@@ -109,6 +109,10 @@ spi_fwm_rxf_ctrl.sv \
 spi_fwmode.sv \
 hmac_reg_top.sv \
 prim_arbiter_ppc.sv \
+aes_cipher_control.sv \
+aes_key_expand.sv \
+aes_shift_rows.sv \
+aes_mix_single_column.sv \
 top_earlgrey.sv \
 clkgen_xil7series.sv \
 top_earlgrey_nexysvideo.sv
@@ -196,7 +200,6 @@ prim_diff_decode.sv \
 prim_alert_sender.sv \
 aes_reg_status.sv \
 aes_control.sv \
-prim_subreg_arb.sv \
 prim_subreg_shadow.sv \
 aes_ctr.sv \
 aes_reg_status.sv \
@@ -205,10 +208,6 @@ prim_gf_mult.sv \
 tlul_err_resp.sv \
 aes_sbox_lut.sv \
 aes_sbox.sv \
-aes_key_expand.sv \
-aes_cipher_control.sv \
-aes_mix_single_column.sv \
-aes_shift_rows.sv \
 prim_lfsr.sv \
 prim_intr_hw.sv \
 alert_handler_ping_timer.sv \
@@ -235,7 +234,6 @@ dmi_jtag_tap.sv \
 dmi_jtag.sv \
 dm_csrs.sv \
 dm_sba.sv \
-tlul_adapter_sram.sv \
 rv_dm.sv \
 flash_rd_ctrl.sv \
 flash_prog_ctrl.sv \
