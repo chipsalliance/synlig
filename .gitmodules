@@ -10,3 +10,6 @@
 [submodule "UHDM-integration-tests"]
 	path = UHDM-integration-tests
 	url = https://github.com/chipsalliance/UHDM-integration-tests.git
+[submodule "yosys-symbiflow-plugins"]
+	path = yosys-symbiflow-plugins
+	url = https://github.com/antmicro/yosys-symbiflow-plugins.git
