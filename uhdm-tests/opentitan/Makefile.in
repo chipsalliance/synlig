@@ -1,0 +1,551 @@
+curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
+OPENTITAN = ${curr_dir}/opentitan
+TOOLCHAIN = ${curr_dir}/toolchain-install
+VENV_OT = ${root_dir}/venv-opentitan
+
+SV2V_FILE = ${root_dir}/build/sv2v.v
+
+TOP := top_earlgrey_nexysvideo
+
+UHDM_file = ${root_dir}/build/${TOP}.uhdm
+
+EARLGRAY_BUILD = ${root_dir}/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1
+TCL_PATH = ${EARLGRAY_BUILD}/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.tcl
+
+EARLGRAY_INCLUDE = \
+        -I$(EARLGRAY_BUILD)/src/lowrisc_prim_assert_0.1/rtl \
+        -I$(EARLGRAY_BUILD)/src/lowrisc_prim_util_memload_0/rtl \
+
+EARLGRAY_PKG_SOURCES = \
+        $(shell \
+                cat ${TCL_PATH} | \
+                grep read_verilog | cut -d' ' -f3  | grep _pkg.sv | \
+                sed 's@^..@${EARLGRAY_BUILD}@')
+
+SV2V_FILES = \
+prim_generic_flop.sv \
+prim_generic_flop_2sync.sv \
+prim_xilinx_clock_mux2.sv \
+prim_xilinx_pad_wrapper.sv \
+prim_diff_decode.sv \
+prim_generic_clock_mux2.sv \
+prim_generic_pad_wrapper.sv \
+prim_generic_ram_1p.sv \
+prim_generic_ram_2p.sv \
+prim_clock_inv.sv \
+prim_clock_mux2.sv \
+prim_flop.sv \
+prim_flop_2sync.sv \
+prim_ram_1p.sv \
+prim_lfsr.sv \
+prim_intr_hw.sv \
+alert_handler_reg_top.sv \
+padctrl_reg_top.sv \
+ibex_icache.sv \
+prim_dom_and_2share.sv \
+prim_arbiter_fixed.sv \
+prim_fifo_async.sv \
+prim_fifo_sync.sv \
+prim_sync_reqack.sv \
+prim_keccak.sv \
+prim_present.sv \
+prim_subst_perm.sv \
+prim_gate_gen.sv \
+prim_subreg_arb.sv \
+prim_subreg.sv \
+prim_subreg_ext.sv \
+prim_generic_clock_inv.sv \
+prim_ram_1p_adv.sv \
+prim_ram_2p_async_adv.sv \
+prim_alert_sender.sv \
+tlul_adapter_host.sv \
+ibex_dummy_instr.sv \
+tlul_fifo_sync.sv \
+tlul_fifo_async.sv \
+tlul_assert.sv \
+tlul_err.sv \
+tlul_assert_multiple.sv \
+tlul_adapter_reg.sv \
+tlul_adapter_sram.sv \
+tlul_err_resp.sv \
+tlul_socket_1n.sv \
+sram2tlul.sv \
+debug_rom_one_scratch.sv \
+aes_reg_top.sv \
+aes_core.sv \
+aes_sbox.sv \
+aes_sbox_lut.sv \
+aes_sbox_canright.sv \
+aes_sbox_canright_masked_noreuse.sv \
+aes_sbox_canright_masked.sv \
+aes.sv \
+alert_handler_reg_wrap.sv \
+alert_handler.sv \
+flash_ctrl_reg_top.sv \
+flash_ctrl.sv \
+flash_mp.sv \
+gpio.sv \
+jtag_mux.sv \
+padctrl.sv \
+prim_secded_39_32_dec.sv \
+prim_secded_39_32_enc.sv \
+rv_plic_target.sv \
+prim_arbiter_tree.sv \
+aes_mix_columns.sv \
+hmac.sv \
+hmac_core.sv \
+aes_sub_bytes.sv \
+dm_mem.sv \
+aes_cipher_core.sv \
+spi_device.sv \
+ibex_pmp.sv \
+ibex_cs_registers.sv \
+ibex_counter.sv \
+spi_device_reg_top.sv \
+prim_ram_2p_adv.sv \
+prim_sram_arbiter.sv \
+spi_fwm_txf_ctrl.sv \
+spi_fwm_rxf_ctrl.sv \
+spi_fwmode.sv \
+hmac_reg_top.sv \
+prim_arbiter_ppc.sv \
+top_earlgrey.sv \
+clkgen_xil7series.sv \
+top_earlgrey_nexysvideo.sv
+
+SV2V_FILES_FULL = \
+	$(shell \
+		for sv2v_file in ${SV2V_FILES}; do \
+		    find ${root_dir}/build -name $${sv2v_file} -print -quit; \
+		done; \
+	)
+
+UHDM_FILES = \
+ibex_pkg.sv \
+prim_pkg.sv \
+top_pkg.sv \
+tlul_pkg.sv \
+prim_util_pkg.sv \
+rstmgr_reg_pkg.sv \
+pwrmgr_reg_pkg.sv \
+pwrmgr_pkg.sv \
+rstmgr_pkg.sv \
+prim_alert_pkg.sv \
+aes_pkg.sv \
+clkmgr_reg_pkg.sv \
+alert_pkg.sv \
+prim_esc_pkg.sv \
+prim_cipher_pkg.sv \
+clkmgr_pkg.sv \
+dm_pkg.sv \
+flash_ctrl_pkg.sv \
+flash_phy_pkg.sv \
+hmac_pkg.sv \
+nmi_gen_reg_pkg.sv \
+otbn_reg_pkg.sv \
+spi_device_pkg.sv \
+spi_device_reg_pkg.sv \
+uart_reg_pkg.sv \
+usb_consts_pkg.sv \
+tl_main_pkg.sv \
+otbn_pkg.sv \
+tl_peri_pkg.sv \
+usbdev_reg_pkg.sv \
+gpio_reg_pkg.sv \
+pinmux_pkg.sv \
+pinmux_reg_pkg.sv \
+rv_timer_reg_pkg.sv \
+rv_plic_reg_pkg.sv \
+hmac_reg_pkg.sv \
+ibex_compressed_decoder.sv \
+ibex_alu.sv \
+ibex_controller.sv \
+ibex_counter.sv \
+ibex_decoder.sv \
+ibex_fetch_fifo.sv \
+ibex_multdiv_slow.sv \
+ibex_load_store_unit.sv \
+ibex_multdiv_fast.sv \
+ibex_wb_stage.sv \
+ibex_register_file_ff.sv \
+ibex_prefetch_buffer.sv \
+ibex_if_stage.sv \
+ibex_id_stage.sv \
+ibex_ex_block.sv \
+ibex_core.sv \
+tlul_adapter_host.sv \
+tlul_err.sv \
+prim_generic_flop_2sync.sv \
+prim_flop_2sync.sv \
+rstmgr_por.sv \
+tlul_adapter_reg.sv \
+prim_subreg.sv \
+prim_subreg_ext.sv \
+rstmgr_reg_top.sv \
+prim_flop.sv \
+prim_generic_flop.sv \
+prim_clock_mux2.sv \
+prim_generic_clock_mux2.sv \
+rstmgr_ctrl.sv \
+rstmgr_info.sv \
+rstmgr.sv \
+prim_fifo_sync.sv \
+tlul_fifo_sync.sv \
+rv_core_ibex.sv \
+prim_diff_decode.sv \
+prim_alert_sender.sv \
+aes_reg_status.sv \
+aes_control.sv \
+prim_subreg_arb.sv \
+prim_subreg_shadow.sv \
+aes_ctr.sv \
+aes_reg_status.sv \
+clkmgr_reg_top.sv \
+prim_gf_mult.sv \
+tlul_err_resp.sv \
+aes_sbox_lut.sv \
+aes_sbox.sv \
+aes_key_expand.sv \
+aes_cipher_control.sv \
+aes_mix_single_column.sv \
+aes_shift_rows.sv \
+prim_lfsr.sv \
+prim_intr_hw.sv \
+alert_handler_ping_timer.sv \
+prim_esc_sender.sv \
+prim_alert_receiver.sv \
+alert_handler_accu.sv \
+alert_handler_esc_timer.sv \
+alert_handler_class.sv \
+prim_clock_inv.sv \
+prim_generic_clock_inv.sv \
+prim_clock_mux2.sv \
+prim_xilinx_clock_mux2.sv \
+prim_generic_clock_mux2.sv \
+aes_prng.sv \
+prim_clock_gating_sync.sv \
+prim_clock_gating.sv \
+prim_generic_clock_gating.sv \
+prim_xilinx_clock_gating.sv \
+clkmgr.sv \
+debug_rom.sv \
+prim_fifo_async.sv \
+dmi_cdc.sv \
+dmi_jtag_tap.sv \
+dmi_jtag.sv \
+dm_csrs.sv \
+dm_sba.sv \
+tlul_adapter_sram.sv \
+rv_dm.sv \
+flash_rd_ctrl.sv \
+flash_prog_ctrl.sv \
+flash_erase_ctrl.sv \
+prim_generic_ram_1p.sv \
+prim_ram_1p.sv \
+prim_generic_flash.sv \
+prim_flash.sv \
+prim_prince.sv \
+flash_phy_scramble.sv \
+flash_phy_rd_buffers.sv \
+flash_phy_rd.sv \
+flash_phy_prog.sv \
+flash_phy_core.sv \
+flash_phy.sv \
+sha2_pad.sv \
+prim_packer.sv \
+nmi_gen_reg_top.sv \
+prim_esc_receiver.sv \
+nmi_gen.sv \
+otbn_reg_top.sv \
+otbn_core.sv \
+prim_generic_pad_wrapper.sv \
+prim_pad_wrapper.sv \
+prim_pulse_sync.sv \
+prim_generic_rom.sv \
+prim_rom.sv \
+prim_rom_adv.sv \
+prim_filter_ctr.sv \
+pwrmgr_fsm.sv \
+pwrmgr_slow_fsm.sv \
+pwrmgr_wake_info.sv \
+rv_plic_gateway.sv \
+timer_core.sv \
+spi_fwmode.sv \
+prim_secded_28_22_dec.sv \
+prim_secded_28_22_enc.sv \
+prim_secded_39_32_dec.sv \
+prim_secded_39_32_enc.sv \
+prim_secded_72_64_dec.sv \
+prim_secded_72_64_enc.sv \
+prim_ram_2p_async_adv.sv \
+prim_ram_2p_adv.sv \
+spi_fwm_rxf_ctrl.sv \
+spi_fwm_txf_ctrl.sv \
+spi_device_reg_top.sv \
+uart_rx.sv \
+uart_tx.sv \
+uart_core.sv \
+usb_fs_rx.sv \
+usb_fs_tx.sv \
+usb_fs_tx_mux.sv \
+usb_fs_nb_in_pe.sv \
+usb_fs_nb_out_pe.sv \
+usb_fs_nb_pe.sv \
+prim_filter.sv \
+usbdev_linkstate.sv \
+usbdev_flop_2syncpulse.sv \
+usbdev_usbif.sv \
+tlul_socket_1n.sv \
+prim_arbiter_ppc.sv \
+tlul_socket_m1.sv \
+tlul_fifo_async.sv \
+prim_fifo_async.sv \
+xbar_main.sv \
+prim_ram_1p_adv.sv \
+otbn.sv \
+xbar_peri.sv \
+usbdev_iomux.sv \
+uart_reg_top.sv \
+gpio_reg_top.sv \
+uart.sv \
+prim_sram_arbiter.sv \
+sha2.sv \
+prim_filter.sv \
+pinmux_wkup.sv \
+pinmux_reg_top.sv \
+pinmux.sv \
+usbdev_reg_top.sv \
+usbdev.sv \
+rv_timer_reg_top.sv \
+rv_timer.sv \
+rv_plic_reg_top.sv \
+rv_plic.sv \
+pwrmgr_cdc.sv \
+pwrmgr_reg_top.sv \
+pwrmgr.sv \
+hmac_reg_top.sv \
+
+UHDM_FILES_FULL = \
+	$(shell \
+		for uhdm_file in ${UHDM_FILES}; do \
+		    find ${root_dir}/build -name $${uhdm_file} -print -quit; \
+		done; \
+	)
+
+CUSTOM_FILES = ${curr_dir}/custom_files/prim_ram_2p.v \
+	       ${curr_dir}/custom_files/prim_xilinx_ram_1p.v \
+	       ${curr_dir}/custom_files/padring.v \
+	       ${curr_dir}/custom_files/prim_xilinx_pad_wrapper.v
+
+#############################
+####      SYNTHESIS      ####
+#############################
+${OPENTITAN}/.gitpatch:
+	cd ${OPENTITAN} && git apply ${curr_dir}/0001-Add-opentitan-patch-for-uhdm.patch && touch $@
+
+${VENV_OT}:
+	virtualenv ${VENV_OT}
+
+
+prep-sources: clean-build | ${OPENTITAN}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT}
+	(. ${VENV_OT}/bin/activate && \
+		pip install -r ${OPENTITAN}/python-requirements.txt && \
+		fusesoc --cores-root=${OPENTITAN} run --setup --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo)
+	cp ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem build/boot_rom_fpga_nexysvideo.32.vmem
+
+${SV2V_FILE}: prep-sources
+	${root_dir}/../image/bin/sv2v -DSYNTHESIS ${EARLGRAY_INCLUDE} ${EARLGRAY_PKG_SOURCES} ${SV2V_FILES_FULL} > ${SV2V_FILE}
+
+${UHDM_file}: ${SV2V_FILE}
+	(cd ${EARLGRAY_BUILD} && \
+		${root_dir}/../image/bin/surelog -parse -sverilog \
+			--disable-feature=parametersubstitution \
+			-DSYNTHESIS \
+			-DPRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric \
+			-DBootRomInitFile=boot_rom_fpga_nexysvideo.32.vmem \
+			-PMemInitFile=boot_rom_fpga_nexysvideo.32.vmem \
+			-PDepth=4096 \
+			-PWidth=32 \
+			-PPMPEnable=1 \
+			-PPMPGranularity=0 \
+			-PPMPNumRegions=16 \
+			-PMHPMCounterNum=8 \
+			-PMHPMCounterWidth=40 \
+			-PRV32E=0 \
+			-PRV32M=1 \
+			-PBranchTargetALU=1 \
+			-PWritebackStage=1 \
+			-PMultiplierImplementation="single-cycle" \
+			-PICache=0 \
+			-PICacheECC=0 \
+			-PDbgTriggerEn=1 \
+			-PSecureIbex=0 \
+			-PPipeLine=1 \
+			-PAsyncOn=1 \
+			-PIdcodeValue=83183693 \
+			-PNrHarts=1 \
+			-PAddrW=17 \
+			-PDataW=32 \
+			-PInW=32 \
+			-POutW=32 \
+			-PVariant=0 \
+			-PAttrDw=10 \
+			-PCycles=16 \
+			-PRamDepth=512 \
+			-PRamWidth=32 \
+			-PDataBitsPerMask=1 \
+			-PCfgW=8 \
+			-PEnableECC=1 \
+			-PFifoDw=8 \
+			-PSramAw=9 \
+			-PSramDw=32 \
+			-PUsbWidth=5 \
+			-PNEndpoints=12 \
+			-PAVFifoWidth=5 \
+			-PRXFifoWidth=17 \
+			-PMaxPktSizeByte=64 \
+			-PNBuf=32 \
+			-PSramAw=9 \
+			-top rv_core_ibex \
+			-top rstmgr \
+			-top prim_alert_sender \
+			-top prim_subreg_shadow \
+			-top aes_ctr \
+			-top aes_control \
+			-top tlul_err_resp \
+			-top aes_sub_bytes \
+			-top aes_cipher_core \
+			-top prim_lfsr \
+			-top prim_intr_hw \
+			-top alert_handler_ping_timer \
+			-top prim_esc_sender \
+			-top prim_alert_receiver \
+			-top alert_handler_accu \
+			-top alert_handler_esc_timer \
+			-top alert_handler_class \
+			-top aes_prng \
+			-top clkmgr \
+			-top rv_dm \
+			-top flash_rd_ctrl \
+			-top flash_prog_ctrl \
+			-top flash_erase_ctrl \
+			-top flash_phy \
+			-top prim_packer \
+			-top hmac_core \
+			-top nmi_gen \
+			-top prim_generic_pad_wrapper \
+			-top prim_pad_wrapper \
+			-top prim_pulse_sync \
+			-top prim_rom_adv \
+			-top prim_filter_ctr \
+			-top pwrmgr_fsm \
+			-top pwrmgr_slow_fsm \
+			-top pwrmgr_wake_info \
+			-top xbar_main \
+			-top otbn \
+			-top xbar_peri \
+			-top gpio_reg_top \
+			-top uart \
+			-top spi_device \
+			-top sha2 \
+			-top pinmux \
+			-top usbdev \
+			-top rv_timer \
+			-top rv_plic \
+			-top pwrmgr \
+			-top hmac \
+			$(EARLGRAY_INCLUDE) \
+			$(UHDM_FILES_FULL) && \
+	cp ${EARLGRAY_BUILD}/slpp_all/surelog.uhdm ${UHDM_file})
+
+	# Delete -top rv_core_ibex when top_earlgrey will be added to uhdm
+		#-PPMPEnable=1 \
+		#-PPMPGranularity=0 \
+		#-PPMPNumRegions=16 \
+		#-PMHPMCounterNum=8 \
+		#-PMHPMCounterWidth=40 \
+		#-PRV32E=0 \
+		#-PRV32M=1 \
+		#-PBranchTargetALU=1 \
+		#-PWritebackStage=1 \
+		#-PMultiplierImplementation="single-cycle" \
+		#-PICache=0 \
+		#-PICacheECC=0 \
+		#-PDbgTriggerEn=1 \
+		#-PSecureIbex=0 \
+		#-PPipeLine=1 \
+	# Delete -top rstmgr when top_earlgrey will be added to uhdm
+	# Delete -top prim_alert_sender when aes.sv, hmac.sv, otp_ctrl.sv, otbn.sv will be added to uhdm
+		# -PAsyncOn=1
+	# Delete -top prim_subreg_shadow when aes_core.sv will be added to uhdm
+	# Delete -top aes_ctr when aes_core.sv will be added to uhdm
+	# Delete -top aes_control when aes_core.sv will be added to uhdm
+	# Delete -top prim_gf_mult when flash_phy_scramble will be added to uhdm
+		# -PStagesPerCycle=64 \
+	# Delete -top tlul_err_resp when tlul_socket_1n will be added to uhdm
+	# Delete -top aes_cipher_core when aes_core will be added to uhdm
+	# Delete -top prim_lfsr when aes_prng will be added to uhdm
+	# Delete -top prim_intr_hw when alert_handler_reg_wrap will be added to uhdm
+	# Delete -top alert_handler_ping_timer when alert_handler will be added to uhdm
+	# Delete -top prim_esc_sender when alert_handler will be added to uhdm
+	# Delete -top prim_alert_receiver when alert_handler will be added to uhdm
+	# Delete -top alert_handler_accu when alert_handler will be added to uhdm
+	# Delete -top alert_handler_esc_timer when alert_handler will be added to uhdm
+	# Delete -top alert_handler_class when alert_handler will be added to uhdm
+	# Delete -top aes_prng when aes will be added to uhdm
+	# Delete -top flash_rd_ctrl when flash_ctrl will be added to uhdm
+		# -PAddrW=17 \
+		# -PDataW=32 \
+	# Delete -top flash_prog_ctrl when flash_ctrl will be added to uhdm
+	# Delete -top flash_erase_ctrl when flash_ctrl will be added to uhdm
+		# -PWordsPerPage=256 \
+		# -PPagesPerBank=256 \
+		# -PEraseBitWidth=1 \
+	# Delete -top prim_packer when hmac will be added to uhdm
+	# Delete -top hmac_core when hmac will be added to uhdm
+	# Delete -top prim_generic_pad_wrapper when padctrl will be added to uhdm
+	# Delete -top prim_pad_wrapper when padring will be added to uhdm
+		# -PVariant=0 \
+		# -PAttrDw=10 \
+	# Delete -top prim_pulse_sync when pinmux_wkup will be added to uhdm
+	# Delete -top prim_filter_ctr when gpio will be added to uhdm
+	# Delete -top pwrmgr_fsm when pwrmgr will be added to uhdm
+	# Delete -top pwrmgr_slow_fsm when pwrmgr will be added to uhdm
+	# Delete -top pwrmgr_wake_info when pwrmgr will be added to uhdm
+	# Delete -top dm_dm when top_earlgrey will be added to uhdm
+	# Delete -top flash_phy when top_earlgrey will be added to uhdm
+	# Delete -top nmi_gen when top_earlgrey will be added to uhdm
+	# Delete -top prim_rom_adv when top_earlgrey will be added to uhdm
+		# -PMemInitFile=boot_rom_fpga_nexysvideo.32.vmem \
+		# -PDepth=4096 \
+		# -PWidth=32 \
+	# Delete -top otbn when top_earlgrey will be added to uhdm
+	# Delete -top spi_device when top_earlgrey will be added to uhdm
+
+yosys/plugins:
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		cd ${root_dir}/../yosys-symbiflow-plugins && $(MAKE) UHDM_INSTALL_DIR=${root_dir}/../image install && cd ..)
+
+
+uhdm/yosys/synth-opentitan: ${UHDM_file} ${SV2V_FILE} | ${VENV_OT} yosys/plugins
+	(cd ${root_dir}/build && \
+	${root_dir}/../image/bin/yosys \
+		-p "plugin -i uhdm" \
+		-p "read_uhdm ${UHDM_file}" \
+		-p "read_verilog -sv -defer ${SV2V_FILE}" \
+		-p "read_verilog -overwrite ${CUSTOM_FILES}" \
+		-p "verilog_defaults -pop" \
+	        -p 'synth_xilinx -iopad -family xc7 -top top_earlgrey_nexysvideo' \
+	        -p 'write_edif -pvector bra ${root_dir}/build/top_earlgrey_nexysvideo.edif' \
+		-p 'write_verilog -noattr earlgray.v')
+
+uhdm/yosys/synth-opentitan-build: | ${root_dir}/build/top_earlgrey_nexysvideo.edif
+	cp ${curr_dir}/build.tcl ${root_dir}/build/build.tcl
+	(cd ${root_dir}/build && \
+		vivado -nojournal -log ${root_dir}/top.log -mode batch -source build.tcl)
+
+vivado/synth-opentitan: clean-build | ${VENV_OT} ${root_dir}/build/boot_rom_fpga_nexysvideo.32.vmem
+	(. ${VENV_OT}/bin/activate && \
+		pip install -r ${OPENTITAN}/python-requirements.txt && \
+		fusesoc --cores-root=${OPENTITAN} run --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile=${root_dir}/build/boot_rom_fpga_nexysvideo.32.vmem)
+
