@@ -16,3 +16,6 @@
 [submodule "make-env"]
 	path = make-env
 	url = https://github.com/SymbiFlow/make-env.git
+[submodule "uhdm-tests/ibex/ibex"]
+	path = uhdm-tests/ibex/ibex
+	url = https://github.com/lowRISC/ibex.git
