@@ -3,7 +3,7 @@ name: 'main'
 on:
   push:
     branches:
-      - uhdm-yosys
+      - master
   pull_request:
 
 jobs:
