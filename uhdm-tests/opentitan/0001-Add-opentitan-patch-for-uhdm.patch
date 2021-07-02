@@ -641,7 +641,7 @@ index 043829d21..2ddee7f3a 100644
                     | update_seckey_inprocess | hash_start_active
                     | msg_push_not_allowed );
 diff --git a/hw/ip/hmac/rtl/hmac_core.sv b/hw/ip/hmac/rtl/hmac_core.sv
-index a1c9515db..52ddaa910 100644
+index a1c9515db..f58e71ee7 100644
 --- a/hw/ip/hmac/rtl/hmac_core.sv
 +++ b/hw/ip/hmac/rtl/hmac_core.sv
 @@ -111,12 +111,25 @@ module hmac_core import hmac_pkg::*; (
@@ -649,7 +649,7 @@ index a1c9515db..52ddaa910 100644
    // sha_rvalid is controlled by State Machine below.
    assign sha_rvalid = (!hmac_en) ? fifo_rvalid : hmac_sha_rvalid ;
 -  assign sha_rdata =
-+  if (!hmac_en) begin
++  /*if (!hmac_en) begin
 +    assign sha_rdata = fifo_rdata;
 +  end else if (sel_rdata == SelIPad) begin
 +    assign sha_rdata.data = i_pad[(BlockSize-1)-32*pad_index-:32];
@@ -661,7 +661,7 @@ index a1c9515db..52ddaa910 100644
 +    assign sha_rdata = fifo_rdata;
 +  end else begin
 +    assign sha_rdata = '{default: '0};
-+  end
++  end*/
 +  /*assign sha_rdata =
      (!hmac_en)             ? fifo_rdata                                               :
      (sel_rdata == SelIPad) ? '{data: i_pad[(BlockSize-1)-32*pad_index-:32], mask: '1} :
