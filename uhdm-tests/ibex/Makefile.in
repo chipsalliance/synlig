@@ -1,0 +1,73 @@
+curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
+IBEX = ${curr_dir}/ibex
+#############################
+####      SYNTHESIS      ####
+#############################
+${IBEX}/.gitpatch:
+	cd ${IBEX} && git apply ${curr_dir}/top_artya7_core.patch && touch $@
+
+${IBEX}/.gitsymbiflowpatch: ${IBEX}/.gitpatch
+	cd ${IBEX} && git apply ${curr_dir}/prim_generic_clock_gating.patch
+	cd ${IBEX} && git apply ${curr_dir}/pins_artya7_xdc.patch && touch $@
+
+uhdm/yosys/synth-ibex: clean-build ${IBEX}/.gitpatch
+	virtualenv ${root_dir}/venv-ibex
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		. ${root_dir}/venv-ibex/bin/activate && \
+		pip install -r ${IBEX}/python-requirements.txt && \
+		pip install git+https://github.com/antmicro/edalize@symbiflow-surelog && \
+		fusesoc --cores-root=${IBEX} run --build --tool yosys --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem" --library_files="${root_dir}/../techlibs/xilinx/cells_xtra_surelog.v","${root_dir}/../techlibs/xilinx/cells_sim.v")
+
+uhdm/yosys/synth-ibex-build: clean-build ${IBEX}/.gitpatch
+	virtualenv ${root_dir}/venv-ibex
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		. ${root_dir}/venv-ibex/bin/activate && \
+		pip install -r ${IBEX}/python-requirements.txt && \
+		pip install git+https://github.com/antmicro/edalize@symbiflow-surelog && \
+		fusesoc --cores-root=${IBEX} run --build --tool vivado --target=synth lowrisc:ibex:top_artya7_surelog --part xc7a35ticsg324-1L --SRAMInitFile="${curr_dir}/led.vmem" --library_files="${root_dir}/../techlibs/xilinx/cells_xtra_surelog.v","${root_dir}/../techlibs/xilinx/cells_sim.v")
+
+##############################
+#### SYMBIFLOW-TOOLCHAIN) ####
+##############################
+
+TOP_DIR := ${root_dir}
+REQUIREMENTS_FILE := ${root_dir}/../conda_conf/requirements.txt
+ENVIRONMENT_FILE := ${root_dir}/../conda_conf/environment.yml
+
+DEVICE  := xc7a50t_test
+
+SYMBIFLOW_TOOLS_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-arch-defs-install-c5272455.tar.xz"
+ifeq ("$(DEVICE)","xc7a50t_test")
+SYMBIFLOW_ARCH_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-xc7a50t_test.tar.xz"
+else ifeq ("$(DEVICE)","xc7a100t_test")
+SYMBIFLOW_ARCH_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-xc7a100t_test.tar.xz"
+else ifeq ("$(DEVICE)","xc7a200t_test")
+SYMBIFLOW_ARCH_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-xc7a200t_test.tar.xz"
+endif
+
+uhdm/yosys/synth-ibex-symbiflow: clean-build patch/symbiflow ${IBEX}/.gitsymbiflowpatch | yosys/plugins
+	(export PATH=${root_dir}/../image/bin:${root_dir}/env/symbiflow/bin:${PATH} && ${IN_CONDA_ENV} \
+		pip install -r ${IBEX}/python-requirements.txt && \
+		pip install git+https://github.com/antmicro/edalize@symbiflow-surelog && \
+		fusesoc --cores-root=${IBEX} run --build --tool symbiflow --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem" \
+		--PRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric \
+		--library_files="${root_dir}/../techlibs/xilinx/cells_xtra_surelog.v","${root_dir}/../techlibs/xilinx/cells_sim.v")
+
+yosys/plugins:
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		cd ${root_dir}/../yosys-symbiflow-plugins && $(IN_CONDA_ENV) $(MAKE) install && cd ..)
+
+${root_dir}/../third_party/make-env/conda.mk:
+	git submodule update --init --recursive
+
+include ${root_dir}/../third_party/make-env/conda.mk
+
+env:: | $(CONDA_ENV_PYTHON)
+	mkdir -p ${root_dir}/env/symbiflow
+	wget -qO- ${SYMBIFLOW_TOOLS_URL} | tar -xJC ${root_dir}/env/symbiflow
+	wget -qO- ${SYMBIFLOW_ARCH_URL} | tar -xJC ${root_dir}/env/symbiflow
+
+patch/symbiflow:
+	cp ${curr_dir}/symbiflow_synth ${root_dir}/env/symbiflow/bin/
+	cp ${curr_dir}/synth.tcl $(root_dir)/env/symbiflow/share/symbiflow/scripts/xc7/synth.tcl
+

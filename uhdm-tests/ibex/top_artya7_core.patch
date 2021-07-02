@@ -1,0 +1,36 @@
+diff --git a/examples/fpga/artya7/top_artya7.core b/examples/fpga/artya7/top_artya7.core
+index 811fb93c..6918a5d9 100644
+--- a/examples/fpga/artya7/top_artya7.core
++++ b/examples/fpga/artya7/top_artya7.core
+@@ -2,7 +2,7 @@ CAPI=2:
+ # Copyright lowRISC contributors.
+ # Licensed under the Apache License, Version 2.0, see LICENSE for details.
+ # SPDX-License-Identifier: Apache-2.0
+-name: "lowrisc:ibex:top_artya7:0.1"
++name: "lowrisc:ibex:top_artya7_surelog:0.1"
+ description: "Ibex example toplevel for Arty A7 boards (both, -35 and -100)"
+ filesets:
+   files_rtl_artya7:
+@@ -50,3 +50,22 @@ targets:
+     tools:
+       vivado:
+         part: "xc7a100tcsg324-1"  # Default to Arty A7-100
++        synth: "yosys"
++        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
++        yosys_read_options: ['-noassert']
++        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++        library_files: ""
++      yosys:
++        arch: "xilinx"
++        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
++        yosys_read_options: ['-noassert', '-debug']
++        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++        library_files: ""
++      symbiflow:
++        package: "csg324-1"
++        part: "xc7a35t"
++        pnr: "vtr"
++        vendor: "xilinx"
++        yosys_frontend: "uhdm"
++        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++        library_files: []
