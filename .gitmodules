@@ -19,3 +19,6 @@
 [submodule "uhdm-tests/ibex/ibex"]
 	path = uhdm-tests/ibex/ibex
 	url = https://github.com/lowRISC/ibex.git
+[submodule "uhdm-tests/opentitan/opentitan"]
+	path = uhdm-tests/opentitan/opentitan
+	url = https://github.com/lowRISC/opentitan.git
