@@ -11,7 +11,7 @@ index 811fb93c..6918a5d9 100644
  description: "Ibex example toplevel for Arty A7 boards (both, -35 and -100)"
  filesets:
    files_rtl_artya7:
-@@ -50,3 +50,22 @@ targets:
+@@ -50,3 +50,20 @@ targets:
      tools:
        vivado:
          part: "xc7a100tcsg324-1"  # Default to Arty A7-100
@@ -19,18 +19,15 @@ index 811fb93c..6918a5d9 100644
 +        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
 +        yosys_read_options: ['-noassert']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
-+        library_files: ""
 +      yosys:
 +        arch: "xilinx"
 +        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
-+        yosys_read_options: ['-noassert', '-debug']
++        yosys_read_options: ['-noassert']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
-+        library_files: ""
 +      symbiflow:
 +        package: "csg324-1"
 +        part: "xc7a35t"
 +        pnr: "vtr"
 +        vendor: "xilinx"
-+        yosys_frontend: "uhdm"
++        yosys_read_options: ['-noassert']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
-+        library_files: []
