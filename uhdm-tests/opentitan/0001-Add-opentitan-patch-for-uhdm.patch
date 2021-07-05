@@ -2645,6 +2645,62 @@ index 8436345d7..06efc7aca 100644
      assign a_rerror_d = '0;
      assign b_rerror_d = '0;
    end
+diff --git a/hw/ip/prim/rtl/prim_subreg_arb.sv b/hw/ip/prim/rtl/prim_subreg_arb.sv
+index 410cf2d1d..af792701b 100644
+--- a/hw/ip/prim/rtl/prim_subreg_arb.sv
++++ b/hw/ip/prim/rtl/prim_subreg_arb.sv
+@@ -25,19 +25,18 @@ module prim_subreg_arb #(
+   output logic [DW-1:0] wr_data
+ );
+ 
++  logic          unused_we;
++  logic [DW-1:0] unused_wd;
++  logic [DW-1:0] unused_q;
+   if ((SWACCESS == "RW") || (SWACCESS == "WO")) begin : gen_w
+     assign wr_en   = we | de;
+     assign wr_data = (we == 1'b1) ? wd : d; // SW higher priority
+     // Unused q - Prevent lint errors.
+-    logic [DW-1:0] unused_q;
+     assign unused_q = q;
+   end else if (SWACCESS == "RO") begin : gen_ro
+     assign wr_en   = de;
+     assign wr_data = d;
+     // Unused we, wd, q - Prevent lint errors.
+-    logic          unused_we;
+-    logic [DW-1:0] unused_wd;
+-    logic [DW-1:0] unused_q;
+     assign unused_we = we;
+     assign unused_wd = wd;
+     assign unused_q  = q;
+@@ -62,15 +61,11 @@ module prim_subreg_arb #(
+     assign wr_en  = we | de;
+     assign wr_data = (de ? d : q) & (we ? '0 : '1);
+     // Unused wd - Prevent lint errors.
+-    logic [DW-1:0] unused_wd;
+     assign unused_wd = wd;
+   end else begin : gen_hw
+     assign wr_en   = de;
+     assign wr_data = d;
+     // Unused we, wd, q - Prevent lint errors.
+-    logic          unused_we;
+-    logic [DW-1:0] unused_wd;
+-    logic [DW-1:0] unused_q;
+     assign unused_we = we;
+     assign unused_wd = wd;
+     assign unused_q  = q;
+diff --git a/hw/ip/prim/rtl/prim_util_pkg.sv b/hw/ip/prim/rtl/prim_util_pkg.sv
+index 6093646cd..38364223f 100644
+--- a/hw/ip/prim/rtl/prim_util_pkg.sv
++++ b/hw/ip/prim/rtl/prim_util_pkg.sv
+@@ -28,7 +28,7 @@ package prim_util_pkg;
+   function automatic integer _clog2(integer value);
+     integer result;
+     value = value - 1;
+-    for (result = 0; value > 0; result = result + 1) begin
++    for (integer result = 0; value > 0; result = result + 1) begin
+       value = value >> 1;
+     end
+     return result;
 diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
 index 962d3b559..d6430bc5a 100644
 --- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
@@ -32893,7 +32949,7 @@ index ffe380ff4..6f518796f 100644
  
    if(WritebackStage) begin : g_writeback_stage
 diff --git a/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv b/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
-index 550b7cc36..c65fe30c4 100755
+index 550b7cc36..3dfe78446 100755
 --- a/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
 +++ b/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
 @@ -216,7 +216,7 @@ module dm_mem #(
@@ -32905,6 +32961,15 @@ index 550b7cc36..c65fe30c4 100755
  
      halted_d_aligned   = NrHartsAligned'(halted_q);
      resuming_d_aligned = NrHartsAligned'(resuming_q);
+@@ -328,7 +328,7 @@ module dm_mem #(
+     data_o = data_bits;
+   end
+ 
+-  always_comb begin : p_abstract_cmd_rom
++  always begin : p_abstract_cmd_rom
+     // this abstract command is currently unsupported
+     unsupported_command = 1'b0;
+     // default memory
 diff --git a/hw/vendor/pulp_riscv_dbg/src/dm_sba.sv b/hw/vendor/pulp_riscv_dbg/src/dm_sba.sv
 index c97f9565a..4aa3646f4 100644
 --- a/hw/vendor/pulp_riscv_dbg/src/dm_sba.sv
