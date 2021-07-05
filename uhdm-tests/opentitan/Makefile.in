@@ -528,9 +528,13 @@ yosys/plugins:
 uhdm/yosys/synth-opentitan: ${UHDM_file} ${SV2V_FILE} | ${VENV_OT} yosys/plugins
 	(cd ${root_dir}/build && \
 	${root_dir}/../image/bin/yosys \
+		-p "verilog_defines -DBootRomInitFile=boot_rom_fpga_nexysvideo.32.vmem" \
+		-p "verilog_defines -DPRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric" \
+		-p "verilog_defaults -push" \
+		-p "verilog_defaults -add -defer" \
 		-p "plugin -i uhdm" \
 		-p "read_uhdm ${UHDM_file}" \
-		-p "read_verilog -sv -defer ${SV2V_FILE}" \
+		-p "read_verilog -sv ${SV2V_FILE}" \
 		-p "read_verilog -overwrite ${CUSTOM_FILES}" \
 		-p "verilog_defaults -pop" \
 	        -p 'synth_xilinx -iopad -family xc7 -top top_earlgrey_nexysvideo' \
