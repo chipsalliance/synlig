@@ -86,33 +86,10 @@ flash_ctrl.sv \
 flash_mp.sv \
 gpio.sv \
 jtag_mux.sv \
+padring.sv \
 padctrl.sv \
 prim_secded_39_32_dec.sv \
 prim_secded_39_32_enc.sv \
-rv_plic_target.sv \
-prim_arbiter_tree.sv \
-aes_mix_columns.sv \
-hmac.sv \
-hmac_core.sv \
-aes_sub_bytes.sv \
-dm_mem.sv \
-aes_cipher_core.sv \
-spi_device.sv \
-ibex_pmp.sv \
-ibex_cs_registers.sv \
-ibex_counter.sv \
-spi_device_reg_top.sv \
-prim_ram_2p_adv.sv \
-prim_sram_arbiter.sv \
-spi_fwm_txf_ctrl.sv \
-spi_fwm_rxf_ctrl.sv \
-spi_fwmode.sv \
-hmac_reg_top.sv \
-prim_arbiter_ppc.sv \
-aes_cipher_control.sv \
-aes_key_expand.sv \
-aes_shift_rows.sv \
-aes_mix_single_column.sv \
 top_earlgrey.sv \
 clkgen_xil7series.sv \
 top_earlgrey_nexysvideo.sv
@@ -168,6 +145,7 @@ ibex_counter.sv \
 ibex_decoder.sv \
 ibex_fetch_fifo.sv \
 ibex_multdiv_slow.sv \
+ibex_pmp.sv \
 ibex_load_store_unit.sv \
 ibex_multdiv_fast.sv \
 ibex_wb_stage.sv \
@@ -176,6 +154,7 @@ ibex_prefetch_buffer.sv \
 ibex_if_stage.sv \
 ibex_id_stage.sv \
 ibex_ex_block.sv \
+ibex_cs_registers.sv \
 ibex_core.sv \
 tlul_adapter_host.sv \
 tlul_err.sv \
@@ -200,6 +179,7 @@ prim_diff_decode.sv \
 prim_alert_sender.sv \
 aes_reg_status.sv \
 aes_control.sv \
+prim_subreg_arb.sv \
 prim_subreg_shadow.sv \
 aes_ctr.sv \
 aes_reg_status.sv \
@@ -208,6 +188,13 @@ prim_gf_mult.sv \
 tlul_err_resp.sv \
 aes_sbox_lut.sv \
 aes_sbox.sv \
+aes_key_expand.sv \
+aes_cipher_control.sv \
+aes_mix_single_column.sv \
+aes_mix_columns.sv \
+aes_shift_rows.sv \
+aes_sub_bytes.sv \
+aes_cipher_core.sv \
 prim_lfsr.sv \
 prim_intr_hw.sv \
 alert_handler_ping_timer.sv \
@@ -233,7 +220,9 @@ dmi_cdc.sv \
 dmi_jtag_tap.sv \
 dmi_jtag.sv \
 dm_csrs.sv \
+dm_mem.sv \
 dm_sba.sv \
+tlul_adapter_sram.sv \
 rv_dm.sv \
 flash_rd_ctrl.sv \
 flash_prog_ctrl.sv \
@@ -244,6 +233,7 @@ prim_generic_flash.sv \
 prim_flash.sv \
 prim_prince.sv \
 flash_phy_scramble.sv \
+prim_arbiter_tree.sv \
 flash_phy_rd_buffers.sv \
 flash_phy_rd.sv \
 flash_phy_prog.sv \
@@ -251,6 +241,7 @@ flash_phy_core.sv \
 flash_phy.sv \
 sha2_pad.sv \
 prim_packer.sv \
+hmac_core.sv \
 nmi_gen_reg_top.sv \
 prim_esc_receiver.sv \
 nmi_gen.sv \
@@ -266,6 +257,7 @@ prim_filter_ctr.sv \
 pwrmgr_fsm.sv \
 pwrmgr_slow_fsm.sv \
 pwrmgr_wake_info.sv \
+rv_plic_target.sv \
 rv_plic_gateway.sv \
 timer_core.sv \
 spi_fwmode.sv \
@@ -307,6 +299,7 @@ uart_reg_top.sv \
 gpio_reg_top.sv \
 uart.sv \
 prim_sram_arbiter.sv \
+spi_device.sv \
 sha2.sv \
 prim_filter.sv \
 pinmux_wkup.sv \
@@ -322,6 +315,7 @@ pwrmgr_cdc.sv \
 pwrmgr_reg_top.sv \
 pwrmgr.sv \
 hmac_reg_top.sv \
+hmac.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -550,4 +544,3 @@ vivado/synth-opentitan: clean-build | ${VENV_OT} ${root_dir}/build/boot_rom_fpga
 	(. ${VENV_OT}/bin/activate && \
 		pip install -r ${OPENTITAN}/python-requirements.txt && \
 		fusesoc --cores-root=${OPENTITAN} run --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile=${root_dir}/build/boot_rom_fpga_nexysvideo.32.vmem)
-
