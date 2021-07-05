@@ -9,6 +9,9 @@ cd Surelog && \
 	cd ..
 #Yosys
 cd yosys && make PREFIX=$INSTALL_PATH install -j $(nproc) && cd ..
+#UHDM plugin
+export PATH=$INSTALL_PATH/bin:${PATH}
+make -C $PWD/yosys-symbiflow-plugins/ install -j$(nproc)
 #sv2v
 wget -qO- https://get.haskellstack.org/ | sh -s - -d $INSTALL_PATH/bin
-export PATH=$INSTALL_PATH/bin:${PATH} && make -C $PWD/sv2v && cp $PWD/sv2v/bin/sv2v $INSTALL_PATH/bin
+make -C $PWD/sv2v && cp $PWD/sv2v/bin/sv2v $INSTALL_PATH/bin
