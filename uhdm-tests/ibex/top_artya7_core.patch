@@ -11,7 +11,7 @@ index 811fb93c..6918a5d9 100644
  description: "Ibex example toplevel for Arty A7 boards (both, -35 and -100)"
  filesets:
    files_rtl_artya7:
-@@ -50,3 +50,20 @@ targets:
+@@ -50,3 +50,19 @@ targets:
      tools:
        vivado:
          part: "xc7a100tcsg324-1"  # Default to Arty A7-100
