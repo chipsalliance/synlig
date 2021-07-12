@@ -1,5 +1,5 @@
 diff --git a/hw/ip/aes/rtl/aes_cipher_core.sv b/hw/ip/aes/rtl/aes_cipher_core.sv
-index ed35dc5ef..d1b6b560f 100644
+index ed35dc5ef..826ba4eff 100644
 --- a/hw/ip/aes/rtl/aes_cipher_core.sv
 +++ b/hw/ip/aes/rtl/aes_cipher_core.sv
 @@ -40,24 +40,24 @@ module aes_cipher_core #(
@@ -49,56 +49,6 @@ index ed35dc5ef..d1b6b560f 100644
    round_key_sel_e       round_key_sel;
  
    //////////
-@@ -103,19 +103,19 @@ module aes_cipher_core #(
-   // Cipher data path
-   aes_sub_bytes #(
-     .SBoxImpl ( SBoxImpl )
--  ) aes_sub_bytes (
-+  ) u_aes_sub_bytes (
-     .op_i   ( op_i          ),
-     .data_i ( state_q       ),
-     .data_o ( sub_bytes_out )
-   );
- 
--  aes_shift_rows aes_shift_rows (
-+  aes_shift_rows u_aes_shift_rows (
-     .op_i   ( op_i           ),
-     .data_i ( sub_bytes_out  ),
-     .data_o ( shift_rows_out )
-   );
- 
--  aes_mix_columns aes_mix_columns (
-+  aes_mix_columns u_aes_mix_columns (
-     .op_i   ( op_i            ),
-     .data_i ( shift_rows_out  ),
-     .data_o ( mix_columns_out )
-@@ -172,7 +172,7 @@ module aes_cipher_core #(
-   aes_key_expand #(
-     .AES192Enable ( AES192Enable ),
-     .SBoxImpl     ( SBoxImpl     )
--  ) aes_key_expand (
-+  ) u_aes_key_expand (
-     .clk_i     ( clk_i            ),
-     .rst_ni    ( rst_ni           ),
-     .op_i      ( key_expand_op    ),
-@@ -197,7 +197,7 @@ module aes_cipher_core #(
-   // Convert words to bytes (every key word contains one column)
-   assign key_bytes = aes_transpose(key_words);
- 
--  aes_mix_columns aes_key_mix_columns (
-+  aes_mix_columns u_aes_key_mix_columns (
-     .op_i   ( CIPH_INV            ),
-     .data_i ( key_bytes           ),
-     .data_o ( key_mix_columns_out )
-@@ -216,7 +216,7 @@ module aes_cipher_core #(
-   /////////////
- 
-   // Control
--  aes_cipher_control aes_cipher_control (
-+  aes_cipher_control u_aes_cipher_control (
-     .clk_i                  ( clk_i                ),
-     .rst_ni                 ( rst_ni               ),
- 
 diff --git a/hw/ip/aes/rtl/aes_key_expand.sv b/hw/ip/aes/rtl/aes_key_expand.sv
 index c030089b7..65f0bdc94 100644
 --- a/hw/ip/aes/rtl/aes_key_expand.sv
@@ -297,37 +247,6 @@ index 5324b4978..fb9e8de6c 100644
    } reg2hw_wrap_t;
  
  endpackage : alert_pkg
-diff --git a/hw/ip/flash_ctrl/rtl/flash_phy.sv b/hw/ip/flash_ctrl/rtl/flash_phy.sv
-index 28ad2a12a..af2b735dd 100644
---- a/hw/ip/flash_ctrl/rtl/flash_phy.sv
-+++ b/hw/ip/flash_ctrl/rtl/flash_phy.sv
-@@ -21,7 +21,7 @@ module flash_phy import flash_ctrl_pkg::*; (
-   input flash_req_t flash_ctrl_i,
-   output flash_rsp_t flash_ctrl_o
- );
--
-+  import flash_phy_pkg::*;
-   // Flash macro outstanding refers to how many reads we allow a macro to move ahead of an
-   // in order blocking read. Since the data cannot be returned out of order, this simply
-   // does the reads in advance and store them in a FIFO
-@@ -46,7 +46,7 @@ module flash_phy import flash_ctrl_pkg::*; (
-   logic [NumBanks-1:0]  host_rsp_avail;
-   logic [NumBanks-1:0]  host_rsp_vld;
-   logic [NumBanks-1:0]  host_rsp_ack;
--  logic [BusWidth-1:0]  host_rsp_data [NumBanks];
-+  logic [0:NumBanks-1][BusWidth-1:0]  host_rsp_data;
-   logic                 seq_fifo_rdy;
-   logic                 seq_fifo_pending;
- 
-@@ -59,7 +59,7 @@ module flash_phy import flash_ctrl_pkg::*; (
-   logic [NumBanks-1:0]  init_busy;
- 
-   // common interface
--  logic [BusWidth-1:0] rd_data [NumBanks];
-+  logic [0:NumBanks-1][BusWidth-1:0] rd_data;
- 
-   // select which bank each is operating on
-   assign host_bank_sel = host_req_i ? host_addr_i[BusAddrW-1 -: BankW] : '0;
 diff --git a/hw/ip/hmac/rtl/hmac.sv b/hw/ip/hmac/rtl/hmac.sv
 index 043829d21..2ddee7f3a 100644
 --- a/hw/ip/hmac/rtl/hmac.sv
@@ -640,38 +559,6 @@ index 043829d21..2ddee7f3a 100644
                     ( msg_push_sha_disabled | hash_start_sha_disabled
                     | update_seckey_inprocess | hash_start_active
                     | msg_push_not_allowed );
-diff --git a/hw/ip/hmac/rtl/hmac_core.sv b/hw/ip/hmac/rtl/hmac_core.sv
-index a1c9515db..f58e71ee7 100644
---- a/hw/ip/hmac/rtl/hmac_core.sv
-+++ b/hw/ip/hmac/rtl/hmac_core.sv
-@@ -111,12 +111,25 @@ module hmac_core import hmac_pkg::*; (
-   assign fifo_rready  = (hmac_en) ? (st_q == StMsg) & sha_rready : sha_rready ;
-   // sha_rvalid is controlled by State Machine below.
-   assign sha_rvalid = (!hmac_en) ? fifo_rvalid : hmac_sha_rvalid ;
--  assign sha_rdata =
-+  /*if (!hmac_en) begin
-+    assign sha_rdata = fifo_rdata;
-+  end else if (sel_rdata == SelIPad) begin
-+    assign sha_rdata.data = i_pad[(BlockSize-1)-32*pad_index-:32];
-+    assign sha_rdata.mask = {WordByte{1'b1}};
-+  end else if (sel_rdata == SelOPad) begin
-+    assign sha_rdata.data = o_pad[(BlockSize-1)-32*pad_index-:32];
-+    assign sha_rdata.mask = {WordByte{1'b1}};
-+  end else if (sel_rdata == SelFifo) begin
-+    assign sha_rdata = fifo_rdata;
-+  end else begin
-+    assign sha_rdata = '{default: '0};
-+  end*/
-+  /*assign sha_rdata =
-     (!hmac_en)             ? fifo_rdata                                               :
-     (sel_rdata == SelIPad) ? '{data: i_pad[(BlockSize-1)-32*pad_index-:32], mask: '1} :
-     (sel_rdata == SelOPad) ? '{data: o_pad[(BlockSize-1)-32*pad_index-:32], mask: '1} :
-     (sel_rdata == SelFifo) ? fifo_rdata                                               :
--    '{default: '0};
-+    '{default: '0};*/
- 
-   assign sha_message_length = (!hmac_en)                 ? message_length             :
-                               (sel_msglen == SelIPadMsg) ? message_length + BlockSize :
 diff --git a/hw/ip/hmac/rtl/hmac_reg_top.sv b/hw/ip/hmac/rtl/hmac_reg_top.sv
 index b11dc5747..bccfe829d 100644
 --- a/hw/ip/hmac/rtl/hmac_reg_top.sv
@@ -1898,40 +1785,6 @@ index b11dc5747..bccfe829d 100644
        end
      endcase
    end
-diff --git a/hw/ip/hmac/rtl/sha2_pad.sv b/hw/ip/hmac/rtl/sha2_pad.sv
-index 5ee90881c..2667008be 100644
---- a/hw/ip/hmac/rtl/sha2_pad.sv
-+++ b/hw/ip/hmac/rtl/sha2_pad.sv
-@@ -89,7 +89,7 @@ module sha2_pad import hmac_pkg::*; (
-       end
- 
-       Pad00: begin
--        shaf_rdata = '0;
-+        shaf_rdata = 32'h00000000;
-       end
- 
-       LenHi: begin
-@@ -101,7 +101,7 @@ module sha2_pad import hmac_pkg::*; (
-       end
- 
-       default: begin
--        shaf_rdata = '0;
-+        shaf_rdata = 32'h00000000;
-       end
-     endcase
-   end
-@@ -298,9 +298,9 @@ module sha2_pad import hmac_pkg::*; (
-   // tx_count
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      tx_count <= '0;
-+      tx_count <= 64'h0000000000000000;
-     end else if (hash_start) begin
--      tx_count <= '0;
-+      tx_count <= 64'h0000000000000000;
-     end else if (inc_txcount) begin
-       tx_count[63:5] <= tx_count[63:5] + 1'b1;
-     end
 diff --git a/hw/ip/otbn/rtl/otbn_core.sv b/hw/ip/otbn/rtl/otbn_core.sv
 index 8b13db4f5..312277b5f 100644
 --- a/hw/ip/otbn/rtl/otbn_core.sv
@@ -2131,72 +1984,6 @@ index 92da2e81c..89b58a8f7 100644
      end else begin
        lc_strap_q       <= lc_strap_d;
        dft_strap_test_q <= dft_strap_test_d;
-diff --git a/hw/ip/pinmux/rtl/pinmux_wkup.sv b/hw/ip/pinmux/rtl/pinmux_wkup.sv
-index 101062346..2eb8496b3 100644
---- a/hw/ip/pinmux/rtl/pinmux_wkup.sv
-+++ b/hw/ip/pinmux/rtl/pinmux_wkup.sv
-@@ -2,7 +2,7 @@
- // Licensed under the Apache License, Version 2.0, see LICENSE for details.
- // SPDX-License-Identifier: Apache-2.0
- //
--module pinmux_wkup import pinmux_pkg::*; import pinmux_reg_pkg::*; #(
-+module pinmux_wkup import pinmux_pkg::*; #(
-   parameter int Cycles = 4
- ) (
-   input                    clk_i,
-@@ -16,7 +16,7 @@ module pinmux_wkup import pinmux_pkg::*; import pinmux_reg_pkg::*; #(
-   input                    wkup_en_i,
-   input                    filter_en_i,
-   input wkup_mode_e        wkup_mode_i,
--  input [WkupCntWidth-1:0] wkup_cnt_th_i,
-+  input [7:0] wkup_cnt_th_i,
-   input                    pin_value_i,
-   // Signals to/from cause register.
-   // They are synched to/from the AON clock internally
-@@ -37,7 +37,7 @@ module pinmux_wkup import pinmux_pkg::*; import pinmux_reg_pkg::*; #(
-   wkup_mode_e aon_wkup_mode_q;
-   logic aon_filter_en_q;
-   logic aon_wkup_en_d, aon_wkup_en_q;
--  logic [WkupCntWidth-1:0] aon_wkup_cnt_th_q;
-+  logic [7:0] aon_wkup_cnt_th_q;
- 
-   prim_flop_2sync #(
-     .Width(1)
-@@ -106,7 +106,7 @@ module pinmux_wkup import pinmux_pkg::*; import pinmux_reg_pkg::*; #(
-   assign aon_rising  =  aon_filter_out_d & ~aon_filter_out_q;
- 
-   logic aon_cnt_en, aon_cnt_eq_th;
--  logic [WkupCntWidth-1:0] aon_cnt_d, aon_cnt_q;
-+  logic [7:0] aon_cnt_d, aon_cnt_q;
-   assign aon_cnt_d = (aon_cnt_eq_th) ? '0                :
-                      (aon_cnt_en)    ?  aon_cnt_q + 1'b1 : '0;
- 
-diff --git a/hw/ip/prim/rtl/prim_arbiter_ppc.sv b/hw/ip/prim/rtl/prim_arbiter_ppc.sv
-index 9ec473f85..86bef1e9d 100644
---- a/hw/ip/prim/rtl/prim_arbiter_ppc.sv
-+++ b/hw/ip/prim/rtl/prim_arbiter_ppc.sv
-@@ -113,12 +113,14 @@ module prim_arbiter_ppc #(
-       end
-     end else begin: gen_nodatapath
-       assign data_o = '1;
--      // TODO: waive data_i from NOT_READ error
-+      // The following signal is used to avoid possible lint errors.
-+      logic [DW-1:0] unused_data [N];
-+      assign unused_data = data_i;
-     end
- 
-     always_comb begin
-       idx_o = '0;
--      for (int i = 0 ; i < N ; i++) begin
-+      for (int unsigned i = 0 ; i < N ; i++) begin
-         if (winner[i]) begin
-           idx_o = i[IdxW-1:0];
-         end
-@@ -222,4 +224,3 @@ end
- `endif
- 
- endmodule : prim_arbiter_ppc
--
 diff --git a/hw/ip/prim/rtl/prim_diff_decode.sv b/hw/ip/prim/rtl/prim_diff_decode.sv
 index c06a77d77..8c9db0c61 100644
 --- a/hw/ip/prim/rtl/prim_diff_decode.sv
@@ -2354,340 +2141,6 @@ index 423a7ca21..cb790a861 100644
      data_o ^= k1_q;
      data_o ^= k0_prime_q;
    end
-diff --git a/hw/ip/prim/rtl/prim_ram_2p_adv.sv b/hw/ip/prim/rtl/prim_ram_2p_adv.sv
-index c6b466982..d34b942cd 100644
---- a/hw/ip/prim/rtl/prim_ram_2p_adv.sv
-+++ b/hw/ip/prim/rtl/prim_ram_2p_adv.sv
-@@ -6,18 +6,18 @@
- //
- // Supported configurations:
- // - ECC for 32b wide memories with no write mask
--//   (Width == 32 && DataBitsPerMask == 32).
--// - Byte parity if Width is a multiple of 8 bit and write masks have Byte
-+//   (RamWidth == 32 && DataBitsPerMask == 32).
-+// - Byte parity if RamWidth is a multiple of 8 bit and write masks have Byte
- //   granularity (DataBitsPerMask == 8).
- //
- // Note that the write mask needs to be per Byte if parity is enabled. If ECC is enabled, the write
--// mask cannot be used and has to be tied to {Width{1'b1}}.
-+// mask cannot be used and has to be tied to {RamWidth{1'b1}}.
- 
- `include "prim_assert.sv"
- 
- module prim_ram_2p_adv #(
--  parameter  int Depth                = 512,
--  parameter  int Width                = 32,
-+  parameter  int RamDepth                = 512,
-+  parameter  int RamWidth                = 32,
-   parameter  int DataBitsPerMask      = 1,  // Number of data bits per bit of write mask
-   parameter  int CfgW                 = 8,  // WTC, RTC, etc
-   parameter      MemInitFile          = "", // VMEM file to initialize the memory with
-@@ -28,7 +28,7 @@ module prim_ram_2p_adv #(
-   parameter  bit EnableInputPipeline  = 0, // Adds an input register (read latency +1)
-   parameter  bit EnableOutputPipeline = 0, // Adds an output register (read latency +1)
- 
--  localparam int Aw                   = prim_util_pkg::vbits(Depth)
-+  localparam int Aw                   = prim_util_pkg::vbits(RamDepth)
- ) (
-   input                    clk_i,
-   input                    rst_ni,
-@@ -36,18 +36,18 @@ module prim_ram_2p_adv #(
-   input                    a_req_i,
-   input                    a_write_i,
-   input        [Aw-1:0]    a_addr_i,
--  input        [Width-1:0] a_wdata_i,
--  input        [Width-1:0] a_wmask_i,  // cannot be used with ECC, tie to 1 in that case
--  output logic [Width-1:0] a_rdata_o,
-+  input        [RamWidth-1:0] a_wdata_i,
-+  input        [RamWidth-1:0] a_wmask_i,  // cannot be used with ECC, tie to 1 in that case
-+  output logic [RamWidth-1:0] a_rdata_o,
-   output logic             a_rvalid_o, // read response (a_rdata_o) is valid
-   output logic [1:0]       a_rerror_o, // Bit1: Uncorrectable, Bit0: Correctable
- 
-   input                    b_req_i,
-   input                    b_write_i,
-   input        [Aw-1:0]    b_addr_i,
--  input        [Width-1:0] b_wdata_i,
--  input        [Width-1:0] b_wmask_i,  // cannot be used with ECC, tie to 1 in that case
--  output logic [Width-1:0] b_rdata_o,
-+  input        [RamWidth-1:0] b_wdata_i,
-+  input        [RamWidth-1:0] b_wmask_i,  // cannot be used with ECC, tie to 1 in that case
-+  output logic [RamWidth-1:0] b_rdata_o,
-   output logic             b_rvalid_o, // read response (b_rdata_o) is valid
-   output logic [1:0]       b_rerror_o, // Bit1: Uncorrectable, Bit0: Correctable
- 
-@@ -55,8 +55,8 @@ module prim_ram_2p_adv #(
- );
- 
-   prim_ram_2p_async_adv #(
--    .Depth               (Depth),
--    .Width               (Width),
-+    .RamDepth               (RamDepth),
-+    .RamWidth               (RamWidth),
-     .DataBitsPerMask     (DataBitsPerMask),
-     .CfgW                (CfgW),
-     .MemInitFile         (MemInitFile),
-diff --git a/hw/ip/prim/rtl/prim_ram_2p_async_adv.sv b/hw/ip/prim/rtl/prim_ram_2p_async_adv.sv
-index 8436345d7..06efc7aca 100644
---- a/hw/ip/prim/rtl/prim_ram_2p_async_adv.sv
-+++ b/hw/ip/prim/rtl/prim_ram_2p_async_adv.sv
-@@ -6,18 +6,18 @@
- //
- // Supported configurations:
- // - ECC for 32b wide memories with no write mask
--//   (Width == 32 && DataBitsPerMask == 32).
--// - Byte parity if Width is a multiple of 8 bit and write masks have Byte
-+//   (RamWidth == 32 && DataBitsPerMask == 32).
-+// - Byte parity if RamWidth is a multiple of 8 bit and write masks have Byte
- //   granularity (DataBitsPerMask == 8).
- //
- // Note that the write mask needs to be per Byte if parity is enabled. If ECC is enabled, the write
--// mask cannot be used and has to be tied to {Width{1'b1}}.
-+// mask cannot be used and has to be tied to {RamWidth{1'b1}}.
- 
- `include "prim_assert.sv"
- 
- module prim_ram_2p_async_adv #(
--  parameter  int Depth                = 512,
--  parameter  int Width                = 32,
-+  parameter  int RamDepth                = 512,
-+  parameter  int RamWidth                = 32,
-   parameter  int DataBitsPerMask      = 1,  // Number of data bits per bit of write mask
-   parameter  int CfgW                 = 8,  // WTC, RTC, etc
-   parameter      MemInitFile          = "", // VMEM file to initialize the memory with
-@@ -28,7 +28,7 @@ module prim_ram_2p_async_adv #(
-   parameter  bit EnableInputPipeline  = 0, // Adds an input register (read latency +1)
-   parameter  bit EnableOutputPipeline = 0, // Adds an output register (read latency +1)
- 
--  localparam int Aw                   = prim_util_pkg::vbits(Depth)
-+  localparam int Aw                   = prim_util_pkg::vbits(RamDepth)
- ) (
-   input clk_a_i,
-   input clk_b_i,
-@@ -38,18 +38,18 @@ module prim_ram_2p_async_adv #(
-   input                    a_req_i,
-   input                    a_write_i,
-   input        [Aw-1:0]    a_addr_i,
--  input        [Width-1:0] a_wdata_i,
--  input        [Width-1:0] a_wmask_i,  // cannot be used with ECC, tie to 1 in that case
--  output logic [Width-1:0] a_rdata_o,
-+  input        [RamWidth-1:0] a_wdata_i,
-+  input        [RamWidth-1:0] a_wmask_i,  // cannot be used with ECC, tie to 1 in that case
-+  output logic [RamWidth-1:0] a_rdata_o,
-   output logic             a_rvalid_o, // read response (a_rdata_o) is valid
-   output logic [1:0]       a_rerror_o, // Bit1: Uncorrectable, Bit0: Correctable
- 
-   input                    b_req_i,
-   input                    b_write_i,
-   input        [Aw-1:0]    b_addr_i,
--  input        [Width-1:0] b_wdata_i,
--  input        [Width-1:0] b_wmask_i,  // cannot be used with ECC, tie to 1 in that case
--  output logic [Width-1:0] b_rdata_o,
-+  input        [RamWidth-1:0] b_wdata_i,
-+  input        [RamWidth-1:0] b_wmask_i,  // cannot be used with ECC, tie to 1 in that case
-+  output logic [RamWidth-1:0] b_rdata_o,
-   output logic             b_rvalid_o, // read response (b_rdata_o) is valid
-   output logic [1:0]       b_rerror_o, // Bit1: Uncorrectable, Bit0: Correctable
- 
-@@ -67,14 +67,14 @@ module prim_ram_2p_async_adv #(
-   localparam int LocalDataBitsPerMask = (EnableParity) ? 1 : DataBitsPerMask;
- 
-   // Calculate ECC width
--  localparam int ParWidth  = (EnableParity) ? Width/8 :
-+  localparam int ParRamWidth  = (EnableParity) ? RamWidth/8 :
-                              (!EnableECC)   ? 0 :
--                             (Width <=   4) ? 4 :
--                             (Width <=  11) ? 5 :
--                             (Width <=  26) ? 6 :
--                             (Width <=  57) ? 7 :
--                             (Width <= 120) ? 8 : 8 ;
--  localparam int TotalWidth = Width + ParWidth;
-+                             (RamWidth <=   4) ? 4 :
-+                             (RamWidth <=  11) ? 5 :
-+                             (RamWidth <=  26) ? 6 :
-+                             (RamWidth <=  57) ? 7 :
-+                             (RamWidth <= 120) ? 8 : 8 ;
-+  localparam int TotalRamWidth = RamWidth + ParRamWidth;
- 
-   ////////////////////////////
-   // RAM Primitive Instance //
-@@ -83,28 +83,28 @@ module prim_ram_2p_async_adv #(
-   logic                    a_req_q,    a_req_d ;
-   logic                    a_write_q,  a_write_d ;
-   logic [Aw-1:0]           a_addr_q,   a_addr_d ;
--  logic [TotalWidth-1:0]   a_wdata_q,  a_wdata_d ;
--  logic [TotalWidth-1:0]   a_wmask_q,  a_wmask_d ;
-+  logic [TotalRamWidth-1:0]   a_wdata_q,  a_wdata_d ;
-+  logic [TotalRamWidth-1:0]   a_wmask_q,  a_wmask_d ;
-   logic                    a_rvalid_q, a_rvalid_d, a_rvalid_sram ;
--  logic [Width-1:0]        a_rdata_q,  a_rdata_d ;
--  logic [TotalWidth-1:0]   a_rdata_sram ;
-+  logic [RamWidth-1:0]        a_rdata_q,  a_rdata_d ;
-+  logic [TotalRamWidth-1:0]   a_rdata_sram ;
-   logic [1:0]              a_rerror_q, a_rerror_d ;
- 
-   logic                    b_req_q,    b_req_d ;
-   logic                    b_write_q,  b_write_d ;
-   logic [Aw-1:0]           b_addr_q,   b_addr_d ;
--  logic [TotalWidth-1:0]   b_wdata_q,  b_wdata_d ;
--  logic [TotalWidth-1:0]   b_wmask_q,  b_wmask_d ;
-+  logic [TotalRamWidth-1:0]   b_wdata_q,  b_wdata_d ;
-+  logic [TotalRamWidth-1:0]   b_wmask_q,  b_wmask_d ;
-   logic                    b_rvalid_q, b_rvalid_d, b_rvalid_sram ;
--  logic [Width-1:0]        b_rdata_q,  b_rdata_d ;
--  logic [TotalWidth-1:0]   b_rdata_sram ;
-+  logic [RamWidth-1:0]        b_rdata_q,  b_rdata_d ;
-+  logic [TotalRamWidth-1:0]   b_rdata_sram ;
-   logic [1:0]              b_rerror_q, b_rerror_d ;
- 
-   prim_ram_2p #(
-     .MemInitFile     (MemInitFile),
- 
--    .Width           (TotalWidth),
--    .Depth           (Depth),
-+    .Width           (TotalRamWidth),
-+    .Depth           (RamDepth),
-     .DataBitsPerMask (LocalDataBitsPerMask)
-   ) u_mem (
-     .clk_a_i    (clk_a_i),
-@@ -161,29 +161,29 @@ module prim_ram_2p_async_adv #(
-   if (EnableParity == 0 && EnableECC) begin : gen_secded
- 
-     // check supported widths
--    `ASSERT_INIT(SecDecWidth_A, Width inside {32})
-+    `ASSERT_INIT(SecDecRamWidth_A, RamWidth inside {32})
- 
-     // the wmask is constantly set to 1 in this case
-     `ASSERT(OnlyWordWritePossibleWithEccPortA_A, a_req_i |->
--        a_wmask_i == {TotalWidth{1'b1}}, clk_a_i, rst_a_ni)
-+        a_wmask_i == {TotalRamWidth{1'b1}}, clk_a_i, rst_a_ni)
-     `ASSERT(OnlyWordWritePossibleWithEccPortB_A, b_req_i |->
--        b_wmask_i == {TotalWidth{1'b1}}, clk_b_i, rst_b_ni)
-+        b_wmask_i == {TotalRamWidth{1'b1}}, clk_b_i, rst_b_ni)
- 
--    assign a_wmask_d = {TotalWidth{1'b1}};
--    assign b_wmask_d = {TotalWidth{1'b1}};
-+    assign a_wmask_d = {TotalRamWidth{1'b1}};
-+    assign b_wmask_d = {TotalRamWidth{1'b1}};
- 
--    if (Width == 32) begin : gen_secded_39_32
-+    if (RamWidth == 32) begin : gen_secded_39_32
-       prim_secded_39_32_enc u_enc_a (.in(a_wdata_i), .out(a_wdata_d));
-       prim_secded_39_32_dec u_dec_a (
-         .in         (a_rdata_sram),
--        .d_o        (a_rdata_d[0+:Width]),
-+        .d_o        (a_rdata_d[0+:RamWidth]),
-         .syndrome_o ( ),
-         .err_o      (a_rerror_d)
-       );
-       prim_secded_39_32_enc u_enc_b (.in(b_wdata_i), .out(b_wdata_d));
-       prim_secded_39_32_dec u_dec_b (
-         .in         (b_rdata_sram),
--        .d_o        (b_rdata_d[0+:Width]),
-+        .d_o        (b_rdata_d[0+:RamWidth]),
-         .syndrome_o ( ),
-         .err_o      (b_rerror_d)
-       );
-@@ -191,40 +191,40 @@ module prim_ram_2p_async_adv #(
-   end else if (EnableParity) begin : gen_byte_parity
- 
-     `ASSERT_INIT(ParityNeedsByteWriteMask_A, DataBitsPerMask == 8)
--    `ASSERT_INIT(WidthNeedsToBeByteAligned_A, Width % 8 == 0)
-+    `ASSERT_INIT(RamWidthNeedsToBeByteAligned_A, RamWidth % 8 == 0)
- 
-     always_comb begin : p_parity
-       a_rerror_d = '0;
-       b_rerror_d = '0;
--      a_wmask_d[0+:Width] = a_wmask_i;
--      b_wmask_d[0+:Width] = b_wmask_i;
--      a_wdata_d[0+:Width] = a_wdata_i;
--      b_wdata_d[0+:Width] = b_wdata_i;
-+      a_wmask_d[0+:RamWidth] = a_wmask_i;
-+      b_wmask_d[0+:RamWidth] = b_wmask_i;
-+      a_wdata_d[0+:RamWidth] = a_wdata_i;
-+      b_wdata_d[0+:RamWidth] = b_wdata_i;
- 
--      for (int i = 0; i < Width/8; i ++) begin
-+      for (int i = 0; i < RamWidth/8; i ++) begin
-         // parity generation (odd parity)
--        a_wdata_d[Width + i] = ~(^a_wdata_i[i*8 +: 8]);
--        b_wdata_d[Width + i] = ~(^b_wdata_i[i*8 +: 8]);
--        a_wmask_d[Width + i] = &a_wmask_i[i*8 +: 8];
--        b_wmask_d[Width + i] = &b_wmask_i[i*8 +: 8];
-+        a_wdata_d[RamWidth + i] = ~(^a_wdata_i[i*8 +: 8]);
-+        b_wdata_d[RamWidth + i] = ~(^b_wdata_i[i*8 +: 8]);
-+        a_wmask_d[RamWidth + i] = &a_wmask_i[i*8 +: 8];
-+        b_wmask_d[RamWidth + i] = &b_wmask_i[i*8 +: 8];
-         // parity decoding (errors are always uncorrectable)
--        a_rerror_d[1] |= ~(^{a_rdata_sram[i*8 +: 8], a_rdata_sram[Width + i]});
--        b_rerror_d[1] |= ~(^{b_rdata_sram[i*8 +: 8], b_rdata_sram[Width + i]});
-+        a_rerror_d[1] |= ~(^{a_rdata_sram[i*8 +: 8], a_rdata_sram[RamWidth + i]});
-+        b_rerror_d[1] |= ~(^{b_rdata_sram[i*8 +: 8], b_rdata_sram[RamWidth + i]});
-       end
-       // tie to zero if the read data is not valid
-       a_rerror_d &= {2{a_rvalid_sram}};
-       b_rerror_d &= {2{b_rvalid_sram}};
-     end
- 
--    assign a_rdata_d  = a_rdata_sram[0+:Width];
--    assign b_rdata_d  = b_rdata_sram[0+:Width];
-+    assign a_rdata_d  = a_rdata_sram[0+:RamWidth];
-+    assign b_rdata_d  = b_rdata_sram[0+:RamWidth];
-   end else begin : gen_nosecded_noparity
-     assign a_wmask_d  = a_wmask_i;
-     assign b_wmask_d  = b_wmask_i;
-     assign a_wdata_d  = a_wdata_i;
-     assign b_wdata_d  = b_wdata_i;
--    assign a_rdata_d  = a_rdata_sram[0+:Width];
--    assign b_rdata_d  = b_rdata_sram[0+:Width];
-+    assign a_rdata_d  = a_rdata_sram[0+:RamWidth];
-+    assign b_rdata_d  = b_rdata_sram[0+:RamWidth];
-     assign a_rerror_d = '0;
-     assign b_rerror_d = '0;
-   end
-diff --git a/hw/ip/prim/rtl/prim_subreg_arb.sv b/hw/ip/prim/rtl/prim_subreg_arb.sv
-index 410cf2d1d..af792701b 100644
---- a/hw/ip/prim/rtl/prim_subreg_arb.sv
-+++ b/hw/ip/prim/rtl/prim_subreg_arb.sv
-@@ -25,19 +25,18 @@ module prim_subreg_arb #(
-   output logic [DW-1:0] wr_data
- );
- 
-+  logic          unused_we;
-+  logic [DW-1:0] unused_wd;
-+  logic [DW-1:0] unused_q;
-   if ((SWACCESS == "RW") || (SWACCESS == "WO")) begin : gen_w
-     assign wr_en   = we | de;
-     assign wr_data = (we == 1'b1) ? wd : d; // SW higher priority
-     // Unused q - Prevent lint errors.
--    logic [DW-1:0] unused_q;
-     assign unused_q = q;
-   end else if (SWACCESS == "RO") begin : gen_ro
-     assign wr_en   = de;
-     assign wr_data = d;
-     // Unused we, wd, q - Prevent lint errors.
--    logic          unused_we;
--    logic [DW-1:0] unused_wd;
--    logic [DW-1:0] unused_q;
-     assign unused_we = we;
-     assign unused_wd = wd;
-     assign unused_q  = q;
-@@ -62,15 +61,11 @@ module prim_subreg_arb #(
-     assign wr_en  = we | de;
-     assign wr_data = (de ? d : q) & (we ? '0 : '1);
-     // Unused wd - Prevent lint errors.
--    logic [DW-1:0] unused_wd;
-     assign unused_wd = wd;
-   end else begin : gen_hw
-     assign wr_en   = de;
-     assign wr_data = d;
-     // Unused we, wd, q - Prevent lint errors.
--    logic          unused_we;
--    logic [DW-1:0] unused_wd;
--    logic [DW-1:0] unused_q;
-     assign unused_we = we;
-     assign unused_wd = wd;
-     assign unused_q  = q;
 diff --git a/hw/ip/prim/rtl/prim_util_pkg.sv b/hw/ip/prim/rtl/prim_util_pkg.sv
 index 6093646cd..38364223f 100644
 --- a/hw/ip/prim/rtl/prim_util_pkg.sv
@@ -2719,36 +2172,6 @@ index 962d3b559..d6430bc5a 100644
  `else
      // different driver types
      assign (strong0, strong1) inout_io = (oe && drv != DRIVE_00) ? out : 1'bz;
-diff --git a/hw/ip/pwrmgr/rtl/pwrmgr_cdc.sv b/hw/ip/pwrmgr/rtl/pwrmgr_cdc.sv
-index c4ccd9b2d..5229b6a82 100644
---- a/hw/ip/pwrmgr/rtl/pwrmgr_cdc.sv
-+++ b/hw/ip/pwrmgr/rtl/pwrmgr_cdc.sv
-@@ -54,6 +54,8 @@ module pwrmgr_cdc import pwrmgr_pkg::*; import pwrmgr_reg_pkg::*;
- 
- );
- 
-+  import pwrmgr_pkg::*;
-+
-   ////////////////////////////////
-   // Sync from clk_i to clk_slow_i
-   ////////////////////////////////
-@@ -137,11 +139,11 @@ module pwrmgr_cdc import pwrmgr_pkg::*; import pwrmgr_reg_pkg::*;
-   // only register configurations can be sync'd using slow_cdc_sync
-   always_ff @(posedge clk_slow_i or negedge rst_slow_ni) begin
-     if (!rst_slow_ni) begin
--      slow_wakeup_en_o <= '0;
--      slow_reset_en_o <= '0;
--      slow_main_pd_no <= '0;
--      slow_io_clk_en_o <= '0;
--      slow_core_clk_en_o <= '0;
-+      slow_wakeup_en_o <= 16'h0000;
-+      slow_reset_en_o <= 2'b00;
-+      slow_main_pd_no <= 1'b0;
-+      slow_io_clk_en_o <= 1'b0;
-+      slow_core_clk_en_o <= 1'b0;
-     end else if (slow_cdc_sync) begin
-       slow_wakeup_en_o <= wakeup_en_i;
-       slow_reset_en_o <= reset_en_i;
 diff --git a/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv b/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv
 index ef4712bf5..336e2ff7d 100644
 --- a/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv
@@ -3309,76 +2732,6 @@ index b7bd92367..824107aed 100644
        end
      endcase
    end
-diff --git a/hw/ip/spi_device/rtl/spi_device.sv b/hw/ip/spi_device/rtl/spi_device.sv
-index f7f9ed1bf..0b0fd2f7e 100644
---- a/hw/ip/spi_device/rtl/spi_device.sv
-+++ b/hw/ip/spi_device/rtl/spi_device.sv
-@@ -519,8 +519,8 @@ module spi_device #(
- 
-   // SRAM Wrapper
-   prim_ram_2p_adv #(
--    .Depth (512),
--    .Width (SramDw),    // 32 x 512 --> 2kB
-+    .RamDepth (512),
-+    .RamWidth (SramDw),    // 32 x 512 --> 2kB
-     .DataBitsPerMask (1),
-     .CfgW  (8),
- 
-diff --git a/hw/ip/tlul/rtl/tlul_adapter_reg.sv b/hw/ip/tlul/rtl/tlul_adapter_reg.sv
-index c451308bd..a0dd153b8 100644
---- a/hw/ip/tlul/rtl/tlul_adapter_reg.sv
-+++ b/hw/ip/tlul/rtl/tlul_adapter_reg.sv
-@@ -30,8 +30,8 @@ module tlul_adapter_reg import tlul_pkg::*; #(
-   input                    error_i
- );
- 
--  localparam int IW  = $bits(tl_i.a_source);
--  localparam int SZW = $bits(tl_i.a_size);
-+  localparam int IW  = 8;
-+  localparam int SZW = 2;
- 
-   logic outstanding;    // Indicates current request is pending
-   logic a_ack, d_ack;
-@@ -69,8 +69,8 @@ module tlul_adapter_reg import tlul_pkg::*; #(
- 
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      reqid <= '0;
--      reqsz <= '0;
-+      reqid <= {IW{1'b0}};
-+      reqsz <= {SZW{1'b0}};
-       rspop <= AccessAck;
-     end else if (a_ack) begin
-       reqid <= tl_i.a_source;
-@@ -82,10 +82,10 @@ module tlul_adapter_reg import tlul_pkg::*; #(
- 
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      rdata  <= '0;
-+      rdata  <= {RegDw{1'b0}};
-       error <= 1'b0;
-     end else if (a_ack) begin
--      rdata <= (err_internal) ? '1 : rdata_i;
-+      rdata <= (err_internal) ? {RegDw{1'b1}} : rdata_i;
-       error <= error_i | err_internal;
-     end
-   end
-@@ -94,12 +94,12 @@ module tlul_adapter_reg import tlul_pkg::*; #(
-     a_ready:  ~outstanding,
-     d_valid:  outstanding,
-     d_opcode: rspop,
--    d_param:  '0,
-+    d_param:  3'b000,
-     d_size:   reqsz,
-     d_source: reqid,
--    d_sink:   '0,
-+    d_sink:   1'b0,
-     d_data:   rdata,
--    d_user:  '0,
-+    d_user:  16'b0000000000000000,
-     d_error: error
-   };
- 
 diff --git a/hw/ip/tlul/rtl/tlul_adapter_sram.sv b/hw/ip/tlul/rtl/tlul_adapter_sram.sv
 index 6e2f33191..cb3e9088c 100644
 --- a/hw/ip/tlul/rtl/tlul_adapter_sram.sv
@@ -3447,21 +2800,6 @@ index add8477ba..4ab895782 100644
            addr_sz_chk  = ~|tl_i.a_address[SubAW-1:0];
            mask_chk     = 1'b1;
            fulldata_chk = &tl_i.a_mask[3:0];
-diff --git a/hw/ip/tlul/rtl/tlul_fifo_sync.sv b/hw/ip/tlul/rtl/tlul_fifo_sync.sv
-index 59fe3ffd4..071a30b94 100644
---- a/hw/ip/tlul/rtl/tlul_fifo_sync.sv
-+++ b/hw/ip/tlul/rtl/tlul_fifo_sync.sv
-@@ -7,8 +7,8 @@
- // and one for the response side.
- 
- module tlul_fifo_sync #(
--  parameter int unsigned ReqPass  = 1'b1,
--  parameter int unsigned RspPass  = 1'b1,
-+  parameter int unsigned ReqPass  = 0,
-+  parameter int unsigned RspPass  = 0,
-   parameter int unsigned ReqDepth = 2,
-   parameter int unsigned RspDepth = 2,
-   parameter int unsigned SpareReqW = 1,
 diff --git a/hw/ip/tlul/rtl/tlul_socket_m1.sv b/hw/ip/tlul/rtl/tlul_socket_m1.sv
 index 8637ad221..fe7aa9858 100644
 --- a/hw/ip/tlul/rtl/tlul_socket_m1.sv
@@ -3541,120 +2879,8 @@ index 8637ad221..fe7aa9858 100644
    end
  
    // this assertion fails when rspid[0+:STIDW] not in [0..M-1]
-diff --git a/hw/ip/uart/rtl/uart_reg_top.sv b/hw/ip/uart/rtl/uart_reg_top.sv
-index f25d459ef..c5ea11cb2 100644
---- a/hw/ip/uart/rtl/uart_reg_top.sv
-+++ b/hw/ip/uart/rtl/uart_reg_top.sv
-@@ -949,7 +949,7 @@ module uart_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (2'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -975,7 +975,7 @@ module uart_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (16'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -1085,7 +1085,7 @@ module uart_reg_top (
-   ) u_rdata (
-     .re     (rdata_re),
-     .we     (1'b0),
--    .wd     ('0),
-+    .wd     (8'b0),
-     .d      (hw2reg.rdata.d),
-     .qre    (reg2hw.rdata.re),
-     .qe     (),
-@@ -1110,7 +1110,7 @@ module uart_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (8'b0  ),
- 
-     // to internal hardware
-     .qe     (reg2hw.wdata.qe),
-@@ -1232,7 +1232,7 @@ module uart_reg_top (
-   ) u_fifo_status_txlvl (
-     .re     (fifo_status_txlvl_re),
-     .we     (1'b0),
--    .wd     ('0),
-+    .wd     (6'b0),
-     .d      (hw2reg.fifo_status.txlvl.d),
-     .qre    (),
-     .qe     (),
-@@ -1247,7 +1247,7 @@ module uart_reg_top (
-   ) u_fifo_status_rxlvl (
-     .re     (fifo_status_rxlvl_re),
-     .we     (1'b0),
--    .wd     ('0),
-+    .wd     (6'b0),
-     .d      (hw2reg.fifo_status.rxlvl.d),
-     .qre    (),
-     .qe     (),
-@@ -1317,7 +1317,7 @@ module uart_reg_top (
-   ) u_val (
-     .re     (val_re),
-     .we     (1'b0),
--    .wd     ('0),
-+    .wd     (16'b0),
-     .d      (hw2reg.val.d),
-     .qre    (),
-     .qe     (),
-@@ -1343,7 +1343,7 @@ module uart_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (24'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -1384,7 +1384,7 @@ module uart_reg_top (
- 
-   logic [11:0] addr_hit;
-   always_comb begin
--    addr_hit = '0;
-+    addr_hit = 12'b000000000000;
-     addr_hit[ 0] = (reg_addr == UART_INTR_STATE_OFFSET);
-     addr_hit[ 1] = (reg_addr == UART_INTR_ENABLE_OFFSET);
-     addr_hit[ 2] = (reg_addr == UART_INTR_TEST_OFFSET);
-@@ -1566,7 +1566,7 @@ module uart_reg_top (
- 
-   // Read data return
-   always_comb begin
--    reg_rdata_next = '0;
-+    reg_rdata_next = {DW{1'b0}};
-     unique case (1'b1)
-       addr_hit[0]: begin
-         reg_rdata_next[0] = intr_state_tx_watermark_qs;
-@@ -1627,7 +1627,7 @@ module uart_reg_top (
-       end
- 
-       addr_hit[6]: begin
--        reg_rdata_next[7:0] = '0;
-+        reg_rdata_next[7:0] = {8{1'b0}};
-       end
- 
-       addr_hit[7]: begin
-@@ -1657,7 +1657,7 @@ module uart_reg_top (
-       end
- 
-       default: begin
--        reg_rdata_next = '1;
-+        reg_rdata_next = {DW{1'b1}};
-       end
-     endcase
-   end
 diff --git a/hw/ip/usbdev/rtl/usbdev.sv b/hw/ip/usbdev/rtl/usbdev.sv
-index cbdadd624..fc428d9a0 100644
+index cbdadd624..64eed7d5f 100644
 --- a/hw/ip/usbdev/rtl/usbdev.sv
 +++ b/hw/ip/usbdev/rtl/usbdev.sv
 @@ -90,8 +90,10 @@ module usbdev (
@@ -3849,7 +3075,7 @@ index cbdadd624..fc428d9a0 100644
    );
  
    // sys clk -> USB clk
-@@ -557,13 +557,13 @@ module usbdev (
+@@ -557,7 +557,7 @@ module usbdev (
    ) cdc_sys_to_usb (
      .clk_i  (clk_usb_48mhz_i),
      .rst_ni (rst_usb_48mhz_ni),
@@ -3858,13 +3084,6 @@ index cbdadd624..fc428d9a0 100644
      .q_o    ({usb_enable,              usb_device_addr})
    );
  
-   // CDC for event signals (arguably they are there for a long time so would be ok)
-   // Just want a pulse to ensure only one interrupt for an event
--  usbdev_flop_2syncpulse #(.Width(5)) syncevent (
-+  usbdev_flop_2syncpulse #(.UsbWidth(5)) syncevent (
-     .clk_i  (clk_i),
-     .rst_ni (rst_ni),
-     .d_i    ({usb_event_disconnect, usb_event_link_reset, usb_event_link_suspend,
 @@ -582,7 +582,7 @@ module usbdev (
      .dst_pulse_o (event_link_resume)
    );
@@ -3901,17 +3120,6 @@ index cbdadd624..fc428d9a0 100644
        end
      end
    end
-@@ -654,8 +654,8 @@ module usbdev (
- 
-   // SRAM Wrapper
-   prim_ram_2p_async_adv #(
--    .Depth (SramDepth),
--    .Width (SramDw),    // 32 x 512 --> 2kB
-+    .RamDepth (SramDepth),
-+    .RamWidth (SramDw),    // 32 x 512 --> 2kB
-     .CfgW  (8),
- 
-     .EnableECC           (0), // No Protection
 @@ -706,177 +706,177 @@ module usbdev (
  
    prim_intr_hw #(.Width(1)) intr_hw_pkt_received (
@@ -4206,42 +3414,6 @@ index cbdadd624..fc428d9a0 100644
      .q_o    (usb_ref_disable)
    );
  
-diff --git a/hw/ip/usbdev/rtl/usbdev_flop_2syncpulse.sv b/hw/ip/usbdev/rtl/usbdev_flop_2syncpulse.sv
-index 9889b0a1f..9b297e67f 100644
---- a/hw/ip/usbdev/rtl/usbdev_flop_2syncpulse.sv
-+++ b/hw/ip/usbdev/rtl/usbdev_flop_2syncpulse.sv
-@@ -5,17 +5,17 @@
- // Generic double-synchronizer flop followed by pulse generation
- 
- module usbdev_flop_2syncpulse #(
--  parameter int unsigned Width = 16
-+  parameter int unsigned UsbWidth = 16
- ) (
-   input  logic             clk_i,    // receive clock
-   input  logic             rst_ni,
--  input  logic [Width-1:0] d_i,
--  output logic [Width-1:0] q_o
-+  input  logic [UsbWidth-1:0] d_i,
-+  output logic [UsbWidth-1:0] q_o
- );
- 
-   // double-flop synchronizer cell
--  logic [Width-1:0] d_sync;
--  prim_flop_2sync #(.Width (Width)) prim_flop_2sync (
-+  logic [UsbWidth-1:0] d_sync;
-+  prim_flop_2sync #(.Width (UsbWidth)) prim_flop_2sync (
-     .clk_i,
-     .rst_ni,
-     .d_i,
-@@ -23,7 +23,7 @@ module usbdev_flop_2syncpulse #(
-   );
- 
-   // delay d_sync by 1 cycle
--  logic [Width-1:0] d_sync_q;
-+  logic [UsbWidth-1:0] d_sync_q;
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
-       d_sync_q <= '0;
 diff --git a/hw/ip/usbdev/rtl/usbdev_reg_top.sv b/hw/ip/usbdev/rtl/usbdev_reg_top.sv
 index 4cff2c116..50b7bb01c 100644
 --- a/hw/ip/usbdev/rtl/usbdev_reg_top.sv
@@ -18437,78 +17609,10 @@ index f771dd35a..61c74e42d 100644
      pwrmgr_reg2hw_wake_info_capture_dis_reg_t wake_info_capture_dis; // [6:6]
      pwrmgr_reg2hw_wake_info_reg_t wake_info; // [5:0]
 diff --git a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv b/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv
-index 2365da52c..e64c9cca6 100644
+index 2365da52c..6a335c778 100644
 --- a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv
 +++ b/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv
-@@ -170,7 +170,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -189,7 +189,7 @@ module pwrmgr_reg_top (
-     .re     (1'b0),
-     .we     (intr_test_we),
-     .wd     (intr_test_wd),
--    .d      ('0),
-+    .d      (1'b0),
-     .qre    (),
-     .qe     (reg2hw.intr_test.qe),
-     .q      (reg2hw.intr_test.q ),
-@@ -204,7 +204,7 @@ module pwrmgr_reg_top (
-   ) u_ctrl_cfg_regwen (
-     .re     (ctrl_cfg_regwen_re),
-     .we     (1'b0),
--    .wd     ('0),
-+    .wd     (1'b0),
-     .d      (hw2reg.ctrl_cfg_regwen.d),
-     .qre    (),
-     .qe     (),
-@@ -256,7 +256,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -282,7 +282,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -308,7 +308,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -362,7 +362,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -391,11 +391,11 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
+@@ -395,7 +395,7 @@ module pwrmgr_reg_top (
  
      // to internal hardware
      .qe     (),
@@ -18517,69 +17621,6 @@ index 2365da52c..e64c9cca6 100644
  
      // to register interface (read)
      .qs     (wakeup_en_qs)
-@@ -426,7 +426,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -453,7 +453,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -486,7 +486,7 @@ module pwrmgr_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      (1'b0  ),
- 
-     // to internal hardware
-     .qe     (),
-@@ -548,7 +548,7 @@ module pwrmgr_reg_top (
- 
-   logic [13:0] addr_hit;
-   always_comb begin
--    addr_hit = '0;
-+    addr_hit = {14{1'b0}};
-     addr_hit[ 0] = (reg_addr == PWRMGR_INTR_STATE_OFFSET);
-     addr_hit[ 1] = (reg_addr == PWRMGR_INTR_ENABLE_OFFSET);
-     addr_hit[ 2] = (reg_addr == PWRMGR_INTR_TEST_OFFSET);
-@@ -643,7 +643,7 @@ module pwrmgr_reg_top (
- 
-   // Read data return
-   always_comb begin
--    reg_rdata_next = '0;
-+    reg_rdata_next = {DW{1'b0}};
-     unique case (1'b1)
-       addr_hit[0]: begin
-         reg_rdata_next[0] = intr_state_qs;
-@@ -654,7 +654,7 @@ module pwrmgr_reg_top (
-       end
- 
-       addr_hit[2]: begin
--        reg_rdata_next[0] = '0;
-+        reg_rdata_next[0] = 1'b0;
-       end
- 
-       addr_hit[3]: begin
-@@ -707,7 +707,7 @@ module pwrmgr_reg_top (
-       end
- 
-       default: begin
--        reg_rdata_next = '1;
-+        reg_rdata_next = {DW{1'b1}};
-       end
-     endcase
-   end
 diff --git a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv b/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
 index c516c01ca..0868b6d65 100644
 --- a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
@@ -32970,29 +32011,3 @@ index 550b7cc36..3dfe78446 100755
      // this abstract command is currently unsupported
      unsupported_command = 1'b0;
      // default memory
-diff --git a/hw/vendor/pulp_riscv_dbg/src/dm_sba.sv b/hw/vendor/pulp_riscv_dbg/src/dm_sba.sv
-index c97f9565a..4aa3646f4 100644
---- a/hw/vendor/pulp_riscv_dbg/src/dm_sba.sv
-+++ b/hw/vendor/pulp_riscv_dbg/src/dm_sba.sv
-@@ -98,16 +98,16 @@ module dm_sba #(
-         // generate byte enable mask
-         unique case (sbaccess_i)
-           3'b000: begin
--            be[be_idx] = '1;
-+            be[be_idx] = 4'b1111;
-           end
-           3'b001: begin
--            be[int'({be_idx[$high(be_idx):1], 1'b0}) +: 2] = '1;
-+            be[int'({be_idx[$high(be_idx):1], 1'b0}) +: 2] = 2'b11;
-           end
-           3'b010: begin
--            if (BusWidth == 32'd64) be[int'({be_idx[$high(be_idx)], 2'h0}) +: 4] = '1;
--            else                    be = '1;
-+            if (BusWidth == 32'd64) be[int'({be_idx[$high(be_idx)], 2'h0}) +: 4] = 2'b11;
-+            else                    be = 4'b1111;
-           end
--          3'b011: be = '1;
-+          3'b011: be = 4'b1111;
-           default: ;
-         endcase
-         if (gnt) state_d = WaitWrite;
