@@ -316,6 +316,18 @@ pwrmgr.sv \
 hmac_reg_top.sv \
 hmac.sv \
 gpio.sv \
+ibex_icache.sv \
+ibex_dummy_instr.sv \
+sram2tlul.sv \
+aes_core.sv \
+aes_reg_pkg.sv \
+aes_reg_top.sv \
+aes_sbox.sv \
+aes_sbox_lut.sv \
+aes_sbox_canright.sv \
+aes_sbox_canright_masked_noreuse.sv \
+aes_sbox_canright_masked.sv \
+aes.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -443,6 +455,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top pwrmgr \
 			-top hmac \
 			-top gpio \
+			-top aes \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \

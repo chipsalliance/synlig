@@ -49,6 +49,96 @@ index ed35dc5ef..826ba4eff 100644
    round_key_sel_e       round_key_sel;
  
    //////////
+@@ -103,19 +103,19 @@ module aes_cipher_core #(
+   // Cipher data path
+   aes_sub_bytes #(
+     .SBoxImpl ( SBoxImpl )
+-  ) aes_sub_bytes (
++  ) u_aes_sub_bytes (
+     .op_i   ( op_i          ),
+     .data_i ( state_q       ),
+     .data_o ( sub_bytes_out )
+   );
+ 
+-  aes_shift_rows aes_shift_rows (
++  aes_shift_rows u_aes_shift_rows (
+     .op_i   ( op_i           ),
+     .data_i ( sub_bytes_out  ),
+     .data_o ( shift_rows_out )
+   );
+ 
+-  aes_mix_columns aes_mix_columns (
++  aes_mix_columns u_aes_mix_columns (
+     .op_i   ( op_i            ),
+     .data_i ( shift_rows_out  ),
+     .data_o ( mix_columns_out )
+@@ -172,7 +172,7 @@ module aes_cipher_core #(
+   aes_key_expand #(
+     .AES192Enable ( AES192Enable ),
+     .SBoxImpl     ( SBoxImpl     )
+-  ) aes_key_expand (
++  ) u_aes_key_expand (
+     .clk_i     ( clk_i            ),
+     .rst_ni    ( rst_ni           ),
+     .op_i      ( key_expand_op    ),
+@@ -197,7 +197,7 @@ module aes_cipher_core #(
+   // Convert words to bytes (every key word contains one column)
+   assign key_bytes = aes_transpose(key_words);
+ 
+-  aes_mix_columns aes_key_mix_columns (
++  aes_mix_columns u_aes_key_mix_columns (
+     .op_i   ( CIPH_INV            ),
+     .data_i ( key_bytes           ),
+     .data_o ( key_mix_columns_out )
+@@ -216,7 +216,7 @@ module aes_cipher_core #(
+   /////////////
+ 
+   // Control
+-  aes_cipher_control aes_cipher_control (
++  aes_cipher_control u_aes_cipher_control (
+     .clk_i                  ( clk_i                ),
+     .rst_ni                 ( rst_ni               ),
+ 
+diff --git a/hw/ip/aes/rtl/aes_core.sv b/hw/ip/aes/rtl/aes_core.sv
+index ee2afd47f..609389ff1 100644
+--- a/hw/ip/aes/rtl/aes_core.sv
++++ b/hw/ip/aes/rtl/aes_core.sv
+@@ -46,13 +46,13 @@ module aes_core #(
+   ctrl_reg_t            ctrl_d, ctrl_q;
+   logic                 ctrl_err_update, ctrl_err_storage;
+ 
+-  logic [3:0][3:0][7:0] state_in;
++  logic [127:0] state_in;
+   si_sel_e              state_in_sel;
+-  logic [3:0][3:0][7:0] add_state_in;
++  logic [127:0] add_state_in;
+   add_si_sel_e          add_state_in_sel;
+ 
+-  logic [3:0][3:0][7:0] state_init;
+-  logic [3:0][3:0][7:0] state_done;
++  logic [127:0] state_init;
++  logic [127:0] state_done;
+ 
+   logic     [7:0][31:0] key_init;
+   logic     [7:0]       key_init_qe;
+@@ -82,7 +82,7 @@ module aes_core #(
+   logic     [3:0]       data_in_qe;
+   logic                 data_in_we;
+ 
+-  logic [3:0][3:0][7:0] add_state_out;
++  logic [127:0] add_state_out;
+   add_so_sel_e          add_state_out_sel;
+ 
+   logic     [3:0][31:0] data_out_d;
+@@ -327,7 +327,7 @@ module aes_core #(
+   prim_subreg_shadow #(
+     .DW       ( $bits(ctrl_reg_t) ),
+     .SWACCESS ( "WO"              ),
+-    .RESVAL   ( CTRL_RESET        )
++    .RESVAL   ( {AES_ENC, AES_NONE, AES_128, 1'b0 } ) // https://github.com/chipsalliance/Surelog/issues/1488
+   ) ctrl_shadowed_reg (
+     .clk_i       ( clk_i            ),
+     .rst_ni      ( rst_ni           ),
 diff --git a/hw/ip/aes/rtl/aes_key_expand.sv b/hw/ip/aes/rtl/aes_key_expand.sv
 index c030089b7..65f0bdc94 100644
 --- a/hw/ip/aes/rtl/aes_key_expand.sv
@@ -106,6 +196,14 @@ index ddc3b7992..6d4e2a759 100644
      end
    end
    return transpose;
+ endfunction
+ 
+ // Extract single column from state matrix
+-function automatic logic [3:0][7:0] aes_col_get(logic [3:0][3:0][7:0] in, logic [1:0] idx);
++function automatic logic [3:0][7:0] aes_col_get(logic [127:0] in, logic [1:0] idx);
+   logic [3:0][7:0] out;
+   for (int i=0; i<4; i++) begin
+     out[i] = in[i][idx];
 diff --git a/hw/ip/aes/rtl/aes_prng.sv b/hw/ip/aes/rtl/aes_prng.sv
 index 08e2a94e6..a94dbdd43 100644
 --- a/hw/ip/aes/rtl/aes_prng.sv
