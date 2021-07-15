@@ -3,6 +3,7 @@ updates:
 - package-ecosystem: gitsubmodule
   directory: "/"
   schedule:
-    interval: daily
-    time: '13:00'
+    interval: weekly
+    day: friday
+    time: '18:00'
   open-pull-requests-limit: 10
