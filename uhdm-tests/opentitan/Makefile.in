@@ -324,10 +324,11 @@ UHDM_FILES_FULL = \
 		done; \
 	)
 
-CUSTOM_FILES = ${curr_dir}/custom_files/prim_ram_2p.v \
-	       ${curr_dir}/custom_files/prim_xilinx_ram_1p.v \
-	       ${curr_dir}/custom_files/padring.v \
+CUSTOM_FILES = ${curr_dir}/custom_files/padring.v \
 	       ${curr_dir}/custom_files/prim_xilinx_pad_wrapper.v
+
+CUSTOM_FILES_UHDM = ${curr_dir}/custom_files/prim_ram_2p.v \
+	       ${curr_dir}/custom_files/prim_xilinx_ram_1p.v
 
 #############################
 ####      SYNTHESIS      ####
@@ -444,7 +445,8 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top pwrmgr \
 			-top hmac \
 			$(EARLGRAY_INCLUDE) \
-			$(UHDM_FILES_FULL) && \
+			$(UHDM_FILES_FULL) \
+			$(CUSTOM_FILES_UHDM) && \
 	cp ${EARLGRAY_BUILD}/slpp_all/surelog.uhdm ${UHDM_file})
 
 	# Delete -top rv_core_ibex when top_earlgrey will be added to uhdm
