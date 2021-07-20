@@ -17,8 +17,7 @@ module prim_ram_2p (
 	parameter signed [31:0] Width = 32;
 	parameter signed [31:0] Depth = 128;
 	parameter signed [31:0] DataBitsPerMask = 1;
-	parameter _sv2v_width_MemInitFile = 1;
-	parameter [_sv2v_width_MemInitFile - 1:0] MemInitFile = "";
+	parameter MemInitFile = "";
 	localparam signed [31:0] Aw = $clog2(Depth);
 	input clk_a_i;
 	input clk_b_i;
