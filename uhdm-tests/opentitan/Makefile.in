@@ -84,7 +84,6 @@ alert_handler.sv \
 flash_ctrl_reg_top.sv \
 flash_ctrl.sv \
 flash_mp.sv \
-gpio.sv \
 jtag_mux.sv \
 padring.sv \
 padctrl.sv \
@@ -316,6 +315,7 @@ pwrmgr_reg_top.sv \
 pwrmgr.sv \
 hmac_reg_top.sv \
 hmac.sv \
+gpio.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -427,14 +427,12 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top prim_pad_wrapper \
 			-top prim_pulse_sync \
 			-top prim_rom_adv \
-			-top prim_filter_ctr \
 			-top pwrmgr_fsm \
 			-top pwrmgr_slow_fsm \
 			-top pwrmgr_wake_info \
 			-top xbar_main \
 			-top otbn \
 			-top xbar_peri \
-			-top gpio_reg_top \
 			-top uart \
 			-top spi_device \
 			-top sha2 \
@@ -444,6 +442,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top rv_plic \
 			-top pwrmgr \
 			-top hmac \
+			-top gpio \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
@@ -499,7 +498,6 @@ ${UHDM_file}: ${SV2V_FILE}
 		# -PVariant=0 \
 		# -PAttrDw=10 \
 	# Delete -top prim_pulse_sync when pinmux_wkup will be added to uhdm
-	# Delete -top prim_filter_ctr when gpio will be added to uhdm
 	# Delete -top pwrmgr_fsm when pwrmgr will be added to uhdm
 	# Delete -top pwrmgr_slow_fsm when pwrmgr will be added to uhdm
 	# Delete -top pwrmgr_wake_info when pwrmgr will be added to uhdm
