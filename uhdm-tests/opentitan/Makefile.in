@@ -40,7 +40,6 @@ prim_ram_1p.sv \
 prim_lfsr.sv \
 prim_intr_hw.sv \
 alert_handler_reg_top.sv \
-padctrl_reg_top.sv \
 ibex_icache.sv \
 prim_dom_and_2share.sv \
 prim_arbiter_fixed.sv \
@@ -75,7 +74,6 @@ alert_handler_reg_wrap.sv \
 alert_handler.sv \
 jtag_mux.sv \
 padring.sv \
-padctrl.sv \
 prim_secded_39_32_dec.sv \
 prim_secded_39_32_enc.sv \
 top_earlgrey.sv \
@@ -126,6 +124,7 @@ pinmux_reg_pkg.sv \
 rv_timer_reg_pkg.sv \
 rv_plic_reg_pkg.sv \
 hmac_reg_pkg.sv \
+padctrl_reg_pkg.sv \
 ibex_compressed_decoder.sv \
 ibex_alu.sv \
 ibex_controller.sv \
@@ -319,6 +318,8 @@ flash_ctrl_reg_pkg.sv \
 flash_ctrl_reg_top.sv \
 flash_ctrl.sv \
 flash_mp.sv \
+padctrl_reg_top.sv \
+padctrl.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -441,6 +442,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top gpio \
 			-top aes \
 			-top flash_ctrl \
+			-top padctrl \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
