@@ -1,3 +1,27 @@
+diff --git a/hw/ip/aes/rtl/aes.sv b/hw/ip/aes/rtl/aes.sv
+index 708de30a5..e25a0819c 100644
+--- a/hw/ip/aes/rtl/aes.sv
++++ b/hw/ip/aes/rtl/aes.sv
+@@ -38,8 +38,8 @@ module aes #(
+   import aes_reg_pkg::*;
+   import aes_pkg::*;
+ 
+-  aes_reg2hw_t reg2hw;
+-  aes_hw2reg_t hw2reg;
++  logic [682:0] reg2hw;
++  logic [673:0] hw2reg;
+ 
+   logic        prng_data_req;
+   logic        prng_data_ack;
+@@ -95,7 +95,7 @@ module aes #(
+     .entropy_i    ( 64'hFEDCBA9876543210 )
+   );
+ 
+-  assign idle_o = hw2reg.status.idle.d;
++  assign idle_o = hw2reg[0];
+ 
+   for (genvar i = 0; i < NumAlerts; i++) begin : gen_alert_tx
+     prim_alert_sender #(
 diff --git a/hw/ip/aes/rtl/aes_cipher_core.sv b/hw/ip/aes/rtl/aes_cipher_core.sv
 index ed35dc5ef..826ba4eff 100644
 --- a/hw/ip/aes/rtl/aes_cipher_core.sv
@@ -49,61 +73,23 @@ index ed35dc5ef..826ba4eff 100644
    round_key_sel_e       round_key_sel;
  
    //////////
-@@ -103,19 +103,19 @@ module aes_cipher_core #(
-   // Cipher data path
-   aes_sub_bytes #(
-     .SBoxImpl ( SBoxImpl )
--  ) aes_sub_bytes (
-+  ) u_aes_sub_bytes (
-     .op_i   ( op_i          ),
-     .data_i ( state_q       ),
-     .data_o ( sub_bytes_out )
-   );
- 
--  aes_shift_rows aes_shift_rows (
-+  aes_shift_rows u_aes_shift_rows (
-     .op_i   ( op_i           ),
-     .data_i ( sub_bytes_out  ),
-     .data_o ( shift_rows_out )
-   );
- 
--  aes_mix_columns aes_mix_columns (
-+  aes_mix_columns u_aes_mix_columns (
-     .op_i   ( op_i            ),
-     .data_i ( shift_rows_out  ),
-     .data_o ( mix_columns_out )
-@@ -172,7 +172,7 @@ module aes_cipher_core #(
-   aes_key_expand #(
-     .AES192Enable ( AES192Enable ),
-     .SBoxImpl     ( SBoxImpl     )
--  ) aes_key_expand (
-+  ) u_aes_key_expand (
-     .clk_i     ( clk_i            ),
-     .rst_ni    ( rst_ni           ),
-     .op_i      ( key_expand_op    ),
-@@ -197,7 +197,7 @@ module aes_cipher_core #(
-   // Convert words to bytes (every key word contains one column)
-   assign key_bytes = aes_transpose(key_words);
- 
--  aes_mix_columns aes_key_mix_columns (
-+  aes_mix_columns u_aes_key_mix_columns (
-     .op_i   ( CIPH_INV            ),
-     .data_i ( key_bytes           ),
-     .data_o ( key_mix_columns_out )
-@@ -216,7 +216,7 @@ module aes_cipher_core #(
-   /////////////
- 
-   // Control
--  aes_cipher_control aes_cipher_control (
-+  aes_cipher_control u_aes_cipher_control (
-     .clk_i                  ( clk_i                ),
-     .rst_ni                 ( rst_ni               ),
- 
 diff --git a/hw/ip/aes/rtl/aes_core.sv b/hw/ip/aes/rtl/aes_core.sv
-index ee2afd47f..609389ff1 100644
+index ee2afd47f..6ecd49a67 100644
 --- a/hw/ip/aes/rtl/aes_core.sv
 +++ b/hw/ip/aes/rtl/aes_core.sv
-@@ -46,13 +46,13 @@ module aes_core #(
+@@ -25,8 +25,9 @@ module aes_core #(
+   output logic                     ctrl_err_o,
+ 
+   // Bus Interface
+-  input  aes_reg_pkg::aes_reg2hw_t reg2hw,
+-  output aes_reg_pkg::aes_hw2reg_t hw2reg
++  input  logic [682:0] reg2hw,
++  output logic [673:0] hw2reg
++
+ );
+ 
+   import aes_reg_pkg::*;
+@@ -46,13 +47,13 @@ module aes_core #(
    ctrl_reg_t            ctrl_d, ctrl_q;
    logic                 ctrl_err_update, ctrl_err_storage;
  
@@ -121,7 +107,7 @@ index ee2afd47f..609389ff1 100644
  
    logic     [7:0][31:0] key_init;
    logic     [7:0]       key_init_qe;
-@@ -82,7 +82,7 @@ module aes_core #(
+@@ -82,7 +83,7 @@ module aes_core #(
    logic     [3:0]       data_in_qe;
    logic                 data_in_we;
  
@@ -130,7 +116,86 @@ index ee2afd47f..609389ff1 100644
    add_so_sel_e          add_state_out_sel;
  
    logic     [3:0][31:0] data_out_d;
-@@ -327,7 +327,7 @@ module aes_core #(
+@@ -112,30 +113,30 @@ module aes_core #(
+ 
+   always_comb begin : key_init_get
+     for (int i=0; i<8; i++) begin
+-      key_init[i]    = reg2hw.key[i].q;
+-      key_init_qe[i] = reg2hw.key[i].qe;
++      key_init[i]    = reg2hw[450+i*33:419+i*33];
++      key_init_qe[i] = reg2hw[451+i*33];
+     end
+   end
+ 
+   always_comb begin : iv_get
+     for (int i=0; i<4; i++) begin
+-      iv[i]    = reg2hw.iv[i].q;
+-      iv_qe[i] = reg2hw.iv[i].qe;
++      iv[i]    = reg2hw[318+i*33:287+i*33];
++      iv_qe[i] = reg2hw[319+i*33];
+     end
+   end
+ 
+   always_comb begin : data_in_get
+     for (int i=0; i<4; i++) begin
+-      data_in[i]    = reg2hw.data_in[i].q;
+-      data_in_qe[i] = reg2hw.data_in[i].qe;
++      data_in[i]    = reg2hw[186+i*33:155+i*33];
++      data_in_qe[i] = reg2hw[187+i*33];
+     end
+   end
+ 
+   always_comb begin : data_out_get
+     for (int i=0; i<4; i++) begin
+       // data_out is actually hwo, but we need hrw for hwre
+-      unused_data_out_q[i] = reg2hw.data_out[i].q;
+-      data_out_re[i]       = reg2hw.data_out[i].re;
++      unused_data_out_q[i] = reg2hw[54+i*33:23+i*33];
++      data_out_re[i]       = reg2hw[55+i*33];
+     end
+   end
+ 
+@@ -292,9 +293,9 @@ module aes_core #(
+   //////////////////////
+ 
+   // Get and resolve values from register interface.
+-  assign ctrl_d.operation = aes_op_e'(reg2hw.ctrl_shadowed.operation.q);
++  assign ctrl_d.operation = aes_op_e'(reg2hw[6]);
+ 
+-  assign mode = aes_mode_e'(reg2hw.ctrl_shadowed.mode.q);
++  assign mode = aes_mode_e'(reg2hw[12:9]);
+   always_comb begin : mode_get
+     unique case (mode)
+       AES_ECB: ctrl_d.mode = AES_ECB;
+@@ -304,7 +305,7 @@ module aes_core #(
+     endcase
+   end
+ 
+-  assign key_len = key_len_e'(reg2hw.ctrl_shadowed.key_len.q);
++  assign key_len = key_len_e'(reg2hw[17:15]);
+   always_comb begin : key_len_get
+     unique case (key_len)
+       AES_128: ctrl_d.key_len = AES_128;
+@@ -314,20 +315,20 @@ module aes_core #(
+     endcase
+   end
+ 
+-  assign ctrl_d.manual_operation = reg2hw.ctrl_shadowed.manual_operation.q;
++  assign ctrl_d.manual_operation = reg2hw[20];
+ 
+   // Get and forward write enable. Writes are only allowed if the module is idle.
+-  assign ctrl_re = reg2hw.ctrl_shadowed.operation.re & reg2hw.ctrl_shadowed.mode.re &
+-      reg2hw.ctrl_shadowed.key_len.re & reg2hw.ctrl_shadowed.manual_operation.re;
+-  assign ctrl_qe = reg2hw.ctrl_shadowed.operation.qe & reg2hw.ctrl_shadowed.mode.qe &
+-      reg2hw.ctrl_shadowed.key_len.qe & reg2hw.ctrl_shadowed.manual_operation.qe;
+-  assign ctrl_we = ctrl_qe & hw2reg.status.idle.d;
++  assign ctrl_re = reg2hw[8] & reg2hw[14] &
++      reg2hw[19] & reg2hw[22];
++  assign ctrl_qe = reg2hw[7] & reg2hw[13] &
++      reg2hw[18] & reg2hw[21];
++  assign ctrl_we = ctrl_qe & hw2reg[0];
+ 
+   // Shadowed register primitve
    prim_subreg_shadow #(
      .DW       ( $bits(ctrl_reg_t) ),
      .SWACCESS ( "WO"              ),
@@ -139,6 +204,119 @@ index ee2afd47f..609389ff1 100644
    ) ctrl_shadowed_reg (
      .clk_i       ( clk_i            ),
      .rst_ni      ( rst_ni           ),
+@@ -365,12 +366,12 @@ module aes_core #(
+     .cipher_op_i             ( cipher_op                        ),
+     .manual_operation_i      ( manual_operation_q               ),
+     .ctrl_err_i              ( ctrl_err_storage                 ),
+-    .start_i                 ( reg2hw.trigger.start.q           ),
+-    .key_clear_i             ( reg2hw.trigger.key_clear.q       ),
+-    .iv_clear_i              ( reg2hw.trigger.iv_clear.q        ),
+-    .data_in_clear_i         ( reg2hw.trigger.data_in_clear.q   ),
+-    .data_out_clear_i        ( reg2hw.trigger.data_out_clear.q  ),
+-    .prng_reseed_i           ( reg2hw.trigger.prng_reseed.q     ),
++    .start_i                 ( reg2hw[0]                        ),
++    .key_clear_i             ( reg2hw[1]                        ),
++    .iv_clear_i              ( reg2hw[2]                        ),
++    .data_in_clear_i         ( reg2hw[3]                        ),
++    .data_out_clear_i        ( reg2hw[4]                        ),
++    .prng_reseed_i           ( reg2hw[5]                        ),
+ 
+     .key_init_qe_i           ( key_init_qe                      ),
+     .iv_qe_i                 ( iv_qe                            ),
+@@ -413,34 +414,34 @@ module aes_core #(
+     .prng_reseed_req_o       ( prng_reseed_req_o                ),
+     .prng_reseed_ack_i       ( prng_reseed_ack_i                ),
+ 
+-    .start_o                 ( hw2reg.trigger.start.d           ),
+-    .start_we_o              ( hw2reg.trigger.start.de          ),
+-    .key_clear_o             ( hw2reg.trigger.key_clear.d       ),
+-    .key_clear_we_o          ( hw2reg.trigger.key_clear.de      ),
+-    .iv_clear_o              ( hw2reg.trigger.iv_clear.d        ),
+-    .iv_clear_we_o           ( hw2reg.trigger.iv_clear.de       ),
+-    .data_in_clear_o         ( hw2reg.trigger.data_in_clear.d   ),
+-    .data_in_clear_we_o      ( hw2reg.trigger.data_in_clear.de  ),
+-    .data_out_clear_o        ( hw2reg.trigger.data_out_clear.d  ),
+-    .data_out_clear_we_o     ( hw2reg.trigger.data_out_clear.de ),
+-    .prng_reseed_o           ( hw2reg.trigger.prng_reseed.d     ),
+-    .prng_reseed_we_o        ( hw2reg.trigger.prng_reseed.de    ),
+-
+-    .output_valid_o          ( hw2reg.status.output_valid.d     ),
+-    .output_valid_we_o       ( hw2reg.status.output_valid.de    ),
+-    .input_ready_o           ( hw2reg.status.input_ready.d      ),
+-    .input_ready_we_o        ( hw2reg.status.input_ready.de     ),
+-    .idle_o                  ( hw2reg.status.idle.d             ),
+-    .idle_we_o               ( hw2reg.status.idle.de            ),
+-    .stall_o                 ( hw2reg.status.stall.d            ),
+-    .stall_we_o              ( hw2reg.status.stall.de           )
++    .start_o                 ( hw2reg[9]                        ),
++    .start_we_o              ( hw2reg[10]                       ),
++    .key_clear_o             ( hw2reg[11]                       ),
++    .key_clear_we_o          ( hw2reg[12]                       ),
++    .iv_clear_o              ( hw2reg[13]                       ),
++    .iv_clear_we_o           ( hw2reg[14]                       ),
++    .data_in_clear_o         ( hw2reg[15]                       ),
++    .data_in_clear_we_o      ( hw2reg[16]                       ),
++    .data_out_clear_o        ( hw2reg[17]                       ),
++    .data_out_clear_we_o     ( hw2reg[18]                       ),
++    .prng_reseed_o           ( hw2reg[19]                       ),
++    .prng_reseed_we_o        ( hw2reg[20]                       ),
++
++    .output_valid_o          ( hw2reg[4]                        ),
++    .output_valid_we_o       ( hw2reg[5]                        ),
++    .input_ready_o           ( hw2reg[6]                        ),
++    .input_ready_we_o        ( hw2reg[7]                        ),
++    .idle_o                  ( hw2reg[0]                        ),
++    .idle_we_o               ( hw2reg[1]                        ),
++    .stall_o                 ( hw2reg[2]                        ),
++    .stall_we_o              ( hw2reg[3]                        )
+   );
+ 
+   // Input data register clear
+   always_comb begin : data_in_reg_clear
+     for (int i=0; i<4; i++) begin
+-      hw2reg.data_in[i].d  = '0;
+-      hw2reg.data_in[i].de = data_in_we;
++      hw2reg[189+i*33:158+i*33] = '0;
++      hw2reg[190+i*33] = data_in_we;
+     end
+   end
+ 
+@@ -456,28 +457,28 @@ module aes_core #(
+ 
+   always_comb begin : key_reg_put
+     for (int i=0; i<8; i++) begin
+-      hw2reg.key[i].d  = key_init_q[i];
++      hw2reg[449+i*32:418+i*32] = key_init_q[i];
+     end
+   end
+ 
+   always_comb begin : iv_reg_put
+     for (int i=0; i<4; i++) begin
+-      hw2reg.iv[i].d  = {iv_q[2*i+1], iv_q[2*i]};
++      hw2reg[321+i*32:290+i*32] = {iv_q[2*i+1], iv_q[2*i]};
+     end
+   end
+ 
+   always_comb begin : data_out_put
+     for (int i=0; i<4; i++) begin
+-      hw2reg.data_out[i].d = data_out_q[i];
++      hw2reg[61+i*32:30+i*32] = data_out_q[i];
+     end
+   end
+ 
+-  assign hw2reg.ctrl_shadowed.mode.d    = {aes_mode_q};
+-  assign hw2reg.ctrl_shadowed.key_len.d = {key_len_q};
++  assign hw2reg[25:22] = {aes_mode_q};
++  assign hw2reg[28:26] = {key_len_q};
+ 
+   // These fields are actually hro. But software must be able observe the current value (rw).
+-  assign hw2reg.ctrl_shadowed.operation.d        = {aes_op_q};
+-  assign hw2reg.ctrl_shadowed.manual_operation.d = manual_operation_q;
++  assign hw2reg[21] = {aes_op_q};
++  assign hw2reg[29] = manual_operation_q;
+ 
+   ////////////////
+   // Assertions //
 diff --git a/hw/ip/aes/rtl/aes_key_expand.sv b/hw/ip/aes/rtl/aes_key_expand.sv
 index c030089b7..65f0bdc94 100644
 --- a/hw/ip/aes/rtl/aes_key_expand.sv
@@ -177,10 +355,10 @@ index 3aee014a2..222464474 100644
    assign data_i_transposed = aes_transpose(data_i);
  
 diff --git a/hw/ip/aes/rtl/aes_pkg.sv b/hw/ip/aes/rtl/aes_pkg.sv
-index ddc3b7992..6d4e2a759 100644
+index ddc3b7992..ffd0c479a 100644
 --- a/hw/ip/aes/rtl/aes_pkg.sv
 +++ b/hw/ip/aes/rtl/aes_pkg.sv
-@@ -165,12 +165,12 @@ function automatic logic [31:0] aes_circ_byte_shift(logic [31:0] in, logic [1:0]
+@@ -165,19 +165,19 @@ function automatic logic [31:0] aes_circ_byte_shift(logic [31:0] in, logic [1:0]
  endfunction
  
  // Transpose state matrix
@@ -227,6 +405,555 @@ index 08e2a94e6..a94dbdd43 100644
 +  assign data_o    = perm_64bit(scrambled, PRESENT_PERM64);
  
  endmodule
+diff --git a/hw/ip/aes/rtl/aes_reg_pkg.sv b/hw/ip/aes/rtl/aes_reg_pkg.sv
+index ca597f30e..15596f2c8 100644
+--- a/hw/ip/aes/rtl/aes_reg_pkg.sv
++++ b/hw/ip/aes/rtl/aes_reg_pkg.sv
+@@ -162,11 +162,11 @@ package aes_reg_pkg;
+   // Register to internal design logic //
+   ///////////////////////////////////////
+   typedef struct packed {
+-    aes_reg2hw_key_mreg_t [7:0] key; // [678:415]
+-    aes_reg2hw_iv_mreg_t [3:0] iv; // [414:283]
+-    aes_reg2hw_data_in_mreg_t [3:0] data_in; // [282:151]
+-    aes_reg2hw_data_out_mreg_t [3:0] data_out; // [150:19]
+-    aes_reg2hw_ctrl_shadowed_reg_t ctrl_shadowed; // [18:6]
++    aes_reg2hw_key_mreg_t [7:0] key; // [682:419]
++    aes_reg2hw_iv_mreg_t [3:0] iv; // [418:287]
++    aes_reg2hw_data_in_mreg_t [3:0] data_in; // [286:155]
++    aes_reg2hw_data_out_mreg_t [3:0] data_out; // [154:23]
++    aes_reg2hw_ctrl_shadowed_reg_t ctrl_shadowed; // [22:6]
+     aes_reg2hw_trigger_reg_t trigger; // [5:0]
+   } aes_reg2hw_t;
+ 
+@@ -174,13 +174,13 @@ package aes_reg_pkg;
+   // Internal design logic to register //
+   ///////////////////////////////////////
+   typedef struct packed {
+-    aes_hw2reg_key_mreg_t [7:0] key; // [672:417]
+-    aes_hw2reg_iv_mreg_t [3:0] iv; // [416:289]
+-    aes_hw2reg_data_in_mreg_t [3:0] data_in; // [288:157]
+-    aes_hw2reg_data_out_mreg_t [3:0] data_out; // [156:29]
+-    aes_hw2reg_ctrl_shadowed_reg_t ctrl_shadowed; // [28:16]
+-    aes_hw2reg_trigger_reg_t trigger; // [15:10]
+-    aes_hw2reg_status_reg_t status; // [9:10]
++    aes_hw2reg_key_mreg_t [7:0] key; // [673:418]
++    aes_hw2reg_iv_mreg_t [3:0] iv; // [417:290]
++    aes_hw2reg_data_in_mreg_t [3:0] data_in; // [289:158]
++    aes_hw2reg_data_out_mreg_t [3:0] data_out; // [157:30]
++    aes_hw2reg_ctrl_shadowed_reg_t ctrl_shadowed; // [29:21]
++    aes_hw2reg_trigger_reg_t trigger; // [20:9]
++    aes_hw2reg_status_reg_t status; // [8:0]
+   } aes_hw2reg_t;
+ 
+   // Register Address
+diff --git a/hw/ip/aes/rtl/aes_reg_top.sv b/hw/ip/aes/rtl/aes_reg_top.sv
+index 77c3cdff9..4765d63ba 100644
+--- a/hw/ip/aes/rtl/aes_reg_top.sv
++++ b/hw/ip/aes/rtl/aes_reg_top.sv
+@@ -14,8 +14,8 @@ module aes_reg_top (
+   input  tlul_pkg::tl_h2d_t tl_i,
+   output tlul_pkg::tl_d2h_t tl_o,
+   // To HW
+-  output aes_reg_pkg::aes_reg2hw_t reg2hw, // Write
+-  input  aes_reg_pkg::aes_hw2reg_t hw2reg, // Read
++  output logic [682:0] reg2hw, // Write
++  input  logic [673:0] hw2reg, // Read
+ 
+   // Config
+   input devmode_i // If 1, explicit error return for unmapped register access
+@@ -155,10 +155,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key0_we),
+     .wd     (key0_wd),
+-    .d      (hw2reg.key[0].d),
++    .d      (hw2reg[449:418]),
+     .qre    (),
+-    .qe     (reg2hw.key[0].qe),
+-    .q      (reg2hw.key[0].q ),
++    .qe     (reg2hw[451]),
++    .q      (reg2hw[450:419]),
+     .qs     ()
+   );
+ 
+@@ -171,10 +171,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key1_we),
+     .wd     (key1_wd),
+-    .d      (hw2reg.key[1].d),
++    .d      (hw2reg[481:450]),
+     .qre    (),
+-    .qe     (reg2hw.key[1].qe),
+-    .q      (reg2hw.key[1].q ),
++    .qe     (reg2hw[484]),
++    .q      (reg2hw[483:452]),
+     .qs     ()
+   );
+ 
+@@ -187,10 +187,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key2_we),
+     .wd     (key2_wd),
+-    .d      (hw2reg.key[2].d),
++    .d      (hw2reg[513:482]),
+     .qre    (),
+-    .qe     (reg2hw.key[2].qe),
+-    .q      (reg2hw.key[2].q ),
++    .qe     (reg2hw[517]),
++    .q      (reg2hw[516:485]),
+     .qs     ()
+   );
+ 
+@@ -203,10 +203,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key3_we),
+     .wd     (key3_wd),
+-    .d      (hw2reg.key[3].d),
++    .d      (hw2reg[545:514]),
+     .qre    (),
+-    .qe     (reg2hw.key[3].qe),
+-    .q      (reg2hw.key[3].q ),
++    .qe     (reg2hw[550]),
++    .q      (reg2hw[549:518]),
+     .qs     ()
+   );
+ 
+@@ -219,10 +219,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key4_we),
+     .wd     (key4_wd),
+-    .d      (hw2reg.key[4].d),
++    .d      (hw2reg[577:546]),
+     .qre    (),
+-    .qe     (reg2hw.key[4].qe),
+-    .q      (reg2hw.key[4].q ),
++    .qe     (reg2hw[583]),
++    .q      (reg2hw[582:551]),
+     .qs     ()
+   );
+ 
+@@ -235,10 +235,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key5_we),
+     .wd     (key5_wd),
+-    .d      (hw2reg.key[5].d),
++    .d      (hw2reg[609:578]),
+     .qre    (),
+-    .qe     (reg2hw.key[5].qe),
+-    .q      (reg2hw.key[5].q ),
++    .qe     (reg2hw[616]),
++    .q      (reg2hw[615:584]),
+     .qs     ()
+   );
+ 
+@@ -251,10 +251,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key6_we),
+     .wd     (key6_wd),
+-    .d      (hw2reg.key[6].d),
++    .d      (hw2reg[641:610]),
+     .qre    (),
+-    .qe     (reg2hw.key[6].qe),
+-    .q      (reg2hw.key[6].q ),
++    .qe     (reg2hw[649]),
++    .q      (reg2hw[648:617]),
+     .qs     ()
+   );
+ 
+@@ -267,10 +267,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (key7_we),
+     .wd     (key7_wd),
+-    .d      (hw2reg.key[7].d),
++    .d      (hw2reg[673:642]),
+     .qre    (),
+-    .qe     (reg2hw.key[7].qe),
+-    .q      (reg2hw.key[7].q ),
++    .qe     (reg2hw[682]),
++    .q      (reg2hw[681:650]),
+     .qs     ()
+   );
+ 
+@@ -285,10 +285,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (iv0_we),
+     .wd     (iv0_wd),
+-    .d      (hw2reg.iv[0].d),
++    .d      (hw2reg[321:290]),
+     .qre    (),
+-    .qe     (reg2hw.iv[0].qe),
+-    .q      (reg2hw.iv[0].q ),
++    .qe     (reg2hw[319]),
++    .q      (reg2hw[318:287]),
+     .qs     ()
+   );
+ 
+@@ -301,10 +301,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (iv1_we),
+     .wd     (iv1_wd),
+-    .d      (hw2reg.iv[1].d),
++    .d      (hw2reg[353:222]),
+     .qre    (),
+-    .qe     (reg2hw.iv[1].qe),
+-    .q      (reg2hw.iv[1].q ),
++    .qe     (reg2hw[352]),
++    .q      (reg2hw[351:320] ),
+     .qs     ()
+   );
+ 
+@@ -317,10 +317,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (iv2_we),
+     .wd     (iv2_wd),
+-    .d      (hw2reg.iv[2].d),
++    .d      (hw2reg[385:354]),
+     .qre    (),
+-    .qe     (reg2hw.iv[2].qe),
+-    .q      (reg2hw.iv[2].q ),
++    .qe     (reg2hw[385]),
++    .q      (reg2hw[384:353] ),
+     .qs     ()
+   );
+ 
+@@ -333,10 +333,10 @@ module aes_reg_top (
+     .re     (1'b0),
+     .we     (iv3_we),
+     .wd     (iv3_wd),
+-    .d      (hw2reg.iv[3].d),
++    .d      (hw2reg[417:386]),
+     .qre    (),
+-    .qe     (reg2hw.iv[3].qe),
+-    .q      (reg2hw.iv[3].q ),
++    .qe     (reg2hw[418]),
++    .q      (reg2hw[417:386]),
+     .qs     ()
+   );
+ 
+@@ -358,12 +358,12 @@ module aes_reg_top (
+     .wd     (data_in0_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.data_in[0].de),
+-    .d      (hw2reg.data_in[0].d ),
++    .de     (hw2reg[190]),
++    .d      (hw2reg[189:158]),
+ 
+     // to internal hardware
+-    .qe     (reg2hw.data_in[0].qe),
+-    .q      (reg2hw.data_in[0].q ),
++    .qe     (reg2hw[187]),
++    .q      (reg2hw[186:155]),
+ 
+     .qs     ()
+   );
+@@ -384,12 +384,12 @@ module aes_reg_top (
+     .wd     (data_in1_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.data_in[1].de),
+-    .d      (hw2reg.data_in[1].d ),
++    .de     (hw2reg[223]),
++    .d      (hw2reg[222:191]),
+ 
+     // to internal hardware
+-    .qe     (reg2hw.data_in[1].qe),
+-    .q      (reg2hw.data_in[1].q ),
++    .qe     (reg2hw[220]),
++    .q      (reg2hw[219:188]),
+ 
+     .qs     ()
+   );
+@@ -410,12 +410,12 @@ module aes_reg_top (
+     .wd     (data_in2_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.data_in[2].de),
+-    .d      (hw2reg.data_in[2].d ),
++    .de     (hw2reg[256]),
++    .d      (hw2reg[255:224]),
+ 
+     // to internal hardware
+-    .qe     (reg2hw.data_in[2].qe),
+-    .q      (reg2hw.data_in[2].q ),
++    .qe     (reg2hw[253]),
++    .q      (reg2hw[252:221]),
+ 
+     .qs     ()
+   );
+@@ -436,12 +436,12 @@ module aes_reg_top (
+     .wd     (data_in3_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.data_in[3].de),
+-    .d      (hw2reg.data_in[3].d ),
++    .de     (hw2reg[289]),
++    .d      (hw2reg[288:257]),
+ 
+     // to internal hardware
+-    .qe     (reg2hw.data_in[3].qe),
+-    .q      (reg2hw.data_in[3].q ),
++    .qe     (reg2hw[286]),
++    .q      (reg2hw[285:254]),
+ 
+     .qs     ()
+   );
+@@ -457,10 +457,10 @@ module aes_reg_top (
+     .re     (data_out0_re),
+     .we     (1'b0),
+     .wd     ('0),
+-    .d      (hw2reg.data_out[0].d),
+-    .qre    (reg2hw.data_out[0].re),
++    .d      (hw2reg[61:30]),
++    .qre    (reg2hw[55]),
+     .qe     (),
+-    .q      (reg2hw.data_out[0].q ),
++    .q      (reg2hw[54:23]),
+     .qs     (data_out0_qs)
+   );
+ 
+@@ -473,10 +473,10 @@ module aes_reg_top (
+     .re     (data_out1_re),
+     .we     (1'b0),
+     .wd     ('0),
+-    .d      (hw2reg.data_out[1].d),
+-    .qre    (reg2hw.data_out[1].re),
++    .d      (hw2reg[93:62]),
++    .qre    (reg2hw[88]),
+     .qe     (),
+-    .q      (reg2hw.data_out[1].q ),
++    .q      (reg2hw[87:56]),
+     .qs     (data_out1_qs)
+   );
+ 
+@@ -489,10 +489,10 @@ module aes_reg_top (
+     .re     (data_out2_re),
+     .we     (1'b0),
+     .wd     ('0),
+-    .d      (hw2reg.data_out[2].d),
+-    .qre    (reg2hw.data_out[2].re),
++    .d      (hw2reg[125:94]),
++    .qre    (reg2hw[121]),
+     .qe     (),
+-    .q      (reg2hw.data_out[2].q ),
++    .q      (reg2hw[120:89]),
+     .qs     (data_out2_qs)
+   );
+ 
+@@ -505,10 +505,10 @@ module aes_reg_top (
+     .re     (data_out3_re),
+     .we     (1'b0),
+     .wd     ('0),
+-    .d      (hw2reg.data_out[3].d),
+-    .qre    (reg2hw.data_out[3].re),
++    .d      (hw2reg[157:126]),
++    .qre    (reg2hw[154]),
+     .qe     (),
+-    .q      (reg2hw.data_out[3].q ),
++    .q      (reg2hw[153:122] ),
+     .qs     (data_out3_qs)
+   );
+ 
+@@ -522,10 +522,10 @@ module aes_reg_top (
+     .re     (ctrl_shadowed_operation_re),
+     .we     (ctrl_shadowed_operation_we),
+     .wd     (ctrl_shadowed_operation_wd),
+-    .d      (hw2reg.ctrl_shadowed.operation.d),
+-    .qre    (reg2hw.ctrl_shadowed.operation.re),
+-    .qe     (reg2hw.ctrl_shadowed.operation.qe),
+-    .q      (reg2hw.ctrl_shadowed.operation.q ),
++    .d      (hw2reg[21]),
++    .qre    (reg2hw[8]),
++    .qe     (reg2hw[7]),
++    .q      (reg2hw[6]),
+     .qs     (ctrl_shadowed_operation_qs)
+   );
+ 
+@@ -537,10 +537,10 @@ module aes_reg_top (
+     .re     (ctrl_shadowed_mode_re),
+     .we     (ctrl_shadowed_mode_we),
+     .wd     (ctrl_shadowed_mode_wd),
+-    .d      (hw2reg.ctrl_shadowed.mode.d),
+-    .qre    (reg2hw.ctrl_shadowed.mode.re),
+-    .qe     (reg2hw.ctrl_shadowed.mode.qe),
+-    .q      (reg2hw.ctrl_shadowed.mode.q ),
++    .d      (hw2reg[25:22]),
++    .qre    (reg2hw[14]),
++    .qe     (reg2hw[13]),
++    .q      (reg2hw[12:9]),
+     .qs     (ctrl_shadowed_mode_qs)
+   );
+ 
+@@ -552,10 +552,10 @@ module aes_reg_top (
+     .re     (ctrl_shadowed_key_len_re),
+     .we     (ctrl_shadowed_key_len_we),
+     .wd     (ctrl_shadowed_key_len_wd),
+-    .d      (hw2reg.ctrl_shadowed.key_len.d),
+-    .qre    (reg2hw.ctrl_shadowed.key_len.re),
+-    .qe     (reg2hw.ctrl_shadowed.key_len.qe),
+-    .q      (reg2hw.ctrl_shadowed.key_len.q ),
++    .d      (hw2reg[28:26]),
++    .qre    (reg2hw[19]),
++    .qe     (reg2hw[18]),
++    .q      (reg2hw[17:15]),
+     .qs     (ctrl_shadowed_key_len_qs)
+   );
+ 
+@@ -567,10 +567,10 @@ module aes_reg_top (
+     .re     (ctrl_shadowed_manual_operation_re),
+     .we     (ctrl_shadowed_manual_operation_we),
+     .wd     (ctrl_shadowed_manual_operation_wd),
+-    .d      (hw2reg.ctrl_shadowed.manual_operation.d),
+-    .qre    (reg2hw.ctrl_shadowed.manual_operation.re),
+-    .qe     (reg2hw.ctrl_shadowed.manual_operation.qe),
+-    .q      (reg2hw.ctrl_shadowed.manual_operation.q ),
++    .d      (hw2reg[29]),
++    .qre    (reg2hw[22]),
++    .qe     (reg2hw[21]),
++    .q      (reg2hw[20]),
+     .qs     (ctrl_shadowed_manual_operation_qs)
+   );
+ 
+@@ -591,12 +591,12 @@ module aes_reg_top (
+     .wd     (trigger_start_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.trigger.start.de),
+-    .d      (hw2reg.trigger.start.d ),
++    .de     (hw2reg[10]),
++    .d      (hw2reg[9]),
+ 
+     // to internal hardware
+     .qe     (),
+-    .q      (reg2hw.trigger.start.q ),
++    .q      (reg2hw[0]),
+ 
+     .qs     ()
+   );
+@@ -616,12 +616,12 @@ module aes_reg_top (
+     .wd     (trigger_key_clear_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.trigger.key_clear.de),
+-    .d      (hw2reg.trigger.key_clear.d ),
++    .de     (hw2reg[12]),
++    .d      (hw2reg[11]),
+ 
+     // to internal hardware
+     .qe     (),
+-    .q      (reg2hw.trigger.key_clear.q ),
++    .q      (reg2hw[1]),
+ 
+     .qs     ()
+   );
+@@ -641,12 +641,12 @@ module aes_reg_top (
+     .wd     (trigger_iv_clear_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.trigger.iv_clear.de),
+-    .d      (hw2reg.trigger.iv_clear.d ),
++    .de     (hw2reg[14]),
++    .d      (hw2reg[13]),
+ 
+     // to internal hardware
+     .qe     (),
+-    .q      (reg2hw.trigger.iv_clear.q ),
++    .q      (reg2hw[2]),
+ 
+     .qs     ()
+   );
+@@ -666,12 +666,12 @@ module aes_reg_top (
+     .wd     (trigger_data_in_clear_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.trigger.data_in_clear.de),
+-    .d      (hw2reg.trigger.data_in_clear.d ),
++    .de     (hw2reg[16]),
++    .d      (hw2reg[15]),
+ 
+     // to internal hardware
+     .qe     (),
+-    .q      (reg2hw.trigger.data_in_clear.q ),
++    .q      (reg2hw[3]),
+ 
+     .qs     ()
+   );
+@@ -691,12 +691,12 @@ module aes_reg_top (
+     .wd     (trigger_data_out_clear_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.trigger.data_out_clear.de),
+-    .d      (hw2reg.trigger.data_out_clear.d ),
++    .de     (hw2reg[18]),
++    .d      (hw2reg[17]),
+ 
+     // to internal hardware
+     .qe     (),
+-    .q      (reg2hw.trigger.data_out_clear.q ),
++    .q      (reg2hw[4]),
+ 
+     .qs     ()
+   );
+@@ -716,12 +716,12 @@ module aes_reg_top (
+     .wd     (trigger_prng_reseed_wd),
+ 
+     // from internal hardware
+-    .de     (hw2reg.trigger.prng_reseed.de),
+-    .d      (hw2reg.trigger.prng_reseed.d ),
++    .de     (hw2reg[20]),
++    .d      (hw2reg[19]),
+ 
+     // to internal hardware
+     .qe     (),
+-    .q      (reg2hw.trigger.prng_reseed.q ),
++    .q      (reg2hw[5]),
+ 
+     .qs     ()
+   );
+@@ -742,8 +742,8 @@ module aes_reg_top (
+     .wd     ('0  ),
+ 
+     // from internal hardware
+-    .de     (hw2reg.status.idle.de),
+-    .d      (hw2reg.status.idle.d ),
++    .de     (hw2reg[1]),
++    .d      (hw2reg[0]),
+ 
+     // to internal hardware
+     .qe     (),
+@@ -767,8 +767,8 @@ module aes_reg_top (
+     .wd     ('0  ),
+ 
+     // from internal hardware
+-    .de     (hw2reg.status.stall.de),
+-    .d      (hw2reg.status.stall.d ),
++    .de     (hw2reg[3]),
++    .d      (hw2reg[2]),
+ 
+     // to internal hardware
+     .qe     (),
+@@ -792,8 +792,8 @@ module aes_reg_top (
+     .wd     ('0  ),
+ 
+     // from internal hardware
+-    .de     (hw2reg.status.output_valid.de),
+-    .d      (hw2reg.status.output_valid.d ),
++    .de     (hw2reg[5]),
++    .d      (hw2reg[4]),
+ 
+     // to internal hardware
+     .qe     (),
+@@ -817,8 +817,8 @@ module aes_reg_top (
+     .wd     ('0  ),
+ 
+     // from internal hardware
+-    .de     (hw2reg.status.input_ready.de),
+-    .d      (hw2reg.status.input_ready.d ),
++    .de     (hw2reg[7]),
++    .d      (hw2reg[6]),
+ 
+     // to internal hardware
+     .qe     (),
 diff --git a/hw/ip/aes/rtl/aes_shift_rows.sv b/hw/ip/aes/rtl/aes_shift_rows.sv
 index b33b570a0..ef9eea32b 100644
 --- a/hw/ip/aes/rtl/aes_shift_rows.sv
