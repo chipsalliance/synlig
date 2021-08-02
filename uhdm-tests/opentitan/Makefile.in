@@ -71,14 +71,6 @@ tlul_err_resp.sv \
 tlul_socket_1n.sv \
 sram2tlul.sv \
 debug_rom_one_scratch.sv \
-aes_reg_top.sv \
-aes_core.sv \
-aes_sbox.sv \
-aes_sbox_lut.sv \
-aes_sbox_canright.sv \
-aes_sbox_canright_masked_noreuse.sv \
-aes_sbox_canright_masked.sv \
-aes.sv \
 alert_handler_reg_wrap.sv \
 alert_handler.sv \
 flash_ctrl_reg_top.sv \
@@ -316,6 +308,16 @@ pwrmgr.sv \
 hmac_reg_top.sv \
 hmac.sv \
 gpio.sv \
+ibex_icache.sv \
+ibex_dummy_instr.sv \
+sram2tlul.sv \
+aes_core.sv \
+aes_reg_pkg.sv \
+aes_reg_top.sv \
+aes_sbox_canright.sv \
+aes_sbox_canright_masked_noreuse.sv \
+aes_sbox_canright_masked.sv \
+aes.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -399,13 +401,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top rv_core_ibex \
 			-top rstmgr \
 			-top prim_alert_sender \
-			-top prim_subreg_shadow \
-			-top aes_ctr \
-			-top aes_control \
 			-top tlul_err_resp \
-			-top aes_sub_bytes \
-			-top aes_cipher_core \
-			-top prim_lfsr \
 			-top prim_intr_hw \
 			-top alert_handler_ping_timer \
 			-top prim_esc_sender \
@@ -413,7 +409,6 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top alert_handler_accu \
 			-top alert_handler_esc_timer \
 			-top alert_handler_class \
-			-top aes_prng \
 			-top clkmgr \
 			-top rv_dm \
 			-top flash_rd_ctrl \
@@ -443,6 +438,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top pwrmgr \
 			-top hmac \
 			-top gpio \
+			-top aes \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
@@ -467,14 +463,9 @@ ${UHDM_file}: ${SV2V_FILE}
 	# Delete -top rstmgr when top_earlgrey will be added to uhdm
 	# Delete -top prim_alert_sender when aes.sv, hmac.sv, otp_ctrl.sv, otbn.sv will be added to uhdm
 		# -PAsyncOn=1
-	# Delete -top prim_subreg_shadow when aes_core.sv will be added to uhdm
-	# Delete -top aes_ctr when aes_core.sv will be added to uhdm
-	# Delete -top aes_control when aes_core.sv will be added to uhdm
 	# Delete -top prim_gf_mult when flash_phy_scramble will be added to uhdm
 		# -PStagesPerCycle=64 \
 	# Delete -top tlul_err_resp when tlul_socket_1n will be added to uhdm
-	# Delete -top aes_cipher_core when aes_core will be added to uhdm
-	# Delete -top prim_lfsr when aes_prng will be added to uhdm
 	# Delete -top prim_intr_hw when alert_handler_reg_wrap will be added to uhdm
 	# Delete -top alert_handler_ping_timer when alert_handler will be added to uhdm
 	# Delete -top prim_esc_sender when alert_handler will be added to uhdm
@@ -482,7 +473,6 @@ ${UHDM_file}: ${SV2V_FILE}
 	# Delete -top alert_handler_accu when alert_handler will be added to uhdm
 	# Delete -top alert_handler_esc_timer when alert_handler will be added to uhdm
 	# Delete -top alert_handler_class when alert_handler will be added to uhdm
-	# Delete -top aes_prng when aes will be added to uhdm
 	# Delete -top flash_rd_ctrl when flash_ctrl will be added to uhdm
 		# -PAddrW=17 \
 		# -PDataW=32 \
@@ -510,6 +500,7 @@ ${UHDM_file}: ${SV2V_FILE}
 		# -PWidth=32 \
 	# Delete -top otbn when top_earlgrey will be added to uhdm
 	# Delete -top spi_device when top_earlgrey will be added to uhdm
+	# Delete -top aes when top_earlgrey will be added to uhdm
 
 yosys/plugins:
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
