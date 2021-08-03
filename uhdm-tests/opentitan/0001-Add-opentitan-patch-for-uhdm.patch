@@ -22,57 +22,6 @@ index 708de30a5..e25a0819c 100644
  
    for (genvar i = 0; i < NumAlerts; i++) begin : gen_alert_tx
      prim_alert_sender #(
-diff --git a/hw/ip/aes/rtl/aes_cipher_core.sv b/hw/ip/aes/rtl/aes_cipher_core.sv
-index ed35dc5ef..826ba4eff 100644
---- a/hw/ip/aes/rtl/aes_cipher_core.sv
-+++ b/hw/ip/aes/rtl/aes_cipher_core.sv
-@@ -40,24 +40,24 @@ module aes_cipher_core #(
-   input  logic          [63:0] prng_data_i,
- 
-   // I/O data & initial key
--  input  logic [3:0][3:0][7:0] state_init_i,
-+  input  logic [127:0] state_init_i,
-   input  logic     [7:0][31:0] key_init_i,
--  output logic [3:0][3:0][7:0] state_o
-+  output logic [127:0] state_o
- );
- 
-   import aes_pkg::*;
- 
-   // Signals
--  logic [3:0][3:0][7:0] state_d;
--  logic [3:0][3:0][7:0] state_q;
-+  logic [127:0] state_d;
-+  logic [127:0] state_q;
-   logic                 state_we;
-   state_sel_e           state_sel;
- 
--  logic [3:0][3:0][7:0] sub_bytes_out;
--  logic [3:0][3:0][7:0] shift_rows_out;
--  logic [3:0][3:0][7:0] mix_columns_out;
--  logic [3:0][3:0][7:0] add_round_key_in;
--  logic [3:0][3:0][7:0] add_round_key_out;
-+  logic [127:0] sub_bytes_out;
-+  logic [127:0] shift_rows_out;
-+  logic [127:0] mix_columns_out;
-+  logic [127:0] add_round_key_in;
-+  logic [127:0] add_round_key_out;
-   add_rk_sel_e          add_round_key_in_sel;
- 
-   logic     [7:0][31:0] key_full_d;
-@@ -75,9 +75,9 @@ module aes_cipher_core #(
-   logic           [3:0] key_expand_round;
-   key_words_sel_e       key_words_sel;
-   logic     [3:0][31:0] key_words;
--  logic [3:0][3:0][7:0] key_bytes;
--  logic [3:0][3:0][7:0] key_mix_columns_out;
--  logic [3:0][3:0][7:0] round_key;
-+  logic [127:0] key_bytes;
-+  logic [127:0] key_mix_columns_out;
-+  logic [127:0] round_key;
-   round_key_sel_e       round_key_sel;
- 
-   //////////
 diff --git a/hw/ip/aes/rtl/aes_core.sv b/hw/ip/aes/rtl/aes_core.sv
 index ee2afd47f..6ecd49a67 100644
 --- a/hw/ip/aes/rtl/aes_core.sv
@@ -89,33 +38,6 @@ index ee2afd47f..6ecd49a67 100644
  );
  
    import aes_reg_pkg::*;
-@@ -46,13 +47,13 @@ module aes_core #(
-   ctrl_reg_t            ctrl_d, ctrl_q;
-   logic                 ctrl_err_update, ctrl_err_storage;
- 
--  logic [3:0][3:0][7:0] state_in;
-+  logic [127:0] state_in;
-   si_sel_e              state_in_sel;
--  logic [3:0][3:0][7:0] add_state_in;
-+  logic [127:0] add_state_in;
-   add_si_sel_e          add_state_in_sel;
- 
--  logic [3:0][3:0][7:0] state_init;
--  logic [3:0][3:0][7:0] state_done;
-+  logic [127:0] state_init;
-+  logic [127:0] state_done;
- 
-   logic     [7:0][31:0] key_init;
-   logic     [7:0]       key_init_qe;
-@@ -82,7 +83,7 @@ module aes_core #(
-   logic     [3:0]       data_in_qe;
-   logic                 data_in_we;
- 
--  logic [3:0][3:0][7:0] add_state_out;
-+  logic [127:0] add_state_out;
-   add_so_sel_e          add_state_out_sel;
- 
-   logic     [3:0][31:0] data_out_d;
 @@ -112,30 +113,30 @@ module aes_core #(
  
    always_comb begin : key_init_get
@@ -330,58 +252,6 @@ index c030089b7..65f0bdc94 100644
      unique case (key_len_i)
  
        /////////////
-diff --git a/hw/ip/aes/rtl/aes_mix_columns.sv b/hw/ip/aes/rtl/aes_mix_columns.sv
-index 3aee014a2..222464474 100644
---- a/hw/ip/aes/rtl/aes_mix_columns.sv
-+++ b/hw/ip/aes/rtl/aes_mix_columns.sv
-@@ -6,15 +6,15 @@
- 
- module aes_mix_columns (
-   input  aes_pkg::ciph_op_e    op_i,
--  input  logic [3:0][3:0][7:0] data_i,
--  output logic [3:0][3:0][7:0] data_o
-+  input  logic [127:0] data_i,
-+  output logic [127:0] data_o
- );
- 
-   import aes_pkg::*;
- 
-   // Transpose to operate on columns
--  logic [3:0][3:0][7:0] data_i_transposed;
--  logic [3:0][3:0][7:0] data_o_transposed;
-+  logic [127:0] data_i_transposed;
-+  logic [127:0] data_o_transposed;
- 
-   assign data_i_transposed = aes_transpose(data_i);
- 
-diff --git a/hw/ip/aes/rtl/aes_pkg.sv b/hw/ip/aes/rtl/aes_pkg.sv
-index ddc3b7992..ffd0c479a 100644
---- a/hw/ip/aes/rtl/aes_pkg.sv
-+++ b/hw/ip/aes/rtl/aes_pkg.sv
-@@ -165,19 +165,19 @@ function automatic logic [31:0] aes_circ_byte_shift(logic [31:0] in, logic [1:0]
- endfunction
- 
- // Transpose state matrix
--function automatic logic [3:0][3:0][7:0] aes_transpose(logic [3:0][3:0][7:0] in);
--  logic [3:0][3:0][7:0] transpose;
-+function automatic logic [127:0] aes_transpose(logic [127:0] in);
-+  logic [127:0] transpose;
-   transpose = '0;
-   for (int j=0; j<4; j++) begin
-     for (int i=0; i<4; i++) begin
--      transpose[i][j] = in[j][i];
-+      transpose[((i * 4) + j) * 8+:8] = in[((j * 4) + i) * 8+:8];
-     end
-   end
-   return transpose;
- endfunction
- 
- // Extract single column from state matrix
--function automatic logic [3:0][7:0] aes_col_get(logic [3:0][3:0][7:0] in, logic [1:0] idx);
-+function automatic logic [3:0][7:0] aes_col_get(logic [127:0] in, logic [1:0] idx);
-   logic [3:0][7:0] out;
-   for (int i=0; i<4; i++) begin
-     out[i] = in[i][idx];
 diff --git a/hw/ip/aes/rtl/aes_prng.sv b/hw/ip/aes/rtl/aes_prng.sv
 index 08e2a94e6..a94dbdd43 100644
 --- a/hw/ip/aes/rtl/aes_prng.sv
@@ -954,69 +824,6 @@ index 77c3cdff9..4765d63ba 100644
  
      // to internal hardware
      .qe     (),
-diff --git a/hw/ip/aes/rtl/aes_shift_rows.sv b/hw/ip/aes/rtl/aes_shift_rows.sv
-index b33b570a0..ef9eea32b 100644
---- a/hw/ip/aes/rtl/aes_shift_rows.sv
-+++ b/hw/ip/aes/rtl/aes_shift_rows.sv
-@@ -6,24 +6,24 @@
- 
- module aes_shift_rows (
-   input  aes_pkg::ciph_op_e    op_i,
--  input  logic [3:0][3:0][7:0] data_i,
--  output logic [3:0][3:0][7:0] data_o
-+  input  logic [127:0] data_i,
-+  output logic [127:0] data_o
- );
- 
-   import aes_pkg::*;
- 
-   // Row 0 is left untouched
--  assign data_o[0] = data_i[0];
-+  assign data_o[0] = data_i[0+:32];
- 
-   // Row 2 does not depend on op_i
--  assign data_o[2] = aes_circ_byte_shift(data_i[2], 2'h2);
-+  assign data_o[2] = aes_circ_byte_shift(data_i[64+:32], 2'h2);
- 
-   // Row 1
--  assign data_o[1] = (op_i == CIPH_FWD) ? aes_circ_byte_shift(data_i[1], 2'h3)
--                                        : aes_circ_byte_shift(data_i[1], 2'h1);
-+  assign data_o[1] = (op_i == CIPH_FWD) ? aes_circ_byte_shift(data_i[32+:32], 2'h3)
-+                                        : aes_circ_byte_shift(data_i[32+:32], 2'h1);
- 
-   // Row 3
--  assign data_o[3] = (op_i == CIPH_FWD) ? aes_circ_byte_shift(data_i[3], 2'h1)
--                                        : aes_circ_byte_shift(data_i[3], 2'h3);
-+  assign data_o[3] = (op_i == CIPH_FWD) ? aes_circ_byte_shift(data_i[96+:32], 2'h1)
-+                                        : aes_circ_byte_shift(data_i[96+:32], 2'h3);
- 
- endmodule
-diff --git a/hw/ip/aes/rtl/aes_sub_bytes.sv b/hw/ip/aes/rtl/aes_sub_bytes.sv
-index 1d3e5c3a9..081c718f9 100644
---- a/hw/ip/aes/rtl/aes_sub_bytes.sv
-+++ b/hw/ip/aes/rtl/aes_sub_bytes.sv
-@@ -8,8 +8,8 @@ module aes_sub_bytes #(
-   parameter SBoxImpl = "lut"
- ) (
-   input  aes_pkg::ciph_op_e    op_i,
--  input  logic [3:0][3:0][7:0] data_i,
--  output logic [3:0][3:0][7:0] data_o
-+  input  logic [127:0] data_i,
-+  output logic [127:0] data_o
- );
- 
-   // Individually substitute bytes
-@@ -19,8 +19,8 @@ module aes_sub_bytes #(
-         .SBoxImpl ( SBoxImpl )
-       ) aes_sbox_ij (
-         .op_i   ( op_i         ),
--        .data_i ( data_i[i][j] ),
--        .data_o ( data_o[i][j] )
-+        .data_i ( data_i[((i * 4) + j) * 8+:8] ),
-+        .data_o ( data_o[((i * 4) + j) * 8+:8] )
-       );
-     end
-   end
 diff --git a/hw/ip/alert_handler/rtl/alert_pkg.sv b/hw/ip/alert_handler/rtl/alert_pkg.sv
 index 5324b4978..fb9e8de6c 100644
 --- a/hw/ip/alert_handler/rtl/alert_pkg.sv
