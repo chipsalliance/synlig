@@ -73,9 +73,6 @@ sram2tlul.sv \
 debug_rom_one_scratch.sv \
 alert_handler_reg_wrap.sv \
 alert_handler.sv \
-flash_ctrl_reg_top.sv \
-flash_ctrl.sv \
-flash_mp.sv \
 jtag_mux.sv \
 padring.sv \
 padctrl.sv \
@@ -318,6 +315,10 @@ aes_sbox_canright.sv \
 aes_sbox_canright_masked_noreuse.sv \
 aes_sbox_canright_masked.sv \
 aes.sv \
+flash_ctrl_reg_pkg.sv \
+flash_ctrl_reg_top.sv \
+flash_ctrl.sv \
+flash_mp.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -439,6 +440,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top hmac \
 			-top gpio \
 			-top aes \
+			-top flash_ctrl \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
