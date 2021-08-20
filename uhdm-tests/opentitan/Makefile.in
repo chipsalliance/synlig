@@ -38,7 +38,6 @@ prim_flop_2sync.sv \
 prim_ram_1p.sv \
 prim_lfsr.sv \
 prim_intr_hw.sv \
-alert_handler_reg_top.sv \
 ibex_icache.sv \
 prim_dom_and_2share.sv \
 prim_arbiter_fixed.sv \
@@ -69,7 +68,6 @@ tlul_err_resp.sv \
 tlul_socket_1n.sv \
 sram2tlul.sv \
 debug_rom_one_scratch.sv \
-alert_handler_reg_wrap.sv \
 alert_handler.sv \
 jtag_mux.sv \
 prim_secded_39_32_dec.sv \
@@ -123,6 +121,7 @@ rv_timer_reg_pkg.sv \
 rv_plic_reg_pkg.sv \
 hmac_reg_pkg.sv \
 padctrl_reg_pkg.sv \
+alert_handler_reg_pkg.sv \
 ibex_compressed_decoder.sv \
 ibex_alu.sv \
 ibex_controller.sv \
@@ -319,6 +318,8 @@ flash_mp.sv \
 padctrl_reg_top.sv \
 padctrl.sv \
 padring.sv \
+alert_handler_reg_top.sv \
+alert_handler_reg_wrap.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -441,6 +442,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top flash_ctrl \
 			-top padctrl \
 			-top padring \
+			-top alert_handler_reg_wrap \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
