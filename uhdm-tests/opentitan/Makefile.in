@@ -26,7 +26,6 @@ SV2V_FILES = \
 prim_generic_flop.sv \
 prim_generic_flop_2sync.sv \
 prim_xilinx_clock_mux2.sv \
-prim_xilinx_pad_wrapper.sv \
 prim_diff_decode.sv \
 prim_generic_clock_mux2.sv \
 prim_generic_pad_wrapper.sv \
@@ -73,7 +72,6 @@ debug_rom_one_scratch.sv \
 alert_handler_reg_wrap.sv \
 alert_handler.sv \
 jtag_mux.sv \
-padring.sv \
 prim_secded_39_32_dec.sv \
 prim_secded_39_32_enc.sv \
 top_earlgrey.sv \
@@ -320,6 +318,7 @@ flash_ctrl.sv \
 flash_mp.sv \
 padctrl_reg_top.sv \
 padctrl.sv \
+padring.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -328,11 +327,9 @@ UHDM_FILES_FULL = \
 		done; \
 	)
 
-CUSTOM_FILES = ${curr_dir}/custom_files/padring.v \
-	       ${curr_dir}/custom_files/prim_xilinx_pad_wrapper.v
-
 CUSTOM_FILES_UHDM = ${curr_dir}/custom_files/prim_ram_2p.v \
 	       ${curr_dir}/custom_files/prim_xilinx_ram_1p.v
+
 
 #############################
 ####      SYNTHESIS      ####
@@ -443,6 +440,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top aes \
 			-top flash_ctrl \
 			-top padctrl \
+			-top padring \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
@@ -521,7 +519,6 @@ uhdm/yosys/synth-opentitan: ${UHDM_file} ${SV2V_FILE} | ${VENV_OT} yosys/plugins
 		-p "plugin -i uhdm" \
 		-p "read_uhdm ${UHDM_file}" \
 		-p "read_verilog -sv ${SV2V_FILE}" \
-		-p "read_verilog -overwrite ${CUSTOM_FILES}" \
 		-p "verilog_defaults -pop" \
 	        -p 'synth_xilinx -iopad -family xc7 -top top_earlgrey_nexysvideo' \
 	        -p 'write_edif -pvector bra ${root_dir}/build/top_earlgrey_nexysvideo.edif' \

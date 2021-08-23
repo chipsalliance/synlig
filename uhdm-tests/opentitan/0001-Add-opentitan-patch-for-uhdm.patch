@@ -3109,6 +3109,71 @@ index 5683741f5..95738a82a 100644
    end
  
    ////////////////
+diff --git a/hw/ip/padctrl/rtl/padring.sv b/hw/ip/padctrl/rtl/padring.sv
+index fc8b3d183..aea2dd353 100644
+--- a/hw/ip/padctrl/rtl/padring.sv
++++ b/hw/ip/padctrl/rtl/padring.sv
+@@ -12,10 +12,10 @@
+ module padring import padctrl_reg_pkg::*; #(
+   // This allows to selectively connect Pad instances.
+   // unconnected inputs are tied to 0, unconnected outputs are high-z.
+-  parameter logic [NMioPads-1:0] ConnectMioIn = '1,
+-  parameter logic [NMioPads-1:0] ConnectMioOut = '1,
+-  parameter logic [NDioPads-1:0] ConnectDioIn = '1,
+-  parameter logic [NDioPads-1:0] ConnectDioOut = '1,
++  parameter logic [NMioPads-1:0] ConnectMioIn = 32'hFFFFF000,
++  parameter logic [NMioPads-1:0] ConnectMioOut = 32'hFFFFF000,
++  parameter logic [NDioPads-1:0] ConnectDioIn = 15'h637F,
++  parameter logic [NDioPads-1:0] ConnectDioOut = 15'h637F,
+ 
+   // 0: bidir, 1: input, 2: tolerant, 3: open drain
+   parameter logic [NMioPads-1:0][1:0] MioPadVariant = '0,
+@@ -59,45 +59,6 @@ module padring import padctrl_reg_pkg::*; #(
+   assign clk_usb_48mhz = clk_usb_48mhz_pad_i;
+   assign rst_n         = rst_pad_ni;
+ 
+-  prim_pad_wrapper #(
+-    .AttrDw  ( AttrDw ),
+-    .Variant ( 1      ) // input-only
+-  ) i_clk_pad (
+-    .inout_io ( clk   ),
+-    .in_o     ( clk_o ),
+-    .ie_i     ( 1'b1  ),
+-    .out_i    ( 1'b0  ),
+-    .oe_i     ( 1'b0  ),
+-    .attr_i   (   '0  ),
+-    .warl_o   (       )
+-  );
+-
+-  prim_pad_wrapper #(
+-    .AttrDw  ( AttrDw ),
+-    .Variant ( 1      ) // input-only
+-  ) i_clk_usb_48mhz_pad (
+-    .inout_io ( clk_usb_48mhz   ),
+-    .in_o     ( clk_usb_48mhz_o ),
+-    .ie_i     ( 1'b1  ),
+-    .out_i    ( 1'b0  ),
+-    .oe_i     ( 1'b0  ),
+-    .attr_i   (   '0  ),
+-    .warl_o   (       )
+-  );
+-
+-  prim_pad_wrapper #(
+-    .AttrDw  ( AttrDw ),
+-    .Variant ( 1      ) // input-only
+-  ) i_rst_pad (
+-    .inout_io ( rst_n  ),
+-    .in_o     ( rst_no ),
+-    .ie_i     ( 1'b1  ),
+-    .out_i    ( 1'b0  ),
+-    .oe_i     ( 1'b0  ),
+-    .attr_i   (   '0  ),
+-    .warl_o   (       )
+-  );
+-
+   //////////////
+   // MIO Pads //
+   //////////////
 diff --git a/hw/ip/pinmux/rtl/pinmux.sv b/hw/ip/pinmux/rtl/pinmux.sv
 index 92da2e81c..89b58a8f7 100644
 --- a/hw/ip/pinmux/rtl/pinmux.sv
@@ -3430,23 +3495,69 @@ index 6093646cd..38364223f 100644
      end
      return result;
 diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-index 962d3b559..d6430bc5a 100644
+index 962d3b559..923a187e0 100644
 --- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
 +++ b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-@@ -70,10 +70,10 @@ module prim_generic_pad_wrapper #(
+@@ -34,6 +34,10 @@ module prim_generic_pad_wrapper #(
+   // [ ] Bit   9: Reserved.
+   assign warl_o = AttrDw'(10'h19F);
+ 
++  typedef enum logic [1:0] {DRIVE_00  = 2'b00,
++                            DRIVE_01  = 2'b01,
++                            DRIVE_10  = 2'b10,
++                            DRIVE_11  = 2'b11} drv_e;
+   if (WarlOnly) begin : gen_warl
+     assign inout_io = 1'bz;
+     assign in_o     = 1'b0;
+@@ -48,10 +52,6 @@ module prim_generic_pad_wrapper #(
+   end else begin : gen_pad
+     // get pad attributes
+     logic unused_sm, kp, unused_sr, ps, pe, od, inv;
+-    typedef enum logic [1:0] {DRIVE_00  = 2'b00,
+-                              DRIVE_01  = 2'b01,
+-                              DRIVE_10  = 2'b10,
+-                              DRIVE_11  = 2'b11} drv_e;
+     drv_e drv;
+     assign {drv, unused_sr, unused_sm, kp, ps, pe, od, inv} = attr_i[8:0];
+ 
+@@ -70,22 +70,9 @@ module prim_generic_pad_wrapper #(
      assign oe       = oe_i & ((od & ~out) | ~od);
  
    // driving strength attributes are not supported by verilator
 -`ifdef VERILATOR
 -    assign inout_io = (oe)   ? out : 1'bz;
-+`ifdef SYNTHESIS
 +    assign inout_io = out;
      // received data driver
 -    assign in_o     = (ie_i) ? in  : 1'bz;
+-`else
+-    // different driver types
+-    assign (strong0, strong1) inout_io = (oe && drv != DRIVE_00) ? out : 1'bz;
+-    assign (pull0, pull1)     inout_io = (oe && drv == DRIVE_00) ? out : 1'bz;
+-    // pullup / pulldown termination
+-    assign (highz0, weak1)    inout_io = pe & ps;  // enabled and select = 1
+-    assign (weak0, highz1)    inout_io = pe & ~ps; // enabled and select = 0
+-    // fake trireg emulation
+-    assign (weak0, weak1)     inout_io = (kp) ? inout_io : 1'bz;
+-    // received data driver
+-    assign in_o     = (ie_i) ? in  : 1'bz;
+-`endif
 +    assign in_o     = in;
- `else
-     // different driver types
-     assign (strong0, strong1) inout_io = (oe && drv != DRIVE_00) ? out : 1'bz;
+   end
+ 
+   // assertions
+diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
+index f9649ddf9..d3ba90953 100644
+--- a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
++++ b/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
+@@ -57,7 +57,7 @@ module prim_xilinx_pad_wrapper #(
+ 
+     // input inversion and buffer
+     logic in;
+-    assign in_o     = (ie_i) ? inv ^ in : 1'bz;
++    assign in_o     = inv ^ in;
+ 
+     // virtual open drain emulation
+     logic oe_n, out;
 diff --git a/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv b/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv
 index ef4712bf5..336e2ff7d 100644
 --- a/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv
