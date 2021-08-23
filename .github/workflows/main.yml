@@ -235,6 +235,53 @@ jobs:
         path: |
           **/plot_*.svg
 
+  tests-yosys-valgrind:
+    runs-on: ubuntu-latest
+    needs: [build-binaries, generate-matrix-yosys]
+    strategy:
+      matrix:
+        TEST_CASE_YOSYS: ${{ fromJson(needs.generate-matrix-yosys.outputs.matrix) }}
+      fail-fast:
+        false
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      GIT_HTTP_LOW_SPEED_LIMIT: 1
+      GIT_HTTP_LOW_SPEED_TIME: 600
+
+    steps:
+    - name: Install dependencies
+      run: |
+        sudo apt-get update -qq
+        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev valgrind
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - uses: actions/setup-python@v2
+      with:
+         python-version: '3.7'
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test (yosys)
+      run: |
+        ./UHDM-integration-tests/.github/ci.sh
+        cat UHDM-integration-tests/build/valgrind.out
+      env:
+        TEST_CASE: ${{ matrix.TEST_CASE_YOSYS }}
+        TARGET: uhdm/yosys/test-ast
+        USE_VALGRIND: 1
+
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:bionic
