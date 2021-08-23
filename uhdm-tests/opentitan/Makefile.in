@@ -68,7 +68,6 @@ tlul_err_resp.sv \
 tlul_socket_1n.sv \
 sram2tlul.sv \
 debug_rom_one_scratch.sv \
-alert_handler.sv \
 jtag_mux.sv \
 prim_secded_39_32_dec.sv \
 prim_secded_39_32_enc.sv \
@@ -320,6 +319,7 @@ padctrl.sv \
 padring.sv \
 alert_handler_reg_top.sv \
 alert_handler_reg_wrap.sv \
+alert_handler.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -442,7 +442,7 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top flash_ctrl \
 			-top padctrl \
 			-top padring \
-			-top alert_handler_reg_wrap \
+			-top alert_handler \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
