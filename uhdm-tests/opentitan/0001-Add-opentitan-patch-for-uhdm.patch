@@ -825,10 +825,10 @@ index 77c3cdff9..4765d63ba 100644
      // to internal hardware
      .qe     (),
 diff --git a/hw/ip/alert_handler/rtl/alert_handler.sv b/hw/ip/alert_handler/rtl/alert_handler.sv
-index 65035ad0b..9ebb31c7f 100644
+index 65035ad0b..795f79c30 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler.sv
 +++ b/hw/ip/alert_handler/rtl/alert_handler.sv
-@@ -26,7 +26,8 @@ module alert_handler
+@@ -26,15 +26,16 @@ module alert_handler
    output logic                    intr_classc_o,
    output logic                    intr_classd_o,
    // State information for HW crashdump
@@ -838,6 +838,18 @@ index 65035ad0b..9ebb31c7f 100644
    // Entropy Input from TRNG
    input                           entropy_i,
    // Alert Sources
+-  input  alert_tx_t [NAlerts-1:0] alert_tx_i,
+-  output alert_rx_t [NAlerts-1:0] alert_rx_o,
++  input  logic [9:0] alert_tx_i,
++  output logic [19:0] alert_rx_o,
+   // Escalation outputs
+-  input  esc_rx_t [N_ESC_SEV-1:0] esc_rx_i,
+-  output esc_tx_t [N_ESC_SEV-1:0] esc_tx_o
++  input  logic [7:0] esc_rx_i,
++  output logic [7:0] esc_tx_o
+ );
+ 
+   //////////////////////////////////
 @@ -42,8 +43,10 @@ module alert_handler
    //////////////////////////////////
  
@@ -1413,7 +1425,7 @@ index 5324b4978..fb9e8de6c 100644
  
  endpackage : alert_pkg
 diff --git a/hw/ip/flash_ctrl/rtl/flash_ctrl.sv b/hw/ip/flash_ctrl/rtl/flash_ctrl.sv
-index 6b573e1b7..1fdfd5191 100644
+index 6b573e1b7..6a4f5b30e 100644
 --- a/hw/ip/flash_ctrl/rtl/flash_ctrl.sv
 +++ b/hw/ip/flash_ctrl/rtl/flash_ctrl.sv
 @@ -309,20 +309,20 @@ module flash_ctrl import flash_ctrl_pkg::*; (
@@ -1424,7 +1436,7 @@ index 6b573e1b7..1fdfd5191 100644
 +  logic [MpRegions*24:0] region_cfgs;
  
 -  assign region_cfgs[MpRegions-1:0] = reg2hw.mp_region_cfg[MpRegions-1:0];
-+  assign region_cfgs[MpRegions*24-1:0] = reg2hw.mp_region_cfg[MpRegions*24-1:0];
++  assign region_cfgs[(MpRegions - 1)*24-1:0] = reg2hw.mp_region_cfg[MpRegions*24-1:0];
  
    //default region
 -  assign region_cfgs[MpRegions].base.q = '0;
@@ -1433,16 +1445,16 @@ index 6b573e1b7..1fdfd5191 100644
 -  assign region_cfgs[MpRegions].rd_en.q = reg2hw.default_region.rd_en.q;
 -  assign region_cfgs[MpRegions].prog_en.q = reg2hw.default_region.prog_en.q;
 -  assign region_cfgs[MpRegions].erase_en.q = reg2hw.default_region.erase_en.q;
-+  assign region_cfgs[MpRegions*24+19:MpRegions*24+11] = '0;
-+  assign region_cfgs[MpRegions*24+10:MpRegions*24+1] = NumBanks * PagesPerBank;
-+  assign region_cfgs[MpRegions*24+23] = 1'b1;
-+  assign region_cfgs[MpRegions*24+22] = reg2hw.default_region.rd_en.q;
-+  assign region_cfgs[MpRegions*24+21] = reg2hw.default_region.prog_en.q;
-+  assign region_cfgs[MpRegions*24+20] = reg2hw.default_region.erase_en.q;
++  assign region_cfgs[(MpRegions - 1)*24+19:(MpRegions - 1)*24+11] = '0;
++  assign region_cfgs[(MpRegions - 1)*24+10:(MpRegions - 1)*24+1] = NumBanks * PagesPerBank;
++  assign region_cfgs[(MpRegions - 1)*24+23] = 1'b1;
++  assign region_cfgs[(MpRegions - 1)*24+22] = reg2hw.default_region.rd_en.q;
++  assign region_cfgs[(MpRegions - 1)*24+21] = reg2hw.default_region.prog_en.q;
++  assign region_cfgs[(MpRegions - 1)*24+20] = reg2hw.default_region.erase_en.q;
    // we are allowed to set default accessibility of data partitions
    // however info partitions default to inaccessible
 -  assign region_cfgs[MpRegions].partition.q = FlashPartData;
-+  assign region_cfgs[MpRegions*24+0] = FlashPartData;
++  assign region_cfgs[(MpRegions - 1)*24+0] = FlashPartData;
  
    flash_part_e flash_part_sel;
    assign flash_part_sel = flash_part_e'(reg2hw.control.partition_sel.q);
@@ -2300,6 +2312,36 @@ index 043829d21..2ddee7f3a 100644
                     ( msg_push_sha_disabled | hash_start_sha_disabled
                     | update_seckey_inprocess | hash_start_active
                     | msg_push_not_allowed );
+diff --git a/hw/ip/hmac/rtl/hmac_core.sv b/hw/ip/hmac/rtl/hmac_core.sv
+index a1c9515db..00a641aeb 100644
+--- a/hw/ip/hmac/rtl/hmac_core.sv
++++ b/hw/ip/hmac/rtl/hmac_core.sv
+@@ -111,12 +111,23 @@ module hmac_core import hmac_pkg::*; (
+   assign fifo_rready  = (hmac_en) ? (st_q == StMsg) & sha_rready : sha_rready ;
+   // sha_rvalid is controlled by State Machine below.
+   assign sha_rvalid = (!hmac_en) ? fifo_rvalid : hmac_sha_rvalid ;
+-  assign sha_rdata =
++  if (!hmac_en) begin
++    assign sha_rdata = fifo_rdata;
++  end else if (sel_rdata == SelIPad) begin
++    assign sha_rdata.data = i_pad[(BlockSize-1)-32*pad_index-:32];
++    assign sha_rdata.mask = '1;
++  end else if (sel_rdata == SelOPad) begin
++    assign sha_rdata.data = o_pad[(BlockSize-1)-32*pad_index-:32];
++    assign sha_rdata.mask = '1;
++  end else begin
++    assign sha_rdata = '0;
++  end
++  /*assign sha_rdata =
+     (!hmac_en)             ? fifo_rdata                                               :
+     (sel_rdata == SelIPad) ? '{data: i_pad[(BlockSize-1)-32*pad_index-:32], mask: '1} :
+     (sel_rdata == SelOPad) ? '{data: o_pad[(BlockSize-1)-32*pad_index-:32], mask: '1} :
+     (sel_rdata == SelFifo) ? fifo_rdata                                               :
+-    '{default: '0};
++    '{default: '0};*/
+ 
+   assign sha_message_length = (!hmac_en)                 ? message_length             :
+                               (sel_msglen == SelIPadMsg) ? message_length + BlockSize :
 diff --git a/hw/ip/hmac/rtl/hmac_reg_top.sv b/hw/ip/hmac/rtl/hmac_reg_top.sv
 index b11dc5747..bccfe829d 100644
 --- a/hw/ip/hmac/rtl/hmac_reg_top.sv
@@ -3526,6 +3568,21 @@ index b11dc5747..bccfe829d 100644
        end
      endcase
    end
+diff --git a/hw/ip/nmi_gen/rtl/nmi_gen.sv b/hw/ip/nmi_gen/rtl/nmi_gen.sv
+index 00bf37c9d..065e5a1a0 100644
+--- a/hw/ip/nmi_gen/rtl/nmi_gen.sv
++++ b/hw/ip/nmi_gen/rtl/nmi_gen.sv
+@@ -23,8 +23,8 @@ module nmi_gen
+   output logic                    intr_esc2_o,
+   output logic                    intr_esc3_o,
+   // Escalation outputs
+-  input  esc_tx_t [N_ESC_SEV-1:0] esc_tx_i,
+-  output esc_rx_t [N_ESC_SEV-1:0] esc_rx_o
++  input  logic [7:0] esc_tx_i,
++  output logic [7:0] esc_rx_o
+ );
+ 
+   //////////////////////
 diff --git a/hw/ip/otbn/rtl/otbn_core.sv b/hw/ip/otbn/rtl/otbn_core.sv
 index 8b13db4f5..312277b5f 100644
 --- a/hw/ip/otbn/rtl/otbn_core.sv
@@ -3857,6 +3914,22 @@ index 92da2e81c..89b58a8f7 100644
      end else begin
        lc_strap_q       <= lc_strap_d;
        dft_strap_test_q <= dft_strap_test_d;
+diff --git a/hw/ip/prim/rtl/prim_arbiter_ppc.sv b/hw/ip/prim/rtl/prim_arbiter_ppc.sv
+index 9ec473f85..87b1ea41e 100644
+--- a/hw/ip/prim/rtl/prim_arbiter_ppc.sv
++++ b/hw/ip/prim/rtl/prim_arbiter_ppc.sv
+@@ -116,9 +116,10 @@ module prim_arbiter_ppc #(
+       // TODO: waive data_i from NOT_READ error
+     end
+ 
++    reg signed [31:0] i;
+     always_comb begin
+       idx_o = '0;
+-      for (int i = 0 ; i < N ; i++) begin
++      for (i = 0 ; i < N ; i++) begin
+         if (winner[i]) begin
+           idx_o = i[IdxW-1:0];
+         end
 diff --git a/hw/ip/prim/rtl/prim_diff_decode.sv b/hw/ip/prim/rtl/prim_diff_decode.sv
 index c06a77d77..8c9db0c61 100644
 --- a/hw/ip/prim/rtl/prim_diff_decode.sv
@@ -4652,17 +4725,156 @@ index b7bd92367..824107aed 100644
      endcase
    end
 diff --git a/hw/ip/tlul/rtl/tlul_adapter_sram.sv b/hw/ip/tlul/rtl/tlul_adapter_sram.sv
-index 6e2f33191..cb3e9088c 100644
+index 6e2f33191..da4fd321c 100644
 --- a/hw/ip/tlul/rtl/tlul_adapter_sram.sv
 +++ b/hw/ip/tlul/rtl/tlul_adapter_sram.sv
-@@ -174,7 +174,7 @@ module tlul_adapter_sram #(
-   logic [WidthMult-1:0][top_pkg::TL_DW-1:0] wmask_int;
-   logic [WidthMult-1:0][top_pkg::TL_DW-1:0] wdata_int;
+@@ -102,6 +102,14 @@ module tlul_adapter_sram #(
+ 
+   // Valid handling
+   logic d_valid, d_error;
++  logic [WoffsetWidth-1:0] woffset;
++  // Convert byte mask to SRAM bit mask for writes, and only forward valid data
++  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wmask_int;
++  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wdata_int;
++  logic [SramDw-1:0] rdata;
++  logic [(WidthMult * top_pkg::TL_DW) - 1:0] rmask;
++  //logic [SramDw-1:0] rmask;
++  logic [top_pkg::TL_DW-1:0] rdata_tlword;
+   always_comb begin
+     d_valid = 1'b0;
+ 
+@@ -134,20 +142,17 @@ module tlul_adapter_sram #(
+     end
+   end
+ 
+-  assign tl_o = '{
+-      d_valid  : d_valid ,
+-      d_opcode : (d_valid && reqfifo_rdata.op != OpRead) ? AccessAck : AccessAckData,
+-      d_param  : '0,
+-      d_size   : (d_valid) ? reqfifo_rdata.size : '0,
+-      d_source : (d_valid) ? reqfifo_rdata.source : '0,
+-      d_sink   : 1'b0,
+-      d_data   : (d_valid && rspfifo_rvalid && reqfifo_rdata.op == OpRead)
+-                 ? rspfifo_rdata.data : '0,
+-      d_user   : '0,
+-      d_error  : d_valid && d_error,
+-
+-      a_ready  : (gnt_i | error_internal) & reqfifo_wready & sramreqfifo_wready
+-  };
++  assign tl_o.d_valid   = d_valid;
++  assign tl_o.d_opcode  = (d_valid && reqfifo_rdata.op != OpRead) ? AccessAck : AccessAckData;
++  assign tl_o.d_param   = '0;
++  assign tl_o.d_size    = (d_valid) ? reqfifo_rdata.size : '0;
++  assign tl_o.d_source  = (d_valid) ? reqfifo_rdata.source : '0;
++  assign tl_o.d_sink    = 1'b0;
++  assign tl_o.d_data    = (d_valid && rspfifo_rvalid && reqfifo_rdata.op == OpRead) ? rspfifo_rdata.data : '0;
++  assign tl_o.d_user    = '0;
++  assign tl_o.d_error   = d_valid && d_error;
++
++  assign tl_o.a_ready   = (gnt_i | error_internal) & reqfifo_wready & sramreqfifo_wready;
+ 
+   // a_ready depends on the FIFO full condition and grant from SRAM (or SRAM arbiter)
+   // assemble response, including read response, write response, and error for unsupported stuff
+@@ -157,31 +162,27 @@ module tlul_adapter_sram #(
+   //    dropped and returned error response to the host. So, error to be pushed to reqfifo.
+   //    In this case, it is assumed the request is granted (may cause ordering issue later?)
+   assign req_o    = tl_i.a_valid & reqfifo_wready & ~error_internal;
+-  assign we_o     = tl_i.a_valid & logic'(tl_i.a_opcode inside {PutFullData, PutPartialData});
++  assign we_o     = tl_i.a_valid & tl_i.a_opcode inside {PutFullData, PutPartialData};
+   assign addr_o   = (tl_i.a_valid) ? tl_i.a_address[DataBitWidth+:SramAw] : '0;
+ 
+   // Support SRAMs wider than the TL-UL word width by mapping the parts of the
+   // TL-UL address which are more fine-granular than the SRAM width to the
+   // SRAM write mask.
+-  logic [WoffsetWidth-1:0] woffset;
+   if (top_pkg::TL_DW != SramDw) begin : gen_wordwidthadapt
+     assign woffset = tl_i.a_address[DataBitWidth-1:prim_util_pkg::vbits(top_pkg::TL_DBW)];
+   end else begin : gen_no_wordwidthadapt
+     assign woffset = '0;
+   end
+ 
+-  // Convert byte mask to SRAM bit mask for writes, and only forward valid data
+-  logic [WidthMult-1:0][top_pkg::TL_DW-1:0] wmask_int;
+-  logic [WidthMult-1:0][top_pkg::TL_DW-1:0] wdata_int;
  
 -  always_comb begin
 +  always begin
      wmask_int = '0;
      wdata_int = '0;
+ 
+     if (tl_i.a_valid) begin
+       for (int i = 0 ; i < top_pkg::TL_DW/8 ; i++) begin
+-        wmask_int[woffset][8*i +: 8] = {8{tl_i.a_mask[i]}};
+-        wdata_int[woffset][8*i +: 8] = (tl_i.a_mask[i] && we_o) ? tl_i.a_data[8*i+:8] : '0;
++        wmask_int[(woffset * top_pkg::TL_DW) + (8 * i) +: 8] = {8{tl_i.a_mask[i]}};
++        wdata_int[(woffset * top_pkg::TL_DW) + (8 * i) +: 8] = (tl_i.a_mask[i] && we_o) ? tl_i.a_data[8*i+:8] : '0;
+       end
+     end
+   end
+@@ -209,7 +210,6 @@ module tlul_adapter_sram #(
+   end else begin : gen_reads_allowed
+     assign rd_vld_error = 1'b0;
+   end
+-
+   tlul_err u_err (
+     .clk_i,
+     .rst_ni,
+@@ -221,46 +221,35 @@ module tlul_adapter_sram #(
+   // End: Request Error Detection
+ 
+   assign reqfifo_wvalid = a_ack ; // Push to FIFO only when granted
+-  assign reqfifo_wdata  = '{
+-    op:     (tl_i.a_opcode != Get) ? OpWrite : OpRead, // To return AccessAck for opcode error
+-    error:  error_internal,
+-    size:   tl_i.a_size,
+-    source: tl_i.a_source
+-  }; // Store the request only. Doesn't have to store data
++  assign reqfifo_wdata.op      = (tl_i.a_opcode != Get) ? OpWrite : OpRead; // To return AccessAck for opcode error
++  assign reqfifo_wdata.error   = error_internal;
++  assign reqfifo_wdata.size    = tl_i.a_size;
++  assign reqfifo_wdata.source  = tl_i.a_source;
+   assign reqfifo_rready = d_ack ;
+ 
+   // push together with ReqFIFO, pop upon returning read
+-  assign sramreqfifo_wdata = '{
+-    mask    : tl_i.a_mask,
+-    woffset : woffset
+-  };
++  assign sramreqfifo_wdata.mask     = tl_i.a_mask;
++  assign sramreqfifo_wdata.woffset  = woffset;
+   assign sramreqfifo_wvalid = sram_ack & ~we_o;
+   assign sramreqfifo_rready = rspfifo_wvalid;
+ 
+   assign rspfifo_wvalid = rvalid_i & reqfifo_rvalid;
+ 
+   // Make sure only requested bytes are forwarded
+-  logic [SramDw-1:0] rdata;
+-  logic [WidthMult-1:0][top_pkg::TL_DW-1:0] rmask;
+-  //logic [SramDw-1:0] rmask;
+-  logic [top_pkg::TL_DW-1:0] rdata_tlword;
+ 
+   always_comb begin
+     rmask = '0;
+     for (int i = 0 ; i < top_pkg::TL_DW/8 ; i++) begin
+-      rmask[sramreqfifo_rdata.woffset][8*i +: 8] = {8{sramreqfifo_rdata.mask[i]}};
++      rmask[(sramreqfifo_rdata.woffset * top_pkg::TL_DW) + (8 * i) +: 8] = {8{sramreqfifo_rdata.mask[i]}};
+     end
+   end
+ 
+   assign rdata = rdata_i & rmask;
+   assign rdata_tlword = rdata[sramreqfifo_rdata.woffset * top_pkg::TL_DW +: top_pkg::TL_DW];
+ 
+-  assign rspfifo_wdata  = '{
+-    data : rdata_tlword,
+-    error: rerror_i[1] // Only care for Uncorrectable error
+-  };
+-  assign rspfifo_rready = (reqfifo_rdata.op == OpRead & ~reqfifo_rdata.error)
+-                        ? reqfifo_rready : 1'b0 ;
++  assign rspfifo_wdata.data   = rdata_tlword;
++  assign rspfifo_wdata.error  = rerror_i[1]; // Only care for Uncorrectable error
++  assign rspfifo_rready = (reqfifo_rdata.op == OpRead & ~reqfifo_rdata.error) ? reqfifo_rready : 1'b0 ;
+ 
+   // FIFO instance: REQ, RSP
  
 diff --git a/hw/ip/tlul/rtl/tlul_err.sv b/hw/ip/tlul/rtl/tlul_err.sv
 index add8477ba..4ab895782 100644
@@ -39949,6 +40161,97 @@ index 64b285761..4125e8d4f 100644
        end
      endcase
    end
+diff --git a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
+index 2acc14e86..913daf87f 100644
+--- a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
++++ b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
+@@ -56,6 +56,8 @@ module top_earlgrey #(
+   import tlul_pkg::*;
+   import top_pkg::*;
+   import tl_main_pkg::*;
++  import clkmgr_pkg::*;
++  import rstmgr_pkg::*;
+ 
+   tl_h2d_t  tl_corei_h_h2d;
+   tl_d2h_t  tl_corei_h_d2h;
+@@ -239,8 +241,8 @@ module top_earlgrey #(
+   assign unused_irq_id = irq_id;
+ 
+   // Alert list
+-  prim_alert_pkg::alert_tx_t [alert_pkg::NAlerts-1:0]  alert_tx;
+-  prim_alert_pkg::alert_rx_t [alert_pkg::NAlerts-1:0]  alert_rx;
++  wire [9:0] alert_tx;
++  wire [19:0] alert_rx;
+   // Escalation outputs
+   prim_esc_pkg::esc_tx_t [alert_pkg::N_ESC_SEV-1:0]  esc_tx;
+   prim_esc_pkg::esc_rx_t [alert_pkg::N_ESC_SEV-1:0]  esc_rx;
+@@ -259,12 +261,12 @@ module top_earlgrey #(
+   pwrmgr_pkg::pwr_cpu_t       pwrmgr_pwr_cpu;
+   clkmgr_pkg::clkmgr_out_t       clkmgr_clocks;
+   logic       aes_idle;
+-  clkmgr_pkg::clk_hint_status_t       clkmgr_status;
++  reg [2:0] clkmgr_status;
+ 
+   always_comb begin
++    clkmgr_status[2-:3] = 3'b111;
++    clkmgr_status[0] = aes_idle;
+     // TODO: So far just aes is connected
+-    clkmgr_status.idle    = clkmgr_pkg::CLK_HINT_STATUS_DEFAULT;
+-    clkmgr_status.idle[0] = aes_idle;
+   end
+ 
+   // Non-debug module reset == reset for everything except for the debug module
+@@ -323,7 +325,7 @@ module top_earlgrey #(
+ 
+   rv_dm #(
+     .NrHarts     (1),
+-    .IdcodeValue (JTAG_IDCODE)
++    .IdcodeValue (83183693)
+   ) u_dm_top (
+     .clk_i         (clkmgr_clocks.clk_proc_main),
+     .rst_ni        (rstmgr_resets.rst_lc_n),
+@@ -627,7 +629,7 @@ module top_earlgrey #(
+       // Inter-module signals
+       .flash_o(flash_ctrl_flash_req),
+       .flash_i(flash_ctrl_flash_rsp),
+-      .otp_i(flash_ctrl_pkg::OTP_FLASH_DEFAULT),
++      .otp_i(256'hdeadbeefbeeffacedeadbeef5a5aa5a5deadbeef5a5aa5a5deadbeefbeefface),
+       .clk_i (clkmgr_clocks.clk_main_infra),
+       .rst_ni (rstmgr_resets.rst_lc_n)
+   );
+@@ -647,8 +649,8 @@ module top_earlgrey #(
+       .tl_o (tl_aes_d_d2h),
+ 
+       // [0]: ctrl_err
+-      .alert_tx_o  ( alert_tx[0:0] ),
+-      .alert_rx_i  ( alert_rx[0:0] ),
++      .alert_tx_o  ( alert_tx[0+:2] ),
++      .alert_rx_i  ( alert_rx[0+:4] ),
+ 
+       // Inter-module signals
+       .idle_o(aes_idle),
+@@ -666,8 +668,8 @@ module top_earlgrey #(
+       .intr_hmac_err_o   (intr_hmac_hmac_err),
+ 
+       // [1]: msg_push_sha_disabled
+-      .alert_tx_o  ( alert_tx[1:1] ),
+-      .alert_rx_i  ( alert_rx[1:1] ),
++      .alert_tx_o  ( alert_tx[2+:2] ),
++      .alert_rx_i  ( alert_rx[4+:4] ),
+       .clk_i (clkmgr_clocks.clk_main_hmac),
+       .rst_ni (rstmgr_resets.rst_sys_n)
+   );
+@@ -904,8 +906,8 @@ module top_earlgrey #(
+       // [2]: imem_uncorrectable
+       // [3]: dmem_uncorrectable
+       // [4]: reg_uncorrectable
+-      .alert_tx_o  ( alert_tx[4:2] ),
+-      .alert_rx_i  ( alert_rx[4:2] ),
++      .alert_tx_o  ( alert_tx[4+:6] ),
++      .alert_rx_i  ( alert_rx[8+:12] ),
+ 
+       // Inter-module signals
+       .idle_o(),
 diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
 index 61469937f..12f0a2bcd 100644
 --- a/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
