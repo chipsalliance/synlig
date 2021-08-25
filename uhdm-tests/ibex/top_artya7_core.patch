@@ -1,5 +1,14 @@
+From 2be6716aabddbb5dca98ccbd09fc8c50f243285c Mon Sep 17 00:00:00 2001
+From: Karol Gugala <kgugala@antmicro.com>
+Date: Tue, 17 Aug 2021 17:20:26 +0200
+Subject: [PATCH] add synth surelog target
+
+---
+ examples/fpga/artya7/top_artya7.core | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
 diff --git a/examples/fpga/artya7/top_artya7.core b/examples/fpga/artya7/top_artya7.core
-index 811fb93c..6918a5d9 100644
+index 4493a8ae..c1dc0c1e 100644
 --- a/examples/fpga/artya7/top_artya7.core
 +++ b/examples/fpga/artya7/top_artya7.core
 @@ -2,7 +2,7 @@ CAPI=2:
@@ -11,7 +20,24 @@ index 811fb93c..6918a5d9 100644
  description: "Ibex example toplevel for Arty A7 boards (both, -35 and -100)"
  filesets:
    files_rtl_artya7:
-@@ -50,3 +50,19 @@ targets:
+@@ -41,7 +41,7 @@ parameters:
+     datatype: str
+     paramtype: vlogdefine
+     description: Primitives implementation to use, e.g. "prim_pkg::ImplGeneric".
+- 
++
+   FPGAPowerAnalysis:
+     datatype: int
+     paramtype: vlogparam
+@@ -53,7 +53,6 @@ targets:
+     filesets:
+       - files_rtl_artya7
+       - files_constraints
+-      - files_tcl
+     toplevel: top_artya7
+     parameters:
+       - SRAMInitFile
+@@ -62,3 +61,19 @@ targets:
      tools:
        vivado:
          part: "xc7a100tcsg324-1"  # Default to Arty A7-100
@@ -31,3 +57,104 @@ index 811fb93c..6918a5d9 100644
 +        vendor: "xilinx"
 +        yosys_read_options: ['-noassert']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
+-- 
+2.31.0
+
+From 0b8a1022316dc2af1a2835cddd5de00a9cd900b8 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Mon, 23 Aug 2021 13:30:45 +0200
+Subject: [PATCH] ibex: change ram_2p to ram_1p
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ examples/fpga/artya7/rtl/top_artya7.sv | 46 +++++++++++++++-----------
+ shared/fpga_xilinx.core                |  4 +--
+ 2 files changed, 28 insertions(+), 22 deletions(-)
+
+diff --git a/examples/fpga/artya7/rtl/top_artya7.sv b/examples/fpga/artya7/rtl/top_artya7.sv
+index 096125e3..c8f0c7ae 100644
+--- a/examples/fpga/artya7/rtl/top_artya7.sv
++++ b/examples/fpga/artya7/rtl/top_artya7.sv
+@@ -8,7 +8,7 @@ module top_artya7 (
+     output [3:0]        LED
+ );
+ 
+-  parameter int          MEM_SIZE     = 256 * 1024; // 256 kB
++  parameter int          MEM_SIZE     = 32 * 1024; // 32 kB
+   parameter logic [31:0] MEM_START    = 32'h00000000;
+   parameter logic [31:0] MEM_MASK     = MEM_SIZE-1;
+   parameter              SRAMInitFile = "";
+@@ -81,28 +81,34 @@ module top_artya7 (
+   );
+ 
+   // SRAM block for instruction and data storage
+-  ram_2p #(
++  ram_1p #(
+     .Depth(MEM_SIZE / 4),
+     .MemInitFile(SRAMInitFile)
+   ) u_ram (
+-    .clk_i (clk_sys),
+-    .rst_ni(rst_sys_n),
+-
+-    .a_req_i   (data_req),
+-    .a_we_i    (data_we),
+-    .a_be_i    (data_be),
+-    .a_addr_i  (data_addr),
+-    .a_wdata_i (data_wdata),
+-    .a_rvalid_o(data_rvalid),
+-    .a_rdata_o (data_rdata),
+-
+-    .b_req_i   (instr_req),
+-    .b_we_i    (1'b0),
+-    .b_be_i    (4'b0),
+-    .b_addr_i  (instr_addr),
+-    .b_wdata_i (32'b0),
+-    .b_rvalid_o(instr_rvalid),
+-    .b_rdata_o (instr_rdata)
++    .clk_i     ( clk_sys         ),
++    .rst_ni    ( rst_sys_n       ),
++    .req_i     ( data_req        ),
++    .we_i      ( data_we         ),
++    .be_i      ( data_be         ),
++    .addr_i    ( data_addr       ),
++    .wdata_i   ( data_wdata      ),
++    .rvalid_o  ( data_rvalid     ),
++    .rdata_o   ( data_rdata      )
++  );
++
++  ram_1p #(
++    .Depth(MEM_SIZE / 4),
++    .MemInitFile(SRAMInitFile)
++  ) u_ram2 (
++    .clk_i     ( clk_sys        ),
++    .rst_ni    ( rst_sys_n      ),
++    .req_i     ( instr_req      ),
++    .we_i      ( 1'b0           ),
++    .be_i      ( 4'b0           ),
++    .addr_i    ( instr_addr     ),
++    .wdata_i   ( 32'b0          ),
++    .rvalid_o  ( instr_rvalid   ),
++    .rdata_o   ( instr_rdata    )
+   );
+ 
+ 
+diff --git a/shared/fpga_xilinx.core b/shared/fpga_xilinx.core
+index 242f1f2d..26b05f1f 100644
+--- a/shared/fpga_xilinx.core
++++ b/shared/fpga_xilinx.core
+@@ -7,10 +7,10 @@ description: "Collection of useful RTL for Xilinx based examples"
+ filesets:
+   files_sv:
+     depend:
+-      - lowrisc:prim:ram_2p
++      - lowrisc:prim:ram_1p
+     files:
+       - rtl/fpga/xilinx/clkgen_xil7series.sv
+-      - rtl/ram_2p.sv
++      - rtl/ram_1p.sv
+     file_type: systemVerilogSource
+ 
+ targets:
+-- 
+2.28.0
+
