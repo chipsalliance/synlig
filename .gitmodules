@@ -22,3 +22,6 @@
 [submodule "uhdm-tests/opentitan/opentitan"]
 	path = uhdm-tests/opentitan/opentitan
 	url = https://github.com/lowRISC/opentitan.git
+[submodule "uhdm-tests/swerv/Cores-SweRV"]
+	path = uhdm-tests/swerv/Cores-SweRV
+	url = https://github.com/chipsalliance/Cores-SweRV.git

@@ -1,0 +1,34 @@
+curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
+DESIGN_DIR = ${curr_dir}/Cores-SweRV
+VENV = ${root_dir}/venv-swerv
+TOP := top_earlgrey_nexysvideo
+
+UHDM_file = ${root_dir}/build/${TOP}.uhdm
+
+${VENV}:
+	virtualenv ${VENV}
+
+${DESIGN_DIR}/.gitpatch:
+	cd ${DESIGN_DIR} && git apply ${curr_dir}/0001-swerv.patch && touch $@
+
+uhdm/yosys/swerv: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		. ${VENV}/bin/activate && \
+		pip install fusesoc && \
+		pip install -I git+https://github.com/antmicro/edalize@uhdm_support && \
+		fusesoc --cores-root=${DESIGN_DIR} run --build --tool yosys --target=synth chipsalliance.org:cores:SweRV_EH1:1.8)
+
+uhdm/yosys/swerv-build: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		. ${VENV}/bin/activate && \
+		pip install fusesoc && \
+		pip install -I git+https://github.com/antmicro/edalize@uhdm_support && \
+		fusesoc --cores-root=${DESIGN_DIR} run --build --tool vivado --target=synth chipsalliance.org:cores:SweRV_EH1:1.8)
+
+uhdm/sv2v/swerv: clean-build | ${VENV}
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		. ${VENV}/bin/activate && \
+		pip install fusesoc && \
+		pip install -I git+https://github.com/antmicro/edalize@uhdm_support && \
+		fusesoc --cores-root=${DESIGN_DIR} run --build --tool sv2v --target=synth chipsalliance.org:cores:SweRV_EH1:1.8)
+
