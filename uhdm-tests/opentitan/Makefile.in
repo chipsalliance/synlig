@@ -71,7 +71,6 @@ jtag_mux.sv \
 prim_secded_39_32_dec.sv \
 prim_secded_39_32_enc.sv \
 prim_alert_receiver.sv \
-clkgen_xil7series.sv \
 top_earlgrey_nexysvideo.sv
 
 SV2V_FILES_FULL = \
@@ -320,6 +319,7 @@ alert_handler_reg_top.sv \
 alert_handler_reg_wrap.sv \
 alert_handler.sv \
 top_earlgrey.sv \
+clkgen_xil7series.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -362,6 +362,8 @@ ${UHDM_file}: ${SV2V_FILE}
 			-PBootRomInitFile="boot_rom_fpga_nexysvideo.32.vmem" \
 			-PIbexPipeLine=1 \
 			-top padring \
+			-top clkgen_xil7series \
+			-PAddClkBuf=0 \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
