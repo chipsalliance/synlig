@@ -62,7 +62,7 @@ jobs:
       - name: Generate matrix (yosys)
         id: generate-matrix-yosys
         run: |
-          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex synthesis OneClass hello-uvm OneThis MultiplePrints assignment-pattern OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction)"
+          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis OneClass hello-uvm OneThis MultiplePrints assignment-pattern OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction PatternType PatternInFunction)"
           echo "::set-output name=matrix::$matrix"
           echo "matrix yosys: $matrix"
 
@@ -84,7 +84,7 @@ jobs:
       - name: Generate matrix (vcddiff)
         id: generate-matrix-vcddiff
         run: |
-          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex synthesis OneClass hello-uvm OneThis array-copy assignment-pattern MultiplePrints OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction)"
+          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis OneClass hello-uvm OneThis array-copy assignment-pattern MultiplePrints OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction PatternType PatternInFunction)"
           echo "::set-output name=matrix::$matrix"
           echo "matrix vcddiff: $matrix"
 
@@ -274,3 +274,47 @@ jobs:
       with:
         name: top_earlgrey_nexysvideo.edif
         path: UHDM-integration-tests/build/top_earlgrey_nexysvideo.edif
+
+  swerv_synth:
+    runs-on: ubuntu-latest
+    needs: build-binaries
+    env:
+      CC: gcc-9
+      CXX: g++-9
+
+    steps:
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update -qq
+        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - uses: actions/setup-python@v2
+      with:
+         python-version: '3.7'
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test
+      run: |
+        pip install virtualenv
+        ./UHDM-integration-tests/.github/ci.sh
+      env:
+        TARGET: uhdm/yosys/swerv
+        TEST_CASE: tests/swerv
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: chipsalliance.org_cores_SweRV_EH1_1.8.edif
+        path: UHDM-integration-tests/build/chipsalliance.org_cores_SweRV_EH1_1.8/synth-vivado/chipsalliance.org_cores_SweRV_EH1_1.8.edif

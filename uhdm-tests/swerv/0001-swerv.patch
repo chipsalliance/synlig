@@ -1,0 +1,976 @@
+diff --git a/design/dec/dec_gpr_ctl.sv b/design/dec/dec_gpr_ctl.sv
+index 5110c1b..8ef38e8 100644
+--- a/design/dec/dec_gpr_ctl.sv
++++ b/design/dec/dec_gpr_ctl.sv
+@@ -53,11 +53,11 @@ module dec_gpr_ctl #(parameter GPR_BANKS      = 1,
+     input  logic        scan_mode
+ );
+ 
+-   logic [GPR_BANKS-1:0][31:1] [31:0] gpr_out;     // 31 x 32 bit GPRs
+-   logic [31:1] [31:0] gpr_in;
++   wire [((GPR_BANKS * 31) >= 1 ? ((GPR_BANKS * 31) * 32) + 31 : ((2 - (GPR_BANKS * 31)) * 32) + (((GPR_BANKS * 31) * 32) - 1)):((GPR_BANKS * 31) >= 1 ? 32 : (GPR_BANKS * 31) * 32)] gpr_out;
++   reg [1023:32] gpr_in;
+    logic [31:1] w0v,w1v,w2v;
+    logic [31:1] gpr_wr_en;
+-   logic [GPR_BANKS-1:0][31:1] gpr_bank_wr_en;
++   wire [GPR_BANKS * 31:1] gpr_bank_wr_en;
+    logic [GPR_BANKS_LOG2-1:0] gpr_bank_id;
+ 
+    //assign gpr_bank_id[GPR_BANKS_LOG2-1:0] = '0;
+@@ -66,9 +66,9 @@ module dec_gpr_ctl #(parameter GPR_BANKS      = 1,
+    // GPR Write Enables for power savings
+    assign gpr_wr_en[31:1] = (w0v[31:1] | w1v[31:1] | w2v[31:1]);
+    for (genvar i=0; i<GPR_BANKS; i++) begin: gpr_banks
+-      assign gpr_bank_wr_en[i][31:1] = gpr_wr_en[31:1] & {31{gpr_bank_id[GPR_BANKS_LOG2-1:0] == i}};
++      assign gpr_bank_wr_en[(i * 31) + 31-:31] = gpr_wr_en[31:1] & {31{gpr_bank_id[GPR_BANKS_LOG2-1:0] == i}};
+       for ( genvar j=1; j<32; j++ )  begin : gpr
+-         rvdffe #(32) gprff (.*, .en(gpr_bank_wr_en[i][j]), .din(gpr_in[j][31:0]), .dout(gpr_out[i][j][31:0]));
++         rvdffe #(32) gprff (.*, .en(gpr_bank_wr_en[(i * 31) + j]), .din(gpr_in[(j * 32) + 31-:32]), .dout(gpr_out[(((GPR_BANKS * 31) >= 1 ? (i * 31) + j : 1 - (((i * 31) + j) - (GPR_BANKS * 31))) * 32) + 31-:32]));
+       end : gpr
+    end: gpr_banks
+ 
+@@ -81,15 +81,15 @@ module dec_gpr_ctl #(parameter GPR_BANKS      = 1,
+       w0v[31:1] = 31'b0;
+       w1v[31:1] = 31'b0;
+       w2v[31:1] = 31'b0;
+-      gpr_in[31:1] = '0;
++	gpr_in[32+:992] = 1'b0;
+ 
+       // GPR Read logic
+       for (int i=0; i<GPR_BANKS; i++) begin
+          for (int j=1; j<32; j++ )  begin
+-            rd0[31:0] |= ({32{rden0 & (raddr0[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[i][j][31:0]);
+-            rd1[31:0] |= ({32{rden1 & (raddr1[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[i][j][31:0]);
+-            rd2[31:0] |= ({32{rden2 & (raddr2[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[i][j][31:0]);
+-            rd3[31:0] |= ({32{rden3 & (raddr3[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[i][j][31:0]);
++            rd0[31:0] |= ({32{rden0 & (raddr0[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[(((GPR_BANKS * 31) >= 1 ? (i * 31) + j : 1 - (((i * 31) + j) - (GPR_BANKS * 31))) * 32) + 31-:32]);
++            rd1[31:0] |= ({32{rden1 & (raddr1[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[(((GPR_BANKS * 31) >= 1 ? (i * 31) + j : 1 - (((i * 31) + j) - (GPR_BANKS * 31))) * 32) + 31-:32]);
++            rd2[31:0] |= ({32{rden2 & (raddr2[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[(((GPR_BANKS * 31) >= 1 ? (i * 31) + j : 1 - (((i * 31) + j) - (GPR_BANKS * 31))) * 32) + 31-:32]);
++            rd3[31:0] |= ({32{rden3 & (raddr3[4:0]== 5'(j)) & (gpr_bank_id[GPR_BANKS_LOG2-1:0] == 1'(i))}} & gpr_out[(((GPR_BANKS * 31) >= 1 ? (i * 31) + j : 1 - (((i * 31) + j) - (GPR_BANKS * 31))) * 32) + 31-:32]);
+         end
+      end
+ 
+@@ -98,7 +98,7 @@ module dec_gpr_ctl #(parameter GPR_BANKS      = 1,
+          w0v[j]     = wen0  & (waddr0[4:0]== 5'(j) );
+          w1v[j]     = wen1  & (waddr1[4:0]== 5'(j) );
+          w2v[j]     = wen2  & (waddr2[4:0]== 5'(j) );
+-         gpr_in[j]  =    ({32{w0v[j]}} & wd0[31:0]) |
++         gpr_in[j * 32+:32]  =    ({32{w0v[j]}} & wd0[31:0]) |
+                          ({32{w1v[j]}} & wd1[31:0]) |
+                          ({32{w2v[j]}} & wd2[31:0]);
+      end
+diff --git a/design/dec/dec_tlu_ctl.sv b/design/dec/dec_tlu_ctl.sv
+index 52a4393..9849b30 100644
+--- a/design/dec/dec_tlu_ctl.sv
++++ b/design/dec/dec_tlu_ctl.sv
+@@ -191,8 +191,10 @@ module dec_tlu_ctl
+    output logic [3:0] dec_tlu_meicurpl, // to PIC
+    output logic [3:0] dec_tlu_meipt, // to PIC
+ 
+-   output br_tlu_pkt_t dec_tlu_br0_wb_pkt, // branch pkt to bp
+-   output br_tlu_pkt_t dec_tlu_br1_wb_pkt, // branch pkt to bp
++   //output br_tlu_pkt_t dec_tlu_br0_wb_pkt, // branch pkt to bp
++   //output br_tlu_pkt_t dec_tlu_br1_wb_pkt, // branch pkt to bp
++  output wire [15:0] dec_tlu_br0_wb_pkt,
++  output wire [15:0] dec_tlu_br1_wb_pkt,
+ 
+    output logic [31:0] dec_csr_rddata_d,      // csr read data at wb
+    output logic dec_csr_legal_d,              // csr indicates legal operation
+@@ -270,8 +272,20 @@ module dec_tlu_ctl
+          wr_mdccmect_wb,wr_mhpme3_wb, wr_mhpme4_wb, wr_mhpme5_wb, wr_mhpme6_wb;
+    logic wr_mgpmc_wb, mgpmc_b, mgpmc;
+    logic wr_mtsel_wb, wr_mtdata1_t0_wb, wr_mtdata1_t1_wb, wr_mtdata1_t2_wb, wr_mtdata1_t3_wb, wr_mtdata2_t0_wb, wr_mtdata2_t1_wb, wr_mtdata2_t2_wb, wr_mtdata2_t3_wb;
+-   logic [31:0] mtdata2_t0, mtdata2_t1, mtdata2_t2, mtdata2_t3, mtdata2_tsel_out, mtdata1_tsel_out;
+-   logic [9:0]  mtdata1_t0_ns, mtdata1_t0, mtdata1_t1_ns, mtdata1_t1, mtdata1_t2_ns, mtdata1_t2, mtdata1_t3_ns, mtdata1_t3;
++   logic [31:0] mtdata2_t0;
++   logic [31:0] mtdata2_t1;
++   logic [31:0] mtdata2_t2;
++   logic [31:0] mtdata2_t3;
++   logic [31:0] mtdata2_tsel_out;
++   logic [31:0] mtdata1_tsel_out;
++   logic [9:0] mtdata1_t0_ns;
++   logic [9:0] mtdata1_t0;
++   logic [9:0] mtdata1_t1_ns;
++   logic [9:0] mtdata1_t1;
++   logic [9:0] mtdata1_t2_ns;
++   logic [9:0] mtdata1_t2;
++   logic [9:0] mtdata1_t3_ns;
++   logic [9:0] mtdata1_t3;
+    logic [27:0] tdata_wrdata_wb;
+    logic [1:0] mtsel_ns, mtsel;
+    logic tlu_i0_kill_writeb_e4, tlu_i1_kill_writeb_e4;
+@@ -873,36 +887,19 @@ module dec_tlu_ctl
+                                   exu_i0_br_middle_e4,
+                                   exu_i1_br_middle_e4
+                                   }),
+-                           .dout({dec_tlu_br0_wb_pkt.hist[1:0],
+-                                  dec_tlu_br0_wb_pkt.br_error,
+-                                  dec_tlu_br0_wb_pkt.br_start_error,
+-                                  dec_tlu_br0_wb_pkt.valid,
+-                                  dec_tlu_br1_wb_pkt.hist[1:0],
+-                                  dec_tlu_br1_wb_pkt.br_error,
+-                                  dec_tlu_br1_wb_pkt.br_start_error,
+-                                  dec_tlu_br1_wb_pkt.valid,
+-                                  dec_tlu_br0_wb_pkt.bank[1:0],
+-                                  dec_tlu_br1_wb_pkt.bank[1:0],
+-                                  dec_tlu_br0_wb_pkt.way,
+-                                  dec_tlu_br1_wb_pkt.way,
+-                                  dec_tlu_br0_wb_pkt.middle,
+-                                  dec_tlu_br1_wb_pkt.middle
+-                                  }));
++                           .dout({dec_tlu_br0_wb_pkt[14:13], dec_tlu_br0_wb_pkt[12], dec_tlu_br0_wb_pkt[11], dec_tlu_br0_wb_pkt[15], dec_tlu_br1_wb_pkt[14:13], dec_tlu_br1_wb_pkt[12], dec_tlu_br1_wb_pkt[11], dec_tlu_br1_wb_pkt[15], dec_tlu_br0_wb_pkt[8:7], dec_tlu_br1_wb_pkt[8:7], dec_tlu_br0_wb_pkt[1], dec_tlu_br1_wb_pkt[1], dec_tlu_br0_wb_pkt[0], dec_tlu_br1_wb_pkt[0]}));
+ 
+    rvdff #(`RV_BHT_GHR_SIZE*2)  bp_wb_ghrff (.*,  .clk(e4e5_clk),
+                                                .din({exu_i0_br_fghr_e4[`RV_BHT_GHR_RANGE],
+                                                      exu_i1_br_fghr_e4[`RV_BHT_GHR_RANGE]
+                                                      }),
+-                                              .dout({dec_tlu_br0_wb_pkt.fghr[`RV_BHT_GHR_RANGE],
+-                                                     dec_tlu_br1_wb_pkt.fghr[`RV_BHT_GHR_RANGE]
+-                                                     }));
++                                              .dout({dec_tlu_br0_wb_pkt[6:2], dec_tlu_br1_wb_pkt[6:2]}));
+ 
+    rvdff #(2*$bits(dec_tlu_br0_addr_e4[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]))
+         bp_wb_index_ff (.*,  .clk(e4e5_clk),
+                             .din({dec_tlu_br0_addr_e4[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO],
+                                   dec_tlu_br1_addr_e4[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]}),
+-                           .dout({dec_tlu_br0_wb_pkt.index[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO],
+-                                  dec_tlu_br1_wb_pkt.index[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]}));
++                           .dout({dec_tlu_br0_wb_pkt[10:9], dec_tlu_br1_wb_pkt[10:9]}));
+ 
+    // only expect these in pipe 0
+    assign       ebreak_e4    =  (dec_tlu_packet_e4.pmu_i0_itype == EBREAK)  & dec_tlu_i0_valid_e4 & ~i0_trigger_hit_e4 & ~dcsr[`DCSR_EBREAKM];
+@@ -1843,10 +1840,10 @@ module dec_tlu_ctl
+                                 {mtdata1_t3[9], update_hit_bit_wb[3] | mtdata1_t3[8], mtdata1_t3[7:0]};
+ 
+ 
+-   rvdff #(10)  mtdata1_t0_ff (.*, .clk(active_clk), .din(mtdata1_t0_ns[9:0]), .dout(mtdata1_t0[9:0]));
+-   rvdff #(10)  mtdata1_t1_ff (.*, .clk(active_clk), .din(mtdata1_t1_ns[9:0]), .dout(mtdata1_t1[9:0]));
+-   rvdff #(10)  mtdata1_t2_ff (.*, .clk(active_clk), .din(mtdata1_t2_ns[9:0]), .dout(mtdata1_t2[9:0]));
+-   rvdff #(10)  mtdata1_t3_ff (.*, .clk(active_clk), .din(mtdata1_t3_ns[9:0]), .dout(mtdata1_t3[9:0]));
++   /*rvdff #(10)  mtdata1_t0_ff (.rst_l(rst_l), .clk(active_clk), .din(mtdata1_t0_ns[9:0]), .dout(mtdata1_t0));
++   rvdff #(10)  mtdata1_t1_ff (.rst_l(rst_l), .clk(active_clk), .din(mtdata1_t1_ns[9:0]), .dout(mtdata1_t1));
++   rvdff #(10)  mtdata1_t2_ff (.rst_l(rst_l), .clk(active_clk), .din(mtdata1_t2_ns[9:0]), .dout(mtdata1_t2));
++   rvdff #(10)  mtdata1_t3_ff (.rst_l(rst_l), .clk(active_clk), .din(mtdata1_t3_ns[9:0]), .dout(mtdata1_t3));*/
+ 
+    assign mtdata1_tsel_out[31:0] = ( ({32{(mtsel[1:0] == 2'b00)}} & {4'h2, mtdata1_t0[9], 6'b011111, mtdata1_t0[8:7], 6'b0, mtdata1_t0[6:5], 3'b0, mtdata1_t0[4:3], 3'b0, mtdata1_t0[2:0]}) |
+                                      ({32{(mtsel[1:0] == 2'b01)}} & {4'h2, mtdata1_t1[9], 6'b011111, mtdata1_t1[8:7], 6'b0, mtdata1_t1[6:5], 3'b0, mtdata1_t1[4:3], 3'b0, mtdata1_t1[2:0]}) |
+@@ -1896,10 +1893,10 @@ module dec_tlu_ctl
+    assign wr_mtdata2_t2_wb = dec_csr_wen_wb_mod & (dec_csr_wraddr_wb[11:0] == `MTDATA2) & (mtsel[1:0] == 2'b10) & (~mtdata1_t2[`MTDATA1_DMODE] | dbg_tlu_halted_f);
+    assign wr_mtdata2_t3_wb = dec_csr_wen_wb_mod & (dec_csr_wraddr_wb[11:0] == `MTDATA2) & (mtsel[1:0] == 2'b11) & (~mtdata1_t3[`MTDATA1_DMODE] | dbg_tlu_halted_f);
+ 
+-   rvdffe #(32)  mtdata2_t0_ff (.*, .en(wr_mtdata2_t0_wb), .din(dec_csr_wrdata_wb[31:0]), .dout(mtdata2_t0[31:0]));
++   /*rvdffe #(32)  mtdata2_t0_ff (.*, .en(wr_mtdata2_t0_wb), .din(dec_csr_wrdata_wb[31:0]), .dout(mtdata2_t0[31:0]));
+    rvdffe #(32)  mtdata2_t1_ff (.*, .en(wr_mtdata2_t1_wb), .din(dec_csr_wrdata_wb[31:0]), .dout(mtdata2_t1[31:0]));
+    rvdffe #(32)  mtdata2_t2_ff (.*, .en(wr_mtdata2_t2_wb), .din(dec_csr_wrdata_wb[31:0]), .dout(mtdata2_t2[31:0]));
+-   rvdffe #(32)  mtdata2_t3_ff (.*, .en(wr_mtdata2_t3_wb), .din(dec_csr_wrdata_wb[31:0]), .dout(mtdata2_t3[31:0]));
++   rvdffe #(32)  mtdata2_t3_ff (.*, .en(wr_mtdata2_t3_wb), .din(dec_csr_wrdata_wb[31:0]), .dout(mtdata2_t3[31:0]));*/
+ 
+    assign mtdata2_tsel_out[31:0] = ( ({32{(mtsel[1:0] == 2'b00)}} & mtdata2_t0[31:0]) |
+                                      ({32{(mtsel[1:0] == 2'b01)}} & mtdata2_t1[31:0]) |
+diff --git a/design/exu/exu_alu_ctl.sv b/design/exu/exu_alu_ctl.sv
+index ee3ba4e..00ed34d 100644
+--- a/design/exu/exu_alu_ctl.sv
++++ b/design/exu/exu_alu_ctl.sv
+@@ -48,7 +48,8 @@ module exu_alu_ctl
+    output logic [31:1] pc_ff,             // flopped PC
+ 
+    output logic pred_correct,             // NPC control
+-   output predict_pkt_t predict_p_ff      // Predicted branch structure
++   //output predict_pkt_t predict_p_ff      // Predicted branch structure
++    output reg [73:0] predict_p_ff
+ 
+   );
+ 
+@@ -68,7 +69,7 @@ module exu_alu_ctl
+ 
+    logic                actual_taken;
+ 
+-   logic signed [31:0]  a_ff;
++   logic [31:0]  a_ff;
+ 
+    logic [31:0]         b_ff;
+ 
+@@ -96,7 +97,7 @@ module exu_alu_ctl
+ 
+    rvdffe #(12) brimmff (.*, .en(enable), .din(brimm[12:1]), .dout(brimm_ff[12:1]));
+ 
+-   predict_pkt_t pp_ff;
++   wire [73:0] pp_ff;
+ 
+    rvdffe #($bits(predict_pkt_t)) predictpacketff (.*,
+                            .en(enable),
+@@ -185,7 +186,7 @@ module exu_alu_ctl
+    assign out[31:0] = ({32{sel_logic}} & lout[31:0]) |
+                       ({32{sel_shift}} & sout[31:0]) |
+                       ({32{sel_adder}} & aout[31:0]) |
+-                      ({32{ap.jal | pp_ff.pcall | pp_ff.pja | pp_ff.pret}} & {pcout[31:1],1'b0}) |
++                      ({32{ap.jal | pp_ff[17] | pp_ff[15] | pp_ff[16] }} & {pcout[31:1],1'b0}) |
+                       ({32{ap.csr_write}} & ((ap.csr_imm) ? b_ff[31:0] : a_ff[31:0])) |                // csr_write: if csr_imm rs2 else rs1
+                       ({31'b0, slt_one});
+ 
+@@ -193,10 +194,7 @@ module exu_alu_ctl
+ 
+    logic                any_jal;
+ 
+-   assign any_jal =       ap.jal |
+-                          pp_ff.pcall |
+-                          pp_ff.pja   |
+-                          pp_ff.pret;
++   assign any_jal =       ap.jal | pp_ff[17] | pp_ff[15] | pp_ff[16];
+ 
+ 
+    assign actual_taken = (ap.beq & eq) |
+@@ -232,7 +230,7 @@ module exu_alu_ctl
+ 
+    // target mispredicts on ret's
+ 
+-   assign target_mispredict = pp_ff.pret & (pp_ff.prett[31:1] != aout[31:1]);
++   assign target_mispredict = pp_ff[16] & (pp_ff[48:18] != aout[31:1]);
+ 
+    assign flush_upper = ( ap.jal | cond_mispredict | target_mispredict) & valid_ff & ~flush & ~freeze;
+ 
+@@ -254,19 +252,19 @@ module exu_alu_ctl
+ 
+    logic [1:0]          newhist;
+ 
+-   assign newhist[1] = (pp_ff.hist[1]&pp_ff.hist[0]) | (!pp_ff.hist[0]&actual_taken);
++   assign newhist[1] = (pp_ff[69] & pp_ff[68]) | (!pp_ff[68]&actual_taken);
+ 
+-   assign newhist[0] = (!pp_ff.hist[1]&!actual_taken) | (pp_ff.hist[1]&actual_taken);
++   assign newhist[0] = (!pp_ff[69] & !actual_taken) | (pp_ff[69]&actual_taken);
+ 
+ 
+ 
+    always_comb begin
+       predict_p_ff = pp_ff;
+ 
+-      predict_p_ff.misp    = (valid_ff) ? (cond_mispredict | target_mispredict) & ~flush : pp_ff.misp;
+-      predict_p_ff.ataken  = (valid_ff) ? actual_taken : pp_ff.ataken;
+-      predict_p_ff.hist[1] = (valid_ff) ? newhist[1] : pp_ff.hist[1];
+-      predict_p_ff.hist[0] = (valid_ff) ? newhist[0] : pp_ff.hist[0];
++      predict_p_ff[73]    = (valid_ff) ? (cond_mispredict | target_mispredict) & ~flush : pp_ff[73];
++      predict_p_ff[72]  = (valid_ff) ? actual_taken : pp_ff[72];
++      predict_p_ff[69] = (valid_ff) ? newhist[1] :pp_ff[69];
++      predict_p_ff[68] = (valid_ff) ? newhist[0] :pp_ff[68];
+ 
+    end
+ 
+diff --git a/design/exu/exu_mul_ctl.sv b/design/exu/exu_mul_ctl.sv
+index 41a86e8..39692f7 100644
+--- a/design/exu/exu_mul_ctl.sv
++++ b/design/exu/exu_mul_ctl.sv
+@@ -47,7 +47,7 @@ module exu_mul_ctl
+    logic                load_mul_rs1_bypass_e1, load_mul_rs2_bypass_e1;
+    logic                rs1_sign_e1, rs1_neg_e1;
+    logic                rs2_sign_e1, rs2_neg_e1;
+-   logic signed [32:0]  a_ff_e2, b_ff_e2;
++   logic  [32:0]  a_ff_e2, b_ff_e2;
+    logic        [63:0]  prod_e3;
+    logic                low_e1, low_e2, low_e3;
+ 
+diff --git a/design/ifu/ifu_aln_ctl.sv b/design/ifu/ifu_aln_ctl.sv
+index 76d5e55..4e9bdef 100644
+--- a/design/ifu/ifu_aln_ctl.sv
++++ b/design/ifu/ifu_aln_ctl.sv
+@@ -91,8 +91,10 @@ module ifu_aln_ctl
+    output logic ifu_fb_consume2,         // Consumed two buffers.To fetch control fetch for buffer mass balance
+    output logic [15:0] ifu_illegal_inst, // Illegal Instruction.
+ 
+-   output br_pkt_t i0_brp,               // Branch packet for I0.
+-   output br_pkt_t i1_brp,               // Branch packet for I1.
++   //output br_pkt_t i0_brp,               // Branch packet for I0.
++   //output br_pkt_t i1_brp,               // Branch packet for I1.
++    output reg [67:0] i0_brp,
++    output reg [67:0] i1_brp,
+ 
+    output logic [1:0] ifu_pmu_instr_aligned,         // number of inst aligned this cycle
+    output logic       ifu_pmu_align_stall,           // aligner stalled this cycle
+@@ -999,56 +1001,56 @@ module ifu_aln_ctl
+ 
+       i0_br_start_error = (first4B & alignval[1] & alignbrend[0]);
+ 
+-      i0_brp.valid = (first2B & alignbrend[0]) |
++      i0_brp[67] = (first2B & alignbrend[0]) |
+                      (first4B & alignbrend[1]) |
+                      i0_br_start_error;
+ 
+       i0_brp_pc4 = (first2B & alignpc4[0]) |
+                    (first4B & alignpc4[1]);
+ 
+-      i0_brp.ret = (first2B & alignret[0]) |
++      i0_brp[9] = (first2B & alignret[0]) |
+                    (first4B & alignret[1]);
+ 
+ `ifdef RV_BTB_48
+       i0_brp.way = (first2B | alignbrend[0]) ? {alignway_b1[0], alignway_b0[0]} : {alignway_b1[1], alignway_b0[1]};
+ `else
+-      i0_brp.way = (first2B | alignbrend[0]) ? alignway[0] : alignway[1];
++      i0_brp[10] = (first2B | alignbrend[0]) ? alignway[0] : alignway[1];
+ `endif
+-      i0_brp.hist[1] = (first2B & alignhist1[0]) |
++      i0_brp[54] = (first2B & alignhist1[0]) |
+                        (first4B & alignhist1[1]);
+ 
+-      i0_brp.hist[0] = (first2B & alignhist0[0]) |
++      i0_brp[53] = (first2B & alignhist0[0]) |
+                        (first4B & alignhist0[1]);
+ 
+       i0_ends_f1 = (first4B & alignfromf1[1]);
+ 
+-      i0_brp.toffset[11:0] = (i0_ends_f1) ? f1poffset[11:0] : f0poffset[11:0];
++      i0_brp[66:55] = (i0_ends_f1) ? f1poffset[11:0] : f0poffset[11:0];
+ 
+-      i0_brp.fghr[`RV_BHT_GHR_RANGE] = (i0_ends_f1) ? f1fghr[`RV_BHT_GHR_RANGE] : f0fghr[`RV_BHT_GHR_RANGE];
++      i0_brp[15:11] = (i0_ends_f1) ? f1fghr[`RV_BHT_GHR_RANGE] : f0fghr[`RV_BHT_GHR_RANGE];
+ 
+-      i0_brp.prett[31:1] = (i0_ends_f1) ? f1prett[31:1] : f0prett[31:1];
++      i0_brp[46:16] = (i0_ends_f1) ? f1prett[31:1] : f0prett[31:1];
+ 
+-      i0_brp.br_start_error = i0_br_start_error;
++      i0_brp[51] = i0_br_start_error;
+ 
+-      i0_brp.index[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] = (first2B | alignbrend[0]) ? firstpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]:
++      i0_brp[50:49] = (first2B | alignbrend[0]) ? firstpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]:
+                                                                                   secondpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO];
+ 
+-      i0_brp.btag[`RV_BTB_BTAG_SIZE-1:0] = (first2B | alignbrend[0]) ? firstbrtag_hash[`RV_BTB_BTAG_SIZE-1:0]:
++      i0_brp[8:0] = (first2B | alignbrend[0]) ? firstbrtag_hash[`RV_BTB_BTAG_SIZE-1:0]:
+                                                                        secondbrtag_hash[`RV_BTB_BTAG_SIZE-1:0];
+ 
+-      i0_brp.bank[1:0] = (first2B | alignbrend[0]) ? firstpc[3:2] :
++      i0_brp[48:47] = (first2B | alignbrend[0]) ? firstpc[3:2] :
+                                                      secondpc[3:2];
+ 
+ 
+-      i0_brp.br_error = (i0_brp.valid &  i0_brp_pc4 &  first2B) |
+-                        (i0_brp.valid & ~i0_brp_pc4 &  first4B);
++      i0_brp[52] = (i0_brp[67] &  i0_brp_pc4 &  first2B) |
++                        (i0_brp[67] & ~i0_brp_pc4 &  first4B);
+ 
+       i1_brp = '0;
+ 
+       i1_br_start_error = (first2B & second4B & alignval[2] & alignbrend[1]) |
+                           (first4B & third4B  & alignval[3] & alignbrend[2]);
+ 
+-      i1_brp.valid = (first4B & third2B & alignbrend[2]) |
++      i1_brp[67] = (first4B & third2B & alignbrend[2]) |
+                      (first4B & third4B & alignbrend[3]) |
+                      (first2B & second2B & alignbrend[1]) |
+                      (first2B & second4B & alignbrend[2]) |
+@@ -1059,7 +1061,7 @@ module ifu_aln_ctl
+                    (first2B & second2B & alignpc4[1]) |
+                    (first2B & second4B & alignpc4[2]);
+ 
+-      i1_brp.ret = (first4B & third2B & alignret[2]) |
++      i1_brp[9] = (first4B & third2B & alignret[2]) |
+                    (first4B & third4B & alignret[3]) |
+                    (first2B & second2B & alignret[1]) |
+                    (first2B & second4B & alignret[2]);
+@@ -1071,19 +1073,19 @@ module ifu_aln_ctl
+                    ({2{first2B & second4B &  alignbrend[1]}} & {alignway_b1[1], alignway_b0[1]} ) |
+                    ({2{first2B & second4B & ~alignbrend[1]}} & {alignway_b1[2], alignway_b0[2]} );
+ `else
+-      i1_brp.way = (first4B & third2B                   & alignway[2] ) |
++      i1_brp[10] = (first4B & third2B                   & alignway[2] ) |
+                    (first4B & third4B &  alignbrend[2]  & alignway[2] ) |
+                    (first4B & third4B & ~alignbrend[2]  & alignway[3] ) |
+                    (first2B & second2B                  & alignway[1] ) |
+                    (first2B & second4B &  alignbrend[1] & alignway[1] ) |
+                    (first2B & second4B & ~alignbrend[1] & alignway[2] );
+ `endif
+-      i1_brp.hist[1] = (first4B & third2B & alignhist1[2]) |
++      i1_brp[54] = (first4B & third2B & alignhist1[2]) |
+                        (first4B & third4B & alignhist1[3]) |
+                        (first2B & second2B & alignhist1[1]) |
+                        (first2B & second4B & alignhist1[2]);
+ 
+-      i1_brp.hist[0] = (first4B & third2B & alignhist0[2]) |
++      i1_brp[53] = (first4B & third2B & alignhist0[2]) |
+                        (first4B & third4B & alignhist0[3]) |
+                        (first2B & second2B & alignhist0[1]) |
+                        (first2B & second4B & alignhist0[2]);
+@@ -1093,41 +1095,41 @@ module ifu_aln_ctl
+                    (first2B & second2B & alignfromf1[1]) |
+                    (first2B & second4B & alignfromf1[2]);
+ 
+-      i1_brp.toffset[11:0] = (i1_ends_f1) ? f1poffset[11:0] : f0poffset[11:0];
++      i1_brp[66:55] = (i1_ends_f1) ? f1poffset[11:0] : f0poffset[11:0];
+ 
+-      i1_brp.fghr[`RV_BHT_GHR_RANGE] = (i1_ends_f1) ? f1fghr[`RV_BHT_GHR_RANGE] : f0fghr[`RV_BHT_GHR_RANGE];
++      i1_brp[15:11] = (i1_ends_f1) ? f1fghr[`RV_BHT_GHR_RANGE] : f0fghr[`RV_BHT_GHR_RANGE];
+ 
+-      i1_brp.prett[31:1] = (i1_ends_f1) ? f1prett[31:1] : f0prett[31:1];
++      i1_brp[46:16] = (i1_ends_f1) ? f1prett[31:1] : f0prett[31:1];
+ 
+-      i1_brp.br_start_error = i1_br_start_error;
++      i1_brp[51] = i1_br_start_error;
+ 
+ `define RV_BTB_RANGE  `RV_BTB_ADDR_HI-`RV_BTB_ADDR_LO+1
+ 
+-      i1_brp.index[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] = ({`RV_BTB_RANGE{first4B & third2B }}                  & thirdpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] ) |
++      i1_brp[50:49] = ({`RV_BTB_RANGE{first4B & third2B }}                  & thirdpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] ) |
+                                                 ({`RV_BTB_RANGE{first4B & third4B &  alignbrend[2] }} & thirdpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] ) |
+                                                 ({`RV_BTB_RANGE{first4B & third4B & ~alignbrend[2] }} & fourthpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] ) |
+                                                 ({`RV_BTB_RANGE{first2B & second2B}}                  & secondpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] ) |
+                                                 ({`RV_BTB_RANGE{first2B & second4B &  alignbrend[1]}} & secondpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] ) |
+                                                 ({`RV_BTB_RANGE{first2B & second4B & ~alignbrend[1]}} & thirdpc_hash[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO] );
+ 
+-      i1_brp.btag[`RV_BTB_BTAG_SIZE-1:0] = ({`RV_BTB_BTAG_SIZE{first4B & third2B }}                  &  thirdbrtag_hash[`RV_BTB_BTAG_SIZE-1:0] ) |
++      i1_brp[8:0] = ({`RV_BTB_BTAG_SIZE{first4B & third2B }}                  &  thirdbrtag_hash[`RV_BTB_BTAG_SIZE-1:0] ) |
+                                            ({`RV_BTB_BTAG_SIZE{first4B & third4B &  alignbrend[2] }} &  thirdbrtag_hash[`RV_BTB_BTAG_SIZE-1:0] ) |
+                                            ({`RV_BTB_BTAG_SIZE{first4B & third4B & ~alignbrend[2] }} & fourthbrtag_hash[`RV_BTB_BTAG_SIZE-1:0] ) |
+                                            ({`RV_BTB_BTAG_SIZE{first2B & second2B}}                  & secondbrtag_hash[`RV_BTB_BTAG_SIZE-1:0] ) |
+                                            ({`RV_BTB_BTAG_SIZE{first2B & second4B &  alignbrend[1]}} & secondbrtag_hash[`RV_BTB_BTAG_SIZE-1:0] ) |
+                                            ({`RV_BTB_BTAG_SIZE{first2B & second4B & ~alignbrend[1]}} &  thirdbrtag_hash[`RV_BTB_BTAG_SIZE-1:0] );
+ 
+-      i1_brp.bank[1:0] = ({2{first4B & third2B }}                  & thirdpc[3:2] ) |
++      i1_brp[48:47] = ({2{first4B & third2B }}                  & thirdpc[3:2] ) |
+                          ({2{first4B & third4B &  alignbrend[2] }} & thirdpc[3:2] ) |
+                          ({2{first4B & third4B & ~alignbrend[2] }} & fourthpc[3:2] ) |
+                          ({2{first2B & second2B}}                  & secondpc[3:2] ) |
+                          ({2{first2B & second4B &  alignbrend[1]}} & secondpc[3:2] ) |
+                          ({2{first2B & second4B & ~alignbrend[1]}} & thirdpc[3:2] );
+ 
+-      i1_brp.br_error = (i1_brp.valid &  i1_brp_pc4 & first4B & third2B ) |
+-                        (i1_brp.valid & ~i1_brp_pc4 & first4B & third4B ) |
+-                        (i1_brp.valid &  i1_brp_pc4 & first2B & second2B) |
+-                        (i1_brp.valid & ~i1_brp_pc4 & first2B & second4B);
++      i1_brp[52] = (i1_brp[67] &  i1_brp_pc4 & first4B & third2B ) |
++                        (i1_brp[67] & ~i1_brp_pc4 & first4B & third4B ) |
++                        (i1_brp[67] &  i1_brp_pc4 & first2B & second2B) |
++                        (i1_brp[67] & ~i1_brp_pc4 & first2B & second4B);
+    end
+ 
+ // figure out 2B illegal insts
+diff --git a/design/ifu/ifu_bp_ctl.sv b/design/ifu/ifu_bp_ctl.sv
+index 215b369..d702377 100644
+--- a/design/ifu/ifu_bp_ctl.sv
++++ b/design/ifu/ifu_bp_ctl.sv
+@@ -136,7 +136,7 @@ module ifu_bp_ctl
+    logic [`RV_BHT_GHR_RANGE]               dec_tlu_br1_fghr_wb;
+ 
+    logic [3:0]        use_mp_way;
+-   logic [`RV_RET_STACK_SIZE-1:0][31:1] rets_out, rets_in, e1_rets_out, e1_rets_in, e4_rets_out, e4_rets_in;
++   logic [124:1] rets_out, rets_in, e1_rets_out, e1_rets_in, e4_rets_out, e4_rets_in;
+    logic [`RV_RET_STACK_SIZE-1:0]       rsenable;
+ 
+ 
+@@ -1138,7 +1138,7 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+                          .dout(bp_btb_target_adder_f2[31:1])
+                          );
+    // mux in the return stack address here for a predicted return
+-   assign ifu_bp_btb_target_f2[31:1] = btb_rd_ret_f2 & ~btb_rd_call_f2 ? rets_out[0][31:1] : bp_btb_target_adder_f2[31:1];
++   assign ifu_bp_btb_target_f2[31:1] = btb_rd_ret_f2 & ~btb_rd_call_f2 ? rets_out[31-:31] : bp_btb_target_adder_f2[31:1];
+ 
+ 
+    // ----------------------------------------------------------------------
+@@ -1160,7 +1160,7 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+ 
+    assign rsunderpop_valid_ns = (rs_push | (rsunderpop_valid_f & ~(exu_i0_br_call_e4 | exu_i1_br_call_e4))) & ~exu_flush_final;
+    assign rsoverpop_valid_ns = (rs_pop | (rsoverpop_valid_f & ~(exu_i0_br_ret_e4 | exu_i1_br_ret_e4))) & ~exu_flush_final;
+-   assign rsoverpop_ns[31:1] = ( ({31{rs_pop}}  & rets_out[0][31:1]) |
++   assign rsoverpop_ns[31:1] = ( ({31{rs_pop}}  & rets_out[62-:31]) |
+                                  ({31{~rs_pop}} & rsoverpop_f[31:1]) );
+ 
+    rvdff #(33) retoverpop_ff (.*, .clk(active_clk), .din({rsunderpop_valid_ns, rsoverpop_valid_ns, rsoverpop_ns[31:1]}), .dout({rsunderpop_valid_f, rsoverpop_valid_f, rsoverpop_f[31:1]}));
+@@ -1185,14 +1185,14 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+ 
+ 
+    // Fetch based
+-   assign rets_in[0][31:1] = ( ({31{rs_overpop_correct & rs_underpop_correct}} & rsoverpop_f[31:1]) |
++   assign rets_in[31-:31] = ( ({31{rs_overpop_correct & rs_underpop_correct}} & rsoverpop_f[31:1]) |
+                                ({31{rs_push & rs_overpop_correct}} & rsoverpop_f[31:1]) |
+                                ({31{rs_push & ~rs_overpop_correct}} & bp_rs_call_target_f2[31:1]) |
+ `ifdef REAL_COMM_RS
+                                ({31{rs_correct}} & e1_rets_out[0][31:1]) |
+                                ({31{e4_rs_correct}} & e4_rets_out[0][31:1]) |
+ `endif
+-                               ({31{rs_pop}}  & rets_out[1][31:1]) );
++                               ({31{rs_pop}}  & rets_out[62-:31]) );
+ 
+    assign rsenable[0] = ~rs_hold;
+ 
+@@ -1205,7 +1205,7 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+                                      ({31{rs_correct}} & e1_rets_out[i][31:1]) |
+                                      ({31{e4_rs_correct}} & e4_rets_out[i][31:1]) );
+ `else
+-         assign rets_in[i][31:1] = rets_out[i-1][31:1];
++         assign rets_in[(i * 31) + 31-:31] = rets_out[((i - 1) * 31) + 31-:31];
+ `endif
+          assign rsenable[i] = rs_push | rs_correct | e4_rs_correct;
+       end
+@@ -1216,12 +1216,12 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+                                     ({31{rs_correct}} & e1_rets_out[i][31:1]) |
+                                     ({31{e4_rs_correct}} & e4_rets_out[i][31:1]) );
+ `else
+-        assign rets_in[i][31:1] = ( ({31{rs_push}} & rets_out[i-1][31:1]) |
+-                                    ({31{rs_pop}}  & rets_out[i+1][31:1]) );
++        assign rets_in[(i * 31) + 31-:31] = ( ({31{rs_push}} & rets_out[((i - 1) * 31) + 31-:31]) |
++                                    ({31{rs_pop}}  & rets_out[((i + 1) * 31) + 31-:31]) );
+ `endif
+          assign rsenable[i] = rs_push | rs_pop | rs_correct | e4_rs_correct;
+       end
+-      rvdffe #(31) rets_ff (.*, .en(rsenable[i]), .din(rets_in[i][31:1]), .dout(rets_out[i][31:1]));
++      rvdffe #(31) rets_ff (.*, .en(rsenable[i]), .din(rets_in[(i * 31) + 31-:31]), .dout(rets_out[(i * 31) + 31-:31]));
+ 
+    end : retstack
+ 
+@@ -1703,16 +1703,14 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+ 
+ 
+ 
+-     function [2:0] encode8_3;
+-      input [7:0] in;
++     function [2:0] encode8_3(input [7:0] in);
+ 
+       encode8_3[2] = |in[7:4];
+       encode8_3[1] = in[7] | in[6] | in[3] | in[2];
+       encode8_3[0] = in[7] | in[5] | in[3] | in[1];
+ 
+    endfunction
+-   function [7:0] decode3_8;
+-      input [2:0] in;
++   function [7:0] decode3_8(input [2:0] in);
+ 
+       decode3_8[7] =  in[2] &  in[1] &  in[0];
+       decode3_8[6] =  in[2] &  in[1] & ~in[0];
+@@ -1724,8 +1722,7 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+       decode3_8[0] = ~in[2] & ~in[1] & ~in[0];
+ 
+    endfunction
+-   function [3:0] decode2_4;
+-      input [1:0] in;
++   function [3:0] decode2_4(input [1:0] in);
+ 
+       decode2_4[3] =  in[1] &  in[0];
+       decode2_4[2] =  in[1] & ~in[0];
+@@ -1734,8 +1731,7 @@ assign fgmask_f2[0] = (~ifc_fetch_addr_f2[3] & ~ifc_fetch_addr_f2[2]
+ 
+    endfunction
+ 
+-   function [3:0] countones;
+-      input [7:0] valid;
++   function [3:0] countones(input [7:0] valid);
+ 
+       begin
+ 
+@@ -1749,9 +1745,7 @@ countones[3:0] = {3'b0, valid[7]} +
+                  {3'b0, valid[0]};
+       end
+    endfunction
+-   function [2:0] newlru; // updated lru
+-      input [2:0] lru;// current lru
+-      input [1:0] used;// hit way
++   function [2:0] newlru(input [2:0] lru, input [1:0] used); // updated lru
+       begin
+ `ifdef BTB_ROUND_ROBIN
+ newlru[2] = 1'b0;
+@@ -1765,9 +1759,7 @@ newlru[0] = (~lru[2] & lru[1] & ~used[1] & ~used[0]) | (~lru[1] & ~lru[0] & used
+       end
+    endfunction //
+ 
+-   function [1:0] lru2way; // new repl way taking invalid ways into account
+-      input [2:0] lru; // current lru
+-      input [2:0] v; // current way valids
++   function [1:0] lru2way(input [2:0] lru,input [2:0] v); // new repl way taking invalid ways into account
+       begin
+ `ifdef BTB_ROUND_ROBIN
+          lru2way[1:0] = lru[1:0];
+diff --git a/design/ifu/ifu_ic_mem.sv b/design/ifu/ifu_ic_mem.sv
+index dded8fd..ffb0952 100644
+--- a/design/ifu/ifu_ic_mem.sv
++++ b/design/ifu/ifu_ic_mem.sv
+@@ -356,16 +356,16 @@ module IC_TAG #(parameter ICACHE_TAG_HIGH = 16 ,
+       ) ;
+ 
+ `ifdef RV_ICACHE_ECC
+-   logic [3:0] [24:0] ic_tag_data_raw;
+-   logic [3:0] [37:ICACHE_TAG_HIGH] w_tout;
++	wire [83:0] ic_tag_data_raw;
++   logic [(32 >= ICACHE_TAG_HIGH ? (4 * (33 - ICACHE_TAG_HIGH)) + (ICACHE_TAG_HIGH - 1) : (4 * (ICACHE_TAG_HIGH - 31)) + 31):(32 >= ICACHE_TAG_HIGH ? ICACHE_TAG_HIGH : 32)] w_tout;
+    logic [24:0] ic_tag_wr_data ;
+    logic [3:0] [31:0] ic_tag_corrected_data_unc;
+    logic [3:0] [06:0] ic_tag_corrected_ecc_unc;
+    logic [3:0]        ic_tag_single_ecc_error;
+    logic [3:0]        ic_tag_double_ecc_error;
+ `else
+-   logic [3:0] [20:0] ic_tag_data_raw;
+-   logic [3:0] [32:ICACHE_TAG_HIGH] w_tout;
++	wire [83:0] ic_tag_data_raw;
++   logic [(32 >= ICACHE_TAG_HIGH ? (4 * (33 - ICACHE_TAG_HIGH)) + (ICACHE_TAG_HIGH - 1) : (4 * (ICACHE_TAG_HIGH - 31)) + 31):(32 >= ICACHE_TAG_HIGH ? ICACHE_TAG_HIGH : 32)] w_tout;
+    logic [20:0] ic_tag_wr_data ;
+ `endif
+ 
+@@ -466,12 +466,12 @@ end
+                                      .WE (ic_tag_wren_q[i]),
+                                      .D  (ic_tag_wr_data[24:0]),
+                                      .ADR(ic_rw_addr_q[ICACHE_TAG_HIGH-1:ICACHE_TAG_LOW]),
+-                                     .Q  (ic_tag_data_raw[i][24:0])
++                                     .Q  (ic_tag_data_raw[(i * 21) + 20-:21])
+                                     );
+ 
+ 
+-         assign w_tout[i][31:ICACHE_TAG_HIGH] = ic_tag_data_raw[i][31-ICACHE_TAG_HIGH:0] ;
+-         assign w_tout[i][36:32]              = ic_tag_data_raw[i][24:20] ;
++          assign w_tout[(32 >= ICACHE_TAG_HIGH ? (i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] = ic_tag_data_raw[(i * 21) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 31 - ICACHE_TAG_HIGH : ((31 - ICACHE_TAG_HIGH) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)];
++          assign w_tout[(i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? 32 : ICACHE_TAG_HIGH)] = ic_tag_data_raw[(i * 21) + 20];
+ 
+          rvecc_decode  ecc_decode (
+                            .en(~dec_tlu_core_ecc_disable),
+@@ -490,14 +490,15 @@ end
+                                      .WE (ic_tag_wren_q[i]),
+                                      .D  (ic_tag_wr_data[20:0]),
+                                      .ADR(ic_rw_addr_q[ICACHE_TAG_HIGH-1:ICACHE_TAG_LOW]),
+-                                     .Q  (ic_tag_data_raw[i][20:0])
++                                     .Q  (ic_tag_data_raw[(i * 21) + 20-:21])
+                                     );
+ 
+-         assign w_tout[i][31:ICACHE_TAG_HIGH] = ic_tag_data_raw[i][31-ICACHE_TAG_HIGH:0] ;
+-         assign w_tout[i][32]                 = ic_tag_data_raw[i][20] ;
++          assign w_tout[(32 >= ICACHE_TAG_HIGH ? (i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] = ic_tag_data_raw[(i * 21) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 31 - ICACHE_TAG_HIGH : ((31 - ICACHE_TAG_HIGH) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)];
++          assign w_tout[(i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? 32 : ICACHE_TAG_HIGH)] = ic_tag_data_raw[(i * 21) + 20];
+ 
+-         rveven_paritycheck #(32-ICACHE_TAG_HIGH) parcheck(.data_in   (w_tout[i][31:ICACHE_TAG_HIGH]),
+-                                                   .parity_in (w_tout[i][32]),
++         rveven_paritycheck #(32-ICACHE_TAG_HIGH) parcheck(
++					.data_in(w_tout[(32 >= ICACHE_TAG_HIGH ? (i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)]),
++					.parity_in(w_tout[(i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? 32 : ICACHE_TAG_HIGH)]),
+                                                    .parity_err(ic_tag_way_perr[i]));
+       `endif
+ 
+@@ -513,8 +514,8 @@ end
+                                      .Q  (ic_tag_data_raw[i][24:0])
+                                     );
+ 
+-         assign w_tout[i][31:ICACHE_TAG_HIGH] = ic_tag_data_raw[i][31-ICACHE_TAG_HIGH:0] ;
+-         assign w_tout[i][36:32]              = ic_tag_data_raw[i][24:20] ;
++				assign w_tout[(32 >= ICACHE_TAG_HIGH ? (i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] = ic_tag_data_raw[(i * 21) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 31 - ICACHE_TAG_HIGH : ((31 - ICACHE_TAG_HIGH) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)];
++				assign w_tout[(i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? 32 : ICACHE_TAG_HIGH)] = ic_tag_data_raw[(i * 21) + 20];
+ 
+          rvecc_decode  ecc_decode (
+                            .en(~dec_tlu_core_ecc_disable),
+@@ -534,14 +535,15 @@ end
+                                      .WE (ic_tag_wren_q[i]),
+                                      .D  (ic_tag_wr_data[20:0]),
+                                      .ADR(ic_rw_addr_q[ICACHE_TAG_HIGH-1:ICACHE_TAG_LOW]),
+-                                     .Q  ({ic_tag_data_raw[i][20:0]})
++                                     .Q  ({ic_tag_data_raw[(i * 21) + 20-:21]})
+                                     );
+ 
+-         assign w_tout[i][31:ICACHE_TAG_HIGH] = ic_tag_data_raw[i][31-ICACHE_TAG_HIGH:0] ;
+-         assign w_tout[i][32]                 = ic_tag_data_raw[i][20] ;
++				assign w_tout[(32 >= ICACHE_TAG_HIGH ? (i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] = ic_tag_data_raw[(i * 21) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 31 - ICACHE_TAG_HIGH : ((31 - ICACHE_TAG_HIGH) + ((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:((31 - ICACHE_TAG_HIGH) >= 0 ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)];
++				assign w_tout[(i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? 32 : ICACHE_TAG_HIGH)] = ic_tag_data_raw[(i * 21) + 20];
+ 
+-       rveven_paritycheck #(32-ICACHE_TAG_HIGH) parcheck(.data_in   (w_tout[i][31:ICACHE_TAG_HIGH]),
+-                                                   .parity_in (w_tout[i][32]),
++       rveven_paritycheck #(32-ICACHE_TAG_HIGH) parcheck(
++					.data_in(w_tout[(32 >= ICACHE_TAG_HIGH ? (i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)]),
++					.parity_in(w_tout[(i * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? 32 : ICACHE_TAG_HIGH)]),
+                                                    .parity_err(ic_tag_way_perr[i]));
+ 
+       `endif
+@@ -556,16 +558,13 @@ end // block: WAYS
+                                        ({25{ic_debug_rd_way_en_ff[3]}} &  ic_tag_data_raw[3] ) ;
+ 
+ `else
+-   assign ictag_debug_rd_data[20:0] =  ({21{ic_debug_rd_way_en_ff[0]}} &  ic_tag_data_raw[0] ) |
+-                                       ({21{ic_debug_rd_way_en_ff[1]}} &  ic_tag_data_raw[1] ) |
+-                                       ({21{ic_debug_rd_way_en_ff[2]}} &  ic_tag_data_raw[2] ) |
+-                                       ({21{ic_debug_rd_way_en_ff[3]}} &  ic_tag_data_raw[3] ) ;
++	assign ictag_debug_rd_data[20:0] = ((({21 {ic_debug_rd_way_en_ff[0]}} & ic_tag_data_raw[0+:21]) | ({21 {ic_debug_rd_way_en_ff[1]}} & ic_tag_data_raw[21+:21])) | ({21 {ic_debug_rd_way_en_ff[2]}} & ic_tag_data_raw[42+:21])) | ({21 {ic_debug_rd_way_en_ff[3]}} & ic_tag_data_raw[63+:21]);
+ 
+ `endif
+-   assign ic_rd_hit[0] = (w_tout[0][31:ICACHE_TAG_HIGH] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[0];
+-   assign ic_rd_hit[1] = (w_tout[1][31:ICACHE_TAG_HIGH] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[1];
+-   assign ic_rd_hit[2] = (w_tout[2][31:ICACHE_TAG_HIGH] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[2];
+-   assign ic_rd_hit[3] = (w_tout[3][31:ICACHE_TAG_HIGH] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[3];
++	assign ic_rd_hit[0] = (w_tout[(32 >= ICACHE_TAG_HIGH ? (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : ((32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[0];
++	assign ic_rd_hit[1] = (w_tout[(32 >= ICACHE_TAG_HIGH ? (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[1];
++	assign ic_rd_hit[2] = (w_tout[(32 >= ICACHE_TAG_HIGH ? (2 * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((2 * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[2];
++	assign ic_rd_hit[3] = (w_tout[(32 >= ICACHE_TAG_HIGH ? (3 * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32)) : (((3 * (32 >= ICACHE_TAG_HIGH ? 33 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 31)) + (32 >= ICACHE_TAG_HIGH ? (31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) : ICACHE_TAG_HIGH - ((31 >= ICACHE_TAG_HIGH ? 31 : (31 + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1) - 32))) + (31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)) - 1)-:(31 >= ICACHE_TAG_HIGH ? 32 - ICACHE_TAG_HIGH : ICACHE_TAG_HIGH - 30)] == ic_rw_addr_ff[31:ICACHE_TAG_HIGH]) & ic_tag_valid[3];
+ 
+    assign  ic_tag_perr  = | (ic_tag_way_perr[3:0] & ic_tag_valid[3:0] ) ;
+ endmodule
+diff --git a/design/ifu/ifu_iccm_mem.sv b/design/ifu/ifu_iccm_mem.sv
+index b636be1..9fb9af0 100644
+--- a/design/ifu/ifu_iccm_mem.sv
++++ b/design/ifu/ifu_iccm_mem.sv
+@@ -64,8 +64,8 @@ module ifu_iccm_mem
+ 
+ 
+ 
+-   logic [ICCM_NUM_BANKS/4-1:0] [77:0]   iccm_bank_dout_hi;
+-   logic [ICCM_NUM_BANKS/4-1:0] [77:0]   iccm_bank_dout_lo;
++      wire [155:0] iccm_bank_dout_hi;
++      wire [155:0] iccm_bank_dout_lo;
+    logic [5:4]                           iccm_rw_addr_q;
+     // assign CLK = clk ;
+ 
+@@ -97,7 +97,7 @@ module ifu_iccm_mem
+                                      .WE(wren_bank_hi0[i]),
+                                      .ADR(addr_bank[i]),
+                                      .D(iccm_wr_data[38:0]),
+-                                     .Q(iccm_bank_dout_hi[i][38:0])
++                                     .Q(iccm_bank_dout_hi[(i * 78) + 38-:39])
+                                       );
+           `RV_ICCM_DATA_CELL iccm_bank_hi1 (
+                                      // Primary ports
+@@ -105,7 +105,7 @@ module ifu_iccm_mem
+                                      .WE(wren_bank_hi1[i]),
+                                      .ADR(addr_bank[i]),
+                                      .D(iccm_wr_data[77:39]),
+-                                     .Q(iccm_bank_dout_hi[i][77:39])
++                                     .Q(iccm_bank_dout_hi[(i * 78) + 77-:39])
+                                       );
+           `RV_ICCM_DATA_CELL iccm_bank_lo0 (
+                                      // Primary ports
+@@ -113,7 +113,7 @@ module ifu_iccm_mem
+                                      .WE(wren_bank_lo0[i]),
+                                      .ADR(addr_bank[i]),
+                                      .D(iccm_wr_data[38:0]),
+-                                     .Q(iccm_bank_dout_lo[i][38:0])
++                                     .Q(iccm_bank_dout_lo[(i * 78) + 38-:39])
+                                       );
+          `RV_ICCM_DATA_CELL iccm_bank_lo1 (
+                                      // Primary ports
+@@ -121,15 +121,15 @@ module ifu_iccm_mem
+                                      .WE(wren_bank_lo1[i]),
+                                      .ADR(addr_bank[i]),
+                                      .D(iccm_wr_data[77:39]),
+-                                     .Q(iccm_bank_dout_lo[i][77:39])
++                                     .Q(iccm_bank_dout_lo[(i * 78) + 77-:39])
+                                       );
+ 
+ 
+    end : mem_bank
+ 
+ 
+-   assign iccm_rd_data[155:0] = (ICCM_BANK_BITS == 2) ?  {iccm_bank_dout_hi[0][77:0], iccm_bank_dout_lo[0][77:0]}   :
+-                                                           { iccm_bank_dout_hi[iccm_rw_addr_q[ICCM_BANK_HI:4]][77:0], iccm_bank_dout_lo[iccm_rw_addr_q[ICCM_BANK_HI:4]][77:0] };
++   assign iccm_rd_data[155:0] = (ICCM_BANK_BITS == 2) ?  {iccm_bank_dout_hi[(iccm_rw_addr_q[ICCM_BANK_HI:4] * 78) + 77-:78], iccm_bank_dout_lo[(iccm_rw_addr_q[ICCM_BANK_HI:4] * 78) + 77-:78]}   :
++                                                           { iccm_bank_dout_hi[(iccm_rw_addr_q[ICCM_BANK_HI:4] * 78) + 77-:78], iccm_bank_dout_lo[(iccm_rw_addr_q[ICCM_BANK_HI:4] * 78) + 77-:78]};
+ 
+ 
+  if (ICCM_BANK_BITS == 2) begin
+diff --git a/design/lib/axi4_to_ahb.sv b/design/lib/axi4_to_ahb.sv
+index 776e8d6..2979530 100644
+--- a/design/lib/axi4_to_ahb.sv
++++ b/design/lib/axi4_to_ahb.sv
+@@ -174,45 +174,35 @@ module axi4_to_ahb #(parameter TAG  = 1) (
+    logic                       ahbm_data_clk;
+ 
+    // Function to get the length from byte enable
+-   function automatic logic [1:0] get_write_size;
+-      input logic [7:0] byteen;
+-
+-      logic [1:0]       size;
+-
+-      size[1:0] = (2'b11 & {2{(byteen[7:0] == 8'hff)}}) |
++   function automatic logic [1:0] get_write_size(input logic [7:0] byteen);
++      get_write_size[1:0] = (2'b11 & {2{(byteen[7:0] == 8'hff)}}) |
+                   (2'b10 & {2{((byteen[7:0] == 8'hf0) | (byteen[7:0] == 8'h0f))}}) |
+                   (2'b01 & {2{((byteen[7:0] == 8'hc0) | (byteen[7:0] == 8'h30) | (byteen[7:0] == 8'h0c) | (byteen[7:0] == 8'h03))}});
+-
+-      return size[1:0];
+    endfunction // get_write_size
+ 
+    // Function to get the length from byte enable
+-   function automatic logic [2:0] get_write_addr;
+-      input logic [7:0] byteen;
+-
+-      logic [2:0]       addr;
+-
+-      addr[2:0] = (3'h0 & {3{((byteen[7:0] == 8'hff) | (byteen[7:0] == 8'h0f) | (byteen[7:0] == 8'h03))}}) |
++   function automatic logic [2:0] get_write_addr(input logic [7:0] byteen);
++      get_write_addr[2:0] = (3'h0 & {3{((byteen[7:0] == 8'hff) | (byteen[7:0] == 8'h0f) | (byteen[7:0] == 8'h03))}}) |
+                   (3'h2 & {3{(byteen[7:0] == 8'h0c)}})                                                     |
+                   (3'h4 & {3{((byteen[7:0] == 8'hf0) | (byteen[7:0] == 8'h03))}})                          |
+                   (3'h6 & {3{(byteen[7:0] == 8'hc0)}});
+-
+-      return addr[2:0];
+    endfunction // get_write_size
+ 
+    // Function to get the next byte pointer
+    function automatic logic [2:0] get_nxtbyte_ptr (logic [2:0] current_byte_ptr, logic [7:0] byteen, logic get_next);
+       logic [2:0] start_ptr;
+       logic       found;
++      logic [2:0] tmp;
+       found = '0;
+       //get_nxtbyte_ptr[2:0] = current_byte_ptr[2:0];
+       start_ptr[2:0] = get_next ? (current_byte_ptr[2:0] + 3'b1) : current_byte_ptr[2:0];
+       for (int j=0; j<8; j++) begin
+          if (~found) begin
+-            get_nxtbyte_ptr[2:0] = 3'(j);
++            tmp[2:0] = 3'(j);
+             found |= (byteen[j] & (3'(j) >= start_ptr[2:0])) ;
+          end
+       end
++      get_nxtbyte_ptr[2:0] = tmp;
+    endfunction // get_nextbyte_ptr
+ 
+ 
+diff --git a/design/lsu/lsu_bus_buffer.sv b/design/lsu/lsu_bus_buffer.sv
+index 7a0e807..9a38009 100644
+--- a/design/lsu/lsu_bus_buffer.sv
++++ b/design/lsu/lsu_bus_buffer.sv
+@@ -24,16 +24,13 @@
+ //********************************************************************************
+ 
+ // Function to do 8 to 3 bit encoding
+-function automatic logic [2:0] f_Enc8to3;
+-   input logic [7:0] Dec_value;
+-
+-   logic [2:0]       Enc_value;
+-   Enc_value[0] = Dec_value[1] | Dec_value[3] | Dec_value[5] | Dec_value[7];
+-   Enc_value[1] = Dec_value[2] | Dec_value[3] | Dec_value[6] | Dec_value[7];
+-   Enc_value[2] = Dec_value[4] | Dec_value[5] | Dec_value[6] | Dec_value[7];
+-
+-   return Enc_value[2:0];
++package tmp;
++function automatic logic [2:0] f_Enc8to3(input logic [7:0] Dec_value);
++   f_Enc8to3[0] = Dec_value[1] | Dec_value[3] | Dec_value[5] | Dec_value[7];
++   f_Enc8to3[1] = Dec_value[2] | Dec_value[3] | Dec_value[6] | Dec_value[7];
++   f_Enc8to3[2] = Dec_value[4] | Dec_value[5] | Dec_value[6] | Dec_value[7];
+ endfunction // f_Enc8to3
++endpackage
+ 
+ 
+ module lsu_bus_buffer
+@@ -188,6 +185,8 @@ module lsu_bus_buffer
+ 
+ `include "global.h"
+ 
++   import tmp::*;
++
+    // For Ld: IDLE -> WAIT -> CMD -> RESP -> DONE -> IDLE
+    // For St: IDLE -> WAIT -> CMD -> RESP(?) -> IDLE
+    typedef enum logic [2:0] {IDLE=3'b000, WAIT=3'b001, CMD=3'b010, RESP=3'b011, DONE=3'b100} state_t;
+@@ -248,7 +247,7 @@ module lsu_bus_buffer
+    logic [63:0]                         bus_rsp_rdata;
+ 
+    // Bus buffer signals
+-   state_t [DEPTH-1:0]                  buf_state;
++     wire [23:0] buf_state;
+    logic   [DEPTH-1:0][2:0]             buf_state_out;
+    logic   [DEPTH-1:0][1:0]             buf_sz;
+    logic   [DEPTH-1:0][31:0]            buf_addr;
+@@ -266,7 +265,7 @@ module lsu_bus_buffer
+    logic   [DEPTH-1:0][31:0]            buf_data;
+    logic   [DEPTH-1:0][DEPTH-1:0]       buf_age, buf_age_younger, buf_age_temp;
+ 
+-   state_t [DEPTH-1:0]                  buf_nxtstate;
++     reg [23:0] buf_nxtstate;
+    logic   [DEPTH-1:0]                  buf_rst;
+    logic   [DEPTH-1:0]                  buf_state_en;
+    logic   [DEPTH-1:0]                  buf_cmd_state_bus_en;
+diff --git a/design/lsu/lsu_dccm_mem.sv b/design/lsu/lsu_dccm_mem.sv
+index ed376ee..5fdb970 100644
+--- a/design/lsu/lsu_dccm_mem.sv
++++ b/design/lsu/lsu_dccm_mem.sv
+@@ -55,7 +55,7 @@ module lsu_dccm_mem
+ 
+    logic [DCCM_NUM_BANKS-1:0]         wren_bank;
+    logic [DCCM_NUM_BANKS-1:0]         rden_bank;
+-   logic [DCCM_NUM_BANKS-1:0] [DCCM_BITS-1:(DCCM_BANK_BITS+2)]   addr_bank;
++   wire [92:5] addr_bank;
+    logic [DCCM_BITS-1:(DCCM_BANK_BITS+DCCM_WIDTH_BITS)] rd_addr_even, rd_addr_odd;
+    logic                              rd_unaligned;
+    logic [DCCM_NUM_BANKS-1:0] [DCCM_FDATA_WIDTH-1:0]   dccm_bank_dout;
+@@ -102,7 +102,7 @@ module lsu_dccm_mem
+    for (genvar i=0; i<DCCM_NUM_BANKS; i++) begin: mem_bank
+       assign  wren_bank[i]        = dccm_wren & (dccm_wr_addr[2+:DCCM_BANK_BITS] == i);
+       assign  rden_bank[i]        = dccm_rden & ((dccm_rd_addr_hi[2+:DCCM_BANK_BITS] == i) | (dccm_rd_addr_lo[2+:DCCM_BANK_BITS] == i));
+-      assign  addr_bank[i][(DCCM_BANK_BITS+DCCM_WIDTH_BITS)+:DCCM_INDEX_BITS] = wren_bank[i] ? dccm_wr_addr[(DCCM_BANK_BITS+DCCM_WIDTH_BITS)+:DCCM_INDEX_BITS] :
++      assign addr_bank[(i * 11) + 5+:DCCM_INDEX_BITS] = wren_bank[i] ? dccm_wr_addr[(DCCM_BANK_BITS+DCCM_WIDTH_BITS)+:DCCM_INDEX_BITS] :
+                                                                                 (((dccm_rd_addr_hi[2+:DCCM_BANK_BITS] == i) & rd_unaligned) ?
+                                                                                                     dccm_rd_addr_hi[(DCCM_BANK_BITS+DCCM_WIDTH_BITS)+:DCCM_INDEX_BITS] :
+                                                                                                     dccm_rd_addr_lo[(DCCM_BANK_BITS+DCCM_WIDTH_BITS)+:DCCM_INDEX_BITS]);
+@@ -124,7 +124,7 @@ module lsu_dccm_mem
+                                      // Primary ports
+                                      .CLK(dccm_clk[i]),
+                                      .WE(wren_bank[i]),
+-                                     .ADR(addr_bank[i]),
++                                     .ADR(addr_bank[5 + (i * 11)+:11]),
+                                      .D(dccm_wr_data[DCCM_FDATA_WIDTH-1:0]),
+                                      .Q(dccm_bank_dout[i][DCCM_FDATA_WIDTH-1:0])
+ 
+diff --git a/design/lsu/lsu_lsc_ctl.sv b/design/lsu/lsu_lsc_ctl.sv
+index 4891a1a..4d2b4ae 100644
+--- a/design/lsu/lsu_lsc_ctl.sv
++++ b/design/lsu/lsu_lsc_ctl.sv
+@@ -143,6 +143,8 @@ module lsu_lsc_ctl
+ 
+ `include "global.h"
+ 
++   import swerv_types::*;
++
+    logic [31:0]        full_addr_dc1;
+    logic [31:0]        full_end_addr_dc1;
+    logic [31:0]        lsu_rs1_d;
+@@ -254,11 +256,11 @@ module lsu_lsc_ctl
+    rvdff #(1) lsu_pkt_vlddc4ff (.*, .din(lsu_pkt_dc4_in.valid), .dout(lsu_pkt_dc4.valid), .clk(lsu_c2_dc4_clk));
+    rvdff #(1) lsu_pkt_vlddc5ff (.*, .din(lsu_pkt_dc5_in.valid), .dout(lsu_pkt_dc5.valid), .clk(lsu_c2_dc5_clk));
+ 
+-   rvdffe #($bits(lsu_pkt_t)-1) lsu_pkt_dc1ff (.*, .din(lsu_pkt_dc1_in[$bits(lsu_pkt_t)-1:1]), .dout(lsu_pkt_dc1[$bits(lsu_pkt_t)-1:1]), .en(lsu_freeze_c1_dc1_clken));
+-   rvdffe #($bits(lsu_pkt_t)-1) lsu_pkt_dc2ff (.*, .din(lsu_pkt_dc2_in[$bits(lsu_pkt_t)-1:1]), .dout(lsu_pkt_dc2[$bits(lsu_pkt_t)-1:1]), .en(lsu_freeze_c1_dc2_clken));
+-   rvdffe #($bits(lsu_pkt_t)-1) lsu_pkt_dc3ff (.*, .din(lsu_pkt_dc3_in[$bits(lsu_pkt_t)-1:1]), .dout(lsu_pkt_dc3[$bits(lsu_pkt_t)-1:1]), .en(lsu_freeze_c1_dc3_clken));
+-   rvdff #($bits(lsu_pkt_t)-1) lsu_pkt_dc4ff (.*, .din(lsu_pkt_dc4_in[$bits(lsu_pkt_t)-1:1]), .dout(lsu_pkt_dc4[$bits(lsu_pkt_t)-1:1]), .clk(lsu_c1_dc4_clk));
+-   rvdff #($bits(lsu_pkt_t)-1) lsu_pkt_dc5ff (.*, .din(lsu_pkt_dc5_in[$bits(lsu_pkt_t)-1:1]), .dout(lsu_pkt_dc5[$bits(lsu_pkt_t)-1:1]), .clk(lsu_c1_dc5_clk));
++   rvdffe #(19-1) lsu_pkt_dc1ff (.*, .din(lsu_pkt_dc1_in[19-1:1]), .dout(lsu_pkt_dc1[19-1:1]), .en(lsu_freeze_c1_dc1_clken));
++   rvdffe #(19-1) lsu_pkt_dc2ff (.*, .din(lsu_pkt_dc2_in[19-1:1]), .dout(lsu_pkt_dc2[19-1:1]), .en(lsu_freeze_c1_dc2_clken));
++   rvdffe #(19-1) lsu_pkt_dc3ff (.*, .din(lsu_pkt_dc3_in[19-1:1]), .dout(lsu_pkt_dc3[19-1:1]), .en(lsu_freeze_c1_dc3_clken));
++   rvdff #(19-1) lsu_pkt_dc4ff (.*, .din(lsu_pkt_dc4_in[19-1:1]), .dout(lsu_pkt_dc4[19-1:1]), .clk(lsu_c1_dc4_clk));
++   rvdff #(19-1) lsu_pkt_dc5ff (.*, .din(lsu_pkt_dc5_in[19-1:1]), .dout(lsu_pkt_dc5[19-1:1]), .clk(lsu_c1_dc5_clk));
+ 
+    assign lsu_ld_datafn_dc3[31:0] = addr_external_dc3 ? bus_read_data_dc3[31:0] : lsu_ld_data_dc3[31:0];
+    assign lsu_ld_datafn_corr_dc3[31:0] = addr_external_dc3 ? bus_read_data_dc3[31:0] : lsu_ld_data_corr_dc3[31:0];
+diff --git a/design/pic_ctrl.sv b/design/pic_ctrl.sv
+index 204da31..c0be339 100644
+--- a/design/pic_ctrl.sv
++++ b/design/pic_ctrl.sv
+@@ -66,7 +66,7 @@ localparam INTPEND_SIZE          = (TOTAL_INT < 32)  ? 32  :
+ localparam INT_GRPS              =   INTPEND_SIZE / 32 ;
+ localparam INTPRIORITY_BITS      =  4 ;
+ localparam ID_BITS               =  8 ;
+-localparam int GW_CONFIG[TOTAL_INT-1:0] = '{default:0} ;
++localparam int GW_CONFIG[TOTAL_INT-1:0] = '0;//'{default:0} ;
+ 
+ logic  addr_intpend_base_match;
+ logic  addr_intenable_base_match;
+diff --git a/swerv.core b/swerv.core
+index b6f986e..b193b7e 100644
+--- a/swerv.core
++++ b/swerv.core
+@@ -113,12 +113,22 @@ targets:
+ 
+   synth:
+     default_tool : vivado
+-    filesets : [includes, rtl, "tool_vivado ? (vivado_tcl)"]
++    filesets : [includes, rtl]
+     generate : [swerv_fpga_config]
+     tools:
+       vivado:
+         part : xc7a100tcsg324-1
+-        pnr  : none
++        synth: "yosys"
++        arch: "xilinx"
++        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
++        yosys_read_options: ['-noassert']
++        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++      yosys:
++        arch: "xilinx"
++        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
++        yosys_read_options: ['-noassert']
++        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++      sv2v:
+     toplevel : swerv_wrapper
+ 
+ generate:
+diff --git a/tools/vivado.tcl b/tools/vivado.tcl
+index 869d2d0..3e8dab0 100644
+--- a/tools/vivado.tcl
++++ b/tools/vivado.tcl
+@@ -1,2 +1 @@
+ set_property is_global_include true [get_files config/common_defines.vh]
+-set_property IS_GLOBAL_INCLUDE 1 [get_files include/def.sv]
