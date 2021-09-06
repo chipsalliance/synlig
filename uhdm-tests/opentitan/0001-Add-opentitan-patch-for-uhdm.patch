@@ -3632,6 +3632,19 @@ index 052cb2f5a..b62227975 100644
  
    // Create Socket_1n
    tlul_socket_1n #(
+diff --git a/hw/ip/padctrl/rtl/jtag_mux.sv b/hw/ip/padctrl/rtl/jtag_mux.sv
+index f8ccce6d3..58373182f 100644
+--- a/hw/ip/padctrl/rtl/jtag_mux.sv
++++ b/hw/ip/padctrl/rtl/jtag_mux.sv
+@@ -54,7 +54,7 @@ module jtag_mux #(
+ 
+   // Input tie-off muxes
+   for (genvar k = 0; k < NumIOs; k++) begin : gen_input_tie_off
+-    if (k inside {TckIdx, TmsIdx, TrstIdx, SrstIdx, TdiIdx, TdoIdx}) begin : gen_jtag_signal
++    if (|{k == TckIdx, k == TmsIdx, k == TrstIdx, k == SrstIdx, k == TdiIdx, k == TdoIdx}) begin : gen_jtag_signal
+       assign in_core_o[k] = (jtag_en) ? TieOffValues[k] : in_padring_i[k];
+     end else begin : gen_other_inputs
+       assign in_core_o[k] = in_padring_i[k];
 diff --git a/hw/ip/padctrl/rtl/padctrl.sv b/hw/ip/padctrl/rtl/padctrl.sv
 index 5683741f5..95738a82a 100644
 --- a/hw/ip/padctrl/rtl/padctrl.sv

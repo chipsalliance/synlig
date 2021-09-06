@@ -67,7 +67,6 @@ tlul_err_resp.sv \
 tlul_socket_1n.sv \
 sram2tlul.sv \
 debug_rom_one_scratch.sv \
-jtag_mux.sv \
 prim_secded_39_32_dec.sv \
 prim_secded_39_32_enc.sv \
 prim_alert_receiver.sv \
@@ -320,6 +319,7 @@ alert_handler_reg_wrap.sv \
 alert_handler.sv \
 top_earlgrey.sv \
 clkgen_xil7series.sv \
+jtag_mux.sv \
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -364,6 +364,17 @@ ${UHDM_file}: ${SV2V_FILE}
 			-top padring \
 			-top clkgen_xil7series \
 			-PAddClkBuf=0 \
+			-top jtag_mux \
+			-PNumIOs=47 \
+			-PTieOffValues=35184372088832 \
+			-PJtagEnIdx=16 \
+			-PJtagEnPolarity=1 \
+			-PTckIdx=46 \
+			-PTmsIdx=45 \
+			-PTrstIdx=18 \
+			-PSrstIdx=19 \
+			-PTdiIdx=44 \
+			-PTdoIdx=43 \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
