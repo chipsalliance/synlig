@@ -3,8 +3,6 @@ OPENTITAN = ${curr_dir}/opentitan
 TOOLCHAIN = ${curr_dir}/toolchain-install
 VENV_OT = ${root_dir}/venv-opentitan
 
-SV2V_FILE = ${root_dir}/build/sv2v.v
-
 TOP := top_earlgrey_nexysvideo
 
 UHDM_file = ${root_dir}/build/${TOP}.uhdm
@@ -21,63 +19,6 @@ EARLGRAY_PKG_SOURCES = \
                 cat ${TCL_PATH} | \
                 grep read_verilog | cut -d' ' -f3  | grep _pkg.sv | \
                 sed 's@^..@${EARLGRAY_BUILD}@')
-
-SV2V_FILES = \
-prim_generic_flop.sv \
-prim_generic_flop_2sync.sv \
-prim_xilinx_clock_mux2.sv \
-prim_diff_decode.sv \
-prim_generic_clock_mux2.sv \
-prim_generic_pad_wrapper.sv \
-prim_generic_ram_1p.sv \
-prim_generic_ram_2p.sv \
-prim_clock_inv.sv \
-prim_clock_mux2.sv \
-prim_flop.sv \
-prim_flop_2sync.sv \
-prim_ram_1p.sv \
-prim_lfsr.sv \
-prim_intr_hw.sv \
-ibex_icache.sv \
-prim_dom_and_2share.sv \
-prim_arbiter_fixed.sv \
-prim_fifo_async.sv \
-prim_fifo_sync.sv \
-prim_sync_reqack.sv \
-prim_keccak.sv \
-prim_present.sv \
-prim_subst_perm.sv \
-prim_gate_gen.sv \
-prim_subreg_arb.sv \
-prim_subreg.sv \
-prim_subreg_ext.sv \
-prim_generic_clock_inv.sv \
-prim_ram_2p_async_adv.sv \
-prim_alert_sender.sv \
-tlul_adapter_host.sv \
-ibex_dummy_instr.sv \
-tlul_fifo_sync.sv \
-tlul_fifo_async.sv \
-tlul_assert.sv \
-tlul_err.sv \
-tlul_assert_multiple.sv \
-tlul_adapter_reg.sv \
-tlul_adapter_sram.sv \
-tlul_err_resp.sv \
-tlul_socket_1n.sv \
-sram2tlul.sv \
-debug_rom_one_scratch.sv \
-prim_secded_39_32_dec.sv \
-prim_secded_39_32_enc.sv \
-prim_alert_receiver.sv \
-top_earlgrey_nexysvideo.sv
-
-SV2V_FILES_FULL = \
-	$(shell \
-		for sv2v_file in ${SV2V_FILES}; do \
-		    find ${root_dir}/build -name $${sv2v_file} -print -quit; \
-		done; \
-	)
 
 UHDM_FILES = \
 ibex_pkg.sv \
@@ -320,6 +261,7 @@ alert_handler.sv \
 top_earlgrey.sv \
 clkgen_xil7series.sv \
 jtag_mux.sv \
+top_earlgrey_nexysvideo.sv
 
 UHDM_FILES_FULL = \
 	$(shell \
@@ -348,33 +290,15 @@ prep-sources: clean-build | ${OPENTITAN}/.gitpatch ${curr_dir}/boot_rom_fpga_nex
 		fusesoc --cores-root=${OPENTITAN} run --setup --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo)
 	cp ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem build/boot_rom_fpga_nexysvideo.32.vmem
 
-${SV2V_FILE}: prep-sources
-	${root_dir}/../image/bin/sv2v -DSYNTHESIS ${EARLGRAY_INCLUDE} ${EARLGRAY_PKG_SOURCES} ${SV2V_FILES_FULL} > ${SV2V_FILE}
-
-${UHDM_file}: ${SV2V_FILE}
+${UHDM_file}: prep-sources
 	(cd ${EARLGRAY_BUILD} && \
 		${root_dir}/../image/bin/surelog -parse -sverilog \
 			--disable-feature=parametersubstitution \
 			-DSYNTHESIS \
 			-DPRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric \
-			-top top_earlgrey \
+			-top top_earlgrey_nexysvideo \
 			-DBootRomInitFile=boot_rom_fpga_nexysvideo.32.vmem \
 			-PBootRomInitFile="boot_rom_fpga_nexysvideo.32.vmem" \
-			-PIbexPipeLine=1 \
-			-top padring \
-			-top clkgen_xil7series \
-			-PAddClkBuf=0 \
-			-top jtag_mux \
-			-PNumIOs=47 \
-			-PTieOffValues=35184372088832 \
-			-PJtagEnIdx=16 \
-			-PJtagEnPolarity=1 \
-			-PTckIdx=46 \
-			-PTmsIdx=45 \
-			-PTrstIdx=18 \
-			-PSrstIdx=19 \
-			-PTdiIdx=44 \
-			-PTdoIdx=43 \
 			$(EARLGRAY_INCLUDE) \
 			$(UHDM_FILES_FULL) \
 			$(CUSTOM_FILES_UHDM) && \
@@ -388,14 +312,8 @@ yosys/plugins:
 uhdm/yosys/synth-opentitan: ${UHDM_file} ${SV2V_FILE} | ${VENV_OT} yosys/plugins
 	(cd ${root_dir}/build && \
 	${root_dir}/../image/bin/yosys \
-		-p "verilog_defines -DBootRomInitFile=boot_rom_fpga_nexysvideo.32.vmem" \
-		-p "verilog_defines -DPRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric" \
-		-p "verilog_defaults -push" \
-		-p "verilog_defaults -add -defer" \
 		-p "plugin -i uhdm" \
 		-p "read_uhdm ${UHDM_file}" \
-		-p "read_verilog -sv ${SV2V_FILE}" \
-		-p "verilog_defaults -pop" \
 		-p 'write_verilog -noattr earlgray_ast.v' \
 	        -p 'synth_xilinx -iopad -family xc7 -top top_earlgrey_nexysvideo' \
 	        -p 'write_edif -pvector bra ${root_dir}/build/top_earlgrey_nexysvideo.edif' \
