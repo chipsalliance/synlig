@@ -23,10 +23,10 @@ index 708de30a5..e25a0819c 100644
    for (genvar i = 0; i < NumAlerts; i++) begin : gen_alert_tx
      prim_alert_sender #(
 diff --git a/hw/ip/aes/rtl/aes_core.sv b/hw/ip/aes/rtl/aes_core.sv
-index ee2afd47f..a9849fd28 100644
+index ee2afd47f..32632d176 100644
 --- a/hw/ip/aes/rtl/aes_core.sv
 +++ b/hw/ip/aes/rtl/aes_core.sv
-@@ -25,8 +25,9 @@ module aes_core #(
+@@ -25,8 +25,8 @@ module aes_core #(
    output logic                     ctrl_err_o,
  
    // Bus Interface
@@ -34,11 +34,10 @@ index ee2afd47f..a9849fd28 100644
 -  output aes_reg_pkg::aes_hw2reg_t hw2reg
 +  input  logic [682:0] reg2hw,
 +  output logic [673:0] hw2reg
-+
  );
  
    import aes_reg_pkg::*;
-@@ -112,30 +113,30 @@ module aes_core #(
+@@ -112,30 +112,30 @@ module aes_core #(
  
    always_comb begin : key_init_get
      for (int i=0; i<8; i++) begin
@@ -77,7 +76,7 @@ index ee2afd47f..a9849fd28 100644
      end
    end
  
-@@ -292,9 +293,9 @@ module aes_core #(
+@@ -292,9 +292,9 @@ module aes_core #(
    //////////////////////
  
    // Get and resolve values from register interface.
@@ -89,7 +88,7 @@ index ee2afd47f..a9849fd28 100644
    always_comb begin : mode_get
      unique case (mode)
        AES_ECB: ctrl_d.mode = AES_ECB;
-@@ -304,7 +305,7 @@ module aes_core #(
+@@ -304,7 +304,7 @@ module aes_core #(
      endcase
    end
  
@@ -98,7 +97,7 @@ index ee2afd47f..a9849fd28 100644
    always_comb begin : key_len_get
      unique case (key_len)
        AES_128: ctrl_d.key_len = AES_128;
-@@ -314,20 +315,20 @@ module aes_core #(
+@@ -314,20 +314,20 @@ module aes_core #(
      endcase
    end
  
@@ -126,7 +125,7 @@ index ee2afd47f..a9849fd28 100644
    ) ctrl_shadowed_reg (
      .clk_i       ( clk_i            ),
      .rst_ni      ( rst_ni           ),
-@@ -365,12 +366,12 @@ module aes_core #(
+@@ -365,12 +365,12 @@ module aes_core #(
      .cipher_op_i             ( cipher_op                        ),
      .manual_operation_i      ( manual_operation_q               ),
      .ctrl_err_i              ( ctrl_err_storage                 ),
@@ -145,7 +144,7 @@ index ee2afd47f..a9849fd28 100644
  
      .key_init_qe_i           ( key_init_qe                      ),
      .iv_qe_i                 ( iv_qe                            ),
-@@ -413,34 +414,34 @@ module aes_core #(
+@@ -413,34 +413,34 @@ module aes_core #(
      .prng_reseed_req_o       ( prng_reseed_req_o                ),
      .prng_reseed_ack_i       ( prng_reseed_ack_i                ),
  
@@ -203,7 +202,7 @@ index ee2afd47f..a9849fd28 100644
      end
    end
  
-@@ -456,28 +457,28 @@ module aes_core #(
+@@ -456,28 +456,28 @@ module aes_core #(
  
    always_comb begin : key_reg_put
      for (int i=0; i<8; i++) begin
@@ -825,10 +824,10 @@ index 77c3cdff9..4765d63ba 100644
      // to internal hardware
      .qe     (),
 diff --git a/hw/ip/alert_handler/rtl/alert_handler.sv b/hw/ip/alert_handler/rtl/alert_handler.sv
-index 65035ad0b..795f79c30 100644
+index 65035ad0b..9ebb31c7f 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler.sv
 +++ b/hw/ip/alert_handler/rtl/alert_handler.sv
-@@ -26,15 +26,16 @@ module alert_handler
+@@ -26,7 +26,8 @@ module alert_handler
    output logic                    intr_classc_o,
    output logic                    intr_classd_o,
    // State information for HW crashdump
@@ -838,18 +837,6 @@ index 65035ad0b..795f79c30 100644
    // Entropy Input from TRNG
    input                           entropy_i,
    // Alert Sources
--  input  alert_tx_t [NAlerts-1:0] alert_tx_i,
--  output alert_rx_t [NAlerts-1:0] alert_rx_o,
-+  input  logic [9:0] alert_tx_i,
-+  output logic [19:0] alert_rx_o,
-   // Escalation outputs
--  input  esc_rx_t [N_ESC_SEV-1:0] esc_rx_i,
--  output esc_tx_t [N_ESC_SEV-1:0] esc_tx_o
-+  input  logic [7:0] esc_rx_i,
-+  output logic [7:0] esc_tx_o
- );
- 
-   //////////////////////////////////
 @@ -42,8 +43,10 @@ module alert_handler
    //////////////////////////////////
  
@@ -996,7 +983,7 @@ index 65035ad0b..795f79c30 100644
    end
  
 diff --git a/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv b/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
-index f6dbddef4..a7b890133 100644
+index f6dbddef4..7c46a712a 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
 +++ b/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
 @@ -13,11 +13,14 @@ module alert_handler_reg_wrap import alert_pkg::*; (
@@ -1030,12 +1017,10 @@ index f6dbddef4..a7b890133 100644
  
    alert_handler_reg_top u_reg (
      .clk_i,
-@@ -43,57 +48,46 @@ module alert_handler_reg_wrap import alert_pkg::*; (
-   // interrupts //
-   ////////////////
+@@ -45,53 +50,53 @@ module alert_handler_reg_wrap import alert_pkg::*; (
  
--    prim_intr_hw #(
--      .Width(1)
+     prim_intr_hw #(
+       .Width(1)
 -    ) i_irq_classa (
 -      .event_intr_i           ( hw2reg_wrap.class_trig[0]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classa.q  ),
@@ -1044,11 +1029,19 @@ index f6dbddef4..a7b890133 100644
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classa.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classa.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classa.d   ),
--      .intr_o                 ( irq_o[0]                     )
--    );
--
--    prim_intr_hw #(
--      .Width(1)
++    ) i_irq_classa(
++      .event_intr_i           ( hw2reg_wrap[208]             ),
++      .reg2hw_intr_enable_q_i ( reg2hw[840]                  ),
++      .reg2hw_intr_test_q_i   ( reg2hw[836]                  ),
++      .reg2hw_intr_test_qe_i  ( reg2hw[835]                  ),
++      .reg2hw_intr_state_q_i  ( reg2hw[844]                  ),
++      .hw2reg_intr_state_de_o ( hw2reg[236]                  ),
++      .hw2reg_intr_state_d_o  ( hw2reg[237]                  ),
+       .intr_o                 ( irq_o[0]                     )
+     );
+ 
+     prim_intr_hw #(
+       .Width(1)
 -    ) i_irq_classb (
 -      .event_intr_i           ( hw2reg_wrap.class_trig[1]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classb.q  ),
@@ -1057,11 +1050,19 @@ index f6dbddef4..a7b890133 100644
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classb.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classb.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classb.d   ),
--      .intr_o                 ( irq_o[1]                     )
--    );
--
--    prim_intr_hw #(
--      .Width(1)
++    ) i_irq_classb(
++      .event_intr_i           ( hw2reg_wrap[209]             ),
++      .reg2hw_intr_enable_q_i ( reg2hw[839]                  ),
++      .reg2hw_intr_test_q_i   ( reg2hw[834]                  ),
++      .reg2hw_intr_test_qe_i  ( reg2hw[833]                  ),
++      .reg2hw_intr_state_q_i  ( reg2hw[843]                  ),
++      .hw2reg_intr_state_de_o ( hw2reg[234]                  ),
++      .hw2reg_intr_state_d_o  ( hw2reg[235]                  ),
+       .intr_o                 ( irq_o[1]                     )
+     );
+ 
+     prim_intr_hw #(
+       .Width(1)
 -    ) i_irq_classc (
 -      .event_intr_i           ( hw2reg_wrap.class_trig[2]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classc.q  ),
@@ -1070,11 +1071,19 @@ index f6dbddef4..a7b890133 100644
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classc.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classc.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classc.d   ),
--      .intr_o                 ( irq_o[2]                     )
--    );
--
--    prim_intr_hw #(
--      .Width(1)
++    ) i_irq_classc(
++      .event_intr_i           ( hw2reg_wrap[210]             ),
++      .reg2hw_intr_enable_q_i ( reg2hw[838]                  ),
++      .reg2hw_intr_test_q_i   ( reg2hw[832]                  ),
++      .reg2hw_intr_test_qe_i  ( reg2hw[831]                  ),
++      .reg2hw_intr_state_q_i  ( reg2hw[842]                  ),
++      .hw2reg_intr_state_de_o ( hw2reg[232]                  ),
++      .hw2reg_intr_state_d_o  ( hw2reg[233]                  ),
+       .intr_o                 ( irq_o[2]                     )
+     );
+ 
+     prim_intr_hw #(
+       .Width(1)
 -    ) i_irq_classd (
 -      .event_intr_i           ( hw2reg_wrap.class_trig[3]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classd.q  ),
@@ -1083,52 +1092,18 @@ index f6dbddef4..a7b890133 100644
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classd.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classd.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classd.d   ),
--      .intr_o                 ( irq_o[3]                     )
--    );
-+  prim_intr_hw #(.Width(1)) i_irq_classa(
-+    .event_intr_i(hw2reg_wrap[208]),
-+    .reg2hw_intr_enable_q_i(reg2hw[840]),
-+    .reg2hw_intr_test_q_i(reg2hw[836]),
-+    .reg2hw_intr_test_qe_i(reg2hw[835]),
-+    .reg2hw_intr_state_q_i(reg2hw[844]),
-+    .hw2reg_intr_state_de_o(hw2reg[236]),
-+    .hw2reg_intr_state_d_o(hw2reg[237]),
-+    .intr_o(irq_o[0])
-+  );
-+  prim_intr_hw #(.Width(1)) i_irq_classb(
-+    .event_intr_i(hw2reg_wrap[209]),
-+    .reg2hw_intr_enable_q_i(reg2hw[839]),
-+    .reg2hw_intr_test_q_i(reg2hw[834]),
-+    .reg2hw_intr_test_qe_i(reg2hw[833]),
-+    .reg2hw_intr_state_q_i(reg2hw[843]),
-+    .hw2reg_intr_state_de_o(hw2reg[234]),
-+    .hw2reg_intr_state_d_o(hw2reg[235]),
-+    .intr_o(irq_o[1])
-+  );
-+  prim_intr_hw #(.Width(1)) i_irq_classc(
-+    .event_intr_i(hw2reg_wrap[210]),
-+    .reg2hw_intr_enable_q_i(reg2hw[838]),
-+    .reg2hw_intr_test_q_i(reg2hw[832]),
-+    .reg2hw_intr_test_qe_i(reg2hw[831]),
-+    .reg2hw_intr_state_q_i(reg2hw[842]),
-+    .hw2reg_intr_state_de_o(hw2reg[232]),
-+    .hw2reg_intr_state_d_o(hw2reg[233]),
-+    .intr_o(irq_o[2])
-+  );
-+  prim_intr_hw #(.Width(1)) i_irq_classd(
-+    .event_intr_i(hw2reg_wrap[211]),
-+    .reg2hw_intr_enable_q_i(reg2hw[837]),
-+    .reg2hw_intr_test_q_i(reg2hw[830]),
-+    .reg2hw_intr_test_qe_i(reg2hw[829]),
-+    .reg2hw_intr_state_q_i(reg2hw[841]),
-+    .hw2reg_intr_state_de_o(hw2reg[230]),
-+    .hw2reg_intr_state_d_o(hw2reg[231]),
-+    .intr_o(irq_o[3])
-+  );
++    ) i_irq_classd(
++      .event_intr_i           ( hw2reg_wrap[211]             ),
++      .reg2hw_intr_enable_q_i ( reg2hw[837]                  ),
++      .reg2hw_intr_test_q_i   ( reg2hw[830]                  ),
++      .reg2hw_intr_test_qe_i  ( reg2hw[829]                  ),
++      .reg2hw_intr_state_q_i  ( reg2hw[841]                  ),
++      .hw2reg_intr_state_de_o ( hw2reg[230]                  ),
++      .hw2reg_intr_state_d_o  ( hw2reg[231]                  ),
+       .intr_o                 ( irq_o[3]                     )
+     );
  
-   /////////////////////
-   // hw2reg mappings //
-@@ -102,185 +96,62 @@ module alert_handler_reg_wrap import alert_pkg::*; (
+@@ -102,185 +107,62 @@ module alert_handler_reg_wrap import alert_pkg::*; (
    // if an alert is enabled and it fires,
    // we have to set the corresponding cause bit
    for (genvar k = 0; k < NAlerts; k++) begin : gen_alert_cause
@@ -1346,7 +1321,7 @@ index f6dbddef4..a7b890133 100644
  
    //////////////////////
    // crashdump output //
-@@ -288,17 +159,17 @@ module alert_handler_reg_wrap import alert_pkg::*; (
+@@ -288,17 +170,17 @@ module alert_handler_reg_wrap import alert_pkg::*; (
  
    // alert cause output
    for (genvar k = 0; k < NAlerts; k++) begin : gen_alert_cause_dump
@@ -2001,7 +1976,7 @@ index 07945937c..518462c7d 100644
      // to register interface (read)
      .qs     (mp_bank_cfg_erase_en1_qs)
 diff --git a/hw/ip/hmac/rtl/hmac.sv b/hw/ip/hmac/rtl/hmac.sv
-index 043829d21..2ddee7f3a 100644
+index 043829d21..c1b7dc313 100644
 --- a/hw/ip/hmac/rtl/hmac.sv
 +++ b/hw/ip/hmac/rtl/hmac.sv
 @@ -30,11 +30,13 @@ module hmac
@@ -2045,7 +2020,7 @@ index 043829d21..2ddee7f3a 100644
  
    hmac_reg2hw_cfg_reg_t cfg_reg;
    logic                 cfg_block;  // Prevent changing config
-@@ -106,33 +111,33 @@ module hmac
+@@ -106,13 +111,13 @@ module hmac
    ///////////////////////
    // Connect registers //
    ///////////////////////
@@ -2064,10 +2039,7 @@ index 043829d21..2ddee7f3a 100644
  
    always_ff @(posedge clk_i or negedge rst_ni) begin
      if (!rst_ni) begin
--      secret_key <= '0;
-+      secret_key <= {256 {1'b0}};
-     end else if (wipe_secret) begin
-       secret_key <= secret_key ^ {8{wipe_v}};
+@@ -122,17 +127,17 @@ module hmac
      end else if (!cfg_block) begin
        // Allow updating secret key only when the engine is in Idle.
        for (int i = 0; i < 8; i++) begin
@@ -2082,7 +2054,7 @@ index 043829d21..2ddee7f3a 100644
  
    for (genvar i = 0; i < 8; i++) begin : gen_key_digest
 -    assign hw2reg.key[7-i].d      = '0;
-+    assign hw2reg[322 + (((7 - i) * 32) + 31)-:32]      = {32{1'b0}};
++    assign hw2reg[322 + (((7 - i) * 32) + 31)-:32]      = '0;
      // digest
 -    assign hw2reg.digest[i].d = conv_endian(digest[i], digest_swap);
 +    assign hw2reg[66 + ((i * 32) + 31)-:32] = conv_endian(digest[i * 32+:32], digest_swap);
@@ -2115,16 +2087,7 @@ index 043829d21..2ddee7f3a 100644
  
    /////////////////////
    // Control signals //
-@@ -163,7 +168,7 @@ module hmac
- 
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      cfg_block <= '0;
-+      cfg_block <= 1'b0;
-     end else if (hash_start) begin
-       cfg_block <= 1'b 1;
-     end else if (reg_hash_done) begin
-@@ -173,16 +178,16 @@ module hmac
+@@ -173,9 +178,9 @@ module hmac
    // Hold the configuration during the process
    always_ff @(posedge clk_i or negedge rst_ni) begin
      if (!rst_ni) begin
@@ -2137,94 +2100,58 @@ index 043829d21..2ddee7f3a 100644
      end
    end
  
-   // Open up the MSG_FIFO from the TL-UL port when it is ready
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      msg_allowed <= '0;
-+      msg_allowed <= 1'b0;
-     end else if (hash_start) begin
-       msg_allowed <= 1'b 1;
-     end else if (packer_flush_done) begin
-@@ -195,7 +200,7 @@ module hmac
-   logic fifo_empty_q, fifo_empty_event;
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      fifo_empty_q <= '1; // By default, it is empty
-+      fifo_empty_q <= 1'b1; // By default, it is empty
-     end else if (!hmac_fifo_wsel) begin
-       fifo_empty_q <= fifo_empty;
-     end
-@@ -206,35 +211,35 @@ module hmac
-   assign event_intr = {err_valid, fifo_empty_event, reg_hash_done};
- 
+@@ -208,32 +213,32 @@ module hmac
    // instantiate interrupt hardware primitive
--  prim_intr_hw #(.Width(1)) intr_hw_hmac_done (
--    .event_intr_i           (event_intr[0]),
+   prim_intr_hw #(.Width(1)) intr_hw_hmac_done (
+     .event_intr_i           (event_intr[0]),
 -    .reg2hw_intr_enable_q_i (reg2hw.intr_enable.hmac_done.q),
 -    .reg2hw_intr_test_q_i   (reg2hw.intr_test.hmac_done.q),
 -    .reg2hw_intr_test_qe_i  (reg2hw.intr_test.hmac_done.qe),
 -    .reg2hw_intr_state_q_i  (reg2hw.intr_state.hmac_done.q),
 -    .hw2reg_intr_state_de_o (hw2reg.intr_state.hmac_done.de),
 -    .hw2reg_intr_state_d_o  (hw2reg.intr_state.hmac_done.d),
--    .intr_o                 (intr_hmac_done_o)
-+  prim_intr_hw #(.Width(1)) intr_hw_hmac_done(
-+          .event_intr_i(event_intr[0]),
-+          .reg2hw_intr_enable_q_i(reg2hw[317]),
-+          .reg2hw_intr_test_q_i(reg2hw[314]),
-+          .reg2hw_intr_test_qe_i(reg2hw[313]),
-+          .reg2hw_intr_state_q_i(reg2hw[320]),
-+          .hw2reg_intr_state_de_o(hw2reg[626]),
-+          .hw2reg_intr_state_d_o(hw2reg[627]),
-+          .intr_o(intr_hmac_done_o)
++    .reg2hw_intr_enable_q_i (reg2hw[317]),
++    .reg2hw_intr_test_q_i   (reg2hw[314]),
++    .reg2hw_intr_test_qe_i  (reg2hw[313]),
++    .reg2hw_intr_state_q_i  (reg2hw[320]),
++    .hw2reg_intr_state_de_o (hw2reg[626]),
++    .hw2reg_intr_state_d_o  (hw2reg[627]),
+     .intr_o                 (intr_hmac_done_o)
    );
--  prim_intr_hw #(.Width(1)) intr_hw_fifo_empty (
--    .event_intr_i           (event_intr[1]),
+   prim_intr_hw #(.Width(1)) intr_hw_fifo_empty (
+     .event_intr_i           (event_intr[1]),
 -    .reg2hw_intr_enable_q_i (reg2hw.intr_enable.fifo_empty.q),
 -    .reg2hw_intr_test_q_i   (reg2hw.intr_test.fifo_empty.q),
 -    .reg2hw_intr_test_qe_i  (reg2hw.intr_test.fifo_empty.qe),
 -    .reg2hw_intr_state_q_i  (reg2hw.intr_state.fifo_empty.q),
 -    .hw2reg_intr_state_de_o (hw2reg.intr_state.fifo_empty.de),
 -    .hw2reg_intr_state_d_o  (hw2reg.intr_state.fifo_empty.d),
--    .intr_o                 (intr_fifo_empty_o)
-+  prim_intr_hw #(.Width(1)) intr_hw_fifo_empty(
-+          .event_intr_i(event_intr[1]),
-+          .reg2hw_intr_enable_q_i(reg2hw[316]),
-+          .reg2hw_intr_test_q_i(reg2hw[312]),
-+          .reg2hw_intr_test_qe_i(reg2hw[311]),
-+          .reg2hw_intr_state_q_i(reg2hw[319]),
-+          .hw2reg_intr_state_de_o(hw2reg[624]),
-+          .hw2reg_intr_state_d_o(hw2reg[625]),
-+          .intr_o(intr_fifo_empty_o)
++    .reg2hw_intr_enable_q_i (reg2hw[316]),
++    .reg2hw_intr_test_q_i   (reg2hw[312]),
++    .reg2hw_intr_test_qe_i  (reg2hw[311]),
++    .reg2hw_intr_state_q_i  (reg2hw[319]),
++    .hw2reg_intr_state_de_o (hw2reg[624]),
++    .hw2reg_intr_state_d_o  (hw2reg[625]),
+     .intr_o                 (intr_fifo_empty_o)
    );
--  prim_intr_hw #(.Width(1)) intr_hw_hmac_err (
--    .event_intr_i           (event_intr[2]),
+   prim_intr_hw #(.Width(1)) intr_hw_hmac_err (
+     .event_intr_i           (event_intr[2]),
 -    .reg2hw_intr_enable_q_i (reg2hw.intr_enable.hmac_err.q),
 -    .reg2hw_intr_test_q_i   (reg2hw.intr_test.hmac_err.q),
 -    .reg2hw_intr_test_qe_i  (reg2hw.intr_test.hmac_err.qe),
 -    .reg2hw_intr_state_q_i  (reg2hw.intr_state.hmac_err.q),
 -    .hw2reg_intr_state_de_o (hw2reg.intr_state.hmac_err.de),
 -    .hw2reg_intr_state_d_o  (hw2reg.intr_state.hmac_err.d),
--    .intr_o                 (intr_hmac_err_o)
-+  prim_intr_hw #(.Width(1)) intr_hw_hmac_err(
-+          .event_intr_i(event_intr[2]),
-+          .reg2hw_intr_enable_q_i(reg2hw[315]),
-+          .reg2hw_intr_test_q_i(reg2hw[310]),
-+          .reg2hw_intr_test_qe_i(reg2hw[309]),
-+          .reg2hw_intr_state_q_i(reg2hw[318]),
-+          .hw2reg_intr_state_de_o(hw2reg[622]),
-+          .hw2reg_intr_state_d_o(hw2reg[623]),
-+          .intr_o(intr_hmac_err_o)
++    .reg2hw_intr_enable_q_i (reg2hw[315]),
++    .reg2hw_intr_test_q_i   (reg2hw[310]),
++    .reg2hw_intr_test_qe_i  (reg2hw[309]),
++    .reg2hw_intr_state_q_i  (reg2hw[318]),
++    .hw2reg_intr_state_de_o (hw2reg[622]),
++    .hw2reg_intr_state_d_o  (hw2reg[623]),
+     .intr_o                 (intr_hmac_err_o)
    );
  
-   ///////////////
-@@ -242,20 +247,18 @@ module hmac
-   ///////////////
- 
-   assign msg_fifo_rvalid = msg_fifo_req & ~msg_fifo_we;
--  assign msg_fifo_rdata  = '1;  // Return all F
--  assign msg_fifo_rerror = '1;  // Return error for read access
-+  assign msg_fifo_rdata  = {32{1'b1}};  // Return all F
-+  assign msg_fifo_rerror = {2{1'b1}};  // Return error for read access
+@@ -247,15 +252,13 @@ module hmac
    assign msg_fifo_gnt    = msg_fifo_req & ~hmac_fifo_wsel & packer_ready;
  
    // FIFO control
@@ -2255,26 +2182,7 @@ index 043829d21..2ddee7f3a 100644
  
      .req_o    (msg_fifo_req   ),
      .gnt_i    (msg_fifo_gnt   ),
-@@ -309,7 +312,7 @@ module hmac
-   logic [$clog2(32+1)-1:0] wmask_ones;
- 
-   always_comb begin
--    wmask_ones = '0;
-+    wmask_ones = {6{1'b0}};
-     for (int i = 0 ; i < 32 ; i++) begin
-       wmask_ones = wmask_ones + msg_fifo_wmask[i];
-     end
-@@ -318,18 +321,18 @@ module hmac
-   // Calculate written message
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      message_length <= '0;
-+      message_length <= {64 {1'b0}};
-     end else if (hash_start) begin
--      message_length <= '0;
-+      message_length <= {64 {1'b0}};
-     end else if (msg_write && sha_en && packer_ready) begin
-       message_length <= message_length + 64'(wmask_ones);
+@@ -326,10 +329,10 @@ module hmac
      end
    end
  
@@ -2343,7 +2251,7 @@ index a1c9515db..00a641aeb 100644
    assign sha_message_length = (!hmac_en)                 ? message_length             :
                                (sel_msglen == SelIPadMsg) ? message_length + BlockSize :
 diff --git a/hw/ip/hmac/rtl/hmac_reg_top.sv b/hw/ip/hmac/rtl/hmac_reg_top.sv
-index b11dc5747..bccfe829d 100644
+index b11dc5747..0b463962c 100644
 --- a/hw/ip/hmac/rtl/hmac_reg_top.sv
 +++ b/hw/ip/hmac/rtl/hmac_reg_top.sv
 @@ -19,8 +19,10 @@ module hmac_reg_top (
@@ -2359,44 +2267,42 @@ index b11dc5747..bccfe829d 100644
  
    // Config
    input devmode_i // If 1, explicit error return for unmapped register access
-@@ -210,701 +212,429 @@ module hmac_reg_top (
+@@ -210,701 +212,437 @@ module hmac_reg_top (
  
    //   F[hmac_done]: 0:0
    prim_subreg #(
 -    .DW      (1),
--    .SWACCESS("W1C"),
++    .DW(1),
+     .SWACCESS("W1C"),
 -    .RESVAL  (1'h0)
--  ) u_intr_state_hmac_done (
++    .RESVAL(1'h0)
+   ) u_intr_state_hmac_done (
 -    .clk_i   (clk_i    ),
 -    .rst_ni  (rst_ni  ),
--
--    // from register interface
++    .clk_i(clk_i),
++    .rst_ni(rst_ni),
+ 
+     // from register interface
 -    .we     (intr_state_hmac_done_we),
 -    .wd     (intr_state_hmac_done_wd),
--
--    // from internal hardware
++    .we(intr_state_hmac_done_we),
++    .wd(intr_state_hmac_done_wd),
+ 
+     // from internal hardware
 -    .de     (hw2reg.intr_state.hmac_done.de),
 -    .d      (hw2reg.intr_state.hmac_done.d ),
--
--    // to internal hardware
++    .de(hw2reg[626]),
++    .d(hw2reg[627]),
+ 
+     // to internal hardware
 -    .qe     (),
 -    .q      (reg2hw.intr_state.hmac_done.q ),
--
--    // to register interface (read)
++    .qe(),
++    .q(reg2hw[320]),
+ 
+     // to register interface (read)
 -    .qs     (intr_state_hmac_done_qs)
-+          .DW(1),
-+          .SWACCESS("W1C"),
-+          .RESVAL(1'h0)
-+  ) u_intr_state_hmac_done(
-+          .clk_i(clk_i),
-+          .rst_ni(rst_ni),
-+          .we(intr_state_hmac_done_we),
-+          .wd(intr_state_hmac_done_wd),
-+          .de(hw2reg[626]),
-+          .d(hw2reg[627]),
-+          .qe(),
-+          .q(reg2hw[320]),
-+          .qs(intr_state_hmac_done_qs)
++    .qs(intr_state_hmac_done_qs)
    );
 -
 -
@@ -2645,6 +2551,100 @@ index b11dc5747..bccfe829d 100644
 -    .qe     (reg2hw.cfg.hmac_en.qe),
 -    .q      (reg2hw.cfg.hmac_en.q ),
 -    .qs     (cfg_hmac_en_qs)
+-  );
+-
+-
+-  //   F[sha_en]: 1:1
+-  prim_subreg_ext #(
+-    .DW    (1)
+-  ) u_cfg_sha_en (
+-    .re     (cfg_sha_en_re),
+-    .we     (cfg_sha_en_we),
+-    .wd     (cfg_sha_en_wd),
+-    .d      (hw2reg.cfg.sha_en.d),
+-    .qre    (),
+-    .qe     (reg2hw.cfg.sha_en.qe),
+-    .q      (reg2hw.cfg.sha_en.q ),
+-    .qs     (cfg_sha_en_qs)
+-  );
+-
+-
+-  //   F[endian_swap]: 2:2
+-  prim_subreg_ext #(
+-    .DW    (1)
+-  ) u_cfg_endian_swap (
+-    .re     (cfg_endian_swap_re),
+-    .we     (cfg_endian_swap_we),
+-    .wd     (cfg_endian_swap_wd),
+-    .d      (hw2reg.cfg.endian_swap.d),
+-    .qre    (),
+-    .qe     (reg2hw.cfg.endian_swap.qe),
+-    .q      (reg2hw.cfg.endian_swap.q ),
+-    .qs     (cfg_endian_swap_qs)
+-  );
+-
+-
+-  //   F[digest_swap]: 3:3
+-  prim_subreg_ext #(
+-    .DW    (1)
+-  ) u_cfg_digest_swap (
+-    .re     (cfg_digest_swap_re),
+-    .we     (cfg_digest_swap_we),
+-    .wd     (cfg_digest_swap_wd),
+-    .d      (hw2reg.cfg.digest_swap.d),
+-    .qre    (),
+-    .qe     (reg2hw.cfg.digest_swap.qe),
+-    .q      (reg2hw.cfg.digest_swap.q ),
+-    .qs     (cfg_digest_swap_qs)
+-  );
+-
+-
+-  // R[cmd]: V(True)
+-
+-  //   F[hash_start]: 0:0
+-  prim_subreg_ext #(
+-    .DW    (1)
+-  ) u_cmd_hash_start (
+-    .re     (1'b0),
+-    .we     (cmd_hash_start_we),
+-    .wd     (cmd_hash_start_wd),
+-    .d      ('0),
+-    .qre    (),
+-    .qe     (reg2hw.cmd.hash_start.qe),
+-    .q      (reg2hw.cmd.hash_start.q ),
+-    .qs     ()
+-  );
+-
+-
+-  //   F[hash_process]: 1:1
+-  prim_subreg_ext #(
+-    .DW    (1)
+-  ) u_cmd_hash_process (
+-    .re     (1'b0),
+-    .we     (cmd_hash_process_we),
+-    .wd     (cmd_hash_process_wd),
+-    .d      ('0),
+-    .qre    (),
+-    .qe     (reg2hw.cmd.hash_process.qe),
+-    .q      (reg2hw.cmd.hash_process.q ),
+-    .qs     ()
+-  );
+-
+-
+-  // R[status]: V(True)
+-
+-  //   F[fifo_empty]: 0:0
+-  prim_subreg_ext #(
+-    .DW    (1)
+-  ) u_status_fifo_empty (
+-    .re     (status_fifo_empty_re),
+-    .we     (1'b0),
+-    .wd     ('0),
+-    .d      (hw2reg.status.fifo_empty.d),
+-    .qre    (),
+-    .qe     (),
+-    .q      (),
+-    .qs     (status_fifo_empty_qs)
 +          .DW(1),
 +          .SWACCESS("RW"),
 +          .RESVAL(1'h0)
@@ -2779,100 +2779,6 @@ index b11dc5747..bccfe829d 100644
 +          .q(),
 +          .qs(status_fifo_depth_qs)
    );
--
--
--  //   F[sha_en]: 1:1
--  prim_subreg_ext #(
--    .DW    (1)
--  ) u_cfg_sha_en (
--    .re     (cfg_sha_en_re),
--    .we     (cfg_sha_en_we),
--    .wd     (cfg_sha_en_wd),
--    .d      (hw2reg.cfg.sha_en.d),
--    .qre    (),
--    .qe     (reg2hw.cfg.sha_en.qe),
--    .q      (reg2hw.cfg.sha_en.q ),
--    .qs     (cfg_sha_en_qs)
--  );
--
--
--  //   F[endian_swap]: 2:2
--  prim_subreg_ext #(
--    .DW    (1)
--  ) u_cfg_endian_swap (
--    .re     (cfg_endian_swap_re),
--    .we     (cfg_endian_swap_we),
--    .wd     (cfg_endian_swap_wd),
--    .d      (hw2reg.cfg.endian_swap.d),
--    .qre    (),
--    .qe     (reg2hw.cfg.endian_swap.qe),
--    .q      (reg2hw.cfg.endian_swap.q ),
--    .qs     (cfg_endian_swap_qs)
--  );
--
--
--  //   F[digest_swap]: 3:3
--  prim_subreg_ext #(
--    .DW    (1)
--  ) u_cfg_digest_swap (
--    .re     (cfg_digest_swap_re),
--    .we     (cfg_digest_swap_we),
--    .wd     (cfg_digest_swap_wd),
--    .d      (hw2reg.cfg.digest_swap.d),
--    .qre    (),
--    .qe     (reg2hw.cfg.digest_swap.qe),
--    .q      (reg2hw.cfg.digest_swap.q ),
--    .qs     (cfg_digest_swap_qs)
--  );
--
--
--  // R[cmd]: V(True)
--
--  //   F[hash_start]: 0:0
--  prim_subreg_ext #(
--    .DW    (1)
--  ) u_cmd_hash_start (
--    .re     (1'b0),
--    .we     (cmd_hash_start_we),
--    .wd     (cmd_hash_start_wd),
--    .d      ('0),
--    .qre    (),
--    .qe     (reg2hw.cmd.hash_start.qe),
--    .q      (reg2hw.cmd.hash_start.q ),
--    .qs     ()
--  );
--
--
--  //   F[hash_process]: 1:1
--  prim_subreg_ext #(
--    .DW    (1)
--  ) u_cmd_hash_process (
--    .re     (1'b0),
--    .we     (cmd_hash_process_we),
--    .wd     (cmd_hash_process_wd),
--    .d      ('0),
--    .qre    (),
--    .qe     (reg2hw.cmd.hash_process.qe),
--    .q      (reg2hw.cmd.hash_process.q ),
--    .qs     ()
--  );
--
--
--  // R[status]: V(True)
--
--  //   F[fifo_empty]: 0:0
--  prim_subreg_ext #(
--    .DW    (1)
--  ) u_status_fifo_empty (
--    .re     (status_fifo_empty_re),
--    .we     (1'b0),
--    .wd     ('0),
--    .d      (hw2reg.status.fifo_empty.d),
--    .qre    (),
--    .qe     (),
--    .q      (),
--    .qs     (status_fifo_empty_qs)
--  );
 -
 -
 -  //   F[fifo_full]: 1:1
@@ -3058,22 +2964,6 @@ index b11dc5747..bccfe829d 100644
 -    .qe     (reg2hw.key[6].qe),
 -    .q      (reg2hw.key[6].q ),
 -    .qs     ()
--  );
--
--  // Subregister 7 of Multireg key
--  // R[key7]: V(True)
--
--  prim_subreg_ext #(
--    .DW    (32)
--  ) u_key7 (
--    .re     (1'b0),
--    .we     (key7_we),
--    .wd     (key7_wd),
--    .d      (hw2reg.key[7].d),
--    .qre    (),
--    .qe     (reg2hw.key[7].qe),
--    .q      (reg2hw.key[7].q ),
--    .qs     ()
 +          .DW(32),
 +          .SWACCESS("RO"),
 +          .RESVAL(32'h00000000)
@@ -3258,6 +3148,22 @@ index b11dc5747..bccfe829d 100644
 +          .q(),
 +          .qs(digest7_qs)
    );
+-
+-  // Subregister 7 of Multireg key
+-  // R[key7]: V(True)
+-
+-  prim_subreg_ext #(
+-    .DW    (32)
+-  ) u_key7 (
+-    .re     (1'b0),
+-    .we     (key7_we),
+-    .wd     (key7_wd),
+-    .d      (hw2reg.key[7].d),
+-    .qre    (),
+-    .qe     (reg2hw.key[7].qe),
+-    .q      (reg2hw.key[7].q ),
+-    .qs     ()
+-  );
 -
 -
 -
@@ -3468,146 +3374,6 @@ index b11dc5747..bccfe829d 100644
    );
  
  
-@@ -912,7 +642,7 @@ module hmac_reg_top (
- 
-   logic [25:0] addr_hit;
-   always_comb begin
--    addr_hit = '0;
-+    addr_hit = {26{1'b0}};
-     addr_hit[ 0] = (reg_addr == HMAC_INTR_STATE_OFFSET);
-     addr_hit[ 1] = (reg_addr == HMAC_INTR_ENABLE_OFFSET);
-     addr_hit[ 2] = (reg_addr == HMAC_INTR_TEST_OFFSET);
-@@ -1077,7 +807,7 @@ module hmac_reg_top (
- 
-   // Read data return
-   always_comb begin
--    reg_rdata_next = '0;
-+    reg_rdata_next = {DW{1'b0}};
-     unique case (1'b1)
-       addr_hit[0]: begin
-         reg_rdata_next[0] = intr_state_hmac_done_qs;
-@@ -1092,9 +822,9 @@ module hmac_reg_top (
-       end
- 
-       addr_hit[2]: begin
--        reg_rdata_next[0] = '0;
--        reg_rdata_next[1] = '0;
--        reg_rdata_next[2] = '0;
-+        reg_rdata_next[0] = 1'b0;
-+        reg_rdata_next[1] = 1'b0;
-+        reg_rdata_next[2] = 1'b0;
-       end
- 
-       addr_hit[3]: begin
-@@ -1105,8 +835,8 @@ module hmac_reg_top (
-       end
- 
-       addr_hit[4]: begin
--        reg_rdata_next[0] = '0;
--        reg_rdata_next[1] = '0;
-+        reg_rdata_next[0] = 1'b0;
-+        reg_rdata_next[1] = 1'b0;
-       end
- 
-       addr_hit[5]: begin
-@@ -1120,39 +850,39 @@ module hmac_reg_top (
-       end
- 
-       addr_hit[7]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[8]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[9]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[10]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[11]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[12]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[13]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[14]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[15]: begin
--        reg_rdata_next[31:0] = '0;
-+        reg_rdata_next[31:0] = {32{1'b0}};
-       end
- 
-       addr_hit[16]: begin
-@@ -1196,7 +926,7 @@ module hmac_reg_top (
-       end
- 
-       default: begin
--        reg_rdata_next = '1;
-+        reg_rdata_next = {DW{1'b1}};
-       end
-     endcase
-   end
-diff --git a/hw/ip/nmi_gen/rtl/nmi_gen.sv b/hw/ip/nmi_gen/rtl/nmi_gen.sv
-index 00bf37c9d..065e5a1a0 100644
---- a/hw/ip/nmi_gen/rtl/nmi_gen.sv
-+++ b/hw/ip/nmi_gen/rtl/nmi_gen.sv
-@@ -23,8 +23,8 @@ module nmi_gen
-   output logic                    intr_esc2_o,
-   output logic                    intr_esc3_o,
-   // Escalation outputs
--  input  esc_tx_t [N_ESC_SEV-1:0] esc_tx_i,
--  output esc_rx_t [N_ESC_SEV-1:0] esc_rx_o
-+  input  logic [7:0] esc_tx_i,
-+  output logic [7:0] esc_rx_o
- );
- 
-   //////////////////////
-diff --git a/hw/ip/otbn/rtl/otbn_core.sv b/hw/ip/otbn/rtl/otbn_core.sv
-index 8b13db4f5..312277b5f 100644
---- a/hw/ip/otbn/rtl/otbn_core.sv
-+++ b/hw/ip/otbn/rtl/otbn_core.sv
-@@ -10,7 +10,6 @@
-  * This module is the top-level of the OTBN processing core.
-  */
- module otbn_core
--  import otbn_pkg::*;
- #(
-   // Size of the instruction memory, in bytes
-   parameter int ImemSizeByte = 4096,
-@@ -40,9 +39,9 @@ module otbn_core
-   output logic                     dmem_req_o,
-   output logic                     dmem_write_o,
-   output logic [DmemAddrWidth-1:0] dmem_addr_o,
--  output logic [WLEN-1:0]          dmem_wdata_o,
--  output logic [WLEN-1:0]          dmem_wmask_o,
--  input  logic [WLEN-1:0]          dmem_rdata_i,
-+  output logic [256-1:0]          dmem_wdata_o,
-+  output logic [256-1:0]          dmem_wmask_o,
-+  input  logic [256-1:0]          dmem_rdata_i,
-   input  logic                     dmem_rvalid_i,
-   input  logic [1:0]               dmem_rerror_i
- );
 diff --git a/hw/ip/otbn/rtl/otbn_reg_top.sv b/hw/ip/otbn/rtl/otbn_reg_top.sv
 index 052cb2f5a..b62227975 100644
 --- a/hw/ip/otbn/rtl/otbn_reg_top.sv
@@ -3713,24 +3479,9 @@ index 5683741f5..95738a82a 100644
  
    ////////////////
 diff --git a/hw/ip/padctrl/rtl/padring.sv b/hw/ip/padctrl/rtl/padring.sv
-index fc8b3d183..aea2dd353 100644
+index fc8b3d183..2b94b0d67 100644
 --- a/hw/ip/padctrl/rtl/padring.sv
 +++ b/hw/ip/padctrl/rtl/padring.sv
-@@ -12,10 +12,10 @@
- module padring import padctrl_reg_pkg::*; #(
-   // This allows to selectively connect Pad instances.
-   // unconnected inputs are tied to 0, unconnected outputs are high-z.
--  parameter logic [NMioPads-1:0] ConnectMioIn = '1,
--  parameter logic [NMioPads-1:0] ConnectMioOut = '1,
--  parameter logic [NDioPads-1:0] ConnectDioIn = '1,
--  parameter logic [NDioPads-1:0] ConnectDioOut = '1,
-+  parameter logic [NMioPads-1:0] ConnectMioIn = 32'hFFFFF000,
-+  parameter logic [NMioPads-1:0] ConnectMioOut = 32'hFFFFF000,
-+  parameter logic [NDioPads-1:0] ConnectDioIn = 15'h637F,
-+  parameter logic [NDioPads-1:0] ConnectDioOut = 15'h637F,
- 
-   // 0: bidir, 1: input, 2: tolerant, 3: open drain
-   parameter logic [NMioPads-1:0][1:0] MioPadVariant = '0,
 @@ -59,45 +59,6 @@ module padring import padctrl_reg_pkg::*; #(
    assign clk_usb_48mhz = clk_usb_48mhz_pad_i;
    assign rst_n         = rst_pad_ni;
@@ -3778,7 +3529,7 @@ index fc8b3d183..aea2dd353 100644
    // MIO Pads //
    //////////////
 diff --git a/hw/ip/pinmux/rtl/pinmux.sv b/hw/ip/pinmux/rtl/pinmux.sv
-index 92da2e81c..89b58a8f7 100644
+index 92da2e81c..48636a35d 100644
 --- a/hw/ip/pinmux/rtl/pinmux.sv
 +++ b/hw/ip/pinmux/rtl/pinmux.sv
 @@ -64,8 +64,10 @@ module pinmux import pinmux_pkg::*; import pinmux_reg_pkg::*; (
@@ -3837,27 +3588,7 @@ index 92da2e81c..89b58a8f7 100644
        assign dio_out_sleep_val_d[k] = 2'b10; // default value defined in hjson
        assign dio_out_sleep_d[k]     = '0;
        assign dio_oe_sleep_d[k]      = '0;
-@@ -135,10 +137,10 @@ module pinmux import pinmux_pkg::*; import pinmux_reg_pkg::*; (
-     if (!rst_ni) begin
-       sleep_en_q          <= 1'b0;
-       dio_out_sleep_val_q <= {NDioPads{2'b10}}; // default value defined in hjson
--      mio_out_sleep_q     <= '0;
--      mio_oe_sleep_q      <= '0;
--      dio_out_sleep_q     <= '0;
--      dio_oe_sleep_q      <= '0;
-+      mio_out_sleep_q <= {32 {1'b0}};
-+      mio_oe_sleep_q <= {32 {1'b0}};
-+      dio_out_sleep_q <= {15 {1'b0}};
-+      dio_oe_sleep_q <= {15 {1'b0}};
-     end else begin
-       sleep_en_q          <= sleep_en_i;
-       dio_out_sleep_val_q <= dio_out_sleep_val_d;
-@@ -163,11 +165,11 @@ module pinmux import pinmux_pkg::*; import pinmux_reg_pkg::*; (
-   // 1. make sure mux is aligned to a power of 2 to avoid Xes.
-   logic [AlignedMuxSize-1:0] mio_data_mux;
-   // TODO: need a way to select which IO POK signal to use por pin
--  assign mio_data_mux = AlignedMuxSize'({(&io_pok_i) ? mio_in_i : '0, 1'b1, 1'b0});
-+  assign mio_data_mux = AlignedMuxSize'({(&io_pok_i) ? mio_in_i : {32 {1'b0}}, 1'b1, 1'b0});
+@@ -167,7 +169,7 @@ module pinmux import pinmux_pkg::*; import pinmux_reg_pkg::*; (
  
    for (genvar k = 0; k < NMioPeriphIn; k++) begin : gen_mio_periph_in
      // index using configured insel
@@ -3916,17 +3647,6 @@ index 92da2e81c..89b58a8f7 100644
        // wakeup request signals on clk_aon (level encoded)
        .aon_wkup_req_o     ( aon_wkup_req[k]                             )
      );
-@@ -288,8 +290,8 @@ module pinmux import pinmux_pkg::*; import pinmux_reg_pkg::*; (
- 
-   always_ff @(posedge clk_i or negedge rst_ni) begin : p_strap_sample
-     if (!rst_ni) begin
--      lc_strap_q       <= '0;
--      dft_strap_test_q <= '0;
-+      lc_strap_q       <= {3{1'b0}};
-+      dft_strap_test_q <= {3{1'b0}};
-     end else begin
-       lc_strap_q       <= lc_strap_d;
-       dft_strap_test_q <= dft_strap_test_d;
 diff --git a/hw/ip/prim/rtl/prim_arbiter_ppc.sv b/hw/ip/prim/rtl/prim_arbiter_ppc.sv
 index 9ec473f85..87b1ea41e 100644
 --- a/hw/ip/prim/rtl/prim_arbiter_ppc.sv
@@ -4100,19 +3820,6 @@ index 423a7ca21..cb790a861 100644
      data_o ^= k1_q;
      data_o ^= k0_prime_q;
    end
-diff --git a/hw/ip/prim/rtl/prim_util_pkg.sv b/hw/ip/prim/rtl/prim_util_pkg.sv
-index 6093646cd..38364223f 100644
---- a/hw/ip/prim/rtl/prim_util_pkg.sv
-+++ b/hw/ip/prim/rtl/prim_util_pkg.sv
-@@ -28,7 +28,7 @@ package prim_util_pkg;
-   function automatic integer _clog2(integer value);
-     integer result;
-     value = value - 1;
--    for (result = 0; value > 0; result = result + 1) begin
-+    for (integer result = 0; value > 0; result = result + 1) begin
-       value = value >> 1;
-     end
-     return result;
 diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
 index 962d3b559..923a187e0 100644
 --- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
@@ -4443,17 +4150,10 @@ index 6080cf464..31418f345 100644
      // to register interface (read)
      .qs     (wakeup_en_en15_qs)
 diff --git a/hw/ip/rv_timer/rtl/rv_timer.sv b/hw/ip/rv_timer/rtl/rv_timer.sv
-index 9b939eedd..3c74f08b8 100644
+index 9b939eedd..a4c91c238 100644
 --- a/hw/ip/rv_timer/rtl/rv_timer.sv
 +++ b/hw/ip/rv_timer/rtl/rv_timer.sv
-@@ -26,15 +26,15 @@ module rv_timer (
- 
-   logic [N_HARTS-1:0] active;
- 
--  logic [11:0] prescaler [N_HARTS];
--  logic [7:0]  step      [N_HARTS];
-+  logic [11:0] prescaler ;
-+  logic [7:0]  step      ;
+@@ -31,10 +31,10 @@ module rv_timer (
  
    logic [N_HARTS-1:0] tick;
  
@@ -4559,7 +4259,7 @@ index 2addad698..37e6d79c4 100644
  
    // Register Address
 diff --git a/hw/ip/rv_timer/rtl/rv_timer_reg_top.sv b/hw/ip/rv_timer/rtl/rv_timer_reg_top.sv
-index b7bd92367..824107aed 100644
+index b7bd92367..572414528 100644
 --- a/hw/ip/rv_timer/rtl/rv_timer_reg_top.sv
 +++ b/hw/ip/rv_timer/rtl/rv_timer_reg_top.sv
 @@ -14,8 +14,10 @@ module rv_timer_reg_top (
@@ -4584,12 +4284,7 @@ index b7bd92367..824107aed 100644
  
      // to register interface (read)
      .qs     (ctrl_qs)
-@@ -148,11 +150,11 @@ module rv_timer_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      ({12 {1'b0}}  ),
+@@ -152,7 +154,7 @@ module rv_timer_reg_top (
  
      // to internal hardware
      .qe     (),
@@ -4598,12 +4293,7 @@ index b7bd92367..824107aed 100644
  
      // to register interface (read)
      .qs     (cfg0_prescale_qs)
-@@ -174,11 +176,11 @@ module rv_timer_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      ({8{1'b0}}  ),
+@@ -178,7 +180,7 @@ module rv_timer_reg_top (
  
      // to internal hardware
      .qe     (),
@@ -4644,12 +4334,8 @@ index b7bd92367..824107aed 100644
  
      // to register interface (read)
      .qs     (timer_v_upper0_qs)
-@@ -255,11 +257,11 @@ module rv_timer_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      ({32 {1'b0}}  ),
+@@ -258,8 +260,8 @@ module rv_timer_reg_top (
+     .d      ('0  ),
  
      // to internal hardware
 -    .qe     (reg2hw.compare_lower0_0.qe),
@@ -4659,12 +4345,8 @@ index b7bd92367..824107aed 100644
  
      // to register interface (read)
      .qs     (compare_lower0_0_qs)
-@@ -282,11 +284,11 @@ module rv_timer_reg_top (
- 
-     // from internal hardware
-     .de     (1'b0),
--    .d      ('0  ),
-+    .d      ({32{1'b0}}  ),
+@@ -285,8 +287,8 @@ module rv_timer_reg_top (
+     .d      ('0  ),
  
      // to internal hardware
 -    .qe     (reg2hw.compare_upper0_0.qe),
@@ -4710,53 +4392,11 @@ index b7bd92367..824107aed 100644
      .qs     ()
    );
  
-@@ -373,7 +375,7 @@ module rv_timer_reg_top (
- 
-   logic [8:0] addr_hit;
-   always_comb begin
--    addr_hit = '0;
-+    addr_hit = {9 {1'b0}};
-     addr_hit[0] = (reg_addr == RV_TIMER_CTRL_OFFSET);
-     addr_hit[1] = (reg_addr == RV_TIMER_CFG0_OFFSET);
-     addr_hit[2] = (reg_addr == RV_TIMER_TIMER_V_LOWER0_OFFSET);
-@@ -433,7 +435,7 @@ module rv_timer_reg_top (
- 
-   // Read data return
-   always_comb begin
--    reg_rdata_next = '0;
-+    reg_rdata_next = {DW{1'b0}};
-     unique case (1'b1)
-       addr_hit[0]: begin
-         reg_rdata_next[0] = ctrl_qs;
-@@ -473,7 +475,7 @@ module rv_timer_reg_top (
-       end
- 
-       default: begin
--        reg_rdata_next = '1;
-+        reg_rdata_next = {DW{1'b1}};
-       end
-     endcase
-   end
 diff --git a/hw/ip/tlul/rtl/tlul_adapter_sram.sv b/hw/ip/tlul/rtl/tlul_adapter_sram.sv
-index 6e2f33191..da4fd321c 100644
+index 6e2f33191..118cc96bb 100644
 --- a/hw/ip/tlul/rtl/tlul_adapter_sram.sv
 +++ b/hw/ip/tlul/rtl/tlul_adapter_sram.sv
-@@ -102,6 +102,14 @@ module tlul_adapter_sram #(
- 
-   // Valid handling
-   logic d_valid, d_error;
-+  logic [WoffsetWidth-1:0] woffset;
-+  // Convert byte mask to SRAM bit mask for writes, and only forward valid data
-+  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wmask_int;
-+  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wdata_int;
-+  logic [SramDw-1:0] rdata;
-+  logic [(WidthMult * top_pkg::TL_DW) - 1:0] rmask;
-+  //logic [SramDw-1:0] rmask;
-+  logic [top_pkg::TL_DW-1:0] rdata_tlword;
-   always_comb begin
-     d_valid = 1'b0;
- 
-@@ -134,20 +142,17 @@ module tlul_adapter_sram #(
+@@ -134,20 +134,17 @@ module tlul_adapter_sram #(
      end
    end
  
@@ -4788,27 +4428,14 @@ index 6e2f33191..da4fd321c 100644
  
    // a_ready depends on the FIFO full condition and grant from SRAM (or SRAM arbiter)
    // assemble response, including read response, write response, and error for unsupported stuff
-@@ -157,31 +162,27 @@ module tlul_adapter_sram #(
-   //    dropped and returned error response to the host. So, error to be pushed to reqfifo.
-   //    In this case, it is assumed the request is granted (may cause ordering issue later?)
-   assign req_o    = tl_i.a_valid & reqfifo_wready & ~error_internal;
--  assign we_o     = tl_i.a_valid & logic'(tl_i.a_opcode inside {PutFullData, PutPartialData});
-+  assign we_o     = tl_i.a_valid & tl_i.a_opcode inside {PutFullData, PutPartialData};
-   assign addr_o   = (tl_i.a_valid) ? tl_i.a_address[DataBitWidth+:SramAw] : '0;
- 
-   // Support SRAMs wider than the TL-UL word width by mapping the parts of the
-   // TL-UL address which are more fine-granular than the SRAM width to the
-   // SRAM write mask.
--  logic [WoffsetWidth-1:0] woffset;
-   if (top_pkg::TL_DW != SramDw) begin : gen_wordwidthadapt
-     assign woffset = tl_i.a_address[DataBitWidth-1:prim_util_pkg::vbits(top_pkg::TL_DBW)];
-   end else begin : gen_no_wordwidthadapt
-     assign woffset = '0;
+@@ -171,17 +168,17 @@ module tlul_adapter_sram #(
    end
  
--  // Convert byte mask to SRAM bit mask for writes, and only forward valid data
+   // Convert byte mask to SRAM bit mask for writes, and only forward valid data
 -  logic [WidthMult-1:0][top_pkg::TL_DW-1:0] wmask_int;
 -  logic [WidthMult-1:0][top_pkg::TL_DW-1:0] wdata_int;
++  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wmask_int;
++  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wdata_int;
  
 -  always_comb begin
 +  always begin
@@ -4824,15 +4451,7 @@ index 6e2f33191..da4fd321c 100644
        end
      end
    end
-@@ -209,7 +210,6 @@ module tlul_adapter_sram #(
-   end else begin : gen_reads_allowed
-     assign rd_vld_error = 1'b0;
-   end
--
-   tlul_err u_err (
-     .clk_i,
-     .rst_ni,
-@@ -221,46 +221,35 @@ module tlul_adapter_sram #(
+@@ -221,19 +218,15 @@ module tlul_adapter_sram #(
    // End: Request Error Detection
  
    assign reqfifo_wvalid = a_ack ; // Push to FIFO only when granted
@@ -4858,13 +4477,14 @@ index 6e2f33191..da4fd321c 100644
    assign sramreqfifo_wvalid = sram_ack & ~we_o;
    assign sramreqfifo_rready = rspfifo_wvalid;
  
-   assign rspfifo_wvalid = rvalid_i & reqfifo_rvalid;
+@@ -241,26 +234,23 @@ module tlul_adapter_sram #(
  
    // Make sure only requested bytes are forwarded
--  logic [SramDw-1:0] rdata;
+   logic [SramDw-1:0] rdata;
 -  logic [WidthMult-1:0][top_pkg::TL_DW-1:0] rmask;
--  //logic [SramDw-1:0] rmask;
--  logic [top_pkg::TL_DW-1:0] rdata_tlword;
++  logic [(WidthMult * top_pkg::TL_DW) - 1:0] rmask;
+   //logic [SramDw-1:0] rmask;
+   logic [top_pkg::TL_DW-1:0] rdata_tlword;
  
    always_comb begin
      rmask = '0;
@@ -4890,26 +4510,9 @@ index 6e2f33191..da4fd321c 100644
    // FIFO instance: REQ, RSP
  
 diff --git a/hw/ip/tlul/rtl/tlul_err.sv b/hw/ip/tlul/rtl/tlul_err.sv
-index add8477ba..4ab895782 100644
+index add8477ba..213209fc6 100644
 --- a/hw/ip/tlul/rtl/tlul_err.sv
 +++ b/hw/ip/tlul/rtl/tlul_err.sv
-@@ -14,11 +14,11 @@ module tlul_err import tlul_pkg::*; (
-   output logic err_o
- );
- 
--  localparam int IW  = $bits(tl_i.a_source);
--  localparam int SZW = $bits(tl_i.a_size);
--  localparam int DW  = $bits(tl_i.a_data);
--  localparam int MW  = $bits(tl_i.a_mask);
--  localparam int SubAW = $clog2(DW/8);
-+  localparam int IW  = 8;
-+  localparam int SZW = 2;
-+  localparam int DW  = 32;
-+  localparam int MW  = 4;
-+  localparam int SubAW = 2;
- 
-   logic opcode_allowed, a_config_allowed;
- 
 @@ -42,7 +42,7 @@ module tlul_err import tlul_pkg::*; (
  
    logic [MW-1:0] mask;
@@ -4919,31 +4522,6 @@ index add8477ba..4ab895782 100644
  
    always_comb begin
      addr_sz_chk  = 1'b0;
-@@ -51,13 +51,13 @@ module tlul_err import tlul_pkg::*; (
- 
-     if (tl_i.a_valid) begin
-       unique case (tl_i.a_size)
--        'h0: begin // 1 Byte
-+        64'h0: begin // 1 Byte
-           addr_sz_chk  = 1'b1;
-           mask_chk     = ~|(tl_i.a_mask & ~mask);
-           fulldata_chk = |(tl_i.a_mask & mask);
-         end
- 
--        'h1: begin // 2 Byte
-+        64'h1: begin // 2 Byte
-           addr_sz_chk  = ~tl_i.a_address[0];
-           // check inactive lanes if lower 2B, check a_mask[3:2], if uppwer 2B, a_mask[1:0]
-           mask_chk     = (tl_i.a_address[1]) ? ~|(tl_i.a_mask & 4'b0011)
-@@ -65,7 +65,7 @@ module tlul_err import tlul_pkg::*; (
-           fulldata_chk = (tl_i.a_address[1]) ? &tl_i.a_mask[3:2] : &tl_i.a_mask[1:0] ;
-         end
- 
--        'h2: begin // 4 Byte
-+        64'h2: begin // 4 Byte
-           addr_sz_chk  = ~|tl_i.a_address[SubAW-1:0];
-           mask_chk     = 1'b1;
-           fulldata_chk = &tl_i.a_mask[3:0];
 diff --git a/hw/ip/tlul/rtl/tlul_socket_m1.sv b/hw/ip/tlul/rtl/tlul_socket_m1.sv
 index 8637ad221..fe7aa9858 100644
 --- a/hw/ip/tlul/rtl/tlul_socket_m1.sv
@@ -5024,7 +4602,7 @@ index 8637ad221..fe7aa9858 100644
  
    // this assertion fails when rspid[0+:STIDW] not in [0..M-1]
 diff --git a/hw/ip/usbdev/rtl/usbdev.sv b/hw/ip/usbdev/rtl/usbdev.sv
-index cbdadd624..64eed7d5f 100644
+index cbdadd624..527a2daca 100644
 --- a/hw/ip/usbdev/rtl/usbdev.sv
 +++ b/hw/ip/usbdev/rtl/usbdev.sv
 @@ -90,8 +90,10 @@ module usbdev (
@@ -5086,12 +4664,11 @@ index cbdadd624..64eed7d5f 100644
    );
  
    // Return all zero if the FIFO is empty (instead of X)
--  assign rx_rdata = rx_fifo_rvalid ? rx_rdata_raw : '0;
+   assign rx_rdata = rx_fifo_rvalid ? rx_rdata_raw : '0;
 -  assign hw2reg.rxfifo.ep.d = rx_rdata[16:13];
 -  assign hw2reg.rxfifo.setup.d = rx_rdata[12];
 -  assign hw2reg.rxfifo.size.d = rx_rdata[11:5];
 -  assign hw2reg.rxfifo.buffer.d = rx_rdata[4:0];
-+  assign rx_rdata = rx_fifo_rvalid ? rx_rdata_raw : {17 {1'b0}};
 +  assign hw2reg[99-:4] = rx_rdata[16:13];
 +  assign hw2reg[100] = rx_rdata[12];
 +  assign hw2reg[107-:7] = rx_rdata[11:5];
@@ -5559,7 +5136,7 @@ index cbdadd624..64eed7d5f 100644
    );
  
 diff --git a/hw/ip/usbdev/rtl/usbdev_reg_top.sv b/hw/ip/usbdev/rtl/usbdev_reg_top.sv
-index 4cff2c116..9e70b7672 100644
+index 4cff2c116..445c6603c 100644
 --- a/hw/ip/usbdev/rtl/usbdev_reg_top.sv
 +++ b/hw/ip/usbdev/rtl/usbdev_reg_top.sv
 @@ -19,8 +19,10 @@ module usbdev_reg_top (
@@ -5575,7 +5152,7 @@ index 4cff2c116..9e70b7672 100644
  
    // Config
    input devmode_i // If 1, explicit error return for unmapped register access
-@@ -647,4714 +649,2720 @@ module usbdev_reg_top (
+@@ -647,4710 +649,2716 @@ module usbdev_reg_top (
    logic phy_config_usb_ref_disable_wd;
    logic phy_config_usb_ref_disable_we;
  
@@ -12996,38 +12573,6 @@ index 4cff2c116..9e70b7672 100644
  
    logic [25:0] addr_hit;
    always_comb begin
--    addr_hit = '0;
-+    addr_hit = {26 {1'b0}};
-     addr_hit[ 0] = (reg_addr == USBDEV_INTR_STATE_OFFSET);
-     addr_hit[ 1] = (reg_addr == USBDEV_INTR_ENABLE_OFFSET);
-     addr_hit[ 2] = (reg_addr == USBDEV_INTR_TEST_OFFSET);
-@@ -5976,7 +3984,7 @@ module usbdev_reg_top (
- 
-   // Read data return
-   always_comb begin
--    reg_rdata_next = '0;
-+    reg_rdata_next = {32 {1'b0}};
-     unique case (1'b1)
-       addr_hit[0]: begin
-         reg_rdata_next[0] = intr_state_pkt_received_qs;
-@@ -6052,7 +4060,7 @@ module usbdev_reg_top (
-       end
- 
-       addr_hit[5]: begin
--        reg_rdata_next[4:0] = '0;
-+        reg_rdata_next[4:0] = {5 {1'b0}};
-       end
- 
-       addr_hit[6]: begin
-@@ -6247,7 +4255,7 @@ module usbdev_reg_top (
-       end
- 
-       default: begin
--        reg_rdata_next = '1;
-+        reg_rdata_next = {32 {1'b1}};
-       end
-     endcase
-   end
 diff --git a/hw/top_earlgrey/ip/alert_handler/rtl/autogen/alert_handler_reg_top.sv b/hw/top_earlgrey/ip/alert_handler/rtl/autogen/alert_handler_reg_top.sv
 index e6d74c618..084f67c94 100644
 --- a/hw/top_earlgrey/ip/alert_handler/rtl/autogen/alert_handler_reg_top.sv
@@ -19308,7 +18853,7 @@ index 30f3ea44f..9a56d6721 100644
    logic [16:0] addr_hit;
    always_comb begin
 diff --git a/hw/top_earlgrey/ip/pinmux/rtl/autogen/pinmux_reg_top.sv b/hw/top_earlgrey/ip/pinmux/rtl/autogen/pinmux_reg_top.sv
-index bf3bc9fc3..88828411c 100644
+index bf3bc9fc3..042321602 100644
 --- a/hw/top_earlgrey/ip/pinmux/rtl/autogen/pinmux_reg_top.sv
 +++ b/hw/top_earlgrey/ip/pinmux/rtl/autogen/pinmux_reg_top.sv
 @@ -14,8 +14,10 @@ module pinmux_reg_top (
@@ -19324,7 +18869,7 @@ index bf3bc9fc3..88828411c 100644
  
    // Config
    input devmode_i // If 1, explicit error return for unmapped register access
-@@ -598,4263 +600,2417 @@ module pinmux_reg_top (
+@@ -598,4260 +600,2414 @@ module pinmux_reg_top (
    logic wkup_cause_cause7_wd;
    logic wkup_cause_cause7_we;
    logic wkup_cause_cause7_re;
@@ -25988,29 +25533,7 @@ index bf3bc9fc3..88828411c 100644
 +  // R[regen]: V(False)
    logic [31:0] addr_hit;
    always_comb begin
--    addr_hit = '0;
-+    addr_hit = {32 {1'b0}};
-     addr_hit[ 0] = (reg_addr == PINMUX_REGEN_OFFSET);
-     addr_hit[ 1] = (reg_addr == PINMUX_PERIPH_INSEL0_OFFSET);
-     addr_hit[ 2] = (reg_addr == PINMUX_PERIPH_INSEL1_OFFSET);
-@@ -5457,7 +3613,7 @@ module pinmux_reg_top (
- 
-   // Read data return
-   always_comb begin
--    reg_rdata_next = '0;
-+    reg_rdata_next = {32 {1'b0}};
-     unique case (1'b1)
-       addr_hit[0]: begin
-         reg_rdata_next[0] = regen_qs;
-@@ -5724,7 +3880,7 @@ module pinmux_reg_top (
-       end
- 
-       default: begin
--        reg_rdata_next = '1;
-+        reg_rdata_next = {32 {1'b1}};
-       end
-     endcase
-   end
+     addr_hit = '0;
 diff --git a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_pkg.sv b/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_pkg.sv
 index f771dd35a..61c74e42d 100644
 --- a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_pkg.sv
@@ -26038,7 +25561,7 @@ index 2365da52c..6a335c778 100644
      // to register interface (read)
      .qs     (wakeup_en_qs)
 diff --git a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv b/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
-index c516c01ca..0868b6d65 100644
+index c516c01ca..543d012e8 100644
 --- a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
 +++ b/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
 @@ -38,13 +38,15 @@ module rv_plic import rv_plic_reg_pkg::*; #(
@@ -26060,7 +25583,7 @@ index c516c01ca..0868b6d65 100644
  
    localparam int MAX_PRIO    = 3;
    localparam int PRIOW = $clog2(MAX_PRIO+1);
-@@ -52,35 +54,35 @@ module rv_plic import rv_plic_reg_pkg::*; #(
+@@ -52,21 +54,21 @@ module rv_plic import rv_plic_reg_pkg::*; #(
    logic [NumSrc-1:0] le; // 0:level 1:edge
    logic [NumSrc-1:0] ip;
  
@@ -26087,18 +25610,16 @@ index c516c01ca..0868b6d65 100644
  
    // Glue logic between rv_plic_reg_top and others
    assign cc_id = irq_id_o;
- 
+@@ -74,13 +76,13 @@ module rv_plic import rv_plic_reg_pkg::*; #(
    always_comb begin
--    claim = '0;
-+    claim = {NumSrc{1'b0}};
+     claim = '0;
      for (int i = 0 ; i < NumTarget ; i++) begin
 -      if (claim_re[i]) claim[claim_id[i]] = 1'b1;
 +      if (claim_re[i]) claim[claim_id] = 1'b1;
      end
    end
    always_comb begin
--    complete = '0;
-+    complete = {NumSrc{1'b0}};
+     complete = '0;
      for (int i = 0 ; i < NumTarget ; i++) begin
 -      if (complete_we[i]) complete[complete_id[i]] = 1'b1;
 +      if (complete_we[i]) complete[complete_id] = 1'b1;
@@ -26378,7 +25899,7 @@ index 72339602f..7c0140e62 100644
    } rv_plic_hw2reg_t;
  
 diff --git a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic_reg_top.sv b/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic_reg_top.sv
-index 64b285761..4125e8d4f 100644
+index 64b285761..349d19147 100644
 --- a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic_reg_top.sv
 +++ b/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic_reg_top.sv
 @@ -14,8 +14,10 @@ module rv_plic_reg_top (
@@ -26394,7 +25915,7 @@ index 64b285761..4125e8d4f 100644
  
    // Config
    input devmode_i // If 1, explicit error return for unmapped register access
-@@ -917,8742 +919,5030 @@ module rv_plic_reg_top (
+@@ -917,8739 +919,5027 @@ module rv_plic_reg_top (
    // Subregister 0 of Multireg ip
    // R[ip0]: V(False)
  
@@ -40151,31 +39672,9 @@ index 64b285761..4125e8d4f 100644
 -
    logic [94:0] addr_hit;
    always_comb begin
--    addr_hit = '0;
-+    addr_hit = {95{1'b0}};
-     addr_hit[ 0] = (reg_addr == RV_PLIC_IP0_OFFSET);
-     addr_hit[ 1] = (reg_addr == RV_PLIC_IP1_OFFSET);
-     addr_hit[ 2] = (reg_addr == RV_PLIC_IP2_OFFSET);
-@@ -10694,7 +6984,7 @@ module rv_plic_reg_top (
- 
-   // Read data return
-   always_comb begin
--    reg_rdata_next = '0;
-+    reg_rdata_next = {DW{1'b0}};
-     unique case (1'b1)
-       addr_hit[0]: begin
-         reg_rdata_next[0] = ip0_p0_qs;
-@@ -11317,7 +7607,7 @@ module rv_plic_reg_top (
-       end
- 
-       default: begin
--        reg_rdata_next = '1;
-+        reg_rdata_next = {DW{1'b1}};
-       end
-     endcase
-   end
+     addr_hit = '0;
 diff --git a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
-index 2acc14e86..913daf87f 100644
+index 2acc14e86..82a44920c 100644
 --- a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 +++ b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 @@ -56,6 +56,8 @@ module top_earlgrey #(
@@ -40214,15 +39713,6 @@ index 2acc14e86..913daf87f 100644
    end
  
    // Non-debug module reset == reset for everything except for the debug module
-@@ -323,7 +325,7 @@ module top_earlgrey #(
- 
-   rv_dm #(
-     .NrHarts     (1),
--    .IdcodeValue (JTAG_IDCODE)
-+    .IdcodeValue (83183693)
-   ) u_dm_top (
-     .clk_i         (clkmgr_clocks.clk_proc_main),
-     .rst_ni        (rstmgr_resets.rst_lc_n),
 @@ -627,7 +629,7 @@ module top_earlgrey #(
        // Inter-module signals
        .flash_o(flash_ctrl_flash_req),
@@ -40265,8 +39755,37 @@ index 2acc14e86..913daf87f 100644
  
        // Inter-module signals
        .idle_o(),
+diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
+index 8d6cf89b6..1683f0693 100644
+--- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
++++ b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
+@@ -56,7 +56,7 @@ targets:
+     filesets:
+       - files_rtl_nexysvideo
+       - files_constraints
+-      - files_tcl
++      #- files_tcl
+     toplevel: top_earlgrey_nexysvideo
+     parameters:
+       - BootRomInitFile
+@@ -64,6 +64,15 @@ targets:
+     tools:
+       vivado:
+         part: "xc7a200tsbg484-1" # Nexys Video
++        synth: "yosys"
++        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
++        yosys_read_options: []
++        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++      yosys:
++        arch: "xilinx"
++        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
++        yosys_read_options: []
++        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
+ 
+   lint:
+     <<: *default_target
 diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
-index 61469937f..12f0a2bcd 100644
+index 61469937f..f27e7f097 100644
 --- a/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
 +++ b/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
 @@ -133,8 +133,8 @@ module ibex_core #(
@@ -40307,17 +39826,17 @@ index 61469937f..12f0a2bcd 100644
 +    logic [PMP_NUM_CHAN-1:0][1:0]    pmp_priv_lvl;
 +    logic [PMP_NUM_CHAN-1:0][33:0] pmp_req_addr;
 +
-+    assign pmp_req_addr[PMP_D] = {2'b00,instr_addr_o[31:0]};
-+    assign pmp_req_type[PMP_D] = PMP_ACC_EXEC;
-+    assign pmp_priv_lvl[PMP_D] = priv_mode_if;
 +    assign pmp_req_addr[PMP_I] = {2'b00,data_addr_o[31:0]};
 +    assign pmp_req_type[PMP_I] = data_we_o ? PMP_ACC_WRITE : PMP_ACC_READ;
 +    assign pmp_priv_lvl[PMP_I] = priv_mode_lsu;
++    assign pmp_req_addr[PMP_D] = {2'b00,instr_addr_o[31:0]};
++    assign pmp_req_type[PMP_D] = PMP_ACC_EXEC;
++    assign pmp_priv_lvl[PMP_D] = priv_mode_if;
  
      ibex_pmp #(
          .PMPGranularity        ( PMPGranularity ),
 diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
-index 6e5eaf4dc..d99e087d6 100644
+index 6e5eaf4dc..b962fd7c6 100644
 --- a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
 +++ b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
 @@ -64,7 +64,7 @@ module ibex_cs_registers #(
@@ -40354,24 +39873,15 @@ index 6e5eaf4dc..d99e087d6 100644
    logic  [4:0] mhpmcounter_idx;
  
    // Debug / trigger registers
-@@ -736,12 +736,12 @@ module ibex_cs_registers #(
-   // PMP registers
-   // -----------------
- 
-+  pmp_cfg_t                    pmp_cfg         [PMPNumRegions];
-+  pmp_cfg_t                    pmp_cfg_wdata   [PMPNumRegions];
-+  logic [PMPNumRegions-1:0][31:0]                 pmp_addr;
-+  logic [PMPNumRegions-1:0]    pmp_cfg_we;
-+  logic [PMPNumRegions-1:0]    pmp_addr_we;
+@@ -739,7 +739,7 @@ module ibex_cs_registers #(
    if (PMPEnable) begin : g_pmp_registers
--    pmp_cfg_t                    pmp_cfg         [PMPNumRegions];
--    pmp_cfg_t                    pmp_cfg_wdata   [PMPNumRegions];
+     pmp_cfg_t                    pmp_cfg         [PMPNumRegions];
+     pmp_cfg_t                    pmp_cfg_wdata   [PMPNumRegions];
 -    logic [31:0]                 pmp_addr        [PMPNumRegions];
--    logic [PMPNumRegions-1:0]    pmp_cfg_we;
--    logic [PMPNumRegions-1:0]    pmp_addr_we;
++    logic [PMPNumRegions-1:0][31:0]                 pmp_addr;
+     logic [PMPNumRegions-1:0]    pmp_cfg_we;
+     logic [PMPNumRegions-1:0]    pmp_addr_we;
  
-     // Expanded / qualified register read data
-     for (genvar i = 0; i < PMP_MAX_REGIONS; i++) begin : g_exp_rd_data
 diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_ex_block.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_ex_block.sv
 index eccc68e95..06a672e88 100644
 --- a/hw/vendor/lowrisc_ibex/rtl/ibex_ex_block.sv
@@ -40402,22 +39912,9 @@ index eccc68e95..06a672e88 100644
  
    /*
 diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv
-index bba4c2af8..a4fbb8da6 100644
+index bba4c2af8..d527e4d06 100644
 --- a/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv
 +++ b/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv
-@@ -21,9 +21,9 @@ module ibex_id_stage #(
-     parameter bit               RV32M           = 1,
-     parameter ibex_pkg::rv32b_e RV32B           = ibex_pkg::RV32BNone,
-     parameter bit               DataIndTiming   = 1'b0,
--    parameter bit               BranchTargetALU = 0,
--    parameter bit               SpecBranch      = 0,
--    parameter bit               WritebackStage  = 0
-+    parameter bit               BranchTargetALU = 1,
-+    parameter bit               SpecBranch      = 1,
-+    parameter bit               WritebackStage  = 1
- ) (
-     input  logic                      clk_i,
-     input  logic                      rst_ni,
 @@ -69,8 +69,8 @@ module ibex_id_stage #(
  
      // Multicycle Operation Stage Register
@@ -40454,17 +39951,15 @@ index 617bb5162..e1890da38 100644
  
      input  logic             multdiv_ready_id_i,
 diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
-index 1b48693a0..4621be034 100644
+index 1b48693a0..9240ce64a 100644
 --- a/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
 +++ b/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
-@@ -30,8 +30,8 @@ module ibex_pmp #(
-   import ibex_pkg::*;
+@@ -31,7 +31,7 @@ module ibex_pmp #(
  
    // Access Checking Signals
--  logic [33:0]                                region_start_addr [PMPNumRegions];
+   logic [33:0]                                region_start_addr [PMPNumRegions];
 -  logic [33:PMPGranularity+2]                 region_addr_mask  [PMPNumRegions];
-+  logic [PMPNumRegions-1:0][33:0]                                region_start_addr;
-+  logic [PMPNumRegions-1:0][33:0]                 region_addr_mask;
++  logic [33:0]                                region_addr_mask  [PMPNumRegions];
    logic [PMPNumChan-1:0][PMPNumRegions-1:0]   region_match_gt;
    logic [PMPNumChan-1:0][PMPNumRegions-1:0]   region_match_lt;
    logic [PMPNumChan-1:0][PMPNumRegions-1:0]   region_match_eq;
@@ -40483,21 +39978,8 @@ index 4dd429df8..8c95e2492 100644
  
    always_comb begin : we_a_decoder
      for (int unsigned i = 1; i < NUM_WORDS; i++) begin
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_wb_stage.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_wb_stage.sv
-index ffe380ff4..6f518796f 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_wb_stage.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_wb_stage.sv
-@@ -51,7 +51,7 @@ module ibex_wb_stage #(
- 
-   // 0 == RF write from ID
-   // 1 == RF write from LSU
--  logic [31:0] rf_wdata_wb_mux    [2];
-+  logic [1:0][31:0] rf_wdata_wb_mux;
-   logic [1:0]  rf_wdata_wb_mux_we;
- 
-   if(WritebackStage) begin : g_writeback_stage
 diff --git a/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv b/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
-index 550b7cc36..3dfe78446 100755
+index 550b7cc36..c65fe30c4 100755
 --- a/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
 +++ b/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
 @@ -216,7 +216,7 @@ module dm_mem #(
@@ -40509,12 +39991,3 @@ index 550b7cc36..3dfe78446 100755
  
      halted_d_aligned   = NrHartsAligned'(halted_q);
      resuming_d_aligned = NrHartsAligned'(resuming_q);
-@@ -328,7 +328,7 @@ module dm_mem #(
-     data_o = data_bits;
-   end
- 
--  always_comb begin : p_abstract_cmd_rom
-+  always begin : p_abstract_cmd_rom
-     // this abstract command is currently unsupported
-     unsupported_command = 1'b0;
-     // default memory
