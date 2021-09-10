@@ -33,6 +33,7 @@ rstmgr_pkg.sv \
 prim_alert_pkg.sv \
 aes_pkg.sv \
 clkmgr_reg_pkg.sv \
+alert_handler_reg_pkg.sv \
 alert_pkg.sv \
 prim_esc_pkg.sv \
 prim_cipher_pkg.sv \
@@ -58,7 +59,6 @@ rv_timer_reg_pkg.sv \
 rv_plic_reg_pkg.sv \
 hmac_reg_pkg.sv \
 padctrl_reg_pkg.sv \
-alert_handler_reg_pkg.sv \
 ibex_compressed_decoder.sv \
 ibex_alu.sv \
 ibex_controller.sv \

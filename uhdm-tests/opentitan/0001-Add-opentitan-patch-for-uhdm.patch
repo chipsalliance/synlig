@@ -251,71 +251,6 @@ index c030089b7..65f0bdc94 100644
      unique case (key_len_i)
  
        /////////////
-diff --git a/hw/ip/aes/rtl/aes_prng.sv b/hw/ip/aes/rtl/aes_prng.sv
-index 08e2a94e6..a94dbdd43 100644
---- a/hw/ip/aes/rtl/aes_prng.sv
-+++ b/hw/ip/aes/rtl/aes_prng.sv
-@@ -23,7 +23,7 @@ module aes_prng (
-   input  logic        entropy_ack_i,
-   input  logic [63:0] entropy_i
- );
--
-+  import prim_cipher_pkg::*;
-   localparam int unsigned DATA_WIDTH = 64;
- 
-   logic                  seed_en;
-@@ -58,7 +58,7 @@ module aes_prng (
-   );
- 
-   // "Scramble" the LFSR state.
--  assign scrambled = prim_cipher_pkg::sbox4_64bit(lfsr_state, prim_cipher_pkg::PRINCE_SBOX4);
--  assign data_o    = prim_cipher_pkg::perm_64bit(scrambled, prim_cipher_pkg::PRESENT_PERM64);
-+  assign scrambled = sbox4_64bit(lfsr_state, PRINCE_SBOX4);
-+  assign data_o    = perm_64bit(scrambled, PRESENT_PERM64);
- 
- endmodule
-diff --git a/hw/ip/aes/rtl/aes_reg_pkg.sv b/hw/ip/aes/rtl/aes_reg_pkg.sv
-index ca597f30e..15596f2c8 100644
---- a/hw/ip/aes/rtl/aes_reg_pkg.sv
-+++ b/hw/ip/aes/rtl/aes_reg_pkg.sv
-@@ -162,11 +162,11 @@ package aes_reg_pkg;
-   // Register to internal design logic //
-   ///////////////////////////////////////
-   typedef struct packed {
--    aes_reg2hw_key_mreg_t [7:0] key; // [678:415]
--    aes_reg2hw_iv_mreg_t [3:0] iv; // [414:283]
--    aes_reg2hw_data_in_mreg_t [3:0] data_in; // [282:151]
--    aes_reg2hw_data_out_mreg_t [3:0] data_out; // [150:19]
--    aes_reg2hw_ctrl_shadowed_reg_t ctrl_shadowed; // [18:6]
-+    aes_reg2hw_key_mreg_t [7:0] key; // [682:419]
-+    aes_reg2hw_iv_mreg_t [3:0] iv; // [418:287]
-+    aes_reg2hw_data_in_mreg_t [3:0] data_in; // [286:155]
-+    aes_reg2hw_data_out_mreg_t [3:0] data_out; // [154:23]
-+    aes_reg2hw_ctrl_shadowed_reg_t ctrl_shadowed; // [22:6]
-     aes_reg2hw_trigger_reg_t trigger; // [5:0]
-   } aes_reg2hw_t;
- 
-@@ -174,13 +174,13 @@ package aes_reg_pkg;
-   // Internal design logic to register //
-   ///////////////////////////////////////
-   typedef struct packed {
--    aes_hw2reg_key_mreg_t [7:0] key; // [672:417]
--    aes_hw2reg_iv_mreg_t [3:0] iv; // [416:289]
--    aes_hw2reg_data_in_mreg_t [3:0] data_in; // [288:157]
--    aes_hw2reg_data_out_mreg_t [3:0] data_out; // [156:29]
--    aes_hw2reg_ctrl_shadowed_reg_t ctrl_shadowed; // [28:16]
--    aes_hw2reg_trigger_reg_t trigger; // [15:10]
--    aes_hw2reg_status_reg_t status; // [9:10]
-+    aes_hw2reg_key_mreg_t [7:0] key; // [673:418]
-+    aes_hw2reg_iv_mreg_t [3:0] iv; // [417:290]
-+    aes_hw2reg_data_in_mreg_t [3:0] data_in; // [289:158]
-+    aes_hw2reg_data_out_mreg_t [3:0] data_out; // [157:30]
-+    aes_hw2reg_ctrl_shadowed_reg_t ctrl_shadowed; // [29:21]
-+    aes_hw2reg_trigger_reg_t trigger; // [20:9]
-+    aes_hw2reg_status_reg_t status; // [8:0]
-   } aes_hw2reg_t;
- 
-   // Register Address
 diff --git a/hw/ip/aes/rtl/aes_reg_top.sv b/hw/ip/aes/rtl/aes_reg_top.sv
 index 77c3cdff9..4765d63ba 100644
 --- a/hw/ip/aes/rtl/aes_reg_top.sv
@@ -1345,49 +1280,19 @@ index f6dbddef4..7c46a712a 100644
  endmodule : alert_handler_reg_wrap
  
 diff --git a/hw/ip/alert_handler/rtl/alert_pkg.sv b/hw/ip/alert_handler/rtl/alert_pkg.sv
-index 5324b4978..fb9e8de6c 100644
+index 5324b4978..46fe5901d 100644
 --- a/hw/ip/alert_handler/rtl/alert_pkg.sv
 +++ b/hw/ip/alert_handler/rtl/alert_pkg.sv
-@@ -5,24 +5,20 @@
+@@ -22,7 +22,7 @@ package alert_pkg;
  
- package alert_pkg;
- 
--  // these localparams are generated based on the system top-level configuration
--  localparam int unsigned      NAlerts   = alert_handler_reg_pkg::NAlerts;   // maximum 252
--  localparam int unsigned      EscCntDw  = alert_handler_reg_pkg::EscCntDw;  // maximum 32
--  localparam int unsigned      AccuCntDw = alert_handler_reg_pkg::AccuCntDw; // maximum 32
--  // seed for the ping timer (must be nonzero!)
--  localparam logic [31:0]      LfsrSeed  = alert_handler_reg_pkg::LfsrSeed;
--  // enable async transitions for specific RX/TX pairs
--  localparam bit [NAlerts-1:0] AsyncOn   = alert_handler_reg_pkg::AsyncOn;
--
--  // common constants, do not change
--  localparam int unsigned N_CLASSES   = alert_handler_reg_pkg::N_CLASSES;
--  localparam int unsigned N_ESC_SEV   = alert_handler_reg_pkg::N_ESC_SEV;
--  localparam int unsigned N_PHASES    = alert_handler_reg_pkg::N_PHASES;
--  localparam int unsigned N_LOC_ALERT = alert_handler_reg_pkg::N_LOC_ALERT;
--
--  localparam int unsigned PING_CNT_DW = alert_handler_reg_pkg::PING_CNT_DW;
--  localparam int unsigned PHASE_DW    = alert_handler_reg_pkg::PHASE_DW;
+   localparam int unsigned PING_CNT_DW = alert_handler_reg_pkg::PING_CNT_DW;
+   localparam int unsigned PHASE_DW    = alert_handler_reg_pkg::PHASE_DW;
 -  localparam int unsigned CLASS_DW    = alert_handler_reg_pkg::CLASS_DW;
-+  // copied from alert_handler_reg_pkg as it is currently unparsable by
-+  // yosys/surelog
-+  parameter int NAlerts = 5;
-+  parameter int EscCntDw = 32;
-+  parameter int AccuCntDw = 16;
-+  parameter int LfsrSeed = 2147483647;
-+  parameter logic [NAlerts-1:0] AsyncOn = 5'b00000;
-+  parameter int N_CLASSES = 4;
-+  parameter int N_ESC_SEV = 4;
-+  parameter int N_PHASES = 4;
-+  parameter int N_LOC_ALERT = 4;
-+  parameter int PING_CNT_DW = 24;
-+  parameter int PHASE_DW = 2;
-+  parameter int CLASS_DW = 2;
++  parameter int unsigned CLASS_DW    = alert_handler_reg_pkg::CLASS_DW;
  
    // do not change the phase encoding
    typedef enum logic [2:0] {Idle = 3'b000, Timeout = 3'b001, Terminal = 3'b011,
-@@ -68,9 +64,9 @@ package alert_pkg;
+@@ -68,9 +68,9 @@ package alert_pkg;
      logic [N_CLASSES-1:0]                              class_clr;          // clears esc/accu
      logic [N_CLASSES-1:0][AccuCntDw-1:0]               class_accum_thresh; // accum esc threshold
      logic [N_CLASSES-1:0][EscCntDw-1:0]                class_timeout_cyc;  // interrupt timeout
@@ -3678,148 +3583,6 @@ index c06a77d77..8c9db0c61 100644
      state_e state_d, state_q;
      logic diff_p_edge, diff_n_edge, diff_check_ok, level;
  
-diff --git a/hw/ip/prim/rtl/prim_prince.sv b/hw/ip/prim/rtl/prim_prince.sv
-index 423a7ca21..cb790a861 100644
---- a/hw/ip/prim/rtl/prim_prince.sv
-+++ b/hw/ip/prim/rtl/prim_prince.sv
-@@ -48,7 +48,7 @@ module prim_prince #(
-   output logic                 valid_o,
-   output logic [DataWidth-1:0] data_o
- );
--
-+  import prim_cipher_pkg::*;
-   ///////////////////
-   // key expansion //
-   ///////////////////
-@@ -63,7 +63,7 @@ module prim_prince #(
-     if (dec_i) begin
-       k0          = k0_prime_d;
-       k0_prime_d  = key_i[DataWidth-1:0];
--      k1_d       ^= prim_cipher_pkg::PRINCE_ALPHA_CONST[DataWidth-1:0];
-+      k1_d       ^= PRINCE_ALPHA_CONST[DataWidth-1:0];
-     end
-   end
- 
-@@ -106,7 +106,7 @@ module prim_prince #(
-   always_comb begin : p_pre_round_xor
-     data_state[0] = data_i ^ k0;
-     data_state[0] ^= k1_d;
--    data_state[0] ^= prim_cipher_pkg::PRINCE_ROUND_CONST[0][DataWidth-1:0];
-+    data_state[0] ^= PRINCE_ROUND_CONST[0][DataWidth-1:0];
-   end
- 
-   // forward pass
-@@ -114,24 +114,24 @@ module prim_prince #(
-     logic [DataWidth-1:0] data_state_round;
-     if (DataWidth == 64) begin : gen_fwd_d64
-       always_comb begin : p_fwd_d64
--        data_state_round = prim_cipher_pkg::sbox4_64bit(data_state[k-1],
--            prim_cipher_pkg::PRINCE_SBOX4);
--        data_state_round = prim_cipher_pkg::prince_mult_prime_64bit(data_state_round);
--        data_state_round = prim_cipher_pkg::prince_shiftrows_64bit(data_state_round,
--            prim_cipher_pkg::PRINCE_SHIFT_ROWS64);
-+        data_state_round = sbox4_64bit(data_state[k-1],
-+            PRINCE_SBOX4);
-+        data_state_round = prince_mult_prime_64bit(data_state_round);
-+        data_state_round = prince_shiftrows_64bit(data_state_round,
-+            PRINCE_SHIFT_ROWS64);
-       end
-     end else begin : gen_fwd_d32
-       always_comb begin : p_fwd_d32
--        data_state_round = prim_cipher_pkg::sbox4_32bit(data_state[k-1],
--            prim_cipher_pkg::PRINCE_SBOX4);
--        data_state_round = prim_cipher_pkg::prince_mult_prime_32bit(data_state_round);
--        data_state_round = prim_cipher_pkg::prince_shiftrows_32bit(data_state_round,
--            prim_cipher_pkg::PRINCE_SHIFT_ROWS64);
-+        data_state_round = sbox4_32bit(data_state[k-1],
-+            PRINCE_SBOX4);
-+        data_state_round = prince_mult_prime_32bit(data_state_round);
-+        data_state_round = prince_shiftrows_32bit(data_state_round,
-+            PRINCE_SHIFT_ROWS64);
-       end
-     end
-     logic [DataWidth-1:0] data_state_xor;
-     assign data_state_xor = data_state_round ^
--                            prim_cipher_pkg::PRINCE_ROUND_CONST[k][DataWidth-1:0];
-+                            PRINCE_ROUND_CONST[k][DataWidth-1:0];
-     // improved keyschedule proposed by https://eprint.iacr.org/2014/656.pdf
-     if (k % 2 == 1) assign data_state[k]  = data_state_xor ^ k0_new_d;
-     else            assign data_state[k]  = data_state_xor ^ k1_d;
-@@ -141,19 +141,19 @@ module prim_prince #(
-   logic [DataWidth-1:0] data_state_middle_d, data_state_middle_q, data_state_middle;
-   if (DataWidth == 64) begin : gen_middle_d64
-     always_comb begin : p_middle_d64
--      data_state_middle_d = prim_cipher_pkg::sbox4_64bit(data_state[NumRoundsHalf],
--          prim_cipher_pkg::PRINCE_SBOX4);
--      data_state_middle = prim_cipher_pkg::prince_mult_prime_64bit(data_state_middle_q);
--      data_state_middle = prim_cipher_pkg::sbox4_64bit(data_state_middle,
--          prim_cipher_pkg::PRINCE_SBOX4_INV);
-+      data_state_middle_d = sbox4_64bit(data_state[NumRoundsHalf],
-+          PRINCE_SBOX4);
-+      data_state_middle = prince_mult_prime_64bit(data_state_middle_q);
-+      data_state_middle = sbox4_64bit(data_state_middle,
-+          PRINCE_SBOX4_INV);
-     end
-   end else begin : gen_middle_d32
-     always_comb begin : p_middle_d32
--      data_state_middle_d = prim_cipher_pkg::sbox4_32bit(data_state_middle[NumRoundsHalf],
--          prim_cipher_pkg::PRINCE_SBOX4);
--      data_state_middle = prim_cipher_pkg::prince_mult_prime_32bit(data_state_middle_q);
--      data_state_middle = prim_cipher_pkg::sbox4_32bit(data_state_middle,
--          prim_cipher_pkg::PRINCE_SBOX4_INV);
-+      data_state_middle_d = sbox4_32bit(data_state_middle[NumRoundsHalf],
-+          PRINCE_SBOX4);
-+      data_state_middle = prince_mult_prime_32bit(data_state_middle_q);
-+      data_state_middle = sbox4_32bit(data_state_middle,
-+          PRINCE_SBOX4_INV);
-     end
-   end
- 
-@@ -187,24 +187,24 @@ module prim_prince #(
-     else            assign data_state_xor0 = data_state[NumRoundsHalf+k] ^ k1_q;
-     // the construction is reflective, hence the subtraction with NumRoundsHalf
-     assign data_state_xor1 = data_state_xor0 ^
--                             prim_cipher_pkg::PRINCE_ROUND_CONST[10-NumRoundsHalf+k][DataWidth-1:0];
-+                             PRINCE_ROUND_CONST[10-NumRoundsHalf+k][DataWidth-1:0];
- 
-     logic [DataWidth-1:0] data_state_bwd;
-     if (DataWidth == 64) begin : gen_bwd_d64
-       always_comb begin : p_bwd_d64
--        data_state_bwd = prim_cipher_pkg::prince_shiftrows_64bit(data_state_xor1,
--            prim_cipher_pkg::PRINCE_SHIFT_ROWS64_INV);
--        data_state_bwd = prim_cipher_pkg::prince_mult_prime_64bit(data_state_bwd);
--        data_state[NumRoundsHalf+k+1] = prim_cipher_pkg::sbox4_64bit(data_state_bwd,
--            prim_cipher_pkg::PRINCE_SBOX4_INV);
-+        data_state_bwd = prince_shiftrows_64bit(data_state_xor1,
-+            PRINCE_SHIFT_ROWS64_INV);
-+        data_state_bwd = prince_mult_prime_64bit(data_state_bwd);
-+        data_state[NumRoundsHalf+k+1] = sbox4_64bit(data_state_bwd,
-+            PRINCE_SBOX4_INV);
-       end
-     end else begin : gen_bwd_d32
-       always_comb begin : p_bwd_d32
--        data_state_bwd = prim_cipher_pkg::prince_shiftrows_32bit(data_state_xor1,
--            prim_cipher_pkg::PRINCE_SHIFT_ROWS64_INV);
--        data_state_bwd = prim_cipher_pkg::prince_mult_prime_32bit(data_state_bwd);
--        data_state[NumRoundsHalf+k+1] = prim_cipher_pkg::sbox4_32bit(data_state_bwd,
--            prim_cipher_pkg::PRINCE_SBOX4_INV);
-+        data_state_bwd = prince_shiftrows_32bit(data_state_xor1,
-+            PRINCE_SHIFT_ROWS64_INV);
-+        data_state_bwd = prince_mult_prime_32bit(data_state_bwd);
-+        data_state[NumRoundsHalf+k+1] = sbox4_32bit(data_state_bwd,
-+            PRINCE_SBOX4_INV);
-       end
-     end
-   end
-@@ -212,7 +212,7 @@ module prim_prince #(
-   // post-rounds
-   always_comb begin : p_post_round_xor
-     data_o  = data_state[2*NumRoundsHalf+1] ^
--              prim_cipher_pkg::PRINCE_ROUND_CONST[11][DataWidth-1:0];
-+              PRINCE_ROUND_CONST[11][DataWidth-1:0];
-     data_o ^= k1_q;
-     data_o ^= k0_prime_q;
-   end
 diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
 index 962d3b559..923a187e0 100644
 --- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
