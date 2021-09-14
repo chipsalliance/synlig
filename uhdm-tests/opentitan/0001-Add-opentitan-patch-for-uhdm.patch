@@ -238,19 +238,6 @@ index ee2afd47f..32632d176 100644
  
    ////////////////
    // Assertions //
-diff --git a/hw/ip/aes/rtl/aes_key_expand.sv b/hw/ip/aes/rtl/aes_key_expand.sv
-index c030089b7..65f0bdc94 100644
---- a/hw/ip/aes/rtl/aes_key_expand.sv
-+++ b/hw/ip/aes/rtl/aes_key_expand.sv
-@@ -191,7 +191,7 @@ module aes_key_expand #(
- 
-   // To reduce muxing resources, we re-use existing
-   // connections for unused words and default cases.
--  always_comb begin : drive_regular
-+  always begin : drive_regular
-     unique case (key_len_i)
- 
-       /////////////
 diff --git a/hw/ip/aes/rtl/aes_reg_top.sv b/hw/ip/aes/rtl/aes_reg_top.sv
 index 77c3cdff9..4765d63ba 100644
 --- a/hw/ip/aes/rtl/aes_reg_top.sv
@@ -1280,18 +1267,9 @@ index f6dbddef4..7c46a712a 100644
  endmodule : alert_handler_reg_wrap
  
 diff --git a/hw/ip/alert_handler/rtl/alert_pkg.sv b/hw/ip/alert_handler/rtl/alert_pkg.sv
-index 5324b4978..46fe5901d 100644
+index 5324b4978..a1a858232 100644
 --- a/hw/ip/alert_handler/rtl/alert_pkg.sv
 +++ b/hw/ip/alert_handler/rtl/alert_pkg.sv
-@@ -22,7 +22,7 @@ package alert_pkg;
- 
-   localparam int unsigned PING_CNT_DW = alert_handler_reg_pkg::PING_CNT_DW;
-   localparam int unsigned PHASE_DW    = alert_handler_reg_pkg::PHASE_DW;
--  localparam int unsigned CLASS_DW    = alert_handler_reg_pkg::CLASS_DW;
-+  parameter int unsigned CLASS_DW    = alert_handler_reg_pkg::CLASS_DW;
- 
-   // do not change the phase encoding
-   typedef enum logic [2:0] {Idle = 3'b000, Timeout = 3'b001, Terminal = 3'b011,
 @@ -68,9 +68,9 @@ package alert_pkg;
      logic [N_CLASSES-1:0]                              class_clr;          // clears esc/accu
      logic [N_CLASSES-1:0][AccuCntDw-1:0]               class_accum_thresh; // accum esc threshold
@@ -1881,7 +1859,7 @@ index 07945937c..518462c7d 100644
      // to register interface (read)
      .qs     (mp_bank_cfg_erase_en1_qs)
 diff --git a/hw/ip/hmac/rtl/hmac.sv b/hw/ip/hmac/rtl/hmac.sv
-index 043829d21..c1b7dc313 100644
+index 043829d21..3e4485a48 100644
 --- a/hw/ip/hmac/rtl/hmac.sv
 +++ b/hw/ip/hmac/rtl/hmac.sv
 @@ -30,11 +30,13 @@ module hmac
@@ -1902,20 +1880,7 @@ index 043829d21..c1b7dc313 100644
  
    logic [255:0] secret_key;
  
-@@ -67,8 +69,10 @@ module hmac
-   logic        packer_flush_done;
- 
-   logic        reg_fifo_wvalid;
--  sha_word_t   reg_fifo_wdata;
--  sha_word_t   reg_fifo_wmask;
-+  wire [31:0] reg_fifo_wdata;
-+  wire [31:0] reg_fifo_wmask;
-+  //sha_word_t   reg_fifo_wdata;
-+  //sha_word_t   reg_fifo_wmask;
-   logic        hmac_fifo_wsel;
-   logic        hmac_fifo_wvalid;
-   logic [2:0]  hmac_fifo_wdata_sel;
-@@ -97,7 +101,8 @@ module hmac
+@@ -97,7 +99,8 @@ module hmac
    err_code_e   err_code;
    logic        err_valid;
  
@@ -1925,7 +1890,7 @@ index 043829d21..c1b7dc313 100644
  
    hmac_reg2hw_cfg_reg_t cfg_reg;
    logic                 cfg_block;  // Prevent changing config
-@@ -106,13 +111,13 @@ module hmac
+@@ -106,13 +109,13 @@ module hmac
    ///////////////////////
    // Connect registers //
    ///////////////////////
@@ -1944,7 +1909,7 @@ index 043829d21..c1b7dc313 100644
  
    always_ff @(posedge clk_i or negedge rst_ni) begin
      if (!rst_ni) begin
-@@ -122,17 +127,17 @@ module hmac
+@@ -122,17 +125,17 @@ module hmac
      end else if (!cfg_block) begin
        // Allow updating secret key only when the engine is in Idle.
        for (int i = 0; i < 8; i++) begin
@@ -1966,7 +1931,7 @@ index 043829d21..c1b7dc313 100644
    end
  
    logic [3:0] unused_cfg_qe;
-@@ -144,17 +149,17 @@ module hmac
+@@ -144,17 +147,17 @@ module hmac
    assign hmac_en     = cfg_reg.hmac_en.q;
    assign endian_swap = cfg_reg.endian_swap.q;
    assign digest_swap = cfg_reg.digest_swap.q;
@@ -1992,7 +1957,7 @@ index 043829d21..c1b7dc313 100644
  
    /////////////////////
    // Control signals //
-@@ -173,9 +178,9 @@ module hmac
+@@ -173,9 +176,9 @@ module hmac
    // Hold the configuration during the process
    always_ff @(posedge clk_i or negedge rst_ni) begin
      if (!rst_ni) begin
@@ -2005,7 +1970,7 @@ index 043829d21..c1b7dc313 100644
      end
    end
  
-@@ -208,32 +213,32 @@ module hmac
+@@ -208,32 +211,32 @@ module hmac
    // instantiate interrupt hardware primitive
    prim_intr_hw #(.Width(1)) intr_hw_hmac_done (
      .event_intr_i           (event_intr[0]),
@@ -2056,7 +2021,7 @@ index 043829d21..c1b7dc313 100644
      .intr_o                 (intr_hmac_err_o)
    );
  
-@@ -247,15 +252,13 @@ module hmac
+@@ -247,15 +250,13 @@ module hmac
    assign msg_fifo_gnt    = msg_fifo_req & ~hmac_fifo_wsel & packer_ready;
  
    // FIFO control
@@ -2076,7 +2041,7 @@ index 043829d21..c1b7dc313 100644
  
    prim_fifo_sync #(
      .Width   ($bits(sha_fifo_t)),
-@@ -287,8 +290,8 @@ module hmac
+@@ -287,8 +288,8 @@ module hmac
    ) u_tlul_adapter (
      .clk_i,
      .rst_ni,
@@ -2087,7 +2052,7 @@ index 043829d21..c1b7dc313 100644
  
      .req_o    (msg_fifo_req   ),
      .gnt_i    (msg_fifo_gnt   ),
-@@ -326,10 +329,10 @@ module hmac
+@@ -326,10 +327,10 @@ module hmac
      end
    end
  
@@ -2102,12 +2067,7 @@ index 043829d21..c1b7dc313 100644
  
  
    // Convert endian here
-@@ -445,11 +448,11 @@ module hmac
-   assign hash_start_active = reg_hash_start & cfg_block;
-   assign msg_push_not_allowed = msg_fifo_req & ~msg_allowed;
- 
--  always_comb begin
-+  always begin
+@@ -449,7 +450,7 @@ module hmac
      update_seckey_inprocess = 1'b0;
      if (cfg_block) begin
        for (int i = 0 ; i < 8 ; i++) begin
@@ -2116,7 +2076,7 @@ index 043829d21..c1b7dc313 100644
            update_seckey_inprocess = update_seckey_inprocess | 1'b1;
          end
        end
-@@ -462,7 +465,7 @@ module hmac
+@@ -462,7 +463,7 @@ module hmac
    // This ensures only the first event of the series of events can be seen to sw.
    // It is recommended that the software reads ERR_CODE register when interrupt
    // is pending to avoid any race conditions.
@@ -3552,22 +3512,6 @@ index 92da2e81c..48636a35d 100644
        // wakeup request signals on clk_aon (level encoded)
        .aon_wkup_req_o     ( aon_wkup_req[k]                             )
      );
-diff --git a/hw/ip/prim/rtl/prim_arbiter_ppc.sv b/hw/ip/prim/rtl/prim_arbiter_ppc.sv
-index 9ec473f85..87b1ea41e 100644
---- a/hw/ip/prim/rtl/prim_arbiter_ppc.sv
-+++ b/hw/ip/prim/rtl/prim_arbiter_ppc.sv
-@@ -116,9 +116,10 @@ module prim_arbiter_ppc #(
-       // TODO: waive data_i from NOT_READ error
-     end
- 
-+    reg signed [31:0] i;
-     always_comb begin
-       idx_o = '0;
--      for (int i = 0 ; i < N ; i++) begin
-+      for (i = 0 ; i < N ; i++) begin
-         if (winner[i]) begin
-           idx_o = i[IdxW-1:0];
-         end
 diff --git a/hw/ip/prim/rtl/prim_diff_decode.sv b/hw/ip/prim/rtl/prim_diff_decode.sv
 index c06a77d77..8c9db0c61 100644
 --- a/hw/ip/prim/rtl/prim_diff_decode.sv
@@ -3647,19 +3591,6 @@ index f9649ddf9..d3ba90953 100644
  
      // virtual open drain emulation
      logic oe_n, out;
-diff --git a/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv b/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv
-index ef4712bf5..336e2ff7d 100644
---- a/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv
-+++ b/hw/ip/pwrmgr/rtl/pwrmgr_fsm.sv
-@@ -131,7 +131,7 @@ module pwrmgr_fsm import pwrmgr_pkg::*; (
-     end
-   end
- 
--  always_comb begin
-+  always begin
-     otp_init = 1'b0;
-     lc_init = 1'b0;
-     wkup_o = 1'b0;
 diff --git a/hw/ip/pwrmgr/rtl/pwrmgr_pkg.sv b/hw/ip/pwrmgr/rtl/pwrmgr_pkg.sv
 index a5669d597..4f39a8b53 100644
 --- a/hw/ip/pwrmgr/rtl/pwrmgr_pkg.sv
@@ -4156,7 +4087,7 @@ index b7bd92367..572414528 100644
    );
  
 diff --git a/hw/ip/tlul/rtl/tlul_adapter_sram.sv b/hw/ip/tlul/rtl/tlul_adapter_sram.sv
-index 6e2f33191..118cc96bb 100644
+index 6e2f33191..2820baadd 100644
 --- a/hw/ip/tlul/rtl/tlul_adapter_sram.sv
 +++ b/hw/ip/tlul/rtl/tlul_adapter_sram.sv
 @@ -134,20 +134,17 @@ module tlul_adapter_sram #(
@@ -4191,7 +4122,7 @@ index 6e2f33191..118cc96bb 100644
  
    // a_ready depends on the FIFO full condition and grant from SRAM (or SRAM arbiter)
    // assemble response, including read response, write response, and error for unsupported stuff
-@@ -171,17 +168,17 @@ module tlul_adapter_sram #(
+@@ -171,8 +168,8 @@ module tlul_adapter_sram #(
    end
  
    // Convert byte mask to SRAM bit mask for writes, and only forward valid data
@@ -4200,10 +4131,9 @@ index 6e2f33191..118cc96bb 100644
 +  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wmask_int;
 +  logic [(WidthMult * top_pkg::TL_DW) - 1:0] wdata_int;
  
--  always_comb begin
-+  always begin
+   always_comb begin
      wmask_int = '0;
-     wdata_int = '0;
+@@ -180,8 +177,8 @@ module tlul_adapter_sram #(
  
      if (tl_i.a_valid) begin
        for (int i = 0 ; i < top_pkg::TL_DW/8 ; i++) begin
@@ -4365,7 +4295,7 @@ index 8637ad221..fe7aa9858 100644
  
    // this assertion fails when rspid[0+:STIDW] not in [0..M-1]
 diff --git a/hw/ip/usbdev/rtl/usbdev.sv b/hw/ip/usbdev/rtl/usbdev.sv
-index cbdadd624..527a2daca 100644
+index cbdadd624..21cd0c515 100644
 --- a/hw/ip/usbdev/rtl/usbdev.sv
 +++ b/hw/ip/usbdev/rtl/usbdev.sv
 @@ -90,8 +90,10 @@ module usbdev (
@@ -4585,7 +4515,7 @@ index cbdadd624..527a2daca 100644
 +    .dst_pulse_o (hw2reg[137])
    );
 -  assign hw2reg.usbctrl.device_address.d = '0;
-+  assign hw2reg[144-:7] = {7 {1'b0}};
++  assign hw2reg[144-:7] = '0;
  
    // AV empty is a single pulse so needs pulsesync
    prim_pulse_sync sync_usb_event_av_empty (
@@ -39741,16 +39671,3 @@ index 4dd429df8..8c95e2492 100644
  
    always_comb begin : we_a_decoder
      for (int unsigned i = 1; i < NUM_WORDS; i++) begin
-diff --git a/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv b/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
-index 550b7cc36..c65fe30c4 100755
---- a/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
-+++ b/hw/vendor/pulp_riscv_dbg/src/dm_mem.sv
-@@ -216,7 +216,7 @@ module dm_mem #(
-   // read/write logic
-   logic [63:0] data_bits;
-   logic [7:0][7:0] rdata;
--  always_comb begin : p_rw_logic
-+  always begin : p_rw_logic
- 
-     halted_d_aligned   = NrHartsAligned'(halted_q);
-     resuming_d_aligned = NrHartsAligned'(resuming_q);
