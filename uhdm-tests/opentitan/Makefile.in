@@ -293,7 +293,6 @@ prep-sources: clean-build | ${OPENTITAN}/.gitpatch ${curr_dir}/boot_rom_fpga_nex
 ${UHDM_file}: prep-sources
 	(cd ${EARLGRAY_BUILD} && \
 		${root_dir}/../image/bin/surelog -parse -sverilog \
-			--disable-feature=parametersubstitution \
 			-DSYNTHESIS \
 			-DPRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric \
 			-top top_earlgrey_nexysvideo \
