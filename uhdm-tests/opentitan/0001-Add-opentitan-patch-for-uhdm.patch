@@ -4152,19 +4152,6 @@ index 6e2f33191..2820baadd 100644
  
    // FIFO instance: REQ, RSP
  
-diff --git a/hw/ip/tlul/rtl/tlul_err.sv b/hw/ip/tlul/rtl/tlul_err.sv
-index add8477ba..213209fc6 100644
---- a/hw/ip/tlul/rtl/tlul_err.sv
-+++ b/hw/ip/tlul/rtl/tlul_err.sv
-@@ -42,7 +42,7 @@ module tlul_err import tlul_pkg::*; (
- 
-   logic [MW-1:0] mask;
- 
--  assign mask = (1 << tl_i.a_address[SubAW-1:0]);
-+  assign mask = (1 << $unsigned(tl_i.a_address[SubAW-1:0]));
- 
-   always_comb begin
-     addr_sz_chk  = 1'b0;
 diff --git a/hw/ip/tlul/rtl/tlul_socket_m1.sv b/hw/ip/tlul/rtl/tlul_socket_m1.sv
 index 8637ad221..fe7aa9858 100644
 --- a/hw/ip/tlul/rtl/tlul_socket_m1.sv
@@ -39317,19 +39304,10 @@ index 64b285761..349d19147 100644
    always_comb begin
      addr_hit = '0;
 diff --git a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
-index 2acc14e86..82a44920c 100644
+index 2acc14e86..875a617cd 100644
 --- a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 +++ b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
-@@ -56,6 +56,8 @@ module top_earlgrey #(
-   import tlul_pkg::*;
-   import top_pkg::*;
-   import tl_main_pkg::*;
-+  import clkmgr_pkg::*;
-+  import rstmgr_pkg::*;
- 
-   tl_h2d_t  tl_corei_h_h2d;
-   tl_d2h_t  tl_corei_h_d2h;
-@@ -239,8 +241,8 @@ module top_earlgrey #(
+@@ -239,8 +239,8 @@ module top_earlgrey #(
    assign unused_irq_id = irq_id;
  
    // Alert list
@@ -39340,7 +39318,7 @@ index 2acc14e86..82a44920c 100644
    // Escalation outputs
    prim_esc_pkg::esc_tx_t [alert_pkg::N_ESC_SEV-1:0]  esc_tx;
    prim_esc_pkg::esc_rx_t [alert_pkg::N_ESC_SEV-1:0]  esc_rx;
-@@ -259,12 +261,12 @@ module top_earlgrey #(
+@@ -259,12 +259,12 @@ module top_earlgrey #(
    pwrmgr_pkg::pwr_cpu_t       pwrmgr_pwr_cpu;
    clkmgr_pkg::clkmgr_out_t       clkmgr_clocks;
    logic       aes_idle;
@@ -39348,15 +39326,15 @@ index 2acc14e86..82a44920c 100644
 +  reg [2:0] clkmgr_status;
  
    always_comb begin
-+    clkmgr_status[2-:3] = 3'b111;
-+    clkmgr_status[0] = aes_idle;
      // TODO: So far just aes is connected
 -    clkmgr_status.idle    = clkmgr_pkg::CLK_HINT_STATUS_DEFAULT;
 -    clkmgr_status.idle[0] = aes_idle;
++    clkmgr_status[2-:3] = clkmgr_pkg::CLK_HINT_STATUS_DEFAULT;
++    clkmgr_status[0] = aes_idle;
    end
  
    // Non-debug module reset == reset for everything except for the debug module
-@@ -627,7 +629,7 @@ module top_earlgrey #(
+@@ -627,7 +627,7 @@ module top_earlgrey #(
        // Inter-module signals
        .flash_o(flash_ctrl_flash_req),
        .flash_i(flash_ctrl_flash_rsp),
@@ -39365,7 +39343,7 @@ index 2acc14e86..82a44920c 100644
        .clk_i (clkmgr_clocks.clk_main_infra),
        .rst_ni (rstmgr_resets.rst_lc_n)
    );
-@@ -647,8 +649,8 @@ module top_earlgrey #(
+@@ -647,8 +647,8 @@ module top_earlgrey #(
        .tl_o (tl_aes_d_d2h),
  
        // [0]: ctrl_err
@@ -39376,7 +39354,7 @@ index 2acc14e86..82a44920c 100644
  
        // Inter-module signals
        .idle_o(aes_idle),
-@@ -666,8 +668,8 @@ module top_earlgrey #(
+@@ -666,8 +666,8 @@ module top_earlgrey #(
        .intr_hmac_err_o   (intr_hmac_hmac_err),
  
        // [1]: msg_push_sha_disabled
@@ -39387,7 +39365,7 @@ index 2acc14e86..82a44920c 100644
        .clk_i (clkmgr_clocks.clk_main_hmac),
        .rst_ni (rstmgr_resets.rst_sys_n)
    );
-@@ -904,8 +906,8 @@ module top_earlgrey #(
+@@ -904,8 +904,8 @@ module top_earlgrey #(
        // [2]: imem_uncorrectable
        // [3]: dmem_uncorrectable
        // [4]: reg_uncorrectable
