@@ -283,7 +283,6 @@ ${OPENTITAN}/.gitpatch:
 ${VENV_OT}:
 	virtualenv ${VENV_OT}
 
-
 prep-sources: clean-build | ${OPENTITAN}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT}
 	(. ${VENV_OT}/bin/activate && \
 		pip install -r ${OPENTITAN}/python-requirements.txt && \
@@ -303,12 +302,7 @@ ${UHDM_file}: prep-sources
 			$(CUSTOM_FILES_UHDM) && \
 	cp ${EARLGRAY_BUILD}/slpp_all/surelog.uhdm ${UHDM_file})
 
-yosys/plugins:
-	(export PATH=${root_dir}/../image/bin:${PATH} && \
-		cd ${root_dir}/../yosys-symbiflow-plugins && $(MAKE) UHDM_INSTALL_DIR=${root_dir}/../image install && cd ..)
-
-
-uhdm/yosys/synth-opentitan: ${UHDM_file} ${SV2V_FILE} | ${VENV_OT} yosys/plugins
+uhdm/yosys/synth-opentitan: ${UHDM_file} ${SV2V_FILE} | ${VENV_OT}
 	(cd ${root_dir}/build && \
 	${root_dir}/../image/bin/yosys \
 		-p "plugin -i uhdm" \
