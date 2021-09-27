@@ -88,6 +88,7 @@ jobs:
         id: generate-matrix-vcddiff
         run: |
           matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis OneClass hello-uvm OneThis array-copy assignment-pattern MultiplePrints OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction PatternType PatternInFunction)"
+          matrix=$(echo $matrix | sed "s/tests\///g")
           echo "::set-output name=matrix::$matrix"
           echo "matrix vcddiff: $matrix"
 
@@ -170,17 +171,14 @@ jobs:
     - name: Generate SV file (Yosys)
       run: |
         ./UHDM-integration-tests/.github/ci.sh
-        test_name="${TEST_CASE:6}"
-        echo $test_name
-        echo "test_name=$test_name" >> $GITHUB_ENV
 
       env:
-        TEST_CASE: ${{ matrix.TEST_CASE_VCDDIFF }}
+        TEST_CASE: tests/${{ matrix.TEST_CASE_VCDDIFF }}
         TARGET: uhdm/yosys/test-ast
 
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.test_name }}.sv
+        name: ${{ matrix.TEST_CASE_VCDDIFF }}.sv
         path: UHDM-integration-tests/build/yosys.sv
 
   ibex_synth:
