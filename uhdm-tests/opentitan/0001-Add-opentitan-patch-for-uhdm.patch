@@ -238,6 +238,24 @@ index ee2afd47f..32632d176 100644
  
    ////////////////
    // Assertions //
+diff --git a/hw/ip/aes/rtl/aes_pkg.sv b/hw/ip/aes/rtl/aes_pkg.sv
+index ddc3b7992..1880c397e 100644
+--- a/hw/ip/aes/rtl/aes_pkg.sv
++++ b/hw/ip/aes/rtl/aes_pkg.sv
+@@ -109,12 +109,7 @@ typedef struct packed {
+   logic      manual_operation;
+ } ctrl_reg_t;
+ 
+-parameter ctrl_reg_t CTRL_RESET = '{
+-  operation:        AES_ENC,
+-  mode:             AES_NONE,
+-  key_len:          AES_128,
+-  manual_operation: '0
+-};
++parameter ctrl_reg_t CTRL_RESET = 40'b0000000000000000000000000000000000110000;
+ 
+ // Multiplication by {02} (i.e. x) on GF(2^8)
+ // with field generating polynomial {01}{1b} (9'h11b)
 diff --git a/hw/ip/aes/rtl/aes_reg_top.sv b/hw/ip/aes/rtl/aes_reg_top.sv
 index 77c3cdff9..4765d63ba 100644
 --- a/hw/ip/aes/rtl/aes_reg_top.sv
@@ -1264,6 +1282,59 @@ index 6b573e1b7..6a4f5b30e 100644
  
    flash_part_e flash_part_sel;
    assign flash_part_sel = flash_part_e'(reg2hw.control.partition_sel.q);
+diff --git a/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv b/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
+index bef591e8e..5ba3fae40 100644
+--- a/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
++++ b/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
+@@ -84,20 +84,7 @@ package flash_ctrl_pkg;
+   } flash_req_t;
+ 
+   // default value of flash_req_t (for dangling ports)
+-  parameter flash_req_t FLASH_REQ_DEFAULT = '{
+-    req:       1'b0,
+-    rd:        1'b0,
+-    prog:      1'b0,
+-    pg_erase:  1'b0,
+-    bk_erase:  1'b0,
+-    part:      FlashPartData,
+-    addr:      '0,
+-    prog_data: '0,
+-    prog_last: '0,
+-    scramble_en: '0,
+-    addr_key:  128'hDEADBEEFBEEFFACEDEADBEEF5A5AA5A5,
+-    data_key:  128'hDEADBEEF5A5AA5A5DEADBEEFBEEFFACE
+-  };
++  parameter flash_req_t FLASH_REQ_DEFAULT = 390'b110111101010110110111110111011110101101001011010101001011010010111011110101011011011111011101111101111101110111111111010110011101101111010101101101111101110111110111110111011111111101011001110110111101010110110111110111011110101101001011010101001011010010100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
+ 
+   // memory to flash controller
+   typedef struct packed {
+@@ -109,13 +96,7 @@ package flash_ctrl_pkg;
+   } flash_rsp_t;
+ 
+   // default value of flash_rsp_t (for dangling ports)
+-  parameter flash_rsp_t FLASH_RSP_DEFAULT = '{
+-    rd_done:    1'b0,
+-    prog_done:  1'b0,
+-    erase_done: 1'b0,
+-    rd_data:    '0,
+-    init_busy:  1'b0
+-  };
++  parameter flash_rsp_t FLASH_RSP_DEFAULT = 36'b000000000000000000000000000000000000;
+ 
+   ////////////////////////////
+   // The following inter-module should be moved to OTP
+@@ -128,10 +109,7 @@ package flash_ctrl_pkg;
+   } otp_flash_t;
+ 
+   // default value of otp_flash_t
+-  parameter otp_flash_t OTP_FLASH_DEFAULT = '{
+-    addr_key: 128'hDEADBEEFBEEFFACEDEADBEEF5A5AA5A5,
+-    data_key: 128'hDEADBEEF5A5AA5A5DEADBEEFBEEFFACE
+-  };
++  parameter otp_flash_t OTP_FLASH_DEFAULT = 256'b1101111010101101101111101110111101011010010110101010010110100101110111101010110110111110111011111011111011101111111110101100111011011110101011011011111011101111101111101110111111111010110011101101111010101101101111101110111101011010010110101010010110100101;
+ 
+ 
+ 
 diff --git a/hw/ip/flash_ctrl/rtl/flash_ctrl_reg_pkg.sv b/hw/ip/flash_ctrl/rtl/flash_ctrl_reg_pkg.sv
 index 4c7081ef9..6e318128d 100644
 --- a/hw/ip/flash_ctrl/rtl/flash_ctrl_reg_pkg.sv
@@ -3055,6 +3126,45 @@ index 6080cf464..31418f345 100644
  
      // to register interface (read)
      .qs     (wakeup_en_en15_qs)
+diff --git a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
+index a07fcce61..ba1597049 100644
+--- a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
++++ b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
+@@ -24,10 +24,7 @@ package rstmgr_pkg;
+   } rstmgr_ast_t;
+ 
+   // default value for rstmgr_ast_rsp_t (for dangling ports)
+-  parameter rstmgr_ast_t RSTMGR_AST_DEFAULT = '{
+-    vcc_pok: 1'b1,
+-    alw_pok: 1'b1
+-  };
++  parameter rstmgr_ast_t RSTMGR_AST_DEFAULT = 2'b11;
+ 
+   // resets generated and broadcast
+   // This should be templatized and generated
+@@ -51,10 +48,7 @@ package rstmgr_pkg;
+   } rstmgr_cpu_t;
+ 
+   // default value for rstmgr_ast_rsp_t (for dangling ports)
+-  parameter rstmgr_cpu_t RSTMGR_CPU_DEFAULT = '{
+-    rst_cpu_n: 1'b1,
+-    ndmreset_req: '0
+-  };
++  parameter rstmgr_cpu_t RSTMGR_CPU_DEFAULT = 2'b10;
+ 
+   // peripherals reset requests
+   typedef struct packed {
+@@ -62,9 +56,7 @@ package rstmgr_pkg;
+   } rstmgr_peri_t;
+ 
+   // default value for rstmgr_ast_rsp_t (for dangling ports)
+-  parameter rstmgr_peri_t RSTMGR_PERI_DEFAULT = '{
+-    rst_reqs: '0
+-  };
++  parameter rstmgr_peri_t RSTMGR_PERI_DEFAULT = 32'b00000000000000000000000000000000;
+ 
+ 
+ endpackage // rstmgr_pkg
 diff --git a/hw/ip/rv_timer/rtl/rv_timer.sv b/hw/ip/rv_timer/rtl/rv_timer.sv
 index 9b939eedd..a4c91c238 100644
 --- a/hw/ip/rv_timer/rtl/rv_timer.sv
@@ -11199,6 +11309,32 @@ index e6d74c618..339f9fff3 100644
    logic [58:0] addr_hit;
    always_comb begin
      addr_hit = '0;
+diff --git a/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv b/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv
+index 84a52bba2..1ef9b878c 100644
+--- a/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv
++++ b/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv
+@@ -16,9 +16,7 @@ package clkmgr_pkg;
+     logic test_en;
+   } clk_dft_t;
+ 
+-  parameter clk_dft_t CLK_DFT_DEFAULT = '{
+-    test_en: 1'b0
+-  };
++  parameter clk_dft_t CLK_DFT_DEFAULT = 1'b0;
+ 
+   typedef struct packed {
+   logic clk_io_powerup;
+@@ -44,9 +42,7 @@ package clkmgr_pkg;
+     logic [3-1:0] idle;
+   } clk_hint_status_t;
+ 
+-  parameter clk_hint_status_t CLK_HINT_STATUS_DEFAULT = '{
+-    idle: {3{1'b1}}
+-  };
++  parameter clk_hint_status_t CLK_HINT_STATUS_DEFAULT = 3'b111;
+ 
+ 
+ endpackage // clkmgr_pkg
 diff --git a/hw/top_earlgrey/ip/padctrl/rtl/autogen/padctrl_reg_top.sv b/hw/top_earlgrey/ip/padctrl/rtl/autogen/padctrl_reg_top.sv
 index 30f3ea44f..9f4532108 100644
 --- a/hw/top_earlgrey/ip/padctrl/rtl/autogen/padctrl_reg_top.sv
