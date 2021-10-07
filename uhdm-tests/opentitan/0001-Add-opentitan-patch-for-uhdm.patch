@@ -5585,7 +5585,7 @@ index 4cff2c116..ee4045ff2 100644
      // to register interface (read)
      .qs     (phy_config_usb_ref_disable_qs)
 diff --git a/hw/top_earlgrey/ip/alert_handler/rtl/autogen/alert_handler_reg_top.sv b/hw/top_earlgrey/ip/alert_handler/rtl/autogen/alert_handler_reg_top.sv
-index e6d74c618..339f9fff3 100644
+index e6d74c618..11fdb8248 100644
 --- a/hw/top_earlgrey/ip/alert_handler/rtl/autogen/alert_handler_reg_top.sv
 +++ b/hw/top_earlgrey/ip/alert_handler/rtl/autogen/alert_handler_reg_top.sv
 @@ -14,8 +14,8 @@ module alert_handler_reg_top (
@@ -7528,7 +7528,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(ping_timeout_cyc_we & regen_qs),
 +      .wd(ping_timeout_cyc_wd),
 +      .de(1'b0),
-+      .d({24 {1'sb0}}),
++      .d({24 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[827-:24]),
 +      .qs(ping_timeout_cyc_qs)
@@ -7618,7 +7618,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(alert_class_class_a0_we & regen_qs),
 +      .wd(alert_class_class_a0_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[790-:2]),
 +      .qs(alert_class_class_a0_qs)
@@ -7633,7 +7633,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(alert_class_class_a1_we & regen_qs),
 +      .wd(alert_class_class_a1_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[792-:2]),
 +      .qs(alert_class_class_a1_qs)
@@ -7648,7 +7648,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(alert_class_class_a2_we & regen_qs),
 +      .wd(alert_class_class_a2_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[794-:2]),
 +      .qs(alert_class_class_a2_qs)
@@ -7663,7 +7663,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(alert_class_class_a3_we & regen_qs),
 +      .wd(alert_class_class_a3_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[796-:2]),
 +      .qs(alert_class_class_a3_qs)
@@ -7678,7 +7678,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(alert_class_class_a4_we & regen_qs),
 +      .wd(alert_class_class_a4_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[798-:2]),
 +      .qs(alert_class_class_a4_qs)
@@ -7828,7 +7828,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(loc_alert_class_class_la0_we & regen_qs),
 +      .wd(loc_alert_class_class_la0_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[773-:2]),
 +      .qs(loc_alert_class_class_la0_qs)
@@ -7843,7 +7843,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(loc_alert_class_class_la1_we & regen_qs),
 +      .wd(loc_alert_class_class_la1_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[775-:2]),
 +      .qs(loc_alert_class_class_la1_qs)
@@ -7858,7 +7858,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(loc_alert_class_class_la2_we & regen_qs),
 +      .wd(loc_alert_class_class_la2_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[777-:2]),
 +      .qs(loc_alert_class_class_la2_qs)
@@ -7873,7 +7873,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(loc_alert_class_class_la3_we & regen_qs),
 +      .wd(loc_alert_class_class_la3_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[779-:2]),
 +      .qs(loc_alert_class_class_la3_qs)
@@ -8038,7 +8038,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_ctrl_map_e0_we & regen_qs),
 +      .wd(classa_ctrl_map_e0_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[761-:2]),
 +      .qs(classa_ctrl_map_e0_qs)
@@ -8053,7 +8053,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_ctrl_map_e1_we & regen_qs),
 +      .wd(classa_ctrl_map_e1_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[759-:2]),
 +      .qs(classa_ctrl_map_e1_qs)
@@ -8068,7 +8068,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_ctrl_map_e2_we & regen_qs),
 +      .wd(classa_ctrl_map_e2_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[757-:2]),
 +      .qs(classa_ctrl_map_e2_qs)
@@ -8083,7 +8083,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_ctrl_map_e3_we & regen_qs),
 +      .wd(classa_ctrl_map_e3_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[755-:2]),
 +      .qs(classa_ctrl_map_e3_qs)
@@ -8121,7 +8121,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(16)) u_classa_accum_cnt(
 +      .re(classa_accum_cnt_re),
 +      .we(1'b0),
-+      .wd({16 {1'sb0}}),
++      .wd({16 {1'b0}}),
 +      .d(hw2reg[209-:16]),
 +      .qre(),
 +      .qe(),
@@ -8138,7 +8138,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_accum_thresh_we & regen_qs),
 +      .wd(classa_accum_thresh_wd),
 +      .de(1'b0),
-+      .d({16 {1'sb0}}),
++      .d({16 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[751-:16]),
 +      .qs(classa_accum_thresh_qs)
@@ -8153,7 +8153,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_timeout_cyc_we & regen_qs),
 +      .wd(classa_timeout_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[735-:32]),
 +      .qs(classa_timeout_cyc_qs)
@@ -8168,7 +8168,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_phase0_cyc_we & regen_qs),
 +      .wd(classa_phase0_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[703-:32]),
 +      .qs(classa_phase0_cyc_qs)
@@ -8183,7 +8183,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_phase1_cyc_we & regen_qs),
 +      .wd(classa_phase1_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[671-:32]),
 +      .qs(classa_phase1_cyc_qs)
@@ -8198,7 +8198,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_phase2_cyc_we & regen_qs),
 +      .wd(classa_phase2_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[639-:32]),
 +      .qs(classa_phase2_cyc_qs)
@@ -8213,7 +8213,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classa_phase3_cyc_we & regen_qs),
 +      .wd(classa_phase3_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[607-:32]),
 +      .qs(classa_phase3_cyc_qs)
@@ -8221,7 +8221,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(32)) u_classa_esc_cnt(
 +      .re(classa_esc_cnt_re),
 +      .we(1'b0),
-+      .wd({32 {1'sb0}}),
++      .wd({32 {1'b0}}),
 +      .d(hw2reg[193-:32]),
 +      .qre(),
 +      .qe(),
@@ -8231,7 +8231,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(3)) u_classa_state(
 +      .re(classa_state_re),
 +      .we(1'b0),
-+      .wd({3 {1'sb0}}),
++      .wd({3 {1'b0}}),
 +      .d(hw2reg[161-:3]),
 +      .qre(),
 +      .qe(),
@@ -8338,7 +8338,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_ctrl_map_e0_we & regen_qs),
 +      .wd(classb_ctrl_map_e0_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[569-:2]),
 +      .qs(classb_ctrl_map_e0_qs)
@@ -8353,7 +8353,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_ctrl_map_e1_we & regen_qs),
 +      .wd(classb_ctrl_map_e1_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[567-:2]),
 +      .qs(classb_ctrl_map_e1_qs)
@@ -8368,7 +8368,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_ctrl_map_e2_we & regen_qs),
 +      .wd(classb_ctrl_map_e2_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[565-:2]),
 +      .qs(classb_ctrl_map_e2_qs)
@@ -8383,7 +8383,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_ctrl_map_e3_we & regen_qs),
 +      .wd(classb_ctrl_map_e3_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[563-:2]),
 +      .qs(classb_ctrl_map_e3_qs)
@@ -8421,7 +8421,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(16)) u_classb_accum_cnt(
 +      .re(classb_accum_cnt_re),
 +      .we(1'b0),
-+      .wd({16 {1'sb0}}),
++      .wd({16 {1'b0}}),
 +      .d(hw2reg[156-:16]),
 +      .qre(),
 +      .qe(),
@@ -8438,7 +8438,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_accum_thresh_we & regen_qs),
 +      .wd(classb_accum_thresh_wd),
 +      .de(1'b0),
-+      .d({16 {1'sb0}}),
++      .d({16 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[559-:16]),
 +      .qs(classb_accum_thresh_qs)
@@ -8453,7 +8453,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_timeout_cyc_we & regen_qs),
 +      .wd(classb_timeout_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[543-:32]),
 +      .qs(classb_timeout_cyc_qs)
@@ -8468,7 +8468,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_phase0_cyc_we & regen_qs),
 +      .wd(classb_phase0_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[511-:32]),
 +      .qs(classb_phase0_cyc_qs)
@@ -8483,7 +8483,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_phase1_cyc_we & regen_qs),
 +      .wd(classb_phase1_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[479-:32]),
 +      .qs(classb_phase1_cyc_qs)
@@ -8498,7 +8498,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_phase2_cyc_we & regen_qs),
 +      .wd(classb_phase2_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[447-:32]),
 +      .qs(classb_phase2_cyc_qs)
@@ -8513,7 +8513,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classb_phase3_cyc_we & regen_qs),
 +      .wd(classb_phase3_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[415-:32]),
 +      .qs(classb_phase3_cyc_qs)
@@ -8521,7 +8521,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(32)) u_classb_esc_cnt(
 +      .re(classb_esc_cnt_re),
 +      .we(1'b0),
-+      .wd({32 {1'sb0}}),
++      .wd({32 {1'b0}}),
 +      .d(hw2reg[140-:32]),
 +      .qre(),
 +      .qe(),
@@ -8531,7 +8531,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(3)) u_classb_state(
 +      .re(classb_state_re),
 +      .we(1'b0),
-+      .wd({3 {1'sb0}}),
++      .wd({3 {1'b0}}),
 +      .d(hw2reg[108-:3]),
 +      .qre(),
 +      .qe(),
@@ -8638,7 +8638,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_ctrl_map_e0_we & regen_qs),
 +      .wd(classc_ctrl_map_e0_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[377-:2]),
 +      .qs(classc_ctrl_map_e0_qs)
@@ -8653,7 +8653,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_ctrl_map_e1_we & regen_qs),
 +      .wd(classc_ctrl_map_e1_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[375-:2]),
 +      .qs(classc_ctrl_map_e1_qs)
@@ -8668,7 +8668,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_ctrl_map_e2_we & regen_qs),
 +      .wd(classc_ctrl_map_e2_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[373-:2]),
 +      .qs(classc_ctrl_map_e2_qs)
@@ -8683,7 +8683,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_ctrl_map_e3_we & regen_qs),
 +      .wd(classc_ctrl_map_e3_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[371-:2]),
 +      .qs(classc_ctrl_map_e3_qs)
@@ -8721,7 +8721,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(16)) u_classc_accum_cnt(
 +      .re(classc_accum_cnt_re),
 +      .we(1'b0),
-+      .wd({16 {1'sb0}}),
++      .wd({16 {1'b0}}),
 +      .d(hw2reg[103-:16]),
 +      .qre(),
 +      .qe(),
@@ -8738,7 +8738,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_accum_thresh_we & regen_qs),
 +      .wd(classc_accum_thresh_wd),
 +      .de(1'b0),
-+      .d({16 {1'sb0}}),
++      .d({16 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[367-:16]),
 +      .qs(classc_accum_thresh_qs)
@@ -8753,7 +8753,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_timeout_cyc_we & regen_qs),
 +      .wd(classc_timeout_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[351-:32]),
 +      .qs(classc_timeout_cyc_qs)
@@ -8768,7 +8768,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_phase0_cyc_we & regen_qs),
 +      .wd(classc_phase0_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[319-:32]),
 +      .qs(classc_phase0_cyc_qs)
@@ -8783,7 +8783,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_phase1_cyc_we & regen_qs),
 +      .wd(classc_phase1_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[287-:32]),
 +      .qs(classc_phase1_cyc_qs)
@@ -8798,7 +8798,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_phase2_cyc_we & regen_qs),
 +      .wd(classc_phase2_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[255-:32]),
 +      .qs(classc_phase2_cyc_qs)
@@ -8813,7 +8813,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classc_phase3_cyc_we & regen_qs),
 +      .wd(classc_phase3_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[223-:32]),
 +      .qs(classc_phase3_cyc_qs)
@@ -8821,7 +8821,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(32)) u_classc_esc_cnt(
 +      .re(classc_esc_cnt_re),
 +      .we(1'b0),
-+      .wd({32 {1'sb0}}),
++      .wd({32 {1'b0}}),
 +      .d(hw2reg[87-:32]),
 +      .qre(),
 +      .qe(),
@@ -8831,7 +8831,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(3)) u_classc_state(
 +      .re(classc_state_re),
 +      .we(1'b0),
-+      .wd({3 {1'sb0}}),
++      .wd({3 {1'b0}}),
 +      .d(hw2reg[55-:3]),
 +      .qre(),
 +      .qe(),
@@ -8938,7 +8938,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_ctrl_map_e0_we & regen_qs),
 +      .wd(classd_ctrl_map_e0_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[185-:2]),
 +      .qs(classd_ctrl_map_e0_qs)
@@ -8953,7 +8953,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_ctrl_map_e1_we & regen_qs),
 +      .wd(classd_ctrl_map_e1_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[183-:2]),
 +      .qs(classd_ctrl_map_e1_qs)
@@ -8968,7 +8968,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_ctrl_map_e2_we & regen_qs),
 +      .wd(classd_ctrl_map_e2_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[181-:2]),
 +      .qs(classd_ctrl_map_e2_qs)
@@ -8983,7 +8983,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_ctrl_map_e3_we & regen_qs),
 +      .wd(classd_ctrl_map_e3_wd),
 +      .de(1'b0),
-+      .d({2 {1'sb0}}),
++      .d({2 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[179-:2]),
 +      .qs(classd_ctrl_map_e3_qs)
@@ -9021,7 +9021,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(16)) u_classd_accum_cnt(
 +      .re(classd_accum_cnt_re),
 +      .we(1'b0),
-+      .wd({16 {1'sb0}}),
++      .wd({16 {1'b0}}),
 +      .d(hw2reg[50-:16]),
 +      .qre(),
 +      .qe(),
@@ -9038,7 +9038,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_accum_thresh_we & regen_qs),
 +      .wd(classd_accum_thresh_wd),
 +      .de(1'b0),
-+      .d({16 {1'sb0}}),
++      .d({16 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[175-:16]),
 +      .qs(classd_accum_thresh_qs)
@@ -9053,7 +9053,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_timeout_cyc_we & regen_qs),
 +      .wd(classd_timeout_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[159-:32]),
 +      .qs(classd_timeout_cyc_qs)
@@ -9068,7 +9068,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_phase0_cyc_we & regen_qs),
 +      .wd(classd_phase0_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[127-:32]),
 +      .qs(classd_phase0_cyc_qs)
@@ -9083,7 +9083,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_phase1_cyc_we & regen_qs),
 +      .wd(classd_phase1_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[95-:32]),
 +      .qs(classd_phase1_cyc_qs)
@@ -9098,7 +9098,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_phase2_cyc_we & regen_qs),
 +      .wd(classd_phase2_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[63-:32]),
 +      .qs(classd_phase2_cyc_qs)
@@ -9113,7 +9113,7 @@ index e6d74c618..339f9fff3 100644
 +      .we(classd_phase3_cyc_we & regen_qs),
 +      .wd(classd_phase3_cyc_wd),
 +      .de(1'b0),
-+      .d({32 {1'sb0}}),
++      .d({32 {1'b0}}),
 +      .qe(),
 +      .q(reg2hw[31-:32]),
 +      .qs(classd_phase3_cyc_qs)
@@ -9121,7 +9121,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(32)) u_classd_esc_cnt(
 +      .re(classd_esc_cnt_re),
 +      .we(1'b0),
-+      .wd({32 {1'sb0}}),
++      .wd({32 {1'b0}}),
 +      .d(hw2reg[34-:32]),
 +      .qre(),
 +      .qe(),
@@ -9131,7 +9131,7 @@ index e6d74c618..339f9fff3 100644
 +  prim_subreg_ext #(.DW(3)) u_classd_state(
 +      .re(classd_state_re),
 +      .we(1'b0),
-+      .wd({3 {1'sb0}}),
++      .wd({3 {1'b0}}),
 +      .d(hw2reg[2-:3]),
 +      .qre(),
 +      .qe(),
