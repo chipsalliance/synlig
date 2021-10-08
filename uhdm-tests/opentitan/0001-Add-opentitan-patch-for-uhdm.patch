@@ -1684,28 +1684,11 @@ index 6e2f33191..2820baadd 100644
    // FIFO instance: REQ, RSP
  
 diff --git a/hw/ip/tlul/rtl/tlul_socket_m1.sv b/hw/ip/tlul/rtl/tlul_socket_m1.sv
-index 8637ad221..fe7aa9858 100644
+index 8637ad221..a3c29e293 100644
 --- a/hw/ip/tlul/rtl/tlul_socket_m1.sv
 +++ b/hw/ip/tlul/rtl/tlul_socket_m1.sv
-@@ -92,9 +92,11 @@ module tlul_socket_m1 #(
-     // ID Shifting
-     logic [STIDW-1:0] reqid_sub;
-     logic [IDW-1:0] shifted_id;
-+    logic [7:0] tmp;
-+    assign tmp = tl_h_i[i].a_source;
-     assign reqid_sub = i;   // can cause conversion error?
-     assign shifted_id = {
--      tl_h_i[i].a_source[0+:(IDW-STIDW)],
-+      tmp[0+:(IDW-STIDW)],
-       reqid_sub
-     };
- 
-@@ -102,21 +104,19 @@ module tlul_socket_m1 #(
- 
-     // assign not connected bits to nc_* signal to make lint happy
-     logic [IDW-1 : IDW-STIDW] unused_tl_h_source;
--    assign unused_tl_h_source = tl_h_i[i].a_source[IDW-1 -: STIDW];
-+    assign unused_tl_h_source = tmp[IDW-1 -: STIDW];
+@@ -105,18 +105,16 @@ module tlul_socket_m1 #(
+     assign unused_tl_h_source = tl_h_i[i].a_source[IDW-1 -: STIDW];
  
      // Put shifted ID
 -    assign hreq_fifo_i = '{
@@ -1733,7 +1716,7 @@ index 8637ad221..fe7aa9858 100644
  
      tlul_fifo_sync #(
        .ReqPass    (HReqPass[i]),
-@@ -237,18 +237,16 @@ module tlul_socket_m1 #(
+@@ -237,18 +235,16 @@ module tlul_socket_m1 #(
                                 (drsp_fifo_o.d_source[0+:STIDW] == i) &
                                drsp_fifo_o.d_valid;
  
