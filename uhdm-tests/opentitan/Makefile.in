@@ -59,6 +59,8 @@ rv_timer_reg_pkg.sv \
 rv_plic_reg_pkg.sv \
 hmac_reg_pkg.sv \
 padctrl_reg_pkg.sv \
+aes_sbox_canright_pkg.sv \
+top_earlgrey_pkg.sv \
 ibex_compressed_decoder.sv \
 ibex_alu.sv \
 ibex_controller.sv \
