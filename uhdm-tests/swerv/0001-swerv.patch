@@ -1,3 +1,16 @@
+diff --git a/design/dec/dec_decode_ctl.sv b/design/dec/dec_decode_ctl.sv
+index 02c0b05..d82b385 100644
+--- a/design/dec/dec_decode_ctl.sv
++++ b/design/dec/dec_decode_ctl.sv
+@@ -814,7 +814,7 @@ module dec_decode_ctl
+       assign cam_data_reset_val[i] = cam_data_reset & (cam_data_reset_tag[NBLOAD_TAG_MSB:0] == cam[i].tag[NBLOAD_TAG_MSB:0]) & cam[i].valid;
+ 
+ 
+-      always_comb begin
++      always begin
+          cam_in[i] = '0;
+ 
+          if (cam_wen[i]) begin
 diff --git a/design/dec/dec_gpr_ctl.sv b/design/dec/dec_gpr_ctl.sv
 index 5110c1b..8ef38e8 100644
 --- a/design/dec/dec_gpr_ctl.sv
