@@ -1131,17 +1131,12 @@ index 07945937c..518462c7d 100644
      // to register interface (read)
      .qs     (mp_bank_cfg_erase_en1_qs)
 diff --git a/hw/ip/hmac/rtl/hmac.sv b/hw/ip/hmac/rtl/hmac.sv
-index 043829d21..047aef175 100644
+index 043829d21..1fde3a8f5 100644
 --- a/hw/ip/hmac/rtl/hmac.sv
 +++ b/hw/ip/hmac/rtl/hmac.sv
-@@ -30,11 +30,11 @@ module hmac
-   /////////////////////////
-   // Signal declarations //
-   /////////////////////////
--  hmac_reg2hw_t reg2hw;
--  hmac_hw2reg_t hw2reg;
-+  wire [320:0] reg2hw;
-+  wire [627:0] hw2reg;
+@@ -33,8 +33,8 @@ module hmac
+   hmac_reg2hw_t reg2hw;
+   hmac_hw2reg_t hw2reg;
  
 -  tlul_pkg::tl_h2d_t  tl_win_h2d[1];
 -  tlul_pkg::tl_d2h_t  tl_win_d2h[1];
@@ -1159,137 +1154,24 @@ index 043829d21..047aef175 100644
  
    hmac_reg2hw_cfg_reg_t cfg_reg;
    logic                 cfg_block;  // Prevent changing config
-@@ -106,13 +106,13 @@ module hmac
-   ///////////////////////
-   // Connect registers //
-   ///////////////////////
--  assign hw2reg.status.fifo_full.d  = fifo_full;
--  assign hw2reg.status.fifo_empty.d = fifo_empty;
--  assign hw2reg.status.fifo_depth.d = fifo_depth;
-+  assign hw2reg[616]  = fifo_full;
-+  assign hw2reg[617] = fifo_empty;
-+  assign hw2reg[615-:5] = fifo_depth;
- 
-   // secret key
--  assign wipe_secret = reg2hw.wipe_secret.qe;
--  assign wipe_v      = reg2hw.wipe_secret.q;
-+  assign wipe_secret = reg2hw[264];
-+  assign wipe_v      = reg2hw[296-:32];
- 
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
-@@ -122,17 +122,17 @@ module hmac
-     end else if (!cfg_block) begin
-       // Allow updating secret key only when the engine is in Idle.
-       for (int i = 0; i < 8; i++) begin
--        if (reg2hw.key[7-i].qe) begin
--          secret_key[32*i+:32] <= reg2hw.key[7-i].q;
-+        if (reg2hw[(7 - i) * 33]) begin
-+          secret_key[32*i+:32] <= reg2hw[((7 - i) * 33) + 32-:32];
-         end
-       end
-     end
-   end
- 
+@@ -132,7 +132,7 @@ module hmac
    for (genvar i = 0; i < 8; i++) begin : gen_key_digest
--    assign hw2reg.key[7-i].d      = '0;
-+    assign hw2reg[322 + (((7 - i) * 32) + 31)-:32]      = '0;
+     assign hw2reg.key[7-i].d      = '0;
      // digest
 -    assign hw2reg.digest[i].d = conv_endian(digest[i], digest_swap);
-+    assign hw2reg[66 + ((i * 32) + 31)-:32] = conv_endian(digest[i * 32+:32], digest_swap);
++    assign hw2reg.digest[i].d = conv_endian(digest[i * 32+:32], digest_swap);
    end
  
    logic [3:0] unused_cfg_qe;
-@@ -144,17 +144,17 @@ module hmac
-   assign hmac_en     = cfg_reg.hmac_en.q;
-   assign endian_swap = cfg_reg.endian_swap.q;
-   assign digest_swap = cfg_reg.digest_swap.q;
--  assign hw2reg.cfg.hmac_en.d     = cfg_reg.hmac_en.q;
--  assign hw2reg.cfg.sha_en.d      = cfg_reg.sha_en.q;
--  assign hw2reg.cfg.endian_swap.d = cfg_reg.endian_swap.q;
--  assign hw2reg.cfg.digest_swap.d = cfg_reg.digest_swap.q;
-+  assign hw2reg[621]     = cfg_reg.hmac_en.q;
-+  assign hw2reg[620]      = cfg_reg.sha_en.q;
-+  assign hw2reg[619] = cfg_reg.endian_swap.q;
-+  assign hw2reg[618] = cfg_reg.digest_swap.q;
- 
--  assign reg_hash_start   = reg2hw.cmd.hash_start.qe   & reg2hw.cmd.hash_start.q;
--  assign reg_hash_process = reg2hw.cmd.hash_process.qe & reg2hw.cmd.hash_process.q;
-+  assign reg_hash_start   = reg2hw[299]   & reg2hw[300];
-+  assign reg_hash_process = reg2hw[297] & reg2hw[298];
- 
-   // Error code register
--  assign hw2reg.err_code.de = err_valid;
--  assign hw2reg.err_code.d  = err_code;
-+  assign hw2reg[578] = err_valid;
-+  assign hw2reg[610-:32]  = err_code;
- 
-   /////////////////////
-   // Control signals //
-@@ -173,9 +173,9 @@ module hmac
+@@ -173,7 +173,7 @@ module hmac
    // Hold the configuration during the process
    always_ff @(posedge clk_i or negedge rst_ni) begin
      if (!rst_ni) begin
 -      cfg_reg <= '{endian_swap: '{q: 1'b1, qe: 1'b0}, default:'0};
--    end else if (!cfg_block && reg2hw.cfg.hmac_en.qe) begin
--      cfg_reg <= reg2hw.cfg ;
 +      cfg_reg <= 8'b00001000;
-+    end else if (!cfg_block && reg2hw[307]) begin
-+      cfg_reg <= reg2hw[308-:8];
+     end else if (!cfg_block && reg2hw.cfg.hmac_en.qe) begin
+       cfg_reg <= reg2hw.cfg ;
      end
-   end
- 
-@@ -208,32 +208,32 @@ module hmac
-   // instantiate interrupt hardware primitive
-   prim_intr_hw #(.Width(1)) intr_hw_hmac_done (
-     .event_intr_i           (event_intr[0]),
--    .reg2hw_intr_enable_q_i (reg2hw.intr_enable.hmac_done.q),
--    .reg2hw_intr_test_q_i   (reg2hw.intr_test.hmac_done.q),
--    .reg2hw_intr_test_qe_i  (reg2hw.intr_test.hmac_done.qe),
--    .reg2hw_intr_state_q_i  (reg2hw.intr_state.hmac_done.q),
--    .hw2reg_intr_state_de_o (hw2reg.intr_state.hmac_done.de),
--    .hw2reg_intr_state_d_o  (hw2reg.intr_state.hmac_done.d),
-+    .reg2hw_intr_enable_q_i (reg2hw[317]),
-+    .reg2hw_intr_test_q_i   (reg2hw[314]),
-+    .reg2hw_intr_test_qe_i  (reg2hw[313]),
-+    .reg2hw_intr_state_q_i  (reg2hw[320]),
-+    .hw2reg_intr_state_de_o (hw2reg[626]),
-+    .hw2reg_intr_state_d_o  (hw2reg[627]),
-     .intr_o                 (intr_hmac_done_o)
-   );
-   prim_intr_hw #(.Width(1)) intr_hw_fifo_empty (
-     .event_intr_i           (event_intr[1]),
--    .reg2hw_intr_enable_q_i (reg2hw.intr_enable.fifo_empty.q),
--    .reg2hw_intr_test_q_i   (reg2hw.intr_test.fifo_empty.q),
--    .reg2hw_intr_test_qe_i  (reg2hw.intr_test.fifo_empty.qe),
--    .reg2hw_intr_state_q_i  (reg2hw.intr_state.fifo_empty.q),
--    .hw2reg_intr_state_de_o (hw2reg.intr_state.fifo_empty.de),
--    .hw2reg_intr_state_d_o  (hw2reg.intr_state.fifo_empty.d),
-+    .reg2hw_intr_enable_q_i (reg2hw[316]),
-+    .reg2hw_intr_test_q_i   (reg2hw[312]),
-+    .reg2hw_intr_test_qe_i  (reg2hw[311]),
-+    .reg2hw_intr_state_q_i  (reg2hw[319]),
-+    .hw2reg_intr_state_de_o (hw2reg[624]),
-+    .hw2reg_intr_state_d_o  (hw2reg[625]),
-     .intr_o                 (intr_fifo_empty_o)
-   );
-   prim_intr_hw #(.Width(1)) intr_hw_hmac_err (
-     .event_intr_i           (event_intr[2]),
--    .reg2hw_intr_enable_q_i (reg2hw.intr_enable.hmac_err.q),
--    .reg2hw_intr_test_q_i   (reg2hw.intr_test.hmac_err.q),
--    .reg2hw_intr_test_qe_i  (reg2hw.intr_test.hmac_err.qe),
--    .reg2hw_intr_state_q_i  (reg2hw.intr_state.hmac_err.q),
--    .hw2reg_intr_state_de_o (hw2reg.intr_state.hmac_err.de),
--    .hw2reg_intr_state_d_o  (hw2reg.intr_state.hmac_err.d),
-+    .reg2hw_intr_enable_q_i (reg2hw[315]),
-+    .reg2hw_intr_test_q_i   (reg2hw[310]),
-+    .reg2hw_intr_test_qe_i  (reg2hw[309]),
-+    .reg2hw_intr_state_q_i  (reg2hw[318]),
-+    .hw2reg_intr_state_de_o (hw2reg[622]),
-+    .hw2reg_intr_state_d_o  (hw2reg[623]),
-     .intr_o                 (intr_hmac_err_o)
-   );
- 
 @@ -247,15 +247,13 @@ module hmac
    assign msg_fifo_gnt    = msg_fifo_req & ~hmac_fifo_wsel & packer_ready;
  
@@ -1321,39 +1203,6 @@ index 043829d21..047aef175 100644
  
      .req_o    (msg_fifo_req   ),
      .gnt_i    (msg_fifo_gnt   ),
-@@ -326,10 +324,10 @@ module hmac
-     end
-   end
- 
--  assign hw2reg.msg_length_upper.de = 1'b1;
--  assign hw2reg.msg_length_upper.d = message_length[63:32];
--  assign hw2reg.msg_length_lower.de = 1'b1;
--  assign hw2reg.msg_length_lower.d = message_length[31:0];
-+  assign hw2reg[0] = 1'b1;
-+  assign hw2reg[32-:32] = message_length[63:32];
-+  assign hw2reg[33] = 1'b1;
-+  assign hw2reg[65-:32] = message_length[31:0];
- 
- 
-   // Convert endian here
-@@ -449,7 +447,7 @@ module hmac
-     update_seckey_inprocess = 1'b0;
-     if (cfg_block) begin
-       for (int i = 0 ; i < 8 ; i++) begin
--        if (reg2hw.key[i].qe) begin
-+        if (reg2hw[i * 33]) begin
-           update_seckey_inprocess = update_seckey_inprocess | 1'b1;
-         end
-       end
-@@ -462,7 +460,7 @@ module hmac
-   // This ensures only the first event of the series of events can be seen to sw.
-   // It is recommended that the software reads ERR_CODE register when interrupt
-   // is pending to avoid any race conditions.
--  assign err_valid = ~reg2hw.intr_state.hmac_err.q &
-+  assign err_valid = ~reg2hw[318] &
-                    ( msg_push_sha_disabled | hash_start_sha_disabled
-                    | update_seckey_inprocess | hash_start_active
-                    | msg_push_not_allowed );
 diff --git a/hw/ip/hmac/rtl/hmac_core.sv b/hw/ip/hmac/rtl/hmac_core.sv
 index a1c9515db..445ca9f1f 100644
 --- a/hw/ip/hmac/rtl/hmac_core.sv
