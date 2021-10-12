@@ -9,7 +9,8 @@ on:
 jobs:
 
   build-binaries:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     env:
       CC: gcc-9
       CXX: g++-9
@@ -18,17 +19,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update -qq
-        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        apt-get update -qq
+        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget
 
     - uses: actions/checkout@v2
       with:
         submodules: recursive
         fetch-depth: 1
-
-    - uses: actions/setup-python@v2
-      with:
-         python-version: '3.7'
 
     - name: Build binaries
       run: |
@@ -45,19 +42,22 @@ jobs:
         path: binaries.tar
 
   generate-matrix-yosys:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     outputs:
       matrix: ${{ steps.generate-matrix-yosys.outputs.matrix }}
     steps:
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y python3
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
       - name: Checkout master
         uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 1
-
-      - uses: actions/setup-python@v2
-        with:
-           python-version: '3.7'
 
       - name: Generate matrix (yosys)
         id: generate-matrix-yosys
@@ -67,29 +67,34 @@ jobs:
           echo "matrix yosys: $matrix"
 
   generate-matrix-vcddiff:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     outputs:
       matrix: ${{ steps.generate-matrix-vcddiff.outputs.matrix }}
     steps:
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y python3
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
       - name: Checkout master
         uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 1
 
-      - uses: actions/setup-python@v2
-        with:
-           python-version: '3.7'
-
       - name: Generate matrix (vcddiff)
         id: generate-matrix-vcddiff
         run: |
           matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis OneClass hello-uvm OneThis array-copy assignment-pattern MultiplePrints OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction PatternType PatternInFunction)"
+          matrix=$(echo $matrix | sed "s/tests\///g")
           echo "::set-output name=matrix::$matrix"
           echo "matrix vcddiff: $matrix"
 
   tests-yosys:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
@@ -105,17 +110,13 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        sudo apt-get update -qq
-        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        apt-get update -qq
+        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
 
     - uses: actions/checkout@v2
       with:
         submodules: recursive
         fetch-depth: 1
-
-    - uses: actions/setup-python@v2
-      with:
-         python-version: '3.7'
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -133,7 +134,8 @@ jobs:
         TARGET: uhdm/yosys/test-ast
 
   tests-vcddiff:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     needs: [build-binaries, generate-matrix-vcddiff]
     strategy:
       matrix:
@@ -149,17 +151,13 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        sudo apt-get update -qq
-        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        apt-get update -qq
+        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
 
     - uses: actions/checkout@v2
       with:
         submodules: recursive
         fetch-depth: 1
-
-    - uses: actions/setup-python@v2
-      with:
-         python-version: '3.7'
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -173,21 +171,19 @@ jobs:
     - name: Generate SV file (Yosys)
       run: |
         ./UHDM-integration-tests/.github/ci.sh
-        test_name="${TEST_CASE:6}"
-        echo $test_name
-        echo "test_name=$test_name" >> $GITHUB_ENV
 
       env:
-        TEST_CASE: ${{ matrix.TEST_CASE_VCDDIFF }}
+        TEST_CASE: tests/${{ matrix.TEST_CASE_VCDDIFF }}
         TARGET: uhdm/yosys/test-ast
 
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.test_name }}.sv
+        name: ${{ matrix.TEST_CASE_VCDDIFF }}.sv
         path: UHDM-integration-tests/build/yosys.sv
 
   ibex_synth:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     needs: build-binaries
     env:
       CC: gcc-9
@@ -197,17 +193,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update -qq
-        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        apt-get update -qq
+        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
     - uses: actions/checkout@v2
       with:
         submodules: recursive
         fetch-depth: 1
-
-    - uses: actions/setup-python@v2
-      with:
-         python-version: '3.7'
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -232,7 +226,8 @@ jobs:
         path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-yosys/lowrisc_ibex_top_artya7_surelog_0.1.edif
 
   opentitan_synth:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     needs: build-binaries
     env:
       CC: gcc-9
@@ -242,16 +237,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update -qq
-        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev
+        apt-get update -qq
+        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
     - uses: actions/checkout@v2
       with:
         submodules: recursive
         fetch-depth: 1
-
-    - uses: actions/setup-python@v2
-      with:
-         python-version: '3.7'
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -276,7 +270,8 @@ jobs:
         path: UHDM-integration-tests/build/top_earlgrey_nexysvideo.edif
 
   swerv_synth:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:latest
     needs: build-binaries
     env:
       CC: gcc-9
@@ -286,16 +281,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update -qq
-        sudo apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev
+        apt-get update -qq
+        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
     - uses: actions/checkout@v2
       with:
         submodules: recursive
         fetch-depth: 1
-
-    - uses: actions/setup-python@v2
-      with:
-         python-version: '3.7'
 
     - name: Download binaries
       uses: actions/download-artifact@v2
