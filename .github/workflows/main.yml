@@ -64,7 +64,7 @@ jobs:
       - name: Generate matrix (yosys)
         id: generate-matrix-yosys
         run: |
-          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis OneClass hello-uvm OneThis MultiplePrints assignment-pattern OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction PatternType PatternInFunction)"
+          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis opentitan)"
           echo "::set-output name=matrix::$matrix"
           echo "matrix yosys: $matrix"
 
@@ -89,7 +89,7 @@ jobs:
       - name: Generate matrix (vcddiff)
         id: generate-matrix-vcddiff
         run: |
-          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis OneClass hello-uvm OneThis array-copy assignment-pattern MultiplePrints OneNetInterf OneNetRange opentitan DpiChandle PutC ImportFunction SelectFromUnpackedInFunction ImportedFunctionCallInModuleAndSubmodule VoidFunction ImportPackageWithFunction VarInFor ParameterUnpackedArray VoidFunction2Returns BitsCallOnExpression FunctionOutputArgument TypedefInModulePort TypedefWithParameter ParameterPackedArray DeclarationInFor TypedefVariableDimensions PatternReplication ParameterUnpackedLogicArray PatternStruct BitsCallOnType VoidFunctionWithoutReturn ImportFunction PatternType PatternInFunction)"
+          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis opentitan)"
           matrix=$(echo $matrix | sed "s/tests\///g")
           echo "::set-output name=matrix::$matrix"
           echo "matrix vcddiff: $matrix"
