@@ -39,7 +39,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: binaries
-        path: binaries.tar
+        path: |
+          binaries.tar
+          **/plot_*.svg
 
   generate-matrix-yosys:
     runs-on: [self-hosted, Linux, X64]
