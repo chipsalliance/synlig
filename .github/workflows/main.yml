@@ -26,6 +26,9 @@ jobs:
       with:
         submodules: recursive
         fetch-depth: 1
+    - name: test
+      run: |
+        which ccache
 
     - name: ccache binaries
       uses: hendrikmuhs/ccache-action@v1
