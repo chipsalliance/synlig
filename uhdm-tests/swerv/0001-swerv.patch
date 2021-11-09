@@ -980,10 +980,3 @@ index b6f986e..b193b7e 100644
      toplevel : swerv_wrapper
  
  generate:
-diff --git a/tools/vivado.tcl b/tools/vivado.tcl
-index 869d2d0..3e8dab0 100644
---- a/tools/vivado.tcl
-+++ b/tools/vivado.tcl
-@@ -1,2 +1 @@
- set_property is_global_include true [get_files config/common_defines.vh]
--set_property IS_GLOBAL_INCLUDE 1 [get_files include/def.sv]
