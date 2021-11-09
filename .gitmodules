@@ -12,7 +12,7 @@
 	url = https://github.com/chipsalliance/UHDM-integration-tests.git
 [submodule "yosys-symbiflow-plugins"]
 	path = yosys-symbiflow-plugins
-	url = https://github.com/antmicro/yosys-symbiflow-plugins.git
+	url = https://github.com/SymbiFlow/yosys-symbiflow-plugins.git
 [submodule "make-env"]
 	path = make-env
 	url = https://github.com/SymbiFlow/make-env.git
