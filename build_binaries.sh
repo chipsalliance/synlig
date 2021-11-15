@@ -15,7 +15,7 @@ cd ..
 fi
 #UHDM plugin
 export PATH=$INSTALL_PATH/bin:${PATH}
-UHDM_INSTALL_DIR=$INSTALL_PATH make -C $PWD/yosys-symbiflow-plugins/ install -j$(nproc)
+UHDM_INSTALL_DIR=$INSTALL_PATH make BUILD_UPSTREAM=1 -C $PWD/yosys-symbiflow-plugins/ install -j$(nproc)
 #sv2v
 wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $INSTALL_PATH/bin
 make -C $PWD/sv2v && cp $PWD/sv2v/bin/sv2v $INSTALL_PATH/bin
