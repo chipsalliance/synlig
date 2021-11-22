@@ -8,9 +8,11 @@ cmake --build build -j $(nproc)
 cmake --install build
 cd ..
 #Yosys
+if [ "$1" != "--skip-yosys" ]; then
 cd yosys
 make CONFIG=gcc PREFIX=$INSTALL_PATH install -j $(nproc)
 cd ..
+fi
 #UHDM plugin
 export PATH=$INSTALL_PATH/bin:${PATH}
 UHDM_INSTALL_DIR=$INSTALL_PATH make -C $PWD/yosys-symbiflow-plugins/ install -j$(nproc)
