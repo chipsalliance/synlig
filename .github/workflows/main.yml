@@ -14,21 +14,36 @@ jobs:
     env:
       CC: gcc-9
       CXX: g++-9
+      CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
 
     steps:
 
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget
+        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget ccache
 
     - uses: actions/checkout@v2
       with:
         submodules: recursive
         fetch-depth: 1
 
+    - name: Create Cache Timestamp
+      id: cache_timestamp
+      uses: nanzm/get-time-action@v1.1
+      with:
+        format: 'YYYY-MM-DD-HH-mm-ss'
+
+    - name: Setup cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ env.CCACHE_DIR }}
+        key: cache_${{ steps.cache_timestamp.outputs.time }}
+        restore-keys: cache_
+
     - name: Build binaries
       run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         ./build_binaries.sh
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
