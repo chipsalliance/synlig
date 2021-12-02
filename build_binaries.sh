@@ -1,6 +1,10 @@
 #!/bin/bash
 set -ex
-INSTALL_PATH=$PWD/image
+
+if [ -z "$INSTALL_PATH" ]; then
+    INSTALL_PATH=$PWD/image
+fi
+
 #Surelog
 cd Surelog
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DCMAKE_POSITION_INDEPENDENT_CODE=ON -S . -B build
