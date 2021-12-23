@@ -1,0 +1,15 @@
+name: surelog_xc7
+channels:
+  - litex-hub
+dependencies:
+  - litex-hub::prjxray-tools
+  - litex-hub::prjxray-db
+  - litex-hub::vtr-optimized
+  - make
+  - lxml
+  - simplejson
+  - intervaltree
+  - git
+  - pip
+  - pip:
+    - -r requirements.txt

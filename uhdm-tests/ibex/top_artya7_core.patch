@@ -1,14 +1,15 @@
-From 2be6716aabddbb5dca98ccbd09fc8c50f243285c Mon Sep 17 00:00:00 2001
-From: Karol Gugala <kgugala@antmicro.com>
-Date: Tue, 17 Aug 2021 17:20:26 +0200
-Subject: [PATCH] add synth surelog target
+From e9601e43c6a07014a29f90d9f747f4abe0f1fb9b Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Thu, 23 Dec 2021 12:57:35 +0100
+Subject: [PATCH 2/3] add synth surelog target
 
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
 ---
- examples/fpga/artya7/top_artya7.core | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ examples/fpga/artya7/top_artya7.core | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/examples/fpga/artya7/top_artya7.core b/examples/fpga/artya7/top_artya7.core
-index 4493a8ae..c1dc0c1e 100644
+index 4493a8ae..9a5e538b 100644
 --- a/examples/fpga/artya7/top_artya7.core
 +++ b/examples/fpga/artya7/top_artya7.core
 @@ -2,7 +2,7 @@ CAPI=2:
@@ -20,7 +21,18 @@ index 4493a8ae..c1dc0c1e 100644
  description: "Ibex example toplevel for Arty A7 boards (both, -35 and -100)"
  filesets:
    files_rtl_artya7:
-@@ -41,7 +41,7 @@ parameters:
+@@ -17,6 +17,10 @@ filesets:
+     files:
+       - data/pins_artya7.xdc
+     file_type: xdc
++  files_constraints_sdc:
++    files:
++      - data/pins_artya7.sdc
++    file_type: SDC
+ 
+   files_tcl:
+     files:
+@@ -41,7 +45,7 @@ parameters:
      datatype: str
      paramtype: vlogdefine
      description: Primitives implementation to use, e.g. "prim_pkg::ImplGeneric".
@@ -29,21 +41,22 @@ index 4493a8ae..c1dc0c1e 100644
    FPGAPowerAnalysis:
      datatype: int
      paramtype: vlogparam
-@@ -53,7 +53,6 @@ targets:
+@@ -53,7 +57,7 @@ targets:
      filesets:
        - files_rtl_artya7
        - files_constraints
 -      - files_tcl
++      - tool_symbiflow ? (files_constraints_sdc)
      toplevel: top_artya7
      parameters:
        - SRAMInitFile
-@@ -62,3 +61,19 @@ targets:
+@@ -62,3 +66,18 @@ targets:
      tools:
        vivado:
          part: "xc7a100tcsg324-1"  # Default to Arty A7-100
 +        synth: "yosys"
 +        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
-+        yosys_read_options: ['-noassert']
++        yosys_read_options: ['-noassert', '-debug']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
 +      yosys:
 +        arch: "xilinx"
@@ -55,24 +68,22 @@ index 4493a8ae..c1dc0c1e 100644
 +        part: "xc7a35t"
 +        pnr: "vtr"
 +        vendor: "xilinx"
-+        yosys_read_options: ['-noassert']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
 -- 
-2.31.0
+2.33.1
 
-From 0b8a1022316dc2af1a2835cddd5de00a9cd900b8 Mon Sep 17 00:00:00 2001
+From 7b0e214fcb86aac8331da89f378ba0dbccc4f0d3 Mon Sep 17 00:00:00 2001
 From: Kamil Rakoczy <krakoczy@antmicro.com>
-Date: Mon, 23 Aug 2021 13:30:45 +0200
-Subject: [PATCH] ibex: change ram_2p to ram_1p
+Date: Thu, 23 Dec 2021 12:58:11 +0100
+Subject: [PATCH 3/3] ibex: change ram_2p to ram_1p
 
-Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
 ---
  examples/fpga/artya7/rtl/top_artya7.sv | 46 +++++++++++++++-----------
  shared/fpga_xilinx.core                |  4 +--
  2 files changed, 28 insertions(+), 22 deletions(-)
 
 diff --git a/examples/fpga/artya7/rtl/top_artya7.sv b/examples/fpga/artya7/rtl/top_artya7.sv
-index 096125e3..c8f0c7ae 100644
+index 5efbf270..e91db9fd 100644
 --- a/examples/fpga/artya7/rtl/top_artya7.sv
 +++ b/examples/fpga/artya7/rtl/top_artya7.sv
 @@ -8,7 +8,7 @@ module top_artya7 (
@@ -84,7 +95,7 @@ index 096125e3..c8f0c7ae 100644
    parameter logic [31:0] MEM_START    = 32'h00000000;
    parameter logic [31:0] MEM_MASK     = MEM_SIZE-1;
    parameter              SRAMInitFile = "";
-@@ -81,28 +81,34 @@ module top_artya7 (
+@@ -84,28 +84,34 @@ module top_artya7 (
    );
  
    // SRAM block for instruction and data storage
@@ -156,5 +167,5 @@ index 242f1f2d..26b05f1f 100644
  
  targets:
 -- 
-2.28.0
+2.33.1
 
