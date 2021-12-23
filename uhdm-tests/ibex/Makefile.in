@@ -34,40 +34,25 @@ TOP_DIR := ${root_dir}
 REQUIREMENTS_FILE := ${root_dir}/../conda_conf/requirements.txt
 ENVIRONMENT_FILE := ${root_dir}/../conda_conf/environment.yml
 
-DEVICE  := xc7a50t_test
-
-SYMBIFLOW_TOOLS_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-arch-defs-install-c5272455.tar.xz"
-ifeq ("$(DEVICE)","xc7a50t_test")
-SYMBIFLOW_ARCH_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-xc7a50t_test.tar.xz"
-else ifeq ("$(DEVICE)","xc7a100t_test")
-SYMBIFLOW_ARCH_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-xc7a100t_test.tar.xz"
-else ifeq ("$(DEVICE)","xc7a200t_test")
-SYMBIFLOW_ARCH_URL = "https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/presubmit/install/1077/20201126-021625/symbiflow-xc7a200t_test.tar.xz"
-endif
-
-uhdm/yosys/synth-ibex-symbiflow: clean-build patch/symbiflow ${IBEX}/.gitsymbiflowpatch | yosys/plugins
+uhdm/yosys/synth-ibex-symbiflow: clean-build patch/symbiflow ${IBEX}/.gitsymbiflowpatch
+	#we are already in conda env, so we don't use here venv
 	(export PATH=${root_dir}/../image/bin:${root_dir}/env/symbiflow/bin:${PATH} && ${IN_CONDA_ENV} \
 		pip install -r ${IBEX}/python-requirements.txt && \
-		pip install git+https://github.com/antmicro/edalize@symbiflow-surelog && \
-		fusesoc --cores-root=${IBEX} run --build --tool symbiflow --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem" \
-		--PRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric \
-		--library_files="${root_dir}/../techlibs/xilinx/cells_xtra_surelog.v","${root_dir}/../techlibs/xilinx/cells_sim.v")
+		pip install git+https://github.com/antmicro/edalize@symbiflow-read_verilog_with_uhdm && \
+		fusesoc --cores-root=${IBEX} run --build --tool symbiflow --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem")
 
-yosys/plugins:
-	(export PATH=${root_dir}/../image/bin:${PATH} && \
-		cd ${root_dir}/../yosys-symbiflow-plugins && $(IN_CONDA_ENV) $(MAKE) install && cd ..)
 
-${root_dir}/../third_party/make-env/conda.mk:
+${root_dir}/../make-env/conda.mk:
 	git submodule update --init --recursive
 
-include ${root_dir}/../third_party/make-env/conda.mk
+include ${root_dir}/../make-env/conda.mk
 
 env:: | $(CONDA_ENV_PYTHON)
 	mkdir -p ${root_dir}/env/symbiflow
-	wget -qO- ${SYMBIFLOW_TOOLS_URL} | tar -xJC ${root_dir}/env/symbiflow
-	wget -qO- ${SYMBIFLOW_ARCH_URL} | tar -xJC ${root_dir}/env/symbiflow
+	curl -fsSL "https://storage.googleapis.com/symbiflow-arch-defs-gha/symbiflow-toolchain-latest" | xargs curl -fsSL | tar -xJC "${root_dir}/env/symbiflow"
+	curl -fsSL "https://storage.googleapis.com/symbiflow-arch-defs-gha/symbiflow-xc7a50t_test-latest" | xargs curl -fsSL | tar -xJC "${root_dir}/env/symbiflow"
 
 patch/symbiflow:
 	cp ${curr_dir}/symbiflow_synth ${root_dir}/env/symbiflow/bin/
-	cp ${curr_dir}/synth.tcl $(root_dir)/env/symbiflow/share/symbiflow/scripts/xc7/synth.tcl
+	cp ${curr_dir}/cells_map.v ${root_dir}/env/symbiflow/share/symbiflow/techmaps/xc7_vpr/techmap/cells_map.v
 
