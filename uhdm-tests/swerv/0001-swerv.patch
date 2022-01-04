@@ -87,7 +87,7 @@ index 5110c1b..8ef38e8 100644
                           ({32{w2v[j]}} & wd2[31:0]);
       end
 diff --git a/design/dec/dec_tlu_ctl.sv b/design/dec/dec_tlu_ctl.sv
-index 52a4393..b5cc73f 100644
+index 52a4393..2564a61 100644
 --- a/design/dec/dec_tlu_ctl.sv
 +++ b/design/dec/dec_tlu_ctl.sv
 @@ -191,8 +191,10 @@ module dec_tlu_ctl
@@ -156,7 +156,8 @@ index 52a4393..b5cc73f 100644
 -                                                     }));
 +                                              .dout({dec_tlu_br0_wb_pkt[6:2], dec_tlu_br1_wb_pkt[6:2]}));
  
-    rvdff #(2*$bits(dec_tlu_br0_addr_e4[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]))
+-   rvdff #(2*$bits(dec_tlu_br0_addr_e4[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]))
++   rvdff #(2*$bits(dec_tlu_br0_addr_e4))
          bp_wb_index_ff (.*,  .clk(e4e5_clk),
                              .din({dec_tlu_br0_addr_e4[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO],
                                    dec_tlu_br1_addr_e4[`RV_BTB_ADDR_HI:`RV_BTB_ADDR_LO]}),
