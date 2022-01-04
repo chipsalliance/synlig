@@ -15,6 +15,7 @@ jobs:
       CC: gcc-9
       CXX: g++-9
       CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
+      DEBIAN_FRONTEND: noninteractive
 
     steps:
 
@@ -123,6 +124,7 @@ jobs:
       CXX: g++-9
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
+      DEBIAN_FRONTEND: noninteractive
 
     steps:
     - name: Install dependencies
@@ -164,6 +166,7 @@ jobs:
       CXX: g++-9
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
+      DEBIAN_FRONTEND: noninteractive
 
     steps:
     - name: Install dependencies
@@ -205,6 +208,7 @@ jobs:
     env:
       CC: gcc-9
       CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
 
     steps:
 
@@ -249,6 +253,7 @@ jobs:
     env:
       CC: gcc-9
       CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
 
     steps:
 
@@ -293,6 +298,7 @@ jobs:
     env:
       CC: gcc-9
       CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
 
     steps:
 
@@ -383,6 +389,7 @@ jobs:
     env:
       CC: gcc-9
       CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
 
     steps:
 
