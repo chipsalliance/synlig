@@ -1,0 +1,42 @@
+From 071a837160255004e8e215203e64a8a8663ec8c1 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Mon, 10 Jan 2022 13:18:31 +0100
+Subject: [PATCH 3/4] Add always_comb_nolatch_5 test
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ tests/verilog/always_comb_nolatch_5.ys | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+ create mode 100644 tests/verilog/always_comb_nolatch_5.ys
+
+diff --git a/tests/verilog/always_comb_nolatch_5.ys b/tests/verilog/always_comb_nolatch_5.ys
+new file mode 100644
+index 000000000..d9b3b4eae
+--- /dev/null
++++ b/tests/verilog/always_comb_nolatch_5.ys
+@@ -0,0 +1,22 @@
++read_verilog -sv <<EOF
++module top();
++logic z;
++logic [3:0] a;
++logic [3:0] b;
++function automatic logic [3:0] transpose(logic [3:0] in);
++  logic [3:0] transpose;
++  transpose = '0;
++  for (int j=0; j<4; j++) begin
++    transpose[j] = in[3 - j];
++  end 
++endfunction 
++always_comb begin
++  unique case (z)
++    1'b0: a = '0;
++    1'b1: a = transpose(b);
++    default: a = '0;
++  endcase
++end
++endmodule
++EOF
++proc
+-- 
+2.33.1
+

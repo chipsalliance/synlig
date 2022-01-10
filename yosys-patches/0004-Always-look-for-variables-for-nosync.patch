@@ -1,0 +1,39 @@
+From b856bb9a3cc8887677dd74c0c837f09cefe76f5e Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Mon, 10 Jan 2022 13:19:38 +0100
+Subject: [PATCH 4/4] Always look for variables for nosync
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ frontends/ast/simplify.cc | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/frontends/ast/simplify.cc b/frontends/ast/simplify.cc
+index 2cef569a8..374f38555 100644
+--- a/frontends/ast/simplify.cc
++++ b/frontends/ast/simplify.cc
+@@ -2370,15 +2370,12 @@ bool AstNode::simplify(bool const_fold, bool at_zero, bool in_lvalue, int stage,
+ 	{
+ 		expand_genblock(str + ".");
+ 
+-		// if this is an autonamed block is in an always_comb
+-		if (current_always && current_always->attributes.count(ID::always_comb)
+-				&& str.at(0) == '$')
+-			// track local variables in this block so we can consider adding
+-			// nosync once the block has been fully elaborated
+-			for (AstNode *child : children)
+-				if (child->type == AST_WIRE &&
+-						!child->attributes.count(ID::nosync))
+-					mark_auto_nosync(this, child);
++		// track local variables in this block so we can consider adding
++		// nosync once the block has been fully elaborated
++		for (AstNode *child : children)
++			if (child->type == AST_WIRE &&
++					!child->attributes.count(ID::nosync))
++				mark_auto_nosync(this, child);
+ 
+ 		std::vector<AstNode*> new_children;
+ 		for (size_t i = 0; i < children.size(); i++)
+-- 
+2.33.1
+

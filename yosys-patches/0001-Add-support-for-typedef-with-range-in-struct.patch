@@ -1,0 +1,64 @@
+From 543231e797c2ac99df33ce63669cfd28fe370a51 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Wed, 22 Sep 2021 12:15:49 +0200
+Subject: [PATCH 1/4] Add support for typedef with range in struct
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ frontends/ast/simplify.cc | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/frontends/ast/simplify.cc b/frontends/ast/simplify.cc
+index 18b1e1e11..f25531e96 100644
+--- a/frontends/ast/simplify.cc
++++ b/frontends/ast/simplify.cc
+@@ -300,6 +300,21 @@ static int size_packed_struct(AstNode *snode, int base_offset)
+ 	bool is_union = (snode->type == AST_UNION);
+ 	int offset = 0;
+ 	int packed_width = -1;
++	// embeded struct or union with range?
++	auto it = std::remove_if(snode->children.begin(), snode->children.end(),
++                         [](AstNode* node) { return node->type == AST_RANGE; });
++	std::vector<AstNode*> ranges(it, snode->children.end());
++	snode->children.erase(it, snode->children.end());
++	if (!ranges.empty()) {
++		if (ranges.size() > 1) {
++			log_file_error(ranges[1]->filename, ranges[1]->location.first_line, "Currently support for custom-type with range is limited to single range\n");
++		}
++		for (auto range : ranges) {
++			snode->multirange_dimensions.push_back(min(range->range_left, range->range_right));
++			snode->multirange_dimensions.push_back(max(range->range_left, range->range_right) - min(range->range_left, range->range_right) + 1);
++			snode->multirange_swapped.push_back(range->range_swapped);
++		}
++	}
+ 	// examine members from last to first
+ 	for (auto it = snode->children.rbegin(); it != snode->children.rend(); ++it) {
+ 		auto node = *it;
+@@ -307,6 +322,15 @@ static int size_packed_struct(AstNode *snode, int base_offset)
+ 		if (node->type == AST_STRUCT || node->type == AST_UNION) {
+ 			// embedded struct or union
+ 			width = size_packed_struct(node, base_offset + offset);
++			if (!node->multirange_dimensions.empty()) {
++				int number_of_structs = 1;
++				number_of_structs = node->multirange_dimensions.back();
++				width *= number_of_structs;
++			}
++			// set range of struct
++			node->range_right = base_offset + offset;
++			node->range_left = base_offset + offset + width - 1;
++			node->range_valid = true;
+ 		}
+ 		else {
+ 			log_assert(node->type == AST_STRUCT_ITEM);
+@@ -509,7 +533,7 @@ static int get_max_offset(AstNode *node)
+ 	// get the width from the MS member in the struct
+ 	// as members are laid out from left to right in the packed wire
+ 	log_assert(node->type==AST_STRUCT || node->type==AST_UNION);
+-	while (node->type != AST_STRUCT_ITEM) {
++	while (node->range_left < 0) {
+ 		node = node->children[0];
+ 	}
+ 	return node->range_left;
+-- 
+2.33.1
+
