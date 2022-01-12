@@ -47,6 +47,9 @@ jobs:
 
     - name: Build binaries
       run: |
+        # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
+        # Make sure we always use https:// instead of git://
+        git config --global url.https://github.com/.insteadOf git://github.com/
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         ./build_binaries.sh
         # By default actions/upload-artifact@v2 do not preserve file permissions

@@ -1,21 +1,3 @@
-diff --git a/hw/ip/aes/rtl/aes_pkg.sv b/hw/ip/aes/rtl/aes_pkg.sv
-index ddc3b7992..1880c397e 100644
---- a/hw/ip/aes/rtl/aes_pkg.sv
-+++ b/hw/ip/aes/rtl/aes_pkg.sv
-@@ -109,12 +109,7 @@ typedef struct packed {
-   logic      manual_operation;
- } ctrl_reg_t;
- 
--parameter ctrl_reg_t CTRL_RESET = '{
--  operation:        AES_ENC,
--  mode:             AES_NONE,
--  key_len:          AES_128,
--  manual_operation: '0
--};
-+parameter ctrl_reg_t CTRL_RESET = 40'b0000000000000000000000000000000000110000;
- 
- // Multiplication by {02} (i.e. x) on GF(2^8)
- // with field generating polynomial {01}{1b} (9'h11b)
 diff --git a/hw/ip/alert_handler/rtl/alert_handler.sv b/hw/ip/alert_handler/rtl/alert_handler.sv
 index 65035ad0b..b0911d650 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler.sv
@@ -535,59 +517,6 @@ index 6b573e1b7..6a4f5b30e 100644
  
    flash_part_e flash_part_sel;
    assign flash_part_sel = flash_part_e'(reg2hw.control.partition_sel.q);
-diff --git a/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv b/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
-index bef591e8e..5ba3fae40 100644
---- a/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
-+++ b/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
-@@ -84,20 +84,7 @@ package flash_ctrl_pkg;
-   } flash_req_t;
- 
-   // default value of flash_req_t (for dangling ports)
--  parameter flash_req_t FLASH_REQ_DEFAULT = '{
--    req:       1'b0,
--    rd:        1'b0,
--    prog:      1'b0,
--    pg_erase:  1'b0,
--    bk_erase:  1'b0,
--    part:      FlashPartData,
--    addr:      '0,
--    prog_data: '0,
--    prog_last: '0,
--    scramble_en: '0,
--    addr_key:  128'hDEADBEEFBEEFFACEDEADBEEF5A5AA5A5,
--    data_key:  128'hDEADBEEF5A5AA5A5DEADBEEFBEEFFACE
--  };
-+  parameter flash_req_t FLASH_REQ_DEFAULT = 390'b110111101010110110111110111011110101101001011010101001011010010111011110101011011011111011101111101111101110111111111010110011101101111010101101101111101110111110111110111011111111101011001110110111101010110110111110111011110101101001011010101001011010010100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
- 
-   // memory to flash controller
-   typedef struct packed {
-@@ -109,13 +96,7 @@ package flash_ctrl_pkg;
-   } flash_rsp_t;
- 
-   // default value of flash_rsp_t (for dangling ports)
--  parameter flash_rsp_t FLASH_RSP_DEFAULT = '{
--    rd_done:    1'b0,
--    prog_done:  1'b0,
--    erase_done: 1'b0,
--    rd_data:    '0,
--    init_busy:  1'b0
--  };
-+  parameter flash_rsp_t FLASH_RSP_DEFAULT = 36'b000000000000000000000000000000000000;
- 
-   ////////////////////////////
-   // The following inter-module should be moved to OTP
-@@ -128,10 +109,7 @@ package flash_ctrl_pkg;
-   } otp_flash_t;
- 
-   // default value of otp_flash_t
--  parameter otp_flash_t OTP_FLASH_DEFAULT = '{
--    addr_key: 128'hDEADBEEFBEEFFACEDEADBEEF5A5AA5A5,
--    data_key: 128'hDEADBEEF5A5AA5A5DEADBEEFBEEFFACE
--  };
-+  parameter otp_flash_t OTP_FLASH_DEFAULT = 256'b1101111010101101101111101110111101011010010110101010010110100101110111101010110110111110111011111011111011101111111110101100111011011110101011011011111011101111101111101110111111111010110011101101111010101101101111101110111101011010010110101010010110100101;
- 
- 
- 
 diff --git a/hw/ip/flash_ctrl/rtl/flash_ctrl_reg_pkg.sv b/hw/ip/flash_ctrl/rtl/flash_ctrl_reg_pkg.sv
 index 4c7081ef9..6e318128d 100644
 --- a/hw/ip/flash_ctrl/rtl/flash_ctrl_reg_pkg.sv
@@ -1130,131 +1059,6 @@ index 07945937c..518462c7d 100644
  
      // to register interface (read)
      .qs     (mp_bank_cfg_erase_en1_qs)
-diff --git a/hw/ip/hmac/rtl/hmac.sv b/hw/ip/hmac/rtl/hmac.sv
-index 043829d21..1fde3a8f5 100644
---- a/hw/ip/hmac/rtl/hmac.sv
-+++ b/hw/ip/hmac/rtl/hmac.sv
-@@ -33,8 +33,8 @@ module hmac
-   hmac_reg2hw_t reg2hw;
-   hmac_hw2reg_t hw2reg;
- 
--  tlul_pkg::tl_h2d_t  tl_win_h2d[1];
--  tlul_pkg::tl_d2h_t  tl_win_d2h[1];
-+  tlul_pkg::tl_h2d_t  tl_win_h2d;
-+  tlul_pkg::tl_d2h_t  tl_win_d2h;
- 
-   logic [255:0] secret_key;
- 
-@@ -97,7 +97,7 @@ module hmac
-   err_code_e   err_code;
-   logic        err_valid;
- 
--  sha_word_t [7:0] digest;
-+  wire [255:0] digest;
- 
-   hmac_reg2hw_cfg_reg_t cfg_reg;
-   logic                 cfg_block;  // Prevent changing config
-@@ -132,7 +132,7 @@ module hmac
-   for (genvar i = 0; i < 8; i++) begin : gen_key_digest
-     assign hw2reg.key[7-i].d      = '0;
-     // digest
--    assign hw2reg.digest[i].d = conv_endian(digest[i], digest_swap);
-+    assign hw2reg.digest[i].d = conv_endian(digest[i * 32+:32], digest_swap);
-   end
- 
-   logic [3:0] unused_cfg_qe;
-@@ -173,7 +173,7 @@ module hmac
-   // Hold the configuration during the process
-   always_ff @(posedge clk_i or negedge rst_ni) begin
-     if (!rst_ni) begin
--      cfg_reg <= '{endian_swap: '{q: 1'b1, qe: 1'b0}, default:'0};
-+      cfg_reg <= 8'b00001000;
-     end else if (!cfg_block && reg2hw.cfg.hmac_en.qe) begin
-       cfg_reg <= reg2hw.cfg ;
-     end
-@@ -247,15 +247,13 @@ module hmac
-   assign msg_fifo_gnt    = msg_fifo_req & ~hmac_fifo_wsel & packer_ready;
- 
-   // FIFO control
--  sha_fifo_t reg_fifo_wentry;
--  assign reg_fifo_wentry.data = conv_endian(reg_fifo_wdata, 1'b1); // always convert
--  assign reg_fifo_wentry.mask = {reg_fifo_wmask[0],  reg_fifo_wmask[8],
--                                 reg_fifo_wmask[16], reg_fifo_wmask[24]};
-+  wire [35:0] reg_fifo_wentry;
-+  assign reg_fifo_wentry[35-:32] = conv_endian(reg_fifo_wdata, 1'b1);
-+  assign reg_fifo_wentry[3-:4] = {reg_fifo_wmask[0], reg_fifo_wmask[8], reg_fifo_wmask[16], reg_fifo_wmask[24]};
-   assign fifo_full   = ~fifo_wready;
-   assign fifo_empty  = ~fifo_rvalid;
-   assign fifo_wvalid = (hmac_fifo_wsel && fifo_wready) ? hmac_fifo_wvalid : reg_fifo_wvalid;
--  assign fifo_wdata  = (hmac_fifo_wsel) ? '{data: digest[hmac_fifo_wdata_sel], mask: '1}
--                                       : reg_fifo_wentry;
-+  assign fifo_wdata = (hmac_fifo_wsel ? {digest[hmac_fifo_wdata_sel * 32+:32], {4{1'b1}}} : reg_fifo_wentry);
- 
-   prim_fifo_sync #(
-     .Width   ($bits(sha_fifo_t)),
-@@ -287,8 +285,8 @@ module hmac
-   ) u_tlul_adapter (
-     .clk_i,
-     .rst_ni,
--    .tl_i   (tl_win_h2d[0]),
--    .tl_o   (tl_win_d2h[0]),
-+    .tl_i   (tl_win_h2d),
-+    .tl_o   (tl_win_d2h),
- 
-     .req_o    (msg_fifo_req   ),
-     .gnt_i    (msg_fifo_gnt   ),
-diff --git a/hw/ip/hmac/rtl/hmac_core.sv b/hw/ip/hmac/rtl/hmac_core.sv
-index a1c9515db..445ca9f1f 100644
---- a/hw/ip/hmac/rtl/hmac_core.sv
-+++ b/hw/ip/hmac/rtl/hmac_core.sv
-@@ -111,12 +111,17 @@ module hmac_core import hmac_pkg::*; (
-   assign fifo_rready  = (hmac_en) ? (st_q == StMsg) & sha_rready : sha_rready ;
-   // sha_rvalid is controlled by State Machine below.
-   assign sha_rvalid = (!hmac_en) ? fifo_rvalid : hmac_sha_rvalid ;
--  assign sha_rdata =
--    (!hmac_en)             ? fifo_rdata                                               :
--    (sel_rdata == SelIPad) ? '{data: i_pad[(BlockSize-1)-32*pad_index-:32], mask: '1} :
--    (sel_rdata == SelOPad) ? '{data: o_pad[(BlockSize-1)-32*pad_index-:32], mask: '1} :
--    (sel_rdata == SelFifo) ? fifo_rdata                                               :
--    '{default: '0};
-+  if (!hmac_en) begin
-+    assign sha_rdata = fifo_rdata;
-+  end else if (sel_rdata == SelIPad) begin
-+    assign sha_rdata.data = i_pad[(BlockSize-1)-32*pad_index-:32];
-+    assign sha_rdata.mask = '1;
-+  end else if (sel_rdata == SelOPad) begin
-+    assign sha_rdata.data = o_pad[(BlockSize-1)-32*pad_index-:32];
-+    assign sha_rdata.mask = '1;
-+  end else begin
-+    assign sha_rdata = '0;
-+  end
- 
-   assign sha_message_length = (!hmac_en)                 ? message_length             :
-                               (sel_msglen == SelIPadMsg) ? message_length + BlockSize :
-diff --git a/hw/ip/otbn/rtl/otbn_reg_top.sv b/hw/ip/otbn/rtl/otbn_reg_top.sv
-index 052cb2f5a..b62227975 100644
---- a/hw/ip/otbn/rtl/otbn_reg_top.sv
-+++ b/hw/ip/otbn/rtl/otbn_reg_top.sv
-@@ -54,13 +54,13 @@ module otbn_reg_top (
-   logic [1:0] reg_steer;
- 
-   // socket_1n connection
--  assign tl_reg_h2d = tl_socket_h2d[2];
--  assign tl_socket_d2h[2] = tl_reg_d2h;
-+  assign tl_reg_h2d = tl_socket_h2d[0];
- 
--  assign tl_win_o[0] = tl_socket_h2d[0];
--  assign tl_socket_d2h[0] = tl_win_i[0];
--  assign tl_win_o[1] = tl_socket_h2d[1];
--  assign tl_socket_d2h[1] = tl_win_i[1];
-+  assign tl_win_o[0] = tl_socket_h2d[1];
-+  assign tl_win_o[1] = tl_socket_h2d[2];
-+  assign tl_socket_d2h[0] = tl_reg_d2h;
-+  assign tl_socket_d2h[1] = tl_win_i[0];
-+  assign tl_socket_d2h[2] = tl_win_i[1];
- 
-   // Create Socket_1n
-   tlul_socket_1n #(
 diff --git a/hw/ip/padctrl/rtl/padring.sv b/hw/ip/padctrl/rtl/padring.sv
 index fc8b3d183..2b94b0d67 100644
 --- a/hw/ip/padctrl/rtl/padring.sv
@@ -1328,136 +1132,6 @@ index 962d3b559..9d5a10c8c 100644
  `endif
    end
  
-diff --git a/hw/ip/pwrmgr/rtl/pwrmgr_pkg.sv b/hw/ip/pwrmgr/rtl/pwrmgr_pkg.sv
-index a5669d597..4f39a8b53 100644
---- a/hw/ip/pwrmgr/rtl/pwrmgr_pkg.sv
-+++ b/hw/ip/pwrmgr/rtl/pwrmgr_pkg.sv
-@@ -35,19 +35,9 @@ package pwrmgr_pkg;
-   } pwr_ast_rsp_t;
- 
-   // default value of pwr_ast_rsp (for dangling ports)
--  parameter pwr_ast_rsp_t PWR_AST_RSP_DEFAULT = '{
--    slow_clk_val: 2'b10,
--    core_clk_val: 2'b10,
--    io_clk_val: 2'b10,
--    main_pok: 1'b1
--  };
--
--  parameter pwr_ast_rsp_t PWR_AST_RSP_SYNC_DEFAULT = '{
--    slow_clk_val: 2'b01,
--    core_clk_val: 2'b01,
--    io_clk_val: 2'b10,
--    main_pok: 1'b0
--  };
-+  parameter pwr_ast_rsp_t PWR_AST_RSP_DEFAULT = 7'b1010101;
-+
-+  parameter pwr_ast_rsp_t PWR_AST_RSP_SYNC_DEFAULT = 7'b0101100;
- 
-   // reasons for pwrmgr reset reset
-   typedef enum logic [1:0] {
-@@ -71,10 +61,7 @@ package pwrmgr_pkg;
-   } pwr_rst_rsp_t;
- 
-   // default value (for dangling ports)
--  parameter pwr_rst_rsp_t PWR_RST_RSP_DEFAULT = '{
--    rst_lc_src_n: {PowerDomains{1'b1}},
--    rst_sys_src_n: {PowerDomains{1'b1}}
--  };
-+  parameter pwr_rst_rsp_t PWR_RST_RSP_DEFAULT = 4'b1111;
- 
-   // pwrmgr to clkmgr
-   typedef struct packed {
-@@ -98,10 +85,7 @@ package pwrmgr_pkg;
-   } pwr_otp_rsp_t;
- 
-   // default value (for dangling ports)
--  parameter pwr_otp_rsp_t PWR_OTP_RSP_DEFAULT = '{
--    otp_done: 1'b1,
--    otp_idle: 1'b1
--  };
-+  parameter pwr_otp_rsp_t PWR_OTP_RSP_DEFAULT = 2'b11;
- 
-   // pwrmgr to lifecycle
-   typedef struct packed {
-@@ -115,10 +99,7 @@ package pwrmgr_pkg;
-   } pwr_lc_rsp_t;
- 
-   // default value (for dangling ports)
--  parameter pwr_lc_rsp_t PWR_LC_RSP_DEFAULT = '{
--    lc_done: 1'b1,
--    lc_idle: 1'b1
--  };
-+  parameter pwr_lc_rsp_t PWR_LC_RSP_DEFAULT = 2'b11;
- 
-   // flash to pwrmgr
-   typedef struct packed {
-@@ -126,9 +107,7 @@ package pwrmgr_pkg;
-   } pwr_flash_t;
- 
-   // default value (for dangling ports)
--  parameter pwr_flash_t PWR_FLASH_DEFAULT = '{
--    flash_idle: 1'b1
--  };
-+  parameter pwr_flash_t PWR_FLASH_DEFAULT = 1'b1;
- 
-   // processor to pwrmgr
-   typedef struct packed {
-@@ -136,13 +115,11 @@ package pwrmgr_pkg;
-   } pwr_cpu_t;
- 
-   // default value (for dangling ports)
--  parameter pwr_cpu_t PWR_CPU_DEFAULT = '{
--    core_sleeping: 1'b0
--  };
-+  parameter pwr_cpu_t PWR_CPU_DEFAULT = 1'b0;
- 
-   // default value (for dangling ports)
--  parameter int WAKEUPS_DEFAULT = '0;
--  parameter int RSTREQS_DEFAULT = '0;
-+  parameter int WAKEUPS_DEFAULT = 0;
-+  parameter int RSTREQS_DEFAULT = 0;
- 
-   // peripherals to pwrmgr
-   typedef struct packed {
-diff --git a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
-index a07fcce61..ba1597049 100644
---- a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
-+++ b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
-@@ -24,10 +24,7 @@ package rstmgr_pkg;
-   } rstmgr_ast_t;
- 
-   // default value for rstmgr_ast_rsp_t (for dangling ports)
--  parameter rstmgr_ast_t RSTMGR_AST_DEFAULT = '{
--    vcc_pok: 1'b1,
--    alw_pok: 1'b1
--  };
-+  parameter rstmgr_ast_t RSTMGR_AST_DEFAULT = 2'b11;
- 
-   // resets generated and broadcast
-   // This should be templatized and generated
-@@ -51,10 +48,7 @@ package rstmgr_pkg;
-   } rstmgr_cpu_t;
- 
-   // default value for rstmgr_ast_rsp_t (for dangling ports)
--  parameter rstmgr_cpu_t RSTMGR_CPU_DEFAULT = '{
--    rst_cpu_n: 1'b1,
--    ndmreset_req: '0
--  };
-+  parameter rstmgr_cpu_t RSTMGR_CPU_DEFAULT = 2'b10;
- 
-   // peripherals reset requests
-   typedef struct packed {
-@@ -62,9 +56,7 @@ package rstmgr_pkg;
-   } rstmgr_peri_t;
- 
-   // default value for rstmgr_ast_rsp_t (for dangling ports)
--  parameter rstmgr_peri_t RSTMGR_PERI_DEFAULT = '{
--    rst_reqs: '0
--  };
-+  parameter rstmgr_peri_t RSTMGR_PERI_DEFAULT = 32'b00000000000000000000000000000000;
- 
- 
- endpackage // rstmgr_pkg
 diff --git a/hw/ip/rv_timer/rtl/rv_timer.sv b/hw/ip/rv_timer/rtl/rv_timer.sv
 index 9b939eedd..a4c91c238 100644
 --- a/hw/ip/rv_timer/rtl/rv_timer.sv
@@ -1745,365 +1419,8 @@ index 8637ad221..a3c29e293 100644
    end
  
    // this assertion fails when rspid[0+:STIDW] not in [0..M-1]
-diff --git a/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv b/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv
-index 84a52bba2..1ef9b878c 100644
---- a/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv
-+++ b/hw/top_earlgrey/ip/clkmgr/rtl/autogen/clkmgr_pkg.sv
-@@ -16,9 +16,7 @@ package clkmgr_pkg;
-     logic test_en;
-   } clk_dft_t;
- 
--  parameter clk_dft_t CLK_DFT_DEFAULT = '{
--    test_en: 1'b0
--  };
-+  parameter clk_dft_t CLK_DFT_DEFAULT = 1'b0;
- 
-   typedef struct packed {
-   logic clk_io_powerup;
-@@ -44,9 +42,7 @@ package clkmgr_pkg;
-     logic [3-1:0] idle;
-   } clk_hint_status_t;
- 
--  parameter clk_hint_status_t CLK_HINT_STATUS_DEFAULT = '{
--    idle: {3{1'b1}}
--  };
-+  parameter clk_hint_status_t CLK_HINT_STATUS_DEFAULT = 3'b111;
- 
- 
- endpackage // clkmgr_pkg
-diff --git a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_pkg.sv b/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_pkg.sv
-index f771dd35a..61c74e42d 100644
---- a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_pkg.sv
-+++ b/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_pkg.sv
-@@ -116,7 +116,7 @@ package pwrmgr_reg_pkg;
-     pwrmgr_reg2hw_intr_test_reg_t intr_test; // [17:16]
-     pwrmgr_reg2hw_control_reg_t control; // [15:12]
-     pwrmgr_reg2hw_cfg_cdc_sync_reg_t cfg_cdc_sync; // [11:10]
--    pwrmgr_reg2hw_wakeup_en_mreg_t [0:0] wakeup_en; // [9:9]
-+    pwrmgr_reg2hw_wakeup_en_mreg_t wakeup_en; // [9:9]
-     pwrmgr_reg2hw_reset_en_reg_t reset_en; // [8:7]
-     pwrmgr_reg2hw_wake_info_capture_dis_reg_t wake_info_capture_dis; // [6:6]
-     pwrmgr_reg2hw_wake_info_reg_t wake_info; // [5:0]
-diff --git a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv b/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv
-index 2365da52c..6a335c778 100644
---- a/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv
-+++ b/hw/top_earlgrey/ip/pwrmgr/rtl/autogen/pwrmgr_reg_top.sv
-@@ -395,7 +395,7 @@ module pwrmgr_reg_top (
- 
-     // to internal hardware
-     .qe     (),
--    .q      (reg2hw.wakeup_en[0].q ),
-+    .q      (reg2hw.wakeup_en.q ),
- 
-     // to register interface (read)
-     .qs     (wakeup_en_qs)
-diff --git a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv b/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
-index c516c01ca..69bb99caa 100644
---- a/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
-+++ b/hw/top_earlgrey/ip/rv_plic/rtl/autogen/rv_plic.sv
-@@ -38,13 +38,13 @@ module rv_plic import rv_plic_reg_pkg::*; #(
- 
-   // Interrupt notification to targets
-   output [NumTarget-1:0] irq_o,
--  output [SRCW-1:0]      irq_id_o [NumTarget],
-+  output [SRCW-1:0]      irq_id_o,
- 
-   output logic [NumTarget-1:0] msip_o
- );
- 
--  rv_plic_reg2hw_t reg2hw;
--  rv_plic_hw2reg_t hw2reg;
-+  wire [343:0] reg2hw;
-+  wire [172:0] hw2reg;
- 
-   localparam int MAX_PRIO    = 3;
-   localparam int PRIOW = $clog2(MAX_PRIO+1);
-@@ -52,21 +52,21 @@ module rv_plic import rv_plic_reg_pkg::*; #(
-   logic [NumSrc-1:0] le; // 0:level 1:edge
-   logic [NumSrc-1:0] ip;
- 
--  logic [NumSrc-1:0] ie [NumTarget];
-+  logic [NumSrc-1:0] ie;
- 
-   logic [NumTarget-1:0] claim_re; // Target read indicator
--  logic [SRCW-1:0]      claim_id [NumTarget];
-+  logic [SRCW-1:0]      claim_id;
-   logic [NumSrc-1:0]    claim; // Converted from claim_re/claim_id
- 
-   logic [NumTarget-1:0] complete_we; // Target write indicator
--  logic [SRCW-1:0]      complete_id [NumTarget];
-+  logic [SRCW-1:0]      complete_id;
-   logic [NumSrc-1:0]    complete; // Converted from complete_re/complete_id
- 
--  logic [SRCW-1:0]      cc_id [NumTarget]; // Write ID
-+  logic [SRCW-1:0]      cc_id; // Write ID
- 
-   logic [PRIOW-1:0] prio [NumSrc];
- 
--  logic [PRIOW-1:0] threshold [NumTarget];
-+  logic [PRIOW-1:0] threshold;
- 
-   // Glue logic between rv_plic_reg_top and others
-   assign cc_id = irq_id_o;
-@@ -74,13 +74,13 @@ module rv_plic import rv_plic_reg_pkg::*; #(
-   always_comb begin
-     claim = '0;
-     for (int i = 0 ; i < NumTarget ; i++) begin
--      if (claim_re[i]) claim[claim_id[i]] = 1'b1;
-+      if (claim_re[i]) claim[claim_id] = 1'b1;
-     end
-   end
-   always_comb begin
-     complete = '0;
-     for (int i = 0 ; i < NumTarget ; i++) begin
--      if (complete_we[i]) complete[complete_id[i]] = 1'b1;
-+      if (complete_we[i]) complete[complete_id] = 1'b1;
-     end
-   end
- 
-@@ -94,129 +94,129 @@ module rv_plic import rv_plic_reg_pkg::*; #(
-   //////////////
-   // Priority //
-   //////////////
--  assign prio[0] = reg2hw.prio0.q;
--  assign prio[1] = reg2hw.prio1.q;
--  assign prio[2] = reg2hw.prio2.q;
--  assign prio[3] = reg2hw.prio3.q;
--  assign prio[4] = reg2hw.prio4.q;
--  assign prio[5] = reg2hw.prio5.q;
--  assign prio[6] = reg2hw.prio6.q;
--  assign prio[7] = reg2hw.prio7.q;
--  assign prio[8] = reg2hw.prio8.q;
--  assign prio[9] = reg2hw.prio9.q;
--  assign prio[10] = reg2hw.prio10.q;
--  assign prio[11] = reg2hw.prio11.q;
--  assign prio[12] = reg2hw.prio12.q;
--  assign prio[13] = reg2hw.prio13.q;
--  assign prio[14] = reg2hw.prio14.q;
--  assign prio[15] = reg2hw.prio15.q;
--  assign prio[16] = reg2hw.prio16.q;
--  assign prio[17] = reg2hw.prio17.q;
--  assign prio[18] = reg2hw.prio18.q;
--  assign prio[19] = reg2hw.prio19.q;
--  assign prio[20] = reg2hw.prio20.q;
--  assign prio[21] = reg2hw.prio21.q;
--  assign prio[22] = reg2hw.prio22.q;
--  assign prio[23] = reg2hw.prio23.q;
--  assign prio[24] = reg2hw.prio24.q;
--  assign prio[25] = reg2hw.prio25.q;
--  assign prio[26] = reg2hw.prio26.q;
--  assign prio[27] = reg2hw.prio27.q;
--  assign prio[28] = reg2hw.prio28.q;
--  assign prio[29] = reg2hw.prio29.q;
--  assign prio[30] = reg2hw.prio30.q;
--  assign prio[31] = reg2hw.prio31.q;
--  assign prio[32] = reg2hw.prio32.q;
--  assign prio[33] = reg2hw.prio33.q;
--  assign prio[34] = reg2hw.prio34.q;
--  assign prio[35] = reg2hw.prio35.q;
--  assign prio[36] = reg2hw.prio36.q;
--  assign prio[37] = reg2hw.prio37.q;
--  assign prio[38] = reg2hw.prio38.q;
--  assign prio[39] = reg2hw.prio39.q;
--  assign prio[40] = reg2hw.prio40.q;
--  assign prio[41] = reg2hw.prio41.q;
--  assign prio[42] = reg2hw.prio42.q;
--  assign prio[43] = reg2hw.prio43.q;
--  assign prio[44] = reg2hw.prio44.q;
--  assign prio[45] = reg2hw.prio45.q;
--  assign prio[46] = reg2hw.prio46.q;
--  assign prio[47] = reg2hw.prio47.q;
--  assign prio[48] = reg2hw.prio48.q;
--  assign prio[49] = reg2hw.prio49.q;
--  assign prio[50] = reg2hw.prio50.q;
--  assign prio[51] = reg2hw.prio51.q;
--  assign prio[52] = reg2hw.prio52.q;
--  assign prio[53] = reg2hw.prio53.q;
--  assign prio[54] = reg2hw.prio54.q;
--  assign prio[55] = reg2hw.prio55.q;
--  assign prio[56] = reg2hw.prio56.q;
--  assign prio[57] = reg2hw.prio57.q;
--  assign prio[58] = reg2hw.prio58.q;
--  assign prio[59] = reg2hw.prio59.q;
--  assign prio[60] = reg2hw.prio60.q;
--  assign prio[61] = reg2hw.prio61.q;
--  assign prio[62] = reg2hw.prio62.q;
--  assign prio[63] = reg2hw.prio63.q;
--  assign prio[64] = reg2hw.prio64.q;
--  assign prio[65] = reg2hw.prio65.q;
--  assign prio[66] = reg2hw.prio66.q;
--  assign prio[67] = reg2hw.prio67.q;
--  assign prio[68] = reg2hw.prio68.q;
--  assign prio[69] = reg2hw.prio69.q;
--  assign prio[70] = reg2hw.prio70.q;
--  assign prio[71] = reg2hw.prio71.q;
--  assign prio[72] = reg2hw.prio72.q;
--  assign prio[73] = reg2hw.prio73.q;
--  assign prio[74] = reg2hw.prio74.q;
--  assign prio[75] = reg2hw.prio75.q;
--  assign prio[76] = reg2hw.prio76.q;
--  assign prio[77] = reg2hw.prio77.q;
--  assign prio[78] = reg2hw.prio78.q;
--  assign prio[79] = reg2hw.prio79.q;
--  assign prio[80] = reg2hw.prio80.q;
--  assign prio[81] = reg2hw.prio81.q;
--  assign prio[82] = reg2hw.prio82.q;
-+  assign prio[0] = reg2hw[260-:2];
-+  assign prio[1] = reg2hw[258-:2];
-+  assign prio[2] = reg2hw[256-:2];
-+  assign prio[3] = reg2hw[254-:2];
-+  assign prio[4] = reg2hw[252-:2];
-+  assign prio[5] = reg2hw[250-:2];
-+  assign prio[6] = reg2hw[248-:2];
-+  assign prio[7] = reg2hw[246-:2];
-+  assign prio[8] = reg2hw[244-:2];
-+  assign prio[9] = reg2hw[242-:2];
-+  assign prio[10] = reg2hw[240-:2];
-+  assign prio[11] = reg2hw[238-:2];
-+  assign prio[12] = reg2hw[236-:2];
-+  assign prio[13] = reg2hw[234-:2];
-+  assign prio[14] = reg2hw[232-:2];
-+  assign prio[15] = reg2hw[230-:2];
-+  assign prio[16] = reg2hw[228-:2];
-+  assign prio[17] = reg2hw[226-:2];
-+  assign prio[18] = reg2hw[224-:2];
-+  assign prio[19] = reg2hw[222-:2];
-+  assign prio[20] = reg2hw[220-:2];
-+  assign prio[21] = reg2hw[218-:2];
-+  assign prio[22] = reg2hw[216-:2];
-+  assign prio[23] = reg2hw[214-:2];
-+  assign prio[24] = reg2hw[212-:2];
-+  assign prio[25] = reg2hw[210-:2];
-+  assign prio[26] = reg2hw[208-:2];
-+  assign prio[27] = reg2hw[206-:2];
-+  assign prio[28] = reg2hw[204-:2];
-+  assign prio[29] = reg2hw[202-:2];
-+  assign prio[30] = reg2hw[200-:2];
-+  assign prio[31] = reg2hw[198-:2];
-+  assign prio[32] = reg2hw[196-:2];
-+  assign prio[33] = reg2hw[194-:2];
-+  assign prio[34] = reg2hw[192-:2];
-+  assign prio[35] = reg2hw[190-:2];
-+  assign prio[36] = reg2hw[188-:2];
-+  assign prio[37] = reg2hw[186-:2];
-+  assign prio[38] = reg2hw[184-:2];
-+  assign prio[39] = reg2hw[182-:2];
-+  assign prio[40] = reg2hw[180-:2];
-+  assign prio[41] = reg2hw[178-:2];
-+  assign prio[42] = reg2hw[176-:2];
-+  assign prio[43] = reg2hw[174-:2];
-+  assign prio[44] = reg2hw[172-:2];
-+  assign prio[45] = reg2hw[170-:2];
-+  assign prio[46] = reg2hw[168-:2];
-+  assign prio[47] = reg2hw[166-:2];
-+  assign prio[48] = reg2hw[164-:2];
-+  assign prio[49] = reg2hw[162-:2];
-+  assign prio[50] = reg2hw[160-:2];
-+  assign prio[51] = reg2hw[158-:2];
-+  assign prio[52] = reg2hw[156-:2];
-+  assign prio[53] = reg2hw[154-:2];
-+  assign prio[54] = reg2hw[152-:2];
-+  assign prio[55] = reg2hw[150-:2];
-+  assign prio[56] = reg2hw[148-:2];
-+  assign prio[57] = reg2hw[146-:2];
-+  assign prio[58] = reg2hw[144-:2];
-+  assign prio[59] = reg2hw[142-:2];
-+  assign prio[60] = reg2hw[140-:2];
-+  assign prio[61] = reg2hw[138-:2];
-+  assign prio[62] = reg2hw[136-:2];
-+  assign prio[63] = reg2hw[134-:2];
-+  assign prio[64] = reg2hw[132-:2];
-+  assign prio[65] = reg2hw[130-:2];
-+  assign prio[66] = reg2hw[128-:2];
-+  assign prio[67] = reg2hw[126-:2];
-+  assign prio[68] = reg2hw[124-:2];
-+  assign prio[69] = reg2hw[122-:2];
-+  assign prio[70] = reg2hw[120-:2];
-+  assign prio[71] = reg2hw[118-:2];
-+  assign prio[72] = reg2hw[116-:2];
-+  assign prio[73] = reg2hw[114-:2];
-+  assign prio[74] = reg2hw[112-:2];
-+  assign prio[75] = reg2hw[110-:2];
-+  assign prio[76] = reg2hw[108-:2];
-+  assign prio[77] = reg2hw[106-:2];
-+  assign prio[78] = reg2hw[104-:2];
-+  assign prio[79] = reg2hw[102-:2];
-+  assign prio[80] = reg2hw[100-:2];
-+  assign prio[81] = reg2hw[98-:2];
-+  assign prio[82] = reg2hw[96-:2];
- 
-   //////////////////////
-   // Interrupt Enable //
-   //////////////////////
-   for (genvar s = 0; s < 83; s++) begin : gen_ie0
--    assign ie[0][s] = reg2hw.ie0[s].q;
-+    assign ie[s] = reg2hw[12 + s];
-   end
- 
-   ////////////////////////
-   // THRESHOLD register //
-   ////////////////////////
--  assign threshold[0] = reg2hw.threshold0.q;
-+  assign threshold = reg2hw[11-:2];
- 
-   /////////////////
-   // CC register //
-   /////////////////
--  assign claim_re[0]    = reg2hw.cc0.re;
--  assign claim_id[0]    = irq_id_o[0];
--  assign complete_we[0] = reg2hw.cc0.qe;
--  assign complete_id[0] = reg2hw.cc0.q;
--  assign hw2reg.cc0.d   = cc_id[0];
-+  assign claim_re[0]    = reg2hw[1];
-+  assign claim_id    = irq_id_o;
-+  assign complete_we[0] = reg2hw[2];
-+  assign complete_id = reg2hw[9-:7];
-+  assign hw2reg[6-:7]   = cc_id;
- 
-   ///////////////////
-   // MSIP register //
-   ///////////////////
--  assign msip_o[0] = reg2hw.msip0.q;
-+  assign msip_o[0] = reg2hw[-0];
- 
-   ////////
-   // IP //
-   ////////
-   for (genvar s = 0; s < 83; s++) begin : gen_ip
--    assign hw2reg.ip[s].de = 1'b1; // Always write
--    assign hw2reg.ip[s].d  = ip[s];
-+    assign hw2reg[7 + (s * 2)] = 1'b1; // Always write
-+    assign hw2reg[7 + ((s * 2) + 1)] = ip[s];
-   end
- 
-   ///////////////////////////////////
-   // Detection:: 0: Level, 1: Edge //
-   ///////////////////////////////////
-   for (genvar s = 0; s < 83; s++) begin : gen_le
--    assign le[s] = reg2hw.le[s].q;
-+    assign le[s] = reg2hw[261 + s];
-   end
- 
-   //////////////
-@@ -249,13 +249,13 @@ module rv_plic import rv_plic_reg_pkg::*; #(
-       .rst_ni,
- 
-       .ip_i        (ip),
--      .ie_i        (ie[i]),
-+      .ie_i        (ie),
- 
-       .prio_i      (prio),
--      .threshold_i (threshold[i]),
-+      .threshold_i (threshold),
- 
-       .irq_o       (irq_o[i]),
--      .irq_id_o    (irq_id_o[i])
-+      .irq_id_o    (irq_id_o)
- 
-     );
-   end
 diff --git a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
-index 2acc14e86..875a617cd 100644
+index 2acc14e86..c6aa89066 100644
 --- a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 +++ b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 @@ -239,8 +239,8 @@ module top_earlgrey #(
@@ -2164,7 +1481,76 @@ index 2acc14e86..875a617cd 100644
        .clk_i (clkmgr_clocks.clk_main_hmac),
        .rst_ni (rstmgr_resets.rst_sys_n)
    );
-@@ -904,8 +904,8 @@ module top_earlgrey #(
+@@ -750,6 +750,8 @@ module top_earlgrey #(
+       .rst_ni (rstmgr_resets.rst_sys_n)
+   );
+ 
++  import pwrmgr_pkg::*;
++
+   pwrmgr u_pwrmgr (
+       .tl_i (tl_pwrmgr_d_h2d),
+       .tl_o (tl_pwrmgr_d_d2h),
+@@ -759,16 +761,16 @@ module top_earlgrey #(
+ 
+       // Inter-module signals
+       .pwr_ast_o(),
+-      .pwr_ast_i(pwrmgr_pkg::PWR_AST_RSP_DEFAULT),
++      .pwr_ast_i(PWR_AST_RSP_DEFAULT),
+       .pwr_rst_o(pwrmgr_pwr_rst_req),
+       .pwr_rst_i(pwrmgr_pwr_rst_rsp),
+       .pwr_clk_o(pwrmgr_pwr_clk_req),
+       .pwr_clk_i(pwrmgr_pwr_clk_rsp),
+       .pwr_otp_o(),
+-      .pwr_otp_i(pwrmgr_pkg::PWR_OTP_RSP_DEFAULT),
++      .pwr_otp_i(PWR_OTP_RSP_DEFAULT),
+       .pwr_lc_o(),
+-      .pwr_lc_i(pwrmgr_pkg::PWR_LC_RSP_DEFAULT),
+-      .pwr_flash_i(pwrmgr_pkg::PWR_FLASH_DEFAULT),
++      .pwr_lc_i(PWR_LC_RSP_DEFAULT),
++      .pwr_flash_i(PWR_FLASH_DEFAULT),
+       .pwr_cpu_i(pwrmgr_pwr_cpu),
+       .wakeups_i(pwrmgr_wakeups),
+       .rstreqs_i('0),
+@@ -778,6 +780,8 @@ module top_earlgrey #(
+       .rst_slow_ni (rstmgr_resets.rst_por_aon_n)
+   );
+ 
++  import rstmgr_pkg::*;
++
+   rstmgr u_rstmgr (
+       .tl_i (tl_rstmgr_d_h2d),
+       .tl_o (tl_rstmgr_d_d2h),
+@@ -786,9 +790,9 @@ module top_earlgrey #(
+       .pwr_i(pwrmgr_pwr_rst_req),
+       .pwr_o(pwrmgr_pwr_rst_rsp),
+       .resets_o(rstmgr_resets),
+-      .ast_i(rstmgr_pkg::RSTMGR_AST_DEFAULT),
++      .ast_i(RSTMGR_AST_DEFAULT),
+       .cpu_i(rstmgr_cpu),
+-      .peri_i(rstmgr_pkg::RSTMGR_PERI_DEFAULT),
++      .peri_i(RSTMGR_PERI_DEFAULT),
+       .scanmode_i   (scanmode_i),
+       .scan_rst_ni  (scan_rst_ni),
+       .clk_i (clkmgr_clocks.clk_io_powerup),
+@@ -800,6 +804,8 @@ module top_earlgrey #(
+       .rst_ni (rst_ni)
+   );
+ 
++  import clkmgr_pkg::*;
++
+   clkmgr u_clkmgr (
+       .tl_i (tl_clkmgr_d_h2d),
+       .tl_o (tl_clkmgr_d_d2h),
+@@ -812,7 +818,7 @@ module top_earlgrey #(
+       .clk_aon_i(clkmgr_clk_aon),
+       .pwr_i(pwrmgr_pwr_clk_req),
+       .pwr_o(pwrmgr_pwr_clk_rsp),
+-      .dft_i(clkmgr_pkg::CLK_DFT_DEFAULT),
++      .dft_i(CLK_DFT_DEFAULT),
+       .status_i(clkmgr_status),
+       .clk_i (clkmgr_clocks.clk_io_powerup),
+       .rst_ni (rstmgr_resets.rst_por_io_n),
+@@ -904,8 +910,8 @@ module top_earlgrey #(
        // [2]: imem_uncorrectable
        // [3]: dmem_uncorrectable
        // [4]: reg_uncorrectable
@@ -2204,197 +1590,3 @@ index 8d6cf89b6..1683f0693 100644
  
    lint:
      <<: *default_target
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
-index 61469937f..f27e7f097 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_core.sv
-@@ -133,8 +133,8 @@ module ibex_core #(
-   logic [31:0] pc_if;                          // Program counter in IF stage
-   logic [31:0] pc_id;                          // Program counter in ID stage
-   logic [31:0] pc_wb;                          // Program counter in WB stage
--  logic [33:0] imd_val_d_ex[2];                // Intermediate register for multicycle Ops
--  logic [33:0] imd_val_q_ex[2];                // Intermediate register for multicycle Ops
-+  logic [1:0][33:0] imd_val_d_ex;                // Intermediate register for multicycle Ops
-+  logic [1:0][33:0] imd_val_q_ex;                // Intermediate register for multicycle Ops
-   logic [1:0]  imd_val_we_ex;
- 
-   logic        data_ind_timing;
-@@ -254,7 +254,7 @@ module ibex_core #(
-   logic [31:0] csr_mepc, csr_depc;
- 
-   // PMP signals
--  logic [33:0] csr_pmp_addr [PMPNumRegions];
-+  logic [PMPNumRegions-1:0][33:0] csr_pmp_addr;
-   pmp_cfg_t    csr_pmp_cfg  [PMPNumRegions];
-   logic        pmp_req_err  [PMP_NUM_CHAN];
-   logic        instr_req_out;
-@@ -932,16 +932,16 @@ module ibex_core #(
-   `ASSERT_KNOWN_IF(IbexCsrWdataIntKnown, cs_registers_i.csr_wdata_int, csr_op_en)
- 
-   if (PMPEnable) begin : g_pmp
--    logic [33:0] pmp_req_addr [PMP_NUM_CHAN];
--    pmp_req_e    pmp_req_type [PMP_NUM_CHAN];
--    priv_lvl_e   pmp_priv_lvl [PMP_NUM_CHAN];
--
--    assign pmp_req_addr[PMP_I] = {2'b00,instr_addr_o[31:0]};
--    assign pmp_req_type[PMP_I] = PMP_ACC_EXEC;
--    assign pmp_priv_lvl[PMP_I] = priv_mode_if;
--    assign pmp_req_addr[PMP_D] = {2'b00,data_addr_o[31:0]};
--    assign pmp_req_type[PMP_D] = data_we_o ? PMP_ACC_WRITE : PMP_ACC_READ;
--    assign pmp_priv_lvl[PMP_D] = priv_mode_lsu;
-+    logic [PMP_NUM_CHAN-1:0][1:0]    pmp_req_type;
-+    logic [PMP_NUM_CHAN-1:0][1:0]    pmp_priv_lvl;
-+    logic [PMP_NUM_CHAN-1:0][33:0] pmp_req_addr;
-+
-+    assign pmp_req_addr[PMP_I] = {2'b00,data_addr_o[31:0]};
-+    assign pmp_req_type[PMP_I] = data_we_o ? PMP_ACC_WRITE : PMP_ACC_READ;
-+    assign pmp_priv_lvl[PMP_I] = priv_mode_lsu;
-+    assign pmp_req_addr[PMP_D] = {2'b00,instr_addr_o[31:0]};
-+    assign pmp_req_type[PMP_D] = PMP_ACC_EXEC;
-+    assign pmp_priv_lvl[PMP_D] = priv_mode_if;
- 
-     ibex_pmp #(
-         .PMPGranularity        ( PMPGranularity ),
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
-index 6e5eaf4dc..b962fd7c6 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
-@@ -64,7 +64,7 @@ module ibex_cs_registers #(
- 
-     // PMP
-     output ibex_pkg::pmp_cfg_t   csr_pmp_cfg_o  [PMPNumRegions],
--    output logic [33:0]          csr_pmp_addr_o [PMPNumRegions],
-+    output logic [PMPNumRegions-1:0][33:0]          csr_pmp_addr_o,
- 
-     // debug
-     input  logic                 debug_mode_i,
-@@ -196,8 +196,8 @@ module ibex_cs_registers #(
-   logic  [5:0] mstack_cause_q, mstack_cause_d;
- 
-   // PMP Signals
--  logic [31:0]                 pmp_addr_rdata  [PMP_MAX_REGIONS];
--  logic [PMP_CFG_W-1:0]        pmp_cfg_rdata   [PMP_MAX_REGIONS];
-+  logic [PMP_MAX_REGIONS-1:0][31:0]                 pmp_addr_rdata;
-+  logic [PMP_MAX_REGIONS-1:0][PMP_CFG_W-1:0]        pmp_cfg_rdata;
- 
-   // Hardware performance monitor signals
-   logic [31:0]                 mcountinhibit;
-@@ -208,11 +208,11 @@ module ibex_cs_registers #(
-   // mhpmcounter flops are elaborated below providing only the precise number that is required based
-   // on MHPMCounterNum/MHPMCounterWidth. This signal connects to the Q output of these flops
-   // where they exist and is otherwise 0.
--  logic [63:0] mhpmcounter [32];
-+  logic [31:0][63:0] mhpmcounter;
-   logic [31:0] mhpmcounter_we;
-   logic [31:0] mhpmcounterh_we;
-   logic [31:0] mhpmcounter_incr;
--  logic [31:0] mhpmevent [32];
-+  logic [31:0][31:0] mhpmevent;
-   logic  [4:0] mhpmcounter_idx;
- 
-   // Debug / trigger registers
-@@ -739,7 +739,7 @@ module ibex_cs_registers #(
-   if (PMPEnable) begin : g_pmp_registers
-     pmp_cfg_t                    pmp_cfg         [PMPNumRegions];
-     pmp_cfg_t                    pmp_cfg_wdata   [PMPNumRegions];
--    logic [31:0]                 pmp_addr        [PMPNumRegions];
-+    logic [PMPNumRegions-1:0][31:0]                 pmp_addr;
-     logic [PMPNumRegions-1:0]    pmp_cfg_we;
-     logic [PMPNumRegions-1:0]    pmp_addr_we;
- 
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_ex_block.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_ex_block.sv
-index eccc68e95..06a672e88 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_ex_block.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_ex_block.sv
-@@ -42,8 +42,8 @@ module ibex_ex_block #(
- 
-     // intermediate val reg
-     output logic [1:0]            imd_val_we_o,
--    output logic [33:0]           imd_val_d_o[2],
--    input  logic [33:0]           imd_val_q_i[2],
-+    output logic [1:0][33:0]           imd_val_d_o,
-+    input  logic [1:0][33:0]           imd_val_q_i,
- 
-     // Outputs
-     output logic [31:0]           alu_adder_result_ex_o, // to LSU
-@@ -63,10 +63,10 @@ module ibex_ex_block #(
-   logic        alu_cmp_result, alu_is_equal_result;
-   logic        multdiv_valid;
-   logic        multdiv_sel;
--  logic [31:0] alu_imd_val_q[2];
--  logic [31:0] alu_imd_val_d[2];
-+  logic [1:0][31:0] alu_imd_val_q;
-+  logic [1:0][31:0] alu_imd_val_d;
-   logic [ 1:0] alu_imd_val_we;
--  logic [33:0] multdiv_imd_val_d[2];
-+  logic [1:0][33:0] multdiv_imd_val_d;
-   logic [ 1:0] multdiv_imd_val_we;
- 
-   /*
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv
-index bba4c2af8..d527e4d06 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_id_stage.sv
-@@ -69,8 +69,8 @@ module ibex_id_stage #(
- 
-     // Multicycle Operation Stage Register
-     input  logic [1:0]                imd_val_we_ex_i,
--    input  logic [33:0]               imd_val_d_ex_i[2],
--    output logic [33:0]               imd_val_q_ex_o[2],
-+    input  logic [1:0][33:0]               imd_val_d_ex_i,
-+    output logic [1:0][33:0]               imd_val_q_ex_o,
- 
-     // Branch target ALU
-     output logic [31:0]               bt_a_operand_o,
-@@ -247,7 +247,7 @@ module ibex_id_stage #(
-   logic        alu_multicycle_dec;
-   logic        stall_alu;
- 
--  logic [33:0] imd_val_q[2];
-+  logic [1:0][33:0] imd_val_q;
- 
-   op_a_sel_e   bt_a_mux_sel;
-   imm_b_sel_e  bt_b_mux_sel;
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_multdiv_fast.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_multdiv_fast.sv
-index 617bb5162..e1890da38 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_multdiv_fast.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_multdiv_fast.sv
-@@ -35,8 +35,8 @@ module ibex_multdiv_fast #(
-     output logic [32:0]      alu_operand_a_o,
-     output logic [32:0]      alu_operand_b_o,
- 
--    input  logic [33:0]      imd_val_q_i[2],
--    output logic [33:0]      imd_val_d_o[2],
-+    input  logic [1:0][33:0]      imd_val_q_i,
-+    output logic [1:0][33:0]      imd_val_d_o,
-     output logic [1:0]       imd_val_we_o,
- 
-     input  logic             multdiv_ready_id_i,
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
-index 1b48693a0..9240ce64a 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
-@@ -31,7 +31,7 @@ module ibex_pmp #(
- 
-   // Access Checking Signals
-   logic [33:0]                                region_start_addr [PMPNumRegions];
--  logic [33:PMPGranularity+2]                 region_addr_mask  [PMPNumRegions];
-+  logic [33:0]                                region_addr_mask  [PMPNumRegions];
-   logic [PMPNumChan-1:0][PMPNumRegions-1:0]   region_match_gt;
-   logic [PMPNumChan-1:0][PMPNumRegions-1:0]   region_match_lt;
-   logic [PMPNumChan-1:0][PMPNumRegions-1:0]   region_match_eq;
-diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_register_file_ff.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_register_file_ff.sv
-index 4dd429df8..8c95e2492 100644
---- a/hw/vendor/lowrisc_ibex/rtl/ibex_register_file_ff.sv
-+++ b/hw/vendor/lowrisc_ibex/rtl/ibex_register_file_ff.sv
-@@ -42,8 +42,8 @@ module ibex_register_file #(
-   localparam int unsigned NUM_WORDS  = 2**ADDR_WIDTH;
- 
-   logic [NUM_WORDS-1:0][DataWidth-1:0] rf_reg;
--  logic [NUM_WORDS-1:1][DataWidth-1:0] rf_reg_q;
--  logic [NUM_WORDS-1:1]                we_a_dec;
-+  logic [NUM_WORDS-1:0][DataWidth-1:0] rf_reg_q;
-+  logic [NUM_WORDS-1:0]                we_a_dec;
- 
-   always_comb begin : we_a_decoder
-     for (int unsigned i = 1; i < NUM_WORDS; i++) begin
