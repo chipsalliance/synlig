@@ -1,16 +1,7 @@
 diff --git a/hw/ip/alert_handler/rtl/alert_handler.sv b/hw/ip/alert_handler/rtl/alert_handler.sv
-index 65035ad0b..b0911d650 100644
+index 65035ad0b..40e915975 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler.sv
 +++ b/hw/ip/alert_handler/rtl/alert_handler.sv
-@@ -26,7 +26,7 @@ module alert_handler
-   output logic                    intr_classc_o,
-   output logic                    intr_classd_o,
-   // State information for HW crashdump
--  output alert_crashdump_t        crashdump_o,
-+  output wire [212:0] crashdump_o,
-   // Entropy Input from TRNG
-   input                           entropy_i,
-   // Alert Sources
 @@ -42,8 +42,8 @@ module alert_handler
    //////////////////////////////////
  
@@ -111,15 +102,12 @@ index 65035ad0b..b0911d650 100644
      );
    end
 diff --git a/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv b/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
-index f6dbddef4..14f7722f6 100644
+index f6dbddef4..bb30fe083 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
 +++ b/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
-@@ -13,11 +13,11 @@ module alert_handler_reg_wrap import alert_pkg::*; (
-   // interrupt
-   output logic [N_CLASSES-1:0] irq_o,
+@@ -15,9 +15,9 @@ module alert_handler_reg_wrap import alert_pkg::*; (
    // State information for HW crashdump
--  output alert_crashdump_t     crashdump_o,
-+  output wire [212:0] crashdump_o,
+   output alert_crashdump_t     crashdump_o,
    // hw2reg
 -  input  hw2reg_wrap_t         hw2reg_wrap,
 +  input wire [220:0] hw2reg_wrap,
@@ -449,21 +437,21 @@ index f6dbddef4..14f7722f6 100644
    // alert cause output
    for (genvar k = 0; k < NAlerts; k++) begin : gen_alert_cause_dump
 -    assign crashdump_o.alert_cause[k]  = reg2hw.alert_cause[k].q;
-+    assign crashdump_o[208 + k] = reg2hw[784 + k];
++    assign crashdump_o.alert_cause[k]  = reg2hw[784 + k];
    end
  
    // local alert cause register output
    for (genvar k = 0; k < N_LOC_ALERT; k++) begin : gen_loc_alert_cause_dump
 -    assign crashdump_o.loc_alert_cause[k]  = reg2hw.loc_alert_cause[k].q;
-+    assign crashdump_o[204 + k] = reg2hw[768 + k];
++    assign crashdump_o.loc_alert_cause[k]  = reg2hw[768 + k];
    end
  
 -  assign crashdump_o.class_accum_cnt = hw2reg_wrap.class_accum_cnt;
 -  assign crashdump_o.class_esc_cnt   = hw2reg_wrap.class_esc_cnt;
 -  assign crashdump_o.class_esc_state = hw2reg_wrap.class_esc_state;
-+  assign crashdump_o[203-:64] = hw2reg_wrap[203-:64];
-+  assign crashdump_o[139-:128] = hw2reg_wrap[139-:128];
-+  assign crashdump_o[11-:12] = hw2reg_wrap[11-:12];
++  assign crashdump_o.class_accum_cnt = hw2reg_wrap[203-:64];
++  assign crashdump_o.class_esc_cnt   = hw2reg_wrap[139-:128];
++  assign crashdump_o.class_esc_state = hw2reg_wrap[11-:12];
  
  endmodule : alert_handler_reg_wrap
  
