@@ -1,14 +1,12 @@
 diff --git a/hw/ip/alert_handler/rtl/alert_handler.sv b/hw/ip/alert_handler/rtl/alert_handler.sv
-index 65035ad0b..40e915975 100644
+index 65035ad0b..001825885 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler.sv
 +++ b/hw/ip/alert_handler/rtl/alert_handler.sv
-@@ -42,8 +42,8 @@ module alert_handler
-   //////////////////////////////////
+@@ -43,7 +43,7 @@ module alert_handler
  
    logic [N_CLASSES-1:0] irq;
--  hw2reg_wrap_t hw2reg_wrap;
+   hw2reg_wrap_t hw2reg_wrap;
 -  reg2hw_wrap_t reg2hw_wrap;
-+  wire [220:0] hw2reg_wrap;
 +  wire [811:0] reg2hw_wrap;
  
    // TODO: make this fully parametric at some point
@@ -35,7 +33,7 @@ index 65035ad0b..40e915975 100644
  
    ///////////////////////////////////////
    // Set alert cause bits and classify //
-@@ -125,13 +125,13 @@ module alert_handler
+@@ -125,10 +125,10 @@ module alert_handler
    alert_handler_class i_class (
      .alert_trig_i      ( alert_trig                  ),
      .loc_alert_trig_i  ( loc_alert_trig              ),
@@ -43,36 +41,28 @@ index 65035ad0b..40e915975 100644
 -    .loc_alert_en_i    ( reg2hw_wrap.loc_alert_en    ),
 -    .alert_class_i     ( reg2hw_wrap.alert_class     ),
 -    .loc_alert_class_i ( reg2hw_wrap.loc_alert_class ),
--    .alert_cause_o     ( hw2reg_wrap.alert_cause     ),
--    .loc_alert_cause_o ( hw2reg_wrap.loc_alert_cause ),
--    .class_trig_o      ( hw2reg_wrap.class_trig      )
 +    .alert_en_i(reg2hw_wrap[774-:5]),
 +    .loc_alert_en_i(reg2hw_wrap[786-:4]),
 +    .alert_class_i(reg2hw_wrap[769-:10]),
 +    .loc_alert_class_i(reg2hw_wrap[782-:8]),
-+    .alert_cause_o(hw2reg_wrap[220-:5]),
-+    .loc_alert_cause_o(hw2reg_wrap[215-:4]),
-+    .class_trig_o(hw2reg_wrap[211-:4])
-   );
- 
-   ////////////////////////////////////
-@@ -145,30 +145,30 @@ module alert_handler
+     .alert_cause_o     ( hw2reg_wrap.alert_cause     ),
+     .loc_alert_cause_o ( hw2reg_wrap.loc_alert_cause ),
+     .class_trig_o      ( hw2reg_wrap.class_trig      )
+@@ -145,10 +145,10 @@ module alert_handler
      alert_handler_accu i_accu (
        .clk_i,
        .rst_ni,
 -      .class_en_i   ( reg2hw_wrap.class_en[k]           ),
 -      .clr_i        ( reg2hw_wrap.class_clr[k]          ),
--      .class_trig_i ( hw2reg_wrap.class_trig[k]         ),
--      .thresh_i     ( reg2hw_wrap.class_accum_thresh[k] ),
--      .accu_cnt_o   ( hw2reg_wrap.class_accum_cnt[k]    ),
 +      .class_en_i(reg2hw_wrap[756 + k]),
 +      .clr_i(reg2hw_wrap[752 + k]),
-+      .class_trig_i(hw2reg_wrap[208 + k]),
+       .class_trig_i ( hw2reg_wrap.class_trig[k]         ),
+-      .thresh_i     ( reg2hw_wrap.class_accum_thresh[k] ),
 +      .thresh_i(reg2hw_wrap[688 + (k * AccuCntDw)+:AccuCntDw]),
-+      .accu_cnt_o(hw2reg_wrap[140 + (k * AccuCntDw)+:AccuCntDw]),
+       .accu_cnt_o   ( hw2reg_wrap.class_accum_cnt[k]    ),
        .accu_trig_o  ( class_accum_trig[k]               )
      );
- 
+@@ -156,16 +156,16 @@ module alert_handler
      alert_handler_esc_timer i_esc_timer (
        .clk_i,
        .rst_ni,
@@ -88,29 +78,20 @@ index 65035ad0b..40e915975 100644
 -      .esc_en_i         ( reg2hw_wrap.class_esc_en[k]      ),
 -      .esc_map_i        ( reg2hw_wrap.class_esc_map[k]     ),
 -      .phase_cyc_i      ( reg2hw_wrap.class_phase_cyc[k]   ),
--      .esc_trig_o       ( hw2reg_wrap.class_esc_trig[k]    ),
--      .esc_cnt_o        ( hw2reg_wrap.class_esc_cnt[k]     ),
--      .esc_state_o      ( hw2reg_wrap.class_esc_state[k]   ),
 +      .timeout_cyc_i(reg2hw_wrap[560 + (k * EscCntDw)+:EscCntDw]),
 +      .esc_en_i(reg2hw_wrap[32 + (k * N_ESC_SEV)+:N_ESC_SEV]),
 +      .esc_map_i(reg2hw_wrap[k]),
 +      .phase_cyc_i(reg2hw_wrap[48 + k]),
-+      .esc_trig_o(hw2reg_wrap[204 + k]),
-+      .esc_cnt_o(hw2reg_wrap[12 + (k * EscCntDw)+:EscCntDw]),
-+      .esc_state_o(hw2reg_wrap[k * 3+:3]),
-       .esc_sig_en_o     ( class_esc_sig_en[k]              )
-     );
-   end
+       .esc_trig_o       ( hw2reg_wrap.class_esc_trig[k]    ),
+       .esc_cnt_o        ( hw2reg_wrap.class_esc_cnt[k]     ),
+       .esc_state_o      ( hw2reg_wrap.class_esc_state[k]   ),
 diff --git a/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv b/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
-index f6dbddef4..bb30fe083 100644
+index f6dbddef4..0cbe62395 100644
 --- a/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
 +++ b/hw/ip/alert_handler/rtl/alert_handler_reg_wrap.sv
-@@ -15,9 +15,9 @@ module alert_handler_reg_wrap import alert_pkg::*; (
-   // State information for HW crashdump
-   output alert_crashdump_t     crashdump_o,
+@@ -17,7 +17,7 @@ module alert_handler_reg_wrap import alert_pkg::*; (
    // hw2reg
--  input  hw2reg_wrap_t         hw2reg_wrap,
-+  input wire [220:0] hw2reg_wrap,
+   input  hw2reg_wrap_t         hw2reg_wrap,
    // reg2hw
 -  output reg2hw_wrap_t         reg2hw_wrap
 +  output wire [811:0] reg2hw_wrap
@@ -133,15 +114,14 @@ index f6dbddef4..bb30fe083 100644
      prim_intr_hw #(
        .Width(1)
 -    ) i_irq_classa (
--      .event_intr_i           ( hw2reg_wrap.class_trig[0]    ),
++    ) i_irq_classa(
+       .event_intr_i           ( hw2reg_wrap.class_trig[0]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classa.q  ),
 -      .reg2hw_intr_test_q_i   ( reg2hw.intr_test.classa.q    ),
 -      .reg2hw_intr_test_qe_i  ( reg2hw.intr_test.classa.qe   ),
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classa.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classa.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classa.d   ),
-+    ) i_irq_classa(
-+      .event_intr_i           ( hw2reg_wrap[208]             ),
 +      .reg2hw_intr_enable_q_i ( reg2hw[840]                  ),
 +      .reg2hw_intr_test_q_i   ( reg2hw[836]                  ),
 +      .reg2hw_intr_test_qe_i  ( reg2hw[835]                  ),
@@ -154,15 +134,14 @@ index f6dbddef4..bb30fe083 100644
      prim_intr_hw #(
        .Width(1)
 -    ) i_irq_classb (
--      .event_intr_i           ( hw2reg_wrap.class_trig[1]    ),
++    ) i_irq_classb(
+       .event_intr_i           ( hw2reg_wrap.class_trig[1]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classb.q  ),
 -      .reg2hw_intr_test_q_i   ( reg2hw.intr_test.classb.q    ),
 -      .reg2hw_intr_test_qe_i  ( reg2hw.intr_test.classb.qe   ),
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classb.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classb.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classb.d   ),
-+    ) i_irq_classb(
-+      .event_intr_i           ( hw2reg_wrap[209]             ),
 +      .reg2hw_intr_enable_q_i ( reg2hw[839]                  ),
 +      .reg2hw_intr_test_q_i   ( reg2hw[834]                  ),
 +      .reg2hw_intr_test_qe_i  ( reg2hw[833]                  ),
@@ -175,15 +154,14 @@ index f6dbddef4..bb30fe083 100644
      prim_intr_hw #(
        .Width(1)
 -    ) i_irq_classc (
--      .event_intr_i           ( hw2reg_wrap.class_trig[2]    ),
++    ) i_irq_classc(
+       .event_intr_i           ( hw2reg_wrap.class_trig[2]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classc.q  ),
 -      .reg2hw_intr_test_q_i   ( reg2hw.intr_test.classc.q    ),
 -      .reg2hw_intr_test_qe_i  ( reg2hw.intr_test.classc.qe   ),
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classc.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classc.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classc.d   ),
-+    ) i_irq_classc(
-+      .event_intr_i           ( hw2reg_wrap[210]             ),
 +      .reg2hw_intr_enable_q_i ( reg2hw[838]                  ),
 +      .reg2hw_intr_test_q_i   ( reg2hw[832]                  ),
 +      .reg2hw_intr_test_qe_i  ( reg2hw[831]                  ),
@@ -196,15 +174,14 @@ index f6dbddef4..bb30fe083 100644
      prim_intr_hw #(
        .Width(1)
 -    ) i_irq_classd (
--      .event_intr_i           ( hw2reg_wrap.class_trig[3]    ),
++    ) i_irq_classd(
+       .event_intr_i           ( hw2reg_wrap.class_trig[3]    ),
 -      .reg2hw_intr_enable_q_i ( reg2hw.intr_enable.classd.q  ),
 -      .reg2hw_intr_test_q_i   ( reg2hw.intr_test.classd.q    ),
 -      .reg2hw_intr_test_qe_i  ( reg2hw.intr_test.classd.qe   ),
 -      .reg2hw_intr_state_q_i  ( reg2hw.intr_state.classd.q   ),
 -      .hw2reg_intr_state_de_o ( hw2reg.intr_state.classd.de  ),
 -      .hw2reg_intr_state_d_o  ( hw2reg.intr_state.classd.d   ),
-+    ) i_irq_classd(
-+      .event_intr_i           ( hw2reg_wrap[211]             ),
 +      .reg2hw_intr_enable_q_i ( reg2hw[837]                  ),
 +      .reg2hw_intr_test_q_i   ( reg2hw[830]                  ),
 +      .reg2hw_intr_test_qe_i  ( reg2hw[829]                  ),
@@ -214,15 +191,15 @@ index f6dbddef4..bb30fe083 100644
        .intr_o                 ( irq_o[3]                     )
      );
  
-@@ -102,185 +102,62 @@ module alert_handler_reg_wrap import alert_pkg::*; (
+@@ -102,185 +102,80 @@ module alert_handler_reg_wrap import alert_pkg::*; (
    // if an alert is enabled and it fires,
    // we have to set the corresponding cause bit
    for (genvar k = 0; k < NAlerts; k++) begin : gen_alert_cause
 -    assign hw2reg.alert_cause[k].d  = 1'b1;
 -    assign hw2reg.alert_cause[k].de = reg2hw.alert_cause[k].q |
--                                      hw2reg_wrap.alert_cause[k];
 +    assign hw2reg[220 + ((k * 2) + 1)] = 1'b1;
-+    assign hw2reg[220 + (k * 2)] = reg2hw[784 + k] | hw2reg_wrap[216 + k];
++    assign hw2reg[220 + (k * 2)] = reg2hw[784 + k] |
+                                       hw2reg_wrap.alert_cause[k];
    end
  
    // if a local alert is enabled and it fires,
@@ -230,9 +207,9 @@ index f6dbddef4..bb30fe083 100644
    for (genvar k = 0; k < N_LOC_ALERT; k++) begin : gen_loc_alert_cause
 -    assign hw2reg.loc_alert_cause[k].d  = 1'b1;
 -    assign hw2reg.loc_alert_cause[k].de = reg2hw.loc_alert_cause[k].q |
--                                          hw2reg_wrap.loc_alert_cause[k];
 +    assign hw2reg[212 + ((k * 2) + 1)] = 1'b1;
-+    assign hw2reg[212 + (k * 2)] = reg2hw[768 + k] | hw2reg_wrap[212 + k];
++    assign hw2reg[212 + (k * 2)] = reg2hw[768 + k] |
+                                           hw2reg_wrap.loc_alert_cause[k];
    end
  
    // ping timeout in cycles
@@ -249,39 +226,48 @@ index f6dbddef4..bb30fe083 100644
 -           hw2reg.classa_clren.de } = hw2reg_wrap.class_esc_trig    &
 -                                      class_autolock_en             &
 -                                      reg2hw_wrap.class_en;
--
--  // current accumulator counts
++  assign { hw2reg[52],
++           hw2reg[105],
++           hw2reg[158],
++           hw2reg[211] } = '0;
++
++  assign { hw2reg[51],
++           hw2reg[104],
++           hw2reg[157],
++           hw2reg[210] } = hw2reg_wrap.class_esc_trig    &
++                           class_autolock_en             &
++                           reg2hw_wrap[759-:4];
+ 
+   // current accumulator counts
 -  assign { hw2reg.classd_accum_cnt.d,
 -           hw2reg.classc_accum_cnt.d,
 -           hw2reg.classb_accum_cnt.d,
 -           hw2reg.classa_accum_cnt.d } = hw2reg_wrap.class_accum_cnt;
--
--  // current accumulator counts
++  assign { hw2reg[209-:16],
++           hw2reg[156-:16],
++           hw2reg[103-:16],
++           hw2reg[50-:16] } = hw2reg_wrap.class_accum_cnt;
+ 
+   // current accumulator counts
 -  assign { hw2reg.classd_esc_cnt.d,
 -           hw2reg.classc_esc_cnt.d,
 -           hw2reg.classb_esc_cnt.d,
 -           hw2reg.classa_esc_cnt.d } = hw2reg_wrap.class_esc_cnt;
--
--  // current accumulator counts
++  assign { hw2reg[193-:32],
++           hw2reg[140-:32],
++           hw2reg[87-:32],
++           hw2reg[34-:32] } = hw2reg_wrap.class_esc_cnt;
+ 
+   // current accumulator counts
 -  assign { hw2reg.classd_state.d,
 -           hw2reg.classc_state.d,
 -           hw2reg.classb_state.d,
 -           hw2reg.classa_state.d } = hw2reg_wrap.class_esc_state;
--
-+  assign {hw2reg[52], hw2reg[105], hw2reg[158], hw2reg[211]} = {4 {1'b0}};
-+  assign {hw2reg[51], hw2reg[104], hw2reg[157], hw2reg[210]} = (hw2reg_wrap[207-:4] & class_autolock_en) & reg2hw_wrap[759-:4];
-+  assign hw2reg[209-:16] = hw2reg_wrap[203-:16];
-+  assign hw2reg[156-:16] = hw2reg_wrap[187-:16];
-+  assign hw2reg[103-:16] = hw2reg_wrap[171-:16];
-+  assign hw2reg[50-:16] = hw2reg_wrap[155-:16];
-+  assign hw2reg[193-:32] = hw2reg_wrap[139-:32];
-+  assign hw2reg[140-:32] = hw2reg_wrap[107-:32];
-+  assign hw2reg[87-:32] = hw2reg_wrap[75-:32];
-+  assign hw2reg[34-:32] = hw2reg_wrap[43-:32];
-+  assign hw2reg[161-:3] = hw2reg_wrap[11-:3];
-+  assign hw2reg[108-:3] = hw2reg_wrap[8-:3];
-+  assign hw2reg[55-:3] = hw2reg_wrap[5-:3];
-+  assign hw2reg[2-:3] = hw2reg_wrap[2-:3];
++  assign { hw2reg[161-:3],
++           hw2reg[108-:3],
++           hw2reg[55-:3],
++           hw2reg[2-:3] } = hw2reg_wrap.class_esc_state;
+ 
    /////////////////////
    // reg2hw mappings //
    /////////////////////
@@ -432,7 +418,7 @@ index f6dbddef4..bb30fe083 100644
  
    //////////////////////
    // crashdump output //
-@@ -288,17 +165,17 @@ module alert_handler_reg_wrap import alert_pkg::*; (
+@@ -288,12 +183,12 @@ module alert_handler_reg_wrap import alert_pkg::*; (
  
    // alert cause output
    for (genvar k = 0; k < NAlerts; k++) begin : gen_alert_cause_dump
@@ -446,15 +432,7 @@ index f6dbddef4..bb30fe083 100644
 +    assign crashdump_o.loc_alert_cause[k]  = reg2hw[768 + k];
    end
  
--  assign crashdump_o.class_accum_cnt = hw2reg_wrap.class_accum_cnt;
--  assign crashdump_o.class_esc_cnt   = hw2reg_wrap.class_esc_cnt;
--  assign crashdump_o.class_esc_state = hw2reg_wrap.class_esc_state;
-+  assign crashdump_o.class_accum_cnt = hw2reg_wrap[203-:64];
-+  assign crashdump_o.class_esc_cnt   = hw2reg_wrap[139-:128];
-+  assign crashdump_o.class_esc_state = hw2reg_wrap[11-:12];
- 
- endmodule : alert_handler_reg_wrap
- 
+   assign crashdump_o.class_accum_cnt = hw2reg_wrap.class_accum_cnt;
 diff --git a/hw/ip/alert_handler/rtl/alert_pkg.sv b/hw/ip/alert_handler/rtl/alert_pkg.sv
 index 5324b4978..a1a858232 100644
 --- a/hw/ip/alert_handler/rtl/alert_pkg.sv
