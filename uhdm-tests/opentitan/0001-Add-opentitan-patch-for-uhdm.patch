@@ -1025,56 +1025,6 @@ index 07945937c..518462c7d 100644
  
      // to register interface (read)
      .qs     (mp_bank_cfg_erase_en1_qs)
-diff --git a/hw/ip/padctrl/rtl/padring.sv b/hw/ip/padctrl/rtl/padring.sv
-index fc8b3d183..2b94b0d67 100644
---- a/hw/ip/padctrl/rtl/padring.sv
-+++ b/hw/ip/padctrl/rtl/padring.sv
-@@ -59,45 +59,6 @@ module padring import padctrl_reg_pkg::*; #(
-   assign clk_usb_48mhz = clk_usb_48mhz_pad_i;
-   assign rst_n         = rst_pad_ni;
- 
--  prim_pad_wrapper #(
--    .AttrDw  ( AttrDw ),
--    .Variant ( 1      ) // input-only
--  ) i_clk_pad (
--    .inout_io ( clk   ),
--    .in_o     ( clk_o ),
--    .ie_i     ( 1'b1  ),
--    .out_i    ( 1'b0  ),
--    .oe_i     ( 1'b0  ),
--    .attr_i   (   '0  ),
--    .warl_o   (       )
--  );
--
--  prim_pad_wrapper #(
--    .AttrDw  ( AttrDw ),
--    .Variant ( 1      ) // input-only
--  ) i_clk_usb_48mhz_pad (
--    .inout_io ( clk_usb_48mhz   ),
--    .in_o     ( clk_usb_48mhz_o ),
--    .ie_i     ( 1'b1  ),
--    .out_i    ( 1'b0  ),
--    .oe_i     ( 1'b0  ),
--    .attr_i   (   '0  ),
--    .warl_o   (       )
--  );
--
--  prim_pad_wrapper #(
--    .AttrDw  ( AttrDw ),
--    .Variant ( 1      ) // input-only
--  ) i_rst_pad (
--    .inout_io ( rst_n  ),
--    .in_o     ( rst_no ),
--    .ie_i     ( 1'b1  ),
--    .out_i    ( 1'b0  ),
--    .oe_i     ( 1'b0  ),
--    .attr_i   (   '0  ),
--    .warl_o   (       )
--  );
--
-   //////////////
-   // MIO Pads //
-   //////////////
 diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
 index 962d3b559..9d5a10c8c 100644
 --- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
