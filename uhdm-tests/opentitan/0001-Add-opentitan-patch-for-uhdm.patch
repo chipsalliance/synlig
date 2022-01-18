@@ -1025,29 +1025,6 @@ index 07945937c..518462c7d 100644
  
      // to register interface (read)
      .qs     (mp_bank_cfg_erase_en1_qs)
-diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-index 962d3b559..9d5a10c8c 100644
---- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-+++ b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-@@ -75,16 +75,9 @@ module prim_generic_pad_wrapper #(
-     // received data driver
-     assign in_o     = (ie_i) ? in  : 1'bz;
- `else
--    // different driver types
--    assign (strong0, strong1) inout_io = (oe && drv != DRIVE_00) ? out : 1'bz;
--    assign (pull0, pull1)     inout_io = (oe && drv == DRIVE_00) ? out : 1'bz;
--    // pullup / pulldown termination
--    assign (highz0, weak1)    inout_io = pe & ps;  // enabled and select = 1
--    assign (weak0, highz1)    inout_io = pe & ~ps; // enabled and select = 0
--    // fake trireg emulation
--    assign (weak0, weak1)     inout_io = (kp) ? inout_io : 1'bz;
-+    assign inout_io = out;
-     // received data driver
--    assign in_o     = (ie_i) ? in  : 1'bz;
-+    assign in_o     = in;
- `endif
-   end
- 
 diff --git a/hw/ip/rv_timer/rtl/rv_timer.sv b/hw/ip/rv_timer/rtl/rv_timer.sv
 index 9b939eedd..a4c91c238 100644
 --- a/hw/ip/rv_timer/rtl/rv_timer.sv
