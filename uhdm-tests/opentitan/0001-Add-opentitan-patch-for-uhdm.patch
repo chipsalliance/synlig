@@ -701,7 +701,7 @@ index 8637ad221..a3c29e293 100644
  
    // this assertion fails when rspid[0+:STIDW] not in [0..M-1]
 diff --git a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
-index 2acc14e86..c6aa89066 100644
+index 2acc14e86..692284ba3 100644
 --- a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 +++ b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 @@ -239,8 +239,8 @@ module top_earlgrey #(
@@ -731,16 +731,25 @@ index 2acc14e86..c6aa89066 100644
    end
  
    // Non-debug module reset == reset for everything except for the debug module
-@@ -627,7 +627,7 @@ module top_earlgrey #(
+@@ -612,6 +612,8 @@ module top_earlgrey #(
+       .rst_ni (rstmgr_resets.rst_spi_device_n)
+   );
+ 
++  import flash_ctrl_pkg::*;
++
+   flash_ctrl u_flash_ctrl (
+       .tl_i (tl_flash_ctrl_d_h2d),
+       .tl_o (tl_flash_ctrl_d_d2h),
+@@ -627,7 +629,7 @@ module top_earlgrey #(
        // Inter-module signals
        .flash_o(flash_ctrl_flash_req),
        .flash_i(flash_ctrl_flash_rsp),
 -      .otp_i(flash_ctrl_pkg::OTP_FLASH_DEFAULT),
-+      .otp_i(256'hdeadbeefbeeffacedeadbeef5a5aa5a5deadbeef5a5aa5a5deadbeefbeefface),
++      .otp_i(OTP_FLASH_DEFAULT),
        .clk_i (clkmgr_clocks.clk_main_infra),
        .rst_ni (rstmgr_resets.rst_lc_n)
    );
-@@ -647,8 +647,8 @@ module top_earlgrey #(
+@@ -647,8 +649,8 @@ module top_earlgrey #(
        .tl_o (tl_aes_d_d2h),
  
        // [0]: ctrl_err
@@ -751,7 +760,7 @@ index 2acc14e86..c6aa89066 100644
  
        // Inter-module signals
        .idle_o(aes_idle),
-@@ -666,8 +666,8 @@ module top_earlgrey #(
+@@ -666,8 +668,8 @@ module top_earlgrey #(
        .intr_hmac_err_o   (intr_hmac_hmac_err),
  
        // [1]: msg_push_sha_disabled
@@ -762,7 +771,7 @@ index 2acc14e86..c6aa89066 100644
        .clk_i (clkmgr_clocks.clk_main_hmac),
        .rst_ni (rstmgr_resets.rst_sys_n)
    );
-@@ -750,6 +750,8 @@ module top_earlgrey #(
+@@ -750,6 +752,8 @@ module top_earlgrey #(
        .rst_ni (rstmgr_resets.rst_sys_n)
    );
  
@@ -771,7 +780,7 @@ index 2acc14e86..c6aa89066 100644
    pwrmgr u_pwrmgr (
        .tl_i (tl_pwrmgr_d_h2d),
        .tl_o (tl_pwrmgr_d_d2h),
-@@ -759,16 +761,16 @@ module top_earlgrey #(
+@@ -759,16 +763,16 @@ module top_earlgrey #(
  
        // Inter-module signals
        .pwr_ast_o(),
@@ -792,7 +801,7 @@ index 2acc14e86..c6aa89066 100644
        .pwr_cpu_i(pwrmgr_pwr_cpu),
        .wakeups_i(pwrmgr_wakeups),
        .rstreqs_i('0),
-@@ -778,6 +780,8 @@ module top_earlgrey #(
+@@ -778,6 +782,8 @@ module top_earlgrey #(
        .rst_slow_ni (rstmgr_resets.rst_por_aon_n)
    );
  
@@ -801,7 +810,7 @@ index 2acc14e86..c6aa89066 100644
    rstmgr u_rstmgr (
        .tl_i (tl_rstmgr_d_h2d),
        .tl_o (tl_rstmgr_d_d2h),
-@@ -786,9 +790,9 @@ module top_earlgrey #(
+@@ -786,9 +792,9 @@ module top_earlgrey #(
        .pwr_i(pwrmgr_pwr_rst_req),
        .pwr_o(pwrmgr_pwr_rst_rsp),
        .resets_o(rstmgr_resets),
@@ -813,7 +822,7 @@ index 2acc14e86..c6aa89066 100644
        .scanmode_i   (scanmode_i),
        .scan_rst_ni  (scan_rst_ni),
        .clk_i (clkmgr_clocks.clk_io_powerup),
-@@ -800,6 +804,8 @@ module top_earlgrey #(
+@@ -800,6 +806,8 @@ module top_earlgrey #(
        .rst_ni (rst_ni)
    );
  
@@ -822,7 +831,7 @@ index 2acc14e86..c6aa89066 100644
    clkmgr u_clkmgr (
        .tl_i (tl_clkmgr_d_h2d),
        .tl_o (tl_clkmgr_d_d2h),
-@@ -812,7 +818,7 @@ module top_earlgrey #(
+@@ -812,7 +820,7 @@ module top_earlgrey #(
        .clk_aon_i(clkmgr_clk_aon),
        .pwr_i(pwrmgr_pwr_clk_req),
        .pwr_o(pwrmgr_pwr_clk_rsp),
@@ -831,7 +840,7 @@ index 2acc14e86..c6aa89066 100644
        .status_i(clkmgr_status),
        .clk_i (clkmgr_clocks.clk_io_powerup),
        .rst_ni (rstmgr_resets.rst_por_io_n),
-@@ -904,8 +910,8 @@ module top_earlgrey #(
+@@ -904,8 +912,8 @@ module top_earlgrey #(
        // [2]: imem_uncorrectable
        // [3]: dmem_uncorrectable
        // [4]: reg_uncorrectable
