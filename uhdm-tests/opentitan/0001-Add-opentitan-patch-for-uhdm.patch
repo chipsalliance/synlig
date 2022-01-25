@@ -523,7 +523,7 @@ index 962d3b559..9d5a10c8c 100644
    end
  
 diff --git a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
-index 2acc14e86..692284ba3 100644
+index 2acc14e86..f20146f6e 100644
 --- a/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 +++ b/hw/top_earlgrey/rtl/autogen/top_earlgrey.sv
 @@ -239,8 +239,8 @@ module top_earlgrey #(
@@ -553,25 +553,7 @@ index 2acc14e86..692284ba3 100644
    end
  
    // Non-debug module reset == reset for everything except for the debug module
-@@ -612,6 +612,8 @@ module top_earlgrey #(
-       .rst_ni (rstmgr_resets.rst_spi_device_n)
-   );
- 
-+  import flash_ctrl_pkg::*;
-+
-   flash_ctrl u_flash_ctrl (
-       .tl_i (tl_flash_ctrl_d_h2d),
-       .tl_o (tl_flash_ctrl_d_d2h),
-@@ -627,7 +629,7 @@ module top_earlgrey #(
-       // Inter-module signals
-       .flash_o(flash_ctrl_flash_req),
-       .flash_i(flash_ctrl_flash_rsp),
--      .otp_i(flash_ctrl_pkg::OTP_FLASH_DEFAULT),
-+      .otp_i(OTP_FLASH_DEFAULT),
-       .clk_i (clkmgr_clocks.clk_main_infra),
-       .rst_ni (rstmgr_resets.rst_lc_n)
-   );
-@@ -647,8 +649,8 @@ module top_earlgrey #(
+@@ -647,8 +647,8 @@ module top_earlgrey #(
        .tl_o (tl_aes_d_d2h),
  
        // [0]: ctrl_err
@@ -582,7 +564,7 @@ index 2acc14e86..692284ba3 100644
  
        // Inter-module signals
        .idle_o(aes_idle),
-@@ -666,8 +668,8 @@ module top_earlgrey #(
+@@ -666,8 +666,8 @@ module top_earlgrey #(
        .intr_hmac_err_o   (intr_hmac_hmac_err),
  
        // [1]: msg_push_sha_disabled
@@ -593,76 +575,7 @@ index 2acc14e86..692284ba3 100644
        .clk_i (clkmgr_clocks.clk_main_hmac),
        .rst_ni (rstmgr_resets.rst_sys_n)
    );
-@@ -750,6 +752,8 @@ module top_earlgrey #(
-       .rst_ni (rstmgr_resets.rst_sys_n)
-   );
- 
-+  import pwrmgr_pkg::*;
-+
-   pwrmgr u_pwrmgr (
-       .tl_i (tl_pwrmgr_d_h2d),
-       .tl_o (tl_pwrmgr_d_d2h),
-@@ -759,16 +763,16 @@ module top_earlgrey #(
- 
-       // Inter-module signals
-       .pwr_ast_o(),
--      .pwr_ast_i(pwrmgr_pkg::PWR_AST_RSP_DEFAULT),
-+      .pwr_ast_i(PWR_AST_RSP_DEFAULT),
-       .pwr_rst_o(pwrmgr_pwr_rst_req),
-       .pwr_rst_i(pwrmgr_pwr_rst_rsp),
-       .pwr_clk_o(pwrmgr_pwr_clk_req),
-       .pwr_clk_i(pwrmgr_pwr_clk_rsp),
-       .pwr_otp_o(),
--      .pwr_otp_i(pwrmgr_pkg::PWR_OTP_RSP_DEFAULT),
-+      .pwr_otp_i(PWR_OTP_RSP_DEFAULT),
-       .pwr_lc_o(),
--      .pwr_lc_i(pwrmgr_pkg::PWR_LC_RSP_DEFAULT),
--      .pwr_flash_i(pwrmgr_pkg::PWR_FLASH_DEFAULT),
-+      .pwr_lc_i(PWR_LC_RSP_DEFAULT),
-+      .pwr_flash_i(PWR_FLASH_DEFAULT),
-       .pwr_cpu_i(pwrmgr_pwr_cpu),
-       .wakeups_i(pwrmgr_wakeups),
-       .rstreqs_i('0),
-@@ -778,6 +782,8 @@ module top_earlgrey #(
-       .rst_slow_ni (rstmgr_resets.rst_por_aon_n)
-   );
- 
-+  import rstmgr_pkg::*;
-+
-   rstmgr u_rstmgr (
-       .tl_i (tl_rstmgr_d_h2d),
-       .tl_o (tl_rstmgr_d_d2h),
-@@ -786,9 +792,9 @@ module top_earlgrey #(
-       .pwr_i(pwrmgr_pwr_rst_req),
-       .pwr_o(pwrmgr_pwr_rst_rsp),
-       .resets_o(rstmgr_resets),
--      .ast_i(rstmgr_pkg::RSTMGR_AST_DEFAULT),
-+      .ast_i(RSTMGR_AST_DEFAULT),
-       .cpu_i(rstmgr_cpu),
--      .peri_i(rstmgr_pkg::RSTMGR_PERI_DEFAULT),
-+      .peri_i(RSTMGR_PERI_DEFAULT),
-       .scanmode_i   (scanmode_i),
-       .scan_rst_ni  (scan_rst_ni),
-       .clk_i (clkmgr_clocks.clk_io_powerup),
-@@ -800,6 +806,8 @@ module top_earlgrey #(
-       .rst_ni (rst_ni)
-   );
- 
-+  import clkmgr_pkg::*;
-+
-   clkmgr u_clkmgr (
-       .tl_i (tl_clkmgr_d_h2d),
-       .tl_o (tl_clkmgr_d_d2h),
-@@ -812,7 +820,7 @@ module top_earlgrey #(
-       .clk_aon_i(clkmgr_clk_aon),
-       .pwr_i(pwrmgr_pwr_clk_req),
-       .pwr_o(pwrmgr_pwr_clk_rsp),
--      .dft_i(clkmgr_pkg::CLK_DFT_DEFAULT),
-+      .dft_i(CLK_DFT_DEFAULT),
-       .status_i(clkmgr_status),
-       .clk_i (clkmgr_clocks.clk_io_powerup),
-       .rst_ni (rstmgr_resets.rst_por_io_n),
-@@ -904,8 +912,8 @@ module top_earlgrey #(
+@@ -904,8 +904,8 @@ module top_earlgrey #(
        // [2]: imem_uncorrectable
        // [3]: dmem_uncorrectable
        // [4]: reg_uncorrectable
