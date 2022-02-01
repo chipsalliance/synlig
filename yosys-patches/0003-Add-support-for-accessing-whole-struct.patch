@@ -1,28 +1,19 @@
-From d2e26aceb4a6923a340fca85bfaba5a18a88fd9d Mon Sep 17 00:00:00 2001
+From 9e9d71d10c37dd9c80c3a9e8d3544567dcc2f0cc Mon Sep 17 00:00:00 2001
 From: Kamil Rakoczy <krakoczy@antmicro.com>
 Date: Mon, 22 Nov 2021 15:02:27 +0100
-Subject: [PATCH 2/4] Add support for accessing whole struct
+Subject: [PATCH 3/4] Add support for accessing whole struct
 
 Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
 ---
- frontends/ast/genrtlil.cc |  4 +++-
- frontends/ast/simplify.cc | 15 ++++++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ frontends/ast/genrtlil.cc |  2 +-
+ frontends/ast/simplify.cc | 24 ++++++++++++++++++------
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
 diff --git a/frontends/ast/genrtlil.cc b/frontends/ast/genrtlil.cc
-index 4c25287ad..53bf43cba 100644
+index 4c25287ad..020b4e5e8 100644
 --- a/frontends/ast/genrtlil.cc
 +++ b/frontends/ast/genrtlil.cc
-@@ -849,6 +849,8 @@ void AstNode::detectSignWidthWorker(int &width_hint, bool &sign_hint, bool *foun
- 				while (id_ast->simplify(true, false, false, 1, -1, false, true)) { }
- 			if (id_ast->children[0]->type == AST_CONSTANT)
- 				this_width = id_ast->children[0]->bits.size();
-+			else if (id_ast->children.size() == 1 && id_ast->children[0]->type == AST_IDENTIFIER && id_ast->children[0]->id2ast)
-+				this_width = id_ast->children[0]->id2ast->range_left - id_ast->children[0]->id2ast->range_right + 1;
- 			else
- 				log_file_error(filename, location.first_line, "Failed to detect width for parameter %s!\n", str.c_str());
- 			if (children.size() != 0)
-@@ -877,7 +879,7 @@ void AstNode::detectSignWidthWorker(int &width_hint, bool &sign_hint, bool *foun
+@@ -877,7 +877,7 @@ void AstNode::detectSignWidthWorker(int &width_hint, bool &sign_hint, bool *foun
  			this_width = id_ast->children[0]->range_left - id_ast->children[0]->range_right + 1;
  			if (children.size() > 1)
  				range = children[1];
@@ -32,10 +23,21 @@ index 4c25287ad..53bf43cba 100644
  			this_width = tmp_range->range_left - tmp_range->range_right + 1;
  			delete tmp_range;
 diff --git a/frontends/ast/simplify.cc b/frontends/ast/simplify.cc
-index f25531e96..2cef569a8 100644
+index 653c64e65..1105c0687 100644
 --- a/frontends/ast/simplify.cc
 +++ b/frontends/ast/simplify.cc
-@@ -517,14 +517,12 @@ static void add_members_to_scope(AstNode *snode, std::string name)
+@@ -307,6 +307,10 @@ static int size_packed_struct(AstNode *snode, int base_offset)
+ 		if (node->type == AST_STRUCT || node->type == AST_UNION) {
+ 			// embedded struct or union
+ 			width = size_packed_struct(node, base_offset + offset);
++			// set range of struct
++			node->range_right = base_offset + offset;
++			node->range_left = base_offset + offset + width - 1;
++			node->range_valid = true;
+ 		}
+ 		else {
+ 			log_assert(node->type == AST_STRUCT_ITEM);
+@@ -493,14 +497,12 @@ static void add_members_to_scope(AstNode *snode, std::string name)
  	// in case later referenced in assignments
  	log_assert(snode->type==AST_STRUCT || snode->type==AST_UNION);
  	for (auto *node : snode->children) {
@@ -52,21 +54,33 @@ index f25531e96..2cef569a8 100644
  	}
  }
  
-@@ -1365,6 +1363,13 @@ bool AstNode::simplify(bool const_fold, bool at_zero, bool in_lvalue, int stage,
+@@ -509,7 +511,7 @@ static int get_max_offset(AstNode *node)
+ 	// get the width from the MS member in the struct
+ 	// as members are laid out from left to right in the packed wire
+ 	log_assert(node->type==AST_STRUCT || node->type==AST_UNION);
+-	while (node->type != AST_STRUCT_ITEM) {
++	while (node->range_left < 0) {
+ 		node = node->children[0];
+ 	}
+ 	return node->range_left;
+@@ -1341,6 +1343,16 @@ bool AstNode::simplify(bool const_fold, bool at_zero, bool in_lvalue, int stage,
  
  	case AST_PARAMETER:
  	case AST_LOCALPARAM:
++		// if parameter is implicite type which is the typename of a struct or union,
++		// save information about struct in wiretype attribute
 +		if (children[0]->type == AST_IDENTIFIER && current_scope.count(children[0]->str) > 0) {
 +			auto item_node = current_scope[children[0]->str];
 +			if (item_node->type == AST_STRUCT || item_node->type == AST_UNION) {
 +				attributes[ID::wiretype] = item_node->clone();
++				size_packed_struct(attributes[ID::wiretype], 0);
 +				add_members_to_scope(attributes[ID::wiretype], str);
 +			}
 +		}
  		while (!children[0]->basic_prep && children[0]->simplify(false, false, false, stage, -1, false, true) == true)
  			did_something = true;
  		children[0]->detectSignWidth(width_hint, sign_hint);
-@@ -2042,7 +2047,7 @@ bool AstNode::simplify(bool const_fold, bool at_zero, bool in_lvalue, int stage,
+@@ -2018,7 +2030,7 @@ bool AstNode::simplify(bool const_fold, bool at_zero, bool in_lvalue, int stage,
  		if (name_has_dot(str, sname)) {
  			if (current_scope.count(str) > 0) {
  				auto item_node = current_scope[str];
