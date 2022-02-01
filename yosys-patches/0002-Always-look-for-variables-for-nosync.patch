@@ -1,7 +1,7 @@
-From b856bb9a3cc8887677dd74c0c837f09cefe76f5e Mon Sep 17 00:00:00 2001
+From 77fb96b368af807a0ab4dd249a57333680654b48 Mon Sep 17 00:00:00 2001
 From: Kamil Rakoczy <krakoczy@antmicro.com>
 Date: Mon, 10 Jan 2022 13:19:38 +0100
-Subject: [PATCH 4/4] Always look for variables for nosync
+Subject: [PATCH 2/4] Always look for variables for nosync
 
 Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
  1 file changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/frontends/ast/simplify.cc b/frontends/ast/simplify.cc
-index 2cef569a8..374f38555 100644
+index 18b1e1e11..653c64e65 100644
 --- a/frontends/ast/simplify.cc
 +++ b/frontends/ast/simplify.cc
-@@ -2370,15 +2370,12 @@ bool AstNode::simplify(bool const_fold, bool at_zero, bool in_lvalue, int stage,
+@@ -2341,15 +2341,12 @@ bool AstNode::simplify(bool const_fold, bool at_zero, bool in_lvalue, int stage,
  	{
  		expand_genblock(str + ".");
  
