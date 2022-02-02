@@ -48,6 +48,79 @@ index fc8b3d183..2b94b0d67 100644
    //////////////
    // MIO Pads //
    //////////////
+diff --git a/hw/ip/prim/util/primgen.py b/hw/ip/prim/util/primgen.py
+index f601d503e..70dd6d438 100755
+--- a/hw/ip/prim/util/primgen.py
++++ b/hw/ip/prim/util/primgen.py
+@@ -238,6 +238,21 @@ def _generate_prim_pkg(gapi):
+     shutil.copyfile(prim_pkg_core_src, prim_pkg_core_dest)
+     print("Core file written to %s." % (prim_pkg_core_dest, ))
+ 
++def _instance_sv_ram(prim_name, techlib, parameters, prim_type):
++    if not parameters:
++        s = "    prim_{techlib}_{prim_name} u_impl_{techlib} (\n"
++    else:
++        s = "    prim_{techlib}_{prim_name} #(\n"
++        s += ",\n".join("      .{p}({p})".format(p=p) for p in parameters)
++        s += "\n    ) u_impl_{techlib}_{prim_type} (\n"
++    s += "      .clk_a_i(clk_{prim_type}_i),\n"
++    s += "      .a_req_i({prim_type}_req_i),\n"
++    s += "      .a_write_i({prim_type}_write_i),\n"
++    s += "      .a_addr_i({prim_type}_addr_i),\n"
++    s += "      .a_wdata_i({prim_type}_wdata_i),\n"
++    s += "      .a_rdata_o({prim_type}_rdata_o)\n"
++    s +=  "    );\n"
++    return s.format(prim_name=prim_name, techlib=techlib, prim_type=prim_type)
+ 
+ def _instance_sv(prim_name, techlib, parameters):
+     if not parameters:
+@@ -246,8 +261,8 @@ def _instance_sv(prim_name, techlib, parameters):
+         s = "    prim_{techlib}_{prim_name} #(\n"
+         s += ",\n".join("      .{p}({p})".format(p=p) for p in parameters)
+         s += "\n    ) u_impl_{techlib} (\n"
+-    s += "      .*\n" \
+-         "    );\n"
++    s += "      .*\n"
++    s +=  "    );\n"
+     return s.format(prim_name=prim_name, techlib=techlib)
+ 
+ 
+@@ -258,12 +273,17 @@ def _create_instances(prim_name, techlibs, parameters):
+     ]
+     techlibs_generic_last = techlibs_wo_generic + ['generic']
+ 
++
+     if not techlibs_wo_generic:
+         # Don't output the if/else blocks if there no alternatives exist.
+         # We still want the generate block to keep hierarchical path names
+         # stable, even if more than one techlib is found.
+         s = "  if (1) begin : gen_generic\n"
+-        s += _instance_sv(prim_name, "generic", parameters) + "\n"
++        if prim_name == "ram_2p":
++            s += _instance_sv_ram("ram_1p", "generic", parameters, "a") + "\n"
++            s += _instance_sv_ram("ram_1p", "generic", parameters, "b") + "\n"
++        else:
++            s += _instance_sv(prim_name, "generic", parameters) + "\n"
+         s += "  end"
+         return s
+ 
+@@ -282,8 +302,14 @@ def _create_instances(prim_name, techlibs, parameters):
+         # TODO: wildcard port lists are against our style guide, but it's safer
+         # to let the synthesis tool figure out the connectivity than us trying
+         # to parse the port list into individual signals.
+-        s += "begin : gen_{techlib}\n" + _instance_sv(prim_name, techlib,
+-                                                      parameters) + "end"
++        s += "begin : gen_{techlib}\n" 
++        if prim_name == "ram_2p":
++            s += _instance_sv_ram("ram_1p", techlib, parameters, "a")
++            s += _instance_sv_ram("ram_1p", techlib, parameters, "b")
++        else:
++            s += _instance_sv(prim_name, techlib, parameters)
++
++        s += "end"
+ 
+         if not is_last:
+             s += " "
 diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
 index 962d3b559..9d5a10c8c 100644
 --- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
@@ -72,7 +145,7 @@ index 962d3b559..9d5a10c8c 100644
    end
  
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
-index 8d6cf89b6..1683f0693 100644
+index 8d6cf89b6..0e01b5276 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 +++ b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 @@ -56,7 +56,7 @@ targets:
@@ -91,7 +164,7 @@ index 8d6cf89b6..1683f0693 100644
 +        synth: "yosys"
 +        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: []
-+        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++        surelog_options: ['-DSYNTHESIS', '-DPRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric']
 +      yosys:
 +        arch: "xilinx"
 +        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]

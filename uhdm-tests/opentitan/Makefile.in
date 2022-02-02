@@ -192,6 +192,8 @@ prim_secded_72_64_dec.sv \
 prim_secded_72_64_enc.sv \
 prim_ram_2p_async_adv.sv \
 prim_ram_2p_adv.sv \
+prim_generic_ram_2p.sv \
+prim_ram_2p.sv \
 spi_fwm_rxf_ctrl.sv \
 spi_fwm_txf_ctrl.sv \
 spi_device_reg_top.sv \
@@ -272,10 +274,6 @@ UHDM_FILES_FULL = \
 		done; \
 	)
 
-CUSTOM_FILES_UHDM = ${curr_dir}/custom_files/prim_ram_2p.v \
-	       ${curr_dir}/custom_files/prim_xilinx_ram_1p.v
-
-
 #############################
 ####      SYNTHESIS      ####
 #############################
@@ -300,8 +298,7 @@ ${UHDM_file}: prep-sources
 			-DBootRomInitFile=boot_rom_fpga_nexysvideo.32.vmem \
 			-PBootRomInitFile="boot_rom_fpga_nexysvideo.32.vmem" \
 			$(EARLGRAY_INCLUDE) \
-			$(UHDM_FILES_FULL) \
-			$(CUSTOM_FILES_UHDM) && \
+			$(UHDM_FILES_FULL) && \
 	cp ${EARLGRAY_BUILD}/slpp_all/surelog.uhdm ${UHDM_file})
 
 uhdm/yosys/synth-opentitan: ${UHDM_file} ${SV2V_FILE} | ${VENV_OT}
