@@ -295,8 +295,8 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: top_earlgrey_nexysvideo.edif
-        path: UHDM-integration-tests/build/top_earlgrey_nexysvideo.edif
+        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.edif
+        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-yosys/lowrisc_systems_top_earlgrey_nexysvideo_0.1.edif
 
   swerv_synth:
     runs-on: [self-hosted, Linux, X64]
