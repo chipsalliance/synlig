@@ -372,19 +372,20 @@ jobs:
         DISTRO=$(lsb_release --short --id)
         DISTRO_RELEASE=$(lsb_release --short --release)
         DISTRO_CODENAME=$(lsb_release --short --codename | sed -e's/[^A-Za-z0-9]//g')
-        TARBALL=yosys-uhdm-integration-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+        FULL_TARBALL=yosys-uhdm-integration-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+        PLUGIN_TARBALL=yosys-uhdm-plugin-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
         # Create a tag of form ad2466e-2021-12-06
         TAG="${TAG:-$(git show -s --date=short --format=%h-%cd)}"
         git tag "$TAG" || true
         echo "TAG=$TAG" >> $GITHUB_ENV
         ls -lah image
-        tar -zcvf $TARBALL image
-        echo "TARBALL=$TARBALL" >> $GITHUB_ENV
+        tar -zcvf $FULL_TARBALL image
+        tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so install_plugin.sh
     - name: Deploy release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ env.TARBALL }}
+        file: yosys-uhdm-*.tar.gz
         tag: ${{ env.TAG }}
         overwrite: true
         file_glob: true
