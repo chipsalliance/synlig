@@ -1,5 +1,12 @@
 #!/bin/sh
 
+set -e
+
+if ! command -v yosys-config; then
+    echo "yosys-config not found! Do you have Yosys installed on your system?"
+    exit 1
+fi
+
 YOSYS_DATDIR=$(yosys-config --datdir)
 YOSYS_PLUGIN_DIR=$YOSYS_DATDIR/plugins
 

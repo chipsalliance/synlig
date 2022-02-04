@@ -390,6 +390,28 @@ jobs:
         overwrite: true
         file_glob: true
 
+  install-plugin:
+    needs: release
+    runs-on: ubuntu-20.04
+    name: Test plugin installation
+    if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+    steps:
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y yosys
+    - uses: robinraju/release-downloader@v1.3
+      with:
+        repository: "antmicro/yosys-uhdm-plugin-integration"
+        fileName: "yosys-uhdm-plugin-*.tar.gz"
+        latest: true
+    - name: Extract UHDM plugin and install it
+      run: |
+        tar -xzf yosys-uhdm-plugin-*.tar.gz
+        ./install_plugin.sh
+    - name: Run Yosys and load UHDM plugin
+      run: yosys -p "plugin -i uhdm"
+
   ibex_synth_symbiflow:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:latest
