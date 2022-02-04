@@ -381,11 +381,21 @@ jobs:
         ls -lah image
         tar -zcvf $FULL_TARBALL image
         tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so install_plugin.sh
+        echo "FULL_TARBALL=$FULL_TARBALL" >> $GITHUB_ENV
+        echo "PLUGIN_TARBALL=$PLUGIN_TARBALL" >> $GITHUB_ENV
     - name: Deploy release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: yosys-uhdm-*.tar.gz
+        file: ${{ env.FULL_TARBALL }}
+        tag: ${{ env.TAG }}
+        overwrite: true
+        file_glob: true
+    - name: Deploy plugin-only release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ env.PLUGIN_TARBALL }}
         tag: ${{ env.TAG }}
         overwrite: true
         file_glob: true
@@ -397,9 +407,7 @@ jobs:
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
     steps:
     - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y yosys
+      run: sudo apt-get install -y yosys
     - uses: robinraju/release-downloader@v1.3
       with:
         repository: "antmicro/yosys-uhdm-plugin-integration"
