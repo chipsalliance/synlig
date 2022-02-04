@@ -396,10 +396,8 @@ jobs:
     name: Test plugin installation
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
     steps:
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y yosys
+    - name: Install Yosys
+      run: sudo apt-get install -y yosys
     - uses: robinraju/release-downloader@v1.3
       with:
         repository: "antmicro/yosys-uhdm-plugin-integration"
