@@ -121,31 +121,79 @@ index f601d503e..70dd6d438 100755
  
          if not is_last:
              s += " "
-diff --git a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-index 962d3b559..9d5a10c8c 100644
---- a/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-+++ b/hw/ip/prim_generic/rtl/prim_generic_pad_wrapper.sv
-@@ -75,16 +75,9 @@ module prim_generic_pad_wrapper #(
-     // received data driver
-     assign in_o     = (ie_i) ? in  : 1'bz;
- `else
--    // different driver types
--    assign (strong0, strong1) inout_io = (oe && drv != DRIVE_00) ? out : 1'bz;
--    assign (pull0, pull1)     inout_io = (oe && drv == DRIVE_00) ? out : 1'bz;
--    // pullup / pulldown termination
--    assign (highz0, weak1)    inout_io = pe & ps;  // enabled and select = 1
--    assign (weak0, highz1)    inout_io = pe & ~ps; // enabled and select = 0
--    // fake trireg emulation
--    assign (weak0, weak1)     inout_io = (kp) ? inout_io : 1'bz;
+diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv
+index 402af9043..b8155a178 100644
+--- a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv
++++ b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv
+@@ -9,10 +9,13 @@ module prim_xilinx_clock_gating (
+   output logic clk_o
+ );
+ 
+-  BUFGCE u_bufgce (
+-    .I  (clk_i),
+-    .CE (en_i | test_en_i),
+-    .O  (clk_o)
+-  );
++  // Assume en_i synchronized, if not put synchronizer prior to en_i
++  logic en_latch;
++  always_latch begin
++    if (!clk_i) begin
++      en_latch = en_i | test_en_i;
++    end
++  end
++  assign clk_o = en_latch & clk_i;
+ 
+ endmodule
+diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv
+index 572c20ffe..c1218e5b3 100644
+--- a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv
++++ b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv
+@@ -11,15 +11,7 @@ module prim_xilinx_clock_mux2 (
+   output logic clk_o
+ );
+ 
+-  // for more info, refer to the Xilinx technology primitives userguide, e.g.:
+-  // ug953-vivado-7series-libraries.pdf
+-  // ug974-vivado-ultrascale-libraries.pdf
+-  BUFGMUX bufgmux_i (
+-    .S  ( sel_i  ),
+-    .I0 ( clk0_i ),
+-    .I1 ( clk1_i ),
+-    .O  ( clk_o  )
+-  );
++  assign clk_o = (sel_i) ? clk1_i : clk0_i;
+ 
+   // make sure sel is never X (including during reset)
+   // need to use ##1 as this could break with inverted clocks that
+diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
+index f9649ddf9..fe9c781e6 100644
+--- a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
++++ b/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
+@@ -57,7 +57,7 @@ module prim_xilinx_pad_wrapper #(
+ 
+     // input inversion and buffer
+     logic in;
+-    assign in_o     = (ie_i) ? inv ^ in : 1'bz;
++    assign in_o     = (ie_i) ? inv ^ in : 1'b0;
+ 
+     // virtual open drain emulation
+     logic oe_n, out;
+@@ -67,12 +67,7 @@ module prim_xilinx_pad_wrapper #(
+     assign oe_n     = ~oe_i | (out & od);
+ 
+     // driver
+-    IOBUF i_iobuf (
+-      .T  ( oe_n     ),
+-      .I  ( out      ),
+-      .O  ( in       ),
+-      .IO ( inout_io )
+-    );
 +    assign inout_io = out;
-     // received data driver
--    assign in_o     = (ie_i) ? in  : 1'bz;
-+    assign in_o     = in;
- `endif
    end
  
+ endmodule : prim_xilinx_pad_wrapper
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
-index 8d6cf89b6..0e01b5276 100644
+index 8d6cf89b6..63a39df67 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 +++ b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 @@ -56,7 +56,7 @@ targets:
@@ -164,12 +212,12 @@ index 8d6cf89b6..0e01b5276 100644
 +        synth: "yosys"
 +        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: []
-+        surelog_options: ['-DSYNTHESIS', '-DPRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric']
++        surelog_options: ['-DSYNTHESIS']
 +      yosys:
 +        arch: "xilinx"
 +        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: []
-+        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
++        surelog_options: ['-DSYNTHESIS']
  
    lint:
      <<: *default_target
