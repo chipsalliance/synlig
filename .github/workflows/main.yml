@@ -391,22 +391,25 @@ jobs:
         file_glob: true
 
   install-plugin:
-    needs: release
-    runs-on: ubuntu-20.04
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:latest
     name: Test plugin installation
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+    env:
+      DEBIAN_FRONTEND: noninteractive
     steps:
     - name: Install Yosys
-      run: sudo apt-get install -y yosys
-    - uses: robinraju/release-downloader@v1.3
-      with:
-        repository: "antmicro/yosys-uhdm-plugin-integration"
-        fileName: "yosys-uhdm-plugin-*.tar.gz"
-        latest: true
-        tarBall: true
-    - name: Extract UHDM plugin and install it
       run: |
-        tar -xzf yosys-uhdm-plugin-*.tar.gz
+        echo "deb http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
+        echo "deb-src http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
+        apt update
+        apt upgrade -y
+        apt install -y yosys yosys-dev curl jq wget
+    - name: Download and extract UHDM plugin
+      run: |
+        curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+    - name: Install it
+      run: |
         ./install_plugin.sh
     - name: Run Yosys and load UHDM plugin
       run: yosys -p "plugin -i uhdm"
