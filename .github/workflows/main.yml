@@ -403,6 +403,7 @@ jobs:
         repository: "antmicro/yosys-uhdm-plugin-integration"
         fileName: "yosys-uhdm-plugin-*.tar.gz"
         latest: true
+        tarBall: true
     - name: Extract UHDM plugin and install it
       run: |
         tar -xzf yosys-uhdm-plugin-*.tar.gz
