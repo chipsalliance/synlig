@@ -121,50 +121,6 @@ index f601d503e..70dd6d438 100755
  
          if not is_last:
              s += " "
-diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv
-index 402af9043..b8155a178 100644
---- a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv
-+++ b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_gating.sv
-@@ -9,10 +9,13 @@ module prim_xilinx_clock_gating (
-   output logic clk_o
- );
- 
--  BUFGCE u_bufgce (
--    .I  (clk_i),
--    .CE (en_i | test_en_i),
--    .O  (clk_o)
--  );
-+  // Assume en_i synchronized, if not put synchronizer prior to en_i
-+  logic en_latch;
-+  always_latch begin
-+    if (!clk_i) begin
-+      en_latch = en_i | test_en_i;
-+    end
-+  end
-+  assign clk_o = en_latch & clk_i;
- 
- endmodule
-diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv
-index 572c20ffe..c1218e5b3 100644
---- a/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv
-+++ b/hw/ip/prim_xilinx/rtl/prim_xilinx_clock_mux2.sv
-@@ -11,15 +11,7 @@ module prim_xilinx_clock_mux2 (
-   output logic clk_o
- );
- 
--  // for more info, refer to the Xilinx technology primitives userguide, e.g.:
--  // ug953-vivado-7series-libraries.pdf
--  // ug974-vivado-ultrascale-libraries.pdf
--  BUFGMUX bufgmux_i (
--    .S  ( sel_i  ),
--    .I0 ( clk0_i ),
--    .I1 ( clk1_i ),
--    .O  ( clk_o  )
--  );
-+  assign clk_o = (sel_i) ? clk1_i : clk0_i;
- 
-   // make sure sel is never X (including during reset)
-   // need to use ##1 as this could break with inverted clocks that
 diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
 index f9649ddf9..fe9c781e6 100644
 --- a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
@@ -193,7 +149,7 @@ index f9649ddf9..fe9c781e6 100644
  
  endmodule : prim_xilinx_pad_wrapper
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
-index 8d6cf89b6..63a39df67 100644
+index 8d6cf89b6..4790b87a5 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 +++ b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 @@ -56,7 +56,7 @@ targets:
@@ -210,12 +166,12 @@ index 8d6cf89b6..63a39df67 100644
        vivado:
          part: "xc7a200tsbg484-1" # Nexys Video
 +        synth: "yosys"
-+        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
++        yosys_synth_options: ['-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: []
 +        surelog_options: ['-DSYNTHESIS']
 +      yosys:
 +        arch: "xilinx"
-+        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
++        yosys_synth_options: ['-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: []
 +        surelog_options: ['-DSYNTHESIS']
  
