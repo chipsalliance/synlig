@@ -93,6 +93,30 @@ index f601d503e..70dd6d438 100755
  
          if not is_last:
              s += " "
+diff --git a/hw/top_earlgrey/rtl/top_earlgrey_nexysvideo.sv b/hw/top_earlgrey/rtl/top_earlgrey_nexysvideo.sv
+index 72329fe75..8e31a6250 100644
+--- a/hw/top_earlgrey/rtl/top_earlgrey_nexysvideo.sv
++++ b/hw/top_earlgrey/rtl/top_earlgrey_nexysvideo.sv
+@@ -67,15 +67,15 @@ module top_earlgrey_nexysvideo #(
+   padring #(
+     // MIOs 31:20 are currently not
+     // connected to pads and hence tied off
+-    .ConnectMioIn  ( 32'h000FFFFF ),
+-    .ConnectMioOut ( 32'h000FFFFF ),
++    .ConnectMioIn  ( 32'hFFFFF000 ),
++    .ConnectMioOut ( 32'hFFFFF000 ),
+     // Tied off DIOs:
+     // 2: usbdev_d
+     // 3: usbdev_suspend
+     // 4: usbdev_tx_mode
+     // 7: usbdev_se
+-    .ConnectDioIn  ( 15'h7F63 ),
+-    .ConnectDioOut ( 15'h7F63 )
++    .ConnectDioIn  ( 15'b110001101111111 ),
++    .ConnectDioOut ( 15'b110001101111111 )
+   ) padring (
+     // Clk / Rst
+     .clk_pad_i           ( 1'b0 ),
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 index 8d6cf89b6..276bfceea 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
