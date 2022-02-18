@@ -1,53 +1,25 @@
 diff --git a/hw/ip/padctrl/rtl/padring.sv b/hw/ip/padctrl/rtl/padring.sv
-index fc8b3d183..2b94b0d67 100644
+index fc8b3d183..6a5b97985 100644
 --- a/hw/ip/padctrl/rtl/padring.sv
 +++ b/hw/ip/padctrl/rtl/padring.sv
-@@ -59,45 +59,6 @@ module padring import padctrl_reg_pkg::*; #(
-   assign clk_usb_48mhz = clk_usb_48mhz_pad_i;
-   assign rst_n         = rst_pad_ni;
- 
--  prim_pad_wrapper #(
--    .AttrDw  ( AttrDw ),
--    .Variant ( 1      ) // input-only
--  ) i_clk_pad (
--    .inout_io ( clk   ),
--    .in_o     ( clk_o ),
--    .ie_i     ( 1'b1  ),
--    .out_i    ( 1'b0  ),
--    .oe_i     ( 1'b0  ),
--    .attr_i   (   '0  ),
--    .warl_o   (       )
--  );
--
--  prim_pad_wrapper #(
--    .AttrDw  ( AttrDw ),
--    .Variant ( 1      ) // input-only
--  ) i_clk_usb_48mhz_pad (
--    .inout_io ( clk_usb_48mhz   ),
--    .in_o     ( clk_usb_48mhz_o ),
--    .ie_i     ( 1'b1  ),
--    .out_i    ( 1'b0  ),
--    .oe_i     ( 1'b0  ),
--    .attr_i   (   '0  ),
--    .warl_o   (       )
--  );
--
--  prim_pad_wrapper #(
--    .AttrDw  ( AttrDw ),
--    .Variant ( 1      ) // input-only
--  ) i_rst_pad (
--    .inout_io ( rst_n  ),
--    .in_o     ( rst_no ),
--    .ie_i     ( 1'b1  ),
--    .out_i    ( 1'b0  ),
--    .oe_i     ( 1'b0  ),
--    .attr_i   (   '0  ),
--    .warl_o   (       )
--  );
--
-   //////////////
-   // MIO Pads //
-   //////////////
+@@ -151,7 +151,7 @@ module padring import padctrl_reg_pkg::*; #(
+     end else begin : gen_mio_tie_off
+       logic unused_out, unused_oe, unused_pad;
+       logic [AttrDw-1:0] unused_attr;
+-      assign mio_pad_io[k] = 1'b0;
++      //assign mio_pad_io[k] = 1'b0;
+       assign unused_pad   = mio_pad_io[k];
+       assign unused_out   = mio_out_i[k];
+       assign unused_oe    = mio_oe_i[k];
+@@ -213,7 +213,7 @@ module padring import padctrl_reg_pkg::*; #(
+     end else begin : gen_dio_tie_off
+       logic unused_out, unused_oe, unused_pad;
+       logic [AttrDw-1:0] unused_attr;
+-      assign dio_pad_io[k] = 1'b0;
++      //assign dio_pad_io[k] = 1'b0;
+       assign unused_pad   = dio_pad_io[k];
+       assign unused_out   = dio_out_i[k];
+       assign unused_oe    = dio_oe_i[k];
 diff --git a/hw/ip/prim/util/primgen.py b/hw/ip/prim/util/primgen.py
 index f601d503e..70dd6d438 100755
 --- a/hw/ip/prim/util/primgen.py
@@ -121,35 +93,8 @@ index f601d503e..70dd6d438 100755
  
          if not is_last:
              s += " "
-diff --git a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv b/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
-index f9649ddf9..fe9c781e6 100644
---- a/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
-+++ b/hw/ip/prim_xilinx/rtl/prim_xilinx_pad_wrapper.sv
-@@ -57,7 +57,7 @@ module prim_xilinx_pad_wrapper #(
- 
-     // input inversion and buffer
-     logic in;
--    assign in_o     = (ie_i) ? inv ^ in : 1'bz;
-+    assign in_o     = (ie_i) ? inv ^ in : 1'b0;
- 
-     // virtual open drain emulation
-     logic oe_n, out;
-@@ -67,12 +67,7 @@ module prim_xilinx_pad_wrapper #(
-     assign oe_n     = ~oe_i | (out & od);
- 
-     // driver
--    IOBUF i_iobuf (
--      .T  ( oe_n     ),
--      .I  ( out      ),
--      .O  ( in       ),
--      .IO ( inout_io )
--    );
-+    assign inout_io = out;
-   end
- 
- endmodule : prim_xilinx_pad_wrapper
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
-index 8d6cf89b6..4790b87a5 100644
+index 8d6cf89b6..276bfceea 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 +++ b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 @@ -56,7 +56,7 @@ targets:
@@ -166,7 +111,7 @@ index 8d6cf89b6..4790b87a5 100644
        vivado:
          part: "xc7a200tsbg484-1" # Nexys Video
 +        synth: "yosys"
-+        yosys_synth_options: ['-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
++        yosys_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: []
 +        surelog_options: ['-DSYNTHESIS']
 +      yosys:
