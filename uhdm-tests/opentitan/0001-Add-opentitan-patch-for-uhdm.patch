@@ -106,6 +106,18 @@ index f601d503e..70dd6d438 100755
  
          if not is_last:
              s += " "
+diff --git a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
+index 9d4ea8b6a..a41c7efc4 100644
+--- a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
++++ b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
+@@ -38,6 +38,7 @@ package rstmgr_pkg;
+     logic rst_por_n;
+     logic rst_por_io_n;
+     logic rst_por_io_div2_n;
++    logic rst_por_io_div4_n;
+     logic rst_por_usb_n;
+     logic rst_lc_n;
+     logic rst_sys_n;
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 index 8d6cf89b6..276bfceea 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
