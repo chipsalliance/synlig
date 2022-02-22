@@ -1,8 +1,8 @@
 diff --git a/hw/ip/otbn/rtl/otbn_decoder.sv b/hw/ip/otbn/rtl/otbn_decoder.sv
-index 8cd4814d7..90fdd2b17 100644
+index 9956cd19c..142bf53eb 100644
 --- a/hw/ip/otbn/rtl/otbn_decoder.sv
 +++ b/hw/ip/otbn/rtl/otbn_decoder.sv
-@@ -123,7 +123,7 @@ module otbn_decoder
+@@ -127,7 +127,7 @@ module otbn_decoder
    // Decoder //
    /////////////
  
@@ -107,7 +107,7 @@ index f601d503e..70dd6d438 100755
          if not is_last:
              s += " "
 diff --git a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
-index 9d4ea8b6a..a41c7efc4 100644
+index 9d4ea8b6a..f8478dbe0 100644
 --- a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
 +++ b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
 @@ -38,6 +38,7 @@ package rstmgr_pkg;
@@ -118,6 +118,20 @@ index 9d4ea8b6a..a41c7efc4 100644
      logic rst_por_usb_n;
      logic rst_lc_n;
      logic rst_sys_n;
+@@ -53,6 +54,13 @@ package rstmgr_pkg;
+     logic ndmreset_req;
+   } rstmgr_cpu_t;
+ 
++  // exported resets
++  typedef struct packed {
++    logic rst_ast_usbdev_sys_io_n;
++    logic rst_ast_usbdev_usb_n;
++    logic rst_ast_sensor_ctrl_sys_io_n;
++  } rstmgr_ast_out_t;
++
+   // default value for rstmgr_ast_rsp_t (for dangling ports)
+   parameter rstmgr_cpu_t RSTMGR_CPU_DEFAULT = '{
+     rst_cpu_n: 1'b1,
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 index 8d6cf89b6..276bfceea 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
