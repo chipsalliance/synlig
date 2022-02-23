@@ -1,8 +1,8 @@
 diff --git a/hw/ip/otbn/rtl/otbn_decoder.sv b/hw/ip/otbn/rtl/otbn_decoder.sv
-index 9956cd19c..142bf53eb 100644
+index ebc335b24..f60324355 100644
 --- a/hw/ip/otbn/rtl/otbn_decoder.sv
 +++ b/hw/ip/otbn/rtl/otbn_decoder.sv
-@@ -127,7 +127,7 @@ module otbn_decoder
+@@ -136,7 +136,7 @@ module otbn_decoder
    // Decoder //
    /////////////
  
@@ -107,36 +107,42 @@ index f601d503e..70dd6d438 100755
          if not is_last:
              s += " "
 diff --git a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
-index 9d4ea8b6a..f8478dbe0 100644
+index 9d4ea8b6a..a9a76249b 100644
 --- a/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
 +++ b/hw/ip/rstmgr/rtl/rstmgr_pkg.sv
-@@ -38,6 +38,7 @@ package rstmgr_pkg;
+@@ -38,10 +38,13 @@ package rstmgr_pkg;
      logic rst_por_n;
      logic rst_por_io_n;
      logic rst_por_io_div2_n;
 +    logic rst_por_io_div4_n;
      logic rst_por_usb_n;
      logic rst_lc_n;
++    logic rst_lc_io_n;
      logic rst_sys_n;
-@@ -53,6 +54,13 @@ package rstmgr_pkg;
+     logic rst_sys_io_n;
++    logic rst_sys_io_div4_n;
+     logic rst_sys_aon_n;
+     logic rst_spi_device_n;
+     logic rst_usb_n;
+@@ -53,6 +56,13 @@ package rstmgr_pkg;
      logic ndmreset_req;
    } rstmgr_cpu_t;
  
 +  // exported resets
 +  typedef struct packed {
-+    logic rst_ast_usbdev_sys_io_n;
++    logic rst_ast_usbdev_sys_io_div4_n;
 +    logic rst_ast_usbdev_usb_n;
-+    logic rst_ast_sensor_ctrl_sys_io_n;
++    logic rst_ast_sensor_ctrl_sys_io_div4_n;
 +  } rstmgr_ast_out_t;
 +
    // default value for rstmgr_ast_rsp_t (for dangling ports)
    parameter rstmgr_cpu_t RSTMGR_CPU_DEFAULT = '{
      rst_cpu_n: 1'b1,
 diff --git a/hw/top_earlgrey/top_earlgrey_nexysvideo.core b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
-index 8d6cf89b6..276bfceea 100644
+index e3cd9ab48..5e0100a13 100644
 --- a/hw/top_earlgrey/top_earlgrey_nexysvideo.core
 +++ b/hw/top_earlgrey/top_earlgrey_nexysvideo.core
-@@ -56,7 +56,7 @@ targets:
+@@ -57,7 +57,7 @@ targets:
      filesets:
        - files_rtl_nexysvideo
        - files_constraints
@@ -145,7 +151,7 @@ index 8d6cf89b6..276bfceea 100644
      toplevel: top_earlgrey_nexysvideo
      parameters:
        - BootRomInitFile
-@@ -64,6 +64,15 @@ targets:
+@@ -65,6 +65,15 @@ targets:
      tools:
        vivado:
          part: "xc7a200tsbg484-1" # Nexys Video
