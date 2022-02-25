@@ -10,7 +10,7 @@ jobs:
 
   build-binaries:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     env:
       CC: gcc-9
       CXX: g++-9
@@ -22,7 +22,10 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget ccache
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget ccache
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
         pip install orderedmultidict
@@ -47,6 +50,8 @@ jobs:
 
     - name: Build binaries
       run: |
+        # ubuntu bionic have too old cmake, install one from pip
+        pip install cmake
         # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
@@ -74,7 +79,7 @@ jobs:
 
   generate-matrix-yosys:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     outputs:
       matrix: ${{ steps.generate-matrix-yosys.outputs.matrix }}
     steps:
@@ -99,7 +104,7 @@ jobs:
 
   generate-matrix-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     outputs:
       matrix: ${{ steps.generate-matrix-vcddiff.outputs.matrix }}
     steps:
@@ -125,7 +130,7 @@ jobs:
 
   tests-yosys:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
@@ -143,7 +148,10 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
 
     - uses: actions/checkout@v2
       with:
@@ -174,7 +182,7 @@ jobs:
 
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     needs: [build-binaries, generate-matrix-vcddiff]
     strategy:
       matrix:
@@ -192,7 +200,10 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
 
     - uses: actions/checkout@v2
       with:
@@ -230,19 +241,23 @@ jobs:
 
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     needs: build-binaries
     env:
       CC: gcc-9
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
 
     steps:
 
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
@@ -262,16 +277,18 @@ jobs:
 
     - name: Build & Test
       run: |
+        source .github/scripts/common.sh
+        enable_vivado 2017.2
         pip install virtualenv
         ./UHDM-integration-tests/.github/ci.sh
       env:
-        TARGET: uhdm/yosys/synth-ibex
+        TARGET: uhdm/yosys/synth-ibex-build
         TEST_CASE: tests/ibex
 
     - uses: actions/upload-artifact@v2
       with:
-        name: lowrisc_ibex_top_artya7_surelog_0.1.edif
-        path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-yosys/lowrisc_ibex_top_artya7_surelog_0.1.edif
+        name: lowrisc_ibex_top_artya7_surelog_0.1.bit
+        path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -282,19 +299,24 @@ jobs:
 
   opentitan_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    # vivado is linked with libraries used in this version of ubuntu
+    container: ubuntu:bionic
     needs: build-binaries
     env:
       CC: gcc-9
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
 
     steps:
 
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
@@ -314,16 +336,118 @@ jobs:
 
     - name: Build & Test
       run: |
+        source .github/scripts/common.sh
+        enable_vivado 2017.2
         pip install virtualenv
         ./UHDM-integration-tests/.github/ci.sh
       env:
-        TARGET: uhdm/yosys/synth-opentitan
+        TARGET: uhdm/yosys/synth-opentitan-build
+        TEST_CASE: tests/opentitan
+
+    - name: Generate AST
+      run: |
+        FILE_NAME=UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/yosys.log
+        start=$(grep -n "AST_MODULE" $FILE_NAME |cut -f1 -d:|head -n 1)
+        end=$(grep -n "AST_" $FILE_NAME |cut -f1 -d:|tail -n 1)
+
+        sed -n $start,"$end"p $FILE_NAME > yosys.ast
+
+    - name: Upload AST
+      uses: actions/upload-artifact@v2
+      if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+      with:
+        name: opentitan-yosys.ast
+        path: yosys.ast
+
+          # Uncomment when first job on master will pass
+          #    - name: Download binaries
+          #      if: ${{ github.event_name == 'pull_request' }}
+          #      uses: actions/download-artifact@v2
+          #      with:
+          #        name: opentitan-yosys.ast
+
+          #    - name: Compare AST
+          #      if: ${{ github.event_name == 'pull_request' }}
+          #      run: |
+          #        mkdir compare
+          #        ./github/scripts/compare_ast.py opentitan-yosys.ast yosys.ast
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+  opentitan_bisect:
+    runs-on: [self-hosted, Linux, X64]
+    # vivado is linked with libraries used in this version of ubuntu
+    container: ubuntu:bionic
+    needs: build-binaries
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+
+    steps:
+
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test
+      run: |
+        source .github/scripts/common.sh
+        enable_vivado 2017.2
+        pip install virtualenv
+        cd uhdm-tests/opentitan/opentitan
+        pwd
+        ls -la
+        git status
+        git remote -v
+        GOOD_REF=$(git rev-list --max-count=1 HEAD)
+        git pull --unshallow
+        git pull origin master
+        BAD_REF=$(git rev-list --max-count=1 HEAD)
+        COUNT_REF=$(git log ${GOOD_REF}..${BAD_REF} --oneline | wc -l)
+        git bisect start HEAD ${GOOD_REF} --
+        echo "GOOD_REF: ${GOOD_REF}, BAD_REF: ${BAD_REF}, commits: ${COUNT_REF}"
+        git bisect run ../../../.github/scripts/bisect.sh
+        git bisect reset
+      env:
+        TARGET: uhdm/yosys/synth-opentitan-build
         TEST_CASE: tests/opentitan
 
     - uses: actions/upload-artifact@v2
       with:
-        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.edif
-        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-yosys/lowrisc_systems_top_earlgrey_nexysvideo_0.1.edif
+        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -334,7 +458,7 @@ jobs:
 
   swerv_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     needs: build-binaries
     env:
       CC: gcc-9
@@ -346,7 +470,10 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
@@ -385,7 +512,7 @@ jobs:
           **/plot_*.svg
 
   release:
-    needs: [ build-binaries, tests-yosys, ibex_synth, opentitan_synth]
+    needs: [ build-binaries, tests-yosys, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
     runs-on: ubuntu-20.04
     name: Release
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
@@ -457,7 +584,7 @@ jobs:
 
   ibex_synth_symbiflow:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:latest
+    container: ubuntu:bionic
     needs: build-binaries
     env:
       CC: gcc-9
@@ -469,7 +596,10 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update -qq
-        apt install -y g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip wget
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip wget
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
     - uses: actions/checkout@v2
