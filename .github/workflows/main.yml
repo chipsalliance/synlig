@@ -16,6 +16,7 @@ jobs:
       CXX: g++-9
       CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
       DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-highmem-8"
 
     steps:
 
@@ -307,7 +308,7 @@ jobs:
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-4"
+      GHA_MACHINE_TYPE: "n2-highmem-8"
 
     steps:
 
@@ -395,7 +396,7 @@ jobs:
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-4"
+      GHA_MACHINE_TYPE: "n2-highmem-8"
 
     steps:
 
