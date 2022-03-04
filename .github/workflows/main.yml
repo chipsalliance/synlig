@@ -307,6 +307,7 @@ jobs:
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
+      GHA_MACHINE_TYPE: "n2-highmem-4"
 
     steps:
 
@@ -394,6 +395,7 @@ jobs:
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
+      GHA_MACHINE_TYPE: "n2-highmem-4"
 
     steps:
 
