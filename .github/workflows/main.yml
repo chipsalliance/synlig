@@ -16,8 +16,6 @@ jobs:
       CXX: g++-9
       CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
       DEBIAN_FRONTEND: noninteractive
-      GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-4"
 
     steps:
 
@@ -99,7 +97,546 @@ jobs:
           submodules: recursive
           fetch-depth: 1
 
-      - name: Generate OOM
+      - name: Generate matrix (yosys)
         id: generate-matrix-yosys
         run: |
-          cat /dev/zero | head -c 20G | tail
+          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass Continue AnonymousUnion FunctionOnDesignLevel ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash)"
+          echo "::set-output name=matrix::$matrix"
+          echo "matrix yosys: $matrix"
+
+  generate-matrix-vcddiff:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    outputs:
+      matrix: ${{ steps.generate-matrix-vcddiff.outputs.matrix }}
+    steps:
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y python3
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
+      - name: Checkout master
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Generate matrix (vcddiff)
+        id: generate-matrix-vcddiff
+        run: |
+          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass Continue AnonymousUnion FunctionOnDesignLevel ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash)"
+          matrix=$(echo $matrix | sed "s/tests\///g")
+          echo "::set-output name=matrix::$matrix"
+          echo "matrix vcddiff: $matrix"
+
+  tests-yosys:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    needs: [build-binaries, generate-matrix-yosys]
+    strategy:
+      matrix:
+        TEST_CASE_YOSYS: ${{ fromJson(needs.generate-matrix-yosys.outputs.matrix) }}
+      fail-fast:
+        false
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      GIT_HTTP_LOW_SPEED_LIMIT: 1
+      GIT_HTTP_LOW_SPEED_TIME: 600
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test (yosys)
+      run: ./UHDM-integration-tests/.github/ci.sh
+      env:
+        TEST_CASE: ${{ matrix.TEST_CASE_YOSYS }}
+        TARGET: uhdm/yosys/test-ast
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+  tests-vcddiff:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    needs: [build-binaries, generate-matrix-vcddiff]
+    strategy:
+      matrix:
+        TEST_CASE_VCDDIFF: ${{ fromJson(needs.generate-matrix-vcddiff.outputs.matrix) }}
+      fail-fast:
+        false
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      GIT_HTTP_LOW_SPEED_LIMIT: 1
+      GIT_HTTP_LOW_SPEED_TIME: 600
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Generate SV file (Yosys)
+      run: |
+        ./UHDM-integration-tests/.github/ci.sh
+
+      env:
+        TEST_CASE: tests/${{ matrix.TEST_CASE_VCDDIFF }}
+        TARGET: uhdm/yosys/test-ast
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.TEST_CASE_VCDDIFF }}.sv
+        path: UHDM-integration-tests/build/yosys.sv
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+  ibex_synth:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    needs: build-binaries
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+
+    steps:
+
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test
+      run: |
+        source .github/scripts/common.sh
+        enable_vivado 2017.2
+        pip install virtualenv
+        ./UHDM-integration-tests/.github/ci.sh
+      env:
+        TARGET: uhdm/yosys/synth-ibex-build
+        TEST_CASE: tests/ibex
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: lowrisc_ibex_top_artya7_surelog_0.1.bit
+        path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+  opentitan_synth:
+    runs-on: [self-hosted, Linux, X64]
+    # vivado is linked with libraries used in this version of ubuntu
+    container: ubuntu:bionic
+    needs: build-binaries
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+      GHA_MACHINE_TYPE: "n2-highmem-4"
+
+    steps:
+
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test
+      run: |
+        source .github/scripts/common.sh
+        enable_vivado 2017.2
+        pip install virtualenv
+        ./UHDM-integration-tests/.github/ci.sh
+      env:
+        TARGET: uhdm/yosys/synth-opentitan-build
+        TEST_CASE: tests/opentitan
+
+    - name: Generate AST
+      run: |
+        FILE_NAME=UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/yosys.log
+        start=$(grep -n "AST_MODULE" $FILE_NAME |cut -f1 -d:|head -n 1)
+        end=$(grep -n "AST_" $FILE_NAME |cut -f1 -d:|tail -n 1)
+
+        sed -n $start,"$end"p $FILE_NAME > yosys.ast
+
+    - name: Upload AST
+      uses: actions/upload-artifact@v2
+      if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+      with:
+        name: opentitan-yosys.ast
+        path: yosys.ast
+
+          # Uncomment when first job on master will pass
+          #    - name: Download binaries
+          #      if: ${{ github.event_name == 'pull_request' }}
+          #      uses: actions/download-artifact@v2
+          #      with:
+          #        name: opentitan-yosys.ast
+
+          #    - name: Compare AST
+          #      if: ${{ github.event_name == 'pull_request' }}
+          #      run: |
+          #        mkdir compare
+          #        ./github/scripts/compare_ast.py opentitan-yosys.ast yosys.ast
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+  opentitan_bisect:
+    runs-on: [self-hosted, Linux, X64]
+    # vivado is linked with libraries used in this version of ubuntu
+    container: ubuntu:bionic
+    needs: build-binaries
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+      GHA_MACHINE_TYPE: "n2-highmem-4"
+
+    steps:
+
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test
+      run: |
+        source .github/scripts/common.sh
+        enable_vivado 2017.2
+        pip install virtualenv
+        cd uhdm-tests/opentitan/opentitan
+        pwd
+        ls -la
+        git status
+        git remote -v
+        GOOD_REF=$(git rev-list --max-count=1 HEAD)
+        git pull --unshallow
+        git pull origin master
+        BAD_REF=$(git rev-list --max-count=1 HEAD)
+        COUNT_REF=$(git log ${GOOD_REF}..${BAD_REF} --oneline | wc -l)
+        git bisect start HEAD ${GOOD_REF} --
+        echo "GOOD_REF: ${GOOD_REF}, BAD_REF: ${BAD_REF}, commits: ${COUNT_REF}"
+        git bisect run ../../../.github/scripts/bisect.sh
+        git bisect reset
+      env:
+        TARGET: uhdm/yosys/synth-opentitan-build
+        TEST_CASE: tests/opentitan
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+  swerv_synth:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    needs: build-binaries
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test
+      run: |
+        pip install virtualenv
+        ./UHDM-integration-tests/.github/ci.sh
+      env:
+        TARGET: uhdm/yosys/swerv
+        TEST_CASE: tests/swerv
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: chipsalliance.org_cores_SweRV_EH1_1.8.edif
+        path: UHDM-integration-tests/build/chipsalliance.org_cores_SweRV_EH1_1.8/synth-vivado/chipsalliance.org_cores_SweRV_EH1_1.8.edif
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+  release:
+    needs: [ build-binaries, tests-yosys, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
+    runs-on: ubuntu-20.04
+    name: Release
+    if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+       # Download complete repository + tags
+       fetch-depth: 0
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Generate tarball and apply TAG
+      run: |
+        GIT_VERSION=${GIT_VERSION:-$(git rev-parse --short "$GITHUB_SHA")}
+        DISTRO_ARCH=$(uname -m)
+        DISTRO=$(lsb_release --short --id)
+        DISTRO_RELEASE=$(lsb_release --short --release)
+        DISTRO_CODENAME=$(lsb_release --short --codename | sed -e's/[^A-Za-z0-9]//g')
+        FULL_TARBALL=yosys-uhdm-integration-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+        PLUGIN_TARBALL=yosys-uhdm-plugin-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+        # Create a tag of form ad2466e-2021-12-06
+        TAG="${TAG:-$(git show -s --date=short --format=%h-%cd)}"
+        git tag "$TAG" || true
+        echo "TAG=$TAG" >> $GITHUB_ENV
+        ls -lah image
+        tar -zcvf $FULL_TARBALL image
+        tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so install_plugin.sh
+    - name: Deploy release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: yosys-uhdm-*.tar.gz
+        tag: ${{ env.TAG }}
+        overwrite: true
+        file_glob: true
+
+  install-plugin:
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:latest
+    name: Test plugin installation
+    if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+    env:
+      DEBIAN_FRONTEND: noninteractive
+    steps:
+    - name: Install Yosys
+      run: |
+        echo "deb http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
+        echo "deb-src http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
+        apt update
+        apt upgrade -y
+        apt install -y yosys yosys-dev curl jq wget
+    - name: Download and extract UHDM plugin
+      run: |
+        curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+    - name: Install it
+      run: |
+        ./install_plugin.sh
+    - name: Run Yosys and load UHDM plugin
+      run: yosys -p "plugin -i uhdm"
+
+  ibex_synth_symbiflow:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    needs: build-binaries
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip wget
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test
+      run: |
+        pip install virtualenv
+        make -C UHDM-integration-tests TEST=tests/ibex env
+        ./UHDM-integration-tests/.github/ci.sh
+      env:
+        TARGET: uhdm/yosys/synth-ibex-symbiflow
+        TEST_CASE: tests/ibex
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: top_artya7.bit
+        path: ./UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
