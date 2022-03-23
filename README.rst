@@ -1,6 +1,6 @@
 yosys-uhdm-plugin-integration
 =============================
-Repository for testing integration between Yosys, uhdm-plugin and Surelog.
+Repository for testing integration between Yosys, systemverilog-plugin and Surelog.
 
 Setup
 -----
@@ -16,7 +16,7 @@ Install dependencies
 Build required binaries
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You can build all required binaries using provided ``build_binaries.sh`` script. This script will build Surelog, Yosys and uhdm-plugin and place them into ``image`` folder. You need to add this folder into your ``PATH`` variable to make sure you are using correct versions of the binaries.
+You can build all required binaries using provided ``build_binaries.sh`` script. This script will build Surelog, Yosys and the systemverilog-plugin and place them into ``image`` folder. You need to add this folder into your ``PATH`` variable to make sure you are using correct versions of the binaries.
 
 .. code-block:: bash
 
@@ -29,25 +29,25 @@ You can build all required binaries using provided ``build_binaries.sh`` script.
 Usage
 -----
 
-Loading uhdm-plugin into Yosys
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Loading systemverilog-plugin into Yosys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to use ``uhdm-plugin`` in Yosys, you need to first load it inside Yosys. This can be done by executing ``plugin -i uhdm`` in Yosys prompt. After loading ``uhdm-plugin``, Yosys is extended with 2 additional commands:
+In order to use the systemverilog plugin in Yosys, you need to first load it inside Yosys. This can be done by executing ``plugin -i systemverilog`` in Yosys prompt. After it's loaded, Yosys is extended with 2 additional commands:
 
+* ``read_systemverilog [options] [filenames]`` - reads SystemVerilog files directly in Yosys. It executes Surelog with provided filenames and converts them (in memory) into UHDM file. This UHDM file is converted into Yosys AST. Note: arguments to this command should be exactly the same as for Surelog binary.
 * ``read_uhdm  [options] [filename]`` - reads UHDM file generated using Surelog and converts it into Yosys AST (more information about conversion can be found: `here <https://github.com/chipsalliance/UHDM-integration-tests#uhdm-yosys>`_).
-* ``read_verilog_with_uhdm [options] [filenames]`` - reads SystemVerilog files directly in Yosys. It executes Surelog with provided filenames and converts them (in memory) into UHDM file. This UHDM file is converted into Yosys AST. Note: arguments to this command should be exactly the same as for Surelog binary.
 
 .. code-block:: bash
 
    yosys
-   plugin -i uhdm
+   plugin -i systemverilog
+   help read_systemverilog
    help read_uhdm
-   help read_verilog_with_uhdm
 
 Generating UHDM file
 ^^^^^^^^^^^^^^^^^^^^
 
-UHDM file can be generated directly using Surelog or SystemVerilog files can be converted to UHDM using Yosys ``read_verilog_with_uhdm`` command. ``read_verilog_with_uhdm`` commands acts as a wrapper around Surelog binary. It accepts the same arguments as Surelog and executes Surelog beneath it. More information about Surelog usage can be found `here <https://github.com/chipsalliance/Surelog#usage>`_.
+UHDM file can be generated directly using Surelog or SystemVerilog files can be converted to UHDM using Yosys ``read_systemverilog`` command. The ``read_systemverilog`` command acts as a wrapper around Surelog binary. It accepts the same arguments as Surelog and executes Surelog beneath it. More information about Surelog usage can be found `here <https://github.com/chipsalliance/Surelog#usage>`_.
 
 Quick start example
 ^^^^^^^^^^^^^^^^^^^
@@ -57,19 +57,19 @@ In minimal example we need to first convert SystemVerilog file into UHDM using S
 .. code-block:: bash
 
    surelog -parse UHDM-integration-tests/tests/onenet/top.sv
-   yosys -p "plugin -i uhdm" -p "read_uhdm slpp_all/surelog.uhdm"
+   yosys -p "plugin -i systemverilog" -p "read_uhdm slpp_all/surelog.uhdm"
 
 This is equivalent to:
 
 .. code-block:: bash
 
-   yosys -p "plugin -i uhdm" -p "read_verilog_with_uhdm -parse UHDM-integration-tests/tests/onenet/top.sv"
+   yosys -p "plugin -i systemverilog" -p "read_systemverilog UHDM-integration-tests/tests/onenet/top.sv"
 
 After loading it into Yosys, you can process it further using regular Yosys commands.
 
 General & debugging tips
 ------------------------
 
-#. ``uhdm-plugin`` needs to be compiled with the same version of the Surelog, that were used to generate UHDM file. When you are updating Surelog version, you also need to recompile yosys-symbiflow-plugins.
-#. You can print UHDM tree by adding ``-debug`` flag to ``read_uhdm`` or ``read_verilog_with_uhdm``. This flag also prints converted Yosys AST.
+#.``systemverilog-plugin`` needs to be compiled with the same version of the Surelog, that was used to generate UHDM file. When you are updating Surelog version, you also need to recompile yosys-f4pga-plugins.
+#. You can print the UHDM tree by adding ``-debug`` flag to ``read_uhdm`` or ``read_systemverilog``. This flag also prints the converted Yosys AST.
 #. Order of the files matters. Surelog requires that all definitions need to be already defined when file is parsed (if file ``B`` is defining type used in file ``A``, file ``B`` needs to be parsed before file ``A``).
