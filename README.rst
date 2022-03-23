@@ -70,6 +70,6 @@ After loading it into Yosys, you can process it further using regular Yosys comm
 General & debugging tips
 ------------------------
 
-#.``systemverilog-plugin`` needs to be compiled with the same version of the Surelog, that was used to generate UHDM file. When you are updating Surelog version, you also need to recompile yosys-f4pga-plugins.
+#. ``systemverilog-plugin`` needs to be compiled with the same version of the Surelog, that was used to generate UHDM file. When you are updating Surelog version, you also need to recompile yosys-f4pga-plugins.
 #. You can print the UHDM tree by adding ``-debug`` flag to ``read_uhdm`` or ``read_systemverilog``. This flag also prints the converted Yosys AST.
 #. Order of the files matters. Surelog requires that all definitions need to be already defined when file is parsed (if file ``B`` is defining type used in file ``A``, file ``B`` needs to be parsed before file ``A``).
