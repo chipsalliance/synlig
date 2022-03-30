@@ -550,7 +550,7 @@ jobs:
         echo "TAG=$TAG" >> $GITHUB_ENV
         ls -lah image
         tar -zcvf $FULL_TARBALL image
-        tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so install_plugin.sh
+        tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so image/share/yosys/plugins/systemverilog.so install_plugin.sh
     - name: Deploy release
       uses: svenstaro/upload-release-action@v2
       with:
