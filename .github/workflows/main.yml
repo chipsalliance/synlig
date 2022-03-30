@@ -581,7 +581,9 @@ jobs:
     - name: Install it
       run: |
         ./install_plugin.sh
-    - name: Run Yosys and load UHDM plugin
+    - name: Run Yosys and load SystemVerilog plugin
+      run: yosys -p "plugin -i systemverilog"
+    - name: Run Yosys and load (deprecated) UHDM plugin
       run: yosys -p "plugin -i uhdm"
 
   ibex_synth_symbiflow:
