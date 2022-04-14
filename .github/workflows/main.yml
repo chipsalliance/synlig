@@ -56,7 +56,6 @@ jobs:
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-        cd yosys && git apply ../yosys-patches/* && cd ..
         ./build_binaries.sh
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
