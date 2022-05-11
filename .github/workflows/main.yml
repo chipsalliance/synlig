@@ -142,6 +142,7 @@ jobs:
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-2"
 
     steps:
     - name: Install dependencies
@@ -194,6 +195,7 @@ jobs:
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-2"
 
     steps:
     - name: Install dependencies
@@ -516,6 +518,8 @@ jobs:
     needs: [ build-binaries, tests-yosys, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
     runs-on: ubuntu-20.04
     name: Release
+    env:
+      GHA_MACHINE_TYPE: "n2-standard-2"
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
 
     steps:
@@ -566,6 +570,7 @@ jobs:
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
     env:
       DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-2"
     steps:
     - name: Install Yosys
       run: |
