@@ -45,7 +45,18 @@ if [ "$PLUGIN_ASAN" -eq "1" ]; then
   PLUGIN_LDFLAGS="-fsanitize=address -fcheck-new -fno-omit-frame-pointer -static-libasan"
 fi
 export PATH=$INSTALL_PATH/bin:${PATH}
-UHDM_INSTALL_DIR=$INSTALL_PATH LDFLAGS=$PLUGIN_LDFLAGS make -C $PWD/yosys-symbiflow-plugins/ install -j$(nproc)
+export UHDM_INSTALL_DIR=$INSTALL_PATH
+export LDFLAGS=$PLUGIN_LDFLAGS
+
+make -C $PWD/yosys-symbiflow-plugins/systemverilog-plugin install -j$(nproc)
+make -C $PWD/yosys-symbiflow-plugins/uhdm-plugin install -j$(nproc)
+
+# plugins needed for ibex
+make -C $PWD/yosys-symbiflow-plugins/xdc-plugin install -j$(nproc)
+make -C $PWD/yosys-symbiflow-plugins/fasm-plugin install -j$(nproc)
+make -C $PWD/yosys-symbiflow-plugins/params-plugin install -j$(nproc)
+make -C $PWD/yosys-symbiflow-plugins/sdc-plugin install -j$(nproc)
+
 #sv2v
 if [ "$BUILD_SV2V" -eq "1" ]; then
 wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $INSTALL_PATH/bin
