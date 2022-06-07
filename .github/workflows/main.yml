@@ -180,6 +180,62 @@ jobs:
         path: |
           **/plot_*.svg
 
+  # Temporary job to check for failures when calling read_systemverilog
+  # Will be replaced by a proper job matrix
+  tests-read-systemverilog:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:bionic
+    needs: [build-binaries, generate-matrix-yosys]
+    strategy:
+      matrix:
+        PARSER: [yosys-plugin, surelog]
+      fail-fast:
+        false
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      GIT_HTTP_LOW_SPEED_LIMIT: 1
+      GIT_HTTP_LOW_SPEED_TIME: 600
+      DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-2"
+
+    steps:
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Build & Test (yosys)
+      run: ./UHDM-integration-tests/.github/ci.sh
+      env:
+        TEST_CASE: tests/MultipleCells
+        TARGET: uhdm/yosys-plugin/test-ast
+        PARSER: ${{ matrix.PARSER }}
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:bionic
