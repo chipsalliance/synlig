@@ -251,6 +251,7 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
+      PARSER: surelog
 
     steps:
     - name: Install dependencies
