@@ -134,6 +134,7 @@ jobs:
     strategy:
       matrix:
         TEST_CASE_YOSYS: ${{ fromJson(needs.generate-matrix-yosys.outputs.matrix) }}
+        PARSER: [yosys-plugin, surelog]
       fail-fast:
         false
     env:
@@ -172,6 +173,7 @@ jobs:
       env:
         TEST_CASE: ${{ matrix.TEST_CASE_YOSYS }}
         TARGET: uhdm/yosys/test-ast
+        PARSER: ${{ matrix.PARSER }}
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
