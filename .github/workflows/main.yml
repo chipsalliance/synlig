@@ -570,7 +570,7 @@ jobs:
           **/plot_*.svg
 
   release:
-    needs: [ build-binaries, tests-yosys, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
+    needs: [ build-binaries, tests-read-uhdm, tests-read-systemverilog, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
     runs-on: ubuntu-20.04
     name: Release
     env:
