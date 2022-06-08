@@ -127,14 +127,13 @@ jobs:
           echo "::set-output name=matrix::$matrix"
           echo "matrix vcddiff: $matrix"
 
-  tests-yosys:
+  tests-read-uhdm:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:bionic
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
         TEST_CASE_YOSYS: ${{ fromJson(needs.generate-matrix-yosys.outputs.matrix) }}
-        PARSER: [yosys-plugin, surelog]
       fail-fast:
         false
     env:
@@ -144,6 +143,7 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
+      PARSER: surelog
 
     steps:
     - name: Install dependencies
@@ -173,7 +173,6 @@ jobs:
       env:
         TEST_CASE: ${{ matrix.TEST_CASE_YOSYS }}
         TARGET: uhdm/yosys/test-ast
-        PARSER: ${{ matrix.PARSER }}
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -182,15 +181,13 @@ jobs:
         path: |
           **/plot_*.svg
 
-  # Temporary job to check for failures when calling read_systemverilog
-  # Will be replaced by a proper job matrix
   tests-read-systemverilog:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:bionic
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
-        PARSER: [yosys-plugin, surelog]
+        TEST_CASE_YOSYS: ${{ fromJson(needs.generate-matrix-yosys.outputs.matrix) }}
       fail-fast:
         false
     env:
@@ -200,6 +197,7 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
+      PARSER: yosys-plugin
 
     steps:
     - name: Install dependencies
@@ -227,9 +225,8 @@ jobs:
     - name: Build & Test (yosys)
       run: ./UHDM-integration-tests/.github/ci.sh
       env:
-        TEST_CASE: tests/MultipleCells
-        TARGET: uhdm/yosys-plugin/test-ast
-        PARSER: ${{ matrix.PARSER }}
+        TEST_CASE: ${{ matrix.TEST_CASE_YOSYS }}
+        TARGET: uhdm/yosys/test-ast
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
