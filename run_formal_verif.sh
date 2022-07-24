@@ -18,8 +18,8 @@ set -e
 
 # Usage:
 # ./build_binaries.sh --build-sv2v
-# ./run_formal_verif.sh
-
+# ./run_formal_verif.sh (tests=<test regex>)
+# ./run_formal_verif.sh update
 
 
 SCRIPT=$(readlink -f "$0")
@@ -43,4 +43,4 @@ cd ../../
 
 cd build
 
-../Surelog/tests/regression.tcl search_dir="../yosys/tests ../UHDM-integration-tests/tests ../sv2v/test" path=$SCRIPTPATH/image/bin/ yosys_exe=$SCRIPTPATH/image/bin/yosys sv2v_exe=$SCRIPTPATH/image/bin/sv2v verification 
+../Surelog/tests/regression.tcl search_dir="../yosys/tests ../UHDM-integration-tests/tests ../sv2v/test" path=$SCRIPTPATH/image/bin/ yosys_exe=$SCRIPTPATH/image/bin/yosys sv2v_exe=$SCRIPTPATH/image/bin/sv2v black_listed=$SCRIPTPATH/formal/blacklisted.tcl verification $@
