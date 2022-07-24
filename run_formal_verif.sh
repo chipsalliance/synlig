@@ -43,9 +43,4 @@ cd ../../
 
 cd build
 
-echo "Yosys Regression"
-../Surelog/tests/regression.tcl search_dir=../yosys/tests path=$SCRIPTPATH/image/bin/ yosys_exe=$SCRIPTPATH/image/bin/yosys sv2v_exe=$SCRIPTPATH/image/bin/sv2v verification
-echo "UHDM-integration Regression"
-../Surelog/tests/regression.tcl search_dir=../UHDM-integration-tests/tests path=$SCRIPTPATH/image/bin/ yosys_exe=$SCRIPTPATH/image/bin/yosys sv2v_exe=$SCRIPTPATH/image/bin/sv2v verification
-echo "SV2V Regression"
-../Surelog/tests/regression.tcl search_dir=../sv2v/test path=$SCRIPTPATH/image/bin/ yosys_exe=$SCRIPTPATH/image/bin/yosys sv2v_exe=$SCRIPTPATH/image/bin/sv2v verification
+../Surelog/tests/regression.tcl search_dir="../yosys/tests ../UHDM-integration-tests/tests ../sv2v/test" path=$SCRIPTPATH/image/bin/ yosys_exe=$SCRIPTPATH/image/bin/yosys sv2v_exe=$SCRIPTPATH/image/bin/sv2v verification 
