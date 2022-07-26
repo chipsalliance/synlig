@@ -16,6 +16,7 @@ jobs:
       CXX: g++-9
       CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
       DEBIAN_FRONTEND: noninteractive
+      PLUGIN_ASAN: 1
 
     steps:
 
