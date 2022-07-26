@@ -332,6 +332,14 @@ jobs:
       with:
         name: binaries
 
+    #- name: Download last formal verification results
+    #  uses: dawidd6/action-download-artifact@v2
+    #  with:
+    #    name: formal-verification-results
+    #    workflow: main
+    #    path: |
+    #      formal/formal_status.tcl
+
     # See https://github.com/actions/upload-artifact/issues/38
     - name: Extract
       run: tar -xf binaries.tar
