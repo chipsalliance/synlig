@@ -361,6 +361,15 @@ jobs:
         path: |
           formal/formal_status.tcl
 
+    - name: Upload formal verification logs
+      uses: actions/upload-artifact@v2
+      with:
+        name: formal-verification-logs
+        path: |
+          build/regression.log
+          build/tests/*/*.log
+          build/tests/*/*.out
+
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
       with:
