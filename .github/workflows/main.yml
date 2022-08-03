@@ -347,6 +347,7 @@ jobs:
     - name: Test
       run: |
         source .github/scripts/common.sh
+        ./patch.sh
         ./run_formal_verif.sh
 
     - name: Save verification results

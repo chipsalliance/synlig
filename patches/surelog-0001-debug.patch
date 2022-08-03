@@ -1,0 +1,46 @@
+diff --git a/tests/regression.tcl b/tests/regression.tcl
+index 0fa6c2a55..6e24e6653 100755
+--- a/tests/regression.tcl
++++ b/tests/regression.tcl
+@@ -447,12 +447,12 @@ proc formal_verification { command testname } {
+     # Surelog parser
+     set yid [open "$output_dir/surelog.ys" "w"]
+     puts $yid "plugin -i systemverilog"
+-    puts $yid "read_systemverilog -mutestdout $yosys_command"
++    puts $yid "read_systemverilog -debug -mutestdout $yosys_command"
+     puts $yid "synth_xilinx"
+     puts $yid "write_verilog $output_dir/surelog_gate.v"
+     close $yid
+     set surelog_parse ""
+-    catch {set out [exec $YOSYS_EXE -s "$output_dir/surelog.ys" -q -q -l $output_dir/surelog.out]} surelog_parse
++    catch {set out [exec $YOSYS_EXE -s "$output_dir/surelog.ys" -l $output_dir/surelog.out]} surelog_parse
+     
+     # Yosys parser
+     set yid [open "$output_dir/yosys.ys" "w"]
+@@ -461,7 +461,7 @@ proc formal_verification { command testname } {
+     puts $yid "write_verilog $output_dir/yosys_gate.v"
+     close $yid
+     set yosys_parse ""
+-    catch {set out [exec $YOSYS_EXE -s "$output_dir/yosys.ys"  -q -q -l $output_dir/yosys.out]} yosys_parse
++    catch {set out [exec $YOSYS_EXE -s "$output_dir/yosys.ys"]} yosys_parse
+ 
+     # If Yosys parser fails, try again with SV2V
+     if [regexp {ERROR:} $yosys_parse] {
+@@ -472,7 +472,7 @@ proc formal_verification { command testname } {
+         puts $yid "write_verilog $output_dir/yosys_gate.v"
+         close $yid
+         set yosys_parse ""
+-        catch {set out [exec $YOSYS_EXE -s "$output_dir/yosys.ys"  -q -q -l $output_dir/yosys.out]} yosys_parse
++        catch {set out [exec $YOSYS_EXE -s "$output_dir/yosys.ys" -l $output_dir/yosys.out]} yosys_parse
+     }
+     
+     if [file exist "$output_dir/surelog.out"] {
+@@ -516,7 +516,7 @@ proc formal_verification { command testname } {
+         puts $yid "equiv_status -assert"
+         close $yid
+         set equiv_run ""
+-        catch {exec $SHELL $SHELL_ARGS "$TIME $YOSYS_EXE -s $output_dir/equiv.ys -q -q -l $output_dir/equiv.out"}  equiv_run
++        catch {exec $SHELL $SHELL_ARGS "$TIME $YOSYS_EXE -s $output_dir/equiv.ys -l $output_dir/equiv.out"}  equiv_run
+         set proven 0
+         set unproven 0
+         if [file exist "$output_dir/equiv.out"] {

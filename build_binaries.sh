@@ -28,6 +28,8 @@ for arg in $@; do
   esac
 done
 
+#Patches
+./patch.sh
 #Surelog
 cd Surelog
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DCMAKE_POSITION_INDEPENDENT_CODE=ON -S . -B build
