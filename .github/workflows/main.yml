@@ -30,6 +30,8 @@ jobs:
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
         pip install orderedmultidict
+        pip install --upgrade pip
+        pip install cmake
 
     - uses: actions/checkout@v2
       with:
@@ -51,8 +53,6 @@ jobs:
 
     - name: Build binaries
       run: |
-        # ubuntu bionic have too old cmake, install one from pip
-        pip install cmake
         # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
