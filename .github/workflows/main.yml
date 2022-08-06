@@ -26,7 +26,7 @@ jobs:
         apt install -y software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget ccache
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev libreadline7 bison libffi-dev wget ccache
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
         pip install orderedmultidict
@@ -629,13 +629,13 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
     steps:
-    - name: Install Yosys
+    - name: Install Yosys and dependencies
       run: |
         echo "deb http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
         echo "deb-src http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
         apt update
         apt upgrade -y
-        apt install -y yosys yosys-dev curl jq wget libreadline-dev
+        apt install -y yosys yosys-dev curl jq wget libreadline-dev libreadline7
     - name: Download and extract UHDM plugin
       run: |
         curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
