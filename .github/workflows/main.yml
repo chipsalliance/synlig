@@ -624,7 +624,6 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     container: debian:latest
     name: Test plugin installation
-    if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
     env:
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
