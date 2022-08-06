@@ -10,7 +10,7 @@ jobs:
 
   build-binaries:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     env:
       CC: gcc-9
       CXX: g++-9
@@ -79,7 +79,7 @@ jobs:
 
   generate-matrix-yosys:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     outputs:
       matrix: ${{ steps.generate-matrix-yosys.outputs.matrix }}
     steps:
@@ -104,7 +104,7 @@ jobs:
 
   generate-matrix-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     outputs:
       matrix: ${{ steps.generate-matrix-vcddiff.outputs.matrix }}
     steps:
@@ -130,7 +130,7 @@ jobs:
 
   tests-read-uhdm:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
@@ -184,7 +184,7 @@ jobs:
 
   tests-read-systemverilog:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
@@ -238,7 +238,7 @@ jobs:
 
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: [build-binaries, generate-matrix-vcddiff]
     strategy:
       matrix:
@@ -299,7 +299,7 @@ jobs:
 
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -358,7 +358,7 @@ jobs:
   opentitan_synth:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -446,7 +446,7 @@ jobs:
   opentitan_bisect:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -518,7 +518,7 @@ jobs:
 
   swerv_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -648,7 +648,7 @@ jobs:
 
   ibex_synth_symbiflow:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
