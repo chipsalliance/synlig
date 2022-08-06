@@ -635,7 +635,7 @@ jobs:
         echo "deb-src http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
         apt update
         apt upgrade -y
-        apt install -y yosys yosys-dev curl jq wget
+        apt install -y yosys yosys-dev curl jq wget libreadline-dev
     - name: Download and extract UHDM plugin
       run: |
         curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
