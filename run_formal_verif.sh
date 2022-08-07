@@ -43,4 +43,12 @@ cd ../../
 
 cd build
 
-../Surelog/tests/regression.tcl search_dir="../yosys/tests ../UHDM-integration-tests/tests ../sv2v/test" path=$SCRIPTPATH/image/bin/ yosys_exe=$SCRIPTPATH/image/bin/yosys sv2v_exe=$SCRIPTPATH/image/bin/sv2v black_listed=$SCRIPTPATH/formal/blacklisted.tcl verification $@
+export PATH=$SCRIPTPATH/image/bin:$PATH
+
+echo "Running with PATH: $PATH"
+
+which surelog
+which sv2v
+which yosys
+
+../Surelog/tests/regression.tcl search_dir="../yosys/tests ../UHDM-integration-tests/tests ../sv2v/test" black_listed=$SCRIPTPATH/formal/blacklisted.tcl verification $@
