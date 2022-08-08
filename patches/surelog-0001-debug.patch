@@ -1,17 +1,56 @@
 diff --git a/tests/regression.tcl b/tests/regression.tcl
-index 0fa6c2a55..8d886a9de 100755
+index 0fa6c2a55..86c5fe2ad 100755
 --- a/tests/regression.tcl
 +++ b/tests/regression.tcl
-@@ -209,7 +209,7 @@ set UHDM_DUMP_COMMAND "[pwd]/third_party/UHDM/bin/uhdm-dump"
+@@ -79,7 +79,7 @@ proc log_nonewline { text } {
+ }
+ 
+ set UPDATE 0
+-set TIME "/usr/bin/env time"
++set TIME "/usr/bin/time"
+ set DEBUG_TOOL ""
+ set PRIOR_USER 0
+ set PRIOR_ELAPSED 0
+@@ -190,6 +190,12 @@ set EXE_NAME "surelog"
+ set YOSYS_EXE "yosys"
+ set SV2V_EXE "sv2v"
+ 
++# Use absolute paths
++catch {exec which $EXE_NAME} EXE_NAME
++catch {exec which $YOSYS_EXE} YOSYS_EXE
++catch {exec which $SV2V_EXE} SV2V_EXE
++
++
+ if [regexp {exe_name=([A-Za-z0-9_/\.\-\:]+)} $argv tmp EXE_NAME] {
+ }
+ 
+@@ -209,7 +215,8 @@ set UHDM_DUMP_COMMAND "[pwd]/third_party/UHDM/bin/uhdm-dump"
  
  set REGRESSION_PATH [pwd]
  
 -set SURELOG_COMMAND "$TIME $DEBUG_TOOL $SURELOG_VERSION"
-+set SURELOG_COMMAND "surelog"
++catch {exec which $EXE_NAME} surelog_path
++set SURELOG_COMMAND "$TIME $surelog_path"
  
  source [project_path]/tests/blacklisted.tcl
  
-@@ -820,8 +820,8 @@ proc run_regression { } {
+@@ -483,11 +490,10 @@ proc formal_verification { command testname } {
+         close $fid
+     }
+     # Find cell libraries
+-    set yosys_path "$env(HOME)/yosys"
+-    set cells_sim $yosys_path/share/xilinx/cells_sim.v
+-    set cells_xtra $yosys_path/share/xilinx/cells_xtra.v
+-    if [file exist [file dirname $YOSYS_EXE]/../share/yosys/xilinx/cells_sim.v] {
+-        set yosys_path [file dirname $YOSYS_EXE]/..
++    set yosys_path ""
++    catch {exec which $YOSYS_EXE} yosys_path
++    if [file exist [file dirname $yosys_path]/../share/yosys/xilinx/cells_sim.v] {
++        set yosys_path [file dirname $yosys_path]/..
+         set cells_sim $yosys_path/share/yosys/xilinx/cells_sim.v
+         set cells_xtra $yosys_path/share/yosys/xilinx/cells_xtra.v
+     }
+@@ -820,8 +826,8 @@ proc run_regression { } {
              close $fid
              set no_previous_time_content 0
          }
