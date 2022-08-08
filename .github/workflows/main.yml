@@ -350,6 +350,18 @@ jobs:
         ./patch.sh
         ./run_formal_verif.sh
 
+    - name: Pack formal verification logs
+      run: |
+        cd build
+        tar cf formal-verification-logs.tar tests/*/*.log tests/*/*.out regression.log
+
+    - name: Upload formal verification logs
+      uses: actions/upload-artifact@v2
+      with:
+        name: formal-verification-logs
+        path: |
+          build/formal-verification-logs.tar
+
     - name: Save verification results
       run: |
         source .github/scripts/common.sh
@@ -361,15 +373,6 @@ jobs:
         name: formal-verification-results
         path: |
           formal/formal_status.tcl
-
-    - name: Upload formal verification logs
-      uses: actions/upload-artifact@v2
-      with:
-        name: formal-verification-logs
-        path: |
-          build/regression.log
-          build/tests/*/*.log
-          build/tests/*/*.out
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
