@@ -1,6 +1,7 @@
 OT_DIR=`pwd`
 ROOT_DIR=$OT_DIR/../../..
 
+set -e
 echo "::group::BISECT"
 
 rm -rf $OT_DIR/.gitpatch
