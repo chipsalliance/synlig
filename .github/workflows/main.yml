@@ -320,7 +320,7 @@ jobs:
         apt install -y software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time
 
     - uses: actions/checkout@v2
       with:

@@ -1,5 +1,5 @@
 diff --git a/tests/regression.tcl b/tests/regression.tcl
-index 0fa6c2a55..86c5fe2ad 100755
+index 0fa6c2a55..24464d0a6 100755
 --- a/tests/regression.tcl
 +++ b/tests/regression.tcl
 @@ -79,7 +79,7 @@ proc log_nonewline { text } {
@@ -11,30 +11,25 @@ index 0fa6c2a55..86c5fe2ad 100755
  set DEBUG_TOOL ""
  set PRIOR_USER 0
  set PRIOR_ELAPSED 0
-@@ -190,6 +190,12 @@ set EXE_NAME "surelog"
- set YOSYS_EXE "yosys"
- set SV2V_EXE "sv2v"
- 
-+# Use absolute paths
-+catch {exec which $EXE_NAME} EXE_NAME
-+catch {exec which $YOSYS_EXE} YOSYS_EXE
-+catch {exec which $SV2V_EXE} SV2V_EXE
-+
-+
- if [regexp {exe_name=([A-Za-z0-9_/\.\-\:]+)} $argv tmp EXE_NAME] {
- }
- 
-@@ -209,7 +215,8 @@ set UHDM_DUMP_COMMAND "[pwd]/third_party/UHDM/bin/uhdm-dump"
+@@ -209,7 +209,7 @@ set UHDM_DUMP_COMMAND "[pwd]/third_party/UHDM/bin/uhdm-dump"
  
  set REGRESSION_PATH [pwd]
  
 -set SURELOG_COMMAND "$TIME $DEBUG_TOOL $SURELOG_VERSION"
-+catch {exec which $EXE_NAME} surelog_path
-+set SURELOG_COMMAND "$TIME $surelog_path"
++set SURELOG_COMMAND "$TIME $DEBUG_TOOL $EXE_NAME"
  
  source [project_path]/tests/blacklisted.tcl
  
-@@ -483,11 +490,10 @@ proc formal_verification { command testname } {
+@@ -453,7 +453,7 @@ proc formal_verification { command testname } {
+     close $yid
+     set surelog_parse ""
+     catch {set out [exec $YOSYS_EXE -s "$output_dir/surelog.ys" -q -q -l $output_dir/surelog.out]} surelog_parse
+-    
++
+     # Yosys parser
+     set yid [open "$output_dir/yosys.ys" "w"]
+     puts $yid "read_verilog -sv $yosys_command"
+@@ -483,11 +483,10 @@ proc formal_verification { command testname } {
          close $fid
      }
      # Find cell libraries
@@ -50,7 +45,7 @@ index 0fa6c2a55..86c5fe2ad 100755
          set cells_sim $yosys_path/share/yosys/xilinx/cells_sim.v
          set cells_xtra $yosys_path/share/yosys/xilinx/cells_xtra.v
      }
-@@ -820,8 +826,8 @@ proc run_regression { } {
+@@ -820,8 +819,8 @@ proc run_regression { } {
              close $fid
              set no_previous_time_content 0
          }
