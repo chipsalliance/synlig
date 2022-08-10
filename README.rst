@@ -1,6 +1,7 @@
-yosys-uhdm-plugin-integration
-=============================
-Repository for testing integration between Yosys, systemverilog-plugin and Surelog.
+SystemVerilog support for Yosys
+===============================
+
+This repository puts together all the moving parts needed to get SystemVerilog support enabled in Yosys.
 
 Setup
 -----
