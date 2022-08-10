@@ -353,7 +353,7 @@ jobs:
     - name: Pack formal verification logs
       run: |
         cd build
-        tar cf formal-verification-logs.tar tests/*/*.log tests/*/*.out regression.log
+        tar cf formal-verification-logs.tar tests/*/*.log tests/*/*.out tests/*/*.time regression.log
 
     - name: Upload formal verification logs
       uses: actions/upload-artifact@v2

@@ -1,16 +1,7 @@
 diff --git a/tests/regression.tcl b/tests/regression.tcl
-index 0fa6c2a55..24464d0a6 100755
+index 0fa6c2a55..5b81be706 100755
 --- a/tests/regression.tcl
 +++ b/tests/regression.tcl
-@@ -79,7 +79,7 @@ proc log_nonewline { text } {
- }
- 
- set UPDATE 0
--set TIME "/usr/bin/env time"
-+set TIME "/usr/bin/time"
- set DEBUG_TOOL ""
- set PRIOR_USER 0
- set PRIOR_ELAPSED 0
 @@ -209,7 +209,7 @@ set UHDM_DUMP_COMMAND "[pwd]/third_party/UHDM/bin/uhdm-dump"
  
  set REGRESSION_PATH [pwd]
