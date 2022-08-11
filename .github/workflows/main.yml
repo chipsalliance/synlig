@@ -297,6 +297,69 @@ jobs:
         path: |
           **/plot_*.svg
 
+  tests-formal-verification:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    needs: [build-binaries]
+    strategy:
+      fail-fast:
+        false
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      GIT_HTTP_LOW_SPEED_LIMIT: 1
+      GIT_HTTP_LOW_SPEED_TIME: 600
+      DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-4"
+      PARSER: yosys-plugin
+
+    steps:
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Test
+      run: |
+        source .github/scripts/common.sh
+        ./run_formal_verif.sh
+
+    - name: Save verification results
+      run: |
+        source .github/scripts/common.sh
+        ./run_formal_verif.sh update
+
+    - name: Upload formal verification results
+      uses: actions/upload-artifact@v2
+      with:
+        name: formal-verification-results
+        path: |
+          formal/formal_status.tcl
+
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
@@ -572,7 +635,7 @@ jobs:
           **/plot_*.svg
 
   release:
-    needs: [ build-binaries, tests-read-uhdm, tests-read-systemverilog, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
+    needs: [ build-binaries, tests-read-uhdm, tests-read-systemverilog, tests-formal-verification, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth ]
     runs-on: ubuntu-20.04
     name: Release
     env:
