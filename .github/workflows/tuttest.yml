@@ -41,6 +41,7 @@ jobs:
         (tuttest README.rst path-setup; tuttest README.rst example-verilog) | bash -
         (tuttest README.rst path-setup; tuttest README.rst example-uhdm-ver1) | bash -
         (tuttest README.rst path-setup; tuttest README.rst example-uhdm-ver2) | bash -
+        tuttest README.rst example-multiple-files | (. <(tuttest README.rst path-setup) && yosys)
 
   test-plugin-ubuntu:
     runs-on: [self-hosted, Linux, X64]
@@ -77,6 +78,7 @@ jobs:
     - name: Test Plugin
       run: |
         tuttest README.rst example-verilog | bash -
+        tuttest README.rst example-multiple-files | yosys
 
   test-plugin-debian:
     runs-on: [self-hosted, Linux, X64]
@@ -113,3 +115,4 @@ jobs:
     - name: Test Plugin
       run: |
         tuttest README.rst example-verilog | bash -
+        tuttest README.rst example-multiple-files | yosys

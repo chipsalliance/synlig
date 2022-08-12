@@ -138,6 +138,23 @@ This is equivalent to:
 
 After loading it into Yosys, you can process it further using regular Yosys commands.
 
+Example for parsing multiple files
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To parse a multi-file with the ``read_systemverilog`` command, all files have to be listed at once. This can be troublesome for larger designs. To mitigate this issue, the plugin supports a flow that allows users to pass files and link them separately. Files can be loaded one by one using  ``-defer`` flag. When all files have been uploaded, you should call ``read_systemverilog -link`` to elaborate them. The described flow would looks like below:
+
+.. code-block:: bash
+   :name: example-multiple-files
+
+    plugin -i systemverilog
+    # Read each file separately
+    read_systemverilog -defer yosys-symbiflow-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation.v
+    read_systemverilog -defer yosys-symbiflow-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-buf.sv
+    read_systemverilog -defer yosys-symbiflow-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-pkg.sv
+    # Finish reading files, elaborate the design
+    read_systemverilog -link
+    # Continue Yosys flow...
+    exit
+
 General & debugging tips
 ------------------------
 
