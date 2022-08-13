@@ -93,7 +93,7 @@ Loading systemverilog-plugin into Yosys
 Yosys can now be started by executing the ``yosys`` command.
 In order to use the systemverilog plugin in Yosys, you need to first load it inside Yosys. This can be done in Yosys prompt by executing the following commands:
 
-.. code-block:: bash
+.. code-block:: tcl
    :name: load-plugin
 
    plugin -i systemverilog
@@ -142,7 +142,7 @@ Example for parsing multiple files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 To parse a multi-file with the ``read_systemverilog`` command, all files have to be listed at once. This can be troublesome for larger designs. To mitigate this issue, the plugin supports a flow that allows users to pass files and link them separately. Files can be loaded one by one using  ``-defer`` flag. When all files have been uploaded, you should call ``read_systemverilog -link`` to elaborate them. The described flow would looks like below:
 
-.. code-block:: bash
+.. code-block:: tcl
    :name: example-multiple-files
 
     plugin -i systemverilog
