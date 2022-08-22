@@ -9,6 +9,10 @@ import subprocess
 
 
 def get_tests(test_path):
+    """
+    Gets all tests available in a given path
+    """
+
     slv_files = []
 
     if os.path.isfile(test_path) and test_path.endswith(".slv"):
@@ -24,7 +28,7 @@ def get_tests(test_path):
 
 def get_test_files(slv_file):
     """
-    Gets a list of all source files used by given test
+    Gets all source files used by given test
     """
 
     command = []
@@ -60,9 +64,32 @@ def get_test_top_module(work_path):
 
 
 def count_messages(work_path):
-    messages = {}
+    """
+    Counts messages appearing in Surelog output
+    """
 
-    return messages
+    log = []
+    count = {}
+    templates = {
+        "fatals": "FATAL\] : ([0-9]+)",
+        "syntax": "SYNTAX\] : ([0-9]+)",
+        "errors": "ERROR\] : ([0-9]+)",
+        "warnings": "WARNING\] : ([0-9]+)",
+        "notes": "NOTE\] : ([0-9]+)",
+    }
+
+    for key in templates:
+        count[key] = 0
+
+    with open(os.path.join(work_path, "slpp_all", "surelog.log"), "r") as surelog_log:
+        log = surelog_log.read()
+        surelog_log.close()
+
+    for key in templates:
+        match = re.search(templates[key], log).groups()
+        count[key] = int(match[0])
+
+    return count
 
 
 def get_time_result(stderr_str):
@@ -290,11 +317,11 @@ def main():
         os.mkdir(output_path)
 
     for test in tests:
-        test_name = os.path.basename(test).removesuffix('.slv')
+        test_name = os.path.basename(test).removesuffix(".slv")
         test_files = get_test_files(test)
         test_files_str = " ".join(test_files)
         work_dir = os.path.join(output_path, test_name)
-        test_result = {'name': test_name}
+        test_result = {"name": test_name}
 
         # Create new work directory
         if os.path.isdir(work_dir):
@@ -316,7 +343,7 @@ def main():
             top_module_name = get_test_top_module(work_dir)
             ret_equiv = run_equiv(top_module_name, work_dir)
 
-            test_result['result'] = get_equiv_result(work_dir)
+            test_result["result"] = get_equiv_result(work_dir)
             test_result.update(count_messages(work_dir))
             test_result.update(get_time_result(ret_equiv.stderr))
 
