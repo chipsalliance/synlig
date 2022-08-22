@@ -261,10 +261,6 @@ def get_equiv_result(output_dir):
         "Proved 0 previously unproven \$equiv cells\.": "MODEL EM",  # EMPTY_MODEL
         "ERROR:": "MODEL_ER",  # ERROR_MODEL
     }
-    surelog_patterns = {
-        "Nb undefined modules: [1-9][0-9]*": "INCOM",
-        "Dumping module ": "S GATE",
-    }
 
     log = ""
     status = "INCONCLUSIVE"
@@ -276,20 +272,19 @@ def get_equiv_result(output_dir):
 
     for pattern in equiv_patterns.keys():
         if re.search(pattern, log):
-            status = equiv_patterns[pattern]
+            return equiv_patterns[pattern]
 
     # Inconclusive, check Surelog output
     with open(os.path.join(output_dir, "surelog.out"), "r") as surelog_out:
         log = surelog_out.read()
         surelog_out.close()
 
-    for pattern in surelog_patterns.keys():
-        if re.search(pattern, log):
-            status = surelog_patterns[pattern]
-
-    for line in log.splitlines():
-        if re.search("^ERROR: ", line):
-            status = "UH PLUG"
+    if re.search("Nb undefined modules: [1-9][0-9]*", log):
+        status = "INCOM"
+    if re.search("Dumping module ", log) == None:
+        status = "S GATE"
+    if re.search("^ERROR: ", log):
+        status = "UH PLUG"
 
     # Inconclusive, check Yosys output
     with open(os.path.join(output_dir, "yosys.out"), "r") as yosys_out:
@@ -314,7 +309,7 @@ def main():
     # Prepare names and paths of test files and working directory
     tests = get_tests(test_path)
     if not os.path.isdir(output_path):
-        os.mkdir(output_path)
+        os.makedirs(output_path)
 
     for test in tests:
         test_name = os.path.basename(test).removesuffix(".slv")
