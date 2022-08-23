@@ -1,0 +1,118 @@
+name: 'tuttest'
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+
+  test-plugin-from-sources:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+
+    - name: Prepare Repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install Prerequisites
+      run: |
+        apt-get update -qq
+        apt-get install -y python3-pip git
+        pip3 install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+    - name: Install Dependencies
+      run: |
+        tuttest README.rst dependencies | bash -
+
+    - name: Build Binaries
+      run: |
+        tuttest README.rst build-binaries | bash -
+
+    - name: Test Binaries
+      run: |
+        tuttest README.rst load-plugin | (. <(tuttest README.rst path-setup) && yosys)
+        (tuttest README.rst path-setup; tuttest README.rst example-verilog) | bash -
+        (tuttest README.rst path-setup; tuttest README.rst example-uhdm-ver1) | bash -
+        (tuttest README.rst path-setup; tuttest README.rst example-uhdm-ver2) | bash -
+        tuttest README.rst example-multiple-files | (. <(tuttest README.rst path-setup) && yosys)
+
+  test-plugin-ubuntu:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+
+    - name: Prepare Repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install Prerequisites
+      run: |
+        apt-get update -qq
+        apt-get install -y python3-pip git
+        pip3 install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+    - name: Install Dependencies
+      run: |
+        tuttest README.rst install-yosys-ubuntu | bash -
+
+    - name: Install Plugin
+      run: |
+        tuttest README.rst download-plugin | bash -
+        tuttest README.rst install-plugin | bash -
+
+    - name: Load Plugin
+      run: |
+        tuttest README.rst load-plugin | yosys
+
+    - name: Test Plugin
+      run: |
+        tuttest README.rst example-verilog | bash -
+        tuttest README.rst example-multiple-files | yosys
+
+  test-plugin-debian:
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:sid
+    env:
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+
+    - name: Prepare Repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install Prerequisites
+      run: |
+        apt-get update -qq
+        apt-get install -y python3-pip git
+        pip3 install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+    - name: Install Dependencies
+      run: |
+        tuttest README.rst install-yosys-debian | bash -
+
+    - name: Install Plugin
+      run: |
+        tuttest README.rst download-plugin | bash -
+        tuttest README.rst install-plugin | bash -
+
+    - name: Load Plugin
+      run: |
+        tuttest README.rst load-plugin | yosys
+
+    - name: Test Plugin
+      run: |
+        tuttest README.rst example-verilog | bash -
+        tuttest README.rst example-multiple-files | yosys

@@ -10,12 +10,13 @@ jobs:
 
   build-binaries:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     env:
       CC: gcc-9
       CXX: g++-9
       CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
       DEBIAN_FRONTEND: noninteractive
+      PLUGIN_ASAN: 1
 
     steps:
 
@@ -29,6 +30,8 @@ jobs:
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
         pip install orderedmultidict
+        pip install --upgrade pip
+        pip install cmake
 
     - uses: actions/checkout@v2
       with:
@@ -50,8 +53,6 @@ jobs:
 
     - name: Build binaries
       run: |
-        # ubuntu bionic have too old cmake, install one from pip
-        pip install cmake
         # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
@@ -78,7 +79,7 @@ jobs:
 
   generate-matrix-yosys:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     outputs:
       matrix: ${{ steps.generate-matrix-yosys.outputs.matrix }}
     steps:
@@ -103,7 +104,7 @@ jobs:
 
   generate-matrix-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     outputs:
       matrix: ${{ steps.generate-matrix-vcddiff.outputs.matrix }}
     steps:
@@ -129,7 +130,7 @@ jobs:
 
   tests-read-uhdm:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
@@ -183,7 +184,7 @@ jobs:
 
   tests-read-systemverilog:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: [build-binaries, generate-matrix-yosys]
     strategy:
       matrix:
@@ -237,7 +238,7 @@ jobs:
 
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: [build-binaries, generate-matrix-vcddiff]
     strategy:
       matrix:
@@ -298,7 +299,7 @@ jobs:
 
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -357,7 +358,7 @@ jobs:
   opentitan_synth:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -374,7 +375,7 @@ jobs:
         apt install -y software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
@@ -445,7 +446,7 @@ jobs:
   opentitan_bisect:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -517,7 +518,7 @@ jobs:
 
   swerv_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -623,21 +624,20 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     container: debian:latest
     name: Test plugin installation
-    if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
     env:
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
     steps:
-    - name: Install Yosys
+    - name: Install Yosys and dependencies
       run: |
         echo "deb http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
         echo "deb-src http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
         apt update
         apt upgrade -y
-        apt install -y yosys yosys-dev curl jq wget
+        apt install -y yosys yosys-dev curl jq wget libreadline-dev
     - name: Download and extract UHDM plugin
       run: |
-        curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+        curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
     - name: Install it
       run: |
         ./install_plugin.sh
@@ -648,7 +648,7 @@ jobs:
 
   ibex_synth_symbiflow:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:bionic
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
