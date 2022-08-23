@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from email import message
 import re
 import os
 import sys
+import json
 import shutil
 import subprocess
 
@@ -118,7 +118,10 @@ def preprocess_sv2v(test_sources, work_path):
     """
 
     sv2v_out = os.path.join(work_path, "sv2v.v")
-    subprocess.run(["sv2v", test_sources, "-w=%s" % sv2v_out])
+    process = subprocess.run(["sv2v", test_sources, "-w=%s" % sv2v_out])
+    if process.returncode != 0:
+        return None
+
     return sv2v_out
 
 
@@ -302,6 +305,13 @@ def get_equiv_result(output_dir):
     return status
 
 
+def log_result(result, output_dir):
+    print(result)
+    with open(os.path.join(output_dir, "result.json"), "w") as result_file:
+        result_file.write(json.dumps(result))
+        result_file.close()
+
+
 def main():
     test_path = os.path.abspath(os.path.normpath(sys.argv[1]))
     output_path = os.path.join(os.getcwd(), "build", "tests")
@@ -328,6 +338,10 @@ def main():
         ret_yosys = run_yosys(test_files_str, work_dir)
         if ret_yosys == False:
             preprocessed_path = preprocess_sv2v(test_files_str, work_dir)
+            if preprocessed_path == None:
+                test_result["result"] = "SV2V_FAIL"
+                log_result(test_result, work_dir)
+                continue
             ret_yosys = run_yosys(preprocessed_path, work_dir)
             ret_surelog = run_surelog(preprocessed_path, work_dir)
         else:
@@ -342,7 +356,7 @@ def main():
             test_result.update(count_messages(work_dir))
             test_result.update(get_time_result(ret_equiv.stderr))
 
-            print(test_result)
+        log_result(test_result, work_dir)
 
 
 if __name__ == "__main__":
