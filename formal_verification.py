@@ -26,6 +26,22 @@ def get_tests(test_path):
     return slv_files
 
 
+def get_skiplist(listfile):
+    """
+    Gets a list of tests to be skipped
+    """
+    list = []
+    with open(listfile, "r") as f:
+        list = f.read().splitlines()
+        f.close()
+
+    for el in list:
+        if el.startswith("#"):
+            list.remove(el)
+
+    return list
+
+
 def get_test_files(slv_file):
     """
     Gets all source files used by given test
@@ -321,6 +337,8 @@ def main():
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
+    skiplist = get_skiplist(os.path.join(".", "formal", "skiplist.txt"))
+
     for test in tests:
         test_name = os.path.basename(test).removesuffix(".slv")
         test_files = get_test_files(test)
@@ -333,6 +351,11 @@ def main():
             shutil.rmtree(work_dir)
         os.mkdir(work_dir)
         os.chdir(work_dir)
+
+
+        if test_name in skiplist:
+            test_result["result"] = "SKIPPED"
+            continue
 
         # Run synthesis of test's source files and export Verilog
         ret_yosys = run_yosys(test_files_str, work_dir)
