@@ -187,7 +187,7 @@ def run_yosys(test_path, output_dir):
     """
 
     script = [
-        "read_verilog %s" % test_path,
+        "read_verilog -sv %s" % test_path,
         "synth_xilinx",
         "write_verilog %s/yosys_gate.v" % output_dir,
     ]
@@ -221,11 +221,11 @@ def run_equiv(top_module, output_dir):
     ]
 
     script = [
-        "read_verilog %s/surelog_gate.v %s %s" % (output_dir, cells[0], cells[1]),
+        "read_verilog -sv %s/surelog_gate.v %s %s" % (output_dir, cells[0], cells[1]),
         "prep -flatten -top %s" % top_module,
         "splitnets -ports;;",
         "design -stash surelog",
-        "read_verilog %s/yosys_gate.v %s %s" % (output_dir, cells[0], cells[1]),
+        "read_verilog -sv %s/yosys_gate.v %s %s" % (output_dir, cells[0], cells[1]),
         "splitnets -ports;;",
         "prep -flatten -top %s" % top_module,
         "design -stash yosys",
