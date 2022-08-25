@@ -1,46 +1,56 @@
 #!/usr/bin/env python3
 
+from email import message
 import re
 import os
 import sys
 import shutil
-import datetime
 import subprocess
 
 
-def get_test_files(test_path):
-    """
-    Gets a list of all source files in a given test directory
-    """
+def get_tests(test_path):
+    slv_files = []
 
-    slv_file = ""
-    command = []
-    files = []
+    if os.path.isfile(test_path) and test_path.endswith(".slv"):
+        slv_files.append(test_path)
+        return slv_files
 
     for file in os.listdir(test_path):
         if file.endswith(".slv"):
-            slv_file = os.path.join(test_path, file)
-            break
+            slv_files.append(os.path.join(test_path, file))
+
+    return slv_files
+
+
+def get_test_files(slv_file):
+    """
+    Gets a list of all source files used by given test
+    """
+
+    command = []
+    files = []
 
     with open(slv_file, "r") as f:
         command = f.readline().split()
         f.close()
 
+    test_base = os.path.dirname(slv_file)
+
     for token in command:
-        source_file = os.path.join(test_path, token)
+        source_file = os.path.join(test_base, token)
         if os.path.exists(source_file):
             files.append(source_file)
 
     return files
 
 
-def get_test_top_module(test_path):
+def get_test_top_module(work_path):
     """
     Extracts top module name from Surelog output
     """
 
     log = []
-    with open(os.path.join(test_path, "surelog.out"), "r") as surelog_out:
+    with open(os.path.join(work_path, "surelog.out"), "r") as surelog_out:
         log = surelog_out.readlines()
         surelog_out.close()
 
@@ -49,8 +59,10 @@ def get_test_top_module(test_path):
             return line.split("\\")[-1]
 
 
-def count_messages(test_path):
-    pass
+def count_messages(work_path):
+    messages = {}
+
+    return messages
 
 
 def get_time_result(stderr_str):
@@ -73,13 +85,13 @@ def get_time_result(stderr_str):
     return result
 
 
-def preprocess_sv2v(test_path, output_dir):
+def preprocess_sv2v(test_sources, work_path):
     """
     Converts all source files from test to Verilog with sv2v
     """
 
-    sv2v_out = os.path.join(output_dir, "sv2v.v")
-    subprocess.run(["sv2v", test_path, "-w=%s" % sv2v_out])
+    sv2v_out = os.path.join(work_path, "sv2v.v")
+    subprocess.run(["sv2v", test_sources, "-w=%s" % sv2v_out])
     return sv2v_out
 
 
@@ -270,38 +282,45 @@ def get_equiv_result(output_dir):
 
 def main():
     test_path = os.path.abspath(os.path.normpath(sys.argv[1]))
-    sv2v_pass = True
+    output_path = os.path.join(os.getcwd(), "build", "tests")
 
     # Prepare names and paths of test files and working directory
-    test_name = os.path.basename(test_path)
-    test_files = get_test_files(test_path)
-    test_files_str = " ".join(test_files)
-    test_target = "%s_%s" % (test_name, os.path.basename(test_files[0]))
-    work_dir = os.path.join(os.getcwd(), "build", "tests", test_target)
+    tests = get_tests(test_path)
+    if not os.path.isdir(output_path):
+        os.mkdir(output_path)
 
-    # Create new work directory
-    if os.path.isdir(work_dir):
-        shutil.rmtree(work_dir)
-    os.mkdir(work_dir)
-    os.chdir(work_dir)
+    for test in tests:
+        test_name = os.path.basename(test).removesuffix('.slv')
+        test_files = get_test_files(test)
+        test_files_str = " ".join(test_files)
+        work_dir = os.path.join(output_path, test_name)
+        test_result = {'name': test_name}
 
-    preprocessed_path = preprocess_sv2v(test_files_str, work_dir)
+        # Create new work directory
+        if os.path.isdir(work_dir):
+            shutil.rmtree(work_dir)
+        os.mkdir(work_dir)
+        os.chdir(work_dir)
 
-    # Run synthesis of test's source files and export Verilog
-    ret_yosys_sv2v = run_yosys(preprocessed_path, work_dir)
-    if sv2v_pass == False:
-        ret_surelog = run_surelog(preprocessed_path, work_dir)
-    else:
-        ret_surelog = run_surelog(test_files_str, work_dir)
+        # Run synthesis of test's source files and export Verilog
+        ret_yosys = run_yosys(test_files_str, work_dir)
+        if ret_yosys == False:
+            preprocessed_path = preprocess_sv2v(test_files_str, work_dir)
+            ret_yosys = run_yosys(preprocessed_path, work_dir)
+            ret_surelog = run_surelog(preprocessed_path, work_dir)
+        else:
+            ret_surelog = run_surelog(test_files_str, work_dir)
 
-    # Equivalance check
-    if ret_yosys_sv2v == True and ret_surelog == True:
-        top_module_name = get_test_top_module(work_dir)
-        ret_equiv = run_equiv(top_module_name, work_dir)
-        print(get_time_result(ret_equiv.stderr))
-        result = get_equiv_result(work_dir)
+        # Equivalance check
+        if ret_yosys == True and ret_surelog == True:
+            top_module_name = get_test_top_module(work_dir)
+            ret_equiv = run_equiv(top_module_name, work_dir)
 
-    print("%s: %s" % (test_target, result))
+            test_result['result'] = get_equiv_result(work_dir)
+            test_result.update(count_messages(work_dir))
+            test_result.update(get_time_result(ret_equiv.stderr))
+
+            print(test_result)
 
 
 if __name__ == "__main__":
