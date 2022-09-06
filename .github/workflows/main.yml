@@ -344,6 +344,10 @@ jobs:
         source .github/scripts/common.sh
         ./run_fv_tests.sh ${{ matrix.test-suite }}
 
+    - name: Print summary
+      run: |
+        python3 ./formal/formal_results.py build
+
     - name: Pack formal verification logs
       run: |
         cd build
