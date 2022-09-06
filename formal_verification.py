@@ -9,19 +9,6 @@ import shutil
 import subprocess
 
 
-result_descriptions = {
-    "NO GATE": "Both parsers didn't produce gate-level netlist",
-    "S GATE": "Surelog parser didn't produce gate-level netlist",
-    "Y GATE": "Surelog parser didn't produce gate-level netlist",
-    "INCOM": "Incomplete, missing module declaration => Inconclusive",
-    "PASS": "Formally equivalent",
-    "DIFF": "Formally not-equivalent",
-    "UH PLUG": "UHDM Plugin error",
-    "UH YGATE": "UHDM Plugin error + Yosys no gate",
-    "INCONCLUSIVE": "Inconclusive"
-}
-
-
 def get_tests(test_path):
     """
     Gets all tests available in a given path
