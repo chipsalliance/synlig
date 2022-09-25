@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -ex
 
 if [ -z "$INSTALL_PATH" ]; then
