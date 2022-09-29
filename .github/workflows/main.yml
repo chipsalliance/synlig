@@ -685,7 +685,7 @@ jobs:
 
   install-plugin:
     runs-on: [self-hosted, Linux, X64]
-    container: debian:latest
+    container: debian:sid
     name: Test plugin installation
     env:
       DEBIAN_FRONTEND: noninteractive
@@ -693,8 +693,6 @@ jobs:
     steps:
     - name: Install Yosys and dependencies
       run: |
-        echo "deb http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
-        echo "deb-src http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
         apt update
         apt upgrade -y
         apt install -y yosys yosys-dev curl jq wget libreadline-dev
