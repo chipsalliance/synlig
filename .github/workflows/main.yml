@@ -57,7 +57,7 @@ jobs:
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-        ./build_binaries.sh
+        ./build_binaries.sh --build-sv2v
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
         # See https://github.com/actions/upload-artifact/issues/38
@@ -296,6 +296,69 @@ jobs:
         name: plots
         path: |
           **/plot_*.svg
+
+  tests-formal-verification:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    needs: [build-binaries]
+    strategy:
+      matrix:
+        test-suite: [UHDM-integration-tests/tests, sv2v/test, yosys/tests]
+      fail-fast:
+        false
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      GIT_HTTP_LOW_SPEED_LIMIT: 1
+      GIT_HTTP_LOW_SPEED_TIME: 600
+      DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-4"
+      PARSER: yosys-plugin
+      TEST_SUITE: ${{ matrix.test-suite }}
+
+    steps:
+    - name: Install dependencies
+      run: |
+        apt-get update -qq
+        apt install -y software-properties-common
+        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get update -qq
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+
+    # See https://github.com/actions/upload-artifact/issues/38
+    - name: Extract
+      run: tar -xf binaries.tar
+
+    - name: Test
+      run: |
+        source .github/scripts/common.sh
+        ./run_fv_tests.sh ${{ matrix.test-suite }}
+
+    - name: Print summary
+      run: |
+        python3 ./formal/formal_results.py build
+
+    - name: Pack formal verification logs
+      run: |
+        cd build
+        tar cf ${TEST_SUITE//\//_}.tar tests/*/*.out tests/*/slpp_all/*.log tests/*/*.txt tests/*/result.json
+
+    - name: Upload formal verification logs
+      uses: actions/upload-artifact@v2
+      with:
+        name: formal-verification-logs
+        path: |
+          build/*.tar
 
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
@@ -622,7 +685,7 @@ jobs:
 
   install-plugin:
     runs-on: [self-hosted, Linux, X64]
-    container: debian:latest
+    container: debian:sid
     name: Test plugin installation
     env:
       DEBIAN_FRONTEND: noninteractive
@@ -630,8 +693,6 @@ jobs:
     steps:
     - name: Install Yosys and dependencies
       run: |
-        echo "deb http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
-        echo "deb-src http://deb.debian.org/debian/ sid main contrib non-free" >> /etc/apt/sources.list
         apt update
         apt upgrade -y
         apt install -y yosys yosys-dev curl jq wget libreadline-dev
