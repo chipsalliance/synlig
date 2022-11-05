@@ -263,6 +263,9 @@ def run_equiv(top_module, output_dir):
         capture_output=True,
         text=True,
     )
+    if process.returncode:
+        print("Subprocess [ %s ] returned error:" % (subprocess.list2cmdline(process.args)))
+        print(process.stderr)
 
     return process
 
