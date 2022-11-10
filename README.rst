@@ -155,6 +155,56 @@ To parse a multi-file with the ``read_systemverilog`` command, all files have to
     # Continue Yosys flow...
     exit
 
+Testing in CI/Github Actions
+----------------------------
+
+Using dedicated branch
+^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new branch and point submodules to revisions with your changes. Then pick one of the following methods.
+
+Create a Pull Request
+"""""""""""""""""""""
+
+Just that. Create a (WIP) Pull Request using your new branch.
+
+Start a workflow manually (using Github Web UI)
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+In Github Web UI, on the repository page:
+
+- Open the "Actions" tab.
+- Select "main" on the Actions list on the left.
+- At the top of the workflows list click the "Run workflow" button.
+- Select your branch in the "Use workflow from" dropdown.
+- Click the "Run workflow" button.
+
+Start a workflow manually (using Github CLI)
+""""""""""""""""""""""""""""""""""""""""""""
+
+.. code-block:: bash
+   :name: gh-cli-start-workflow
+
+   gh workflow run main --ref $YOUR_BRANCH_NAME
+
+Using plugins submodule override
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method can be used to test changes limited to `yosys-symbiflow-plugins` submodule.
+
+- Push your changes in `yosys-symbiflow-plugins` into a branch in https://github.com/antmicro/yosys-f4pga-plugins/
+- Perform steps from "Start a workflow manually (using Github Web UI)" above, but:
+
+  - Select "master" (or any other branch with submodule revisions you would like to use in the CI) in the "Use workflow from" dropdown.
+  - In the same pop-up, under "yosys-symbiflow-plugins branch", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/. This branch will be checked out in `yosys-symbiflow-plugins` submodule.
+
+- Alternatively, use Github CLI:
+
+  .. code-block:: bash
+     :name: gh-cli-start-workflow-with-plugins-branch
+
+     gh workflow run main --ref master -f plugins_branch=$PLUGINS_BRANCH_NAME
+
 General & debugging tips
 ------------------------
 
