@@ -1,6 +1,20 @@
 name: 'main'
+run-name: >
+  ${{ github.event_name == 'workflow_dispatch' &&
+        format('{0}{1}',
+          github.ref_name,
+          (github.event.inputs.plugins_branch && format('; plugins: {0}', github.event.inputs.plugins_branch) || '')
+        )
+      || ''
+  }}
 
 on:
+  workflow_dispatch:
+    inputs:
+      plugins_branch:
+        description: 'yosys-symbiflow-plugins branch'
+        required: false
+        default: ''
   push:
     branches:
       - master
@@ -43,6 +57,14 @@ jobs:
       uses: nanzm/get-time-action@v1.1
       with:
         format: 'YYYY-MM-DD-HH-mm-ss'
+
+    - name: Checkout custom branches in submodules (if requested)
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
+      run: |
+        cd yosys-symbiflow-plugins
+        git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
+        git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
+        git checkout FETCH_HEAD
 
     - name: Setup cache
       uses: actions/cache@v2
