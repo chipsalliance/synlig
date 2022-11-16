@@ -123,9 +123,16 @@ jobs:
     - name: Build & Test (yosys)
       run: |
         ./.github/scripts/run_group_test.sh
+        mv test-results/test-results.passed test-results/test-results-uhdm.passed || true
+        mv test-results/test-results.failed test-results/test-results-uhdm.failed || true
 
       env:
         TARGET: uhdm/yosys/test-ast
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: test-results
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -177,9 +184,16 @@ jobs:
     - name: Build & Test (yosys)
       run: |
         ./.github/scripts/run_group_test.sh
+        mv test-results/test-results.passed test-results/test-results-systemverilog.passed || true
+        mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
 
       env:
         TARGET: uhdm/yosys/test-ast
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: test-results
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -231,9 +245,16 @@ jobs:
     - name: Generate SV file (Yosys)
       run: |
         ./.github/scripts/run_group_test.sh
+        mv test-results/test-results.passed test-results/test-results-vcddiff.passed || true
+        mv test-results/test-results.failed test-results/test-results-vcddiff.failed || true
 
       env:
         TARGET: uhdm/yosys/test-ast
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: test-results
 
     - uses: actions/upload-artifact@v2
       with:
@@ -246,6 +267,24 @@ jobs:
         name: plots
         path: |
           **/plot_*.svg
+
+  generate-tests-summary:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    if: ${{ always() }}
+    needs: [tests-read-uhdm, tests-read-systemverilog, tests-vcddiff]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Download test results
+      uses: /actions/download-artifact@v3
+      with:
+        name: test-results
+
+    - name: Generate summary
+      run: |
+        ./.github/scripts/generate_summary.sh
 
   tests-formal-verification:
     runs-on: [self-hosted, Linux, X64]
