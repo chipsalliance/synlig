@@ -9,6 +9,6 @@ function enable_vivado() {
     source /opt/Xilinx/Vivado/$1/settings64.sh
     # close stdin in case vivado -version fails
     vivado -version <&- | grep $1
-    ec = $?
+    ec=$?
     echo "Vivado exit code: $ec"
 }
