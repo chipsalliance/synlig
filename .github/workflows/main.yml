@@ -134,13 +134,18 @@ jobs:
     - name: Build & Test (yosys)
       run: |
         ./.github/scripts/run_group_test.sh
-        mv test-results/test-results.passed test-results/test-results-uhdm.passed || true
-        mv test-results/test-results.failed test-results/test-results-uhdm.failed || true
 
       env:
         TARGET: uhdm/yosys/test-ast
 
+    - name: Rename test results
+      if: ${{ always() }}
+      run: |
+        mv test-results/test-results.passed test-results/test-results-uhdm.passed || true
+        mv test-results/test-results.failed test-results/test-results-uhdm.failed || true
+
     - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
       with:
         name: test-results
         path: test-results
@@ -195,13 +200,18 @@ jobs:
     - name: Build & Test (yosys)
       run: |
         ./.github/scripts/run_group_test.sh
-        mv test-results/test-results.passed test-results/test-results-systemverilog.passed || true
-        mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
 
       env:
         TARGET: uhdm/yosys/test-ast
 
+    - name: Rename test results
+      if: ${{ always() }}
+      run: |
+        mv test-results/test-results.passed test-results/test-results-systemverilog.passed || true
+        mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
+
     - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
       with:
         name: test-results
         path: test-results
@@ -256,18 +266,24 @@ jobs:
     - name: Generate SV file (Yosys)
       run: |
         ./.github/scripts/run_group_test.sh
-        mv test-results/test-results.passed test-results/test-results-vcddiff.passed || true
-        mv test-results/test-results.failed test-results/test-results-vcddiff.failed || true
 
       env:
         TARGET: uhdm/yosys/test-ast
 
+    - name: Rename test results
+      if: ${{ always() }}
+      run: |
+        mv test-results/test-results.passed test-results/test-results-vcddiff.passed || true
+        mv test-results/test-results.failed test-results/test-results-vcddiff.failed || true
+
     - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
       with:
         name: test-results
         path: test-results
 
     - uses: actions/upload-artifact@v2
+      if: ${{ always() }}
       with:
         name: tests-vcddiff-artifacts
         path: UHDM-integration-tests/artifacts
