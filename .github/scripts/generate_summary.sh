@@ -9,34 +9,34 @@ VCDDIFF_FAILED_FILE=$TEST_RESULTS_PREFIX-vcddiff.failed
 
 # Read passed tests if any exist
 if [[ -e $UHDM_PASSED_FILE ]]; then
-    UHDM_PASSED_NUMBER=$(wc -l $UHDM_PASSED_FILE)
+    UHDM_PASSED_NUMBER=$(wc -l < $UHDM_PASSED_FILE)
 else
     UHDM_FAILED_NUMBER=0
 fi
 if [[ -e $SYSTEMVERILOG_PASSED_FILE ]]; then
-    SYSTEMVERILOG_PASSED_NUMBER=$(wc -l $SYSTEMVERILOG_PASSED_FILE)
+    SYSTEMVERILOG_PASSED_NUMBER=$(wc -l < $SYSTEMVERILOG_PASSED_FILE)
 else
     SYSTEMVERILOG_PASSED_NUMBER=0
 fi
 if [[ -e $VCDDIFF_PASSED_FILE ]]; then
-    VCDDIFF_PASSED_NUMBER=$(wc -l $VCDDIFF_PASSED_FILE)
+    VCDDIFF_PASSED_NUMBER=$(wc -l < $VCDDIFF_PASSED_FILE)
 else
     VCDDIFF_PASSED_NUMBER=0
 fi
 
 # Read failed tests if any exist
 if [[ -e $UHDM_FAILED_FILE ]]; then
-    UHDM_FAILED_NUMBER=$(wc -l $UHDM_FAILED_FILE)
+    UHDM_FAILED_NUMBER=$(wc -l < $UHDM_FAILED_FILE)
 else
     UHDM_FAILED_NUMBER=0
 fi
 if [[ -e $SYSTEMVERILOG_FAILED_FILE ]]; then
-    SYSTEMVERILOG_FAILED_NUMBER=$(wc -l $SYSTEMVERILOG_FAILED_FILE)
+    SYSTEMVERILOG_FAILED_NUMBER=$(wc -l < $SYSTEMVERILOG_FAILED_FILE)
 else
     SYSTEMVERILOG_FAILED_NUMBER=0
 fi
 if [[ -e $VCDDIFF_FAILED_FILE ]]; then
-    VCDDIFF_FAILED_NUMBER=$(wc -l $VCDDIFF_FAILED_FILE)
+    VCDDIFF_FAILED_NUMBER=$(wc -l < $VCDDIFF_FAILED_FILE)
 else
     VCDDIFF_FAILED_NUMBER=0
 fi
@@ -51,12 +51,12 @@ else
     echo ":x: SOME TESTS FAILED :x:" > $GITHUB_STEP_SUMMARY
 fi
 echo "" >> $GITHUB_STEP_SUMMARY
-echo "| Name | Tests failed |" >> $GITHUB_STEP_SUMMARY
-echo "|------|--------------|" >> $GITHUB_STEP_SUMMARY
-echo "| tests-read-uhdm          | $UHDM_FAILED_NUMBER |" >> $GITHUB_STEP_SUMMARY
-echo "| tests-read-systemverilog | $SYSTEMVERILOG_FAILED_NUMBER |" >> $GITHUB_STEP_SUMMARY
-echo "| tests-read-vcddiff       | $VCDDIFF_FAILED_NUMBER |" >> $GITHUB_STEP_SUMMARY
-echo "| **Total** | **$TOTAL_FAILED_TESTS** |" >> $GITHUB_STEP_SUMMARY
+echo "| Name | Tests failed | Tests passed |" >> $GITHUB_STEP_SUMMARY
+echo "|------|--------------|--------------|" >> $GITHUB_STEP_SUMMARY
+echo "| tests-read-uhdm          | $UHDM_FAILED_NUMBER | $UHDM_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
+echo "| tests-read-systemverilog | $SYSTEMVERILOG_FAILED_NUMBER | $SYSTEMVERILOG_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
+echo "| tests-read-vcddiff       | $VCDDIFF_FAILED_NUMBER | $VCDDIFF_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
+echo "| **Total** | **$TOTAL_FAILED_TESTS** | **$TOTAL_PASSED_TESTS** |" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 echo "$TOTAL_FAILED_TESTS out of total $TOTAL_TESTS failed." >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY

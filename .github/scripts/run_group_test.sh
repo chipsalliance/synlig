@@ -11,15 +11,15 @@ for TEST_CASE in $TEST_CASES;
 do
     export TEST_CASE
     $ROOT_DIR/UHDM-integration-tests/.github/ci.sh
+    TEST_RET=$?
     TEST_CASE=$(echo $TEST_CASE | sed "s/tests\///g")
-    if [ $? -eq 0 ]; then
+    if [ $TEST_RET -eq 0 ]; then
         echo "|$TEST_CASE | :heavy_check_mark: **PASS**|" >> $ROOT_DIR/test-results/test-results.passed
     else
         echo "|$TEST_CASE | :x: **FAIL**|" >> $ROOT_DIR/test-results/test-results.failed
         RET=1
     fi
 done
-
 
 # Leave with non-zero error status if any test failed
 if [[ $RET -ne 0 ]]; then
