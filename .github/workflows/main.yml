@@ -20,6 +20,20 @@ on:
       - master
   pull_request:
 
+env:
+  TESTS_TO_SKIP: ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass
+    Continue AnonymousUnion FunctionOnDesignLevel ParameterUnpackedArray VoidFunction2Returns PatternStruct
+    ImportedFunctionCallInModuleAndSubmodule VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType
+    FunctionOutputArgument GetC ForkJoinTypes EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel
+    UnsizedConstantsParameterParsing Fork PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray
+    SelectFromUnpackedInFunction PatternReplication VoidFunction MultiplePrints BitSelectPartSelectInFunction
+    ImportPackageWithFunction ParameterPackedArray StringAssignment SystemFunctions ParameterDoubleUnderscoreInSvFrontend
+    OutputSizeWithParameterOfInstanceInitializedByStructMember ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule
+    ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter
+    RealValue BitsCallOnParametetrizedTypeFromPackage AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor
+    NestedPatternPassedAsPort NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect
+    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction
+
 jobs:
 
   build-binaries:
@@ -99,64 +113,11 @@ jobs:
         path: |
           **/plot_*.svg
 
-  generate-matrix-yosys:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    outputs:
-      matrix: ${{ steps.generate-matrix-yosys.outputs.matrix }}
-    steps:
-      - name: Install dependencies
-        run: |
-          apt-get update -qq
-          apt install -y python3
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-      - name: Checkout master
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 1
-
-      - name: Generate matrix (yosys)
-        id: generate-matrix-yosys
-        run: |
-          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass Continue AnonymousUnion FunctionOnDesignLevel ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter RealValue BitsCallOnParametetrizedTypeFromPackage AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor NestedPatternPassedAsPort NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction)"
-          echo "::set-output name=matrix::$matrix"
-          echo "matrix yosys: $matrix"
-
-  generate-matrix-vcddiff:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    outputs:
-      matrix: ${{ steps.generate-matrix-vcddiff.outputs.matrix }}
-    steps:
-      - name: Install dependencies
-        run: |
-          apt-get update -qq
-          apt install -y python3
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-      - name: Checkout master
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 1
-
-      - name: Generate matrix (vcddiff)
-        id: generate-matrix-vcddiff
-        run: |
-          matrix="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass Continue AnonymousUnion FunctionOnDesignLevel ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter RealValue BitsCallOnParametetrizedTypeFromPackage AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor NestedPatternPassedAsPort NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction)"
-          matrix=$(echo $matrix | sed "s/tests\///g")
-          echo "::set-output name=matrix::$matrix"
-          echo "matrix vcddiff: $matrix"
-
   tests-read-uhdm:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
-    needs: [build-binaries, generate-matrix-yosys]
+    needs: [build-binaries]
     strategy:
-      matrix:
-        TEST_CASE_YOSYS: ${{ fromJson(needs.generate-matrix-yosys.outputs.matrix) }}
       fail-fast:
         false
     env:
@@ -176,6 +137,7 @@ jobs:
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
     - uses: actions/checkout@v2
       with:
@@ -192,10 +154,23 @@ jobs:
       run: tar -xf binaries.tar
 
     - name: Build & Test (yosys)
-      run: ./UHDM-integration-tests/.github/ci.sh
+      run: |
+        ./.github/scripts/run_group_test.sh
+
       env:
-        TEST_CASE: ${{ matrix.TEST_CASE_YOSYS }}
         TARGET: uhdm/yosys/test-ast
+
+    - name: Rename test results
+      if: ${{ always() }}
+      run: |
+        mv test-results/test-results.passed test-results/test-results-uhdm.passed || true
+        mv test-results/test-results.failed test-results/test-results-uhdm.failed || true
+
+    - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
+      with:
+        name: test-results
+        path: test-results
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -207,10 +182,8 @@ jobs:
   tests-read-systemverilog:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
-    needs: [build-binaries, generate-matrix-yosys]
+    needs: [build-binaries]
     strategy:
-      matrix:
-        TEST_CASE_YOSYS: ${{ fromJson(needs.generate-matrix-yosys.outputs.matrix) }}
       fail-fast:
         false
     env:
@@ -230,6 +203,7 @@ jobs:
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
     - uses: actions/checkout@v2
       with:
@@ -246,10 +220,23 @@ jobs:
       run: tar -xf binaries.tar
 
     - name: Build & Test (yosys)
-      run: ./UHDM-integration-tests/.github/ci.sh
+      run: |
+        ./.github/scripts/run_group_test.sh
+
       env:
-        TEST_CASE: ${{ matrix.TEST_CASE_YOSYS }}
         TARGET: uhdm/yosys/test-ast
+
+    - name: Rename test results
+      if: ${{ always() }}
+      run: |
+        mv test-results/test-results.passed test-results/test-results-systemverilog.passed || true
+        mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
+
+    - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
+      with:
+        name: test-results
+        path: test-results
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -261,10 +248,8 @@ jobs:
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
-    needs: [build-binaries, generate-matrix-vcddiff]
+    needs: [build-binaries]
     strategy:
-      matrix:
-        TEST_CASE_VCDDIFF: ${{ fromJson(needs.generate-matrix-vcddiff.outputs.matrix) }}
       fail-fast:
         false
     env:
@@ -284,6 +269,7 @@ jobs:
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
+        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
     - uses: actions/checkout@v2
       with:
@@ -301,16 +287,28 @@ jobs:
 
     - name: Generate SV file (Yosys)
       run: |
-        ./UHDM-integration-tests/.github/ci.sh
+        ./.github/scripts/run_group_test.sh
 
       env:
-        TEST_CASE: tests/${{ matrix.TEST_CASE_VCDDIFF }}
         TARGET: uhdm/yosys/test-ast
 
-    - uses: actions/upload-artifact@v2
+    - name: Rename test results
+      if: ${{ always() }}
+      run: |
+        mv test-results/test-results.passed test-results/test-results-vcddiff.passed || true
+        mv test-results/test-results.failed test-results/test-results-vcddiff.failed || true
+
+    - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
       with:
-        name: ${{ matrix.TEST_CASE_VCDDIFF }}.sv
-        path: UHDM-integration-tests/build/yosys.sv
+        name: test-results
+        path: test-results
+
+    - uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: tests-vcddiff-artifacts
+        path: UHDM-integration-tests/artifacts
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
@@ -318,6 +316,24 @@ jobs:
         name: plots
         path: |
           **/plot_*.svg
+
+  generate-tests-summary:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    if: ${{ always() }}
+    needs: [tests-read-uhdm, tests-read-systemverilog, tests-vcddiff]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Download test results
+      uses: /actions/download-artifact@v3
+      with:
+        name: test-results
+
+    - name: Generate summary
+      run: |
+        ./.github/scripts/generate_summary.sh
 
   tests-formal-verification:
     runs-on: [self-hosted, Linux, X64]
@@ -345,7 +361,7 @@ jobs:
         apt install -y software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time python3
 
     - uses: actions/checkout@v2
       with:
