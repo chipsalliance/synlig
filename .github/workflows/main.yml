@@ -7,7 +7,18 @@ on:
   pull_request:
 
 env:
-  TESTS_PER_GROUP: 300
+  TESTS_TO_SKIP: ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass
+    Continue AnonymousUnion FunctionOnDesignLevel ParameterUnpackedArray VoidFunction2Returns PatternStruct
+    ImportedFunctionCallInModuleAndSubmodule VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType
+    FunctionOutputArgument GetC ForkJoinTypes EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel
+    UnsizedConstantsParameterParsing Fork PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray
+    SelectFromUnpackedInFunction PatternReplication VoidFunction MultiplePrints BitSelectPartSelectInFunction
+    ImportPackageWithFunction ParameterPackedArray StringAssignment SystemFunctions ParameterDoubleUnderscoreInSvFrontend
+    OutputSizeWithParameterOfInstanceInitializedByStructMember ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule
+    ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter
+    RealValue BitsCallOnParametetrizedTypeFromPackage AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor
+    NestedPatternPassedAsPort NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect
+    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction
 
 jobs:
 

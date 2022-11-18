@@ -1,5 +1,9 @@
 ROOT_DIR=$(dirname $(dirname $(dirname "$0")))
-TEST_CASES="$(cd UHDM-integration-tests && python list.py -d tests -s ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass Continue AnonymousUnion FunctionOnDesignLevel ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter RealValue BitsCallOnParametetrizedTypeFromPackage AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor NestedPatternPassedAsPort NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction)"
+if [[ -z $TESTS_TO_SKIP ]]; then
+    TEST_CASES="$(cd UHDM-integration-tests && python list.py -d tests)"
+else
+    TEST_CASES="$(cd UHDM-integration-tests && python list.py -d tests -s $TESTS_TO_SKIP)"
+fi
 TEST_CASES=$(echo $TEST_CASES | sed "s/[][,\"]//g") # Remove characters '[', ']', '"' and ',' from json like array
 
 mkdir -p $ROOT_DIR/test-results
