@@ -173,6 +173,7 @@ jobs:
         path: test-results
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
@@ -239,6 +240,7 @@ jobs:
         path: test-results
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
@@ -311,6 +313,7 @@ jobs:
         path: UHDM-integration-tests/artifacts
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
@@ -450,6 +453,7 @@ jobs:
         path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
@@ -538,6 +542,7 @@ jobs:
         path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
@@ -611,6 +616,7 @@ jobs:
         path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
@@ -666,6 +672,7 @@ jobs:
         path: UHDM-integration-tests/build/chipsalliance.org_cores_SweRV_EH1_1.8/synth-vivado/chipsalliance.org_cores_SweRV_EH1_1.8.edif
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
@@ -794,6 +801,7 @@ jobs:
         path: ./UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
 
     - name: Upload load graphs
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: plots
