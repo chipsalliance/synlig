@@ -398,6 +398,14 @@ jobs:
         path: |
           build/*.tar
 
+    - name: Upload load graphs
+      uses: actions/upload-artifact@v2
+      with:
+        name: plots
+        path: |
+          **/plot_*.svg
+
+
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
