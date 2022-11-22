@@ -6,10 +6,12 @@ echo "::group::BISECT"
 
 rm -rf $OT_DIR/.gitpatch
 cd ${ROOT_DIR}
-$ROOT_DIR/UHDM-integration-tests/.github/ci.sh
-ec=$?
+ec=0
+{ $ROOT_DIR/UHDM-integration-tests/.github/ci.sh || ec=$?; }
 cd ${OT_DIR}
+git reset --hard HEAD
+git clean -f
 git checkout .
+echo "::endgroup::"
 exit $ec
 
-echo "::endgroup::"
