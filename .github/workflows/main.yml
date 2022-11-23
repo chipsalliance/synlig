@@ -102,7 +102,7 @@ jobs:
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
         # See https://github.com/actions/upload-artifact/issues/38
-        tar -cvf binaries.tar image
+        tar -cvf binaries_${{ matrix.surelog_rev }}.tar image
 
     - name: Upload binaries
       uses: actions/upload-artifact@v2
@@ -478,6 +478,9 @@ jobs:
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
     needs: build-binaries
+    strategy:
+      matrix:
+        surelog_rev: [9be3f1751924aac458fad722e0a47972a72263cc, 6ad1c873c02a2e542a16855ac87ee90953dcdc84]
     env:
       CC: gcc-9
       CXX: g++-9
@@ -509,7 +512,7 @@ jobs:
 
     # See https://github.com/actions/upload-artifact/issues/38
     - name: Extract
-      run: tar -xf binaries.tar
+      run: tar -xf binaries_${{ matrix.surelog_rev }}.tar
 
     - name: Build & Test
       run: |
