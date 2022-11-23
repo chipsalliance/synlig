@@ -67,7 +67,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
-        fetch-depth: 1
+        fetch-depth: 300
 
     - name: Create Cache Timestamp
       id: cache_timestamp
@@ -96,10 +96,8 @@ jobs:
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-        git -C Surelog submodule deinit --all
-        git -C Surelog fetch --unshallow
         git -C Surelog checkout ${{ matrix.surelog_rev }}
-        git -C Surelog submodule update --init --recursive
+        git -C Surelog submodule update --recursive
         ./build_binaries.sh --build-sv2v
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
