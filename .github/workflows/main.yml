@@ -98,7 +98,8 @@ jobs:
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         git -C Surelog fetch --unshallow
         git -C Surelog checkout ${{ matrix.surelog_rev }}
-        git -C Surelog submodule update --recursive
+        git -C Surelog submodule deinit
+        git -C Surelog submodule update --init --recursive
         ./build_binaries.sh --build-sv2v
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
