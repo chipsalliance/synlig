@@ -39,6 +39,9 @@ jobs:
   build-binaries:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
+    strategy:
+      matrix:
+        surelog_rev: [9be3f1751924aac458fad722e0a47972a72263cc, 6ad1c873c02a2e542a16855ac87ee90953dcdc84]
     env:
       CC: gcc-9
       CXX: g++-9
@@ -93,6 +96,8 @@ jobs:
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        git -C Surelog checkout ${{ matrix.surelog_rev }}
+        git -C Surelog submodule update --recursive
         ./build_binaries.sh --build-sv2v
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
