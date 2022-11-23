@@ -96,7 +96,7 @@ jobs:
         # Make sure we always use https:// instead of git://
         git config --global url.https://github.com/.insteadOf git://github.com/
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-        git -C Surelog fetch --depth=0
+        git -C Surelog fetch --unshallow
         git -C Surelog checkout ${{ matrix.surelog_rev }}
         git -C Surelog submodule update --recursive
         ./build_binaries.sh --build-sv2v
