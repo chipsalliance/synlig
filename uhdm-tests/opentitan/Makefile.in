@@ -26,5 +26,5 @@ uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN}/.gitpatch ${curr_di
 		. ${VENV_OT}/bin/activate && \
 		pip install -r ${OPENTITAN}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@uhdm_support && \
-		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_ip --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem")
+		fusesoc --verbose --log-file=fusesoc.log --cores-root=${OPENTITAN} run --flag=fileset_ip --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem" > output.log)
 

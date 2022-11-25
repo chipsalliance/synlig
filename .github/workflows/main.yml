@@ -99,6 +99,9 @@ jobs:
         git -C Surelog checkout ${{ matrix.surelog_rev }}
         git -C Surelog submodule update --recursive
         ./build_binaries.sh --build-sv2v
+        mv image/bin/yosys image/bin/yosys.real
+        printf '#!/bin/bash\nexec yosys.real -Xg "$@"\n' > image/bin/yosys
+        chmod +x image/bin/yosys
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
         # See https://github.com/actions/upload-artifact/issues/38
@@ -523,6 +526,14 @@ jobs:
       env:
         TARGET: uhdm/yosys/synth-opentitan-build
         TEST_CASE: tests/opentitan
+
+    - name: Upload Logs
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: logs_opentitan_synth
+        path: |
+          UHDM-integration-tests/output.log
 
     - name: Generate AST
       run: |
