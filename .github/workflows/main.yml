@@ -100,7 +100,7 @@ jobs:
         git -C Surelog submodule update --recursive
         ./build_binaries.sh --build-sv2v
         mv image/bin/yosys image/bin/yosys.real
-        printf '#!/bin/bash\nexec yosys.real -Xg "$@"\n' > image/bin/yosys
+        printf '#!/bin/bash\nexec yosys.real -Xgt "$@"\n' > image/bin/yosys
         chmod +x image/bin/yosys
         # By default actions/upload-artifact@v2 do not preserve file permissions
         # tar directory to workaround this issue
