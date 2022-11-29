@@ -385,10 +385,6 @@ jobs:
         source .github/scripts/common.sh
         ./run_fv_tests.sh ${{ matrix.test-suite }}
 
-    - name: Print summary
-      run: |
-        python3 ./formal/formal_results.py build
-
     - name: Pack formal verification logs
       run: |
         cd build
@@ -407,6 +403,12 @@ jobs:
         name: plots
         path: |
           **/plot_*.svg
+
+    # Do this at the end as this can actually fail
+    - name: Check results and print a summary
+      run: |
+        set -o pipefail
+        python3 ./formal/formal_results.py build | tee $GITHUB_STEP_SUMMARY
 
 
   ibex_synth:
