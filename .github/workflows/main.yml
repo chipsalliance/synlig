@@ -519,10 +519,13 @@ jobs:
 
     - name: Build & Test
       run: |
+        touch build_in_progress
+        .github/scripts/log_resources.sh resource_usage.log build_in_progress &
         source .github/scripts/common.sh
         enable_vivado 2017.2
         pip install virtualenv
         ./UHDM-integration-tests/.github/ci.sh
+        rm build_in_progress
       env:
         TARGET: uhdm/yosys/synth-opentitan-build
         TEST_CASE: tests/opentitan
@@ -534,6 +537,7 @@ jobs:
         name: logs_opentitan_synth
         path: |
           UHDM-integration-tests/output.log
+          resource_usage.log
 
     - name: Generate AST
       run: |
