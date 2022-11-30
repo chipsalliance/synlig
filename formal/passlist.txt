@@ -261,3 +261,8 @@ core_output_implicit.v
 core_function_ret_unpacked.v
 core_wire_reg.v
 core_always_latch.v
+simple_case_expr_const.v
+simple_signedexpr.v
+simple_scopes.v
+simple_loop_var_shadow.v
+simple_const_func_shadow.v
