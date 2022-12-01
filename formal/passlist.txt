@@ -266,3 +266,4 @@ simple_signedexpr.v
 simple_scopes.v
 simple_loop_var_shadow.v
 simple_const_func_shadow.v
+core_net_or_var.sv
