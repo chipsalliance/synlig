@@ -267,3 +267,11 @@ simple_scopes.v
 simple_loop_var_shadow.v
 simple_const_func_shadow.v
 core_net_or_var.sv
+simple_case_expr_non_const.v
+various_attrib07_func_call.v
+various_reg_wire_error.sv
+simple_arraycells.v
+verilog_net_types.sv
+simple_matching_end_labels.sv
+simple_hierdefparam.v
+ParameterInGenScopeInitializedWithLongConstant_top.sv
