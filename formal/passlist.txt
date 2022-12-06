@@ -272,3 +272,4 @@ verilog_net_types.sv
 simple_matching_end_labels.sv
 simple_hierdefparam.v
 ParameterInGenScopeInitializedWithLongConstant_top.sv
+common_logic.v
