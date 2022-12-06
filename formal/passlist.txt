@@ -9,7 +9,6 @@ ConcatWidth_top.sv
 ParameterInitializationWithNegation_top.sv
 compound_assignments_top.sv
 PartSelectOfMember_top.sv
-fsm_using_function_dut.v
 ParameterConditionalAssignment_top.sv
 AssignSumOfConstants_top.sv
 CastSize_top.sv
@@ -218,7 +217,6 @@ hana_test_simulation_and.v
 asicworld_code_hdl_models_clk_div.v
 asicworld_code_hdl_models_encoder_4to2_gates.v
 asicworld_code_hdl_models_half_adder_gates.v
-asicworld_code_tidbits_fsm_using_function.v
 asicworld_code_hdl_models_up_down_counter.v
 sim_dlatch.v
 asicworld_code_tidbits_syn_reset.v
@@ -265,5 +263,12 @@ simple_case_expr_const.v
 simple_signedexpr.v
 simple_scopes.v
 simple_loop_var_shadow.v
-simple_const_func_shadow.v
 core_net_or_var.sv
+simple_case_expr_non_const.v
+various_attrib07_func_call.v
+various_reg_wire_error.sv
+simple_arraycells.v
+verilog_net_types.sv
+simple_matching_end_labels.sv
+simple_hierdefparam.v
+ParameterInGenScopeInitializedWithLongConstant_top.sv
