@@ -32,7 +32,7 @@ env:
     ParameterOfSizeOfPort StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter
     RealValue BitsCallOnParametetrizedTypeFromPackage AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor
     NestedPatternPassedAsPort NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect
-    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction
+    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction StreamOp
 
 jobs:
 
@@ -385,10 +385,6 @@ jobs:
         source .github/scripts/common.sh
         ./run_fv_tests.sh ${{ matrix.test-suite }}
 
-    - name: Print summary
-      run: |
-        python3 ./formal/formal_results.py build
-
     - name: Pack formal verification logs
       run: |
         cd build
@@ -407,6 +403,12 @@ jobs:
         name: plots
         path: |
           **/plot_*.svg
+
+    # Do this at the end as this can actually fail
+    - name: Check results and print a summary
+      run: |
+        set -o pipefail
+        python3 ./formal/formal_results.py build | tee $GITHUB_STEP_SUMMARY
 
 
   ibex_synth:
@@ -478,7 +480,7 @@ jobs:
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-4"
+      GHA_MACHINE_TYPE: "n2-highmem-8"
 
     steps:
 
