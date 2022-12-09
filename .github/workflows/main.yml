@@ -106,6 +106,7 @@ jobs:
         # tar directory to workaround this issue
         # See https://github.com/actions/upload-artifact/issues/38
         tar -cvf binaries_${{ matrix.surelog_rev }}.tar image
+        tar -cvf binaries.tar image
 
     - name: Upload binaries
       uses: actions/upload-artifact@v2
@@ -113,6 +114,7 @@ jobs:
         name: binaries
         path: |
           binaries_${{ matrix.surelog_rev }}.tar
+          binaries.tar
 
     - name: Upload load graphs
       uses: actions/upload-artifact@v2
