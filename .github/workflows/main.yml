@@ -41,7 +41,7 @@ jobs:
     container: ubuntu:jammy
     strategy:
       matrix:
-        surelog_rev: [a731098ce392b438a174564f985beff187a97d2b]
+        surelog_rev: [703af04e9d484a03149f3808aacd592fa3eb08e5, a731098ce392b438a174564f985beff187a97d2b]
     env:
       CC: gcc-9
       CXX: g++-9
@@ -485,7 +485,7 @@ jobs:
     needs: build-binaries
     strategy:
       matrix:
-        surelog_rev: [a731098ce392b438a174564f985beff187a97d2b]
+        surelog_rev: [703af04e9d484a03149f3808aacd592fa3eb08e5, a731098ce392b438a174564f985beff187a97d2b]
     env:
       CC: gcc-9
       CXX: g++-9
@@ -528,6 +528,7 @@ jobs:
         pip install virtualenv
         ./UHDM-integration-tests/.github/ci.sh
         rm build_in_progress
+        ls -l ./UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/*uhdm
       env:
         TARGET: uhdm/yosys/synth-opentitan-build
         TEST_CASE: tests/opentitan
