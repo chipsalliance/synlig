@@ -151,12 +151,12 @@ index 8d6cf89b6..6480e08ba 100644
          part: "xc7a200tsbg484-1" # Nexys Video
 +        synth: "yosys"
 +        yosys_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
-+        yosys_read_options: ['-noassert', '-no_dump_ptr']
++        yosys_read_options: ['-noassert', '-dump_ast1', '-dump_ast2', '-no_dump_ptr']
 +        surelog_options: ['-DSYNTHESIS']
 +      yosys:
 +        arch: "xilinx"
 +        yosys_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
-+        yosys_read_options: ['-noassert', '-no_dump_ptr']
++        yosys_read_options: ['-noassert', '-dump_ast1', '-dump_ast2', '-no_dump_ptr']
 +        surelog_options: ['-DSYNTHESIS']
  
    lint:
