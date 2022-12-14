@@ -349,10 +349,21 @@ def main():
 
     skiplist = get_skiplist(os.path.join(".", "formal", "skiplist.txt"))
 
+    test_dir = os.path.split(test_path)[0]
+    if (os.path.basename(test_dir) != "test") and (os.path.basename(test_dir) != "tests"):
+        test_dir = test_dir.split("/tests/")
+        if len(test_dir) < 2:
+            test_dir = test_dir[0].split("/test/")
+        test_dir = test_dir[1].replace("/", "_")
+    else:
+        test_dir = ""
+
     for test in tests:
         test_name = os.path.basename(test).removesuffix(".slv")
         test_files = get_test_files(test)
         test_files_str = " ".join(test_files)
+        if test_dir:
+            test_name = "_".join([test_dir, test_name])
         work_dir = os.path.join(output_path, test_name)
         test_result = {"name": test_name}
 
