@@ -388,7 +388,7 @@ jobs:
     - name: Pack formal verification logs
       run: |
         cd build
-        tar cf ${TEST_SUITE//\//_}.tar tests/*/*.out tests/*/slpp_all/*.log tests/*/*.txt tests/*/result.json
+        tar cf ${TEST_SUITE//\//_}.tar tests/*/*/*.out tests/*/*/slpp_all/*.log tests/*/*/*.txt tests/*/*/result.json
 
     - name: Upload formal verification logs
       uses: actions/upload-artifact@v2

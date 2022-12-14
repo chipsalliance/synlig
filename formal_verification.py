@@ -354,8 +354,10 @@ def main():
         test_dir = test_dir.split("/tests/")
         if len(test_dir) < 2:
             test_dir = test_dir[0].split("/test/")
+        test_suite = os.path.basename(test_dir[0])
         test_dir = test_dir[1].replace("/", "_")
     else:
+        test_suite = os.path.basename(os.path.split(test_dir)[0])
         test_dir = ""
 
     for test in tests:
@@ -364,13 +366,13 @@ def main():
         test_files_str = " ".join(test_files)
         if test_dir:
             test_name = "_".join([test_dir, test_name])
-        work_dir = os.path.join(output_path, test_name)
+        work_dir = os.path.join(output_path, test_suite, test_name)
         test_result = {"name": test_name}
 
         # Create new work directory
         if os.path.isdir(work_dir):
             shutil.rmtree(work_dir)
-        os.mkdir(work_dir)
+        os.makedirs(work_dir)
         os.chdir(work_dir)
 
 
