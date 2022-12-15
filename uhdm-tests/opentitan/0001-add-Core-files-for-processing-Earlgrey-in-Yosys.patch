@@ -1,0 +1,152 @@
+From 89d7d3a60e75b38986a6271b4e10f568e8db5f36 Mon Sep 17 00:00:00 2001
+From: Wojciech Sipak <wsipak@antmicro.com>
+Date: Wed, 4 Jan 2023 15:22:23 +0100
+Subject: [PATCH 1/2] add Core files for processing Earlgrey in Yosys
+
+---
+ hw/top_earlgrey/chip_earlgrey_yosys.core | 40 ++++++++++++++
+ hw/top_earlgrey/dv/yosys/BUILD           | 10 ++++
+ hw/top_earlgrey/dv/yosys/chip_synth.core | 67 ++++++++++++++++++++++++
+ 3 files changed, 117 insertions(+)
+ create mode 100644 hw/top_earlgrey/chip_earlgrey_yosys.core
+ create mode 100644 hw/top_earlgrey/dv/yosys/BUILD
+ create mode 100644 hw/top_earlgrey/dv/yosys/chip_synth.core
+
+diff --git a/hw/top_earlgrey/chip_earlgrey_yosys.core b/hw/top_earlgrey/chip_earlgrey_yosys.core
+new file mode 100644
+index 000000000..3826a6ece
+--- /dev/null
++++ b/hw/top_earlgrey/chip_earlgrey_yosys.core
+@@ -0,0 +1,40 @@
++CAPI=2:
++# Copyright lowRISC contributors.
++# Licensed under the Apache License, Version 2.0, see LICENSE for details.
++# SPDX-License-Identifier: Apache-2.0
++name: "lowrisc:systems:chip_earlgrey_yosys:0.1"
++description: "Earl Grey toplevel for synthesis with Yosys"
++filesets:
++  files_synth_yosys:
++    depend:
++      - lowrisc:systems:top_earlgrey:0.1
++      - lowrisc:systems:top_earlgrey_pkg
++      - lowrisc:ibex:ibex_tracer
++      - lowrisc:prim:clock_div
++      - lowrisc:systems:ast
++      - lowrisc:systems:scan_role_pkg
++
++parameters:
++  AST_BYPASS_CLK:
++    datatype: bool
++    paramtype: vlogdefine
++  IBEX_CUSTOM_PMP_RESET_VALUES:
++    datatype: bool
++    default: true
++    paramtype: vlogdefine
++
++targets:
++  default: &default_target
++    filesets:
++      - files_synth_yosys
++    parameters:
++      - IBEX_CUSTOM_PMP_RESET_VALUES
++      - AST_BYPASS_CLK=true
++    toplevel: top_earlgrey
++
++  synth:
++    <<: *default_target
++    default_tool: yosys
++    tools:
++      yosys:
++        arch: "xilinx"
+diff --git a/hw/top_earlgrey/dv/yosys/BUILD b/hw/top_earlgrey/dv/yosys/BUILD
+new file mode 100644
+index 000000000..36beb77a6
+--- /dev/null
++++ b/hw/top_earlgrey/dv/yosys/BUILD
+@@ -0,0 +1,10 @@
++# Copyright lowRISC contributors.
++# Licensed under the Apache License, Version 2.0, see LICENSE for details.
++# SPDX-License-Identifier: Apache-2.0
++
++package(default_visibility = ["//visibility:public"])
++
++filegroup(
++    name = "all_files",
++    srcs = glob(["**"]),
++)
+diff --git a/hw/top_earlgrey/dv/yosys/chip_synth.core b/hw/top_earlgrey/dv/yosys/chip_synth.core
+new file mode 100644
+index 000000000..0b31d6c79
+--- /dev/null
++++ b/hw/top_earlgrey/dv/yosys/chip_synth.core
+@@ -0,0 +1,67 @@
++CAPI=2:
++# Copyright lowRISC contributors.
++# Licensed under the Apache License, Version 2.0, see LICENSE for details.
++# SPDX-License-Identifier: Apache-2.0
++name: "lowrisc:dv:chip_yosys_synth:0.1"
++description: "Earl Grey toplevel for synthesis with Yosys"
++filesets:
++  files_synth_yosys:
++    depend:
++      - lowrisc:dv_dpi:uartdpi
++      - lowrisc:dv_dpi:gpiodpi
++      - lowrisc:dv_dpi:jtagdpi
++      - lowrisc:dv_dpi:dmidpi
++      - lowrisc:dv_dpi:spidpi
++      - lowrisc:dv_dpi:usbdpi
++      - lowrisc:dv_verilator:memutil_verilator
++      - lowrisc:dv_verilator:simutil_verilator
++      - lowrisc:dv:sim_sram
++      - lowrisc:dv:sw_test_status
++      - lowrisc:dv:dv_test_status
++      - lowrisc:systems:chip_earlgrey_yosys
++
++parameters:
++  # For value definition, please see ip/prim/rtl/prim_pkg.sv
++  PRIM_DEFAULT_IMPL:
++    datatype: str
++    paramtype: vlogdefine
++    description: Primitives implementation to use, e.g. "prim_pkg::ImplGeneric".
++  RVFI:
++    datatype: bool
++    paramtype: vlogdefine
++    description: Enable the RISC-V Verification Interface and instruction tracing
++  flashinit:
++    datatype : file
++    description : Application to load into Flash (in Verilog hex format)
++    paramtype : cmdlinearg
++  rominit:
++    datatype : file
++    description : Application to load into Boot ROM (in Verilog hex format)
++    paramtype : cmdlinearg
++  otpinit:
++    datatype : file
++    description : Image to load into the OTP (in Verilog hex format)
++    paramtype : cmdlinearg
++  DMIDirectTAP:
++    datatype: bool
++    paramtype: vlogdefine
++    default: true
++    description: Replace JTAG TAP with an OpenOCD direct connection
++  UART_LOG_uart0:
++    datatype: string
++    paramtype: plusarg
++    description: Write a log of output from uart0 to the given log file. Use "-" for stdout.
++
++targets:
++  default: &default_target
++    filesets:
++      - files_synth_yosys
++    toplevel: earlgrey_top
++
++  synth:
++    <<: *default_target
++    default_tool: yosys
++    tools:
++      yosys:
++        arch: "xilinx"
++
+-- 
+2.38.1
+
