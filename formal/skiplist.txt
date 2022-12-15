@@ -47,7 +47,7 @@ PartSelectInFor_top.sv
 PatternInFunction_top.sv
 PatternStruct_top.sv
 PatternType_top.sv
-prim_secded_prim_secded_top.sv
+ibex_module_tests_prim_secded_prim_secded_top.sv
 PutC_top.sv
 RealValue_top.sv
 SelectFromUnpackedInFunction_top.sv
@@ -64,7 +64,7 @@ SystemFunctions_top.sv
 TypedefOnFileLevel_top.sv
 TypedefVariableDimensions_top.sv
 UnsizedConstantsParameterParsing_top.sv
-uvm_ibex_decoder_tb.sv
+ibex_uvm_ibex_decoder_tb.sv
 VoidFunction2Returns_top.sv
 VoidFunction_top.sv
 VoidFunctionWithoutReturn_top.sv
