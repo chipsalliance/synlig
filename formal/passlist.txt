@@ -117,7 +117,6 @@ asicworld_code_tidbits_blocking.v
 simple_rotate.v
 verilog_bug656.v
 sim_dlatchsr.v
-simple_const_fold_func.v
 asicworld_code_hdl_models_parity_using_bitwise.v
 simple_local_loop_var.sv
 asicworld_code_verilog_tutorial_which_clock.v
