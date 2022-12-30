@@ -117,7 +117,6 @@ asicworld_code_tidbits_blocking.v
 simple_rotate.v
 verilog_bug656.v
 sim_dlatchsr.v
-simple_const_fold_func.v
 asicworld_code_hdl_models_parity_using_bitwise.v
 simple_local_loop_var.sv
 asicworld_code_verilog_tutorial_which_clock.v
@@ -299,3 +298,5 @@ arch_common_add_sub.v
 arch_common_tribuf.v
 serv-minimal_src_serv_1.1.0_rtl_serv_ctrl.v
 cmake_MultipleCells_top.sv
+asicworld_code_tidbits_fsm_using_function.v
+fsm_using_function_dut.v
