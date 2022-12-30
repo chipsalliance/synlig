@@ -414,3 +414,4 @@ relong_gen_struct.sv
 core_struct_bit_struct.sv
 sva_basic00.sv
 sva_basic03.sv
+sat_asserts.v
