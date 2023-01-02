@@ -161,6 +161,9 @@ def run_surelog(test_path, output_dir):
     script = [
         "plugin -i systemverilog",
         "tee -o %s/surelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, test_path),
+        # Workaround https://github.com/YosysHQ/yosys/issues/3576
+        "write_rtlil %s/surelog_rtlil.txt" % output_dir,
+        "read_rtlil -overwrite %s/surelog_rtlil.txt" % output_dir,
         "synth_xilinx",
         "write_verilog %s/surelog_gate.v" % output_dir,
     ]
@@ -189,6 +192,9 @@ def run_yosys(test_path, output_dir):
 
     script = [
         "tee -o %s/yosys_ast.txt read_verilog -dump_ast1 -sv %s" % (output_dir, test_path),
+        # Workaround https://github.com/YosysHQ/yosys/issues/3576
+        "write_rtlil %s/yosys_rtlil.txt" % output_dir,
+        "read_rtlil -overwrite %s/yosys_rtlil.txt" % output_dir,
         "synth_xilinx",
         "write_verilog %s/yosys_gate.v" % output_dir,
     ]
