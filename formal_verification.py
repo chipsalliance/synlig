@@ -158,31 +158,39 @@ def run_surelog(test_path, output_dir):
     Writes and executes Surelog synthesis script
     """
 
-    script = [
+    scriptR = [
         "plugin -i systemverilog",
         "tee -o %s/surelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, test_path),
         # Workaround https://github.com/YosysHQ/yosys/issues/3576
         "write_rtlil %s/surelog_rtlil.txt" % output_dir,
+    ]
+
+    scriptS = [
         "read_rtlil -overwrite %s/surelog_rtlil.txt" % output_dir,
         "synth_xilinx",
         "write_verilog %s/surelog_gate.v" % output_dir,
     ]
 
-    script_path = os.path.join(output_dir, "surelog.ys")
+    scriptR_path = os.path.join(output_dir, "surelogR.ys")
+    scriptS_path = os.path.join(output_dir, "surelogS.ys")
 
-    with open(script_path, "w") as script_file:
-        script_file.write("\n".join(script))
+    with open(scriptR_path, "w") as script_file:
+        script_file.write("\n".join(scriptR))
         script_file.close()
 
-    process = subprocess.run(
-        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/surelog.out" % output_dir],
-        capture_output=True,
-        text=True,
-    )
+    with open(scriptS_path, "w") as script_file:
+        script_file.write("\n".join(scriptS))
+        script_file.close()
+    for script_path in [scriptR_path, scriptS_path]:
+        process = subprocess.run(
+            ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/surelog.out" % output_dir],
+            capture_output=True,
+            text=True,
+        )
+        if process.stdout != "":
+            return False
 
-    if process.stdout == "":
-        return True
-    return False
+    return True
 
 
 def run_yosys(test_path, output_dir):
@@ -190,30 +198,39 @@ def run_yosys(test_path, output_dir):
     Writes and executes Yosys synthesis script
     """
 
-    script = [
+    scriptR = [
         "tee -o %s/yosys_ast.txt read_verilog -dump_ast1 -sv %s" % (output_dir, test_path),
         # Workaround https://github.com/YosysHQ/yosys/issues/3576
         "write_rtlil %s/yosys_rtlil.txt" % output_dir,
+    ]
+
+    scriptS = [
         "read_rtlil -overwrite %s/yosys_rtlil.txt" % output_dir,
         "synth_xilinx",
         "write_verilog %s/yosys_gate.v" % output_dir,
     ]
 
-    script_path = os.path.join(output_dir, "yosys.ys")
+    scriptR_path = os.path.join(output_dir, "yosysR.ys")
+    scriptS_path = os.path.join(output_dir, "yosysS.ys")
 
-    with open(script_path, "w") as script_file:
-        script_file.write("\n".join(script))
+    with open(scriptR_path, "w") as script_file:
+        script_file.write("\n".join(scriptR))
         script_file.close()
 
-    process = subprocess.run(
-        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/yosys.out" % output_dir],
-        capture_output=True,
-        text=True,
-    )
+    with open(scriptS_path, "w") as script_file:
+        script_file.write("\n".join(scriptS))
+        script_file.close()
 
-    if process.stdout == "":
-        return True
-    return False
+    for script_path in [scriptR_path, scriptS_path]:
+        process = subprocess.run(
+            ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/yosys.out" % output_dir],
+            capture_output=True,
+            text=True,
+        )
+        if process.stdout != "":
+            return False
+
+    return True
 
 
 def run_equiv(top_module, output_dir):
@@ -254,26 +271,31 @@ def run_equiv(top_module, output_dir):
         script_file.write("\n".join(script))
         script_file.close()
 
-    process = subprocess.run(
-        [
-            "/usr/bin/env",
-            "time",
-            "yosys",
-            "-s",
-            script_path,
-            "-q",
-            "-q",
-            "-l",
-            "%s/equiv.out" % output_dir,
-        ],
-        capture_output=True,
-        text=True,
-    )
-    if process.returncode:
-        print("Subprocess [ %s ] returned error:" % (subprocess.list2cmdline(process.args)))
-        print(process.stderr)
+    try:
+        process = subprocess.check_output(
+            [
+                "/usr/bin/env",
+                "yosys",
+                "-s",
+                script_path,
+                "-q",
+                "-q",
+                "-l",
+                "%s/equiv.out" % output_dir,
+            ],
+            #capture_output=True,
+            text=True,
+            timeout=5*60
+        )
+        return process
+    except subprocess.CalledProcessError as e:
+            print("Subprocess [ %s ] returned error:" % (e.output))
+    except subprocess.TimeoutExpired as e:
+            print("Subprocess [ %s ] timed out:" % (e.output))
+    #if process.returncode:
+    #    print("Subprocess [ %s ] returned error:" % (subprocess.list2cmdline(process.args)))
+    #    print(process.stderr)
 
-    return process
 
 
 def get_equiv_result(output_dir):
@@ -406,7 +428,6 @@ def main():
 
             test_result["result"] = get_equiv_result(work_dir)
             test_result.update(count_messages(work_dir))
-            test_result.update(get_time_result(ret_equiv.stderr))
 
         log_result(test_result, work_dir)
 
