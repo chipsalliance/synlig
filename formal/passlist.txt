@@ -300,3 +300,6 @@ serv-minimal_src_serv_1.1.0_rtl_serv_ctrl.v
 cmake_MultipleCells_top.sv
 asicworld_code_tidbits_fsm_using_function.v
 fsm_using_function_dut.v
+InterfaceAsPort_top.sv
+InterfaceAsPortAssignValueInSubmodule_top.sv
+relong_typedef.sv
