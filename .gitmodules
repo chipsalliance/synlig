@@ -19,9 +19,12 @@
 [submodule "uhdm-tests/ibex/ibex"]
 	path = uhdm-tests/ibex/ibex
 	url = https://github.com/lowRISC/ibex.git
-[submodule "uhdm-tests/opentitan/opentitan"]
-	path = uhdm-tests/opentitan/opentitan
+[submodule "uhdm-tests/opentitan/opentitan-9d82960888"]
+	path = uhdm-tests/opentitan/opentitan-9d82960888
 	url = https://github.com/lowRISC/opentitan.git
 [submodule "uhdm-tests/swerv/Cores-SweRV"]
 	path = uhdm-tests/swerv/Cores-SweRV
 	url = https://github.com/chipsalliance/Cores-SweRV.git
+[submodule "uhdm-tests/opentitan/opentitan"]
+	path = uhdm-tests/opentitan/opentitan
+	url = https://github.com/lowRISC/opentitan

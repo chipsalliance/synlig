@@ -1,30 +1,71 @@
 curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
+# distinguish two different submodules of opentitan
+OPENTITAN_9d82960888 = ${curr_dir}/opentitan-9d82960888
 OPENTITAN = ${curr_dir}/opentitan
-TOOLCHAIN = ${curr_dir}/toolchain-install
+VENV_OT_9d82960888 = ${root_dir}/venv-opentitan-9d82960888
 VENV_OT = ${root_dir}/venv-opentitan
+TOOLCHAIN = ${curr_dir}/toolchain-install
+DEPS_DOT = ${OPENTITAN}/lowrisc_dv_chip_yosys_synth_0.dot
+DEPS_SVG = ${root_dir}/opentitan_dependency_graph.svg
 
-TOP := top_earlgrey_nexysvideo
+##############################
+###  OPENTITAN_9d82960888  ###
+##############################
+${OPENTITAN_9d82960888}/.gitpatch:
+	cd ${OPENTITAN_9d82960888} && git apply ${curr_dir}/0001-Add-opentitan-patch-for-uhdm.patch && touch $@
 
-#############################
-####      SYNTHESIS      ####
-#############################
+${VENV_OT_9d82960888}:
+	virtualenv ${VENV_OT_9d82960888}
+	. ${VENV_OT_9d82960888}/bin/activate && \
+	pip install -r ${OPENTITAN_9d82960888}/python-requirements.txt && \
+	pip install git+https://github.com/antmicro/edalize@uhdm_support
+
+uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN_9d82960888}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT_9d82960888}
+	(export PATH=${root_dir}/../image/bin:${PATH} && \
+		. ${VENV_OT_9d82960888}/bin/activate && \
+		fusesoc --cores-root=${OPENTITAN_9d82960888} run --flag=fileset_ip --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem")
+
+
+#################
+### OPENTITAN ###
+#################
+TOP := lowrisc:dv:chip_yosys_synth
+TOP_SV = ${OPENTITAN}/hw/top_earlgrey/rtl/top_earlgrey.sv
+
 ${OPENTITAN}/.gitpatch:
-	cd ${OPENTITAN} && git apply ${curr_dir}/0001-Add-opentitan-patch-for-uhdm.patch && touch $@
+	cd ${OPENTITAN} && git apply ${curr_dir}/0001-add-Core-files-for-processing-Earlgrey-in-Yosys.patch && git apply ${curr_dir}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch && touch $@
 
-${VENV_OT}:
+${VENV_OT}: | ${OPENTITAN}/.gitpatch
 	virtualenv ${VENV_OT}
+	(. ${VENV_OT}/bin/activate && \
+		pip install -r ${OPENTITAN}/python-requirements.txt && \
+		pip install pygraphviz && \
+		pip install networkx && \
+		git clone https://github.com/lowRISC/fusesoc.git -b ot-0.3 && \
+		cd fusesoc && \
+		git apply ${curr_dir}/0001-allow-processing-cores-without-top-module.patch && \
+		pip install --upgrade --force-reinstall --no-dependencies . && \
+		cd - && \
+		rm -rf fusesoc)
 
-uhdm/yosys/synth-opentitan: clean-build | ${OPENTITAN}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT}
+${TOP_SV}: | ${VENV_OT}
+	(. ${VENV_OT}/bin/activate && \
+	cd ${OPENTITAN}/hw/top_earlgrey && \
+	../../util/topgen.py -t data/top_earlgrey.hjson -o . -v)
+
+${DEPS_DOT}: | ${OPENTITAN}/.gitpatch ${VENV_OT}
+	(. ${VENV_OT}/bin/activate && \
+		cd ${OPENTITAN} && \
+		fusesoc --cores-root=. dep graph ${TOP})
+
+opentitan_report ${DEPS_SVG} &: | ${OPENTITAN}/.gitpatch ${DEPS_DOT} ${VENV_OT} ${TOP_SV}
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${VENV_OT}/bin/activate && \
-		pip install -r ${OPENTITAN}/python-requirements.txt && \
-		pip install git+https://github.com/antmicro/edalize@uhdm_support && \
-		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_ip --build --tool yosys --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem")
+		cd ${OPENTITAN} && \
+		python3 ${curr_dir}/iterate_cores.py && \
+		dot -Tsvg graph.dot > ${DEPS_SVG} && \
+		mv ${OPENTITAN}/build ${root_dir}/opentitan_build && \
+		mv ${OPENTITAN}/result.txt ${root_dir}/opentitan_report.txt)
 
-uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT}
-	(export PATH=${root_dir}/../image/bin:${PATH} && \
-		. ${VENV_OT}/bin/activate && \
-		pip install -r ${OPENTITAN}/python-requirements.txt && \
-		pip install git+https://github.com/antmicro/edalize@uhdm_support && \
-		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_ip --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem")
-
+# generate TOP_SV each time
+.PHONY: ${TOP_SV} opentitan_report
