@@ -84,10 +84,12 @@ with open('result.txt', 'w') as f:
     f.write('|--|--|--|\n')
     # sort failed nodes by the number of nodes that depend on that node, descending
     # limit the result to 10 entries
-    for dependency, predecessors in sorted(failed_deps.items(), key=lambda item: len(item[1]), reverse=True)[:10]:
+    result_limit = 10
+    for dependency, predecessors in sorted(failed_deps.items(), key=lambda item: len(item[1]), reverse=True)[:result_limit]:
         pred = ', '.join(predecessors)
         f.write(f'|{dependency}|{pred}|{len(predecessors)}|\n')
     f.write('\n')
+    f.write(f'(limited to {result_limit} results)\n')
 
 
 # set node colors and status attributes
