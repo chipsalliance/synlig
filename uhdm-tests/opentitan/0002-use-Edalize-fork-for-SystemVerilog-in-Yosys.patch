@@ -1,0 +1,25 @@
+From e5ffb85b4525e3eea4fe8bc024fb833ba507ff0b Mon Sep 17 00:00:00 2001
+From: Wojciech Sipak <wsipak@antmicro.com>
+Date: Wed, 4 Jan 2023 15:25:35 +0100
+Subject: [PATCH 2/2] use Edalize fork for SystemVerilog in Yosys
+
+---
+ python-requirements.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/python-requirements.txt b/python-requirements.txt
+index a00237663..e36e91716 100644
+--- a/python-requirements.txt
++++ b/python-requirements.txt
+@@ -49,7 +49,7 @@ anytree==2.8.0
+ git+https://github.com/lowRISC/fusesoc.git@ot-0.3
+ 
+ # Development version with OT-specific changes
+-git+https://github.com/lowRISC/edalize.git@v0.4.0
++git+https://github.com/antmicro/edalize.git@yosys_systemverilog
+ 
+ # Development version of minimal ChipWhisperer toolchain with latest features
+ # and bug fixes. We fix the version for improved stability and manually update
+-- 
+2.38.1
+

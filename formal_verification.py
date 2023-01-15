@@ -65,48 +65,19 @@ def get_test_files(slv_file):
     return files
 
 
-def get_test_top_module(work_path):
+def get_test_top_module(work_path, prefix=""):
     """
     Extracts top module name from Surelog output
     """
 
     log = []
-    with open(os.path.join(work_path, "surelog.out"), "r") as surelog_out:
+    with open(os.path.join(work_path, "%ssurelog.out" % prefix), "r") as surelog_out:
         log = surelog_out.readlines()
         surelog_out.close()
 
     for line in log:
         if line.startswith("Top module:"):
             return line.split("\\")[-1]
-
-
-def count_messages(work_path):
-    """
-    Counts messages appearing in Surelog output
-    """
-
-    log = []
-    count = {}
-    templates = {
-        "fatals": "FATAL\] : ([0-9]+)",
-        "syntax": "SYNTAX\] : ([0-9]+)",
-        "errors": "ERROR\] : ([0-9]+)",
-        "warnings": "WARNING\] : ([0-9]+)",
-        "notes": "NOTE\] : ([0-9]+)",
-    }
-
-    for key in templates:
-        count[key] = 0
-
-    with open(os.path.join(work_path, "slpp_all", "surelog.log"), "r") as surelog_log:
-        log = surelog_log.read()
-        surelog_log.close()
-
-    for key in templates:
-        match = re.search(templates[key], log).groups()
-        count[key] = int(match[0])
-
-    return count
 
 
 def get_time_result(stderr_str):
@@ -153,64 +124,60 @@ def find_xilinx_cells():
     return cells_path
 
 
-def run_surelog(test_path, output_dir):
+def run_surelog(test_path, output_dir, prefix=""):
     """
     Writes and executes Surelog synthesis script
     """
 
     script = [
         "plugin -i systemverilog",
-        "tee -o %s/surelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, test_path),
+        "tee -o %s/%ssurelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, prefix, test_path),
         "synth_xilinx",
-        "write_verilog %s/surelog_gate.v" % output_dir,
+        "write_verilog %s/%ssurelog_gate.v" % (output_dir, prefix),
     ]
 
-    script_path = os.path.join(output_dir, "surelog.ys")
+    script_path = os.path.join(output_dir, "%ssurelog.ys" % prefix)
 
     with open(script_path, "w") as script_file:
         script_file.write("\n".join(script))
         script_file.close()
 
     process = subprocess.run(
-        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/surelog.out" % output_dir],
+        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/%ssurelog.out" % (output_dir, prefix)],
         capture_output=True,
         text=True,
     )
 
-    if process.stdout == "":
-        return True
-    return False
+    return process.returncode
 
 
-def run_yosys(test_path, output_dir):
+def run_yosys(test_path, output_dir, prefix=""):
     """
     Writes and executes Yosys synthesis script
     """
 
     script = [
-        "tee -o %s/yosys_ast.txt read_verilog -dump_ast1 -sv %s" % (output_dir, test_path),
+        "tee -o %s/%syosys_ast.txt read_verilog -dump_ast1 -sv %s" % (output_dir, prefix, test_path),
         "synth_xilinx",
-        "write_verilog %s/yosys_gate.v" % output_dir,
+        "write_verilog %s/%syosys_gate.v" % (output_dir, prefix),
     ]
 
-    script_path = os.path.join(output_dir, "yosys.ys")
+    script_path = os.path.join(output_dir, "%syosys.ys" % prefix)
 
     with open(script_path, "w") as script_file:
         script_file.write("\n".join(script))
         script_file.close()
 
     process = subprocess.run(
-        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/yosys.out" % output_dir],
+        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/%syosys.out" % (output_dir, prefix)],
         capture_output=True,
         text=True,
     )
 
-    if process.stdout == "":
-        return True
-    return False
+    return process.returncode
 
 
-def run_equiv(top_module, output_dir):
+def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate="yosys_gate.v"):
     """
     Writes and executes Yosys equivalence check script
     """
@@ -222,11 +189,11 @@ def run_equiv(top_module, output_dir):
     ]
 
     script = [
-        "read_verilog -sv %s/surelog_gate.v %s %s" % (output_dir, cells[0], cells[1]),
+        "read_verilog -sv %s/%s %s %s" % (output_dir, surelog_gate, cells[0], cells[1]),
         "prep -flatten -top %s" % top_module,
         "splitnets -ports;;",
         "design -stash surelog",
-        "read_verilog -sv %s/yosys_gate.v %s %s" % (output_dir, cells[0], cells[1]),
+        "read_verilog -sv %s/%s %s %s" % (output_dir, yosys_gate, cells[0], cells[1]),
         "splitnets -ports;;",
         "prep -flatten -top %s" % top_module,
         "design -stash yosys",
@@ -242,7 +209,12 @@ def run_equiv(top_module, output_dir):
         "equiv_status -assert",
     ]
 
-    script_path = os.path.join(output_dir, "equiv.ys")
+    if surelog_gate.startswith("sv2v_"):
+        prefix = "sv2v_"
+    else:
+        prefix = ""
+
+    script_path = os.path.join(output_dir, "%sequiv.ys" % prefix)
 
     with open(script_path, "w") as script_file:
         script_file.write("\n".join(script))
@@ -258,7 +230,7 @@ def run_equiv(top_module, output_dir):
             "-q",
             "-q",
             "-l",
-            "%s/equiv.out" % output_dir,
+            "%s/%sequiv.out" % (output_dir, prefix),
         ],
         capture_output=True,
         text=True,
@@ -270,7 +242,7 @@ def run_equiv(top_module, output_dir):
     return process
 
 
-def get_equiv_result(output_dir):
+def get_equiv_result(surelog_out, yosys_out, output_dir, prefix=""):
     """
     Parses equivalence check log to find a final result
     """
@@ -289,7 +261,7 @@ def get_equiv_result(output_dir):
     status = "INCONCLUSIVE"
 
     # Check equivalence check output
-    with open(os.path.join(output_dir, "equiv.out"), "r") as equiv_out:
+    with open(os.path.join(output_dir, "%sequiv.out" % prefix), "r") as equiv_out:
         log = equiv_out.read()
         equiv_out.close()
 
@@ -298,7 +270,7 @@ def get_equiv_result(output_dir):
             return equiv_patterns[pattern]
 
     # Inconclusive, check Surelog output
-    with open(os.path.join(output_dir, "surelog.out"), "r") as surelog_out:
+    with open(os.path.join(output_dir, surelog_out), "r") as surelog_out:
         log = surelog_out.read()
         surelog_out.close()
 
@@ -310,7 +282,7 @@ def get_equiv_result(output_dir):
         status = "UH PLUG"
 
     # Inconclusive, check Yosys output
-    with open(os.path.join(output_dir, "yosys.out"), "r") as yosys_out:
+    with open(os.path.join(output_dir, yosys_out), "r") as yosys_out:
         log = yosys_out.read()
         yosys_out.close()
 
@@ -379,29 +351,55 @@ def main():
         if test_name in skiplist:
             test_result["result"] = "SKIPPED"
             continue
-
         # Run synthesis of test's source files and export Verilog
         ret_yosys = run_yosys(test_files_str, work_dir)
-        if ret_yosys == False:
+        processed_sv2v = False
+        ys_prefix = ""
+        if ret_yosys:
+            ys_prefix = "sv2v_"
+            test_result["yosys"] = "FAIL"
+            test_result["sv2v_yosys"] = "OK"
             preprocessed_path = preprocess_sv2v(test_files_str, work_dir)
             if preprocessed_path == None:
-                test_result["result"] = "SV2V_FAIL"
+                test_result["sv2v_yosys"] = "SV2V_FAIL"
+                test_result["surelog"] = "SKIPPED"
+                test_result["sv2v_surelog"] = "SKIPPED"
                 log_result(test_result, work_dir)
                 continue
-            ret_yosys = run_yosys(preprocessed_path, work_dir)
-            ret_surelog = run_surelog(preprocessed_path, work_dir)
+
+            processed_sv2v = True
+            ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
+            if ret_yosys:
+                test_result["sv2v_yosys"] = "FAIL"
+                test_result["surelog"] = "SKIPPED"
+                test_result["sv2v_surelog"] = "SKIPPED"
+                log_result(test_result, work_dir)
+                continue
         else:
-            ret_surelog = run_surelog(test_files_str, work_dir)
+            test_result["yosys"] = "OK"
+            test_result["sv2v_yosys"] = "SKIPPED"
 
-        # Equivalance check
-        if ret_yosys == True and ret_surelog == True:
+        ret_surelog = run_surelog(test_files_str, work_dir)
+        if not ret_surelog:
             top_module_name = get_test_top_module(work_dir)
-            ret_equiv = run_equiv(top_module_name, work_dir)
+            ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
+            test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
+        else:
+            test_result["surelog"] = "FAIL"
 
-            test_result["result"] = get_equiv_result(work_dir)
-            test_result.update(count_messages(work_dir))
-            test_result.update(get_time_result(ret_equiv.stderr))
+        if processed_sv2v:
+            ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
+            if not ret_surelog:
+                top_module_name = get_test_top_module(work_dir, "sv2v_")
+                ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
+                test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
+            else:
+                test_result["sv2v_surelog"] = "FAIL"
+        else:
+            test_result["sv2v_surelog"] = "SKIPPED"
 
+
+        test_result.update(get_time_result(ret_equiv.stderr))
         log_result(test_result, work_dir)
 
 

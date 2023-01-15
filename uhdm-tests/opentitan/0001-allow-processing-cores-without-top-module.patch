@@ -1,0 +1,36 @@
+From 45c4accc0aea17a5fa45ac1e6ba06483a8edaee2 Mon Sep 17 00:00:00 2001
+From: Wojciech Sipak <wsipak@antmicro.com>
+Date: Thu, 29 Dec 2022 13:31:11 +0100
+Subject: [PATCH] allow processing cores without top module
+
+---
+ fusesoc/edalizer.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/fusesoc/edalizer.py b/fusesoc/edalizer.py
+index de9ff73..584421f 100644
+--- a/fusesoc/edalizer.py
++++ b/fusesoc/edalizer.py
+@@ -317,6 +317,10 @@ class Edalizer:
+                 snippets.append(snippet)
+ 
+         top_core = self.resolved_cores[-1]
++        try:
++            toplevel = top_core.get_toplevel(self.flags)
++        except SyntaxError:
++            toplevel = "None"
+         self.edam = {
+             "version": "0.2.1",
+             "dependencies": {},
+@@ -325,7 +329,7 @@ class Edalizer:
+             "name": self.system_name or top_core.sanitized_name,
+             "parameters": {},
+             "tool_options": {},
+-            "toplevel": top_core.get_toplevel(self.flags),
++            "toplevel": toplevel,
+             "vpi": [],
+         }
+ 
+-- 
+2.38.1
+

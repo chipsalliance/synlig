@@ -470,7 +470,7 @@ jobs:
         path: |
           **/plot_*.svg
 
-  opentitan_synth:
+  opentitan_9d82960888_synth:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
@@ -559,7 +559,7 @@ jobs:
         path: |
           **/plot_*.svg
 
-  opentitan_bisect:
+  opentitan_parse_report:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
@@ -569,17 +569,15 @@ jobs:
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-4"
-
+      GHA_MACHINE_TYPE: "n2-highmem-8"
     steps:
-
     - name: Install dependencies
       run: |
         apt-get update -qq
         apt install -y software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5
+        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5 graphviz libgraphviz-dev pkg-config
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
@@ -597,33 +595,34 @@ jobs:
     - name: Extract
       run: tar -xf binaries.tar
 
-    - name: Build & Test
+    - name: Parse OpenTitan components
       run: |
         source .github/scripts/common.sh
         enable_vivado 2017.2
         pip install virtualenv
-        cd uhdm-tests/opentitan/opentitan
-        pwd
-        ls -la
-        git status
-        git remote -v
-        GOOD_REF=$(git rev-list --max-count=1 HEAD)
-        git pull --unshallow
-        git pull origin master
-        BAD_REF=$(git rev-list --max-count=1 HEAD)
-        COUNT_REF=$(git log ${GOOD_REF}..${BAD_REF} --oneline | wc -l)
-        git bisect start HEAD ${GOOD_REF} --
-        echo "GOOD_REF: ${GOOD_REF}, BAD_REF: ${BAD_REF}, commits: ${COUNT_REF}"
-        git bisect run ../../../.github/scripts/bisect.sh
-        git bisect reset
+        ./UHDM-integration-tests/.github/ci.sh
       env:
-        TARGET: uhdm/yosys/synth-opentitan-build
+        TARGET: opentitan_report
         TEST_CASE: tests/opentitan
 
-    - uses: actions/upload-artifact@v2
+    - name: Generate summary
+      run: cat ./UHDM-integration-tests/opentitan_report.txt | tee $GITHUB_STEP_SUMMARY
+
+    - name: Upload dependency graph
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
       with:
-        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
-        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+        name: opentitan_dependency_graph.svg
+        path: |
+          ./UHDM-integration-tests/opentitan_dependency_graph.svg
+
+    - name: Upload logs
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: opentitan-logs
+        path: |
+          ./UHDM-integration-tests/opentitan_build
 
     - name: Upload load graphs
       if: ${{ always() }}
@@ -690,7 +689,7 @@ jobs:
           **/plot_*.svg
 
   release:
-    needs: [ build-binaries, tests-read-uhdm, tests-read-systemverilog, ibex_synth, opentitan_synth, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
+    needs: [ build-binaries, tests-read-uhdm, tests-read-systemverilog, ibex_synth, opentitan_9d82960888_synth, opentitan_parse_report, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
     runs-on: ubuntu-20.04
     name: Release
     env:
