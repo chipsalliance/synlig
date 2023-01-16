@@ -62,7 +62,7 @@ opentitan_report ${DEPS_SVG} &: | ${OPENTITAN}/.gitpatch ${DEPS_DOT} ${VENV_OT} 
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${VENV_OT}/bin/activate && \
 		cd ${OPENTITAN} && \
-		python3 ${curr_dir}/iterate_cores.py ${DEPS_DOT} && \
+		python3 ${curr_dir}/iterate_cores.py ${DEPS_DOT} --skiplist ${curr_dir}/ot-cores-skiplist.txt --passlist ${curr_dir}/ot-cores-passlist.txt && \
 		dot -Tsvg graph.dot > ${DEPS_SVG} && \
 		mv ${OPENTITAN}/build ${root_dir}/opentitan_build && \
 		mv ${OPENTITAN}/result.txt ${root_dir}/opentitan_report.txt)
