@@ -123,12 +123,14 @@ with open('result.txt', 'w') as f:
         f.write('|----|\n')
         for node in new_passes:
             f.write(f'|{node}|\n')
+        f.write('\n')
 
     if new_fails:
         f.write('| Unexpected fail for cores: |\n')
         f.write('|----|\n')
         for node in new_fails:
             f.write(f'|{node}|\n')
+        f.write('\n')
 
 
 # set node colors and status attributes
