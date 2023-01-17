@@ -33,7 +33,7 @@ TOP := lowrisc:dv:chip_yosys_synth
 TOP_SV = ${OPENTITAN}/hw/top_earlgrey/rtl/top_earlgrey.sv
 
 ${OPENTITAN}/.gitpatch:
-	cd ${OPENTITAN} && git apply ${curr_dir}/0001-add-Core-files-for-processing-Earlgrey-in-Yosys.patch && git apply ${curr_dir}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch && touch $@
+	cd ${OPENTITAN} && git apply ${curr_dir}/0001-add-Core-files-for-processing-Earlgrey-in-Yosys.patch && git apply ${curr_dir}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch && git apply ${curr_dir}/0003-Add-missing-dependencies.patch && touch $@
 
 ${VENV_OT}: | ${OPENTITAN}/.gitpatch
 	virtualenv ${VENV_OT}
