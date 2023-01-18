@@ -608,6 +608,9 @@ jobs:
     - name: Generate summary
       run: cat ./UHDM-integration-tests/opentitan_report.txt | tee $GITHUB_STEP_SUMMARY
 
+    - name: Prune the build directory
+      run: find ./UHDM-integration-tests/opentitan_build -name "src" | xargs rm -rf
+
     - name: Upload dependency graph
       if: ${{ always() }}
       uses: actions/upload-artifact@v2
