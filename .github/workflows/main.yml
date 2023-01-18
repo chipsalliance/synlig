@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       plugins_branch:
-        description: 'yosys-symbiflow-plugins branch'
+        description: 'yosys-f4pga-plugins branch'
         required: false
         default: ''
   push:
@@ -75,7 +75,7 @@ jobs:
     - name: Checkout custom branches in submodules (if requested)
       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
       run: |
-        cd yosys-symbiflow-plugins
+        cd yosys-f4pga-plugins
         git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
         git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
         git checkout FETCH_HEAD

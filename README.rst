@@ -119,7 +119,7 @@ As a simple example, we run Verilog code synthesis using the plugin.
 .. code-block:: bash
    :name: example-verilog
 
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog yosys-symbiflow-plugins/systemverilog-plugin/tests/counter/counter.v"
+   yosys -p "plugin -i systemverilog" -p "read_systemverilog yosys-f4pga-plugins/systemverilog-plugin/tests/counter/counter.v"
 
 In the second example, we need to first convert SystemVerilog file into UHDM using Surelog and then read it into Yosys.
 
@@ -147,9 +147,9 @@ To parse a multi-file with the ``read_systemverilog`` command, all files have to
 
     plugin -i systemverilog
     # Read each file separately
-    read_systemverilog -defer yosys-symbiflow-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation.v
-    read_systemverilog -defer yosys-symbiflow-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-buf.sv
-    read_systemverilog -defer yosys-symbiflow-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-pkg.sv
+    read_systemverilog -defer yosys-f4pga-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation.v
+    read_systemverilog -defer yosys-f4pga-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-buf.sv
+    read_systemverilog -defer yosys-f4pga-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-pkg.sv
     # Finish reading files, elaborate the design
     read_systemverilog -link
     # Continue Yosys flow...
@@ -190,13 +190,13 @@ Start a workflow manually (using Github CLI)
 Using plugins submodule override
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This method can be used to test changes limited to `yosys-symbiflow-plugins` submodule.
+This method can be used to test changes limited to `yosys-f4pga-plugins` submodule.
 
-- Push your changes in `yosys-symbiflow-plugins` into a branch in https://github.com/antmicro/yosys-f4pga-plugins/
+- Push your changes in `yosys-f4pga-plugins` into a branch in https://github.com/antmicro/yosys-f4pga-plugins/
 - Perform steps from "Start a workflow manually (using Github Web UI)" above, but:
 
   - Select "master" (or any other branch with submodule revisions you would like to use in the CI) in the "Use workflow from" dropdown.
-  - In the same pop-up, under "yosys-symbiflow-plugins branch", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/. This branch will be checked out in `yosys-symbiflow-plugins` submodule.
+  - In the same pop-up, under "yosys-f4pga-plugins branch", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/. This branch will be checked out in `yosys-f4pga-plugins` submodule.
 
 - Alternatively, use Github CLI:
 
