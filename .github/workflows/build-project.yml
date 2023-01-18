@@ -1,0 +1,272 @@
+name: Build project
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        type: string
+        required: true
+      submodule-dir:
+        type: string
+        required: true
+      use-ccache:
+        type: boolean
+        required: false
+        default: false
+      cache-dir:
+        type: string
+        required: true
+      install-dir:
+        type: string
+        required: true
+      prepare-script:
+        type: string
+        required: false
+        default: ''
+      build-script:
+        type: string
+        required: true
+
+      # cache-dependency-1-name:
+        # required: false
+        # type: string
+      # cache-dependency-1-dir:
+        # required: false
+        # type: string
+      # cache-dependency-2-name:
+        # required: false
+        # type: string
+      # cache-dependency-2-dir:
+        # required: false
+        # type: string
+      # cache-dependency-3-name:
+        # required: false
+        # type: string
+      # cache-dependency-3-dir:
+        # required: false
+        # type: string
+
+jobs:
+  build:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      CC: gcc-9
+      CXX: g++-9
+
+      # Move non-script inputs to environment variables to avoid accidental code injection
+      MYCI_NAME: ${{ inputs.name }}
+      MYCI_SUBMODULE_DIR: ${{ inputs.submodule-dir }}
+      MYCI_USE_CCACHE: ${{ inputs.use-ccache && 'true' || 'false' }}
+      MYCI_CACHE_DIR: ${{ inputs.cache-dir }}
+      MYCI_INSTALL_DIR: ${{ inputs.install-dir }}
+
+      MY_INSTALL_CACHE_DIR: ${{ inputs.cache-dir }}/image/${{ inputs.name }}
+      MY_INSTALL_DIR: ${{ inputs.install-dir }}
+
+      MY_INSTALL_FILES_LIST: ${{ inputs.cache-dir }}/image_before.txt
+
+      # Length of SHA1 hash used in cache keys. Full hash has 40 characters.
+      MYCI_CACHE_HASH_LENGTH: 20
+
+      # MY_DEP_1_NAME: ${{ inputs.cache-dependency-1-name }}
+      # MY_DEP_1_DIR:  ${{ inputs.cache-dependency-1-dir }}
+      # MY_DEP_2_NAME: ${{ inputs.cache-dependency-2-name }}
+      # MY_DEP_2_DIR:  ${{ inputs.cache-dependency-2-dir }}
+      # MY_DEP_3_NAME: ${{ inputs.cache-dependency-3-name }}
+      # MY_DEP_3_DIR:  ${{ inputs.cache-dependency-3-dir }}
+
+    outputs:
+      cache-key: ${{ inputs.name }}@${{ steps.rev.outputs.repo-hash }}+deps@${{ steps.rev.outputs.deps-hash }}
+
+    steps:
+
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'false'
+
+    - name: 'Normalize job inpus'
+      run: |
+        # Names of all variable with paths that we want to be absolute.
+        env_vars_with_paths=(
+          MYCI_CACHE_DIR
+          MYCI_INSTALL_DIR
+          MY_INSTALL_CACHE_DIR
+          MY_INSTALL_DIR
+          MY_INSTALL_FILES_LIST
+        )
+        for varname in ${env_vars_with_paths[@]}; do
+          declare -n varref="$varname"
+          varref="$(realpath -ms "$varref")"
+          printf '%s=%s\n' "$varname" "$varref" >> $GITHUB_ENV
+        done
+
+    - name: 'Install git'
+      run: |
+        # TODO(mglb): replace grep with sed
+        mirrors="$(grep '^deb http://archive\.ubuntu\.com' /etc/apt/sources.list | sed -e 's`http://archive.ubuntu.com/ubuntu/`mirror://mirrors.ubuntu.com/mirrors.txt`')"
+        printf '%s\n' "$mirrors" >> /etc/apt/sources.list
+
+        apt-get update -qq
+        apt-get install -y git
+        # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
+        # Make sure we always use https:// instead of git://
+        git config --global url.https://github.com/.insteadOf git://github.com/
+
+    - name: 'Get project revision'
+      id: rev
+      run: |
+        # TODO(mglb): support overrides from workflow inputs
+        repo_hash="$(git submodule status "$MYCI_SUBMODULE_DIR")"
+        # Skip first character which is ' ' or '+'
+        repo_hash="${repo_hash:1:$MYCI_CACHE_HASH_LENGTH}"
+
+        # TODO(mglb): hash .github and build scripts and replace dummy hash below
+        deps_hash=$(printf "%0.${MYCI_CACHE_HASH_LENGTH}x\n" 0)
+        # WORKAROUND(mglb): GITHUB_OUTPUT is not supported in our runner at this point. The old method is suported.
+        # printf '%s=%s\n'  'repo-hash'  "${repo_hash}" >> $GITHUB_OUTPUT
+        # printf '%s=%s\n'  'deps-hash'  "${deps_hash}" >> $GITHUB_OUTPUT
+        printf '::set-output name=%s::%s\n' 'repo-hash' "${repo_hash}"
+        printf '::set-output name=%s::%s\n' 'deps-hash' "${deps_hash}"
+
+    - name: 'Try restoring build results from cache'
+      id: results-cache-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: ${{ env.MY_INSTALL_CACHE_DIR }}
+        key: ${{ env.MYCI_NAME }}@${{ steps.rev.outputs.repo-hash }}+deps@${{ steps.rev.outputs.deps-hash }}
+
+    - name: 'Prepare'
+      if: ${{ steps.results-cache-restore.outputs.cache-hit != 'true' && inputs.prepare-script }}
+      run: |
+        mkdir -p "$MYCI_CACHE_DIR"
+        (
+        ${{ inputs.prepare-script }}
+        )
+
+        if $MYCI_USE_CCACHE; then
+          export CCACHE_DIR="$MYCI_CACHE_DIR/ccache/$MYCI_NAME"
+          printf '%s=%s\n' 'CCACHE_DIR' "$CCACHE_DIR" >> $GITHUB_ENV
+          mkdir -p "$CCACHE_DIR"
+
+          apt-get install -y ccache
+
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          printf '%s=%s\n' 'PATH' "$PATH" >> $GITHUB_ENV
+        fi
+        # TODO(mglb): update dependency repositories
+        git submodule update --init --recursive "$MYCI_SUBMODULE_DIR"
+
+    # - name: 'Get dependency 1 from cache'
+      # if: >
+        # ${{ inputs.cache-dependency-1-name
+            # && inputs.cache-dependency-1-dir
+            # && steps.results-cache-restore.outputs.cache-hit != 'true' }}
+      # id: get-dep-1
+      # uses: actions/cache/restore@v3
+      # with:
+        # path: ${{ inputs.cache-dependency-1-dir }}
+        # key: ${{ inputs.cache-dependency-1-name }}
+
+    # - name: 'Get dependency 2 from cache'
+      # if: >
+        # ${{ inputs.cache-dependency-2-name
+            # && inputs.cache-dependency-2-dir
+            # && steps.results-cache-restore.outputs.cache-hit != 'true' }}
+      # id: get-dep-2
+      # uses: actions/cache/restore@v3
+      # with:
+        # path: ${{ inputs.cache-dependency-2-dir }}
+        # key: ${{ inputs.cache-dependency-2-name }}
+
+    # - name: 'Get dependency 3 from cache'
+      # if: >
+        # ${{ inputs.cache-dependency-3-name
+            # && inputs.cache-dependency-3-dir
+            # && steps.results-cache-restore.outputs.cache-hit != 'true' }}
+      # id: get-dep-3
+      # uses: actions/cache/restore@v3
+      # with:
+        # path: ${{ inputs.cache-dependency-3-dir }}
+        # key: ${{ inputs.cache-dependency-3-name }}
+
+    # - name: 'Install dependencies'
+      # if: >
+        # ${{ (inputs.cache-dependency-1-name
+              # || inputs.cache-dependency-2-name
+              # || inputs.cache-dependency-3-name)
+            # && steps.results-cache-restore.outputs.cache-hit != 'true' }}
+      # run: |
+        # declare -ra dep_oks=(
+          # '${{ steps.get-dep-1.outputs.cache-hit }}'
+          # '${{ steps.get-dep-2.outputs.cache-hit }}'
+          # '${{ steps.get-dep-3.outputs.cache-hit }}'
+        # )
+        # mkdir -p "$MY_INSTALL_DIR"
+        # for i in 1 2 3; do
+          # declare -n dep_name="MY_DEP_${i}_NAME"
+          # declare -n dep_dir="MY_DEP_${i}_DIR"
+          # declare    dep_ok="${dep_oks[$i-1]}"
+
+          # if [[ -n "$dep_name" && -n "$dep_dir" ]]; then
+            # if [[ "$dep_ok" != 'true' ]]; then
+              # printf "Failed to get dependency '%s' from cache\n" "$dep_name" >&2
+              # exit 1
+            # fi
+            # cp -a "$dep_dir" "$MY_INSTALL_DIR"
+          # fi
+        # done
+        # cd "$MY_INSTALL_DIR"
+        # mkdir -p "$(dirname "$MY_INSTALL_FILES_LIST")"
+        # find ./ -not type d | sort > "$MY_INSTALL_FILES_LIST"
+
+    - name: 'Restore CCache cache'
+      if: ${{ inputs.use-ccache && steps.results-cache-restore.outputs.cache-hit != 'true' }}
+      id: ccache-cache-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: ${{ env.CCACHE_DIR }}
+        key: ccache.${{ env.MYCI_NAME }}@${{ steps.rev.outputs.repo-hash }}+deps@${{ steps.rev.outputs.deps-hash }}
+        restore-keys: |
+          ccache.${{ env.MYCI_NAME }}@${{ steps.rev.outputs.repo-hash }}+deps@
+          ccache.${{ env.MYCI_NAME }}@
+
+    - name: 'Build'
+      id: build
+      if: ${{ steps.results-cache-restore.outputs.cache-hit != 'true' }}
+      run: |
+        printf '::set-output name=%s::%s\n'  'started'  'true'
+        ${{ inputs.build-script }}
+
+    - name: 'Collect build results'
+      if: ${{ steps.results-cache-restore.outputs.cache-hit != 'true' && ! (failure() || cancelled()) }}
+      run: |
+        if [[ -e "$MY_INSTALL_FILES_LIST" ]]; then
+          mkdir -p "$MY_INSTALL_CACHE_DIR"
+          install_files_list_after="$MYCI_CACHE_DIR/image_after.txt"
+          (
+            cd "$MY_INSTALL_DIR"
+            find ./ -not type d | sort > "$install_files_list_after"
+            while read -r f; do
+              cp -a --parents "$f" "$MY_INSTALL_CACHE_DIR"
+            done < <(comm -13 "$MY_INSTALL_FILES_LIST" "$install_files_list_after")
+          )
+        else
+          mkdir -p "$(dirname "$MY_INSTALL_CACHE_DIR")"
+          mv -f "$MY_INSTALL_DIR" "$MY_INSTALL_CACHE_DIR"
+        fi
+
+    - name: 'Save build results to cache'
+      if: ${{ steps.results-cache-restore.outputs.cache-hit != 'true' && ! (failure() || cancelled()) }}
+      uses: actions/cache/save@v3
+      with:
+        path: ${{ env.MY_INSTALL_CACHE_DIR }}
+        key: ${{ steps.results-cache-restore.outputs.cache-primary-key }}
+
+    - name: 'Save CCache cache'
+      if: ${{ inputs.use-ccache && steps.results-cache-restore.outputs.cache-hit != 'true' && steps.build.outputs.started == 'true' && (success() || failure()) }}
+      uses: actions/cache/save@v3
+      with:
+        path: ${{ env.CCACHE_DIR }}
+        key: ${{ steps.ccache-cache-restore.outputs.cache-primary-key }}
