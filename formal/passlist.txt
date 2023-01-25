@@ -435,3 +435,4 @@ InterfaceParameter_top.sv
 PatternParameterInSubmodule_top.sv
 BreakWhile_top.sv
 2DeclarationsInFor_top.sv
+sat_asserts.v
