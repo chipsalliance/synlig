@@ -73,6 +73,7 @@ jobs:
       CC: gcc-9
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
+      TEST_CASE: tests/ibex
 
     steps:
       - uses: actions/checkout@v3
@@ -102,14 +103,14 @@ jobs:
       - name: Extract
         run: tar -xf binaries.tar
 
-      - name: Build & Test
+      - name: Setup build environment
         run: |
-          pip install virtualenv
-          make -C UHDM-integration-tests TEST=tests/ibex env
-          ./UHDM-integration-tests/.github/ci.sh
+          make -C ./UHDM-integration-tests -j1 TEST=${TEST_CASE} env
+
+      - name: Build & Test
         env:
           TARGET: uhdm/yosys/synth-ibex-symbiflow
-          TEST_CASE: tests/ibex
+        run: ./UHDM-integration-tests/.github/ci.sh
 
       - uses: actions/upload-artifact@v2
         with:
