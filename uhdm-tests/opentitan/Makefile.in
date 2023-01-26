@@ -5,7 +5,7 @@ OPENTITAN = ${curr_dir}/opentitan
 VENV_OT_9d82960888 = ${root_dir}/venv-opentitan-9d82960888
 VENV_OT = ${root_dir}/venv-opentitan
 TOOLCHAIN = ${curr_dir}/toolchain-install
-DEPS_DOT = ${OPENTITAN}/lowrisc_dv_chip_yosys_synth_0.dot
+DEPS_DOT = ${OPENTITAN}/lowrisc_systems_chip_earlgrey_yosys_0.1.dot
 DEPS_SVG = ${root_dir}/opentitan_dependency_graph.svg
 
 ##############################
@@ -29,11 +29,11 @@ uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN_9d82960888}/.gitpatc
 #################
 ### OPENTITAN ###
 #################
-TOP := lowrisc:dv:chip_yosys_synth
+TOP := lowrisc:systems:chip_earlgrey_yosys:0.1
 TOP_SV = ${OPENTITAN}/hw/top_earlgrey/rtl/top_earlgrey.sv
 
 ${OPENTITAN}/.gitpatch:
-	cd ${OPENTITAN} && git apply ${curr_dir}/0001-add-Core-files-for-processing-Earlgrey-in-Yosys.patch && git apply ${curr_dir}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch && git apply ${curr_dir}/0003-Add-missing-dependencies.patch && touch $@
+	cd ${OPENTITAN} && git apply ${curr_dir}/0001-Add-core-files-for-processing-Earlgrey-in-Yosys.patch && git apply ${curr_dir}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch && git apply ${curr_dir}/0003-Add-missing-dependencies.patch && touch $@
 
 ${VENV_OT}: | ${OPENTITAN}/.gitpatch
 	virtualenv ${VENV_OT}
