@@ -100,13 +100,17 @@ def get_time_result(stderr_str):
     return result
 
 
+def make_timeout_cmd(timeout_s: int, kill_after_s: int = 10):
+    return ['timeout', '-k', str(kill_after_s), str(timeout_s) + 's']
+
+
 def preprocess_sv2v(test_sources, work_path):
     """
     Converts all source files from test to Verilog with sv2v
     """
 
     sv2v_out = os.path.join(work_path, "sv2v.v")
-    process = subprocess.run(["sv2v", test_sources, "-w=%s" % sv2v_out])
+    process = subprocess.run([*make_timeout_cmd(5*60), "sv2v", test_sources, "-w=%s" % sv2v_out])
     if process.returncode != 0:
         return None
 
@@ -143,7 +147,7 @@ def run_surelog(test_path, output_dir, prefix=""):
         script_file.close()
 
     process = subprocess.run(
-        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/%ssurelog.out" % (output_dir, prefix)],
+        [*make_timeout_cmd(10*60), "yosys", "-s", script_path, "-q", "-q", "-l", "%s/%ssurelog.out" % (output_dir, prefix)],
         capture_output=True,
         text=True,
     )
@@ -169,7 +173,7 @@ def run_yosys(test_path, output_dir, prefix=""):
         script_file.close()
 
     process = subprocess.run(
-        ["yosys", "-s", script_path, "-q", "-q", "-l", "%s/%syosys.out" % (output_dir, prefix)],
+        [*make_timeout_cmd(10*60), "yosys", "-s", script_path, "-q", "-q", "-l", "%s/%syosys.out" % (output_dir, prefix)],
         capture_output=True,
         text=True,
     )
@@ -224,6 +228,7 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
         [
             "/usr/bin/env",
             "time",
+            *make_timeout_cmd(10*60),
             "yosys",
             "-s",
             script_path,
