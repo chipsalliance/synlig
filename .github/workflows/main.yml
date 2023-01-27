@@ -354,78 +354,8 @@ jobs:
           ./.github/scripts/generate_summary.sh
 
   tests-formal-verification:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    uses: ./.github/workflows/formal-verification.yml
     needs: build-binaries
-    strategy:
-      matrix:
-        test-suite: [UHDM-integration-tests/tests, sv2v/test, yosys/tests]
-      fail-fast: false
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      GIT_HTTP_LOW_SPEED_LIMIT: 1
-      GIT_HTTP_LOW_SPEED_TIME: 600
-      DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-highmem-4"
-      PARSER: yosys-plugin
-      TEST_SUITE: ${{ matrix.test-suite }}
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-      - name: Install dependencies
-        run: |
-          apt-get update -qq
-          apt install -y software-properties-common
-          add-apt-repository ppa:ubuntu-toolchain-r/test
-          apt-get update -qq
-          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time python3
-
-      - name: Download binaries
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries
-
-      # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries.tar
-
-      - name: Test
-        run: |
-          source .github/scripts/common.sh
-          ./run_fv_tests.sh ${{ matrix.test-suite }}
-
-      - name: Pack formal verification logs
-        run: |
-          cd build
-          tar cf ${TEST_SUITE//\//_}.tar tests/*/*/*.out tests/*/*/slpp_all/*.log tests/*/*/*.txt tests/*/*/result.json
-
-      - name: Upload formal verification logs
-        uses: actions/upload-artifact@v2
-        with:
-          name: formal-verification-logs
-          path: |
-            build/*.tar
-
-      - name: Upload load graphs
-        uses: actions/upload-artifact@v2
-        with:
-          name: plots
-          path: |
-            **/plot_*.svg
-
-      # Do this at the end as this can actually fail
-      - name: Check results and print a summary
-        run: |
-          set -o pipefail
-          python3 ./formal/formal_results.py build | tee $GITHUB_STEP_SUMMARY
 
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
