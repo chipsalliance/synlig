@@ -322,6 +322,25 @@ def log_result(result, output_dir):
         result_file.close()
 
 
+def group_begin(name: str):
+    sys.stdout.flush()
+    sys.stderr.flush()
+    label = f"\x1b[97;1m{name}\x1b[0m"
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        print(f"::group::{label}")
+    else:
+        print(label)
+
+
+def group_end():
+    sys.stdout.flush()
+    sys.stderr.flush()
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        print("::endgroup::")
+    else:
+        print()
+
+
 def main():
     test_path = os.path.abspath(os.path.normpath(sys.argv[1]))
     output_path = os.path.join(os.getcwd(), "build", "tests")
@@ -369,56 +388,59 @@ def main():
         if test_name in skiplist:
             test_result["result"] = "SKIPPED"
             continue
-        # Run synthesis of test's source files and export Verilog
-        ret_yosys = run_yosys(test_files_str, work_dir)
-        processed_sv2v = False
-        ys_prefix = ""
-        if ret_yosys:
-            ys_prefix = "sv2v_"
-            test_result["yosys"] = "FAIL"
-            test_result["sv2v_yosys"] = "OK"
-            preprocessed_path = preprocess_sv2v(test_files_str, work_dir)
-            if preprocessed_path == None:
-                test_result["sv2v_yosys"] = "SV2V_FAIL"
-                test_result["surelog"] = "SKIPPED"
-                test_result["sv2v_surelog"] = "SKIPPED"
-                log_result(test_result, work_dir)
-                continue
 
-            processed_sv2v = True
-            ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
+        group_begin(test_name)
+        try:
+            # Run synthesis of test's source files and export Verilog
+            ret_yosys = run_yosys(test_files_str, work_dir)
+            processed_sv2v = False
+            ys_prefix = ""
             if ret_yosys:
-                test_result["sv2v_yosys"] = "FAIL"
-                test_result["surelog"] = "SKIPPED"
-                test_result["sv2v_surelog"] = "SKIPPED"
-                log_result(test_result, work_dir)
-                continue
-        else:
-            test_result["yosys"] = "OK"
-            test_result["sv2v_yosys"] = "SKIPPED"
+                ys_prefix = "sv2v_"
+                test_result["yosys"] = "FAIL"
+                test_result["sv2v_yosys"] = "OK"
+                preprocessed_path = preprocess_sv2v(test_files_str, work_dir)
+                if preprocessed_path == None:
+                    test_result["sv2v_yosys"] = "SV2V_FAIL"
+                    test_result["surelog"] = "SKIPPED"
+                    test_result["sv2v_surelog"] = "SKIPPED"
+                    continue
 
-        ret_surelog = run_surelog(test_files_str, work_dir)
-        if not ret_surelog:
-            top_module_name = get_test_top_module(work_dir)
-            ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
-            test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
-        else:
-            test_result["surelog"] = "FAIL"
-
-        if processed_sv2v:
-            ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
-            if not ret_surelog:
-                top_module_name = get_test_top_module(work_dir, "sv2v_")
-                ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
-                test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
+                processed_sv2v = True
+                ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
+                if ret_yosys:
+                    test_result["sv2v_yosys"] = "FAIL"
+                    test_result["surelog"] = "SKIPPED"
+                    test_result["sv2v_surelog"] = "SKIPPED"
+                    continue
             else:
-                test_result["sv2v_surelog"] = "FAIL"
-        else:
-            test_result["sv2v_surelog"] = "SKIPPED"
+                test_result["yosys"] = "OK"
+                test_result["sv2v_yosys"] = "SKIPPED"
 
+            ret_surelog = run_surelog(test_files_str, work_dir)
+            if not ret_surelog:
+                top_module_name = get_test_top_module(work_dir)
+                ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
+                test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
+            else:
+                test_result["surelog"] = "FAIL"
 
-        test_result.update(get_time_result(ret_equiv.stderr))
-        log_result(test_result, work_dir)
+            if processed_sv2v:
+                ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
+                if not ret_surelog:
+                    top_module_name = get_test_top_module(work_dir, "sv2v_")
+                    ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
+                    test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
+                else:
+                    test_result["sv2v_surelog"] = "FAIL"
+            else:
+                test_result["sv2v_surelog"] = "SKIPPED"
+
+            test_result.update(get_time_result(ret_equiv.stderr))
+
+        finally:
+            log_result(test_result, work_dir)
+            group_end()
 
 
 if __name__ == "__main__":
