@@ -155,6 +155,10 @@ To parse a multi-file with the ``read_systemverilog`` command, all files have to
     # Continue Yosys flow...
     exit
 
+The :code:`-defer` flag is experimental.
+If you encounter any problems with it, please compare the results with a single `read_systemverilog` command,
+check the `open issues <https://github.com/chipsalliance/yosys-f4pga-plugins/issues>`_, and open a new issue if needed.
+
 Testing in CI/Github Actions
 ----------------------------
 
