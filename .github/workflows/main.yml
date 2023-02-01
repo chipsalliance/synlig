@@ -38,7 +38,7 @@ jobs:
 
   build-binaries:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     env:
       CC: gcc-9
       CXX: g++-9
@@ -115,7 +115,7 @@ jobs:
 
   tests-read-uhdm:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: [build-binaries]
     strategy:
       fail-fast:
@@ -182,7 +182,7 @@ jobs:
 
   tests-read-systemverilog:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: [build-binaries]
     strategy:
       fail-fast:
@@ -249,7 +249,7 @@ jobs:
 
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: [build-binaries]
     strategy:
       fail-fast:
@@ -322,7 +322,7 @@ jobs:
 
   generate-tests-summary:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     if: ${{ always() }}
     needs: [tests-read-uhdm, tests-read-systemverilog, tests-vcddiff]
     steps:
@@ -340,7 +340,7 @@ jobs:
 
   tests-formal-verification:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: [build-binaries]
     strategy:
       matrix:
@@ -413,7 +413,7 @@ jobs:
 
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: build-binaries
     env:
       CC: gcc-9
@@ -473,7 +473,7 @@ jobs:
   opentitan_9d82960888_synth:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: build-binaries
     env:
       CC: gcc-9
@@ -562,7 +562,7 @@ jobs:
   opentitan_parse_report:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: build-binaries
     env:
       CC: gcc-9
@@ -637,7 +637,7 @@ jobs:
 
   swerv_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: build-binaries
     env:
       CC: gcc-9
@@ -766,7 +766,7 @@ jobs:
 
   ibex_synth_symbiflow:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: ubuntu:jammy-20221130
     needs: build-binaries
     env:
       CC: gcc-9
