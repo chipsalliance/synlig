@@ -695,8 +695,6 @@ jobs:
     needs: [ build-binaries, tests-read-uhdm, tests-read-systemverilog, ibex_synth, opentitan_9d82960888_synth, opentitan_parse_report, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
     runs-on: ubuntu-20.04
     name: Release
-    env:
-      GHA_MACHINE_TYPE: "n2-standard-2"
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
 
     steps:
