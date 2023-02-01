@@ -729,12 +729,35 @@ jobs:
         ls -lah image
         tar -zcvf $FULL_TARBALL image
         tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so image/share/yosys/plugins/systemverilog.so install_plugin.sh
+    - name: Get PR data
+      uses: 8BitJonny/gh-get-current-pr@2.2.0
+      with:
+        sha: ${{ github.event.pull_request.head.sha }}
+      id: release_pr
     - name: Deploy release
+      env:
+        RELEASE_NAME: >
+          ${{ steps.release_pr.outputs.pr_found == 'true'
+              &&
+                format('{0}: #{1}: {2}',
+                       env.TAG,
+                       steps.release_pr.outputs.number,
+                       steps.release_pr.outputs.pr_title)
+              ||
+                env.TAG }}
+        RELEASE_BODY: >
+          ${{ steps.release_pr.outputs.pr_found == 'true'
+              &&
+                steps.release_pr.outputs.pr_body
+              ||
+                '' }}
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: yosys-uhdm-*.tar.gz
         tag: ${{ env.TAG }}
+        release_name: ${{ env.RELEASE_NAME }}
+        body: ${{ env.RELEASE_BODY }}
         overwrite: true
         file_glob: true
 
