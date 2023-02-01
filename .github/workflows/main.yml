@@ -606,7 +606,11 @@ jobs:
         TEST_CASE: tests/opentitan
 
     - name: Generate summary
-      run: cat ./UHDM-integration-tests/opentitan_report.txt | tee $GITHUB_STEP_SUMMARY
+      run: |
+        cat ./UHDM-integration-tests/opentitan_report.txt | tee $GITHUB_STEP_SUMMARY
+        if grep -iq 'Unexpected \(pass\|fail\)' ./UHDM-integration-tests/opentitan_report.txt; then
+          exit 1
+        fi
 
     - name: Prune the build directory
       run: find ./UHDM-integration-tests/opentitan_build -name "src" | xargs rm -rf
