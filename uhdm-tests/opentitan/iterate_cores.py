@@ -10,20 +10,34 @@ from subprocess import run
 from enum import Enum
 import argparse
 import pygraphviz as pgv
+import re
 import networkx as nx
 
 parser = argparse.ArgumentParser()
 parser.add_argument('dot', help='Dot file with dependency graph generated using "fusesoc dep graph …"')
+parser.add_argument('--skiplist', help='file with a list of Cores to skip')
+parser.add_argument('--passlist', help='file with a list of Cores expected to pass')
 args = parser.parse_args()
 
 dot_graph = pgv.AGraph(args.dot)
 graph = nx.DiGraph(dot_graph)
+
+skiplist = ''
+if args.skiplist:
+    with open(args.skiplist) as f:
+        skiplist = f.read()
+
+passlist = ''
+if args.passlist:
+    with open(args.passlist) as f:
+        passlist = f.read()
 
 class Status(Enum):
     FAILED = 1
     PASSED = 2
     UNKNOWN = 3
     SKIPPED = 4
+    DEPENDENCY_FAILED = 5
 
 nx.set_node_attributes(graph, {node: Status.UNKNOWN for node in graph}, 'status')
 root = [node for node, degree in graph.in_degree() if degree == 0][0]
@@ -42,13 +56,18 @@ def process_node(graph, node):
 
 for node in nodes:
     children_names = list(graph[node])
+    # If the node belongs to the skiplist, set status and continue
+    if re.search("^" + node, skiplist, re.MULTILINE):
+        nx.set_node_attributes(graph, {node: Status.SKIPPED}, 'status')
+        continue
+
     # If any of the children failed, skip this node
     for child in children_names:
         status = nx.get_node_attributes(graph, 'status')[child]
-        if  status == Status.FAILED or status == Status.SKIPPED:
-            nx.set_node_attributes(graph, {node: Status.SKIPPED}, 'status')
+        if  status == Status.FAILED or status == Status.DEPENDENCY_FAILED:
+            nx.set_node_attributes(graph, {node: Status.DEPENDENCY_FAILED}, 'status')
             break
-    if nx.get_node_attributes(graph, 'status')[node] == Status.SKIPPED:
+    if nx.get_node_attributes(graph, 'status')[node] == Status.DEPENDENCY_FAILED:
         continue
     process_node(graph, node)
 
@@ -59,8 +78,9 @@ with open('result.txt', 'w') as f:
 
     status_labels = {
         Status.PASSED: ':heavy_check_mark: PASSED',
-        Status.FAILED: ':x: FAILED',
         Status.SKIPPED: ':heavy_minus_sign: SKIPPED',
+        Status.FAILED: ':x: FAILED',
+        Status.DEPENDENCY_FAILED: ':x: DEPENDENCY_FAILED',
     }
     for node in graph:
         status = nx.get_node_attributes(graph, 'status')[node]
@@ -70,6 +90,7 @@ with open('result.txt', 'w') as f:
     passed = {node for node, status in nx.get_node_attributes(graph, 'status').items() if status == Status.PASSED}
     failed = {node for node, status in nx.get_node_attributes(graph, 'status').items() if status == Status.FAILED}
     skipped = {node for node, status in nx.get_node_attributes(graph, 'status').items() if status == Status.SKIPPED}
+    dependecy_failed = {node for node, status in nx.get_node_attributes(graph, 'status').items() if status == Status.DEPENDENCY_FAILED}
 
     f.write('\n')
     f.write('|  |  |\n')
@@ -77,6 +98,7 @@ with open('result.txt', 'w') as f:
     f.write(f'| PASSED | {len(passed)} |\n')
     f.write(f'| FAILED | {len(failed)} |\n')
     f.write(f'| SKIPPED | {len(skipped)} |\n')
+    f.write(f'| DEPENDENCY_FAILED | {len(dependecy_failed)} |\n')
     f.write('\n')
 
     failed_deps = {str(fail): list(graph.predecessors(fail)) for fail in failed} 
@@ -90,6 +112,25 @@ with open('result.txt', 'w') as f:
         f.write(f'|{dependency}|{pred}|{len(predecessors)}|\n')
     f.write('\n')
     f.write(f'(limited to {result_limit} results)\n')
+
+    # cores that previously didn't pass for whatever reason, and now passed
+    new_passes = {node for node in passed if not re.search("^" + node, passlist, re.MULTILINE)}
+    # cores that previously passed and now don't
+    new_fails = {node for node in failed if re.search("^" + node, passlist, re.MULTILINE)}
+
+    if new_passes:
+        f.write('| Unexpected pass for cores: |\n')
+        f.write('|----|\n')
+        for node in new_passes:
+            f.write(f'|{node}|\n')
+        f.write('\n')
+
+    if new_fails:
+        f.write('| Unexpected fail for cores: |\n')
+        f.write('|----|\n')
+        for node in new_fails:
+            f.write(f'|{node}|\n')
+        f.write('\n')
 
 
 # set node colors and status attributes
