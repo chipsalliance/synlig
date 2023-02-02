@@ -417,6 +417,7 @@ def main():
                 test_result["yosys"] = "OK"
                 test_result["sv2v_yosys"] = "SKIPPED"
 
+            ret_equiv = None
             ret_surelog = run_surelog(test_files_str, work_dir)
             if not ret_surelog:
                 top_module_name = get_test_top_module(work_dir)
@@ -436,7 +437,8 @@ def main():
             else:
                 test_result["sv2v_surelog"] = "SKIPPED"
 
-            test_result.update(get_time_result(ret_equiv.stderr))
+            if ret_equiv is not None:
+                test_result.update(get_time_result(ret_equiv.stderr))
 
         finally:
             log_result(test_result, work_dir)
