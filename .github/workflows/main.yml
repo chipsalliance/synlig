@@ -656,6 +656,7 @@ jobs:
       - build-binaries
       - tests-read-uhdm
       - tests-read-systemverilog
+      - tests-formal-verification
       - ibex_synth
       - opentitan_9d82960888_synth
       - opentitan_parse_report
