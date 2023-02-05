@@ -79,6 +79,10 @@ fv_header = (
 )
 
 
+def emit_warn(title: str, msg: str):
+    print(f"::warning title={title}::{msg}", file=sys.stderr)
+
+
 def process_data(results_path, result_keys: list, result_description_keys: list):
     result_files = []
     result_count = {}
@@ -97,28 +101,39 @@ def process_data(results_path, result_keys: list, result_description_keys: list)
                 result_files.append(os.path.join(root, f))
 
     for f in result_files:
-        with open(f, "r") as file:
-            result_data = json.load(file)
+        try:
+            with open(f, "r") as file:
+                result_data = json.load(file)
             results[result_data["name"]] = {}
             for result in result_keys:
                 results[result_data["name"]][result] = result_data[result]
+        except KeyError:
+            emit_warn("Missing key in results of test `{result_data.get('name', '?')}`",
+                    f"Missing key `{result}` in `{result_data!r}`.\n")
+            continue
 
     failed_should_pass = []
     passed_should_fail = []
+    passlist_contents = set()
     with open("formal/passlist.txt", "r") as passlist:
-        passlist_contents = passlist.read()
+        passlist_contents = {line.strip() for line in passlist}
 
-        for test in results.keys():
-            for r in result_keys:
+    for test in results.keys():
+        for r in result_keys:
+            try:
                 result_count[results[test][r]][r] += 1
+            except KeyError:
+                emit_warn("Missing key in results of test `{test}`",
+                        f"Missing key `{r}` in `{results[test]!r}`.\n")
+                continue
 
-            if (results[test]["yosys"] == "OK" and results[test]["surelog"] == "PASS") or \
-               (results[test]["sv2v_yosys"] == "OK" and results[test]["sv2v_surelog"] == "PASS"):
-                if not re.search("^" + test, passlist_contents, re.MULTILINE):
-                    passed_should_fail.append(test)
-            else: # Any other result is effectively FAIL
-                if re.search("^" + test, passlist_contents, re.MULTILINE):
-                    failed_should_pass.append(test)
+        if (results[test].get("yosys") == "OK" and results[test].get("surelog") == "PASS") or \
+           (results[test].get("sv2v_yosys") == "OK" and results[test].get("sv2v_surelog") == "PASS"):
+            if test not in passlist_contents:
+                passed_should_fail.append(test)
+        else: # Any other result is effectively FAIL
+            if test in passlist_contents:
+                failed_should_pass.append(test)
 
     return result_count, passed_should_fail, failed_should_pass
 
