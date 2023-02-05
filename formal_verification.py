@@ -1,68 +1,26 @@
 #!/usr/bin/env python3
-
-
+import argparse
 import re
 import os
 import sys
 import json
 import shutil
 import subprocess
-
-
-def get_tests(test_path):
-    """
-    Gets all tests available in a given path
-    """
-
-    slv_files = []
-
-    if os.path.isfile(test_path) and test_path.endswith(".slv"):
-        slv_files.append(test_path)
-        return slv_files
-
-    for file in os.listdir(test_path):
-        if file.endswith(".slv"):
-            slv_files.append(os.path.join(test_path, file))
-
-    return slv_files
+from pathlib import Path
 
 
 def get_skiplist(listfile):
     """
     Gets a list of tests to be skipped
     """
-    list = []
+    entries = set()
     with open(listfile, "r") as f:
-        list = f.read().splitlines()
-        f.close()
+        for line in f:
+            line = line.strip()
+            if not line.startswith("#"):
+                entries.add(line)
 
-    for el in list:
-        if el.startswith("#"):
-            list.remove(el)
-
-    return list
-
-
-def get_test_files(slv_file):
-    """
-    Gets all source files used by given test
-    """
-
-    command = []
-    files = []
-
-    with open(slv_file, "r") as f:
-        command = f.readline().split()
-        f.close()
-
-    test_base = os.path.dirname(slv_file)
-
-    for token in command:
-        source_file = os.path.join(test_base, token)
-        if os.path.exists(source_file):
-            files.append(source_file)
-
-    return files
+    return entries
 
 
 def get_test_top_module(work_path, prefix=""):
@@ -322,10 +280,27 @@ def log_result(result, output_dir):
         result_file.close()
 
 
-def group_begin(name: str):
+def get_test_label(name: str, test_id: int, tests_count: int, skipped: bool = False):
+    prefix = ""
+    if test_id > 0 and tests_count > 0:
+        id_width = (
+            1 if tests_count < 10 else
+            2 if tests_count < 100 else
+            3 if tests_count < 1000 else
+            4
+        )
+        prefix = f"[{test_id:{id_width}}/{tests_count}] "
+
+    if skipped:
+        return f"\x1b[2m{prefix}\x1b[33m{name}\x1b[39m (skipped)\x1b[0m"
+    else:
+        return f"{prefix}\x1b[97;1m{name}\x1b[0m"
+
+
+def group_begin(name: str, test_id: int, tests_count: int, skipped: bool = False):
     sys.stdout.flush()
     sys.stderr.flush()
-    label = f"\x1b[97;1m{name}\x1b[0m"
+    label = get_test_label(name, test_id, tests_count, skipped)
     if os.environ.get("GITHUB_ACTIONS") == "true":
         print(f"::group::{label}")
     else:
@@ -342,107 +317,147 @@ def group_end():
 
 
 def main():
-    test_path = os.path.abspath(os.path.normpath(sys.argv[1]))
-    output_path = os.path.join(os.getcwd(), "build", "tests")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--test-id", type=int, default=-1,
+            help="The test number. For status logging only.")
+    parser.add_argument("--tests-count", type=int, default=-1,
+            help="Total tests count. For status logging only.")
 
-    if len(sys.argv) < 2:
-        print("No test path passed")
-        for res in result_descriptions:
-            print("%s: %s" % (res, result_descriptions[res]))
-        exit(1)
+    parser.add_argument("--test-suite-name", type=str, default="",
+            help="Used as a part of test name when performing lookup in skiplist. "
+            + "Also used as a name of a directory created under output directory.")
+    parser.add_argument("--test-suite-dir", type=Path, default=Path.cwd(),
+            help="Base directory of the test suite. "
+            + "The test file should be located in this directory tree.")
 
-    # Prepare names and paths of test files and working directory
-    tests = get_tests(test_path)
-    if not os.path.isdir(output_path):
-        os.makedirs(output_path)
+    parser.add_argument("--output-dir", type=Path, default=Path.cwd()/"build"/"tests")
 
-    skiplist = get_skiplist(os.path.join(".", "formal", "skiplist.txt"))
+    parser.add_argument("test_src_file", type=Path, help="(System)Verilog source file to test.")
+    args = parser.parse_args()
 
-    test_dir = os.path.split(test_path)[0]
-    if (os.path.basename(test_dir) != "test") and (os.path.basename(test_dir) != "tests"):
-        test_dir = test_dir.split("/tests/")
-        if len(test_dir) < 2:
-            test_dir = test_dir[0].split("/test/")
-        test_suite = os.path.basename(test_dir[0])
-        test_dir = test_dir[1].replace("/", "_")
+    test_id = args.test_id
+    tests_count = args.tests_count
+    if test_id > tests_count:
+        print(f"Warning: Invalid Arguments: `test_id` ({test_id}) > `tests_count` ({tests_count}). Assuming unset.")
+        test_id = tests_count = -1
+
+    test_suite_dir = args.test_suite_dir.resolve()
+    if not test_suite_dir.is_dir():
+        print(f"Warning: Invalid Arguments: `test_suite_dir` ({args.test_suite_dir}) is not a directory. Using CWD ({Path.cwd()}) instead.")
+        test_suite_dir = Path.cwd().resolve()
+
+    test_src_file = args.test_src_file.resolve()
+    if not test_src_file.exists():
+        print(f"Error: Invalid Arguments: `test_src_file` ({args.test_src_file}) does not exist. Aborting.")
+        sys.exit(1)
+
+    # Test name presented to the user.
+    try:
+        # Path to the source file relative to the test suite directory.
+        test_name = str(test_src_file.relative_to(test_suite_dir))
+    except ValueError:
+        print(f"Warning: Invalid Arguments: `test_src_file` ({test_src_file}) is not located below `test_suite_dir` ({test_suite_dir}).")
+        # Use file path as specified in the argument.
+        test_name = str(test_src_file)
+
+    # Full test name presented to the user, with test suite name as a prefix.
+    # This name is used in passlist.txt and skiplist.txt.
+    if args.test_suite_name:
+        full_test_name = f"{args.test_suite_name}:{test_name}"
     else:
-        test_suite = os.path.basename(os.path.split(test_dir)[0])
-        test_dir = ""
+        full_test_name = {test_name}
 
-    for test in tests:
-        test_name = os.path.basename(test).removesuffix(".slv")
-        test_files = get_test_files(test)
-        test_files_str = " ".join(test_files)
-        if test_dir:
-            test_name = "_".join([test_dir, test_name])
-        work_dir = os.path.join(output_path, test_suite, test_name)
-        test_result = {"name": test_name}
+    # Test name suitable for use as a file name (no whitespace, `:`, `/`, control characters).
+    safe_test_name = re.sub(r"[\s:/\x00-\x1f\x7f-\x9f]", "_", test_name)
 
-        # Create new work directory
-        if os.path.isdir(work_dir):
-            shutil.rmtree(work_dir)
-        os.makedirs(work_dir)
-        os.chdir(work_dir)
+    # Directory for storing result.
+    output_path = args.output_dir.resolve()
 
+    skiplist = get_skiplist(Path(__file__).parent/"formal"/"skiplist.txt")
 
-        if test_name in skiplist:
-            test_result["result"] = "SKIPPED"
-            continue
+    if args.test_suite_name:
+        test_suite_work_dir = output_path/args.test_suite_name
+    else:
+        test_suite_work_dir = output_path
 
-        group_begin(test_name)
-        try:
-            # Run synthesis of test's source files and export Verilog
-            ret_yosys = run_yosys(test_files_str, work_dir)
-            processed_sv2v = False
-            ys_prefix = ""
-            if ret_yosys:
-                ys_prefix = "sv2v_"
-                test_result["yosys"] = "FAIL"
-                test_result["sv2v_yosys"] = "OK"
-                preprocessed_path = preprocess_sv2v(test_files_str, work_dir)
-                if preprocessed_path == None:
-                    test_result["sv2v_yosys"] = "SV2V_FAIL"
-                    test_result["surelog"] = "SKIPPED"
-                    test_result["sv2v_surelog"] = "SKIPPED"
-                    continue
+    try:
+        test_suite_work_dir.mkdir(parents=True, exist_ok=True)
+    except FileExistsError:
+        print(f"Error: Output path (or its ancestor) exists and is not a directory: {test_suite_work_dir}")
+        sys.exit(1)
 
-                processed_sv2v = True
-                ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
-                if ret_yosys:
-                    test_result["sv2v_yosys"] = "FAIL"
-                    test_result["surelog"] = "SKIPPED"
-                    test_result["sv2v_surelog"] = "SKIPPED"
-                    continue
-            else:
-                test_result["yosys"] = "OK"
-                test_result["sv2v_yosys"] = "SKIPPED"
+    work_dir = test_suite_work_dir/safe_test_name
+    test_result = {"name": test_name}
 
-            ret_equiv = None
-            ret_surelog = run_surelog(test_files_str, work_dir)
-            if not ret_surelog:
-                top_module_name = get_test_top_module(work_dir)
-                ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
-                test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
-            else:
-                test_result["surelog"] = "FAIL"
+    # Create new work directory, removing existing one if needed.
+    if work_dir.is_dir():
+        shutil.rmtree(work_dir)
+    elif work_dir.exists():
+        work_dir.unlink()
+    work_dir.mkdir()
 
-            if processed_sv2v:
-                ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
-                if not ret_surelog:
-                    top_module_name = get_test_top_module(work_dir, "sv2v_")
-                    ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
-                    test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
-                else:
-                    test_result["sv2v_surelog"] = "FAIL"
-            else:
+    os.chdir(work_dir)
+
+    if full_test_name in skiplist:
+        group_begin(full_test_name, test_id, tests_count, True)
+        group_end()
+        # Intentionally do not save test result.
+        return
+
+    group_begin(full_test_name, test_id, tests_count)
+    try:
+        # Run synthesis of test's source files and export Verilog
+        ret_yosys = run_yosys(test_src_file, work_dir)
+        processed_sv2v = False
+        ys_prefix = ""
+        if ret_yosys:
+            ys_prefix = "sv2v_"
+            test_result["yosys"] = "FAIL"
+            test_result["sv2v_yosys"] = "OK"
+            preprocessed_path = preprocess_sv2v(test_src_file, work_dir)
+            if preprocessed_path == None:
+                test_result["sv2v_yosys"] = "SV2V_FAIL"
+                test_result["surelog"] = "SKIPPED"
                 test_result["sv2v_surelog"] = "SKIPPED"
+                return
 
-            if ret_equiv is not None:
-                test_result.update(get_time_result(ret_equiv.stderr))
+            processed_sv2v = True
+            ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
+            if ret_yosys:
+                test_result["sv2v_yosys"] = "FAIL"
+                test_result["surelog"] = "SKIPPED"
+                test_result["sv2v_surelog"] = "SKIPPED"
+                return
+        else:
+            test_result["yosys"] = "OK"
+            test_result["sv2v_yosys"] = "SKIPPED"
 
-        finally:
-            log_result(test_result, work_dir)
-            group_end()
+        ret_equiv = None
+        ret_surelog = run_surelog(test_src_file, work_dir)
+        if not ret_surelog:
+            top_module_name = get_test_top_module(work_dir)
+            ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
+            test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
+        else:
+            test_result["surelog"] = "FAIL"
+
+        if processed_sv2v:
+            ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
+            if not ret_surelog:
+                top_module_name = get_test_top_module(work_dir, "sv2v_")
+                ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
+                test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
+            else:
+                test_result["sv2v_surelog"] = "FAIL"
+        else:
+            test_result["sv2v_surelog"] = "SKIPPED"
+
+        if ret_equiv is not None:
+            test_result.update(get_time_result(ret_equiv.stderr))
+
+    finally:
+        log_result(test_result, work_dir)
+        group_end()
 
 
 if __name__ == "__main__":

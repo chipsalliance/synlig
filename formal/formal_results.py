@@ -84,6 +84,7 @@ def emit_warn(title: str, msg: str):
 
 
 def process_data(results_path, result_keys: list, result_description_keys: list):
+    test_suite_name = os.path.basename(results_path)
     result_files = []
     result_count = {}
 
@@ -127,13 +128,14 @@ def process_data(results_path, result_keys: list, result_description_keys: list)
                         f"Missing key `{r}` in `{results[test]!r}`.\n")
                 continue
 
+        full_test_name = f"{test_suite_name}:{test}"
         if (results[test].get("yosys") == "OK" and results[test].get("surelog") == "PASS") or \
            (results[test].get("sv2v_yosys") == "OK" and results[test].get("sv2v_surelog") == "PASS"):
-            if test not in passlist_contents:
-                passed_should_fail.append(test)
+            if full_test_name not in passlist_contents:
+                passed_should_fail.append(full_test_name)
         else: # Any other result is effectively FAIL
-            if test in passlist_contents:
-                failed_should_pass.append(test)
+            if full_test_name in passlist_contents:
+                failed_should_pass.append(full_test_name)
 
     return result_count, passed_should_fail, failed_should_pass
 
@@ -178,10 +180,10 @@ def print_results(headers, result_keys, result_descriptions, result_count, passe
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("results_path", type=str)
+    parser.add_argument("test_suite_results_dir", type=str)
     args = parser.parse_args()
 
-    results_path = os.path.abspath(args.results_path)
+    results_path = os.path.abspath(args.test_suite_results_dir)
 
     # Get formal verification results descriptions
     result_description_keys = fv_result_descriptions.copy()

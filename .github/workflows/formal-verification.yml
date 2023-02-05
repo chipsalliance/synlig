@@ -9,12 +9,15 @@ jobs:
     container: ubuntu:jammy
     strategy:
       matrix:
-        test-suite:
-          - UHDM-integration-tests/tests
-          - sv2v/test
-          - yosys/tests
+        include:
+          - name: UHDM-integration-tests
+            test-suite: UHDM-integration-tests/tests
+          - name: sv2v
+            test-suite: sv2v/test
+          - name: yosys
+            test-suite: yosys/tests
       fail-fast: false
-    name: ${{ matrix.test-suite }}
+    name: ${{ matrix.name }}
     env:
       CC: gcc-9
       CXX: g++-9
@@ -24,6 +27,7 @@ jobs:
       GHA_MACHINE_TYPE: "n2-highmem-4"
       PARSER: yosys-plugin
       TEST_SUITE: ${{ matrix.test-suite }}
+      TEST_SUITE_NAME: ${{ matrix.name }}
 
     steps:
       - uses: actions/checkout@v3
@@ -54,21 +58,21 @@ jobs:
       - name: Test
         run: |
           source .github/scripts/common.sh
-          ./run_fv_tests.sh ${{ matrix.test-suite }}
+          ./run_fv_tests.sh "$TEST_SUITE" "$TEST_SUITE_NAME"
 
       - name: Generate list of performed tests
         run: |
-          list_file="build/${TEST_SUITE//\//_}.performed_tests_list.txt"
+          list_file="build/${TEST_SUITE_NAME}.performed_tests_list.txt"
           touch "$list_file"
           for result_json in build/tests/*/*/result.json; do
             test_name=$(jq -r '.name' "${result_json}")
-            printf '%s\n' "$test_name" >> "$list_file"
+            printf '%s:%s\n' "${TEST_SUITE_NAME}" "${test_name}" >> "$list_file"
           done
 
       - name: Pack formal verification logs
         run: |
           cd build
-          tar cf ${TEST_SUITE//\//_}.tar tests/*/*/*.out tests/*/*/slpp_all/*.log tests/*/*/*.txt tests/*/*/result.json
+          tar cf ${TEST_SUITE_NAME}.tar tests/*/*/*.out tests/*/*/slpp_all/*.log tests/*/*/*.txt tests/*/*/result.json
 
       - name: Upload formal verification logs
         uses: actions/upload-artifact@v2
@@ -94,7 +98,7 @@ jobs:
       - name: Check results and print a summary
         run: |
           set -o pipefail
-          python3 ./formal/formal_results.py build | tee $GITHUB_STEP_SUMMARY
+          python3 ./formal/formal_results.py "build/tests/${TEST_SUITE_NAME}" | tee $GITHUB_STEP_SUMMARY
 
   passlist-check:
     name: Passlist Check
