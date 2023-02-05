@@ -231,7 +231,7 @@ jobs:
   generate-tests-summary:
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
-    if: ${{ always() }}
+    if: ${{ !cancelled() }}
     needs:
       - tests-read-uhdm
       - tests-read-systemverilog
