@@ -19,6 +19,7 @@ env:
 
 jobs:
   tests-read-uhdm:
+    name: Surelog
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     strategy:
@@ -93,6 +94,7 @@ jobs:
             **/plot_*.svg
 
   tests-read-systemverilog:
+    name: SystemVerilog Plugin
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     strategy:
@@ -161,6 +163,7 @@ jobs:
             **/plot_*.svg
 
   generate-tests-summary:
+    name: Summary Generation
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     if: ${{ !cancelled() }}
