@@ -22,6 +22,7 @@ on:
 
 jobs:
   build-binaries:
+    name: Build Binaries
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
@@ -101,25 +102,28 @@ jobs:
             **/plot_*.svg
 
   tests-parsing:
+    name: Parsing Tests
     uses: ./.github/workflows/parsing-tests.yml
     needs: build-binaries
 
   tests-formal-verification:
+    name: Formal Verification Tests
     uses: ./.github/workflows/formal-verification.yml
     needs: build-binaries
 
   tests-large-designs:
+    name: Large Designs Tests
     uses: ./.github/workflows/large-designs.yml
     needs: build-binaries
 
   release:
+    name: Release Package
     needs:
       - build-binaries
       - tests-parsing
       - tests-formal-verification
       - tests-large-designs
     runs-on: ubuntu-20.04
-    name: Release
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
 
     steps:
@@ -186,9 +190,9 @@ jobs:
           file_glob: true
 
   install-plugin:
+    name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
     container: debian:sid
-    name: Test plugin installation
     needs: release
     env:
       DEBIAN_FRONTEND: noninteractive

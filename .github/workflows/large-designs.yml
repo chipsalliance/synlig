@@ -5,6 +5,7 @@ on:
 
 jobs:
   ibex_synth:
+    name: Ibex (Vivado synthesis)
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
@@ -65,6 +66,7 @@ jobs:
             **/plot_*.svg
 
   ibex_synth_symbiflow:
+    name: Ibex (Symbiflow synthesis)
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
@@ -123,6 +125,7 @@ jobs:
             **/plot_*.svg
 
   opentitan_9d82960888_synth:
+    name: Opentitan 9d82960888 (synthesis)
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
@@ -213,6 +216,7 @@ jobs:
             **/plot_*.svg
 
   opentitan_parse_report:
+    name: Opentitan (parsing report)
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
@@ -301,6 +305,7 @@ jobs:
             **/plot_*.svg
 
   swerv_synth:
+    name: Swerv (synthesis)
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
