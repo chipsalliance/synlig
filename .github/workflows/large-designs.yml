@@ -281,7 +281,7 @@ jobs:
         run: find ./UHDM-integration-tests/opentitan_build -name "src" | xargs rm -rf
 
       - name: Upload dependency graph
-        if: ${{ always() }}
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v2
         with:
           name: opentitan_dependency_graph.svg
@@ -289,7 +289,7 @@ jobs:
             ./UHDM-integration-tests/opentitan_dependency_graph.svg
 
       - name: Upload logs
-        if: ${{ always() }}
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v2
         with:
           name: opentitan-logs
