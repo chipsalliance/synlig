@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import argparse
 import json
 import os
 import sys
@@ -162,7 +162,11 @@ def print_results(headers, result_keys, result_descriptions, result_count, passe
 
 
 def main():
-    results_path = os.path.abspath(os.path.normpath(sys.argv[1]))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("results_path", type=str)
+    args = parser.parse_args()
+
+    results_path = os.path.abspath(args.results_path)
 
     # Get formal verification results descriptions
     result_description_keys = fv_result_descriptions.copy()
