@@ -10,7 +10,7 @@ jobs:
 
   test-plugin-from-sources:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     env:
       DEBIAN_FRONTEND: noninteractive
 
@@ -48,7 +48,7 @@ jobs:
 
   test-plugin-ubuntu:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     env:
       DEBIAN_FRONTEND: noninteractive
 
