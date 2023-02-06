@@ -15,11 +15,14 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
 
     steps:
-
     - name: Prepare Repository
       uses: actions/checkout@v2
       with:
         submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Install Prerequisites
       run: |
@@ -50,11 +53,14 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
 
     steps:
-
     - name: Prepare Repository
       uses: actions/checkout@v2
       with:
         submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Install Prerequisites
       run: |
