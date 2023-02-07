@@ -10,7 +10,7 @@ mkdir -p $ROOT_DIR/test-results
 for TEST_CASE in $TEST_CASES;
 do
     export TEST_CASE
-    $ROOT_DIR/UHDM-integration-tests/.github/ci.sh
+    output=`$ROOT_DIR/UHDM-integration-tests/.github/ci.sh` || echo $output && false
     TEST_RET=$?
     TEST_CASE=$(echo $TEST_CASE | sed "s/tests\///g")
     if [ $TEST_RET -eq 0 ]; then
