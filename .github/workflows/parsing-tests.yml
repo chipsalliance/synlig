@@ -19,6 +19,7 @@ env:
 
 jobs:
   tests-read-uhdm:
+    name: Surelog
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     strategy:
@@ -78,6 +79,12 @@ jobs:
           name: test-results
           path: test-results
 
+      - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: tests-vcddiff-artifacts
+          path: UHDM-integration-tests/artifacts
+
       - name: Upload load graphs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
@@ -87,6 +94,7 @@ jobs:
             **/plot_*.svg
 
   tests-read-systemverilog:
+    name: SystemVerilog Plugin
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     strategy:
@@ -154,88 +162,14 @@ jobs:
           path: |
             **/plot_*.svg
 
-  tests-vcddiff:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    strategy:
-      fail-fast: false
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      GIT_HTTP_LOW_SPEED_LIMIT: 1
-      GIT_HTTP_LOW_SPEED_TIME: 600
-      DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-standard-2"
-      PARSER: surelog
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-      - name: Install dependencies
-        run: |
-          apt-get update -qq
-          apt install -y software-properties-common
-          add-apt-repository ppa:ubuntu-toolchain-r/test
-          apt-get update -qq
-          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-      - name: Download binaries
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries
-
-      # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries.tar
-
-      - name: Generate SV file (Yosys)
-        run: |
-          ./.github/scripts/run_group_test.sh
-
-        env:
-          TARGET: uhdm/yosys/test-ast
-
-      - name: Rename test results
-        if: ${{ always() }}
-        run: |
-          mv test-results/test-results.passed test-results/test-results-vcddiff.passed || true
-          mv test-results/test-results.failed test-results/test-results-vcddiff.failed || true
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: test-results
-          path: test-results
-
-      - uses: actions/upload-artifact@v2
-        if: ${{ always() }}
-        with:
-          name: tests-vcddiff-artifacts
-          path: UHDM-integration-tests/artifacts
-
-      - name: Upload load graphs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: plots
-          path: |
-            **/plot_*.svg
-
   generate-tests-summary:
+    name: Summary Generation
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     if: ${{ !cancelled() }}
     needs:
       - tests-read-uhdm
       - tests-read-systemverilog
-      - tests-vcddiff
 
     steps:
       - uses: actions/checkout@v3
