@@ -38,7 +38,7 @@ jobs:
 
   build-binaries:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     env:
       CC: gcc-9
       CXX: g++-9
@@ -47,6 +47,13 @@ jobs:
       PLUGIN_ASAN: 1
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Install dependencies
       run: |
@@ -60,11 +67,6 @@ jobs:
         pip install orderedmultidict
         pip install --upgrade pip
         pip install cmake
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Create Cache Timestamp
       id: cache_timestamp
@@ -115,7 +117,7 @@ jobs:
 
   tests-read-uhdm:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: [build-binaries]
     strategy:
       fail-fast:
@@ -130,6 +132,14 @@ jobs:
       PARSER: surelog
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
     - name: Install dependencies
       run: |
         apt-get update -qq
@@ -138,11 +148,6 @@ jobs:
         apt-get update -qq
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -182,7 +187,7 @@ jobs:
 
   tests-read-systemverilog:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: [build-binaries]
     strategy:
       fail-fast:
@@ -197,6 +202,14 @@ jobs:
       PARSER: yosys-plugin
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
     - name: Install dependencies
       run: |
         apt-get update -qq
@@ -205,11 +218,6 @@ jobs:
         apt-get update -qq
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -249,7 +257,7 @@ jobs:
 
   tests-vcddiff:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: [build-binaries]
     strategy:
       fail-fast:
@@ -264,6 +272,14 @@ jobs:
       PARSER: surelog
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
     - name: Install dependencies
       run: |
         apt-get update -qq
@@ -272,11 +288,6 @@ jobs:
         apt-get update -qq
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -322,12 +333,16 @@ jobs:
 
   generate-tests-summary:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     if: ${{ always() }}
     needs: [tests-read-uhdm, tests-read-systemverilog, tests-vcddiff]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Download test results
       uses: /actions/download-artifact@v3
@@ -340,7 +355,7 @@ jobs:
 
   tests-formal-verification:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: [build-binaries]
     strategy:
       matrix:
@@ -358,6 +373,14 @@ jobs:
       TEST_SUITE: ${{ matrix.test-suite }}
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
     - name: Install dependencies
       run: |
         apt-get update -qq
@@ -365,11 +388,6 @@ jobs:
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -qq
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time python3
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -413,7 +431,7 @@ jobs:
 
   ibex_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -422,6 +440,13 @@ jobs:
       GHA_EXTERNAL_DISK: "tools"
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Install dependencies
       run: |
@@ -432,11 +457,6 @@ jobs:
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip libtinfo5
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -473,7 +493,7 @@ jobs:
   opentitan_9d82960888_synth:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -483,6 +503,13 @@ jobs:
       GHA_MACHINE_TYPE: "n2-highmem-8"
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Install dependencies
       run: |
@@ -493,11 +520,6 @@ jobs:
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -544,7 +566,7 @@ jobs:
           #      if: ${{ github.event_name == 'pull_request' }}
           #      run: |
           #        mkdir compare
-          #        ./github/scripts/compare_ast.py opentitan-yosys.ast yosys.ast
+          #        ./.github/scripts/compare_ast.py opentitan-yosys.ast yosys.ast
 
     - uses: actions/upload-artifact@v2
       with:
@@ -562,7 +584,7 @@ jobs:
   opentitan_parse_report:
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -571,6 +593,14 @@ jobs:
       GHA_EXTERNAL_DISK: "tools"
       GHA_MACHINE_TYPE: "n2-highmem-8"
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
     - name: Install dependencies
       run: |
         apt-get update -qq
@@ -580,11 +610,6 @@ jobs:
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5 graphviz libgraphviz-dev pkg-config
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -641,7 +666,7 @@ jobs:
 
   swerv_synth:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -649,6 +674,13 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Install dependencies
       run: |
@@ -659,11 +691,6 @@ jobs:
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
@@ -791,7 +818,7 @@ jobs:
 
   ibex_synth_symbiflow:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy-20221130
+    container: ubuntu:jammy
     needs: build-binaries
     env:
       CC: gcc-9
@@ -799,6 +826,13 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
 
     steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Set up common Ubuntu configuration
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
     - name: Install dependencies
       run: |
@@ -809,10 +843,6 @@ jobs:
         apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip wget
         update-alternatives --install /usr/bin/python python /usr/bin/python3 1
         update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 1
 
     - name: Download binaries
       uses: actions/download-artifact@v2
