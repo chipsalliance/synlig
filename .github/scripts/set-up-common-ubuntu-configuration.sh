@@ -20,6 +20,10 @@ declare -ra mirrors=(
 	## Official regional mirror
 	http://us.archive.ubuntu.com/ubuntu/
 
+	# The 4 non-ubuntu URLs below were picked because they have highest
+	# throughput from all official US mirrors (20+ Gbps) according
+	# to https://launchpad.net/ubuntu/+archivemirrors.
+
 	## US, 100 Gbps; https://launchpad.net/ubuntu/+mirror/enzu.com
 	http://mirror.enzu.com/ubuntu/
 	## US, 20 Gbps; https://launchpad.net/ubuntu/+mirror/mirror.genesisadaptive.com-archive
@@ -52,6 +56,8 @@ begin_group 'Add extra APT configuration'
 
 apt_ci_config=/etc/apt/apt.conf.d/99-ci
 
+# Set retry count to 6, and disables ipv6 (ubuntu servers have problems with
+# it, and it is used by default).
 printf '%s\n' \
 		'Acquire::ForceIPv4 "true";' \
 		'Acquire::Retries "6";' \
