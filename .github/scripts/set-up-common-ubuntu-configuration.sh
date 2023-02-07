@@ -7,8 +7,23 @@ set -e -u -o pipefail
 shopt -s nullglob
 shopt -s extglob
 
+# Included only in CI, so `$0` should be relative to repository directory.
+declare -r THIS_FILE="$0"
+
+emit_error() { printf '::error file=%s::%s\n' "$THIS_FILE" "$*"; }
 begin_group() { printf '::group::%s\n' "$*"; }
 end_group() { printf '::endgroup::\n'; }
+
+# Check whether the OS is compatible Ubuntu version.
+(
+	# https://www.freedesktop.org/software/systemd/man/os-release.html
+	source /etc/os-release
+	if ! [[ "${ID:-}" == 'ubuntu'
+			&& ( "${VERSION_ID:-}" == '22.04' || "${VERSION_CODENAME:-}" == 'jammy' ) ]]; then
+		emit_error "Incompatible OS (expected Ubuntu 22.04 AKA jammy), please update `${THIS_FILE}`."
+		exit 1
+	fi
+)
 
 #-----------------------------------------------------------------------------
 begin_group 'Use regional (US) Ubuntu repository mirrors'
