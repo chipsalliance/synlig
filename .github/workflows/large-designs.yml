@@ -1,0 +1,363 @@
+name: Large Designs Tests
+
+on:
+  workflow_call:
+
+jobs:
+  ibex_synth:
+    name: Ibex (Vivado synthesis)
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y software-properties-common
+          add-apt-repository ppa:ubuntu-toolchain-r/test
+          apt-get update -qq
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip libtinfo5
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Build & Test
+        run: |
+          source .github/scripts/common.sh
+          enable_vivado 2017.2
+          pip install virtualenv
+          ./UHDM-integration-tests/.github/ci.sh
+        env:
+          TARGET: uhdm/yosys/synth-ibex-build
+          TEST_CASE: tests/ibex
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lowrisc_ibex_top_artya7_surelog_0.1.bit
+          path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
+
+      - name: Upload load graphs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg
+
+  ibex_synth_symbiflow:
+    name: Ibex (Symbiflow synthesis)
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y software-properties-common
+          add-apt-repository ppa:ubuntu-toolchain-r/test
+          apt-get update -qq
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip wget
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Build & Test
+        run: |
+          pip install virtualenv
+          make -C UHDM-integration-tests TEST=tests/ibex env
+          ./UHDM-integration-tests/.github/ci.sh
+        env:
+          TARGET: uhdm/yosys/synth-ibex-symbiflow
+          TEST_CASE: tests/ibex
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: top_artya7.bit
+          path: ./UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
+
+      - name: Upload load graphs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg
+
+  opentitan_9d82960888_synth:
+    name: Opentitan 9d82960888 (synthesis)
+    runs-on: [self-hosted, Linux, X64]
+    # vivado is linked with libraries used in this version of ubuntu
+    container: ubuntu:jammy
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+      GHA_MACHINE_TYPE: "n2-highmem-8"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y software-properties-common
+          add-apt-repository ppa:ubuntu-toolchain-r/test
+          apt-get update -qq
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Build & Test
+        run: |
+          source .github/scripts/common.sh
+          enable_vivado 2017.2
+          pip install virtualenv
+          ./UHDM-integration-tests/.github/ci.sh
+        env:
+          TARGET: uhdm/yosys/synth-opentitan-build
+          TEST_CASE: tests/opentitan
+
+      - name: Generate AST
+        run: |
+          FILE_NAME=UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/yosys.log
+          start=$(grep -n "AST_MODULE" $FILE_NAME |cut -f1 -d:|head -n 1)
+          end=$(grep -n "AST_" $FILE_NAME |cut -f1 -d:|tail -n 1)
+
+          sed -n $start,"$end"p $FILE_NAME > yosys.ast
+
+      - name: Upload AST
+        uses: actions/upload-artifact@v2
+        if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+        with:
+          name: opentitan-yosys.ast
+          path: yosys.ast
+
+      # # Uncomment when first job on master will pass
+      # - name: Download binaries
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: opentitan-yosys.ast
+
+      # - name: Compare AST
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #   run: |
+      #     mkdir compare
+      #     ./github/scripts/compare_ast.py opentitan-yosys.ast yosys.ast
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+          path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+
+      - name: Upload load graphs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg
+
+  opentitan_parse_report:
+    name: Opentitan (parsing report)
+    runs-on: [self-hosted, Linux, X64]
+    # vivado is linked with libraries used in this version of ubuntu
+    container: ubuntu:jammy
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+      GHA_MACHINE_TYPE: "n2-highmem-8"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y software-properties-common
+          add-apt-repository ppa:ubuntu-toolchain-r/test
+          apt-get update -qq
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5 graphviz libgraphviz-dev pkg-config
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Parse OpenTitan components
+        run: |
+          source .github/scripts/common.sh
+          enable_vivado 2017.2
+          pip install virtualenv
+          ./UHDM-integration-tests/.github/ci.sh
+        env:
+          TARGET: opentitan_report
+          TEST_CASE: tests/opentitan
+
+      - name: Generate summary
+        run: |
+          cat ./UHDM-integration-tests/opentitan_report.txt | tee $GITHUB_STEP_SUMMARY
+          if grep -iq 'Unexpected \(pass\|fail\)' ./UHDM-integration-tests/opentitan_report.txt; then
+            exit 1
+          fi
+
+      - name: Prune the build directory
+        run: find ./UHDM-integration-tests/opentitan_build -name "src" | xargs rm -rf
+
+      - name: Upload dependency graph
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: opentitan_dependency_graph.svg
+          path: |
+            ./UHDM-integration-tests/opentitan_dependency_graph.svg
+
+      - name: Upload logs
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: opentitan-logs
+          path: |
+            ./UHDM-integration-tests/opentitan_build
+
+      - name: Upload load graphs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg
+
+  swerv_synth:
+    name: Swerv (synthesis)
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y software-properties-common
+          add-apt-repository ppa:ubuntu-toolchain-r/test
+          apt-get update -qq
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Build & Test
+        run: |
+          pip install virtualenv
+          ./UHDM-integration-tests/.github/ci.sh
+        env:
+          TARGET: uhdm/yosys/swerv
+          TEST_CASE: tests/swerv
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: chipsalliance.org_cores_SweRV_EH1_1.8.edif
+          path: UHDM-integration-tests/build/chipsalliance.org_cores_SweRV_EH1_1.8/synth-vivado/chipsalliance.org_cores_SweRV_EH1_1.8.edif
+
+      - name: Upload load graphs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg

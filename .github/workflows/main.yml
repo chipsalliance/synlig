@@ -20,23 +20,9 @@ on:
       - master
   pull_request:
 
-env:
-  TESTS_TO_SKIP: ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass
-    Continue AnonymousUnion ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule
-    VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes
-    EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork
-    PatternInFunction TypedefVariableDimensions ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication
-    VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment
-    SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember
-    ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation
-    StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter RealValue BitsCallOnParametetrizedTypeFromPackage
-    AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor NestedPatternPassedAsPort StreamOp
-    NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect
-    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction
-
 jobs:
-
   build-binaries:
+    name: Build Binaries
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
@@ -47,830 +33,184 @@ jobs:
       PLUGIN_ASAN: 1
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
 
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
 
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget ccache
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-        pip install orderedmultidict
-        pip install --upgrade pip
-        pip install cmake
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y software-properties-common
+          add-apt-repository ppa:ubuntu-toolchain-r/test
+          apt-get update -qq
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget ccache
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          pip install orderedmultidict
+          pip install --upgrade pip
+          pip install cmake
 
-    - name: Create Cache Timestamp
-      id: cache_timestamp
-      uses: nanzm/get-time-action@v1.1
-      with:
-        format: 'YYYY-MM-DD-HH-mm-ss'
+      - name: Create Cache Timestamp
+        id: cache_timestamp
+        uses: nanzm/get-time-action@v1.1
+        with:
+          format: 'YYYY-MM-DD-HH-mm-ss'
 
-    - name: Checkout custom branches in submodules (if requested)
-      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
-      run: |
-        cd yosys-f4pga-plugins
-        git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
-        git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
-        git checkout FETCH_HEAD
+      - name: Checkout custom branches in submodules (if requested)
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
+        run: |
+          cd yosys-f4pga-plugins
+          git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
+          git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
+          git checkout FETCH_HEAD
 
-    - name: Setup cache
-      uses: actions/cache@v2
-      with:
-        path: ${{ env.CCACHE_DIR }}
-        key: cache_${{ steps.cache_timestamp.outputs.time }}
-        restore-keys: cache_
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: cache_${{ steps.cache_timestamp.outputs.time }}
+          restore-keys: cache_
 
-    - name: Build binaries
-      run: |
-        # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
-        # Make sure we always use https:// instead of git://
-        git config --global url.https://github.com/.insteadOf git://github.com/
-        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-        ./build_binaries.sh --build-sv2v
-        # By default actions/upload-artifact@v2 do not preserve file permissions
-        # tar directory to workaround this issue
-        # See https://github.com/actions/upload-artifact/issues/38
-        tar -cvf binaries.tar image
+      - name: Build binaries
+        run: |
+          # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
+          # Make sure we always use https:// instead of git://
+          git config --global url.https://github.com/.insteadOf git://github.com/
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          ./build_binaries.sh --build-sv2v
+          # By default actions/upload-artifact@v2 do not preserve file permissions
+          # tar directory to workaround this issue
+          # See https://github.com/actions/upload-artifact/issues/38
+          tar -cvf binaries.tar image
 
-    - name: Upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: binaries
-        path: |
-          binaries.tar
+      - name: Upload binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: |
+            binaries.tar
 
-    - name: Upload load graphs
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
+      - name: Upload load graphs
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg
 
-  tests-read-uhdm:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    needs: [build-binaries]
-    strategy:
-      fail-fast:
-        false
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      GIT_HTTP_LOW_SPEED_LIMIT: 1
-      GIT_HTTP_LOW_SPEED_TIME: 600
-      DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-standard-2"
-      PARSER: surelog
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Build & Test (yosys)
-      run: |
-        ./.github/scripts/run_group_test.sh
-
-      env:
-        TARGET: uhdm/yosys/test-ast
-
-    - name: Rename test results
-      if: ${{ always() }}
-      run: |
-        mv test-results/test-results.passed test-results/test-results-uhdm.passed || true
-        mv test-results/test-results.failed test-results/test-results-uhdm.failed || true
-
-    - uses: actions/upload-artifact@v3
-      if: ${{ always() }}
-      with:
-        name: test-results
-        path: test-results
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
-
-  tests-read-systemverilog:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    needs: [build-binaries]
-    strategy:
-      fail-fast:
-        false
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      GIT_HTTP_LOW_SPEED_LIMIT: 1
-      GIT_HTTP_LOW_SPEED_TIME: 600
-      DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-standard-2"
-      PARSER: yosys-plugin
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Build & Test (yosys)
-      run: |
-        ./.github/scripts/run_group_test.sh
-
-      env:
-        TARGET: uhdm/yosys/test-ast
-
-    - name: Rename test results
-      if: ${{ always() }}
-      run: |
-        mv test-results/test-results.passed test-results/test-results-systemverilog.passed || true
-        mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
-
-    - uses: actions/upload-artifact@v3
-      if: ${{ always() }}
-      with:
-        name: test-results
-        path: test-results
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
-
-  tests-vcddiff:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    needs: [build-binaries]
-    strategy:
-      fail-fast:
-        false
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      GIT_HTTP_LOW_SPEED_LIMIT: 1
-      GIT_HTTP_LOW_SPEED_TIME: 600
-      DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-standard-2"
-      PARSER: surelog
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Generate SV file (Yosys)
-      run: |
-        ./.github/scripts/run_group_test.sh
-
-      env:
-        TARGET: uhdm/yosys/test-ast
-
-    - name: Rename test results
-      if: ${{ always() }}
-      run: |
-        mv test-results/test-results.passed test-results/test-results-vcddiff.passed || true
-        mv test-results/test-results.failed test-results/test-results-vcddiff.failed || true
-
-    - uses: actions/upload-artifact@v3
-      if: ${{ always() }}
-      with:
-        name: test-results
-        path: test-results
-
-    - uses: actions/upload-artifact@v2
-      if: ${{ always() }}
-      with:
-        name: tests-vcddiff-artifacts
-        path: UHDM-integration-tests/artifacts
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
-
-  generate-tests-summary:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    if: ${{ always() }}
-    needs: [tests-read-uhdm, tests-read-systemverilog, tests-vcddiff]
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Download test results
-      uses: /actions/download-artifact@v3
-      with:
-        name: test-results
-
-    - name: Generate summary
-      run: |
-        ./.github/scripts/generate_summary.sh
+  tests-parsing:
+    name: Parsing Tests
+    uses: ./.github/workflows/parsing-tests.yml
+    needs: build-binaries
 
   tests-formal-verification:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    needs: [build-binaries]
-    strategy:
-      matrix:
-        test-suite: [UHDM-integration-tests/tests, sv2v/test, yosys/tests]
-      fail-fast:
-        false
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      GIT_HTTP_LOW_SPEED_LIMIT: 1
-      GIT_HTTP_LOW_SPEED_TIME: 600
-      DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-highmem-4"
-      PARSER: yosys-plugin
-      TEST_SUITE: ${{ matrix.test-suite }}
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time python3
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Test
-      run: |
-        source .github/scripts/common.sh
-        ./run_fv_tests.sh ${{ matrix.test-suite }}
-
-    - name: Pack formal verification logs
-      run: |
-        cd build
-        tar cf ${TEST_SUITE//\//_}.tar tests/*/*/*.out tests/*/*/slpp_all/*.log tests/*/*/*.txt tests/*/*/result.json
-
-    - name: Upload formal verification logs
-      uses: actions/upload-artifact@v2
-      with:
-        name: formal-verification-logs
-        path: |
-          build/*.tar
-
-    - name: Upload load graphs
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
-
-    # Do this at the end as this can actually fail
-    - name: Check results and print a summary
-      run: |
-        set -o pipefail
-        python3 ./formal/formal_results.py build | tee $GITHUB_STEP_SUMMARY
-
-
-  ibex_synth:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    name: Formal Verification Tests
+    uses: ./.github/workflows/formal-verification.yml
     needs: build-binaries
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      DEBIAN_FRONTEND: noninteractive
-      GHA_EXTERNAL_DISK: "tools"
 
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip libtinfo5
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Build & Test
-      run: |
-        source .github/scripts/common.sh
-        enable_vivado 2017.2
-        pip install virtualenv
-        ./UHDM-integration-tests/.github/ci.sh
-      env:
-        TARGET: uhdm/yosys/synth-ibex-build
-        TEST_CASE: tests/ibex
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: lowrisc_ibex_top_artya7_surelog_0.1.bit
-        path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
-
-  opentitan_9d82960888_synth:
-    runs-on: [self-hosted, Linux, X64]
-    # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:jammy
+  tests-large-designs:
+    name: Large Designs Tests
+    uses: ./.github/workflows/large-designs.yml
     needs: build-binaries
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      DEBIAN_FRONTEND: noninteractive
-      GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-8"
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Build & Test
-      run: |
-        source .github/scripts/common.sh
-        enable_vivado 2017.2
-        pip install virtualenv
-        ./UHDM-integration-tests/.github/ci.sh
-      env:
-        TARGET: uhdm/yosys/synth-opentitan-build
-        TEST_CASE: tests/opentitan
-
-    - name: Generate AST
-      run: |
-        FILE_NAME=UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/yosys.log
-        start=$(grep -n "AST_MODULE" $FILE_NAME |cut -f1 -d:|head -n 1)
-        end=$(grep -n "AST_" $FILE_NAME |cut -f1 -d:|tail -n 1)
-
-        sed -n $start,"$end"p $FILE_NAME > yosys.ast
-
-    - name: Upload AST
-      uses: actions/upload-artifact@v2
-      if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
-      with:
-        name: opentitan-yosys.ast
-        path: yosys.ast
-
-          # Uncomment when first job on master will pass
-          #    - name: Download binaries
-          #      if: ${{ github.event_name == 'pull_request' }}
-          #      uses: actions/download-artifact@v2
-          #      with:
-          #        name: opentitan-yosys.ast
-
-          #    - name: Compare AST
-          #      if: ${{ github.event_name == 'pull_request' }}
-          #      run: |
-          #        mkdir compare
-          #        ./.github/scripts/compare_ast.py opentitan-yosys.ast yosys.ast
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
-        path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
-
-  opentitan_parse_report:
-    runs-on: [self-hosted, Linux, X64]
-    # vivado is linked with libraries used in this version of ubuntu
-    container: ubuntu:jammy
-    needs: build-binaries
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      DEBIAN_FRONTEND: noninteractive
-      GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-8"
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5 graphviz libgraphviz-dev pkg-config
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Parse OpenTitan components
-      run: |
-        source .github/scripts/common.sh
-        enable_vivado 2017.2
-        pip install virtualenv
-        ./UHDM-integration-tests/.github/ci.sh
-      env:
-        TARGET: opentitan_report
-        TEST_CASE: tests/opentitan
-
-    - name: Generate summary
-      run: |
-        cat ./UHDM-integration-tests/opentitan_report.txt | tee $GITHUB_STEP_SUMMARY
-        if grep -iq 'Unexpected \(pass\|fail\)' ./UHDM-integration-tests/opentitan_report.txt; then
-          exit 1
-        fi
-
-    - name: Prune the build directory
-      run: find ./UHDM-integration-tests/opentitan_build -name "src" | xargs rm -rf
-
-    - name: Upload dependency graph
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: opentitan_dependency_graph.svg
-        path: |
-          ./UHDM-integration-tests/opentitan_dependency_graph.svg
-
-    - name: Upload logs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: opentitan-logs
-        path: |
-          ./UHDM-integration-tests/opentitan_build
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
-
-  swerv_synth:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    needs: build-binaries
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      DEBIAN_FRONTEND: noninteractive
-
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Build & Test
-      run: |
-        pip install virtualenv
-        ./UHDM-integration-tests/.github/ci.sh
-      env:
-        TARGET: uhdm/yosys/swerv
-        TEST_CASE: tests/swerv
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: chipsalliance.org_cores_SweRV_EH1_1.8.edif
-        path: UHDM-integration-tests/build/chipsalliance.org_cores_SweRV_EH1_1.8/synth-vivado/chipsalliance.org_cores_SweRV_EH1_1.8.edif
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
 
   release:
-    needs: [ build-binaries, tests-read-uhdm, tests-read-systemverilog, ibex_synth, opentitan_9d82960888_synth, opentitan_parse_report, tests-vcddiff, ibex_synth_symbiflow, swerv_synth]
+    name: Release Package
+    needs:
+      - build-binaries
+      - tests-parsing
+      - tests-formal-verification
+      - tests-large-designs
     runs-on: ubuntu-20.04
-    name: Release
     if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
 
     steps:
+      - uses: actions/checkout@v2
+        with:
+         # Download complete repository + tags
+         fetch-depth: 0
 
-    - uses: actions/checkout@v2
-      with:
-       # Download complete repository + tags
-       fetch-depth: 0
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
 
-    - name: Download artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
 
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Generate tarball and apply TAG
-      run: |
-        GIT_VERSION=${GIT_VERSION:-$(git rev-parse --short "$GITHUB_SHA")}
-        DISTRO_ARCH=$(uname -m)
-        DISTRO=$(lsb_release --short --id)
-        DISTRO_RELEASE=$(lsb_release --short --release)
-        DISTRO_CODENAME=$(lsb_release --short --codename | sed -e's/[^A-Za-z0-9]//g')
-        FULL_TARBALL=yosys-uhdm-integration-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
-        PLUGIN_TARBALL=yosys-uhdm-plugin-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
-        # Create a tag of form ad2466e-2021-12-06
-        TAG="${TAG:-$(git show -s --date=short --format=%h-%cd)}"
-        git tag "$TAG" || true
-        echo "TAG=$TAG" >> $GITHUB_ENV
-        ls -lah image
-        tar -zcvf $FULL_TARBALL image
-        tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so image/share/yosys/plugins/systemverilog.so install_plugin.sh
-    - name: Get PR data
-      uses: 8BitJonny/gh-get-current-pr@2.2.0
-      with:
-        sha: ${{ github.event.pull_request.head.sha }}
-      id: release_pr
-    - name: Deploy release
-      env:
-        RELEASE_NAME: >
-          ${{ steps.release_pr.outputs.pr_found == 'true'
-              &&
-                format('{0}: #{1}: {2}',
-                       env.TAG,
-                       steps.release_pr.outputs.number,
-                       steps.release_pr.outputs.pr_title)
-              ||
-                env.TAG }}
-        RELEASE_BODY: >
-          ${{ steps.release_pr.outputs.pr_found == 'true'
-              &&
-                steps.release_pr.outputs.pr_body
-              ||
-                '' }}
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: yosys-uhdm-*.tar.gz
-        tag: ${{ env.TAG }}
-        release_name: ${{ env.RELEASE_NAME }}
-        body: ${{ env.RELEASE_BODY }}
-        overwrite: true
-        file_glob: true
+      - name: Generate tarball and apply TAG
+        run: |
+          GIT_VERSION=${GIT_VERSION:-$(git rev-parse --short "$GITHUB_SHA")}
+          DISTRO_ARCH=$(uname -m)
+          DISTRO=$(lsb_release --short --id)
+          DISTRO_RELEASE=$(lsb_release --short --release)
+          DISTRO_CODENAME=$(lsb_release --short --codename | sed -e's/[^A-Za-z0-9]//g')
+          FULL_TARBALL=yosys-uhdm-integration-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+          PLUGIN_TARBALL=yosys-uhdm-plugin-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+          # Create a tag of form ad2466e-2021-12-06
+          TAG="${TAG:-$(git show -s --date=short --format=%h-%cd)}"
+          git tag "$TAG" || true
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          ls -lah image
+          tar -zcvf $FULL_TARBALL image
+          tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so image/share/yosys/plugins/systemverilog.so install_plugin.sh
+      - name: Get PR data
+        uses: 8BitJonny/gh-get-current-pr@2.2.0
+        with:
+          sha: ${{ github.event.pull_request.head.sha }}
+        id: release_pr
+      - name: Deploy release
+        env:
+          RELEASE_NAME: >
+            ${{ steps.release_pr.outputs.pr_found == 'true'
+                &&
+                  format('{0}: #{1}: {2}',
+                         env.TAG,
+                         steps.release_pr.outputs.number,
+                         steps.release_pr.outputs.pr_title)
+                ||
+                  env.TAG }}
+          RELEASE_BODY: >
+            ${{ steps.release_pr.outputs.pr_found == 'true'
+                &&
+                  steps.release_pr.outputs.pr_body
+                ||
+                  '' }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: yosys-uhdm-*.tar.gz
+          tag: ${{ env.TAG }}
+          release_name: ${{ env.RELEASE_NAME }}
+          body: ${{ env.RELEASE_BODY }}
+          overwrite: true
+          file_glob: true
 
   install-plugin:
+    name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
     container: debian:sid
-    name: Test plugin installation
+    needs: release
     env:
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
-    steps:
-    - name: Install Yosys and dependencies
-      run: |
-        apt update
-        apt upgrade -y
-        apt install -y yosys yosys-dev curl jq wget libreadline-dev
-    - name: Download and extract UHDM plugin
-      run: |
-        curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
-    - name: Install it
-      run: |
-        ./install_plugin.sh
-    - name: Run Yosys and load SystemVerilog plugin
-      run: yosys -p "plugin -i systemverilog"
-    - name: Run Yosys and load (deprecated) UHDM plugin
-      run: yosys -p "plugin -i uhdm"
-
-  ibex_synth_symbiflow:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    needs: build-binaries
-    env:
-      CC: gcc-9
-      CXX: g++-9
-      DEBIAN_FRONTEND: noninteractive
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 1
-
-    - name: Set up common Ubuntu configuration
-      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-    - name: Install dependencies
-      run: |
-        apt-get update -qq
-        apt install -y software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update -qq
-        apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git python3-pip wget
-        update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-        update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-    - name: Download binaries
-      uses: actions/download-artifact@v2
-      with:
-        name: binaries
-
-    # See https://github.com/actions/upload-artifact/issues/38
-    - name: Extract
-      run: tar -xf binaries.tar
-
-    - name: Build & Test
-      run: |
-        pip install virtualenv
-        make -C UHDM-integration-tests TEST=tests/ibex env
-        ./UHDM-integration-tests/.github/ci.sh
-      env:
-        TARGET: uhdm/yosys/synth-ibex-symbiflow
-        TEST_CASE: tests/ibex
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: top_artya7.bit
-        path: ./UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
-
-    - name: Upload load graphs
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: plots
-        path: |
-          **/plot_*.svg
+      - name: Install Yosys and dependencies
+        run: |
+          apt update
+          apt upgrade -y
+          apt install -y yosys yosys-dev curl jq wget libreadline-dev
+      - name: Download and extract UHDM plugin
+        run: |
+          curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+      - name: Install it
+        run: |
+          ./install_plugin.sh
+      - name: Run Yosys and load SystemVerilog plugin
+        run: yosys -p "plugin -i systemverilog"
+      - name: Run Yosys and load (deprecated) UHDM plugin
+        run: yosys -p "plugin -i uhdm"
