@@ -79,8 +79,8 @@ fv_header = (
 )
 
 
-def emit_warn(title: str, msg: str):
-    print(f"::warning title={title}::{msg}", file=sys.stderr)
+def emit_error(title: str, msg: str):
+    print(f"::error title={title}::{msg}", file=sys.stderr)
 
 
 def process_data(results_path, result_keys: list, result_description_keys: list):
@@ -109,9 +109,12 @@ def process_data(results_path, result_keys: list, result_description_keys: list)
             for result in result_keys:
                 results[result_data["name"]][result] = result_data[result]
         except KeyError:
-            emit_warn("Missing key in results of test `{result_data.get('name', '?')}`",
-                    f"Missing key `{result}` in `{result_data!r}`.\n")
-            continue
+            # Clearly show what happened and let the script fail.
+            # This isn't expected to happen, but when it will,
+            # this message will help to find the issue.
+            emit_error("Broken results file (missing key)",
+                    f"Processing of the file failed: {f}")
+            raise
 
     failed_should_pass = []
     passed_should_fail = []
@@ -121,12 +124,8 @@ def process_data(results_path, result_keys: list, result_description_keys: list)
 
     for test in results.keys():
         for r in result_keys:
-            try:
-                result_count[results[test][r]][r] += 1
-            except KeyError:
-                emit_warn("Missing key in results of test `{test}`",
-                        f"Missing key `{r}` in `{results[test]!r}`.\n")
-                continue
+            # At this point KeyError can't happen anymore - it would be caught in the previous loop.
+            result_count[results[test][r]][r] += 1
 
         full_test_name = f"{test_suite_name}:{test}"
         if (results[test].get("yosys") == "OK" and results[test].get("surelog") == "PASS") or \
