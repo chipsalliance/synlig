@@ -8,6 +8,15 @@ import shutil
 import subprocess
 from pathlib import Path
 
+import time
+
+
+def timed_subprocess_run(*run_args, **run_kwargs):
+    ts = time.time()
+    process = subprocess.run(*run_args, **run_kwargs)
+    td = time.time() - ts
+    return (process, td)
+
 
 def get_skiplist(listfile):
     """
@@ -68,10 +77,12 @@ def preprocess_sv2v(test_sources, work_path):
     """
 
     sv2v_out = os.path.join(work_path, "sv2v.v")
-    process = subprocess.run([*make_timeout_cmd(5*60), "sv2v", test_sources, "-w=%s" % sv2v_out],
+    # Measurements show this normally takes up to 1 second.
+    process, duration = timed_subprocess_run([*make_timeout_cmd(30), "sv2v", test_sources, "-w=%s" % sv2v_out],
         capture_output=True,
         text=True,
     )
+    print(f"# preprocess_sv2v: {duration:7.3f} s; rc: {process.returncode}")
     if process.stderr:
         for line in process.stderr.splitlines():
             print(f"[sv2v] {line}")
@@ -110,11 +121,13 @@ def run_surelog(test_path, output_dir, prefix=""):
         script_file.write("\n".join(script))
         script_file.close()
 
-    process = subprocess.run(
+    # Measurements show this normally takes up to 350 seconds.
+    process, duration = timed_subprocess_run(
         [*make_timeout_cmd(10*60), "yosys", "-s", script_path, "-q", "-q", "-l", "%s/%ssurelog.out" % (output_dir, prefix)],
         capture_output=True,
         text=True,
     )
+    print(f"# run_surelog: {duration:7.3f} s; rc: {process.returncode}")
     if process.stderr:
         for line in process.stderr.splitlines():
             print(f"[yosys] {line}")
@@ -139,11 +152,13 @@ def run_yosys(test_path, output_dir, prefix=""):
         script_file.write("\n".join(script))
         script_file.close()
 
-    process = subprocess.run(
-        [*make_timeout_cmd(10*60), "yosys", "-s", script_path, "-q", "-q", "-l", "%s/%syosys.out" % (output_dir, prefix)],
+    # Measurements show this normally takes up to 132 seconds.
+    process, duration = timed_subprocess_run(
+        [*make_timeout_cmd(5*60), "yosys", "-s", script_path, "-q", "-q", "-l", "%s/%syosys.out" % (output_dir, prefix)],
         capture_output=True,
         text=True,
     )
+    print(f"# run_yosys: {duration:7.3f} s; rc: {process.returncode}")
     if process.stderr:
         for line in process.stderr.splitlines():
             print(f"[yosys] {line}")
@@ -194,11 +209,12 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
         script_file.write("\n".join(script))
         script_file.close()
 
-    process = subprocess.run(
+    # Measurements show this normally takes up to 117 seconds.
+    process, duration = timed_subprocess_run(
         [
             "/usr/bin/env",
             "time",
-            *make_timeout_cmd(10*60),
+            *make_timeout_cmd(5*60),
             "yosys",
             "-s",
             script_path,
@@ -210,6 +226,7 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
         capture_output=True,
         text=True,
     )
+    print(f"# run_equiv: {duration:7.3f} s; rc: {process.returncode}")
     if process.returncode:
         print("Subprocess [ %s ] returned error:" % (subprocess.list2cmdline(process.args)))
         sys.stdout.flush()
