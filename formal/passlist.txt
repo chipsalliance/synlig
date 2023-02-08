@@ -436,3 +436,4 @@ UHDM-integration-tests:PatternParameterInSubmodule/top.sv
 UHDM-integration-tests:BreakWhile/top.sv
 UHDM-integration-tests:2DeclarationsInFor/top.sv
 yosys:sat/asserts.v
+UHDM-integration-tests:CaseInside/top.sv
