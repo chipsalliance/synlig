@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import argparse
 import json
 import os
 import sys
@@ -79,7 +79,12 @@ fv_header = (
 )
 
 
+def emit_error(title: str, msg: str):
+    print(f"::error title={title}::{msg}", file=sys.stderr)
+
+
 def process_data(results_path, result_keys: list, result_description_keys: list):
+    test_suite_name = os.path.basename(results_path)
     result_files = []
     result_count = {}
 
@@ -97,28 +102,39 @@ def process_data(results_path, result_keys: list, result_description_keys: list)
                 result_files.append(os.path.join(root, f))
 
     for f in result_files:
-        with open(f, "r") as file:
-            result_data = json.load(file)
+        try:
+            with open(f, "r") as file:
+                result_data = json.load(file)
             results[result_data["name"]] = {}
             for result in result_keys:
                 results[result_data["name"]][result] = result_data[result]
+        except KeyError:
+            # Clearly show what happened and let the script fail.
+            # This isn't expected to happen, but when it will,
+            # this message will help to find the issue.
+            emit_error("Broken results file (missing key)",
+                    f"Processing of the file failed: {f}")
+            raise
 
     failed_should_pass = []
     passed_should_fail = []
+    passlist_contents = set()
     with open("formal/passlist.txt", "r") as passlist:
-        passlist_contents = passlist.read()
+        passlist_contents = {line.strip() for line in passlist}
 
-        for test in results.keys():
-            for r in result_keys:
-                result_count[results[test][r]][r] += 1
+    for test in results.keys():
+        for r in result_keys:
+            # At this point KeyError can't happen anymore - it would be caught in the previous loop.
+            result_count[results[test][r]][r] += 1
 
-            if (results[test]["yosys"] == "OK" and results[test]["surelog"] == "PASS") or \
-               (results[test]["sv2v_yosys"] == "OK" and results[test]["sv2v_surelog"] == "PASS"):
-                if not re.search("^" + test, passlist_contents, re.MULTILINE):
-                    passed_should_fail.append(test)
-            else: # Any other result is effectively FAIL
-                if re.search("^" + test, passlist_contents, re.MULTILINE):
-                    failed_should_pass.append(test)
+        full_test_name = f"{test_suite_name}:{test}"
+        if (results[test].get("yosys") == "OK" and results[test].get("surelog") == "PASS") or \
+           (results[test].get("sv2v_yosys") == "OK" and results[test].get("sv2v_surelog") == "PASS"):
+            if full_test_name not in passlist_contents:
+                passed_should_fail.append(full_test_name)
+        else: # Any other result is effectively FAIL
+            if full_test_name in passlist_contents:
+                failed_should_pass.append(full_test_name)
 
     return result_count, passed_should_fail, failed_should_pass
 
@@ -162,7 +178,11 @@ def print_results(headers, result_keys, result_descriptions, result_count, passe
 
 
 def main():
-    results_path = os.path.abspath(os.path.normpath(sys.argv[1]))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("test_suite_results_dir", type=str)
+    args = parser.parse_args()
+
+    results_path = os.path.abspath(args.test_suite_results_dir)
 
     # Get formal verification results descriptions
     result_description_keys = fv_result_descriptions.copy()
