@@ -100,8 +100,9 @@ jobs:
       - name: Install Prerequisites
         run: |
           apt-get update -qq
-          apt-get install -y python3-pip git
-          pip3 install git+https://github.com/antmicro/tuttest#egg=tuttest
+          apt-get install -y pipx git
+          echo "${HOME}/.local/bin:" >> $GITHUB_PATH
+          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
       - name: Install Dependencies
         run: |
