@@ -1,0 +1,1 @@
+https://github.com/chipsalliance/f4pga/archive/main.zip#subdirectory=f4pga
