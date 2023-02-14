@@ -90,6 +90,7 @@ jobs:
     container: debian:sid
     env:
       DEBIAN_FRONTEND: noninteractive
+      PIPX_BIN_DIR: /usr/local/bin
 
     steps:
       - name: Prepare Repository
@@ -101,7 +102,6 @@ jobs:
         run: |
           apt-get update -qq
           apt-get install -y pipx git
-          echo "${HOME}/.local/bin:" >> $GITHUB_PATH
           pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
       - name: Install Dependencies
