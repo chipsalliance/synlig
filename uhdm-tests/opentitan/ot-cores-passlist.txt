@@ -24,6 +24,7 @@ lowrisc:ip:entropy_src_ack_sm_pkg:0.1
 lowrisc:ip:entropy_src_main_sm_pkg:0.1
 lowrisc:ip:entropy_src_pkg:0.1
 lowrisc:ip:flash_ctrl_pkg:0.1
+lowrisc:ip:i2c_pkg:0.1
 lowrisc:ip:jtag_pkg:0.1
 lowrisc:ip:keymgr_pkg:0.1
 lowrisc:ip:lc_ctrl_pkg:0.1
@@ -94,6 +95,7 @@ lowrisc:prim:rom_pkg:0
 lowrisc:prim:rst_sync:0
 lowrisc:prim:sec_anchor:0.1
 lowrisc:prim:secded:0.1
+lowrisc:prim:sparse_fsm:0
 lowrisc:prim:subreg:0
 lowrisc:prim:sum_tree:0
 lowrisc:prim:usb_diff_rx:0

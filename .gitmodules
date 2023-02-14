@@ -1,6 +1,6 @@
 [submodule "yosys"]
 	path = yosys
-	url = https://github.com/YosysHQ/yosys.git
+	url = https://github.com/antmicro/yosys.git
 [submodule "Surelog"]
 	path = Surelog
 	url = https://github.com/chipsalliance/Surelog.git
@@ -14,7 +14,7 @@
 	path = yosys-f4pga-plugins
 	url = https://github.com/chipsalliance/yosys-f4pga-plugins.git
 [submodule "make-env"]
-	path = make-env
+	path = uhdm-tests/ibex/make-env
 	url = https://github.com/SymbiFlow/make-env.git
 [submodule "uhdm-tests/ibex/ibex"]
 	path = uhdm-tests/ibex/ibex
