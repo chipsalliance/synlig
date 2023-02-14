@@ -443,3 +443,4 @@ yosys:simple/attrib04_net_var.v
 yosys:techmap/mem_simple_4x1_cells.v
 yosys:arch/common/blockrom.v
 yosys:various/dynamic_part_select/latch_002_gate.v
+yosys:opt/opt_share_mux_tree.v
