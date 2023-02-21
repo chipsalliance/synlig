@@ -12,7 +12,7 @@
 	url = https://github.com/antmicro/UHDM-integration.git
 [submodule "yosys-f4pga-plugins"]
 	path = yosys-f4pga-plugins
-	url = https://github.com/chipsalliance/yosys-f4pga-plugins.git
+	url = https://github.com/antmicro/yosys-f4pga-plugins.git
 [submodule "make-env"]
 	path = uhdm-tests/ibex/make-env
 	url = https://github.com/SymbiFlow/make-env.git
