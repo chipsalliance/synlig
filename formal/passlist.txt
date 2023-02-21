@@ -445,3 +445,7 @@ yosys:arch/common/blockrom.v
 yosys:various/dynamic_part_select/latch_002_gate.v
 yosys:opt/opt_share_mux_tree.v
 UHDM-integration-tests:CaseInside/top.sv
+UHDM-integration-tests:BitsCallOnSubArray/top.sv
+UHDM-integration-tests:ModuleInstantiationAndIndirectParams/dut.sv
+sv2v:relong/complex_interface.sv
+yosys:sva/extnets.sv
