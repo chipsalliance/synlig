@@ -1,0 +1,27 @@
+From 70484507528bde28ea5db210cad7993a2a9c9ac6 Mon Sep 17 00:00:00 2001
+From: Wojciech Sipak <wsipak@antmicro.com>
+Date: Tue, 21 Feb 2023 13:25:24 +0100
+Subject: [PATCH 3/3] temporarily patch tlul_lc_gate
+
+---
+ hw/ip/tlul/rtl/tlul_lc_gate.sv | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ip/tlul/rtl/tlul_lc_gate.sv b/hw/ip/tlul/rtl/tlul_lc_gate.sv
+index f5496b622..67a288d23 100644
+--- a/hw/ip/tlul/rtl/tlul_lc_gate.sv
++++ b/hw/ip/tlul/rtl/tlul_lc_gate.sv
+@@ -131,8 +131,8 @@ module tlul_lc_gate
+   // Minimum Hamming weight: 3
+   // Maximum Hamming weight: 6
+   //
+-  localparam int StateWidth = 9;
+-  typedef enum logic [StateWidth-1:0] {
++  //localparam int StateWidth = 9;
++  typedef enum logic [8:0] {
+     StActive = 9'b100100001,
+     StOutstanding = 9'b011100111,
+     StFlush = 9'b001001100,
+-- 
+2.39.0
+
