@@ -703,3 +703,4 @@ yosys:sva/nested_clk_else.sv
 yosys:simple/string_format.v
 yosys:memories/wide_read_trans.v
 yosys:memories/wide_write.v
+UHDM-integration-tests:MemoryInGenblock/top.sv
