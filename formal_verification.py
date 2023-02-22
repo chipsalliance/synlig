@@ -105,15 +105,30 @@ def find_xilinx_cells():
 
 def postprocess_gate_v(gate_v_path):
     """
-    Normalizes `*_gate.v` file by removing non-important details.
+    Normalizes `*_gate.v` file by removing non-important details
+    and initializing registers to 0.
     """
     gate_v_path = Path(gate_v_path)
     if not (gate_v_path.exists() and gate_v_path.is_file()):
         return None
 
+    # Each alternate pattern is inside its own group.
+    # The replace() function below checks which group has been matched
+    # and returns adequate replacement string.
+    # If you need to change this, avoid using nested capturing groups.
+    # Non capturing groups are OK through.
     PATTERNS = re.compile(
+            r"(\b1'hx\b)|" +
             r"( *\(\* src = \"[a-zA-Z0-9_/|:\.-]*\" \*\)\s*)|" +
             r"( *\(\* keep = +1 +\*\)\s*)")
+
+    def replace(match):
+        if match.group(1):
+            return "1'h0"
+        elif match.group(2) or match.group(3):
+            return ""
+        else:
+            return match.group(0)
 
     content = None
     with open(gate_v_path, "r") as f:
@@ -121,7 +136,7 @@ def postprocess_gate_v(gate_v_path):
     # Keep original file for debugging purposes.
     gate_v_path.rename(gate_v_path.with_suffix(".v.orig"))
 
-    content = PATTERNS.sub("", content)
+    content = PATTERNS.sub(replace, content)
 
     with open(gate_v_path, "w") as f:
         f.write(content)
