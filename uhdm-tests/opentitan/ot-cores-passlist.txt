@@ -113,6 +113,7 @@ lowrisc:tlul:adapter_reg:0.1
 lowrisc:tlul:adapter_sram:0.1
 lowrisc:tlul:common:0.1
 lowrisc:tlul:headers:0.1
+lowrisc:tlul:lc_gate:0.1
 lowrisc:tlul:socket_1n:0.1
 lowrisc:tlul:sram2tlul:0.1
 lowrisc:tlul:trans_intg:0.1
