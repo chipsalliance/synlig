@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 import argparse
-import re
-import os
-import sys
 import json
+import os
+import re
 import shutil
 import subprocess
-from pathlib import Path
-
+import sys
 import time
 
+from pathlib import Path
 
-def timed_subprocess_run(*run_args, **run_kwargs):
-    ts = time.time()
-    process = subprocess.run(*run_args, **run_kwargs)
-    td = time.time() - ts
-    return (process, td)
+sys.path.append(str(Path(__file__).resolve().parent / "lib" / "python3"))
+
+from yosys_systemverilog.run_command import run_command
 
 
 def get_skiplist(listfile):
@@ -47,28 +44,16 @@ def get_test_top_module(work_path, prefix=""):
             return line.split("\\")[-1]
 
 
-def get_time_result(stderr_str):
-    """
-    Extracts resource usage from GNU time output
-    """
-
-    m1 = re.search(
-        "([0-9\.:]+)user [0-9\.:]+system ([0-9]+):([0-9\.]+)elapsed ([0-9]+)%CPU",
-        stderr_str,
-    ).groups()
-    m2 = re.search("([0-9]+)maxresident", stderr_str).groups()
+def run_command_result_to_dict(result):
+    cpu_usage = (result.utime_s + result.stime_s) / result.elapsed_s
 
     result = {
-        "user": float(m1[0]),
-        "elapsed": (int(m1[1]) * 60) + float(m1[2]),
-        "cpu": int(m1[3]),
-        "resident": int(m2[0]) / 1024,
+        "user": round(result.utime_s, 3),
+        "elapsed": round(result.elapsed_s, 3),
+        "cpu": int(cpu_usage * 100.0 + 0.5),
+        "resident": round(result.rss_kb / 1024, 3),
     }
     return result
-
-
-def make_timeout_cmd(timeout_s: int, kill_after_s: int = 10):
-    return ['timeout', '-k', str(kill_after_s), str(timeout_s) + 's']
 
 
 def preprocess_sv2v(test_sources, work_path):
@@ -78,15 +63,18 @@ def preprocess_sv2v(test_sources, work_path):
 
     sv2v_out = os.path.join(work_path, "sv2v.v")
     # Measurements show this normally takes up to 1 second.
-    process, duration = timed_subprocess_run([*make_timeout_cmd(30), "sv2v", test_sources, "-w=%s" % sv2v_out],
-        capture_output=True,
-        text=True,
-    )
-    print(f"# preprocess_sv2v: {duration:7.3f} s; rc: {process.returncode}")
-    if process.stderr:
-        for line in process.stderr.splitlines():
-            print(f"[sv2v] {line}")
-    if process.returncode != 0:
+    # sv2v allocates huge buffers and relies on overcommiting. No vmem limit as a result.
+    result = run_command(
+            ["sv2v", test_sources, f"-w={sv2v_out}"],
+            timeout=30,
+            capture_stderr=True,
+            oom_score_adj=1000
+        )
+    print(f"# preprocess_sv2v: {result}")
+    if result.stderr:
+        for line in result.stderr.decode("UTF-8").splitlines():
+            print(f"┆ \x1b[33m{line}\x1b[0m")
+    if result.status != 0:
         return None
 
     return sv2v_out
@@ -98,6 +86,8 @@ def find_xilinx_cells():
     """
 
     yosys_bin_path = shutil.which("yosys")
+    if not yosys_bin_path:
+        raise FileNotFoundError("yosys")
     head_tail = os.path.split(yosys_bin_path)
     cells_path = os.path.join(head_tail[0], "..", "share", "yosys", "xilinx")
     return cells_path
@@ -161,19 +151,22 @@ def run_surelog(test_path, output_dir, prefix=""):
         script_file.close()
 
     # Measurements show this normally takes up to 350 seconds.
-    process, duration = timed_subprocess_run(
-        [*make_timeout_cmd(10*60), "yosys", "-s", script_path, "-q", "-q", "-l", "%s/%ssurelog.out" % (output_dir, prefix)],
-        capture_output=True,
-        text=True,
-    )
-    print(f"# run_surelog: {duration:7.3f} s; rc: {process.returncode}")
-    if process.stderr:
-        for line in process.stderr.splitlines():
-            print(f"[yosys] {line}")
+    result = run_command(
+            ["yosys", "-s", script_path, "-q", "-q", "-l", f"{output_dir}/{prefix}surelog.out"],
+            timeout=10*60,
+            # Max measured RSS: 398MB; Note that this sets virtual memory (address space) limit, not RSS!
+            vmem_limit_kb=2*1024*1024,
+            capture_stderr=True,
+            oom_score_adj=500
+        )
+    print(f"# run_surelog:     {result}")
+    if result.stderr:
+        for line in result.stderr.decode("UTF-8").splitlines():
+            print(f"┆ \x1b[33m{line}\x1b[0m")
 
     postprocess_gate_v(os.path.join(output_dir, f"{prefix}surelog_gate.v"))
 
-    return process.returncode
+    return result.status
 
 
 def run_yosys(test_path, output_dir, prefix=""):
@@ -194,19 +187,22 @@ def run_yosys(test_path, output_dir, prefix=""):
         script_file.close()
 
     # Measurements show this normally takes up to 132 seconds.
-    process, duration = timed_subprocess_run(
-        [*make_timeout_cmd(5*60), "yosys", "-s", script_path, "-q", "-q", "-l", "%s/%syosys.out" % (output_dir, prefix)],
-        capture_output=True,
-        text=True,
-    )
-    print(f"# run_yosys: {duration:7.3f} s; rc: {process.returncode}")
-    if process.stderr:
-        for line in process.stderr.splitlines():
-            print(f"[yosys] {line}")
+    result = run_command(
+            ["yosys", "-s", script_path, "-q", "-q", "-l", f"{output_dir}/{prefix}yosys.out"],
+            timeout=5*60,
+            # Max measured RSS: 164MB; Note that this sets virtual memory (address space) limit, not RSS!
+            vmem_limit_kb=2*1024*1024,
+            capture_stderr=True,
+            oom_score_adj=500
+        )
+    print(f"# run_yosys:       {result}")
+    if result.stderr:
+        for line in result.stderr.decode("UTF-8").splitlines():
+            print(f"┆ \x1b[33m{line}\x1b[0m")
 
     postprocess_gate_v(os.path.join(output_dir, f"{prefix}yosys_gate.v"))
 
-    return process.returncode
+    return result.status
 
 
 def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate="yosys_gate.v"):
@@ -214,13 +210,17 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
     Writes and executes Yosys equivalence check script
     """
 
+    output_dir = Path(output_dir)
     prefix = "sv2v_" if surelog_gate.startswith("sv2v_") else ""
-    equiv_out = Path(output_dir) / f"{prefix}equiv.out"
+
+    equiv_out = output_dir / f"{prefix}equiv.out"
+    surelog_gate_file = output_dir / surelog_gate
+    yosys_gate_file = output_dir / yosys_gate
 
     # Report equivalence without running actual check when both netlists
     # have the same contents. Otherwise Yosys can report inequivalence just
     # because it is unable to prove something.
-    with open(surelog_gate, "r") as sgf, open(yosys_gate, "r") as ygf:
+    with open(surelog_gate_file, "r") as sgf, open(yosys_gate_file, "r") as ygf:
         surelog_gate_content = sgf.read()
         yosys_gate_content = ygf.read()
         if surelog_gate_content == yosys_gate_content:
@@ -230,6 +230,13 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
                 outf.write("Same content")
                 return None
 
+    if top_module is None:
+        print(f"# run_equiv: unknown top module name")
+        with open(equiv_out, "w") as outf:
+            # The string written below is checked by `get_equiv_result()`
+            outf.write("ERROR: Failed to find top module.")
+            return None
+
     cells_path = find_xilinx_cells()
     cells = [
         os.path.join(cells_path, "cells_sim.v"),
@@ -237,16 +244,16 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
     ]
 
     script = [
-        "read_verilog -sv %s/%s %s %s" % (output_dir, surelog_gate, cells[0], cells[1]),
-        "prep -flatten -top %s" % top_module,
+        f"read_verilog -sv {surelog_gate_file} {cells[0]} {cells[1]}",
+        f"prep -flatten -top {top_module}",
         "splitnets -ports;;",
         "design -stash surelog",
-        "read_verilog -sv %s/%s %s %s" % (output_dir, yosys_gate, cells[0], cells[1]),
+        f"read_verilog -sv {yosys_gate_file} {cells[0]} {cells[1]}",
         "splitnets -ports;;",
-        "prep -flatten -top %s" % top_module,
+        f"prep -flatten -top {top_module}",
         "design -stash yosys",
-        "design -copy-from surelog -as surelog %s" % top_module,
-        "design -copy-from yosys -as yosys %s" % top_module,
+        f"design -copy-from surelog -as surelog {top_module}",
+        f"design -copy-from yosys -as yosys {top_module}",
         "equiv_make surelog yosys equiv",
         "prep -flatten -top equiv",
         "opt_clean -purge",
@@ -257,36 +264,30 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
         "equiv_status -assert",
     ]
 
-    script_path = os.path.join(output_dir, "%sequiv.ys" % prefix)
+    script_file = output_dir / f"{prefix}sequiv.ys"
 
-    with open(script_path, "w") as script_file:
-        script_file.write("\n".join(script))
-        script_file.close()
+    with open(script_file, "w") as f:
+        f.write("\n".join(script))
+        f.close()
 
     # Measurements show this normally takes up to 117 seconds.
-    process, duration = timed_subprocess_run(
-        [
-            "/usr/bin/env",
-            "time",
-            *make_timeout_cmd(5*60),
-            "yosys",
-            "-s",
-            script_path,
-            "-q",
-            "-q",
-            "-l",
-            equiv_out,
-        ],
-        capture_output=True,
-        text=True,
-    )
-    print(f"# run_equiv: {duration:7.3f} s; rc: {process.returncode}")
-    if process.returncode:
-        print("Subprocess [ %s ] returned error:" % (subprocess.list2cmdline(process.args)))
-        sys.stdout.flush()
-        print(process.stderr)
+    cmd = ["yosys", "-s", script_file, "-q", "-q", "-l", equiv_out]
+    result = run_command(
+            cmd,
+            timeout=5*60,
+            # Max measured RSS: 830MB; Note that this sets virtual memory (address space) limit, not RSS!
+            vmem_limit_kb=3*1024*1024,
+            capture_merged_outputs=True,
+            oom_score_adj=500
+        )
+    print(f"# run_equiv:       {result}")
+    if result.status != 0:
+        cmd_str = subprocess.list2cmdline(cmd)
+        print(f"# cmd: \x1b[37m{cmd_str}\x1b[0m")
+        for line in result.stdout.decode("UTF-8").splitlines():
+            print(f"┆ \x1b[33m{line}\x1b[0m")
 
-    return process
+    return result
 
 
 def get_equiv_result(surelog_out, yosys_out, output_dir, prefix=""):
@@ -437,10 +438,10 @@ def main():
     if args.test_suite_name:
         full_test_name = f"{args.test_suite_name}:{test_name}"
     else:
-        full_test_name = {test_name}
+        full_test_name = test_name
 
     # Test name suitable for use as a file name (no whitespace, `:`, `/`, control characters).
-    safe_test_name = re.sub(r"[\s:/\x00-\x1f\x7f-\x9f]", "_", test_name)
+    safe_test_name = re.sub(r"[\s:/\x00-\x20\x7f-\x9f]", "_", test_name)
 
     # Directory for storing result.
     output_path = args.output_dir.resolve()
@@ -474,14 +475,15 @@ def main():
         group_begin(full_test_name, test_id, tests_count, True)
         group_end()
         # Intentionally do not save test result.
-        return
+        return 0
 
-    group_begin(full_test_name, test_id, tests_count)
+    cancelled = False
     try:
+        group_begin(full_test_name, test_id, tests_count)
         # Run synthesis of test's source files and export Verilog
         ret_yosys = run_yosys(test_src_file, work_dir)
-        processed_sv2v = False
         ys_prefix = ""
+        preprocessed_path = None
         if ret_yosys:
             ys_prefix = "sv2v_"
             test_result["yosys"] = "FAIL"
@@ -491,15 +493,14 @@ def main():
                 test_result["sv2v_yosys"] = "SV2V_FAIL"
                 test_result["surelog"] = "SKIPPED"
                 test_result["sv2v_surelog"] = "SKIPPED"
-                return
+                return 0
 
-            processed_sv2v = True
             ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
             if ret_yosys:
                 test_result["sv2v_yosys"] = "FAIL"
                 test_result["surelog"] = "SKIPPED"
                 test_result["sv2v_surelog"] = "SKIPPED"
-                return
+                return 0
         else:
             test_result["yosys"] = "OK"
             test_result["sv2v_yosys"] = "SKIPPED"
@@ -513,7 +514,7 @@ def main():
         else:
             test_result["surelog"] = "FAIL"
 
-        if processed_sv2v:
+        if preprocessed_path:
             ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
             if not ret_surelog:
                 top_module_name = get_test_top_module(work_dir, "sv2v_")
@@ -525,12 +526,29 @@ def main():
             test_result["sv2v_surelog"] = "SKIPPED"
 
         if ret_equiv is not None:
-            test_result.update(get_time_result(ret_equiv.stderr))
+            test_result.update(run_command_result_to_dict(ret_equiv))
+
+    except KeyboardInterrupt as e:
+        # Catch the interrupt here to print a message between group_begin
+        # and group_end and ultimately allow to see in the middle of which
+        # test it happened.
+        cancelled = True
+        import traceback
+        print("Cancelled:")
+        traceback.print_tb(e.__traceback__, file=sys.stdout)
+        return 1
+
+    except Exception:
+        import traceback
+        # Print to stdout to be in sync with `group_end()`
+        traceback.print_exc(file=sys.stdout)
+        return 1
 
     finally:
-        log_result(test_result, work_dir)
+        if not cancelled:
+            log_result(test_result, work_dir)
         group_end()
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
