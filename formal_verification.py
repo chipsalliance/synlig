@@ -116,7 +116,7 @@ def postprocess_gate_v(gate_v_path):
     # The replace() function below checks which group has been matched
     # and returns adequate replacement string.
     # If you need to change this, avoid using nested capturing groups.
-    # Non capturing groups are OK through.
+    # Non capturing groups are OK though.
     PATTERNS = re.compile(
             r"(\b1'hx\b)|" +
             r"( *\(\* src = \"[a-zA-Z0-9_/|:\.-]*\" \*\)\s*)|" +
