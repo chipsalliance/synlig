@@ -127,8 +127,7 @@ def postprocess_gate_v(gate_v_path):
             return "1'h0"
         elif match.group(2) or match.group(3):
             return ""
-        else:
-            return match.group(0)
+        raise Exception(f"Unexpected match: {match.group(0)!r}")
 
     content = None
     with open(gate_v_path, "r") as f:
