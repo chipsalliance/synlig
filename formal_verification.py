@@ -103,11 +103,50 @@ def find_xilinx_cells():
     return cells_path
 
 
+def postprocess_gate_v(gate_v_path):
+    """
+    Normalizes `*_gate.v` file by removing non-important details
+    and initializing registers to 0.
+    """
+    gate_v_path = Path(gate_v_path)
+    if not gate_v_path.is_file():
+        return None
+
+    # Each alternate pattern is inside its own group.
+    # The replace() function below checks which group has been matched
+    # and returns adequate replacement string.
+    # If you need to change this, avoid using nested capturing groups.
+    # Non capturing groups are OK though.
+    PATTERNS = re.compile(
+            r"(\b1'hx\b)|" +
+            r"( *\(\* src = \"[a-zA-Z0-9_/|:\.-]*\" \*\)\s*)|" +
+            r"( *\(\* keep = +1 +\*\)\s*)")
+
+    def replace(match):
+        if match.group(1):
+            return "1'h0"
+        elif match.group(2) or match.group(3):
+            return ""
+        raise Exception(f"Unexpected match: {match.group(0)!r}")
+
+    content = None
+    with open(gate_v_path, "r") as f:
+        content = f.read()
+    # Keep original file for debugging purposes.
+    gate_v_path.rename(gate_v_path.with_suffix(".v.orig"))
+
+    content = PATTERNS.sub(replace, content)
+
+    with open(gate_v_path, "w") as f:
+        f.write(content)
+
+
 def run_surelog(test_path, output_dir, prefix=""):
     """
     Writes and executes Surelog synthesis script
     """
 
+    gate_v = Path(output_dir) / f"{prefix}surelog_gate.v"
     script = [
         "plugin -i systemverilog",
         "tee -o %s/%ssurelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, prefix, test_path),
@@ -131,6 +170,8 @@ def run_surelog(test_path, output_dir, prefix=""):
     if process.stderr:
         for line in process.stderr.splitlines():
             print(f"[yosys] {line}")
+
+    postprocess_gate_v(os.path.join(output_dir, f"{prefix}surelog_gate.v"))
 
     return process.returncode
 
@@ -163,6 +204,8 @@ def run_yosys(test_path, output_dir, prefix=""):
         for line in process.stderr.splitlines():
             print(f"[yosys] {line}")
 
+    postprocess_gate_v(os.path.join(output_dir, f"{prefix}yosys_gate.v"))
+
     return process.returncode
 
 
@@ -170,6 +213,22 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
     """
     Writes and executes Yosys equivalence check script
     """
+
+    prefix = "sv2v_" if surelog_gate.startswith("sv2v_") else ""
+    equiv_out = Path(output_dir) / f"{prefix}equiv.out"
+
+    # Report equivalence without running actual check when both netlists
+    # have the same contents. Otherwise Yosys can report inequivalence just
+    # because it is unable to prove something.
+    with open(surelog_gate, "r") as sgf, open(yosys_gate, "r") as ygf:
+        surelog_gate_content = sgf.read()
+        yosys_gate_content = ygf.read()
+        if surelog_gate_content == yosys_gate_content:
+            with open(equiv_out, "w") as outf:
+                print(f"# run_equiv: netlist contents equal, skipping actual equivalence check.")
+                # The string written below is checked by `get_equiv_result()`
+                outf.write("Same content")
+                return None
 
     cells_path = find_xilinx_cells()
     cells = [
@@ -198,11 +257,6 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
         "equiv_status -assert",
     ]
 
-    if surelog_gate.startswith("sv2v_"):
-        prefix = "sv2v_"
-    else:
-        prefix = ""
-
     script_path = os.path.join(output_dir, "%sequiv.ys" % prefix)
 
     with open(script_path, "w") as script_file:
@@ -221,7 +275,7 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
             "-q",
             "-q",
             "-l",
-            "%s/%sequiv.out" % (output_dir, prefix),
+            equiv_out,
         ],
         capture_output=True,
         text=True,
@@ -241,6 +295,7 @@ def get_equiv_result(surelog_out, yosys_out, output_dir, prefix=""):
     """
 
     equiv_patterns = {
+        "Same content": "PASS",  # EQUIVALENT
         "Equivalence successfully proven": "PASS",  # EQUIVALENT
         "Unproven": "DIFF",  # NOT_EQUIVALENT
         "[0-9]+ unproven": "DIFF",  # NOT_EQUIVALENT
