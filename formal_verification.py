@@ -109,7 +109,7 @@ def postprocess_gate_v(gate_v_path):
     and initializing registers to 0.
     """
     gate_v_path = Path(gate_v_path)
-    if not (gate_v_path.exists() and gate_v_path.is_file()):
+    if not gate_v_path.is_file():
         return None
 
     # Each alternate pattern is inside its own group.
