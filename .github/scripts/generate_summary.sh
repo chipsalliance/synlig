@@ -46,27 +46,27 @@ fi
 echo "" >> $GITHUB_STEP_SUMMARY
 echo "| Tool/Parser          | Failed | Passed |" >> $GITHUB_STEP_SUMMARY
 echo "|:---------------------|-------:|-------:|" >> $GITHUB_STEP_SUMMARY
-echo "| Surelog              | $UHDM_FAILED_NUMBER | $UHDM_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
-echo "| SystemVerilog Plugin | $SYSTEMVERILOG_FAILED_NUMBER | $SYSTEMVERILOG_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
+echo "| `read-uhdm`          | $UHDM_FAILED_NUMBER | $UHDM_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
+echo "| `read-systemverilog` | $SYSTEMVERILOG_FAILED_NUMBER | $SYSTEMVERILOG_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
 echo "| **Total**            | **$TOTAL_FAILED_TESTS** | **$TOTAL_PASSED_TESTS** |" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 echo "$TOTAL_FAILED_TESTS out of total $TOTAL_TESTS failed." >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 echo "" >> $GITHUB_STEP_SUMMARY
 
-declare -A surelog_results=()
-declare -A sv_plugin_results=()
+declare -A uhdm_results=()
+declare -A systemverilog_results=()
 for result_file in "$SYSTEMVERILOG_FAILED_FILE" "$SYSTEMVERILOG_PASSED_FILE"; do
     if [[ -f "$result_file" ]]; then
         while read -r test_name test_result; do
-            sv_plugin_results[$test_name]=${test_result}
+            systemverilog_results[$test_name]=${test_result}
         done < "$result_file"
     fi
 done
 for result_file in "$UHDM_FAILED_FILE" "$UHDM_PASSED_FILE"; do
     if [[ -f "$result_file" ]]; then
         while read -r test_name test_result; do
-            surelog_results[$test_name]=${test_result}
+            uhdm_results[$test_name]=${test_result}
         done < "$result_file"
     fi
 done
@@ -79,8 +79,8 @@ declare -a results_11=()
 declare -r pass_str=':heavy_check_mark: **PASS**'
 declare -r fail_str=':x: **FAIL**'
 
-for test_name in "${!surelog_results[@]}"; do
-    case "${surelog_results[$test_name]:-0}${sv_plugin_results[$test_name]:-0}" in
+for test_name in "${!uhdm_results[@]}"; do
+    case "${uhdm_results[$test_name]:-0}${systemverilog_results[$test_name]:-0}" in
         [^1][^1])
             results_00+=("| $fail_str | $fail_str | $test_name |")
         ;;
@@ -103,8 +103,8 @@ print_ln() { printf '%s\n' "$@"; }
         print_ln '<details open>'
         print_ln '<summary><strong>List of failed tests</strong></summary>'
         print_ln ''
-        print_ln '| Surelog | SV Plugin | Test |'
-        print_ln '|:-------:|:---------:|:-----|'
+        print_ln '| `read_uhdm` | `read_systemverilog` | Test |'
+        print_ln '|:-----------:|:--------------------:|:-----|'
         print_ln "${results_00[@]}" | sort
         print_ln "${results_10[@]}" | sort
         print_ln "${results_01[@]}" | sort
@@ -115,8 +115,8 @@ print_ln() { printf '%s\n' "$@"; }
     print_ln '<details>'
     print_ln '<summary><strong>List of passed tests</strong></summary>'
     print_ln ''
-    print_ln '| Surelog | SV Plugin | Test |'
-    print_ln '|:-------:|:---------:|:-----|'
+    print_ln '| `read_uhdm` | `read_systemverilog` | Test |'
+    print_ln '|:-----------:|:--------------------:|:-----|'
     print_ln "${results_11[@]}" | sort
     print_ln ''
     print_ln '</details>'
