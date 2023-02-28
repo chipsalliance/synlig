@@ -71,6 +71,9 @@ for result_file in "$UHDM_FAILED_FILE" "$UHDM_PASSED_FILE"; do
     fi
 done
 
+# List of tests with specific combination of results.
+# 0 means "fail", 1 means "pass". Each digit represents one column in the table
+# (`read_uhdm` and `read_systemverilog`, respectivelly).
 declare -a results_00=()
 declare -a results_10=()
 declare -a results_01=()
@@ -79,6 +82,7 @@ declare -a results_11=()
 declare -r pass_str=':heavy_check_mark: **PASS**'
 declare -r fail_str=':x: **FAIL**'
 
+# `[^1]` below is used instead of `0` to catch any unexpected values as failures.
 for test_name in "${!uhdm_results[@]}"; do
     case "${uhdm_results[$test_name]:-0}${systemverilog_results[$test_name]:-0}" in
         [^1][^1])
