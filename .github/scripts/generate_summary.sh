@@ -46,8 +46,8 @@ TOTAL_TESTS=$(($TOTAL_FAILED_TESTS+$TOTAL_PASSED_TESTS))
     fi
 
     printf '\n'
-    printf '| Tool/Parser          | Failed | Passed |\n' >> $GITHUB_STEP_SUMMARY
-    printf '|:---------------------|-------:|-------:|\n' >> $GITHUB_STEP_SUMMARY
+    printf '| Tool/Parser          | Failed | Passed |\n'
+    printf '|:---------------------|-------:|-------:|\n'
     printf '| `read-uhdm`          | %d     | %d     |\n' "$UHDM_FAILED_NUMBER" "$UHDM_PASSED_NUMBER"
     printf '| `read-systemverilog` | %d     | %d     |\n' "$SYSTEMVERILOG_FAILED_NUMBER" "$SYSTEMVERILOG_PASSED_NUMBER"
     printf '| **Total**            | **%d** | **%d** |\n' "$TOTAL_FAILED_TESTS" "$TOTAL_PASSED_TESTS"
