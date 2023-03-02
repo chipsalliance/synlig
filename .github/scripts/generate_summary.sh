@@ -38,21 +38,22 @@ TOTAL_FAILED_TESTS=$(($UHDM_FAILED_NUMBER+$SYSTEMVERILOG_FAILED_NUMBER))
 TOTAL_PASSED_TESTS=$(($UHDM_PASSED_NUMBER+$SYSTEMVERILOG_PASSED_NUMBER))
 TOTAL_TESTS=$(($TOTAL_FAILED_TESTS+$TOTAL_PASSED_TESTS))
 
-if [[ ! -e $UHDM_FAILED_FILE && ! -e $SYSTEMVERILOG_FAILED_FILE ]]; then
-    echo ":heavy_check_mark: ALL TESTS PASSED :heavy_check_mark:" > $GITHUB_STEP_SUMMARY
-else
-    echo ":x: SOME TESTS FAILED :x:" > $GITHUB_STEP_SUMMARY
-fi
-echo "" >> $GITHUB_STEP_SUMMARY
-echo "| Tool/Parser          | Failed | Passed |" >> $GITHUB_STEP_SUMMARY
-echo "|:---------------------|-------:|-------:|" >> $GITHUB_STEP_SUMMARY
-echo "| `read-uhdm`          | $UHDM_FAILED_NUMBER | $UHDM_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
-echo "| `read-systemverilog` | $SYSTEMVERILOG_FAILED_NUMBER | $SYSTEMVERILOG_PASSED_NUMBER |" >> $GITHUB_STEP_SUMMARY
-echo "| **Total**            | **$TOTAL_FAILED_TESTS** | **$TOTAL_PASSED_TESTS** |" >> $GITHUB_STEP_SUMMARY
-echo "" >> $GITHUB_STEP_SUMMARY
-echo "$TOTAL_FAILED_TESTS out of total $TOTAL_TESTS failed." >> $GITHUB_STEP_SUMMARY
-echo "" >> $GITHUB_STEP_SUMMARY
-echo "" >> $GITHUB_STEP_SUMMARY
+{
+    if [[ ! -e $UHDM_FAILED_FILE && ! -e $SYSTEMVERILOG_FAILED_FILE ]]; then
+        echo ":heavy_check_mark: ALL TESTS PASSED :heavy_check_mark:"
+    else
+        echo ":x: SOME TESTS FAILED :x:"
+    fi
+
+    printf '\n'
+    printf '| Tool/Parser          | Failed | Passed |\n'
+    printf '|:---------------------|-------:|-------:|\n'
+    printf '| `read-uhdm`          | %d     | %d     |\n' "$UHDM_FAILED_NUMBER" "$UHDM_PASSED_NUMBER"
+    printf '| `read-systemverilog` | %d     | %d     |\n' "$SYSTEMVERILOG_FAILED_NUMBER" "$SYSTEMVERILOG_PASSED_NUMBER"
+    printf '| **Total**            | **%d** | **%d** |\n' "$TOTAL_FAILED_TESTS" "$TOTAL_PASSED_TESTS"
+    printf '\n'
+    printf '%d out of total %d failed.\n\n\n' "$TOTAL_FAILED_TESTS" "$TOTAL_TESTS"
+} >> $GITHUB_STEP_SUMMARY
 
 declare -A uhdm_results=()
 declare -A systemverilog_results=()
