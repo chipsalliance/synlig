@@ -1,3 +1,4 @@
+#!/bin/bash
 ROOT_DIR=$(dirname $(dirname $(dirname "$0")))
 if [[ -z $TESTS_TO_SKIP ]]; then
     TEST_CASES="$(cd UHDM-integration-tests && python list.py -d tests)"
@@ -12,11 +13,11 @@ do
     export TEST_CASE
     $ROOT_DIR/UHDM-integration-tests/.github/ci.sh
     TEST_RET=$?
-    TEST_CASE=$(echo $TEST_CASE | sed "s/tests\///g")
-    if [ $TEST_RET -eq 0 ]; then
-        echo "|$TEST_CASE | :heavy_check_mark: **PASS**|" >> $ROOT_DIR/test-results/test-results.passed
+    TEST_CASE="${TEST_CASE//tests\//}"
+    if [[ $TEST_RET -eq 0 ]]; then
+        printf '%s\t%s\n' "$TEST_CASE" '1' >> $ROOT_DIR/test-results/test-results.passed
     else
-        echo "|$TEST_CASE | :x: **FAIL**|" >> $ROOT_DIR/test-results/test-results.failed
+        printf '%s\t%s\n' "$TEST_CASE" '0' >> $ROOT_DIR/test-results/test-results.failed
         RET=1
     fi
 done
