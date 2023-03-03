@@ -117,3 +117,15 @@ lowrisc:tlul:socket_1n:0.1
 lowrisc:tlul:sram2tlul:0.1
 lowrisc:tlul:trans_intg:0.1
 lowrisc:tool:check_tool_requirements:0.1
+lowrisc:prim:arbiter:0
+lowrisc:ip:rstmgr_cnsty_chk:0
+lowrisc:prim:edn_req:0.1
+lowrisc:ip:clkmgr_components:0.1
+lowrisc:prim:measure:0
+pulp-platform:riscv-dbg:0.1:0
+lowrisc:prim:otp:0
+lowrisc:prim:all:0.1
+lowrisc:ip:usb_fs_nb_pe:0.1
+lowrisc:tlul:socket_m1:0.1
+lowrisc:prim:flash:0
+lowrisc:tlul:adapter_host:0.1
