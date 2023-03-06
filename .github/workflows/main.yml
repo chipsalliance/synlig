@@ -31,6 +31,7 @@ jobs:
       CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
       DEBIAN_FRONTEND: noninteractive
       PLUGIN_ASAN: 1
+      GHA_MACHINE_TYPE: "n2-highmem-8"
 
     steps:
       - uses: actions/checkout@v3
