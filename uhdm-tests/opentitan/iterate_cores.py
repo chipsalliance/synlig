@@ -41,7 +41,7 @@ class Status(Enum):
 
 nx.set_node_attributes(graph, {node: Status.UNKNOWN for node in graph}, 'status')
 root = [node for node, degree in graph.in_degree() if degree == 0][0]
-nodes = reversed(list(nx.topological_sort(graph)))
+nodes = list(nx.topological_sort(graph))
 
 def process_node(graph, node):
     status = nx.get_node_attributes(graph, 'status')[node]
@@ -55,21 +55,19 @@ def process_node(graph, node):
             nx.set_node_attributes(graph, {node: Status.FAILED}, 'status')
 
 for node in nodes:
-    children_names = list(graph[node])
     # If the node belongs to the skiplist, set status and continue
     if re.search("^" + node, skiplist, re.MULTILINE):
         nx.set_node_attributes(graph, {node: Status.SKIPPED}, 'status')
         continue
 
-    # If any of the children failed, skip this node
-    for child in children_names:
-        status = nx.get_node_attributes(graph, 'status')[child]
-        if  status == Status.FAILED or status == Status.DEPENDENCY_FAILED:
-            nx.set_node_attributes(graph, {node: Status.DEPENDENCY_FAILED}, 'status')
-            break
-    if nx.get_node_attributes(graph, 'status')[node] == Status.DEPENDENCY_FAILED:
+    if not nx.get_node_attributes(graph, 'status')[node] == Status.UNKNOWN:
         continue
+
     process_node(graph, node)
+    if nx.get_node_attributes(graph, 'status')[node] == Status.PASSED:
+        children_names = list(graph[node])
+        for child in children_names:
+            nx.set_node_attributes(graph, {child: Status.SKIPPED}, 'status')
 
 # write markdown table with results
 with open('result.txt', 'w') as f:
