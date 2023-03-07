@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: recursive
+          submodules: false
           fetch-depth: 1
 
       - name: Set up common Ubuntu configuration
@@ -61,12 +61,21 @@ jobs:
         with:
           format: 'YYYY-MM-DD-HH-mm-ss'
 
+      - name: Checkout submodules
+        run: |
+          git submodule update -j 8 --depth 1 --init --recursive \
+              Surelog \
+              yosys \
+              yosys-f4pga-plugins \
+              sv2v \
+              ;
+
       - name: Checkout custom branches in submodules (if requested)
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
         run: |
           cd yosys-f4pga-plugins
           git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
-          git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
+          git fetch -j 8 github/antmicro ${{github.event.inputs.plugins_branch}}
           git checkout FETCH_HEAD
 
       - name: Setup cache
