@@ -1,0 +1,2387 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/SumOfParameters/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/SumOfParameters/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.26+73 (git sha1 9747e55d9, gcc 12.2.0 -Og -fPIC)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -> skip.
+[TCL: yUsing Yosys read_systemverilog command
+osys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/SumOfParameters/top.sv:1:1: No timescale set for "tl_main_pkg".
+
+[WRN:PA0205] UHDM-integration-tests/tests/SumOfParameters/top.sv:5:1: No timescale set for "dm".
+
+[WRN:PA0205] UHDM-integration-tests/tests/SumOfParameters/top.sv:10:1: No timescale set for "top".
+
+[WRN:PA0205] UHDM-integration-tests/tests/SumOfParameters/top.sv:18:1: No timescale set for "rv_core_ibex".
+
+[WRN:PA0205] UHDM-integration-tests/tests/SumOfParameters/top.sv:25:1: No timescale set for "ibex_core".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0301] UHDM-integration-tests/tests/SumOfParameters/top.sv:1:1: Compile package "tl_main_pkg".
+
+[INF:CP0301] UHDM-integration-tests/tests/SumOfParameters/top.sv:5:1: Compile package "dm".
+
+[INF:CP0303] UHDM-integration-tests/tests/SumOfParameters/top.sv:25:1: Compile module "work@ibex_core".
+
+[INF:CP0303] UHDM-integration-tests/tests/SumOfParameters/top.sv:18:1: Compile module "work@rv_core_ibex".
+
+[INF:CP0303] UHDM-integration-tests/tests/SumOfParameters/top.sv:10:1: Compile module "work@top".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/SumOfParameters/top.sv:10:1: Top level module "work@top".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 3.
+
+[NTE:EL0510] Nb instances: 3.
+
+[NTE:EL0511] Nb leaf instances: 1.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 5
+[   NOTE] : 5
+design: (work@top)
+ |vpiName:work@top
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmallPackages:
+ \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:tl_main_pkg
+   |vpiFullName:tl_main_pkg::
+   |vpiParameter:
+   \_parameter: (tl_main_pkg::AddrSpace), line:2:19, endln:2:28
+     |vpiParent:
+     \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+     |UINT:1
+     |vpiTypespec:
+     \_int_typespec: , line:2:15, endln:2:18
+       |vpiParent:
+       \_parameter: (tl_main_pkg::AddrSpace), line:2:19, endln:2:28
+       |vpiInstance:
+       \_package: (tl_main_pkg)
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiLocalParam:1
+     |vpiName:AddrSpace
+     |vpiFullName:tl_main_pkg::AddrSpace
+   |vpiParamAssign:
+   \_param_assign: , line:2:19, endln:2:32
+     |vpiParent:
+     \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+     |vpiRhs:
+     \_constant: , line:2:31, endln:2:32
+       |vpiDecompile:1
+       |vpiSize:32
+       |UINT:1
+       |vpiTypespec:
+       \_int_typespec: , line:2:15, endln:2:18
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (tl_main_pkg::AddrSpace), line:2:19, endln:2:28
+   |vpiDefName:tl_main_pkg
+ |uhdmallPackages:
+ \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:dm
+   |vpiFullName:dm::
+   |vpiParameter:
+   \_parameter: (dm::HaltAddress), line:6:19, endln:6:30
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |UINT:10
+     |vpiTypespec:
+     \_int_typespec: , line:6:15, endln:6:18
+       |vpiParent:
+       \_parameter: (dm::HaltAddress), line:6:19, endln:6:30
+       |vpiInstance:
+       \_package: (dm)
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiLocalParam:1
+     |vpiName:HaltAddress
+     |vpiFullName:dm::HaltAddress
+   |vpiParameter:
+   \_parameter: (dm::ExceptionAddress), line:7:28, endln:7:44
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |vpiTypespec:
+     \_logic_typespec: , line:7:15, endln:7:27
+       |vpiParent:
+       \_parameter: (dm::ExceptionAddress), line:7:28, endln:7:44
+       |vpiInstance:
+       \_package: (dm)
+       |vpiRange:
+       \_range: , line:7:21, endln:7:27
+         |vpiLeftRange:
+         \_constant: , line:7:22, endln:7:24
+           |vpiParent:
+           \_range: , line:7:21, endln:7:27
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:7:25, endln:7:26
+           |vpiParent:
+           \_range: , line:7:21, endln:7:27
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiLocalParam:1
+     |vpiName:ExceptionAddress
+     |vpiFullName:dm::ExceptionAddress
+   |vpiParamAssign:
+   \_param_assign: , line:6:19, endln:6:35
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |vpiRhs:
+     \_constant: , line:6:33, endln:6:35
+       |vpiDecompile:10
+       |vpiSize:32
+       |UINT:10
+       |vpiTypespec:
+       \_int_typespec: , line:6:15, endln:6:18
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (dm::HaltAddress), line:6:19, endln:6:30
+   |vpiParamAssign:
+   \_param_assign: , line:7:28, endln:7:62
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |vpiRhs:
+     \_operation: , line:7:47, endln:7:62
+       |vpiOpType:24
+       |vpiOperand:
+       \_ref_obj: (HaltAddress), line:7:47, endln:7:58
+         |vpiParent:
+         \_operation: , line:7:47, endln:7:62
+         |vpiName:HaltAddress
+       |vpiOperand:
+       \_constant: , line:7:61, endln:7:62
+         |vpiParent:
+         \_operation: , line:7:47, endln:7:62
+         |vpiDecompile:2
+         |vpiSize:64
+         |UINT:2
+         |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (dm::ExceptionAddress), line:7:28, endln:7:44
+   |vpiDefName:dm
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmtopPackages:
+ \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:tl_main_pkg
+   |vpiFullName:tl_main_pkg::
+   |vpiParameter:
+   \_parameter: (tl_main_pkg::AddrSpace), line:2:19, endln:2:28
+     |vpiParent:
+     \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+     |UINT:1
+     |vpiTypespec:
+     \_int_typespec: , line:2:15, endln:2:18
+       |vpiParent:
+       \_parameter: (tl_main_pkg::AddrSpace), line:2:19, endln:2:28
+       |vpiInstance:
+       \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiLocalParam:1
+     |vpiName:AddrSpace
+     |vpiFullName:tl_main_pkg::AddrSpace
+   |vpiParamAssign:
+   \_param_assign: , line:2:19, endln:2:32
+     |vpiParent:
+     \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+     |vpiRhs:
+     \_constant: , line:2:31, endln:2:32
+       |vpiDecompile:1
+       |vpiSize:32
+       |UINT:1
+       |vpiTypespec:
+       \_int_typespec: , line:2:15, endln:2:18
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (tl_main_pkg::AddrSpace), line:2:19, endln:2:28
+   |vpiDefName:tl_main_pkg
+   |vpiTop:1
+ |uhdmtopPackages:
+ \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:dm
+   |vpiFullName:dm::
+   |vpiParameter:
+   \_parameter: (dm::HaltAddress), line:6:19, endln:6:30
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |UINT:10
+     |vpiTypespec:
+     \_int_typespec: , line:6:15, endln:6:18
+       |vpiParent:
+       \_parameter: (dm::HaltAddress), line:6:19, endln:6:30
+       |vpiInstance:
+       \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiLocalParam:1
+     |vpiName:HaltAddress
+     |vpiFullName:dm::HaltAddress
+   |vpiParameter:
+   \_parameter: (dm::ExceptionAddress), line:7:28, endln:7:44
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |vpiTypespec:
+     \_logic_typespec: , line:7:15, endln:7:27
+       |vpiParent:
+       \_parameter: (dm::ExceptionAddress), line:7:28, endln:7:44
+       |vpiInstance:
+       \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+       |vpiRange:
+       \_range: , line:7:21, endln:7:27
+         |vpiLeftRange:
+         \_constant: , line:7:22, endln:7:24
+           |vpiParent:
+           \_range: , line:7:21, endln:7:27
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:7:25, endln:7:26
+           |vpiParent:
+           \_range: , line:7:21, endln:7:27
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiLocalParam:1
+     |vpiName:ExceptionAddress
+     |vpiFullName:dm::ExceptionAddress
+   |vpiParamAssign:
+   \_param_assign: , line:6:19, endln:6:35
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |vpiRhs:
+     \_constant: , line:6:33, endln:6:35
+       |vpiDecompile:10
+       |vpiSize:32
+       |UINT:10
+       |vpiTypespec:
+       \_int_typespec: , line:6:15, endln:6:18
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (dm::HaltAddress), line:6:19, endln:6:30
+   |vpiParamAssign:
+   \_param_assign: , line:7:28, endln:7:62
+     |vpiParent:
+     \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+     |vpiRhs:
+     \_operation: , line:7:47, endln:7:62
+       |vpiOpType:24
+       |vpiOperand:
+       \_ref_obj: (HaltAddress), line:7:47, endln:7:58
+         |vpiParent:
+         \_operation: , line:7:47, endln:7:62
+         |vpiName:HaltAddress
+       |vpiOperand:
+       \_constant: , line:7:61, endln:7:62
+         |vpiParent:
+         \_operation: , line:7:47, endln:7:62
+         |vpiDecompile:2
+         |vpiSize:64
+         |UINT:2
+         |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (dm::ExceptionAddress), line:7:28, endln:7:44
+   |vpiDefName:dm
+   |vpiTop:1
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@ibex_core (work@ibex_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:25:1, endln:28:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@ibex_core
+   |vpiParameter:
+   \_parameter: (work@ibex_core.DmExceptionAddr), line:26:27, endln:26:42
+     |vpiParent:
+     \_module_inst: work@ibex_core (work@ibex_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:25:1, endln:28:10
+     |UINT:4
+     |vpiTypespec:
+     \_int_typespec: , line:26:14, endln:26:26
+       |vpiParent:
+       \_parameter: (work@ibex_core.DmExceptionAddr), line:26:27, endln:26:42
+     |vpiName:DmExceptionAddr
+     |vpiFullName:work@ibex_core.DmExceptionAddr
+   |vpiParamAssign:
+   \_param_assign: , line:26:27, endln:26:46
+     |vpiParent:
+     \_module_inst: work@ibex_core (work@ibex_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:25:1, endln:28:10
+     |vpiRhs:
+     \_constant: , line:26:45, endln:26:46
+       |vpiDecompile:4
+       |vpiSize:32
+       |UINT:4
+       |vpiTypespec:
+       \_int_typespec: , line:26:14, endln:26:26
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@ibex_core.DmExceptionAddr), line:26:27, endln:26:42
+   |vpiDefName:work@ibex_core
+   |vpiNet:
+   \_logic_net: (work@ibex_core.b), line:25:29, endln:25:30
+     |vpiParent:
+     \_module_inst: work@ibex_core (work@ibex_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:25:1, endln:28:10
+     |vpiName:b
+     |vpiFullName:work@ibex_core.b
+   |vpiPort:
+   \_port: (b), line:25:29, endln:25:30
+     |vpiParent:
+     \_module_inst: work@ibex_core (work@ibex_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:25:1, endln:28:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@ibex_core.b), line:25:29, endln:25:30
+     |vpiTypedef:
+     \_int_typespec: , line:25:25, endln:25:28
+       |vpiSigned:1
+   |vpiContAssign:
+   \_cont_assign: , line:27:11, endln:27:30
+     |vpiParent:
+     \_module_inst: work@ibex_core (work@ibex_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:25:1, endln:28:10
+     |vpiRhs:
+     \_ref_obj: (work@ibex_core.DmExceptionAddr), line:27:15, endln:27:30
+       |vpiParent:
+       \_cont_assign: , line:27:11, endln:27:30
+       |vpiName:DmExceptionAddr
+       |vpiFullName:work@ibex_core.DmExceptionAddr
+     |vpiLhs:
+     \_ref_obj: (work@ibex_core.b), line:27:11, endln:27:12
+       |vpiParent:
+       \_cont_assign: , line:27:11, endln:27:30
+       |vpiName:b
+       |vpiFullName:work@ibex_core.b
+       |vpiActual:
+       \_int_var: (work@top.u_rv_core_ibex.u_core.b), line:25:29, endln:25:30
+ |uhdmallModules:
+ \_module_inst: work@rv_core_ibex (work@rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:18:1, endln:23:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@rv_core_ibex
+   |vpiParameter:
+   \_parameter: (work@rv_core_ibex.DmExceptionAddr), line:19:27, endln:19:42
+     |vpiParent:
+     \_module_inst: work@rv_core_ibex (work@rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:18:1, endln:23:10
+     |UINT:3
+     |vpiTypespec:
+     \_int_typespec: , line:19:14, endln:19:26
+       |vpiParent:
+       \_parameter: (work@rv_core_ibex.DmExceptionAddr), line:19:27, endln:19:42
+     |vpiName:DmExceptionAddr
+     |vpiFullName:work@rv_core_ibex.DmExceptionAddr
+   |vpiParamAssign:
+   \_param_assign: , line:19:27, endln:19:46
+     |vpiParent:
+     \_module_inst: work@rv_core_ibex (work@rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:18:1, endln:23:10
+     |vpiRhs:
+     \_constant: , line:19:45, endln:19:46
+       |vpiDecompile:3
+       |vpiSize:32
+       |UINT:3
+       |vpiTypespec:
+       \_int_typespec: , line:19:14, endln:19:26
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@rv_core_ibex.DmExceptionAddr), line:19:27, endln:19:42
+   |vpiDefName:work@rv_core_ibex
+   |vpiNet:
+   \_logic_net: (work@rv_core_ibex.a), line:18:32, endln:18:33
+     |vpiParent:
+     \_module_inst: work@rv_core_ibex (work@rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:18:1, endln:23:10
+     |vpiName:a
+     |vpiFullName:work@rv_core_ibex.a
+   |vpiPort:
+   \_port: (a), line:18:32, endln:18:33
+     |vpiParent:
+     \_module_inst: work@rv_core_ibex (work@rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:18:1, endln:23:10
+     |vpiName:a
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@rv_core_ibex.a), line:18:32, endln:18:33
+     |vpiTypedef:
+     \_int_typespec: , line:18:28, endln:18:31
+       |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@top
+   |vpiParameter:
+   \_parameter: (work@top.AddrSpace), line:2:19, endln:2:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |UINT:1
+     |vpiTypespec:
+     \_int_typespec: , line:2:15, endln:2:18
+       |vpiParent:
+       \_parameter: (work@top.AddrSpace), line:2:19, endln:2:28
+       |vpiInstance:
+       \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiLocalParam:1
+     |vpiName:AddrSpace
+     |vpiFullName:work@top.AddrSpace
+     |vpiImported:tl_main_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:2:19, endln:2:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiRhs:
+     \_constant: , line:2:31, endln:2:32
+       |vpiParent:
+       \_param_assign: , line:2:19, endln:2:32
+       |vpiDecompile:1
+       |vpiSize:32
+       |UINT:1
+       |vpiTypespec:
+       \_int_typespec: , line:2:15, endln:2:18
+         |vpiParent:
+         \_constant: , line:2:31, endln:2:32
+         |vpiInstance:
+         \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+         |vpiSigned:1
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.AddrSpace), line:2:19, endln:2:28
+       |vpiParent:
+       \_param_assign: , line:2:19, endln:2:32
+       |UINT:1
+       |vpiTypespec:
+       \_int_typespec: , line:2:15, endln:2:18
+         |vpiParent:
+         \_parameter: (work@top.AddrSpace), line:2:19, endln:2:28
+         |vpiInstance:
+         \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+         |vpiSigned:1
+       |vpiSigned:1
+       |vpiLocalParam:1
+       |vpiName:AddrSpace
+       |vpiFullName:work@top.AddrSpace
+       |vpiImported:tl_main_pkg
+   |vpiTypedef:
+   \_import_typespec: (tl_main_pkg), line:11:11, endln:11:25
+   |vpiDefName:work@top
+   |vpiNet:
+   \_logic_net: (work@top.o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiName:o
+     |vpiFullName:work@top.o
+   |vpiPort:
+   \_port: (o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiName:o
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.o), line:10:23, endln:10:24
+     |vpiTypedef:
+     \_int_typespec: , line:10:19, endln:10:22
+       |vpiSigned:1
+ |uhdmtopModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+   |vpiName:work@top
+   |vpiVariables:
+   \_int_var: (work@top.o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiTypespec:
+     \_int_typespec: , line:10:19, endln:10:22
+       |vpiSigned:1
+     |vpiName:o
+     |vpiFullName:work@top.o
+     |vpiSigned:1
+     |vpiVisibility:1
+   |vpiParameter:
+   \_parameter: (work@top.AddrSpace), line:2:19, endln:2:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |UINT:1
+     |vpiTypespec:
+     \_int_typespec: , line:2:15, endln:2:18
+       |vpiParent:
+       \_parameter: (work@top.AddrSpace), line:2:19, endln:2:28
+       |vpiInstance:
+       \_package: tl_main_pkg (tl_main_pkg::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:1:1, endln:3:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiLocalParam:1
+     |vpiName:AddrSpace
+     |vpiFullName:work@top.AddrSpace
+     |vpiImported:tl_main_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:2:19, endln:2:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiRhs:
+     \_constant: , line:2:31, endln:2:32
+       |vpiDecompile:1
+       |vpiSize:32
+       |UINT:1
+       |vpiTypespec:
+       \_int_typespec: , line:2:15, endln:2:18
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.AddrSpace), line:2:19, endln:2:28
+   |vpiTypedef:
+   \_import_typespec: (tl_main_pkg), line:11:11, endln:11:25
+   |vpiDefName:work@top
+   |vpiTop:1
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiName:o
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.o), line:10:23, endln:10:24
+       |vpiName:o
+       |vpiFullName:work@top.o
+       |vpiActual:
+       \_int_var: (work@top.o), line:10:23, endln:10:24
+     |vpiTypedef:
+     \_int_typespec: , line:10:19, endln:10:22
+       |vpiSigned:1
+   |vpiModule:
+   \_module_inst: work@rv_core_ibex (work@top.u_rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:13:4, endln:15:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiName:u_rv_core_ibex
+     |vpiFullName:work@top.u_rv_core_ibex
+     |vpiVariables:
+     \_int_var: (work@top.u_rv_core_ibex.a), line:18:32, endln:18:33
+       |vpiParent:
+       \_module_inst: work@rv_core_ibex (work@top.u_rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:13:4, endln:15:28
+       |vpiTypespec:
+       \_int_typespec: , line:18:28, endln:18:31
+         |vpiSigned:1
+       |vpiName:a
+       |vpiFullName:work@top.u_rv_core_ibex.a
+       |vpiSigned:1
+       |vpiVisibility:1
+     |vpiParameter:
+     \_parameter: (work@top.u_rv_core_ibex.DmExceptionAddr), line:19:27, endln:19:42
+       |vpiParent:
+       \_module_inst: work@rv_core_ibex (work@top.u_rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:13:4, endln:15:28
+       |UINT:3
+       |vpiTypespec:
+       \_int_typespec: , line:19:14, endln:19:26
+         |vpiParent:
+         \_parameter: (work@top.u_rv_core_ibex.DmExceptionAddr), line:19:27, endln:19:42
+       |vpiName:DmExceptionAddr
+       |vpiFullName:work@top.u_rv_core_ibex.DmExceptionAddr
+     |vpiParamAssign:
+     \_param_assign: , line:19:27, endln:19:46
+       |vpiParent:
+       \_module_inst: work@rv_core_ibex (work@top.u_rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:13:4, endln:15:28
+       |vpiOverriden:1
+       |vpiRhs:
+       \_operation: , line:14:24, endln:14:56
+         |vpiOpType:24
+         |vpiOperand:
+         \_constant: , line:14:24, endln:14:33
+           |vpiParent:
+           \_operation: , line:14:24, endln:14:56
+           |vpiDecompile:1
+           |vpiSize:32
+           |UINT:1
+           |vpiConstType:9
+         |vpiOperand:
+         \_operation: , line:7:47, endln:7:62
+           |vpiParent:
+           \_operation: , line:14:24, endln:14:56
+           |vpiTypespec:
+           \_logic_typespec: , line:7:15, endln:7:27
+           |vpiOpType:24
+           |vpiOperand:
+           \_ref_obj: (HaltAddress), line:7:47, endln:7:58
+             |vpiParent:
+             \_operation: , line:7:47, endln:7:62
+             |vpiName:HaltAddress
+           |vpiOperand:
+           \_constant: , line:7:61, endln:7:62
+             |vpiParent:
+             \_operation: , line:7:47, endln:7:62
+             |vpiDecompile:2
+             |vpiSize:64
+             |UINT:2
+             |vpiConstType:9
+       |vpiLhs:
+       \_parameter: (work@top.u_rv_core_ibex.DmExceptionAddr), line:19:27, endln:19:42
+     |vpiDefName:work@rv_core_ibex
+     |vpiDefFile:UHDM-integration-tests/tests/SumOfParameters/top.sv
+     |vpiDefLineNo:18
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:10:1, endln:16:10
+     |vpiPort:
+     \_port: (a), line:18:32, endln:18:33
+       |vpiParent:
+       \_module_inst: work@rv_core_ibex (work@top.u_rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:13:4, endln:15:28
+       |vpiName:a
+       |vpiDirection:2
+       |vpiHighConn:
+       \_ref_obj: (work@top.o), line:15:24, endln:15:25
+         |vpiName:o
+         |vpiFullName:work@top.o
+         |vpiActual:
+         \_int_var: (work@top.o), line:10:23, endln:10:24
+       |vpiLowConn:
+       \_ref_obj: (work@top.u_rv_core_ibex.a), line:15:22, endln:15:23
+         |vpiName:a
+         |vpiFullName:work@top.u_rv_core_ibex.a
+         |vpiActual:
+         \_int_var: (work@top.u_rv_core_ibex.a), line:18:32, endln:18:33
+       |vpiTypedef:
+       \_int_typespec: , line:18:28, endln:18:31
+         |vpiSigned:1
+     |vpiModule:
+     \_module_inst: work@ibex_core (work@top.u_rv_core_ibex.u_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:20:4, endln:22:19
+       |vpiParent:
+       \_module_inst: work@rv_core_ibex (work@top.u_rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:13:4, endln:15:28
+       |vpiName:u_core
+       |vpiFullName:work@top.u_rv_core_ibex.u_core
+       |vpiVariables:
+       \_int_var: (work@top.u_rv_core_ibex.u_core.b), line:25:29, endln:25:30
+         |vpiParent:
+         \_module_inst: work@ibex_core (work@top.u_rv_core_ibex.u_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:20:4, endln:22:19
+         |vpiTypespec:
+         \_int_typespec: , line:25:25, endln:25:28
+           |vpiSigned:1
+         |vpiName:b
+         |vpiFullName:work@top.u_rv_core_ibex.u_core.b
+         |vpiSigned:1
+         |vpiVisibility:1
+       |vpiParameter:
+       \_parameter: (work@top.u_rv_core_ibex.u_core.DmExceptionAddr), line:26:27, endln:26:42
+         |vpiParent:
+         \_module_inst: work@ibex_core (work@top.u_rv_core_ibex.u_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:20:4, endln:22:19
+         |UINT:4
+         |vpiTypespec:
+         \_int_typespec: , line:26:14, endln:26:26
+           |vpiParent:
+           \_parameter: (work@top.u_rv_core_ibex.u_core.DmExceptionAddr), line:26:27, endln:26:42
+         |vpiName:DmExceptionAddr
+         |vpiFullName:work@top.u_rv_core_ibex.u_core.DmExceptionAddr
+       |vpiParamAssign:
+       \_param_assign: , line:26:27, endln:26:46
+         |vpiParent:
+         \_module_inst: work@ibex_core (work@top.u_rv_core_ibex.u_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:20:4, endln:22:19
+         |vpiOverriden:1
+         |vpiRhs:
+         \_operation: , line:21:24, endln:21:39
+           |vpiTypespec:
+           \_int_typespec: , line:19:14, endln:19:26
+           |vpiOpType:24
+           |vpiOperand:
+           \_constant: , line:14:24, endln:14:33
+             |vpiParent:
+             \_operation: , line:21:24, endln:21:39
+             |vpiDecompile:1
+             |vpiSize:32
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_operation: , line:7:47, endln:7:62
+             |vpiParent:
+             \_operation: , line:21:24, endln:21:39
+             |vpiTypespec:
+             \_logic_typespec: , line:7:15, endln:7:27
+               |vpiParent:
+               \_operation: , line:7:47, endln:7:62
+               |vpiInstance:
+               \_package: dm (dm::), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:5:1, endln:8:16
+               |vpiRange:
+               \_range: , line:7:21, endln:7:27
+                 |vpiParent:
+                 \_logic_typespec: , line:7:15, endln:7:27
+                 |vpiLeftRange:
+                 \_constant: , line:7:22, endln:7:24
+                   |vpiParent:
+                   \_range: , line:7:21, endln:7:27
+                   |vpiDecompile:31
+                   |vpiSize:64
+                   |UINT:31
+                   |vpiConstType:9
+                 |vpiRightRange:
+                 \_constant: , line:7:25, endln:7:26
+                   |vpiParent:
+                   \_range: , line:7:21, endln:7:27
+                   |vpiDecompile:0
+                   |vpiSize:64
+                   |UINT:0
+                   |vpiConstType:9
+             |vpiOpType:24
+             |vpiOperand:
+             \_ref_obj: (HaltAddress), line:7:47, endln:7:58
+               |vpiParent:
+               \_operation: , line:7:47, endln:7:62
+               |vpiName:HaltAddress
+             |vpiOperand:
+             \_constant: , line:7:61, endln:7:62
+               |vpiParent:
+               \_operation: , line:7:47, endln:7:62
+               |vpiDecompile:2
+               |vpiSize:64
+               |UINT:2
+               |vpiConstType:9
+         |vpiLhs:
+         \_parameter: (work@top.u_rv_core_ibex.u_core.DmExceptionAddr), line:26:27, endln:26:42
+       |vpiDefName:work@ibex_core
+       |vpiDefFile:UHDM-integration-tests/tests/SumOfParameters/top.sv
+       |vpiDefLineNo:25
+       |vpiInstance:
+       \_module_inst: work@rv_core_ibex (work@top.u_rv_core_ibex), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:13:4, endln:15:28
+       |vpiPort:
+       \_port: (b), line:25:29, endln:25:30
+         |vpiParent:
+         \_module_inst: work@ibex_core (work@top.u_rv_core_ibex.u_core), file:UHDM-integration-tests/tests/SumOfParameters/top.sv, line:20:4, endln:22:19
+         |vpiName:b
+         |vpiDirection:2
+         |vpiHighConn:
+         \_ref_obj: (work@top.u_rv_core_ibex.a), line:22:15, endln:22:16
+           |vpiName:a
+           |vpiFullName:work@top.u_rv_core_ibex.a
+           |vpiActual:
+           \_int_var: (work@top.u_rv_core_ibex.a), line:18:32, endln:18:33
+         |vpiLowConn:
+         \_ref_obj: (work@top.u_rv_core_ibex.u_core.b), line:22:13, endln:22:14
+           |vpiName:b
+           |vpiFullName:work@top.u_rv_core_ibex.u_core.b
+           |vpiActual:
+           \_int_var: (work@top.u_rv_core_ibex.u_core.b), line:25:29, endln:25:30
+         |vpiTypedef:
+         \_int_typespec: , line:25:25, endln:25:28
+           |vpiSigned:1
+       |vpiContAssign:
+       \_cont_assign: , line:27:11, endln:27:30
+Object 'work@top' of type 'design'
+  Object 'builtin' of type 'package'
+  Object 'tl_main_pkg' of type 'package'
+    Object 'AddrSpace' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'AddrSpace' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+  Object 'dm' of type 'package'
+    Object 'HaltAddress' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object 'ExceptionAddress' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object '' of type 'param_assign'
+      Object 'HaltAddress' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'ExceptionAddress' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'operation'
+        Object 'HaltAddress' of type 'ref_obj'
+        Object '' of type 'constant'
+  Object '' of type 'module_inst'
+    Object 'DmExceptionAddr' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'DmExceptionAddr' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'b' of type 'logic_net'
+  Object '' of type 'module_inst'
+    Object 'DmExceptionAddr' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'DmExceptionAddr' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'a' of type 'logic_net'
+  Object '' of type 'module_inst'
+    Object 'tl_main_pkg' of type 'import_typespec'
+    Object 'AddrSpace' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'AddrSpace' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'o' of type 'logic_net'
+  Object 'work@top' of type 'module_inst'
+    Object 'u_rv_core_ibex' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'DmExceptionAddr' of type 'parameter'
+          Object '' of type 'int_typespec'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object 'HaltAddress' of type 'ref_obj'
+            Object '' of type 'constant'
+      Object '' of type 'param_assign'
+        Object 'DmExceptionAddr' of type 'parameter'
+          Object '' of type 'int_typespec'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object 'HaltAddress' of type 'ref_obj'
+            Object '' of type 'constant'
+      Object 'a' of type 'int_var'
+      Object 'u_core' of type 'module_inst'
+        Object '' of type 'param_assign'
+          Object 'DmExceptionAddr' of type 'parameter'
+            Object '' of type 'int_typespec'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'operation'
+              Object 'HaltAddress' of type 'ref_obj'
+              Object '' of type 'constant'
+        Object '' of type 'param_assign'
+          Object 'DmExceptionAddr' of type 'parameter'
+            Object '' of type 'int_typespec'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'operation'
+              Object 'HaltAddress' of type 'ref_obj'
+              Object '' of type 'constant'
+        Object 'b' of type 'int_var'
+        Object 'b' of type 'port'
+          Object '' of type 'int_typespec'
+        Object '' of type 'cont_assign'
+          Object 'b' of type 'ref_obj'
+          Object 'DmExceptionAddr' of type 'ref_obj'
+        Object 'a' of type 'ref_obj'
+      Object 'a' of type 'port'
+        Object '' of type 'int_typespec'
+      Object 'o' of type 'ref_obj'
+    Object 'AddrSpace' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'AddrSpace' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'o' of type 'port'
+      Object '' of type 'int_typespec'
+    Object 'o' of type 'int_var'
+Warning: Removing unused module: \rv_core_ibex from the design.
+Warning: Removing unused module: \ibex_core from the design.
+Generating RTLIL representation for module `$paramod\rv_core_ibex\DmExceptionAddr=32'd13'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/SumOfParameters/top.sv:18.1-23.10> str='$paramod\rv_core_ibex\DmExceptionAddr=32'd13'
+      AST_PARAMETER <UHDM-integration-tests/tests/SumOfParameters/top.sv:19.27-19.46> str='\DmExceptionAddr' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:14.24-14.56> bits='00000000000000000000000000001101'(32) basic_prep range=[31:0] int=13
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/SumOfParameters/top.sv:18.32-18.33> str='\a' output signed port=2 range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0>
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_CELL <UHDM-integration-tests/tests/SumOfParameters/top.sv:20.4-22.19> str='\u_core'
+        AST_CELLTYPE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> str='$paramod\ibex_core\DmExceptionAddr=32'd13'
+        AST_ARGUMENT <UHDM-integration-tests/tests/SumOfParameters/top.sv:20.4-22.19> str='\b'
+          AST_IDENTIFIER <UHDM-integration-tests/tests/SumOfParameters/top.sv:22.15-22.16> str='\a'
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\tl_main_pkg::AddrSpace' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:6.19-6.35> str='\dm::HaltAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000001010'(32) basic_prep range=[31:0] int=10
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.28-7.62> str='\dm::ExceptionAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.21-7.27> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.47-7.62> bits='00000000000000000000000000001100'(32) basic_prep range=[31:0] int=12
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module \$paramod\rv_core_ibex\DmExceptionAddr=32'd13 (a);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* is_simplified_wire = 1 *)
+      output signed [31:0] a;
+      /** AST_CELL **/
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/SumOfParameters/top.sv:18.1-23.10> str='$paramod\rv_core_ibex\DmExceptionAddr=32'd13' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/SumOfParameters/top.sv:19.27-19.46> str='\DmExceptionAddr' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:14.24-14.56> bits='00000000000000000000000000001101'(32) basic_prep range=[31:0] int=13
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/SumOfParameters/top.sv:18.32-18.33> str='\a' output signed basic_prep port=2 range=[31:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_CELL <UHDM-integration-tests/tests/SumOfParameters/top.sv:20.4-22.19> str='\u_core' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> str='$paramod\ibex_core\DmExceptionAddr=32'd13' basic_prep
+        AST_ARGUMENT <UHDM-integration-tests/tests/SumOfParameters/top.sv:20.4-22.19> str='\b' basic_prep
+          AST_IDENTIFIER <UHDM-integration-tests/tests/SumOfParameters/top.sv:22.15-22.16> str='\a' basic_prep
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\tl_main_pkg::AddrSpace' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:6.19-6.35> str='\dm::HaltAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000001010'(32) basic_prep range=[31:0] int=10
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.28-7.62> str='\dm::ExceptionAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.21-7.27> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.47-7.62> bits='00000000000000000000000000001100'(32) basic_prep range=[31:0] int=12
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module \$paramod\rv_core_ibex\DmExceptionAddr=32'd13 (a);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* is_simplified_wire = 1 *)
+      output signed [31:0] a;
+      /** AST_CELL **/
+    endmodule
+--- END OF AST DUMP ---
+Generating RTLIL representation for module `\top'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/SumOfParameters/top.sv:10.1-16.10> str='\top'
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\AddrSpace' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_imported:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/SumOfParameters/top.sv:10.23-10.24> str='\o' output signed port=3 range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0>
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_CELL <UHDM-integration-tests/tests/SumOfParameters/top.sv:13.4-15.28> str='\u_rv_core_ibex'
+        AST_CELLTYPE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> str='$paramod\rv_core_ibex\DmExceptionAddr=32'd13'
+        AST_ARGUMENT <UHDM-integration-tests/tests/SumOfParameters/top.sv:13.4-15.28> str='\a'
+          AST_IDENTIFIER <UHDM-integration-tests/tests/SumOfParameters/top.sv:15.24-15.25> str='\o'
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\tl_main_pkg::AddrSpace' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:6.19-6.35> str='\dm::HaltAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000001010'(32) basic_prep range=[31:0] int=10
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.28-7.62> str='\dm::ExceptionAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.21-7.27> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.47-7.62> bits='00000000000000000000000000001100'(32) basic_prep range=[31:0] int=12
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module top(o);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_imported = 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* is_simplified_wire = 1 *)
+      output signed [31:0] o;
+      /** AST_CELL **/
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/SumOfParameters/top.sv:10.1-16.10> str='\top' basic_prep
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\AddrSpace' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_imported:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/SumOfParameters/top.sv:10.23-10.24> str='\o' output signed basic_prep port=3 range=[31:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_CELL <UHDM-integration-tests/tests/SumOfParameters/top.sv:13.4-15.28> str='\u_rv_core_ibex' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> str='$paramod\rv_core_ibex\DmExceptionAddr=32'd13' basic_prep
+        AST_ARGUMENT <UHDM-integration-tests/tests/SumOfParameters/top.sv:13.4-15.28> str='\a' basic_prep
+          AST_IDENTIFIER <UHDM-integration-tests/tests/SumOfParameters/top.sv:15.24-15.25> str='\o' basic_prep
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\tl_main_pkg::AddrSpace' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:6.19-6.35> str='\dm::HaltAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000001010'(32) basic_prep range=[31:0] int=10
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.28-7.62> str='\dm::ExceptionAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.21-7.27> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.47-7.62> bits='00000000000000000000000000001100'(32) basic_prep range=[31:0] int=12
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module top(o);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_imported = 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* is_simplified_wire = 1 *)
+      output signed [31:0] o;
+      /** AST_CELL **/
+    endmodule
+--- END OF AST DUMP ---
+Generating RTLIL representation for module `$paramod\ibex_core\DmExceptionAddr=32'd13'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/SumOfParameters/top.sv:25.1-28.10> str='$paramod\ibex_core\DmExceptionAddr=32'd13'
+      AST_PARAMETER <UHDM-integration-tests/tests/SumOfParameters/top.sv:26.27-26.46> str='\DmExceptionAddr' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:21.24-21.39> bits='00000000000000000000000000001101'(32) basic_prep range=[31:0] int=13
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/SumOfParameters/top.sv:25.29-25.30> str='\b' output signed port=1 range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0>
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/SumOfParameters/top.sv:27.11-27.30>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/SumOfParameters/top.sv:27.11-27.12> str='\b'
+        AST_IDENTIFIER <UHDM-integration-tests/tests/SumOfParameters/top.sv:27.15-27.30> str='\DmExceptionAddr'
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\tl_main_pkg::AddrSpace' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:6.19-6.35> str='\dm::HaltAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000001010'(32) basic_prep range=[31:0] int=10
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.28-7.62> str='\dm::ExceptionAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.21-7.27> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.47-7.62> bits='00000000000000000000000000001100'(32) basic_prep range=[31:0] int=12
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module \$paramod\ibex_core\DmExceptionAddr=32'd13 (b);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* is_simplified_wire = 1 *)
+      output signed [31:0] b;
+      assign b = DmExceptionAddr;
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/SumOfParameters/top.sv:25.1-28.10> str='$paramod\ibex_core\DmExceptionAddr=32'd13' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/SumOfParameters/top.sv:26.27-26.46> str='\DmExceptionAddr' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:21.24-21.39> bits='00000000000000000000000000001101'(32) basic_prep range=[31:0] int=13
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/SumOfParameters/top.sv:25.29-25.30> str='\b' output signed basic_prep port=1 range=[31:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/SumOfParameters/top.sv:27.11-27.30> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/SumOfParameters/top.sv:27.11-27.12> str='\b' basic_prep
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:27.15-27.30> bits='00000000000000000000000000001101'(32) basic_prep range=[31:0] int=13
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:2.19-2.32> str='\tl_main_pkg::AddrSpace' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:6.19-6.35> str='\dm::HaltAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000001010'(32) basic_prep range=[31:0] int=10
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.28-7.62> str='\dm::ExceptionAddress' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.21-7.27> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:7.47-7.62> bits='00000000000000000000000000001100'(32) basic_prep range=[31:0] int=12
+        AST_RANGE <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/SumOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module \$paramod\ibex_core\DmExceptionAddr=32'd13 (b);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_LOCALPARAM **/
+      (* is_simplified_wire = 1 *)
+      output signed [31:0] b;
+      assign b = 13;
+    endmodule
+--- END OF AST DUMP ---
+
+2. Executing PREP pass.
+
+2.1. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1.1. Analyzing design hierarchy..
+Top module:  \top
+Used module:     $paramod\rv_core_ibex\DmExceptionAddr=32'd13
+Used module:         $paramod\ibex_core\DmExceptionAddr=32'd13
+
+2.1.2. Analyzing design hierarchy..
+Top module:  \top
+Used module:     $paramod\rv_core_ibex\DmExceptionAddr=32'd13
+Used module:         $paramod\ibex_core\DmExceptionAddr=32'd13
+Removed 0 unused modules.
+
+2.2. Executing PROC pass (convert processes to netlists).
+
+2.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+2.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+2.2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+2.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+2.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+2.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+2.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\ibex_core\DmExceptionAddr=32'd13.
+Optimizing module top.
+Optimizing module $paramod\rv_core_ibex\DmExceptionAddr=32'd13.
+
+2.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\ibex_core\DmExceptionAddr=32'd13.
+Optimizing module top.
+Optimizing module $paramod\rv_core_ibex\DmExceptionAddr=32'd13.
+
+2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\ibex_core\DmExceptionAddr=32'd13..
+Finding unused cells or wires in module \top..
+Finding unused cells or wires in module $paramod\rv_core_ibex\DmExceptionAddr=32'd13..
+
+2.5. Executing CHECK pass (checking for obvious problems).
+Checking module $paramod\ibex_core\DmExceptionAddr=32'd13...
+Checking module $paramod\rv_core_ibex\DmExceptionAddr=32'd13...
+Checking module top...
+Found and reported 0 problems.
+
+2.6. Executing OPT pass (performing simple optimizations).
+
+2.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\ibex_core\DmExceptionAddr=32'd13.
+Optimizing module $paramod\rv_core_ibex\DmExceptionAddr=32'd13.
+Optimizing module top.
+
+2.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\ibex_core\DmExceptionAddr=32'd13'.
+Finding identical cells in module `$paramod\rv_core_ibex\DmExceptionAddr=32'd13'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod\ibex_core\DmExceptionAddr=32'd13..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\rv_core_ibex\DmExceptionAddr=32'd13..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod\ibex_core\DmExceptionAddr=32'd13.
+  Optimizing cells in module $paramod\rv_core_ibex\DmExceptionAddr=32'd13.
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+2.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\ibex_core\DmExceptionAddr=32'd13'.
+Finding identical cells in module `$paramod\rv_core_ibex\DmExceptionAddr=32'd13'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\ibex_core\DmExceptionAddr=32'd13..
+Finding unused cells or wires in module $paramod\rv_core_ibex\DmExceptionAddr=32'd13..
+Finding unused cells or wires in module \top..
+
+2.6.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\ibex_core\DmExceptionAddr=32'd13.
+Optimizing module $paramod\rv_core_ibex\DmExceptionAddr=32'd13.
+Optimizing module top.
+
+2.6.8. Finished OPT passes. (There is nothing left to do.)
+
+2.7. Executing WREDUCE pass (reducing word size of cells).
+
+2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\ibex_core\DmExceptionAddr=32'd13..
+Finding unused cells or wires in module $paramod\rv_core_ibex\DmExceptionAddr=32'd13..
+Finding unused cells or wires in module \top..
+
+2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+2.10. Executing OPT pass (performing simple optimizations).
+
+2.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\ibex_core\DmExceptionAddr=32'd13.
+Optimizing module $paramod\rv_core_ibex\DmExceptionAddr=32'd13.
+Optimizing module top.
+
+2.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\ibex_core\DmExceptionAddr=32'd13'.
+Finding identical cells in module `$paramod\rv_core_ibex\DmExceptionAddr=32'd13'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\ibex_core\DmExceptionAddr=32'd13..
+Finding unused cells or wires in module $paramod\rv_core_ibex\DmExceptionAddr=32'd13..
+Finding unused cells or wires in module \top..
+
+2.10.4. Finished fast OPT passes.
+
+2.11. Printing statistics.
+
+=== $paramod\ibex_core\DmExceptionAddr=32'd13 ===
+
+   Number of wires:                  1
+   Number of wire bits:             32
+   Number of public wires:           1
+   Number of public wire bits:      32
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== $paramod\rv_core_ibex\DmExceptionAddr=32'd13 ===
+
+   Number of wires:                  1
+   Number of wire bits:             32
+   Number of public wires:           1
+   Number of public wire bits:      32
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     $paramod\ibex_core\DmExceptionAddr=32'd13      1
+
+=== top ===
+
+   Number of wires:                  1
+   Number of wire bits:             32
+   Number of public wires:           1
+   Number of public wire bits:      32
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     $paramod\rv_core_ibex\DmExceptionAddr=32'd13      1
+
+=== design hierarchy ===
+
+   top                               1
+     $paramod\rv_core_ibex\DmExceptionAddr=32'd13      1
+       $paramod\ibex_core\DmExceptionAddr=32'd13      1
+
+   Number of wires:                  3
+   Number of wire bits:             96
+   Number of public wires:           3
+   Number of public wire bits:      96
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+2.12. Executing CHECK pass (checking for obvious problems).
+Checking module $paramod\ibex_core\DmExceptionAddr=32'd13...
+Checking module $paramod\rv_core_ibex\DmExceptionAddr=32'd13...
+Checking module top...
+Found and reported 0 problems.
+
+3. Executing Verilog backend.
+
+3.1. Executing BMUXMAP pass.
+
+3.2. Executing DEMUXMAP pass.
+/* Generated by Yosys 0.26+73 (git sha1 9747e55d9, gcc 12.2.0 -Og -fPIC) */
+Dumping module `$paramod\ibex_core\DmExceptionAddr=32'd13'.
+
+(* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:25.1-28.10" *)
+module \$paramod\ibex_core\DmExceptionAddr=32'd13 (b);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:25.29-25.30" *)
+  output [31:0] b;
+  wire [31:0] b;
+  assign b = 32'd13;
+endmodule
+Dumping module `$paramod\rv_core_ibex\DmExceptionAddr=32'd13'.
+
+(* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:18.1-23.10" *)
+module \$paramod\rv_core_ibex\DmExceptionAddr=32'd13 (a);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:18.32-18.33" *)
+  output [31:0] a;
+  wire [31:0] a;
+  (* module_not_derived = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:20.4-22.19" *)
+  \$paramod\ibex_core\DmExceptionAddr=32'd13  u_core (
+    .b(a)
+  );
+endmodule
+Dumping module `\top'.
+
+(* top =  1  *)
+(* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:10.1-16.10" *)
+module top(o);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:10.23-10.24" *)
+  output [31:0] o;
+  wire [31:0] o;
+  (* module_not_derived = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/SumOfParameters/top.sv:13.4-15.28" *)
+  \$paramod\rv_core_ibex\DmExceptionAddr=32'd13  u_rv_core_ibex (
+    .a(o)
+  );
+endmodule
+
+4. Executing Verilog backend.
+
+4.1. Executing BMUXMAP pass.
+
+4.2. Executing DEMUXMAP pass.
+Dumping module `$paramod\ibex_core\DmExceptionAddr=32'd13'.
+Dumping module `$paramod\rv_core_ibex\DmExceptionAddr=32'd13'.
+Dumping module `\top'.
+
+5. Executing SIM pass (simulate the circuit).
+Simulating cycle 0.
+Simulating cycle 1.
+Simulating cycle 2.
+Simulating cycle 3.
+Simulating cycle 4.
+Simulating cycle 5.
+Simulating cycle 6.
+Simulating cycle 7.
+Simulating cycle 8.
+Simulating cycle 9.
+Simulating cycle 10.
+Simulating cycle 11.
+Simulating cycle 12.
+Simulating cycle 13.
+Simulating cycle 14.
+Simulating cycle 15.
+Simulating cycle 16.
+Simulating cycle 17.
+Simulating cycle 18.
+Simulating cycle 19.
+Simulating cycle 20.
+Simulating cycle 21.
+Simulating cycle 22.
+Simulating cycle 23.
+Simulating cycle 24.
+Simulating cycle 25.
+Simulating cycle 26.
+Simulating cycle 27.
+Simulating cycle 28.
+Simulating cycle 29.
+Simulating cycle 30.
+Simulating cycle 31.
+Simulating cycle 32.
+Simulating cycle 33.
+Simulating cycle 34.
+Simulating cycle 35.
+Simulating cycle 36.
+Simulating cycle 37.
+Simulating cycle 38.
+Simulating cycle 39.
+Simulating cycle 40.
+
+Warnings: 2 unique messages, 2 total
+
+Yosys 0.26+73 (git sha1 9747e55d9, gcc 12.2.0 -Og -fPIC)
+

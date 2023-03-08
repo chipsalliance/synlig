@@ -1,0 +1,2064 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/StreamOp/dut.sv" TOP_MODULE="dut" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/StreamOp/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.26+73 (git sha1 9747e55d9, gcc 12.2.0 -Og -fPIC)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -> skip.
+[TCL: yUsing Yosys read_systemverilog command
+osys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/StreamOp/dut.sv:1:1: No timescale set for "dut".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0303] UHDM-integration-tests/tests/StreamOp/dut.sv:1:1: Compile module "work@dut".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/StreamOp/dut.sv:1:1: Top level module "work@dut".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 1.
+
+[NTE:EL0510] Nb instances: 1.
+
+[NTE:EL0511] Nb leaf instances: 0.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 1
+[   NOTE] : 5
+design: (work@dut)
+ |vpiName:work@dut
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiFullName:work@dut
+   |vpiDefName:work@dut
+   |vpiNet:
+   \_logic_net: (work@dut.a), line:1:32, endln:1:33
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:a
+     |vpiFullName:work@dut.a
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.b), line:1:35, endln:1:36
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:b
+     |vpiFullName:work@dut.b
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.c), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:c
+     |vpiFullName:work@dut.c
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.d), line:1:61, endln:1:62
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:d
+     |vpiFullName:work@dut.d
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.x), line:2:15, endln:2:16
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:x
+     |vpiFullName:work@dut.x
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.y), line:3:15, endln:3:16
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:y
+     |vpiFullName:work@dut.y
+     |vpiNetType:36
+   |vpiPort:
+   \_port: (a), line:1:32, endln:1:33
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:a
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.a), line:1:32, endln:1:33
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:31
+       |vpiRange:
+       \_range: , line:1:25, endln:1:31
+         |vpiLeftRange:
+         \_constant: , line:1:26, endln:1:28
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:29, endln:1:30
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (b), line:1:35, endln:1:36
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:1:35, endln:1:36
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:31
+       |vpiRange:
+       \_range: , line:1:25, endln:1:31
+         |vpiLeftRange:
+         \_constant: , line:1:26, endln:1:28
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:29, endln:1:30
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (c), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:c
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.c), line:1:58, endln:1:59
+     |vpiTypedef:
+     \_logic_typespec: , line:1:45, endln:1:57
+       |vpiRange:
+       \_range: , line:1:51, endln:1:57
+         |vpiLeftRange:
+         \_constant: , line:1:52, endln:1:54
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:63
+           |vpiSize:64
+           |UINT:63
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:55, endln:1:56
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (d), line:1:61, endln:1:62
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:d
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.d), line:1:61, endln:1:62
+     |vpiTypedef:
+     \_logic_typespec: , line:1:45, endln:1:57
+       |vpiRange:
+       \_range: , line:1:51, endln:1:57
+         |vpiLeftRange:
+         \_constant: , line:1:52, endln:1:54
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:63
+           |vpiSize:64
+           |UINT:63
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:55, endln:1:56
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiProcess:
+   \_initial: , line:5:3, endln:8:6
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiStmt:
+     \_begin: (work@dut), line:5:11, endln:8:6
+       |vpiParent:
+       \_initial: , line:5:3, endln:8:6
+       |vpiFullName:work@dut
+       |vpiStmt:
+       \_assignment: , line:6:6, endln:6:42
+         |vpiParent:
+         \_begin: (work@dut), line:5:11, endln:8:6
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_operation: , line:6:10, endln:6:42
+           |vpiParent:
+           \_begin: (work@dut), line:5:11, endln:8:6
+           |vpiOpType:33
+           |vpiOperand:
+           \_constant: , line:6:12, endln:6:17
+             |vpiParent:
+             \_operation: , line:6:10, endln:6:42
+             |vpiDecompile:8'd23
+             |vpiSize:8
+             |DEC:23
+             |vpiConstType:1
+           |vpiOperand:
+           \_constant: , line:6:19, endln:6:24
+             |vpiParent:
+             \_operation: , line:6:10, endln:6:42
+             |vpiDecompile:8'd42
+             |vpiSize:8
+             |DEC:42
+             |vpiConstType:1
+           |vpiOperand:
+           \_constant: , line:6:26, endln:6:32
+             |vpiParent:
+             \_operation: , line:6:10, endln:6:42
+             |vpiDecompile:8'd127
+             |vpiSize:8
+             |DEC:127
+             |vpiConstType:1
+           |vpiOperand:
+           \_constant: , line:6:34, endln:6:40
+             |vpiParent:
+             \_operation: , line:6:10, endln:6:42
+             |vpiDecompile:8'd255
+             |vpiSize:8
+             |DEC:255
+             |vpiConstType:1
+         |vpiLhs:
+         \_ref_obj: (work@dut.x), line:6:6, endln:6:7
+           |vpiParent:
+           \_begin: (work@dut), line:5:11, endln:8:6
+           |vpiName:x
+           |vpiFullName:work@dut.x
+           |vpiActual:
+           \_logic_var: (work@dut.x), line:2:15, endln:2:16
+       |vpiStmt:
+       \_assignment: , line:7:6, endln:7:22
+         |vpiParent:
+         \_begin: (work@dut), line:5:11, endln:8:6
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_operation: , line:7:17, endln:7:20
+           |vpiParent:
+           \_begin: (work@dut), line:5:11, endln:8:6
+           |vpiOpType:72
+           |vpiOperand:
+           \_constant: , line:7:15, endln:7:16
+             |vpiDecompile:8
+             |vpiSize:64
+             |UINT:8
+             |vpiConstType:9
+           |vpiOperand:
+           \_operation: , line:7:10, endln:7:22
+             |vpiParent:
+             \_operation: , line:7:17, endln:7:20
+             |vpiOpType:33
+             |vpiOperand:
+             \_ref_obj: (work@dut.x), line:7:18, endln:7:19
+               |vpiParent:
+               \_begin: (work@dut), line:5:11, endln:8:6
+               |vpiName:x
+               |vpiFullName:work@dut.x
+               |vpiActual:
+               \_logic_var: (work@dut.x), line:2:15, endln:2:16
+         |vpiLhs:
+         \_ref_obj: (work@dut.a), line:7:6, endln:7:7
+           |vpiParent:
+           \_begin: (work@dut), line:5:11, endln:8:6
+           |vpiName:a
+           |vpiFullName:work@dut.a
+           |vpiActual:
+           \_logic_net: (work@dut.a), line:1:32, endln:1:33
+   |vpiContAssign:
+   \_cont_assign: , line:10:10, endln:10:46
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiRhs:
+     \_operation: , line:10:14, endln:10:46
+       |vpiParent:
+       \_cont_assign: , line:10:10, endln:10:46
+       |vpiOpType:33
+       |vpiOperand:
+       \_constant: , line:10:16, endln:10:22
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd255
+         |vpiSize:8
+         |DEC:255
+         |vpiConstType:1
+       |vpiOperand:
+       \_constant: , line:10:24, endln:10:30
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd127
+         |vpiSize:8
+         |DEC:127
+         |vpiConstType:1
+       |vpiOperand:
+       \_constant: , line:10:32, endln:10:37
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd42
+         |vpiSize:8
+         |DEC:42
+         |vpiConstType:1
+       |vpiOperand:
+       \_constant: , line:10:39, endln:10:44
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd23
+         |vpiSize:8
+         |DEC:23
+         |vpiConstType:1
+     |vpiLhs:
+     \_ref_obj: (work@dut.y), line:10:10, endln:10:11
+       |vpiParent:
+       \_cont_assign: , line:10:10, endln:10:46
+       |vpiName:y
+       |vpiFullName:work@dut.y
+       |vpiActual:
+       \_logic_var: (work@dut.y), line:3:15, endln:3:16
+   |vpiContAssign:
+   \_cont_assign: , line:12:10, endln:12:26
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiRhs:
+     \_operation: , line:12:21, endln:12:24
+       |vpiParent:
+       \_cont_assign: , line:12:10, endln:12:26
+       |vpiOpType:72
+       |vpiOperand:
+       \_constant: , line:12:19, endln:12:20
+         |vpiDecompile:8
+         |vpiSize:64
+         |UINT:8
+         |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:12:14, endln:12:26
+         |vpiParent:
+         \_operation: , line:12:21, endln:12:24
+         |vpiOpType:33
+         |vpiOperand:
+         \_ref_obj: (y), line:12:22, endln:12:23
+           |vpiName:y
+           |vpiActual:
+           \_logic_var: (work@dut.y), line:3:15, endln:3:16
+     |vpiLhs:
+     \_ref_obj: (work@dut.b), line:12:10, endln:12:11
+       |vpiParent:
+       \_cont_assign: , line:12:10, endln:12:26
+       |vpiName:b
+       |vpiFullName:work@dut.b
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:1:35, endln:1:36
+   |vpiContAssign:
+   \_cont_assign: , line:13:10, endln:13:29
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiRhs:
+     \_operation: , line:13:21, endln:13:27
+       |vpiParent:
+       \_cont_assign: , line:13:10, endln:13:29
+       |vpiOpType:72
+       |vpiOperand:
+       \_constant: , line:13:19, endln:13:20
+         |vpiDecompile:8
+         |vpiSize:64
+         |UINT:8
+         |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:13:14, endln:13:29
+         |vpiParent:
+         \_operation: , line:13:21, endln:13:27
+         |vpiOpType:33
+         |vpiOperand:
+         \_ref_obj: (x), line:13:22, endln:13:23
+           |vpiName:x
+           |vpiActual:
+           \_logic_var: (work@dut.x), line:2:15, endln:2:16
+         |vpiOperand:
+         \_ref_obj: (y), line:13:25, endln:13:26
+           |vpiName:y
+           |vpiActual:
+           \_logic_var: (work@dut.y), line:3:15, endln:3:16
+     |vpiLhs:
+     \_ref_obj: (work@dut.c), line:13:10, endln:13:11
+       |vpiParent:
+       \_cont_assign: , line:13:10, endln:13:29
+       |vpiName:c
+       |vpiFullName:work@dut.c
+       |vpiActual:
+       \_logic_net: (work@dut.c), line:1:58, endln:1:59
+   |vpiContAssign:
+   \_cont_assign: , line:14:10, endln:14:29
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiRhs:
+     \_operation: , line:14:21, endln:14:27
+       |vpiParent:
+       \_cont_assign: , line:14:10, endln:14:29
+       |vpiOpType:71
+       |vpiOperand:
+       \_constant: , line:14:19, endln:14:20
+         |vpiDecompile:8
+         |vpiSize:64
+         |UINT:8
+         |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:14:14, endln:14:29
+         |vpiParent:
+         \_operation: , line:14:21, endln:14:27
+         |vpiOpType:33
+         |vpiOperand:
+         \_ref_obj: (x), line:14:22, endln:14:23
+           |vpiName:x
+           |vpiActual:
+           \_logic_var: (work@dut.x), line:2:15, endln:2:16
+         |vpiOperand:
+         \_ref_obj: (y), line:14:25, endln:14:26
+           |vpiName:y
+           |vpiActual:
+           \_logic_var: (work@dut.y), line:3:15, endln:3:16
+     |vpiLhs:
+     \_ref_obj: (work@dut.d), line:14:10, endln:14:11
+       |vpiParent:
+       \_cont_assign: , line:14:10, endln:14:29
+       |vpiName:d
+       |vpiFullName:work@dut.d
+       |vpiActual:
+       \_logic_net: (work@dut.d), line:1:61, endln:1:62
+ |uhdmtopModules:
+ \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+   |vpiName:work@dut
+   |vpiVariables:
+   \_logic_var: (work@dut.x), line:2:15, endln:2:16
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiTypespec:
+     \_logic_typespec: , line:2:3, endln:2:14
+       |vpiRange:
+       \_range: , line:2:8, endln:2:14
+         |vpiLeftRange:
+         \_constant: , line:2:9, endln:2:11
+           |vpiParent:
+           \_range: , line:2:8, endln:2:14
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:2:12, endln:2:13
+           |vpiParent:
+           \_range: , line:2:8, endln:2:14
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:x
+     |vpiFullName:work@dut.x
+     |vpiVisibility:1
+     |vpiRange:
+     \_range: , line:2:8, endln:2:14
+       |vpiLeftRange:
+       \_constant: , line:2:9, endln:2:11
+         |vpiParent:
+         \_range: , line:2:8, endln:2:14
+         |vpiDecompile:31
+         |vpiSize:64
+         |UINT:31
+         |vpiConstType:9
+       |vpiRightRange:
+       \_constant: , line:2:12, endln:2:13
+         |vpiParent:
+         \_range: , line:2:8, endln:2:14
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+   |vpiVariables:
+   \_logic_var: (work@dut.y), line:3:15, endln:3:16
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiTypespec:
+     \_logic_typespec: , line:3:3, endln:3:14
+       |vpiRange:
+       \_range: , line:3:8, endln:3:14
+         |vpiLeftRange:
+         \_constant: , line:3:9, endln:3:11
+           |vpiParent:
+           \_range: , line:3:8, endln:3:14
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:3:12, endln:3:13
+           |vpiParent:
+           \_range: , line:3:8, endln:3:14
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:y
+     |vpiFullName:work@dut.y
+     |vpiVisibility:1
+     |vpiRange:
+     \_range: , line:3:8, endln:3:14
+       |vpiLeftRange:
+       \_constant: , line:3:9, endln:3:11
+         |vpiParent:
+         \_range: , line:3:8, endln:3:14
+         |vpiDecompile:31
+         |vpiSize:64
+         |UINT:31
+         |vpiConstType:9
+       |vpiRightRange:
+       \_constant: , line:3:12, endln:3:13
+         |vpiParent:
+         \_range: , line:3:8, endln:3:14
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+   |vpiDefName:work@dut
+   |vpiTop:1
+   |vpiNet:
+   \_logic_net: (work@dut.a), line:1:32, endln:1:33
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:31
+       |vpiRange:
+       \_range: , line:1:25, endln:1:31
+         |vpiLeftRange:
+         \_constant: , line:1:26, endln:1:28
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:29, endln:1:30
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:a
+     |vpiFullName:work@dut.a
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.b), line:1:35, endln:1:36
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:31
+     |vpiName:b
+     |vpiFullName:work@dut.b
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.c), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:45, endln:1:57
+       |vpiRange:
+       \_range: , line:1:51, endln:1:57
+         |vpiLeftRange:
+         \_constant: , line:1:52, endln:1:54
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:63
+           |vpiSize:64
+           |UINT:63
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:55, endln:1:56
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:c
+     |vpiFullName:work@dut.c
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@dut.d), line:1:61, endln:1:62
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:45, endln:1:57
+     |vpiName:d
+     |vpiFullName:work@dut.d
+     |vpiNetType:36
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (a), line:1:32, endln:1:33
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:a
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@dut.a), line:1:32, endln:1:33
+       |vpiName:a
+       |vpiFullName:work@dut.a
+       |vpiActual:
+       \_logic_net: (work@dut.a), line:1:32, endln:1:33
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:31
+       |vpiRange:
+       \_range: , line:1:25, endln:1:31
+         |vpiParent:
+         \_port: (a), line:1:32, endln:1:33
+         |vpiLeftRange:
+         \_constant: , line:1:26, endln:1:28
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:31
+           |vpiSize:64
+           |UINT:31
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:29, endln:1:30
+           |vpiParent:
+           \_range: , line:1:25, endln:1:31
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (b), line:1:35, endln:1:36
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@dut.b), line:1:35, endln:1:36
+       |vpiName:b
+       |vpiFullName:work@dut.b
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:1:35, endln:1:36
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:31
+   |vpiPort:
+   \_port: (c), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:c
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@dut.c), line:1:58, endln:1:59
+       |vpiName:c
+       |vpiFullName:work@dut.c
+       |vpiActual:
+       \_logic_net: (work@dut.c), line:1:58, endln:1:59
+     |vpiTypedef:
+     \_logic_typespec: , line:1:45, endln:1:57
+       |vpiRange:
+       \_range: , line:1:51, endln:1:57
+         |vpiParent:
+         \_port: (c), line:1:58, endln:1:59
+         |vpiLeftRange:
+         \_constant: , line:1:52, endln:1:54
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:63
+           |vpiSize:64
+           |UINT:63
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:55, endln:1:56
+           |vpiParent:
+           \_range: , line:1:51, endln:1:57
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (d), line:1:61, endln:1:62
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/StreamOp/dut.sv, line:1:1, endln:16:10
+     |vpiName:d
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@dut.d), line:1:61, endln:1:62
+       |vpiName:d
+       |vpiFullName:work@dut.d
+       |vpiActual:
+       \_logic_net: (work@dut.d), line:1:61, endln:1:62
+     |vpiTypedef:
+     \_logic_typespec: , line:1:45, endln:1:57
+   |vpiProcess:
+   \_initial: , line:5:3, endln:8:6
+   |vpiContAssign:
+   \_cont_assign: , line:10:10, endln:10:46
+     |vpiRhs:
+     \_operation: , line:10:14, endln:10:46
+       |vpiParent:
+       \_cont_assign: , line:10:10, endln:10:46
+       |vpiOpType:33
+       |vpiOperand:
+       \_constant: , line:10:16, endln:10:22
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd255
+         |vpiSize:8
+         |DEC:255
+         |vpiConstType:1
+       |vpiOperand:
+       \_constant: , line:10:24, endln:10:30
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd127
+         |vpiSize:8
+         |DEC:127
+         |vpiConstType:1
+       |vpiOperand:
+       \_constant: , line:10:32, endln:10:37
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd42
+         |vpiSize:8
+         |DEC:42
+         |vpiConstType:1
+       |vpiOperand:
+       \_constant: , line:10:39, endln:10:44
+         |vpiParent:
+         \_operation: , line:10:14, endln:10:46
+         |vpiDecompile:8'd23
+         |vpiSize:8
+         |DEC:23
+         |vpiConstType:1
+     |vpiLhs:
+     \_ref_obj: (y), line:10:10, endln:10:11
+       |vpiParent:
+       \_cont_assign: , line:10:10, endln:10:46
+       |vpiName:y
+       |vpiActual:
+       \_logic_var: (work@dut.y), line:3:15, endln:3:16
+   |vpiContAssign:
+   \_cont_assign: , line:12:10, endln:12:26
+     |vpiRhs:
+     \_operation: , line:12:21, endln:12:24
+       |vpiParent:
+       \_cont_assign: , line:12:10, endln:12:26
+       |vpiOpType:72
+       |vpiOperand:
+       \_constant: , line:12:19, endln:12:20
+         |vpiParent:
+         \_operation: , line:12:21, endln:12:24
+         |vpiDecompile:8
+         |vpiSize:64
+         |UINT:8
+         |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:12:14, endln:12:26
+         |vpiParent:
+         \_operation: , line:12:21, endln:12:24
+         |vpiOpType:33
+         |vpiOperand:
+         \_ref_obj: (y), line:12:22, endln:12:23
+           |vpiParent:
+           \_operation: , line:12:14, endln:12:26
+           |vpiName:y
+     |vpiLhs:
+     \_ref_obj: (b), line:12:10, endln:12:11
+       |vpiParent:
+       \_cont_assign: , line:12:10, endln:12:26
+       |vpiName:b
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:1:35, endln:1:36
+   |vpiContAssign:
+   \_cont_assign: , line:13:10, endln:13:29
+     |vpiRhs:
+     \_operation: , line:13:21, endln:13:27
+       |vpiParent:
+       \_cont_assign: , line:13:10, endln:13:29
+       |vpiOpType:72
+       |vpiOperand:
+       \_constant: , line:13:19, endln:13:20
+         |vpiParent:
+         \_operation: , line:13:21, endln:13:27
+         |vpiDecompile:8
+         |vpiSize:64
+         |UINT:8
+         |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:13:14, endln:13:29
+         |vpiParent:
+         \_operation: , line:13:21, endln:13:27
+         |vpiOpType:33
+         |vpiOperand:
+         \_ref_obj: (x), line:13:22, endln:13:23
+           |vpiParent:
+           \_operation: , line:13:14, endln:13:29
+           |vpiName:x
+         |vpiOperand:
+         \_ref_obj: (y), line:13:25, endln:13:26
+           |vpiParent:
+           \_operation: , line:13:14, endln:13:29
+           |vpiName:y
+     |vpiLhs:
+     \_ref_obj: (c), line:13:10, endln:13:11
+       |vpiParent:
+       \_cont_assign: , line:13:10, endln:13:29
+       |vpiName:c
+       |vpiActual:
+       \_logic_net: (work@dut.c), line:1:58, endln:1:59
+   |vpiContAssign:
+   \_cont_assign: , line:14:10, endln:14:29
+     |vpiRhs:
+     \_operation: , line:14:21, endln:14:27
+       |vpiParent:
+       \_cont_assign: , line:14:10, endln:14:29
+       |vpiOpType:71
+       |vpiOperand:
+       \_constant: , line:14:19, endln:14:20
+         |vpiParent:
+         \_operation: , line:14:21, endln:14:27
+         |vpiDecompile:8
+         |vpiSize:64
+         |UINT:8
+         |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:14:14, endln:14:29
+         |vpiParent:
+         \_operation: , line:14:21, endln:14:27
+         |vpiOpType:33
+         |vpiOperand:
+         \_ref_obj: (x), line:14:22, endln:14:23
+           |vpiParent:
+           \_operation: , line:14:14, endln:14:29
+           |vpiName:x
+         |vpiOperand:
+         \_ref_obj: (y), line:14:25, endln:14:26
+           |vpiParent:
+           \_operation: , line:14:14, endln:14:29
+           |vpiName:y
+     |vpiLhs:
+     \_ref_obj: (d), line:14:10, endln:14:11
+       |vpiParent:
+       \_cont_assign: , line:14:10, endln:14:29
+       |vpiName:d
+       |vpiActual:
+       \_logic_net: (work@dut.d), line:1:61, endln:1:62
+Object 'work@dut' of type 'design'
+  Object 'builtin' of type 'package'
+  Object '' of type 'module_inst'
+    Object 'a' of type 'logic_net'
+    Object 'b' of type 'logic_net'
+    Object 'c' of type 'logic_net'
+    Object 'd' of type 'logic_net'
+    Object 'x' of type 'logic_net'
+    Object 'y' of type 'logic_net'
+    Object '' of type 'initial'
+      Object '' of type 'begin'
+        Object '' of type 'assignment'
+          Object 'x' of type 'ref_obj'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'a' of type 'ref_obj'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'operation'
+              Object 'x' of type 'ref_obj'
+  Object 'work@dut' of type 'module_inst'
+    Object 'a' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'b' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'c' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'd' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'a' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'b' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'c' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'd' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object '' of type 'cont_assign'
+      Object 'y' of type 'ref_obj'
+      Object '' of type 'operation'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object '' of type 'cont_assign'
+      Object 'b' of type 'ref_obj'
+      Object '' of type 'operation'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object 'y' of type 'ref_obj'
+    Object '' of type 'cont_assign'
+      Object 'c' of type 'ref_obj'
+      Object '' of type 'operation'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object 'x' of type 'ref_obj'
+          Object 'y' of type 'ref_obj'
+    Object '' of type 'cont_assign'
+      Object 'd' of type 'ref_obj'
+      Object '' of type 'operation'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object 'x' of type 'ref_obj'
+          Object 'y' of type 'ref_obj'
+    Object 'x' of type 'logic_var'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'y' of type 'logic_var'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+Generating RTLIL representation for module `\dut'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.1-16.10> str='\dut'
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.32-1.33> str='\a' output logic port=1 multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.25-1.31> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.35-1.36> str='\b' output logic port=2 multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.25-1.31> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.58-1.59> str='\c' output logic port=3 multirange=[ 0 64 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.51-1.57> basic_prep range=[63:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.61-1.62> str='\d' output logic port=4 multirange=[ 0 64 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:1.51-1.57> basic_prep range=[63:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:2.15-2.16> str='\x' logic
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:2.8-2.14>
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:2.8-2.14>
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i' reg signed range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::temp' range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+          AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+            AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\$bits'
+              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.6-7.7> str='\a'
+            AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:3.15-3.16> str='\y' logic
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:3.8-3.14>
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:3.8-3.14>
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/StreamOp/dut.sv:10.10-10.46>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:10.10-10.11> str='\y'
+        AST_CONCAT <UHDM-integration-tests/tests/StreamOp/dut.sv:10.14-10.46>
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00010111'(8) range=[7:0] int=23
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00101010'(8) range=[7:0] int=42
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='01111111'(8) range=[7:0] int=127
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='11111111'(8) range=[7:0] int=255
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i' reg signed range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::temp' range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+          AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+            AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\$bits'
+              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.10-12.11> str='\b'
+            AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
+      AST_ALWAYS <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+        AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::temp'
+            AST_CONCAT <UHDM-integration-tests/tests/StreamOp/dut.sv:12.14-12.26>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.22-12.23> str='\y'
+          AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+            AST_FOR <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='$loop1'
+              AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_LE <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                  AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\$bits'
+                    AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.10-12.11> str='\b'
+                  AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+              AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                  AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+              AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\stream_op_block1'
+                AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.10-12.11> str='\b'
+                    AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                      AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                        AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                          AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                            AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                              AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\$bits'
+                                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.10-12.11> str='\b'
+                              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                      AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                        AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                          AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                            AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                              AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                                AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\$bits'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.10-12.11> str='\b'
+                                AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::temp'
+                    AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                      AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                        AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                          AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                      AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                        AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24>
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.21-12.24> str='\loop1::i'
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/StreamOp/dut.sv:12.10-12.26>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:12.10-12.11> str='\b'
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i' reg signed range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::temp' range=[-1:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+          AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+            AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\$bits'
+              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.10-13.11> str='\c'
+            AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
+      AST_ALWAYS <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+        AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::temp'
+            AST_CONCAT <UHDM-integration-tests/tests/StreamOp/dut.sv:13.14-13.29>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.25-13.26> str='\y'
+              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.22-13.23> str='\x'
+          AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+            AST_FOR <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='$loop2'
+              AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_LE <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                  AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\$bits'
+                    AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.10-13.11> str='\c'
+                  AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+              AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                  AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+              AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\stream_op_block2'
+                AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.10-13.11> str='\c'
+                    AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                      AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                        AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                          AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                            AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                              AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\$bits'
+                                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.10-13.11> str='\c'
+                              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                      AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                        AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                          AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                            AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                              AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                                AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\$bits'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.10-13.11> str='\c'
+                                AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::temp'
+                    AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                      AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                        AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                          AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                      AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                        AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27>
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.21-13.27> str='\loop2::i'
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/StreamOp/dut.sv:13.10-13.29>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:13.10-13.11> str='\c'
+      AST_ASSIGN <UHDM-integration-tests/tests/StreamOp/dut.sv:14.10-14.29>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:14.10-14.11> str='\d'
+        AST_CONCAT <UHDM-integration-tests/tests/StreamOp/dut.sv:14.14-14.29>
+          AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:14.25-14.26> str='\y'
+          AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:14.22-14.23> str='\x'
+      AST_INITIAL <UHDM-integration-tests/tests/StreamOp/dut.sv:5.3-8.6>
+        AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:5.11-8.6>
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:6.6-6.42>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:6.6-6.7> str='\x'
+            AST_CONCAT <UHDM-integration-tests/tests/StreamOp/dut.sv:6.10-6.42>
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='11111111'(8) range=[7:0] int=255
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='01111111'(8) range=[7:0] int=127
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00101010'(8) range=[7:0] int=42
+              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00010111'(8) range=[7:0] int=23
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::temp'
+            AST_CONCAT <UHDM-integration-tests/tests/StreamOp/dut.sv:7.10-7.22>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.18-7.19> str='\x'
+          AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+            AST_FOR <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='$loop0'
+              AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_LE <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                  AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\$bits'
+                    AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.6-7.7> str='\a'
+                  AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+              AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                  AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+              AST_BLOCK <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\stream_op_block0'
+                AST_ASSIGN_EQ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.6-7.7> str='\a'
+                    AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                      AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                        AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                          AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                            AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                              AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\$bits'
+                                AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.6-7.7> str='\a'
+                              AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                      AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                        AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                          AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                            AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                              AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                                AST_FCALL <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\$bits'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.6-7.7> str='\a'
+                                AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::temp'
+                    AST_RANGE <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                      AST_SUB <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                        AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                          AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                            AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                          AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                      AST_ADD <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                        AST_SELFSZ <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20>
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/StreamOp/dut.sv:7.17-7.20> str='\loop0::i'
+                        AST_CONSTANT <UHDM-integration-tests/tests/StreamOp/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module dut(a, b, c, d);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [31:0] a;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [31:0] b;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [63:0] c;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [63:0] d;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      wire [31:0] x;
+      (* is_simplified_wire = 1 *)
+      reg signed [31:0] \loop0::i ;
+      (* is_simplified_wire = 1 *)
+      wire [(/** AST_FCALL **/)-(1):0] \loop0::temp ;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      wire [31:0] y;
+      (* is_simplified_wire = 1 *)
+      reg signed [31:0] \loop1::i ;
+      (* is_simplified_wire = 1 *)
+      wire [(/** AST_FCALL **/)-(1):0] \loop1::temp ;
+      (* is_simplified_wire = 1 *)
+      reg signed [31:0] \loop2::i ;
+      (* is_simplified_wire = 1 *)
+      wire [(/** AST_FCALL **/)-(1):0] \loop2::temp ;
+      assign y = {8'b 11111111, 8'b 01111111, 8'b 00101010, 8'b 00010111};
+      always @*
+        begin
+          \loop1::temp  = {y};
+          /** AST_FOR **/
+        end
+      assign b
