@@ -113,6 +113,7 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up common Ubuntu configuration
         run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
@@ -143,14 +144,13 @@ jobs:
           TARGET: uhdm/yosys/test-ast
 
       - name: Update logs
-        if: ${{github.event_name == 'pull_request' && (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master')}}
+        if: ${{github.event_name == 'pull_request'}}
         run: |
           git config --global user.email "action@example.com" &&
           git config --global user.name "github action"
           if [ -n "$(git status logs/ --porcelain)" ]; then
-            git checkout -B kr/process_module
             git commit logs/ -m "Update logs" &&
-            git push --set-upstream origin kr/process_module
+            git push origin
           fi
 
       - name: Rename test results
