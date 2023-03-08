@@ -143,6 +143,7 @@ jobs:
           TARGET: uhdm/yosys/test-ast
 
       - name: Update logs
+        if: ${{github.event_name == 'pull_request' && (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master')}}
         run: |
           git config --global user.email "action@example.com" &&
           git config --global user.name "github action"
