@@ -1538,7 +1538,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:12.4-14.32> str='\u_aes_cipher_core'
-        AST_CELLTYPE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> str='$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218'
+        AST_CELLTYPE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> str='$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core'
         AST_ARGUMENT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:12.4-14.32> str='\x'
           AST_IDENTIFIER <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:14.28-14.29> str='\o'
       AST_PARAMETER <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:2.28-3.51> str='\aes_pkg::P_PKG' basic_prep range=[159:0] multirange=[ 0 160 ] multirange_swapped=[ 0 ]
@@ -1591,7 +1591,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:12.4-14.32> str='\u_aes_cipher_core' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> str='$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> str='$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:12.4-14.32> str='\x' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:14.28-14.29> str='\o' basic_prep
       AST_PARAMETER <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:2.28-3.51> str='\aes_pkg::P_PKG' basic_prep range=[159:0] multirange=[ 0 160 ] multirange_swapped=[ 0 ]
@@ -1621,9 +1621,9 @@ Dumping Verilog AST after simplification:
       /** AST_CELL **/
     endmodule
 --- END OF AST DUMP ---
-Generating RTLIL representation for module `$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218'.
+Generating RTLIL representation for module `$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:6.1-9.10> str='$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218'
+    AST_MODULE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:6.1-9.10> str='$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core'
       AST_PARAMETER <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:2.28-3.51> str='\P_PKG' multirange=[ 0 160 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1673,7 +1673,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218 (x);
+    module \$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core (x);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       (* is_imported = 1 *)
@@ -1690,7 +1690,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:6.1-9.10> str='$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:6.1-9.10> str='$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core' basic_prep
       AST_PARAMETER <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:2.28-3.51> str='\P_PKG' basic_prep range=[159:0] multirange=[ 0 160 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -1740,7 +1740,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterSizeOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218 (x);
+    module \$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core (x);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       (* is_imported = 1 *)
@@ -1790,22 +1790,22 @@ Converted 0 switches.
 Cleaned up 0 empty switches.
 
 3.12. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218.
+Optimizing module $paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core.
 Optimizing module top.
 
 4. Executing OPT pass (performing simple optimizations).
 
 4.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218.
+Optimizing module $paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core.
 Optimizing module top.
 
 4.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218'.
+Finding identical cells in module `$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 4.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module $paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218..
+Running muxtree optimizer on module $paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Running muxtree optimizer on module \top..
@@ -1814,23 +1814,23 @@ Running muxtree optimizer on module \top..
 Removed 0 multiplexer ports.
 
 4.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module $paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218.
+  Optimizing cells in module $paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core.
   Optimizing cells in module \top.
 Performed a total of 0 changes.
 
 4.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218'.
+Finding identical cells in module `$paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 4.6. Executing OPT_DFF pass (perform DFF optimizations).
 
 4.7. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218..
+Finding unused cells or wires in module $paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core..
 Finding unused cells or wires in module \top..
 
 4.8. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\aes_cipher_core\P_PKG=160'd1961980218\P_INSTANCE=160'd1961980218.
+Optimizing module $paramod$1aa61d22b39305f2b956a5290b20157037396e24\aes_cipher_core.
 Optimizing module top.
 
 4.9. Finished OPT passes. (There is nothing left to do.)

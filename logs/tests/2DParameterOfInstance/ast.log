@@ -1936,9 +1936,9 @@ Object 'work@top' of type 'design'
       Object '' of type 'int_typespec'
     Object 'o' of type 'int_var'
 Warning: Removing unused module: \keymgr from the design.
-Generating RTLIL representation for module `$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'.
+Generating RTLIL representation for module `$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.1-13.10> str='$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'
+    AST_MODULE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.1-13.10> str='$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'
       AST_TYPEDEF <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:2.12-2.29> str='\lfsr_perm_t'
         AST_WIRE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:2.12-2.29> logic multirange=[ 0 6 0 64 ] multirange_swapped=[ 0 0 ]
           ATTR \packed_ranges:
@@ -2031,7 +2031,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr (x);
+    module \$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr (x);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       (* is_imported = 1 *)
@@ -2050,7 +2050,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.1-13.10> str='$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.1-13.10> str='$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr' basic_prep
       AST_TYPEDEF <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:2.12-2.29> str='\lfsr_perm_t' basic_prep
         AST_WIRE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:2.12-2.29> logic basic_prep range=[383:0] multirange=[ 0 6 0 64 ] multirange_swapped=[ 0 0 ]
           ATTR \packed_ranges:
@@ -2143,7 +2143,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr (x);
+    module \$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr (x);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       (* is_imported = 1 *)
@@ -2171,7 +2171,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:16.4-18.22> str='\u_keymgr'
-        AST_CELLTYPE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> str='$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'
+        AST_CELLTYPE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> str='$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'
         AST_ARGUMENT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:16.4-18.22> str='\x'
           AST_IDENTIFIER <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:18.18-18.19> str='\o'
       AST_TYPEDEF <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:2.12-2.29> str='\keymgr_pkg::lfsr_perm_t' basic_prep
@@ -2227,7 +2227,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:16.4-18.22> str='\u_keymgr' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> str='$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> str='$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:16.4-18.22> str='\x' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:18.18-18.19> str='\o' basic_prep
       AST_TYPEDEF <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:2.12-2.29> str='\keymgr_pkg::lfsr_perm_t' basic_prep
@@ -2281,11 +2281,11 @@ Dumping Verilog AST after simplification:
 
 2.1.1. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr
+Used module:     $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr
 
 2.1.2. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr
+Used module:     $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr
 Removed 0 unused modules.
 
 2.2. Executing PROC pass (convert processes to netlists).
@@ -2320,34 +2320,34 @@ Cleaned up 0 empty switches.
 
 2.2.12. Executing OPT_EXPR pass (perform const folding).
 Optimizing module top.
-Optimizing module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr.
+Optimizing module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr.
 
 2.3. Executing OPT_EXPR pass (perform const folding).
 Optimizing module top.
-Optimizing module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr.
+Optimizing module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr.
 
 2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \top..
-Finding unused cells or wires in module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr..
+Finding unused cells or wires in module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr..
 
 2.5. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr...
+Checking module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr...
 Checking module top...
 Found and reported 0 problems.
 
 2.6. Executing OPT pass (performing simple optimizations).
 
 2.6.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr.
+Optimizing module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr.
 Optimizing module top.
 
 2.6.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'.
+Finding identical cells in module `$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr..
+Running muxtree optimizer on module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Running muxtree optimizer on module \top..
@@ -2356,21 +2356,21 @@ Running muxtree optimizer on module \top..
 Removed 0 multiplexer ports.
 
 2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr.
+  Optimizing cells in module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr.
   Optimizing cells in module \top.
 Performed a total of 0 changes.
 
 2.6.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'.
+Finding identical cells in module `$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr..
+Finding unused cells or wires in module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr..
 Finding unused cells or wires in module \top..
 
 2.6.7. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr.
+Optimizing module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr.
 Optimizing module top.
 
 2.6.8. Finished OPT passes. (There is nothing left to do.)
@@ -2378,7 +2378,7 @@ Optimizing module top.
 2.7. Executing WREDUCE pass (reducing word size of cells).
 
 2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr..
+Finding unused cells or wires in module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr..
 Finding unused cells or wires in module \top..
 
 2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
@@ -2386,23 +2386,23 @@ Finding unused cells or wires in module \top..
 2.10. Executing OPT pass (performing simple optimizations).
 
 2.10.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr.
+Optimizing module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr.
 Optimizing module top.
 
 2.10.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'.
+Finding identical cells in module `$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr..
+Finding unused cells or wires in module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr..
 Finding unused cells or wires in module \top..
 
 2.10.4. Finished fast OPT passes.
 
 2.11. Printing statistics.
 
-=== $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr ===
+=== $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr ===
 
    Number of wires:                  1
    Number of wire bits:             32
@@ -2423,12 +2423,12 @@ Finding unused cells or wires in module \top..
    Number of memory bits:            0
    Number of processes:              0
    Number of cells:                  1
-     $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr      1
+     $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr      1
 
 === design hierarchy ===
 
    top                               1
-     $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr      1
+     $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr      1
 
    Number of wires:                  2
    Number of wire bits:             64
@@ -2440,7 +2440,7 @@ Finding unused cells or wires in module \top..
    Number of cells:                  0
 
 2.12. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr...
+Checking module $paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr...
 Checking module top...
 Found and reported 0 problems.
 
@@ -2450,10 +2450,10 @@ Found and reported 0 problems.
 
 3.2. Executing DEMUXMAP pass.
 /* Generated by Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
-Dumping module `$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'.
+Dumping module `$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'.
 
 (* src = "UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.1-13.10" *)
-module \$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr (x);
+module \$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr (x);
   (* is_simplified_wire = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.26-9.27" *)
   output [31:0] x;
@@ -2471,7 +2471,7 @@ module top(o);
   wire [31:0] o;
   (* module_not_derived = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:16.4-18.22" *)
-  \$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr  u_keymgr (
+  \$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr  u_keymgr (
     .x(o)
   );
 endmodule
@@ -2481,7 +2481,7 @@ endmodule
 4.1. Executing BMUXMAP pass.
 
 4.2. Executing DEMUXMAP pass.
-Dumping module `$paramod$e6fd93242c9468ad060eb798d3cec3b5229709bd\keymgr'.
+Dumping module `$paramod$a2f3e329c2dc28b5279ee0bb03104c4b3455d058\keymgr'.
 Dumping module `\top'.
 
 5. Executing SIM pass (simulate the circuit).

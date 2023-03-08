@@ -1847,9 +1847,9 @@ Object 'work@dut' of type 'design'
         Object '' of type 'constant'
 Warning: Removing unused module: \SUB from the design.
 Warning: Removing unused module: \middle from the design.
-Generating RTLIL representation for module `$paramod\SUB\width=32'd1'.
+Generating RTLIL representation for module `$paramod\SUB\width=32'00000000000000000000000000000001'.
 Dumping AST before simplification:
-    AST_MODULE <Surelog/tests/OneNetRange/dut.v:15.1-17.10> str='$paramod\SUB\width=32'd1'
+    AST_MODULE <Surelog/tests/OneNetRange/dut.v:15.1-17.10> str='$paramod\SUB\width=32'00000000000000000000000000000001'
       AST_PARAMETER <Surelog/tests/OneNetRange/dut.v:15.24-15.33> str='\width' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1893,7 +1893,7 @@ Dumping AST before simplification:
         AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:16.16-16.19> str='\inp'
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\SUB\width=32'd1 (inp, out);
+    module \$paramod\SUB\width=32'00000000000000000000000000000001 (inp, out);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -1909,7 +1909,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <Surelog/tests/OneNetRange/dut.v:15.1-17.10> str='$paramod\SUB\width=32'd1' basic_prep
+    AST_MODULE <Surelog/tests/OneNetRange/dut.v:15.1-17.10> str='$paramod\SUB\width=32'00000000000000000000000000000001' basic_prep
       AST_PARAMETER <Surelog/tests/OneNetRange/dut.v:15.24-15.33> str='\width' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -1953,7 +1953,7 @@ Dumping AST after simplification:
         AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:16.16-16.19> str='\inp' basic_prep
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\SUB\width=32'd1 (inp, out);
+    module \$paramod\SUB\width=32'00000000000000000000000000000001 (inp, out);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -1968,9 +1968,9 @@ Dumping Verilog AST after simplification:
       assign out = inp;
     endmodule
 --- END OF AST DUMP ---
-Generating RTLIL representation for module `$paramod\middle\width=32'd1'.
+Generating RTLIL representation for module `$paramod\middle\width=32'00000000000000000000000000000001'.
 Dumping AST before simplification:
-    AST_MODULE <Surelog/tests/OneNetRange/dut.v:11.1-13.10> str='$paramod\middle\width=32'd1'
+    AST_MODULE <Surelog/tests/OneNetRange/dut.v:11.1-13.10> str='$paramod\middle\width=32'00000000000000000000000000000001'
       AST_PARAMETER <Surelog/tests/OneNetRange/dut.v:11.27-11.36> str='\width' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1991,14 +1991,14 @@ Dumping AST before simplification:
         AST_WIRETYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='\ConnectTB'
         AST_INTERFACEPORTTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='\ConnectTB'
       AST_CELL <Surelog/tests/OneNetRange/dut.v:12.3-12.64> str='\sub1'
-        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\SUB\width=32'd1'
+        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\SUB\width=32'00000000000000000000000000000001'
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:12.3-12.64> str='\inp'
           AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:12.34-12.44> str='\conn.con_i'
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:12.3-12.64> str='\out'
           AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:12.51-12.61> str='\conn.con_o'
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\middle\width=32'd1 ();
+    module \$paramod\middle\width=32'00000000000000000000000000000001 ();
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -2009,7 +2009,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <Surelog/tests/OneNetRange/dut.v:11.1-13.10> str='$paramod\middle\width=32'd1' basic_prep
+    AST_MODULE <Surelog/tests/OneNetRange/dut.v:11.1-13.10> str='$paramod\middle\width=32'00000000000000000000000000000001' basic_prep
       AST_PARAMETER <Surelog/tests/OneNetRange/dut.v:11.27-11.36> str='\width' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -2030,7 +2030,7 @@ Dumping AST after simplification:
         AST_WIRETYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='\ConnectTB' basic_prep
         AST_INTERFACEPORTTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='\ConnectTB' basic_prep
       AST_CELL <Surelog/tests/OneNetRange/dut.v:12.3-12.64> str='\sub1' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\SUB\width=32'd1' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\SUB\width=32'00000000000000000000000000000001' basic_prep
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:12.3-12.64> str='\inp' basic_prep
           AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:12.34-12.44> str='\conn.con_i' basic_prep
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:12.3-12.64> str='\out' basic_prep
@@ -2039,7 +2039,7 @@ Dumping AST after simplification:
       AST_AUTOWIRE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='\conn.con_o' basic_prep
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\middle\width=32'd1 ();
+    module \$paramod\middle\width=32'00000000000000000000000000000001 ();
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -2095,7 +2095,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\middle1'
-        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\middle\width=32'd1'
+        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\middle\width=32'00000000000000000000000000000001'
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\conn'
           AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:4.35-4.41> str='\conntb'
       AST_CELL <Surelog/tests/OneNetRange/dut.v:3.3-3.58> str='\conntb'
@@ -2163,7 +2163,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\middle1' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\middle\width=32'd1' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\middle\width=32'00000000000000000000000000000001' basic_prep
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\conn' basic_prep
           AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:4.35-4.41> str='\conntb' basic_prep
       AST_CELL <Surelog/tests/OneNetRange/dut.v:3.3-3.58> str='\conntb' basic_prep
@@ -2222,20 +2222,20 @@ Dumping Verilog AST after simplification:
 
 2.1.1. Analyzing design hierarchy..
 Top module:  \dut
-Used module:     $paramod\middle\width=32'd1
-Used module:         $paramod\SUB\width=32'd1
-Generating RTLIL representation for module `$paramod\middle\width=32'd1'.
+Used module:     $paramod\middle\width=32'00000000000000000000000000000001
+Used module:         $paramod\SUB\width=32'00000000000000000000000000000001
+Generating RTLIL representation for module `$paramod\middle\width=32'00000000000000000000000000000001'.
 
 2.1.2. Analyzing design hierarchy..
 Top module:  \dut
-Used module:     $paramod\middle\width=32'd1
-Used module:         $paramod\SUB\width=32'd1
+Used module:     $paramod\middle\width=32'00000000000000000000000000000001
+Used module:         $paramod\SUB\width=32'00000000000000000000000000000001
 Warning: Could not find interface instance for `conntb' in `dut'
 
 2.1.3. Analyzing design hierarchy..
 Top module:  \dut
-Used module:     $paramod\middle\width=32'd1
-Used module:         $paramod\SUB\width=32'd1
+Used module:     $paramod\middle\width=32'00000000000000000000000000000001
+Used module:         $paramod\SUB\width=32'00000000000000000000000000000001
 Removed 0 unused modules.
 
 2.2. Executing PROC pass (convert processes to netlists).
@@ -2269,46 +2269,46 @@ Converted 0 switches.
 Cleaned up 0 empty switches.
 
 2.2.12. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\middle\width=32'd1.
+Optimizing module $paramod\middle\width=32'00000000000000000000000000000001.
 Optimizing module dut.
-Optimizing module $paramod\SUB\width=32'd1.
+Optimizing module $paramod\SUB\width=32'00000000000000000000000000000001.
 
 2.3. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\middle\width=32'd1.
+Optimizing module $paramod\middle\width=32'00000000000000000000000000000001.
 Optimizing module dut.
-Optimizing module $paramod\SUB\width=32'd1.
+Optimizing module $paramod\SUB\width=32'00000000000000000000000000000001.
 
 2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\middle\width=32'd1..
+Finding unused cells or wires in module $paramod\middle\width=32'00000000000000000000000000000001..
 Finding unused cells or wires in module \dut..
-Finding unused cells or wires in module $paramod\SUB\width=32'd1..
+Finding unused cells or wires in module $paramod\SUB\width=32'00000000000000000000000000000001..
 Removed 2 unused cells and 1 unused wires.
 <suppressed ~3 debug messages>
 
 2.5. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\SUB\width=32'd1...
-Checking module $paramod\middle\width=32'd1...
+Checking module $paramod\SUB\width=32'00000000000000000000000000000001...
+Checking module $paramod\middle\width=32'00000000000000000000000000000001...
 Checking module dut...
 Found and reported 0 problems.
 
 2.6. Executing OPT pass (performing simple optimizations).
 
 2.6.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\SUB\width=32'd1.
-Optimizing module $paramod\middle\width=32'd1.
+Optimizing module $paramod\SUB\width=32'00000000000000000000000000000001.
+Optimizing module $paramod\middle\width=32'00000000000000000000000000000001.
 Optimizing module dut.
 
 2.6.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\SUB\width=32'd1'.
-Finding identical cells in module `$paramod\middle\width=32'd1'.
+Finding identical cells in module `$paramod\SUB\width=32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\middle\width=32'00000000000000000000000000000001'.
 Finding identical cells in module `\dut'.
 Removed a total of 0 cells.
 
 2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module $paramod\SUB\width=32'd1..
+Running muxtree optimizer on module $paramod\SUB\width=32'00000000000000000000000000000001..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module $paramod\middle\width=32'd1..
+Running muxtree optimizer on module $paramod\middle\width=32'00000000000000000000000000000001..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Running muxtree optimizer on module \dut..
@@ -2317,25 +2317,25 @@ Running muxtree optimizer on module \dut..
 Removed 0 multiplexer ports.
 
 2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module $paramod\SUB\width=32'd1.
-  Optimizing cells in module $paramod\middle\width=32'd1.
+  Optimizing cells in module $paramod\SUB\width=32'00000000000000000000000000000001.
+  Optimizing cells in module $paramod\middle\width=32'00000000000000000000000000000001.
   Optimizing cells in module \dut.
 Performed a total of 0 changes.
 
 2.6.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\SUB\width=32'd1'.
-Finding identical cells in module `$paramod\middle\width=32'd1'.
+Finding identical cells in module `$paramod\SUB\width=32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\middle\width=32'00000000000000000000000000000001'.
 Finding identical cells in module `\dut'.
 Removed a total of 0 cells.
 
 2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\SUB\width=32'd1..
-Finding unused cells or wires in module $paramod\middle\width=32'd1..
+Finding unused cells or wires in module $paramod\SUB\width=32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\middle\width=32'00000000000000000000000000000001..
 Finding unused cells or wires in module \dut..
 
 2.6.7. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\SUB\width=32'd1.
-Optimizing module $paramod\middle\width=32'd1.
+Optimizing module $paramod\SUB\width=32'00000000000000000000000000000001.
+Optimizing module $paramod\middle\width=32'00000000000000000000000000000001.
 Optimizing module dut.
 
 2.6.8. Finished OPT passes. (There is nothing left to do.)
@@ -2343,8 +2343,8 @@ Optimizing module dut.
 2.7. Executing WREDUCE pass (reducing word size of cells).
 
 2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\SUB\width=32'd1..
-Finding unused cells or wires in module $paramod\middle\width=32'd1..
+Finding unused cells or wires in module $paramod\SUB\width=32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\middle\width=32'00000000000000000000000000000001..
 Finding unused cells or wires in module \dut..
 
 2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
@@ -2352,26 +2352,26 @@ Finding unused cells or wires in module \dut..
 2.10. Executing OPT pass (performing simple optimizations).
 
 2.10.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\SUB\width=32'd1.
-Optimizing module $paramod\middle\width=32'd1.
+Optimizing module $paramod\SUB\width=32'00000000000000000000000000000001.
+Optimizing module $paramod\middle\width=32'00000000000000000000000000000001.
 Optimizing module dut.
 
 2.10.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\SUB\width=32'd1'.
-Finding identical cells in module `$paramod\middle\width=32'd1'.
+Finding identical cells in module `$paramod\SUB\width=32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\middle\width=32'00000000000000000000000000000001'.
 Finding identical cells in module `\dut'.
 Removed a total of 0 cells.
 
 2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\SUB\width=32'd1..
-Finding unused cells or wires in module $paramod\middle\width=32'd1..
+Finding unused cells or wires in module $paramod\SUB\width=32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\middle\width=32'00000000000000000000000000000001..
 Finding unused cells or wires in module \dut..
 
 2.10.4. Finished fast OPT passes.
 
 2.11. Printing statistics.
 
-=== $paramod\SUB\width=32'd1 ===
+=== $paramod\SUB\width=32'00000000000000000000000000000001 ===
 
    Number of wires:                  2
    Number of wire bits:              2
@@ -2382,7 +2382,7 @@ Finding unused cells or wires in module \dut..
    Number of processes:              0
    Number of cells:                  0
 
-=== $paramod\middle\width=32'd1 ===
+=== $paramod\middle\width=32'00000000000000000000000000000001 ===
 
    Number of wires:                  2
    Number of wire bits:              2
@@ -2392,7 +2392,7 @@ Finding unused cells or wires in module \dut..
    Number of memory bits:            0
    Number of processes:              0
    Number of cells:                  1
-     $paramod\SUB\width=32'd1        1
+     $paramod\SUB\width=32'00000000000000000000000000000001      1
 
 === dut ===
 
@@ -2421,8 +2421,8 @@ Finding unused cells or wires in module \dut..
      ConnectTB                       1
 
 2.12. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\SUB\width=32'd1...
-Checking module $paramod\middle\width=32'd1...
+Checking module $paramod\SUB\width=32'00000000000000000000000000000001...
+Checking module $paramod\middle\width=32'00000000000000000000000000000001...
 Checking module dut...
 Found and reported 0 problems.
 
@@ -2432,10 +2432,10 @@ Found and reported 0 problems.
 
 3.2. Executing DEMUXMAP pass.
 /* Generated by Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
-Dumping module `$paramod\SUB\width=32'd1'.
+Dumping module `$paramod\SUB\width=32'00000000000000000000000000000001'.
 
 (* src = "Surelog/tests/OneNetRange/dut.v:15.1-17.10" *)
-module \$paramod\SUB\width=32'd1 (inp, out);
+module \$paramod\SUB\width=32'00000000000000000000000000000001 (inp, out);
   (* is_simplified_wire = 32'd1 *)
   (* packed_ranges = 1'h1 *)
   (* src = "Surelog/tests/OneNetRange/dut.v:15.59-15.62" *)
@@ -2450,11 +2450,11 @@ module \$paramod\SUB\width=32'd1 (inp, out);
   wire out;
   assign out = inp;
 endmodule
-Dumping module `$paramod\middle\width=32'd1'.
+Dumping module `$paramod\middle\width=32'00000000000000000000000000000001'.
 
 (* interfaces_replaced_in_module =  1  *)
 (* src = "Surelog/tests/OneNetRange/dut.v:11.1-13.10" *)
-module \$paramod\middle\width=32'd1 (\conn.con_i , \conn.con_o );
+module \$paramod\middle\width=32'00000000000000000000000000000001 (\conn.con_i , \conn.con_o );
   (* src = "Surelog/tests/OneNetRange/dut.v:0.0-0.0" *)
   inout \conn.con_i ;
   wire \conn.con_i ;
@@ -2463,7 +2463,7 @@ module \$paramod\middle\width=32'd1 (\conn.con_i , \conn.con_o );
   wire \conn.con_o ;
   (* module_not_derived = 32'd1 *)
   (* src = "Surelog/tests/OneNetRange/dut.v:12.3-12.64" *)
-  \$paramod\SUB\width=32'd1  sub1 (
+  \$paramod\SUB\width=32'00000000000000000000000000000001  sub1 (
     .inp(\conn.con_i ),
     .out(\conn.con_o )
   );
@@ -2498,8 +2498,8 @@ endmodule
 4.1. Executing BMUXMAP pass.
 
 4.2. Executing DEMUXMAP pass.
-Dumping module `$paramod\SUB\width=32'd1'.
-Dumping module `$paramod\middle\width=32'd1'.
+Dumping module `$paramod\SUB\width=32'00000000000000000000000000000001'.
+Dumping module `$paramod\middle\width=32'00000000000000000000000000000001'.
 Dumping module `\dut'.
 
 5. Executing SIM pass (simulate the circuit).

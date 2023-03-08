@@ -3034,9 +3034,9 @@ Object 'work@top' of type 'design'
 Warning: Removing unused module: \sub_top from the design.
 Warning: Removing unused module: \prim_pad_attr from the design.
 Warning: Removing unused module: \prim_generic_pad_attr from the design.
-Generating RTLIL representation for module `$paramod\prim_generic_pad_attr\PadType=3'd1'.
+Generating RTLIL representation for module `$paramod\prim_generic_pad_attr\PadType=3'001'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.1-28.34> str='$paramod\prim_generic_pad_attr\PadType=3'd1'
+    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.1-28.34> str='$paramod\prim_generic_pad_attr\PadType=3'001'
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum2' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3169,7 +3169,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\prim_generic_pad_attr\PadType=3'd1 (a);
+    module \$paramod\prim_generic_pad_attr\PadType=3'001 (a);
       /** AST_PARAMETER **/
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
@@ -3197,7 +3197,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.1-28.34> str='$paramod\prim_generic_pad_attr\PadType=3'd1' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.1-28.34> str='$paramod\prim_generic_pad_attr\PadType=3'001' basic_prep
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum2' logic basic_prep
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -3334,7 +3334,7 @@ Dumping AST after simplification:
         AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\prim_generic_pad_attr\PadType=3'd1 (a);
+    module \$paramod\prim_generic_pad_attr\PadType=3'001 (a);
       /** AST_PARAMETER **/
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
@@ -3362,9 +3362,9 @@ Dumping Verilog AST after simplification:
       assign a = 1;
     endmodule
 --- END OF AST DUMP ---
-Generating RTLIL representation for module `$paramod\prim_pad_attr\PadType=3'd1'.
+Generating RTLIL representation for module `$paramod\prim_pad_attr\PadType=3'001'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.1-39.10> str='$paramod\prim_pad_attr\PadType=3'd1'
+    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.1-39.10> str='$paramod\prim_pad_attr\PadType=3'001'
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum3' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3402,7 +3402,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_GENBLOCK <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:34.4-38.7> str='\gen_generic'
         AST_CELL <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:35.7-37.31> str='\u_impl_generic'
-          AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_generic_pad_attr\PadType=3'd1'
+          AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_generic_pad_attr\PadType=3'001'
           AST_ARGUMENT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:35.7-37.31> str='\a'
             AST_IDENTIFIER <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:37.27-37.28> str='\b'
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum1' logic basic_prep
@@ -3498,7 +3498,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\prim_pad_attr\PadType=3'd1 (b);
+    module \$paramod\prim_pad_attr\PadType=3'001 (b);
       /** AST_PARAMETER **/
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
@@ -3526,7 +3526,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.1-39.10> str='$paramod\prim_pad_attr\PadType=3'd1' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.1-39.10> str='$paramod\prim_pad_attr\PadType=3'001' basic_prep
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum3' logic basic_prep
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -3659,12 +3659,12 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
             AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:35.7-37.31> str='\gen_generic.u_impl_generic' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_generic_pad_attr\PadType=3'd1' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_generic_pad_attr\PadType=3'001' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:35.7-37.31> str='\a' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:37.27-37.28> str='\b' basic_prep
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\prim_pad_attr\PadType=3'd1 (b);
+    module \$paramod\prim_pad_attr\PadType=3'001 (b);
       /** AST_PARAMETER **/
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
@@ -3716,7 +3716,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:57.4-59.19> str='\u_sub'
-        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'
+        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'
         AST_ARGUMENT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:57.4-59.19> str='\c'
           AST_IDENTIFIER <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:59.15-59.16> str='\o'
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum1' logic basic_prep
@@ -3861,7 +3861,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:57.4-59.19> str='\u_sub' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:57.4-59.19> str='\c' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:59.15-59.16> str='\o' basic_prep
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum1' logic basic_prep
@@ -3983,9 +3983,9 @@ Dumping Verilog AST after simplification:
       /** AST_TYPEDEF **/
     endmodule
 --- END OF AST DUMP ---
-Generating RTLIL representation for module `$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'.
+Generating RTLIL representation for module `$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:41.1-50.10> str='$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'
+    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:41.1-50.10> str='$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum4' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -4078,7 +4078,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_CELL <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:46.6-48.31> str='\u_prim_pad_attr'
-          AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_pad_attr\PadType=3'd1'
+          AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_pad_attr\PadType=3'001'
           AST_ARGUMENT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:46.6-48.31> str='\b'
             AST_IDENTIFIER <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:48.27-48.28> str='\c'
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum1' logic basic_prep
@@ -4174,7 +4174,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1 (c);
+    module \$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top (c);
       (* wiretype = "\target_cfg_t" *)
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
@@ -4214,7 +4214,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:41.1-50.10> str='$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:41.1-50.10> str='$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top' basic_prep
       AST_ENUM <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:2.4-5.17> str='$enum4' logic basic_prep
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -4402,12 +4402,12 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:46.6-48.31> str='\gen_dio_attr[0].u_prim_pad_attr' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_pad_attr\PadType=3'd1' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:0.0-0.0> str='$paramod\prim_pad_attr\PadType=3'001' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:46.6-48.31> str='\b' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:48.27-48.28> str='\c' basic_prep
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1 (c);
+    module \$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top (c);
       (* wiretype = "\target_cfg_t" *)
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
@@ -4457,15 +4457,15 @@ Dumping Verilog AST after simplification:
 
 2.1.1. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1
-Used module:         $paramod\prim_pad_attr\PadType=3'd1
-Used module:             $paramod\prim_generic_pad_attr\PadType=3'd1
+Used module:     $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top
+Used module:         $paramod\prim_pad_attr\PadType=3'001
+Used module:             $paramod\prim_generic_pad_attr\PadType=3'001
 
 2.1.2. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1
-Used module:         $paramod\prim_pad_attr\PadType=3'd1
-Used module:             $paramod\prim_generic_pad_attr\PadType=3'd1
+Used module:     $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top
+Used module:         $paramod\prim_pad_attr\PadType=3'001
+Used module:             $paramod\prim_generic_pad_attr\PadType=3'001
 Removed 0 unused modules.
 
 2.2. Executing PROC pass (convert processes to netlists).
@@ -4499,53 +4499,53 @@ Converted 0 switches.
 Cleaned up 0 empty switches.
 
 2.2.12. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1.
+Optimizing module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top.
 Optimizing module top.
-Optimizing module $paramod\prim_pad_attr\PadType=3'd1.
-Optimizing module $paramod\prim_generic_pad_attr\PadType=3'd1.
+Optimizing module $paramod\prim_pad_attr\PadType=3'001.
+Optimizing module $paramod\prim_generic_pad_attr\PadType=3'001.
 
 2.3. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1.
+Optimizing module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top.
 Optimizing module top.
-Optimizing module $paramod\prim_pad_attr\PadType=3'd1.
-Optimizing module $paramod\prim_generic_pad_attr\PadType=3'd1.
+Optimizing module $paramod\prim_pad_attr\PadType=3'001.
+Optimizing module $paramod\prim_generic_pad_attr\PadType=3'001.
 
 2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1..
+Finding unused cells or wires in module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top..
 Finding unused cells or wires in module \top..
-Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'd1..
-Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'd1..
+Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'001..
+Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'001..
 
 2.5. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\prim_generic_pad_attr\PadType=3'd1...
-Checking module $paramod\prim_pad_attr\PadType=3'd1...
-Checking module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1...
+Checking module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top...
+Checking module $paramod\prim_generic_pad_attr\PadType=3'001...
+Checking module $paramod\prim_pad_attr\PadType=3'001...
 Checking module top...
 Found and reported 0 problems.
 
 2.6. Executing OPT pass (performing simple optimizations).
 
 2.6.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_generic_pad_attr\PadType=3'd1.
-Optimizing module $paramod\prim_pad_attr\PadType=3'd1.
-Optimizing module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1.
+Optimizing module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top.
+Optimizing module $paramod\prim_generic_pad_attr\PadType=3'001.
+Optimizing module $paramod\prim_pad_attr\PadType=3'001.
 Optimizing module top.
 
 2.6.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\prim_generic_pad_attr\PadType=3'd1'.
-Finding identical cells in module `$paramod\prim_pad_attr\PadType=3'd1'.
-Finding identical cells in module `$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'.
+Finding identical cells in module `$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'.
+Finding identical cells in module `$paramod\prim_generic_pad_attr\PadType=3'001'.
+Finding identical cells in module `$paramod\prim_pad_attr\PadType=3'001'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module $paramod\prim_generic_pad_attr\PadType=3'd1..
+Running muxtree optimizer on module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module $paramod\prim_pad_attr\PadType=3'd1..
+Running muxtree optimizer on module $paramod\prim_generic_pad_attr\PadType=3'001..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1..
+Running muxtree optimizer on module $paramod\prim_pad_attr\PadType=3'001..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Running muxtree optimizer on module \top..
@@ -4554,29 +4554,29 @@ Running muxtree optimizer on module \top..
 Removed 0 multiplexer ports.
 
 2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module $paramod\prim_generic_pad_attr\PadType=3'd1.
-  Optimizing cells in module $paramod\prim_pad_attr\PadType=3'd1.
-  Optimizing cells in module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1.
+  Optimizing cells in module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top.
+  Optimizing cells in module $paramod\prim_generic_pad_attr\PadType=3'001.
+  Optimizing cells in module $paramod\prim_pad_attr\PadType=3'001.
   Optimizing cells in module \top.
 Performed a total of 0 changes.
 
 2.6.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\prim_generic_pad_attr\PadType=3'd1'.
-Finding identical cells in module `$paramod\prim_pad_attr\PadType=3'd1'.
-Finding identical cells in module `$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'.
+Finding identical cells in module `$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'.
+Finding identical cells in module `$paramod\prim_generic_pad_attr\PadType=3'001'.
+Finding identical cells in module `$paramod\prim_pad_attr\PadType=3'001'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'd1..
-Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'd1..
-Finding unused cells or wires in module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1..
+Finding unused cells or wires in module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top..
+Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'001..
+Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'001..
 Finding unused cells or wires in module \top..
 
 2.6.7. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_generic_pad_attr\PadType=3'd1.
-Optimizing module $paramod\prim_pad_attr\PadType=3'd1.
-Optimizing module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1.
+Optimizing module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top.
+Optimizing module $paramod\prim_generic_pad_attr\PadType=3'001.
+Optimizing module $paramod\prim_pad_attr\PadType=3'001.
 Optimizing module top.
 
 2.6.8. Finished OPT passes. (There is nothing left to do.)
@@ -4584,9 +4584,9 @@ Optimizing module top.
 2.7. Executing WREDUCE pass (reducing word size of cells).
 
 2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'd1..
-Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'd1..
-Finding unused cells or wires in module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1..
+Finding unused cells or wires in module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top..
+Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'001..
+Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'001..
 Finding unused cells or wires in module \top..
 
 2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
@@ -4594,29 +4594,41 @@ Finding unused cells or wires in module \top..
 2.10. Executing OPT pass (performing simple optimizations).
 
 2.10.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_generic_pad_attr\PadType=3'd1.
-Optimizing module $paramod\prim_pad_attr\PadType=3'd1.
-Optimizing module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1.
+Optimizing module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top.
+Optimizing module $paramod\prim_generic_pad_attr\PadType=3'001.
+Optimizing module $paramod\prim_pad_attr\PadType=3'001.
 Optimizing module top.
 
 2.10.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\prim_generic_pad_attr\PadType=3'd1'.
-Finding identical cells in module `$paramod\prim_pad_attr\PadType=3'd1'.
-Finding identical cells in module `$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'.
+Finding identical cells in module `$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'.
+Finding identical cells in module `$paramod\prim_generic_pad_attr\PadType=3'001'.
+Finding identical cells in module `$paramod\prim_pad_attr\PadType=3'001'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'd1..
-Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'd1..
-Finding unused cells or wires in module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1..
+Finding unused cells or wires in module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top..
+Finding unused cells or wires in module $paramod\prim_generic_pad_attr\PadType=3'001..
+Finding unused cells or wires in module $paramod\prim_pad_attr\PadType=3'001..
 Finding unused cells or wires in module \top..
 
 2.10.4. Finished fast OPT passes.
 
 2.11. Printing statistics.
 
-=== $paramod\prim_generic_pad_attr\PadType=3'd1 ===
+=== $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top ===
+
+   Number of wires:                  1
+   Number of wire bits:             32
+   Number of public wires:           1
+   Number of public wire bits:      32
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     $paramod\prim_pad_attr\PadType=3'001      1
+
+=== $paramod\prim_generic_pad_attr\PadType=3'001 ===
 
    Number of wires:                  1
    Number of wire bits:             32
@@ -4627,7 +4639,7 @@ Finding unused cells or wires in module \top..
    Number of processes:              0
    Number of cells:                  0
 
-=== $paramod\prim_pad_attr\PadType=3'd1 ===
+=== $paramod\prim_pad_attr\PadType=3'001 ===
 
    Number of wires:                  1
    Number of wire bits:             32
@@ -4637,19 +4649,7 @@ Finding unused cells or wires in module \top..
    Number of memory bits:            0
    Number of processes:              0
    Number of cells:                  1
-     $paramod\prim_generic_pad_attr\PadType=3'd1      1
-
-=== $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1 ===
-
-   Number of wires:                  1
-   Number of wire bits:             32
-   Number of public wires:           1
-   Number of public wire bits:      32
-   Number of memories:               0
-   Number of memory bits:            0
-   Number of processes:              0
-   Number of cells:                  1
-     $paramod\prim_pad_attr\PadType=3'd1      1
+     $paramod\prim_generic_pad_attr\PadType=3'001      1
 
 === top ===
 
@@ -4661,14 +4661,14 @@ Finding unused cells or wires in module \top..
    Number of memory bits:            0
    Number of processes:              0
    Number of cells:                  1
-     $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1      1
+     $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top      1
 
 === design hierarchy ===
 
    top                               1
-     $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1      1
-       $paramod\prim_pad_attr\PadType=3'd1      1
-         $paramod\prim_generic_pad_attr\PadType=3'd1      1
+     $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top      1
+       $paramod\prim_pad_attr\PadType=3'001      1
+         $paramod\prim_generic_pad_attr\PadType=3'001      1
 
    Number of wires:                  4
    Number of wire bits:            128
@@ -4680,9 +4680,9 @@ Finding unused cells or wires in module \top..
    Number of cells:                  0
 
 2.12. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\prim_generic_pad_attr\PadType=3'd1...
-Checking module $paramod\prim_pad_attr\PadType=3'd1...
-Checking module $paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1...
+Checking module $paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top...
+Checking module $paramod\prim_generic_pad_attr\PadType=3'001...
+Checking module $paramod\prim_pad_attr\PadType=3'001...
 Checking module top...
 Found and reported 0 problems.
 
@@ -4692,42 +4692,42 @@ Found and reported 0 problems.
 
 3.2. Executing DEMUXMAP pass.
 /* Generated by Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
-Dumping module `$paramod\prim_generic_pad_attr\PadType=3'd1'.
-
-(* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.1-28.34" *)
-module \$paramod\prim_generic_pad_attr\PadType=3'd1 (a);
-  (* is_simplified_wire = 32'd1 *)
-  (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.41-22.42" *)
-  output [31:0] a;
-  wire [31:0] a;
-  assign a = 32'd1;
-endmodule
-Dumping module `$paramod\prim_pad_attr\PadType=3'd1'.
-
-(* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.1-39.10" *)
-module \$paramod\prim_pad_attr\PadType=3'd1 (b);
-  (* is_simplified_wire = 32'd1 *)
-  (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.33-30.34" *)
-  output [31:0] b;
-  wire [31:0] b;
-  (* module_not_derived = 32'd1 *)
-  (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:35.7-37.31" *)
-  \$paramod\prim_generic_pad_attr\PadType=3'd1  \gen_generic.u_impl_generic  (
-    .a(b)
-  );
-endmodule
-Dumping module `$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'.
+Dumping module `$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'.
 
 (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:41.1-50.10" *)
-module \$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1 (c);
+module \$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top (c);
   (* is_simplified_wire = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:41.27-41.28" *)
   output [31:0] c;
   wire [31:0] c;
   (* module_not_derived = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:46.6-48.31" *)
-  \$paramod\prim_pad_attr\PadType=3'd1  \gen_dio_attr[0].u_prim_pad_attr  (
+  \$paramod\prim_pad_attr\PadType=3'001  \gen_dio_attr[0].u_prim_pad_attr  (
     .b(c)
+  );
+endmodule
+Dumping module `$paramod\prim_generic_pad_attr\PadType=3'001'.
+
+(* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.1-28.34" *)
+module \$paramod\prim_generic_pad_attr\PadType=3'001 (a);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:22.41-22.42" *)
+  output [31:0] a;
+  wire [31:0] a;
+  assign a = 32'd1;
+endmodule
+Dumping module `$paramod\prim_pad_attr\PadType=3'001'.
+
+(* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.1-39.10" *)
+module \$paramod\prim_pad_attr\PadType=3'001 (b);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:30.33-30.34" *)
+  output [31:0] b;
+  wire [31:0] b;
+  (* module_not_derived = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:35.7-37.31" *)
+  \$paramod\prim_generic_pad_attr\PadType=3'001  \gen_generic.u_impl_generic  (
+    .a(b)
   );
 endmodule
 Dumping module `\top'.
@@ -4741,7 +4741,7 @@ module top(o);
   wire [31:0] o;
   (* module_not_derived = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv:57.4-59.19" *)
-  \$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1  u_sub (
+  \$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top  u_sub (
     .c(o)
   );
 endmodule
@@ -4751,9 +4751,9 @@ endmodule
 4.1. Executing BMUXMAP pass.
 
 4.2. Executing DEMUXMAP pass.
-Dumping module `$paramod\prim_generic_pad_attr\PadType=3'd1'.
-Dumping module `$paramod\prim_pad_attr\PadType=3'd1'.
-Dumping module `$paramod\sub_top\NDioPads=32'd1\DefaultTargetCfg=1'd0\TargetCfg=1'd1'.
+Dumping module `$paramod$069a38f3842f03c39169c91405b6689b3178e237\sub_top'.
+Dumping module `$paramod\prim_generic_pad_attr\PadType=3'001'.
+Dumping module `$paramod\prim_pad_attr\PadType=3'001'.
 Dumping module `\top'.
 
 5. Executing SIM pass (simulate the circuit).

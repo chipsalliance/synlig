@@ -4244,9 +4244,9 @@ Object 'work@dut' of type 'design'
         Object '' of type 'constant'
         Object '' of type 'constant'
 Warning: Removing unused module: \ibex_counter from the design.
-Generating RTLIL representation for module `$paramod\ibex_counter\CounterWidth=32'd10'.
+Generating RTLIL representation for module `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/genscope_cells/dut.sv:28.1-106.10> str='$paramod\ibex_counter\CounterWidth=32'd10'
+    AST_MODULE <UHDM-integration-tests/tests/genscope_cells/dut.sv:28.1-106.10> str='$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010'
       AST_PARAMETER <UHDM-integration-tests/tests/genscope_cells/dut.sv:29.17-29.34> str='\CounterWidth' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -4545,7 +4545,7 @@ Dumping AST before simplification:
         AST_IDENTIFIER <UHDM-integration-tests/tests/genscope_cells/dut.sv:104.26-104.33> str='\counter'
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\ibex_counter\CounterWidth=32'd10 (clk_i, rst_ni, counter_inc_i, counterh_we_i, counter_we_i, counter_val_i, counter_val_o);
+    module \$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010 (clk_i, rst_ni, counter_inc_i, counterh_we_i, counter_we_i, counter_val_i, counter_val_o);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -4629,7 +4629,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/genscope_cells/dut.sv:28.1-106.10> str='$paramod\ibex_counter\CounterWidth=32'd10' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/genscope_cells/dut.sv:28.1-106.10> str='$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010' basic_prep
       AST_PARAMETER <UHDM-integration-tests/tests/genscope_cells/dut.sv:29.17-29.34> str='\CounterWidth' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -4911,7 +4911,7 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000001010'(32) signed basic_prep range=[31:0] int=10
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\ibex_counter\CounterWidth=32'd10 (clk_i, rst_ni, counter_inc_i, counterh_we_i, counter_we_i, counter_val_i, counter_val_o);
+    module \$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010 (clk_i, rst_ni, counter_inc_i, counterh_we_i, counter_we_i, counter_val_i, counter_val_o);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -5119,7 +5119,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_CELL <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\module_in_genscope'
-          AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=32'd10'
+          AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010'
           AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\clk_i'
             AST_IDENTIFIER <UHDM-integration-tests/tests/genscope_cells/dut.sv:14.42-14.45> str='\clk'
           AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\rst_ni'
@@ -5176,7 +5176,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_CELL <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\module_in_genscope'
-          AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=32'd10'
+          AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010'
           AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\clk_i'
             AST_IDENTIFIER <UHDM-integration-tests/tests/genscope_cells/dut.sv:14.42-14.45> str='\clk'
           AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\rst_ni'
@@ -5374,7 +5374,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\gen_modules[0].module_in_genscope' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=32'd10' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\clk_i' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/genscope_cells/dut.sv:14.42-14.45> str='\clk' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\rst_ni' basic_prep
@@ -5414,7 +5414,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\gen_modules[1].module_in_genscope' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=32'd10' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/genscope_cells/dut.sv:0.0-0.0> str='$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\clk_i' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/genscope_cells/dut.sv:14.42-14.45> str='\clk' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35> str='\rst_ni' basic_prep
@@ -5493,8 +5493,8 @@ Dumping Verilog AST after simplification:
 Cleaned up 0 empty switches.
 
 2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
-Marked 1 switch rules as full_case in process $proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4 in module $paramod\ibex_counter\CounterWidth=32'd10.
-Marked 3 switch rules as full_case in process $proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1 in module $paramod\ibex_counter\CounterWidth=32'd10.
+Marked 1 switch rules as full_case in process $proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4 in module $paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.
+Marked 3 switch rules as full_case in process $proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1 in module $paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.
 Removed a total of 0 dead cases.
 
 2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
@@ -5504,42 +5504,42 @@ Promoted 4 assignments to connections.
 2.4. Executing PROC_INIT pass (extract init attributes).
 
 2.5. Executing PROC_ARST pass (detect async resets in processes).
-Found async reset \rst_ni in `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
+Found async reset \rst_ni in `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
 
 2.6. Executing PROC_ROM pass (convert switches to ROMs).
 Converted 0 switches.
 <suppressed ~3 debug messages>
 
 2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
-Creating decoders for process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
+Creating decoders for process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
      1/1: $0\counter_q[9:0]
-Creating decoders for process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
+Creating decoders for process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
      1/4: $2\counter_d[9:0]
      2/4: $1\counter_d[9:0]
      3/4: $1\counter_load[63:0] [63:32]
      4/4: $1\counter_load[63:0] [31:0]
 
 2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
-No latch inferred for signal `$paramod\ibex_counter\CounterWidth=32'd10.\counter_upd' from process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
-No latch inferred for signal `$paramod\ibex_counter\CounterWidth=32'd10.\counter_load' from process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
-No latch inferred for signal `$paramod\ibex_counter\CounterWidth=32'd10.\we' from process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
-No latch inferred for signal `$paramod\ibex_counter\CounterWidth=32'd10.\counter_d' from process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
+No latch inferred for signal `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.\counter_upd' from process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
+No latch inferred for signal `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.\counter_load' from process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
+No latch inferred for signal `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.\we' from process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
+No latch inferred for signal `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.\counter_d' from process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
 
 2.9. Executing PROC_DFF pass (convert process syncs to FFs).
-Creating register for signal `$paramod\ibex_counter\CounterWidth=32'd10.\counter_q' using process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
+Creating register for signal `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.\counter_q' using process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
   created $adff cell `$procdff$21' with positive edge clock and negative level reset.
 
 2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
 
 2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
-Removing empty process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
-Found and cleaned up 3 empty switches in `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
-Removing empty process `$paramod\ibex_counter\CounterWidth=32'd10.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
+Removing empty process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:86$4'.
+Found and cleaned up 3 empty switches in `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
+Removing empty process `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.$proc$UHDM-integration-tests/tests/genscope_cells/dut.sv:48$1'.
 Cleaned up 3 empty switches.
 
 2.12. Executing OPT_EXPR pass (perform const folding).
 Optimizing module dut.
-Optimizing module $paramod\ibex_counter\CounterWidth=32'd10.
+Optimizing module $paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010.
 
 3. Executing Verilog backend.
 
@@ -5547,11 +5547,11 @@ Optimizing module $paramod\ibex_counter\CounterWidth=32'd10.
 
 3.2. Executing DEMUXMAP pass.
 /* Generated by Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
-Dumping module `$paramod\ibex_counter\CounterWidth=32'd10'.
+Dumping module `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010'.
 
 (* cells_not_processed =  1  *)
 (* src = "UHDM-integration-tests/tests/genscope_cells/dut.sv:28.1-106.10" *)
-module \$paramod\ibex_counter\CounterWidth=32'd10 (clk_i, rst_ni, counter_inc_i, counterh_we_i, counter_we_i, counter_val_i, counter_val_o);
+module \$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010 (clk_i, rst_ni, counter_inc_i, counterh_we_i, counter_we_i, counter_val_i, counter_val_o);
   (* src = "UHDM-integration-tests/tests/genscope_cells/dut.sv:48.3-70.6" *)
   wire [9:0] _00_;
   (* src = "UHDM-integration-tests/tests/genscope_cells/dut.sv:48.3-70.6" *)
@@ -5724,7 +5724,7 @@ module dut();
   wire rst;
   (* module_not_derived = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35" *)
-  \$paramod\ibex_counter\CounterWidth=32'd10  \gen_modules[0].module_in_genscope  (
+  \$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010  \gen_modules[0].module_in_genscope  (
     .clk_i(clk),
     .counter_inc_i(counter_inc_i[0]),
     .counter_val_i(counter_val_i[31:0]),
@@ -5735,7 +5735,7 @@ module dut();
   );
   (* module_not_derived = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/genscope_cells/dut.sv:13.3-21.35" *)
-  \$paramod\ibex_counter\CounterWidth=32'd10  \gen_modules[1].module_in_genscope  (
+  \$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010  \gen_modules[1].module_in_genscope  (
     .clk_i(clk),
     .counter_inc_i(counter_inc_i[1]),
     .counter_val_i(counter_val_i[63:32]),
@@ -5751,7 +5751,7 @@ endmodule
 4.1. Executing BMUXMAP pass.
 
 4.2. Executing DEMUXMAP pass.
-Dumping module `$paramod\ibex_counter\CounterWidth=32'd10'.
+Dumping module `$paramod\ibex_counter\CounterWidth=s32'00000000000000000000000000001010'.
 Dumping module `\dut'.
 
 Warnings: 1 unique messages, 1 total

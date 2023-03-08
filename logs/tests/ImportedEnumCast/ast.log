@@ -1726,9 +1726,176 @@ Object 'work@top' of type 'design'
       Object '' of type 'constant'
 Warning: Removing unused module: \prim_flop from the design.
 Warning: Removing unused module: \generic_flop from the design.
-Generating RTLIL representation for module `$paramod\generic_flop\ResetValue=4'd9'.
+Generating RTLIL representation for module `$paramod\prim_flop\ResetValue=4'1001'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:9.1-10.10> str='$paramod\generic_flop\ResetValue=4'd9'
+    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.1-16.10> str='$paramod\prim_flop\ResetValue=4'1001'
+      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.43-12.57> str='\ResetValue' multirange=[ 0 4 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1001'(4) range=[3:0] int=9
+        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_CELL <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:13.5-15.23> str='\impl_generic'
+        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\generic_flop\ResetValue=4'1001'
+      AST_ENUM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='$enum0' logic basic_prep
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> str='\lc_ctrl_state_pkg::LcStScrap' logic basic_prep range=[3:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> bits='1001'(4) basic_prep range=[3:0] int=9
+          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_TYPEDEF <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='\lc_ctrl_state_pkg::lc_state_e' basic_prep
+        AST_WIRE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> reg basic_prep range=[3:0]
+          ATTR \enum_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          ATTR \is_simplified_wire:
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.25-2.35> str='\lc_ctrl_state_pkg::B0' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.25-3.35> str='\lc_ctrl_state_pkg::B1' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='10'(2) basic_prep range=[1:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module \$paramod\prim_flop\ResetValue=4'1001 ();
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      /** AST_CELL **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_ENUM **/
+      /** AST_TYPEDEF **/
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.1-16.10> str='$paramod\prim_flop\ResetValue=4'1001' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.43-12.57> str='\ResetValue' basic_prep range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1001'(4) basic_prep range=[3:0] int=9
+        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_CELL <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:13.5-15.23> str='\impl_generic' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\generic_flop\ResetValue=4'1001' basic_prep
+      AST_ENUM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='$enum0' logic basic_prep
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> str='\lc_ctrl_state_pkg::LcStScrap' logic basic_prep range=[3:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> bits='1001'(4) basic_prep range=[3:0] int=9
+          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_TYPEDEF <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='\lc_ctrl_state_pkg::lc_state_e' basic_prep
+        AST_WIRE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> reg basic_prep range=[3:0]
+          ATTR \enum_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          ATTR \is_simplified_wire:
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.25-2.35> str='\lc_ctrl_state_pkg::B0' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.25-3.35> str='\lc_ctrl_state_pkg::B1' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='10'(2) basic_prep range=[1:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module \$paramod\prim_flop\ResetValue=4'1001 ();
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      /** AST_CELL **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_ENUM **/
+      /** AST_TYPEDEF **/
+    endmodule
+--- END OF AST DUMP ---
+Generating RTLIL representation for module `$paramod\generic_flop\ResetValue=4'1001'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:9.1-10.10> str='$paramod\generic_flop\ResetValue=4'1001'
       AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:9.45-9.59> str='\ResetValue' multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1791,7 +1958,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\generic_flop\ResetValue=4'd9 ();
+    module \$paramod\generic_flop\ResetValue=4'1001 ();
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -1808,7 +1975,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:9.1-10.10> str='$paramod\generic_flop\ResetValue=4'd9' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:9.1-10.10> str='$paramod\generic_flop\ResetValue=4'1001' basic_prep
       AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:9.45-9.59> str='\ResetValue' basic_prep range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -1871,7 +2038,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\generic_flop\ResetValue=4'd9 ();
+    module \$paramod\generic_flop\ResetValue=4'1001 ();
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -1881,173 +2048,6 @@ Dumping Verilog AST after simplification:
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_ENUM **/
-      /** AST_TYPEDEF **/
-    endmodule
---- END OF AST DUMP ---
-Generating RTLIL representation for module `$paramod\prim_flop\ResetValue=4'd9'.
-Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.1-16.10> str='$paramod\prim_flop\ResetValue=4'd9'
-      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.43-12.57> str='\ResetValue' multirange=[ 0 4 ] multirange_swapped=[ 0 ]
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1001'(4) range=[3:0] int=9
-        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_CELL <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:13.5-15.23> str='\impl_generic'
-        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\generic_flop\ResetValue=4'd9'
-      AST_ENUM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='$enum0' logic basic_prep
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_ENUM_ITEM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> str='\lc_ctrl_state_pkg::LcStScrap' logic basic_prep range=[3:0]
-          ATTR \enum_base_type:
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> bits='1001'(4) basic_prep range=[3:0] int=9
-          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_TYPEDEF <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='\lc_ctrl_state_pkg::lc_state_e' basic_prep
-        AST_WIRE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> reg basic_prep range=[3:0]
-          ATTR \enum_type:
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
-          ATTR \is_simplified_wire:
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.25-2.35> str='\lc_ctrl_state_pkg::B0' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.25-3.35> str='\lc_ctrl_state_pkg::B1' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='10'(2) basic_prep range=[1:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
---- END OF AST DUMP ---
-Dumping Verilog AST before simplification:
-    module \$paramod\prim_flop\ResetValue=4'd9 ();
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_PARAMETER **/
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_PARAMETER **/
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_PARAMETER **/
-      /** AST_CELL **/
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_ENUM **/
-      /** AST_TYPEDEF **/
-    endmodule
---- END OF AST DUMP ---
-Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.1-16.10> str='$paramod\prim_flop\ResetValue=4'd9' basic_prep
-      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.43-12.57> str='\ResetValue' basic_prep range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1001'(4) basic_prep range=[3:0] int=9
-        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.37-12.42> basic_prep range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_CELL <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:13.5-15.23> str='\impl_generic' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\generic_flop\ResetValue=4'd9' basic_prep
-      AST_ENUM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='$enum0' logic basic_prep
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_ENUM_ITEM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> str='\lc_ctrl_state_pkg::LcStScrap' logic basic_prep range=[3:0]
-          ATTR \enum_base_type:
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:5.5-5.34> bits='1001'(4) basic_prep range=[3:0] int=9
-          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_TYPEDEF <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='\lc_ctrl_state_pkg::lc_state_e' basic_prep
-        AST_WIRE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> reg basic_prep range=[3:0]
-          ATTR \enum_type:
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
-          ATTR \is_simplified_wire:
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.22-4.27> basic_prep range=[3:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-            AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.25-2.35> str='\lc_ctrl_state_pkg::B0' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:2.19-2.24> basic_prep range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.25-3.35> str='\lc_ctrl_state_pkg::B1' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-              AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='10'(2) basic_prep range=[1:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:3.19-3.24> basic_prep range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
---- END OF AST DUMP ---
-Dumping Verilog AST after simplification:
-    module \$paramod\prim_flop\ResetValue=4'd9 ();
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_PARAMETER **/
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_PARAMETER **/
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_PARAMETER **/
-      /** AST_CELL **/
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_ENUM **/
@@ -2108,7 +2108,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:21.3-23.19> str='\state_regs'
-        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\prim_flop\ResetValue=4'd9'
+        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\prim_flop\ResetValue=4'1001'
       AST_ENUM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='$enum0' logic basic_prep
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -2240,7 +2240,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:21.3-23.19> str='\state_regs' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\prim_flop\ResetValue=4'd9' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> str='$paramod\prim_flop\ResetValue=4'1001' basic_prep
       AST_ENUM <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:4.3-6.16> str='$enum0' logic basic_prep
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ImportedEnumCast/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -2324,13 +2324,13 @@ Dumping Verilog AST after simplification:
 
 2.1.1. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod\prim_flop\ResetValue=4'd9
-Used module:         $paramod\generic_flop\ResetValue=4'd9
+Used module:     $paramod\prim_flop\ResetValue=4'1001
+Used module:         $paramod\generic_flop\ResetValue=4'1001
 
 2.1.2. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod\prim_flop\ResetValue=4'd9
-Used module:         $paramod\generic_flop\ResetValue=4'd9
+Used module:     $paramod\prim_flop\ResetValue=4'1001
+Used module:         $paramod\generic_flop\ResetValue=4'1001
 Removed 0 unused modules.
 
 2.2. Executing PROC pass (convert processes to netlists).
@@ -2365,45 +2365,45 @@ Cleaned up 0 empty switches.
 
 2.2.12. Executing OPT_EXPR pass (perform const folding).
 Optimizing module top.
-Optimizing module $paramod\prim_flop\ResetValue=4'd9.
-Optimizing module $paramod\generic_flop\ResetValue=4'd9.
+Optimizing module $paramod\generic_flop\ResetValue=4'1001.
+Optimizing module $paramod\prim_flop\ResetValue=4'1001.
 
 2.3. Executing OPT_EXPR pass (perform const folding).
 Optimizing module top.
-Optimizing module $paramod\prim_flop\ResetValue=4'd9.
-Optimizing module $paramod\generic_flop\ResetValue=4'd9.
+Optimizing module $paramod\generic_flop\ResetValue=4'1001.
+Optimizing module $paramod\prim_flop\ResetValue=4'1001.
 
 2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \top..
-Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'd9..
-Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'd9..
+Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'1001..
+Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'1001..
 Removed 2 unused cells and 0 unused wires.
 <suppressed ~2 debug messages>
 
 2.5. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\generic_flop\ResetValue=4'd9...
-Checking module $paramod\prim_flop\ResetValue=4'd9...
+Checking module $paramod\generic_flop\ResetValue=4'1001...
+Checking module $paramod\prim_flop\ResetValue=4'1001...
 Checking module top...
 Found and reported 0 problems.
 
 2.6. Executing OPT pass (performing simple optimizations).
 
 2.6.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\generic_flop\ResetValue=4'd9.
-Optimizing module $paramod\prim_flop\ResetValue=4'd9.
+Optimizing module $paramod\generic_flop\ResetValue=4'1001.
+Optimizing module $paramod\prim_flop\ResetValue=4'1001.
 Optimizing module top.
 
 2.6.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\generic_flop\ResetValue=4'd9'.
-Finding identical cells in module `$paramod\prim_flop\ResetValue=4'd9'.
+Finding identical cells in module `$paramod\generic_flop\ResetValue=4'1001'.
+Finding identical cells in module `$paramod\prim_flop\ResetValue=4'1001'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module $paramod\generic_flop\ResetValue=4'd9..
+Running muxtree optimizer on module $paramod\generic_flop\ResetValue=4'1001..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module $paramod\prim_flop\ResetValue=4'd9..
+Running muxtree optimizer on module $paramod\prim_flop\ResetValue=4'1001..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Running muxtree optimizer on module \top..
@@ -2412,25 +2412,25 @@ Running muxtree optimizer on module \top..
 Removed 0 multiplexer ports.
 
 2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module $paramod\generic_flop\ResetValue=4'd9.
-  Optimizing cells in module $paramod\prim_flop\ResetValue=4'd9.
+  Optimizing cells in module $paramod\generic_flop\ResetValue=4'1001.
+  Optimizing cells in module $paramod\prim_flop\ResetValue=4'1001.
   Optimizing cells in module \top.
 Performed a total of 0 changes.
 
 2.6.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\generic_flop\ResetValue=4'd9'.
-Finding identical cells in module `$paramod\prim_flop\ResetValue=4'd9'.
+Finding identical cells in module `$paramod\generic_flop\ResetValue=4'1001'.
+Finding identical cells in module `$paramod\prim_flop\ResetValue=4'1001'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'd9..
-Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'd9..
+Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'1001..
+Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'1001..
 Finding unused cells or wires in module \top..
 
 2.6.7. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\generic_flop\ResetValue=4'd9.
-Optimizing module $paramod\prim_flop\ResetValue=4'd9.
+Optimizing module $paramod\generic_flop\ResetValue=4'1001.
+Optimizing module $paramod\prim_flop\ResetValue=4'1001.
 Optimizing module top.
 
 2.6.8. Finished OPT passes. (There is nothing left to do.)
@@ -2438,8 +2438,8 @@ Optimizing module top.
 2.7. Executing WREDUCE pass (reducing word size of cells).
 
 2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'd9..
-Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'd9..
+Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'1001..
+Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'1001..
 Finding unused cells or wires in module \top..
 
 2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
@@ -2447,26 +2447,26 @@ Finding unused cells or wires in module \top..
 2.10. Executing OPT pass (performing simple optimizations).
 
 2.10.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\generic_flop\ResetValue=4'd9.
-Optimizing module $paramod\prim_flop\ResetValue=4'd9.
+Optimizing module $paramod\generic_flop\ResetValue=4'1001.
+Optimizing module $paramod\prim_flop\ResetValue=4'1001.
 Optimizing module top.
 
 2.10.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\generic_flop\ResetValue=4'd9'.
-Finding identical cells in module `$paramod\prim_flop\ResetValue=4'd9'.
+Finding identical cells in module `$paramod\generic_flop\ResetValue=4'1001'.
+Finding identical cells in module `$paramod\prim_flop\ResetValue=4'1001'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'd9..
-Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'd9..
+Finding unused cells or wires in module $paramod\generic_flop\ResetValue=4'1001..
+Finding unused cells or wires in module $paramod\prim_flop\ResetValue=4'1001..
 Finding unused cells or wires in module \top..
 
 2.10.4. Finished fast OPT passes.
 
 2.11. Printing statistics.
 
-=== $paramod\generic_flop\ResetValue=4'd9 ===
+=== $paramod\generic_flop\ResetValue=4'1001 ===
 
    Number of wires:                  0
    Number of wire bits:              0
@@ -2477,7 +2477,7 @@ Finding unused cells or wires in module \top..
    Number of processes:              0
    Number of cells:                  0
 
-=== $paramod\prim_flop\ResetValue=4'd9 ===
+=== $paramod\prim_flop\ResetValue=4'1001 ===
 
    Number of wires:                  0
    Number of wire bits:              0
@@ -2513,8 +2513,8 @@ Finding unused cells or wires in module \top..
    Number of cells:                  0
 
 2.12. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\generic_flop\ResetValue=4'd9...
-Checking module $paramod\prim_flop\ResetValue=4'd9...
+Checking module $paramod\generic_flop\ResetValue=4'1001...
+Checking module $paramod\prim_flop\ResetValue=4'1001...
 Checking module top...
 Found and reported 0 problems.
 
@@ -2524,15 +2524,15 @@ Found and reported 0 problems.
 
 3.2. Executing DEMUXMAP pass.
 /* Generated by Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
-Dumping module `$paramod\generic_flop\ResetValue=4'd9'.
+Dumping module `$paramod\generic_flop\ResetValue=4'1001'.
 
 (* src = "UHDM-integration-tests/tests/ImportedEnumCast/top.sv:9.1-10.10" *)
-module \$paramod\generic_flop\ResetValue=4'd9 ();
+module \$paramod\generic_flop\ResetValue=4'1001 ();
 endmodule
-Dumping module `$paramod\prim_flop\ResetValue=4'd9'.
+Dumping module `$paramod\prim_flop\ResetValue=4'1001'.
 
 (* src = "UHDM-integration-tests/tests/ImportedEnumCast/top.sv:12.1-16.10" *)
-module \$paramod\prim_flop\ResetValue=4'd9 ();
+module \$paramod\prim_flop\ResetValue=4'1001 ();
 endmodule
 Dumping module `\top'.
 
@@ -2546,8 +2546,8 @@ endmodule
 4.1. Executing BMUXMAP pass.
 
 4.2. Executing DEMUXMAP pass.
-Dumping module `$paramod\generic_flop\ResetValue=4'd9'.
-Dumping module `$paramod\prim_flop\ResetValue=4'd9'.
+Dumping module `$paramod\generic_flop\ResetValue=4'1001'.
+Dumping module `$paramod\prim_flop\ResetValue=4'1001'.
 Dumping module `\top'.
 
 Warnings: 2 unique messages, 2 total

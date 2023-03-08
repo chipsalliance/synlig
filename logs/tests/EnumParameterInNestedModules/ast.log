@@ -1420,9 +1420,9 @@ Object 'work@top' of type 'design'
     Object 'o' of type 'int_var'
 Warning: Removing unused module: \prim_subreg_shadow from the design.
 Warning: Removing unused module: \prim_subreg from the design.
-Generating RTLIL representation for module `$paramod\prim_subreg\RESVAL=5'd31'.
+Generating RTLIL representation for module `$paramod\prim_subreg\RESVAL=5'11111'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.1-4.10> str='$paramod\prim_subreg\RESVAL=5'd31'
+    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.1-4.10> str='$paramod\prim_subreg\RESVAL=5'11111'
       AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:2.26-2.37> str='\RESVAL' multirange=[ 0 5 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1446,7 +1446,7 @@ Dumping AST before simplification:
         AST_IDENTIFIER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:3.20-3.26> str='\RESVAL'
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\prim_subreg\RESVAL=5'd31 (a);
+    module \$paramod\prim_subreg\RESVAL=5'11111 (a);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -1456,7 +1456,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.1-4.10> str='$paramod\prim_subreg\RESVAL=5'd31' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.1-4.10> str='$paramod\prim_subreg\RESVAL=5'11111' basic_prep
       AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:2.26-2.37> str='\RESVAL' basic_prep range=[4:0] multirange=[ 0 5 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -1480,7 +1480,7 @@ Dumping AST after simplification:
         AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:3.20-3.26> bits='11111'(5) basic_prep range=[4:0] int=31
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\prim_subreg\RESVAL=5'd31 (a);
+    module \$paramod\prim_subreg\RESVAL=5'11111 (a);
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
@@ -1523,7 +1523,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:25.4-27.34> str='\u_ctrl_reg_shadowed'
-        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg_shadow\RESVAL=5'd31'
+        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg_shadow\RESVAL=5'11111'
         AST_ARGUMENT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:25.4-27.34> str='\b'
           AST_IDENTIFIER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:27.30-27.31> str='\o'
       AST_ALWAYS <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:29.4-31.7>
@@ -1585,7 +1585,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:25.4-27.34> str='\u_ctrl_reg_shadowed' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg_shadow\RESVAL=5'd31' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg_shadow\RESVAL=5'11111' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:25.4-27.34> str='\b' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:27.30-27.31> str='\o' basic_prep
       AST_ALWAYS <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:29.4-31.7> basic_prep
@@ -1642,9 +1642,9 @@ Dumping Verilog AST after simplification:
       /** AST_ASSERT **/
     endmodule
 --- END OF AST DUMP ---
-Generating RTLIL representation for module `$paramod\prim_subreg_shadow\RESVAL=5'd31'.
+Generating RTLIL representation for module `$paramod\prim_subreg_shadow\RESVAL=5'11111'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.1-16.10> str='$paramod\prim_subreg_shadow\RESVAL=5'd31'
+    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.1-16.10> str='$paramod\prim_subreg_shadow\RESVAL=5'11111'
       AST_ENUM <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:7.4-9.13> str='$enum0' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1676,12 +1676,12 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:13.4-15.25> str='\staged_reg'
-        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg\RESVAL=5'd31'
+        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg\RESVAL=5'11111'
         AST_ARGUMENT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:13.4-15.25> str='\a'
           AST_IDENTIFIER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:15.21-15.22> str='\b'
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module \$paramod\prim_subreg_shadow\RESVAL=5'd31 (b);
+    module \$paramod\prim_subreg_shadow\RESVAL=5'11111 (b);
       /** AST_PARAMETER **/
       (* is_simplified_wire = 1 *)
       output signed [31:0] b;
@@ -1693,7 +1693,7 @@ Dumping Verilog AST before simplification:
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.1-16.10> str='$paramod\prim_subreg_shadow\RESVAL=5'd31' basic_prep
+    AST_MODULE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.1-16.10> str='$paramod\prim_subreg_shadow\RESVAL=5'11111' basic_prep
       AST_ENUM <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:7.4-9.13> str='$enum0' logic basic_prep
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -1727,12 +1727,12 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:13.4-15.25> str='\staged_reg' basic_prep
-        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg\RESVAL=5'd31' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$paramod\prim_subreg\RESVAL=5'11111' basic_prep
         AST_ARGUMENT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:13.4-15.25> str='\a' basic_prep
           AST_IDENTIFIER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:15.21-15.22> str='\b' basic_prep
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module \$paramod\prim_subreg_shadow\RESVAL=5'd31 (b);
+    module \$paramod\prim_subreg_shadow\RESVAL=5'11111 (b);
       /** AST_PARAMETER **/
       (* is_simplified_wire = 1 *)
       output signed [31:0] b;
@@ -1750,13 +1750,13 @@ Dumping Verilog AST after simplification:
 
 2.1.1. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod\prim_subreg_shadow\RESVAL=5'd31
-Used module:         $paramod\prim_subreg\RESVAL=5'd31
+Used module:     $paramod\prim_subreg_shadow\RESVAL=5'11111
+Used module:         $paramod\prim_subreg\RESVAL=5'11111
 
 2.1.2. Analyzing design hierarchy..
 Top module:  \top
-Used module:     $paramod\prim_subreg_shadow\RESVAL=5'd31
-Used module:         $paramod\prim_subreg\RESVAL=5'd31
+Used module:     $paramod\prim_subreg_shadow\RESVAL=5'11111
+Used module:         $paramod\prim_subreg\RESVAL=5'11111
 Removed 0 unused modules.
 Module top directly or indirectly contains formal properties -> setting "keep" attribute.
 
@@ -1795,46 +1795,46 @@ Removing empty process `top.$proc$UHDM-integration-tests/tests/EnumParameterInNe
 Cleaned up 0 empty switches.
 
 2.2.12. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'd31.
+Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'11111.
 Optimizing module top.
-Optimizing module $paramod\prim_subreg\RESVAL=5'd31.
+Optimizing module $paramod\prim_subreg\RESVAL=5'11111.
 
 2.3. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'd31.
+Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'11111.
 Optimizing module top.
-Optimizing module $paramod\prim_subreg\RESVAL=5'd31.
+Optimizing module $paramod\prim_subreg\RESVAL=5'11111.
 
 2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'd31..
+Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'11111..
 Finding unused cells or wires in module \top..
-Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'd31..
+Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'11111..
 Removed 0 unused cells and 4 unused wires.
 <suppressed ~1 debug messages>
 
 2.5. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\prim_subreg\RESVAL=5'd31...
-Checking module $paramod\prim_subreg_shadow\RESVAL=5'd31...
+Checking module $paramod\prim_subreg\RESVAL=5'11111...
+Checking module $paramod\prim_subreg_shadow\RESVAL=5'11111...
 Checking module top...
 Found and reported 0 problems.
 
 2.6. Executing OPT pass (performing simple optimizations).
 
 2.6.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_subreg\RESVAL=5'd31.
-Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'd31.
+Optimizing module $paramod\prim_subreg\RESVAL=5'11111.
+Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'11111.
 Optimizing module top.
 
 2.6.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\prim_subreg\RESVAL=5'd31'.
-Finding identical cells in module `$paramod\prim_subreg_shadow\RESVAL=5'd31'.
+Finding identical cells in module `$paramod\prim_subreg\RESVAL=5'11111'.
+Finding identical cells in module `$paramod\prim_subreg_shadow\RESVAL=5'11111'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module $paramod\prim_subreg\RESVAL=5'd31..
+Running muxtree optimizer on module $paramod\prim_subreg\RESVAL=5'11111..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module $paramod\prim_subreg_shadow\RESVAL=5'd31..
+Running muxtree optimizer on module $paramod\prim_subreg_shadow\RESVAL=5'11111..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Running muxtree optimizer on module \top..
@@ -1843,25 +1843,25 @@ Running muxtree optimizer on module \top..
 Removed 0 multiplexer ports.
 
 2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module $paramod\prim_subreg\RESVAL=5'd31.
-  Optimizing cells in module $paramod\prim_subreg_shadow\RESVAL=5'd31.
+  Optimizing cells in module $paramod\prim_subreg\RESVAL=5'11111.
+  Optimizing cells in module $paramod\prim_subreg_shadow\RESVAL=5'11111.
   Optimizing cells in module \top.
 Performed a total of 0 changes.
 
 2.6.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\prim_subreg\RESVAL=5'd31'.
-Finding identical cells in module `$paramod\prim_subreg_shadow\RESVAL=5'd31'.
+Finding identical cells in module `$paramod\prim_subreg\RESVAL=5'11111'.
+Finding identical cells in module `$paramod\prim_subreg_shadow\RESVAL=5'11111'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'd31..
-Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'd31..
+Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'11111..
+Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'11111..
 Finding unused cells or wires in module \top..
 
 2.6.7. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_subreg\RESVAL=5'd31.
-Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'd31.
+Optimizing module $paramod\prim_subreg\RESVAL=5'11111.
+Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'11111.
 Optimizing module top.
 
 2.6.8. Finished OPT passes. (There is nothing left to do.)
@@ -1870,8 +1870,8 @@ Optimizing module top.
 Removed top 26 bits (of 32) from port B of cell top.$eq$UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:30$5 ($eq).
 
 2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'd31..
-Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'd31..
+Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'11111..
+Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'11111..
 Finding unused cells or wires in module \top..
 
 2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
@@ -1879,26 +1879,26 @@ Finding unused cells or wires in module \top..
 2.10. Executing OPT pass (performing simple optimizations).
 
 2.10.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\prim_subreg\RESVAL=5'd31.
-Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'd31.
+Optimizing module $paramod\prim_subreg\RESVAL=5'11111.
+Optimizing module $paramod\prim_subreg_shadow\RESVAL=5'11111.
 Optimizing module top.
 
 2.10.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `$paramod\prim_subreg\RESVAL=5'd31'.
-Finding identical cells in module `$paramod\prim_subreg_shadow\RESVAL=5'd31'.
+Finding identical cells in module `$paramod\prim_subreg\RESVAL=5'11111'.
+Finding identical cells in module `$paramod\prim_subreg_shadow\RESVAL=5'11111'.
 Finding identical cells in module `\top'.
 Removed a total of 0 cells.
 
 2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'd31..
-Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'd31..
+Finding unused cells or wires in module $paramod\prim_subreg\RESVAL=5'11111..
+Finding unused cells or wires in module $paramod\prim_subreg_shadow\RESVAL=5'11111..
 Finding unused cells or wires in module \top..
 
 2.10.4. Finished fast OPT passes.
 
 2.11. Printing statistics.
 
-=== $paramod\prim_subreg\RESVAL=5'd31 ===
+=== $paramod\prim_subreg\RESVAL=5'11111 ===
 
    Number of wires:                  1
    Number of wire bits:             32
@@ -1909,7 +1909,7 @@ Finding unused cells or wires in module \top..
    Number of processes:              0
    Number of cells:                  0
 
-=== $paramod\prim_subreg_shadow\RESVAL=5'd31 ===
+=== $paramod\prim_subreg_shadow\RESVAL=5'11111 ===
 
    Number of wires:                  1
    Number of wire bits:             32
@@ -1919,7 +1919,7 @@ Finding unused cells or wires in module \top..
    Number of memory bits:            0
    Number of processes:              0
    Number of cells:                  1
-     $paramod\prim_subreg\RESVAL=5'd31      1
+     $paramod\prim_subreg\RESVAL=5'11111      1
 
 === top ===
 
@@ -1933,13 +1933,13 @@ Finding unused cells or wires in module \top..
    Number of cells:                  3
      $assert                         1
      $eq                             1
-     $paramod\prim_subreg_shadow\RESVAL=5'd31      1
+     $paramod\prim_subreg_shadow\RESVAL=5'11111      1
 
 === design hierarchy ===
 
    top                               1
-     $paramod\prim_subreg_shadow\RESVAL=5'd31      1
-       $paramod\prim_subreg\RESVAL=5'd31      1
+     $paramod\prim_subreg_shadow\RESVAL=5'11111      1
+       $paramod\prim_subreg\RESVAL=5'11111      1
 
    Number of wires:                  4
    Number of wire bits:             97
@@ -1953,8 +1953,8 @@ Finding unused cells or wires in module \top..
      $eq                             1
 
 2.12. Executing CHECK pass (checking for obvious problems).
-Checking module $paramod\prim_subreg\RESVAL=5'd31...
-Checking module $paramod\prim_subreg_shadow\RESVAL=5'd31...
+Checking module $paramod\prim_subreg\RESVAL=5'11111...
+Checking module $paramod\prim_subreg_shadow\RESVAL=5'11111...
 Checking module top...
 Found and reported 0 problems.
 
@@ -1964,27 +1964,27 @@ Found and reported 0 problems.
 
 3.2. Executing DEMUXMAP pass.
 /* Generated by Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
-Dumping module `$paramod\prim_subreg\RESVAL=5'd31'.
+Dumping module `$paramod\prim_subreg\RESVAL=5'11111'.
 
 (* src = "UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.1-4.10" *)
-module \$paramod\prim_subreg\RESVAL=5'd31 (a);
+module \$paramod\prim_subreg\RESVAL=5'11111 (a);
   (* is_simplified_wire = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.31-1.32" *)
   output [31:0] a;
   wire [31:0] a;
   assign a = 32'd31;
 endmodule
-Dumping module `$paramod\prim_subreg_shadow\RESVAL=5'd31'.
+Dumping module `$paramod\prim_subreg_shadow\RESVAL=5'11111'.
 
 (* src = "UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.1-16.10" *)
-module \$paramod\prim_subreg_shadow\RESVAL=5'd31 (b);
+module \$paramod\prim_subreg_shadow\RESVAL=5'11111 (b);
   (* is_simplified_wire = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.38-6.39" *)
   output [31:0] b;
   wire [31:0] b;
   (* module_not_derived = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:13.4-15.25" *)
-  \$paramod\prim_subreg\RESVAL=5'd31  staged_reg (
+  \$paramod\prim_subreg\RESVAL=5'11111  staged_reg (
     .a(b)
   );
 endmodule
@@ -2004,7 +2004,7 @@ module top(o);
   assign _0_ = $signed(o) == (* src = "UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:30.14-30.21" *) $signed(6'h1f);
   (* module_not_derived = 32'd1 *)
   (* src = "UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:25.4-27.34" *)
-  \$paramod\prim_subreg_shadow\RESVAL=5'd31  u_ctrl_reg_shadowed (
+  \$paramod\prim_subreg_shadow\RESVAL=5'11111  u_ctrl_reg_shadowed (
     .b(o)
   );
 endmodule
@@ -2014,8 +2014,8 @@ endmodule
 4.1. Executing BMUXMAP pass.
 
 4.2. Executing DEMUXMAP pass.
-Dumping module `$paramod\prim_subreg\RESVAL=5'd31'.
-Dumping module `$paramod\prim_subreg_shadow\RESVAL=5'd31'.
+Dumping module `$paramod\prim_subreg\RESVAL=5'11111'.
+Dumping module `$paramod\prim_subreg_shadow\RESVAL=5'11111'.
 Dumping module `\top'.
 
 5. Executing SIM pass (simulate the circuit).
