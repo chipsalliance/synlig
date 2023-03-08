@@ -110,9 +110,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           submodules: recursive
           fetch-depth: 1
+      - uses: actions/checkout@v3
+        # Checkout action by default checkouts to merged ref (target ref + source ref)
+        # As we later pushing to source ref update log files
+        # checkout to only source ref in pull requests
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          submodules: recursive
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up common Ubuntu configuration
         run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
@@ -125,6 +135,10 @@ jobs:
           apt-get update -qq
           apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git
           update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
+      - name: Checkout branch
+        run: |
+          git checkout --progress --force -B ${{ github.head_ref }} ${{ github.event.pull_request.head.sha }}
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -143,13 +157,14 @@ jobs:
           TARGET: uhdm/yosys/test-ast
 
       - name: Update logs
-        if: ${{github.event_name == 'pull_request' && (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master')}}
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           git config --global user.email "action@example.com" &&
           git config --global user.name "github action"
           if [ -n "$(git status logs/ --porcelain)" ]; then
-            git commit logs/ -m "Update logs" &&
-            git push origin
+            git add logs/
+            git commit -m "Update logs" &&
+            git push --set-upstream origin ${{ github.head_ref }}
           fi
 
       - name: Rename test results
