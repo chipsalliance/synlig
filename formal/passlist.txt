@@ -710,3 +710,7 @@ UHDM-integration-tests:MemoryInGenblock/top.sv
 yosys:sim/aldff.v
 yosys:sim/aldffe.v
 yosys:memories/firrtl_938.v
+sv2v:lex/block_comment.v
+sv2v:core/multipack_delayed.v
+sv2v:core/multipack_delayed.sv
+sv2v:lex/block_comment.sv
