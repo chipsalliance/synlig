@@ -282,6 +282,7 @@ jobs:
           fi
 
       - name: Prune the build directory
+        if: ${{ !cancelled() }}
         run: find ./UHDM-integration-tests/opentitan_build -name "src" | xargs rm -rf
 
       - name: Upload dependency graph

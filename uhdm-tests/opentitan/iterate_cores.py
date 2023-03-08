@@ -46,7 +46,7 @@ nodes = reversed(list(nx.topological_sort(graph)))
 def process_node(graph, node):
     status = nx.get_node_attributes(graph, 'status')[node]
     if status == Status.UNKNOWN:
-        cmd = ['fusesoc', '--cores-root=.', 'run', '--flag=fileset_ip', '--target=default', '--build', '--tool=yosys', node]
+        cmd = ['fusesoc', '--cores-root=.', 'run', '--flag=fileset_ip', '--flag=ot_is_custom_tiny', '--target=default', '--build', '--tool=yosys', node]
         print('running: ' + ' '.join(cmd))
         fuse = run(cmd, shell=False, capture_output=False)
         if fuse.returncode == 0:
