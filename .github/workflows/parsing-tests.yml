@@ -113,6 +113,7 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up common Ubuntu configuration
         run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
