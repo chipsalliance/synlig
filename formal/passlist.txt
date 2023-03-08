@@ -703,3 +703,7 @@ yosys:sva/nested_clk_else.sv
 yosys:simple/string_format.v
 yosys:memories/wide_read_trans.v
 yosys:memories/wide_write.v
+yosys:verific/case.sv
+yosys:verific/range_case.sv
+yosys:memlib/memlib_multilut.v
+UHDM-integration-tests:MemoryInGenblock/top.sv
