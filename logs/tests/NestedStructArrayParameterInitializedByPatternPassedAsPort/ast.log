@@ -1,0 +1,2843 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.26+73 (git sha1 9747e55d9, gcc 12.2.0 -Og -fPIC)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -> skip.
+[TCL: yUsing Yosys read_systemverilog command
+osys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv:1:1: No timescale set for "flash_ctrl_pkg".
+
+[WRN:PA0205] UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv:21:1: No timescale set for "flash_mp_data_region_sel".
+
+[WRN:PA0205] UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv:28:1: No timescale set for "top".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0301] UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv:1:1: Compile package "flash_ctrl_pkg".
+
+[INF:CP0303] UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv:21:1: Compile module "work@flash_mp_data_region_sel".
+
+[INF:CP0303] UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv:28:1: Compile module "work@top".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv:28:1: Top level module "work@top".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 2.
+
+[NTE:EL0510] Nb instances: 2.
+
+[NTE:EL0511] Nb leaf instances: 1.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 3
+[   NOTE] : 5
+design: (work@top)
+ |vpiName:work@top
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmallPackages:
+ \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:flash_ctrl_pkg
+   |vpiFullName:flash_ctrl_pkg::
+   |vpiParameter:
+   \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+     |vpiParent:
+     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+     |vpiSize:1
+     |vpiTypespec:
+     \_array_typespec: 
+       |vpiParent:
+       \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiElemTypespec:
+       \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+         |vpiParent:
+         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+         |vpiName:flash_ctrl_pkg::data_region_attr_t
+         |vpiInstance:
+         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+         |vpiPacked:1
+         |vpiTypespecMember:
+         \_typespec_member: (cfg), line:9:23, endln:9:26
+           |vpiParent:
+           \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiName:cfg
+           |vpiTypespec:
+           \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+             |vpiParent:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+             |vpiInstance:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiPacked:1
+             |vpiTypespecMember:
+             \_typespec_member: (he_en), line:5:9, endln:5:14
+               |vpiParent:
+               \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiName:he_en
+               |vpiTypespec:
+               \_struct_typespec: , line:3:7, endln:3:13
+                 |vpiParent:
+                 \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiInstance:
+                 \_package: (flash_ctrl_pkg)
+                 |vpiPacked:1
+                 |vpiTypespecMember:
+                 \_typespec_member: (q), line:4:16, endln:4:17
+                   |vpiParent:
+                   \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiName:q
+                   |vpiTypespec:
+                   \_logic_typespec: , line:4:10, endln:4:15
+                     |vpiParent:
+                     \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiInstance:
+                     \_package: (flash_ctrl_pkg)
+                   |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                   |vpiRefLineNo:4
+                   |vpiRefColumnNo:10
+                   |vpiRefEndLineNo:4
+                   |vpiRefEndColumnNo:15
+               |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+               |vpiRefLineNo:3
+               |vpiRefColumnNo:7
+               |vpiRefEndLineNo:5
+               |vpiRefEndColumnNo:8
+           |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+           |vpiRefLineNo:9
+           |vpiRefColumnNo:7
+           |vpiRefEndLineNo:9
+           |vpiRefEndColumnNo:22
+     |vpiRange:
+     \_range: , line:12:44, endln:12:45
+     |vpiName:HwDataAttr
+     |vpiFullName:flash_ctrl_pkg::HwDataAttr
+   |vpiParamAssign:
+   \_param_assign: , line:12:33, endln:18:5
+     |vpiParent:
+     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+     |vpiRhs:
+     \_operation: , line:12:49, endln:18:5
+       |vpiOpType:75
+       |vpiOperand:
+       \_operation: , line:13:6, endln:17:8
+         |vpiParent:
+         \_operation: , line:12:49, endln:18:5
+         |vpiOpType:75
+         |vpiOperand:
+         \_tagged_pattern: , line:14:15, endln:16:17
+           |vpiPattern:
+           \_operation: , line:14:15, endln:16:17
+             |vpiParent:
+             \_operation: , line:13:6, endln:17:8
+             |vpiOpType:75
+             |vpiOperand:
+             \_tagged_pattern: , line:15:26, endln:15:30
+               |vpiPattern:
+               \_constant: , line:15:26, endln:15:30
+                 |vpiDecompile:1'b1
+                 |vpiSize:1
+                 |BIN:1
+                 |vpiConstType:3
+               |vpiTypespec:
+               \_string_typespec: (he_en), line:15:19, endln:15:24
+                 |vpiName:he_en
+           |vpiTypespec:
+           \_string_typespec: (cfg), line:14:10, endln:14:13
+             |vpiName:cfg
+     |vpiLhs:
+     \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+   |vpiDefName:flash_ctrl_pkg
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmtopPackages:
+ \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:flash_ctrl_pkg
+   |vpiFullName:flash_ctrl_pkg::
+   |vpiParameter:
+   \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+     |vpiParent:
+     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+     |vpiSize:1
+     |vpiTypespec:
+     \_array_typespec: 
+       |vpiParent:
+       \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiElemTypespec:
+       \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+         |vpiParent:
+         \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+         |vpiName:flash_ctrl_pkg::data_region_attr_t
+         |vpiInstance:
+         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+         |vpiPacked:1
+         |vpiTypespecMember:
+         \_typespec_member: (cfg), line:9:23, endln:9:26
+           |vpiParent:
+           \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiName:cfg
+           |vpiTypespec:
+           \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+             |vpiParent:
+             \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+             |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+             |vpiInstance:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiPacked:1
+             |vpiTypespecMember:
+             \_typespec_member: (he_en), line:5:9, endln:5:14
+               |vpiParent:
+               \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiName:he_en
+               |vpiTypespec:
+               \_struct_typespec: , line:3:7, endln:3:13
+                 |vpiParent:
+                 \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiInstance:
+                 \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                 |vpiPacked:1
+                 |vpiTypespecMember:
+                 \_typespec_member: (q), line:4:16, endln:4:17
+                   |vpiParent:
+                   \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiName:q
+                   |vpiTypespec:
+                   \_logic_typespec: , line:4:10, endln:4:15
+                     |vpiParent:
+                     \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiInstance:
+                     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                   |vpiRefLineNo:4
+                   |vpiRefColumnNo:10
+                   |vpiRefEndLineNo:4
+                   |vpiRefEndColumnNo:15
+               |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+               |vpiRefLineNo:3
+               |vpiRefColumnNo:7
+               |vpiRefEndLineNo:5
+               |vpiRefEndColumnNo:8
+           |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+           |vpiRefLineNo:9
+           |vpiRefColumnNo:7
+           |vpiRefEndLineNo:9
+           |vpiRefEndColumnNo:22
+     |vpiRange:
+     \_range: , line:12:44, endln:12:45
+     |vpiName:HwDataAttr
+     |vpiFullName:flash_ctrl_pkg::HwDataAttr
+   |vpiParamAssign:
+   \_param_assign: , line:12:33, endln:18:5
+     |vpiParent:
+     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+     |vpiRhs:
+     \_operation: , line:12:49, endln:18:5
+       |vpiOpType:75
+       |vpiOperand:
+       \_operation: , line:13:6, endln:17:8
+         |vpiParent:
+         \_operation: , line:12:49, endln:18:5
+         |vpiOpType:75
+         |vpiOperand:
+         \_tagged_pattern: , line:14:15, endln:16:17
+           |vpiPattern:
+           \_operation: , line:14:15, endln:16:17
+             |vpiParent:
+             \_operation: , line:13:6, endln:17:8
+             |vpiOpType:75
+             |vpiOperand:
+             \_tagged_pattern: , line:15:26, endln:15:30
+               |vpiPattern:
+               \_constant: , line:15:26, endln:15:30
+                 |vpiDecompile:1'b1
+                 |vpiSize:1
+                 |BIN:1
+                 |vpiConstType:3
+               |vpiTypespec:
+               \_string_typespec: (he_en), line:15:19, endln:15:24
+                 |vpiName:he_en
+           |vpiTypespec:
+           \_string_typespec: (cfg), line:14:10, endln:14:13
+             |vpiName:cfg
+     |vpiLhs:
+     \_parameter: (flash_ctrl_pkg::HwDataAttr), line:12:33, endln:12:43
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+   |vpiDefName:flash_ctrl_pkg
+   |vpiTop:1
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@flash_mp_data_region_sel
+   |vpiParameter:
+   \_parameter: (work@flash_mp_data_region_sel.HwDataAttr), line:12:33, endln:12:43
+     |vpiParent:
+     \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+     |vpiSize:1
+     |vpiTypespec:
+     \_array_typespec: 
+       |vpiParent:
+       \_parameter: (work@flash_mp_data_region_sel.HwDataAttr), line:12:33, endln:12:43
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_array_typespec: 
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_operation: 
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiParent:
+             \_operation: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiElemTypespec:
+       \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+         |vpiParent:
+         \_array_typespec: 
+         |vpiName:flash_ctrl_pkg::data_region_attr_t
+         |vpiInstance:
+         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+         |vpiPacked:1
+         |vpiTypespecMember:
+         \_typespec_member: (cfg), line:9:23, endln:9:26
+           |vpiParent:
+           \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiName:cfg
+           |vpiTypespec:
+           \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+             |vpiParent:
+             \_typespec_member: (cfg), line:9:23, endln:9:26
+             |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+             |vpiInstance:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiPacked:1
+             |vpiTypespecMember:
+             \_typespec_member: (he_en), line:5:9, endln:5:14
+               |vpiParent:
+               \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiName:he_en
+               |vpiTypespec:
+               \_struct_typespec: , line:3:7, endln:3:13
+                 |vpiParent:
+                 \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiInstance:
+                 \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                 |vpiPacked:1
+                 |vpiTypespecMember:
+                 \_typespec_member: (q), line:4:16, endln:4:17
+                   |vpiParent:
+                   \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiName:q
+                   |vpiTypespec:
+                   \_logic_typespec: , line:4:10, endln:4:15
+                     |vpiParent:
+                     \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiInstance:
+                     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                   |vpiRefLineNo:4
+                   |vpiRefColumnNo:10
+                   |vpiRefEndLineNo:4
+                   |vpiRefEndColumnNo:15
+               |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+               |vpiRefLineNo:3
+               |vpiRefColumnNo:7
+               |vpiRefEndLineNo:5
+               |vpiRefEndColumnNo:8
+           |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+           |vpiRefLineNo:9
+           |vpiRefColumnNo:7
+           |vpiRefEndLineNo:9
+           |vpiRefEndColumnNo:22
+     |vpiRange:
+     \_range: , line:12:44, endln:12:45
+       |vpiParent:
+       \_parameter: (work@flash_mp_data_region_sel.HwDataAttr), line:12:33, endln:12:43
+       |vpiLeftRange:
+       \_constant: , line:12:44, endln:12:45
+         |vpiParent:
+         \_range: , line:12:44, endln:12:45
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiRightRange:
+       \_operation: 
+         |vpiParent:
+         \_range: , line:12:44, endln:12:45
+         |vpiOpType:11
+         |vpiOperand:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_operation: 
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiOperand:
+         \_constant: 
+           |vpiParent:
+           \_operation: 
+           |vpiSize:64
+           |INT:1
+           |vpiConstType:7
+     |vpiName:HwDataAttr
+     |vpiFullName:work@flash_mp_data_region_sel.HwDataAttr
+     |vpiImported:flash_ctrl_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:12:33, endln:18:5
+     |vpiParent:
+     \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+     |vpiRhs:
+     \_operation: , line:12:49, endln:18:5
+       |vpiParent:
+       \_param_assign: , line:12:33, endln:18:5
+       |vpiOpType:75
+       |vpiOperand:
+       \_operation: , line:13:6, endln:17:8
+         |vpiParent:
+         \_operation: , line:12:49, endln:18:5
+         |vpiOpType:75
+         |vpiOperand:
+         \_tagged_pattern: , line:14:15, endln:16:17
+           |vpiParent:
+           \_operation: , line:13:6, endln:17:8
+           |vpiPattern:
+           \_operation: , line:14:15, endln:16:17
+             |vpiParent:
+             \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiOpType:75
+             |vpiOperand:
+             \_tagged_pattern: , line:15:26, endln:15:30
+               |vpiParent:
+               \_operation: , line:14:15, endln:16:17
+               |vpiPattern:
+               \_constant: , line:15:26, endln:15:30
+                 |vpiParent:
+                 \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiDecompile:1'b1
+                 |vpiSize:1
+                 |BIN:1
+                 |vpiConstType:3
+               |vpiTypespec:
+               \_string_typespec: (he_en), line:15:19, endln:15:24
+                 |vpiParent:
+                 \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiName:he_en
+           |vpiTypespec:
+           \_string_typespec: (cfg), line:14:10, endln:14:13
+             |vpiParent:
+             \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiName:cfg
+     |vpiLhs:
+     \_parameter: (work@flash_mp_data_region_sel.HwDataAttr), line:12:33, endln:12:43
+       |vpiParent:
+       \_param_assign: , line:12:33, endln:18:5
+       |vpiSize:1
+       |vpiTypespec:
+       \_array_typespec: 
+         |vpiParent:
+         \_parameter: (work@flash_mp_data_region_sel.HwDataAttr), line:12:33, endln:12:43
+         |vpiRange:
+         \_range: , line:12:44, endln:12:45
+           |vpiParent:
+           \_array_typespec: 
+           |vpiLeftRange:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+           |vpiRightRange:
+           \_operation: 
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiOpType:11
+             |vpiOperand:
+             \_constant: , line:12:44, endln:12:45
+               |vpiParent:
+               \_operation: 
+               |vpiDecompile:1
+               |vpiSize:64
+               |UINT:1
+               |vpiConstType:9
+             |vpiOperand:
+             \_constant: 
+               |vpiParent:
+               \_operation: 
+               |vpiSize:64
+               |INT:1
+               |vpiConstType:7
+         |vpiElemTypespec:
+         \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiParent:
+           \_array_typespec: 
+           |vpiName:flash_ctrl_pkg::data_region_attr_t
+           |vpiInstance:
+           \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+           |vpiPacked:1
+           |vpiTypespecMember:
+           \_typespec_member: (cfg), line:9:23, endln:9:26
+             |vpiParent:
+             \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+             |vpiName:cfg
+             |vpiTypespec:
+             \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiParent:
+               \_typespec_member: (cfg), line:9:23, endln:9:26
+               |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+               |vpiInstance:
+               \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+               |vpiPacked:1
+               |vpiTypespecMember:
+               \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiParent:
+                 \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                 |vpiName:he_en
+                 |vpiTypespec:
+                 \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiParent:
+                   \_typespec_member: (he_en), line:5:9, endln:5:14
+                   |vpiInstance:
+                   \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiPacked:1
+                   |vpiTypespecMember:
+                   \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiParent:
+                     \_struct_typespec: , line:3:7, endln:3:13
+                     |vpiName:q
+                     |vpiTypespec:
+                     \_logic_typespec: , line:4:10, endln:4:15
+                       |vpiParent:
+                       \_typespec_member: (q), line:4:16, endln:4:17
+                       |vpiInstance:
+                       \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                     |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                     |vpiRefLineNo:4
+                     |vpiRefColumnNo:10
+                     |vpiRefEndLineNo:4
+                     |vpiRefEndColumnNo:15
+                 |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                 |vpiRefLineNo:3
+                 |vpiRefColumnNo:7
+                 |vpiRefEndLineNo:5
+                 |vpiRefEndColumnNo:8
+             |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+             |vpiRefLineNo:9
+             |vpiRefColumnNo:7
+             |vpiRefEndLineNo:9
+             |vpiRefEndColumnNo:22
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_parameter: (work@flash_mp_data_region_sel.HwDataAttr), line:12:33, endln:12:43
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_operation: 
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiParent:
+             \_operation: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiName:HwDataAttr
+       |vpiFullName:work@flash_mp_data_region_sel.HwDataAttr
+       |vpiImported:flash_ctrl_pkg
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+   |vpiTypedef:
+   \_import_typespec: (flash_ctrl_pkg), line:21:40, endln:21:57
+   |vpiDefName:work@flash_mp_data_region_sel
+   |vpiNet:
+   \_logic_net: (work@flash_mp_data_region_sel.region_attrs_i), line:22:29, endln:22:43
+     |vpiParent:
+     \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+     |vpiName:region_attrs_i
+     |vpiFullName:work@flash_mp_data_region_sel.region_attrs_i
+   |vpiNet:
+   \_logic_net: (work@flash_mp_data_region_sel.x), line:23:17, endln:23:18
+     |vpiParent:
+     \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+     |vpiName:x
+     |vpiFullName:work@flash_mp_data_region_sel.x
+     |vpiNetType:36
+   |vpiPort:
+   \_port: (region_attrs_i), line:22:29, endln:22:43
+     |vpiParent:
+     \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+     |vpiName:region_attrs_i
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@flash_mp_data_region_sel.region_attrs_i), line:22:29, endln:22:43
+     |vpiTypedef:
+     \_array_typespec: , line:22:10, endln:22:46
+       |vpiParent:
+       \_port: (region_attrs_i), line:22:29, endln:22:43
+       |vpiArrayType:1
+       |vpiRange:
+       \_range: , line:22:45, endln:22:46
+         |vpiLeftRange:
+         \_constant: , line:22:45, endln:22:46
+           |vpiParent:
+           \_range: , line:22:45, endln:22:46
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:22:45, endln:22:46
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:22:45, endln:22:46
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiElemTypespec:
+       \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+   |vpiPort:
+   \_port: (x), line:23:17, endln:23:18
+     |vpiParent:
+     \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+     |vpiName:x
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@flash_mp_data_region_sel.x), line:23:17, endln:23:18
+     |vpiTypedef:
+     \_logic_typespec: , line:23:11, endln:23:16
+   |vpiContAssign:
+   \_cont_assign: , line:25:11, endln:25:36
+     |vpiParent:
+     \_module_inst: work@flash_mp_data_region_sel (work@flash_mp_data_region_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:21:1, endln:26:10
+     |vpiRhs:
+     \_hier_path: (region_attrs_i[0].cfg), line:25:15, endln:25:36
+       |vpiParent:
+       \_cont_assign: , line:25:11, endln:25:36
+       |vpiName:region_attrs_i[0].cfg
+       |vpiActual:
+       \_bit_select: (region_attrs_i), line:25:15, endln:25:29
+         |vpiParent:
+         \_ref_obj: (work@flash_mp_data_region_sel.region_attrs_i[0])
+           |vpiParent:
+           \_hier_path: (region_attrs_i[0].cfg), line:25:15, endln:25:36
+           |vpiName:region_attrs_i[0]
+           |vpiFullName:work@flash_mp_data_region_sel.region_attrs_i[0]
+         |vpiName:region_attrs_i
+         |vpiIndex:
+         \_constant: , line:25:30, endln:25:31
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+       |vpiActual:
+       \_ref_obj: (cfg), line:25:33, endln:25:36
+         |vpiName:cfg
+     |vpiLhs:
+     \_ref_obj: (work@flash_mp_data_region_sel.x), line:25:11, endln:25:12
+       |vpiParent:
+       \_cont_assign: , line:25:11, endln:25:36
+       |vpiName:x
+       |vpiFullName:work@flash_mp_data_region_sel.x
+       |vpiActual:
+       \_logic_net: (work@top.u_hw_sel.x), line:23:17, endln:23:18
+ |uhdmallModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@top
+   |vpiParameter:
+   \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiSize:1
+     |vpiTypespec:
+     \_array_typespec: 
+       |vpiParent:
+       \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_array_typespec: 
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_operation: 
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiParent:
+             \_operation: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiElemTypespec:
+       \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+         |vpiParent:
+         \_array_typespec: 
+         |vpiName:flash_ctrl_pkg::data_region_attr_t
+         |vpiInstance:
+         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+         |vpiPacked:1
+         |vpiTypespecMember:
+         \_typespec_member: (cfg), line:9:23, endln:9:26
+           |vpiParent:
+           \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiName:cfg
+           |vpiTypespec:
+           \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+             |vpiParent:
+             \_typespec_member: (cfg), line:9:23, endln:9:26
+             |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+             |vpiInstance:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiPacked:1
+             |vpiTypespecMember:
+             \_typespec_member: (he_en), line:5:9, endln:5:14
+               |vpiParent:
+               \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiName:he_en
+               |vpiTypespec:
+               \_struct_typespec: , line:3:7, endln:3:13
+                 |vpiParent:
+                 \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiInstance:
+                 \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                 |vpiPacked:1
+                 |vpiTypespecMember:
+                 \_typespec_member: (q), line:4:16, endln:4:17
+                   |vpiParent:
+                   \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiName:q
+                   |vpiTypespec:
+                   \_logic_typespec: , line:4:10, endln:4:15
+                     |vpiParent:
+                     \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiInstance:
+                     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                   |vpiRefLineNo:4
+                   |vpiRefColumnNo:10
+                   |vpiRefEndLineNo:4
+                   |vpiRefEndColumnNo:15
+               |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+               |vpiRefLineNo:3
+               |vpiRefColumnNo:7
+               |vpiRefEndLineNo:5
+               |vpiRefEndColumnNo:8
+           |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+           |vpiRefLineNo:9
+           |vpiRefColumnNo:7
+           |vpiRefEndLineNo:9
+           |vpiRefEndColumnNo:22
+     |vpiRange:
+     \_range: , line:12:44, endln:12:45
+       |vpiParent:
+       \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+       |vpiLeftRange:
+       \_constant: , line:12:44, endln:12:45
+         |vpiParent:
+         \_range: , line:12:44, endln:12:45
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiRightRange:
+       \_operation: 
+         |vpiParent:
+         \_range: , line:12:44, endln:12:45
+         |vpiOpType:11
+         |vpiOperand:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_operation: 
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiOperand:
+         \_constant: 
+           |vpiParent:
+           \_operation: 
+           |vpiSize:64
+           |INT:1
+           |vpiConstType:7
+     |vpiName:HwDataAttr
+     |vpiFullName:work@top.HwDataAttr
+     |vpiImported:flash_ctrl_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:12:33, endln:18:5
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiRhs:
+     \_operation: , line:12:49, endln:18:5
+       |vpiParent:
+       \_param_assign: , line:12:33, endln:18:5
+       |vpiOpType:75
+       |vpiOperand:
+       \_operation: , line:13:6, endln:17:8
+         |vpiParent:
+         \_operation: , line:12:49, endln:18:5
+         |vpiOpType:75
+         |vpiOperand:
+         \_tagged_pattern: , line:14:15, endln:16:17
+           |vpiParent:
+           \_operation: , line:13:6, endln:17:8
+           |vpiPattern:
+           \_operation: , line:14:15, endln:16:17
+             |vpiParent:
+             \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiOpType:75
+             |vpiOperand:
+             \_tagged_pattern: , line:15:26, endln:15:30
+               |vpiParent:
+               \_operation: , line:14:15, endln:16:17
+               |vpiPattern:
+               \_constant: , line:15:26, endln:15:30
+                 |vpiParent:
+                 \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiDecompile:1'b1
+                 |vpiSize:1
+                 |BIN:1
+                 |vpiConstType:3
+               |vpiTypespec:
+               \_string_typespec: (he_en), line:15:19, endln:15:24
+                 |vpiParent:
+                 \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiName:he_en
+           |vpiTypespec:
+           \_string_typespec: (cfg), line:14:10, endln:14:13
+             |vpiParent:
+             \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiName:cfg
+     |vpiLhs:
+     \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+       |vpiParent:
+       \_param_assign: , line:12:33, endln:18:5
+       |vpiSize:1
+       |vpiTypespec:
+       \_array_typespec: 
+         |vpiParent:
+         \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+         |vpiRange:
+         \_range: , line:12:44, endln:12:45
+           |vpiParent:
+           \_array_typespec: 
+           |vpiLeftRange:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+           |vpiRightRange:
+           \_operation: 
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiOpType:11
+             |vpiOperand:
+             \_constant: , line:12:44, endln:12:45
+               |vpiParent:
+               \_operation: 
+               |vpiDecompile:1
+               |vpiSize:64
+               |UINT:1
+               |vpiConstType:9
+             |vpiOperand:
+             \_constant: 
+               |vpiParent:
+               \_operation: 
+               |vpiSize:64
+               |INT:1
+               |vpiConstType:7
+         |vpiElemTypespec:
+         \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiParent:
+           \_array_typespec: 
+           |vpiName:flash_ctrl_pkg::data_region_attr_t
+           |vpiInstance:
+           \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+           |vpiPacked:1
+           |vpiTypespecMember:
+           \_typespec_member: (cfg), line:9:23, endln:9:26
+             |vpiParent:
+             \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+             |vpiName:cfg
+             |vpiTypespec:
+             \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiParent:
+               \_typespec_member: (cfg), line:9:23, endln:9:26
+               |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+               |vpiInstance:
+               \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+               |vpiPacked:1
+               |vpiTypespecMember:
+               \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiParent:
+                 \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                 |vpiName:he_en
+                 |vpiTypespec:
+                 \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiParent:
+                   \_typespec_member: (he_en), line:5:9, endln:5:14
+                   |vpiInstance:
+                   \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiPacked:1
+                   |vpiTypespecMember:
+                   \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiParent:
+                     \_struct_typespec: , line:3:7, endln:3:13
+                     |vpiName:q
+                     |vpiTypespec:
+                     \_logic_typespec: , line:4:10, endln:4:15
+                       |vpiParent:
+                       \_typespec_member: (q), line:4:16, endln:4:17
+                       |vpiInstance:
+                       \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                     |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                     |vpiRefLineNo:4
+                     |vpiRefColumnNo:10
+                     |vpiRefEndLineNo:4
+                     |vpiRefEndColumnNo:15
+                 |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                 |vpiRefLineNo:3
+                 |vpiRefColumnNo:7
+                 |vpiRefEndLineNo:5
+                 |vpiRefEndColumnNo:8
+             |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+             |vpiRefLineNo:9
+             |vpiRefColumnNo:7
+             |vpiRefEndLineNo:9
+             |vpiRefEndColumnNo:22
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_operation: 
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiParent:
+             \_operation: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiName:HwDataAttr
+       |vpiFullName:work@top.HwDataAttr
+       |vpiImported:flash_ctrl_pkg
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+   |vpiTypedef:
+   \_import_typespec: (flash_ctrl_pkg), line:29:11, endln:29:28
+   |vpiDefName:work@top
+   |vpiNet:
+   \_logic_net: (work@top.o), line:28:25, endln:28:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiName:o
+     |vpiFullName:work@top.o
+     |vpiNetType:36
+   |vpiPort:
+   \_port: (o), line:28:25, endln:28:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiName:o
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.o), line:28:25, endln:28:26
+     |vpiTypedef:
+     \_logic_typespec: , line:28:19, endln:28:24
+ |uhdmtopModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+   |vpiName:work@top
+   |vpiParameter:
+   \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiSize:1
+     |vpiTypespec:
+     \_array_typespec: 
+       |vpiParent:
+       \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_array_typespec: 
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_operation: 
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiParent:
+             \_operation: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiElemTypespec:
+       \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+         |vpiParent:
+         \_array_typespec: 
+         |vpiName:flash_ctrl_pkg::data_region_attr_t
+         |vpiInstance:
+         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+         |vpiPacked:1
+         |vpiTypespecMember:
+         \_typespec_member: (cfg), line:9:23, endln:9:26
+           |vpiParent:
+           \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiName:cfg
+           |vpiTypespec:
+           \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+             |vpiParent:
+             \_typespec_member: (cfg), line:9:23, endln:9:26
+             |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+             |vpiInstance:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiPacked:1
+             |vpiTypespecMember:
+             \_typespec_member: (he_en), line:5:9, endln:5:14
+               |vpiParent:
+               \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiName:he_en
+               |vpiTypespec:
+               \_struct_typespec: , line:3:7, endln:3:13
+                 |vpiParent:
+                 \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiInstance:
+                 \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                 |vpiPacked:1
+                 |vpiTypespecMember:
+                 \_typespec_member: (q), line:4:16, endln:4:17
+                   |vpiParent:
+                   \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiName:q
+                   |vpiTypespec:
+                   \_logic_typespec: , line:4:10, endln:4:15
+                     |vpiParent:
+                     \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiInstance:
+                     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                   |vpiRefLineNo:4
+                   |vpiRefColumnNo:10
+                   |vpiRefEndLineNo:4
+                   |vpiRefEndColumnNo:15
+               |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+               |vpiRefLineNo:3
+               |vpiRefColumnNo:7
+               |vpiRefEndLineNo:5
+               |vpiRefEndColumnNo:8
+           |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+           |vpiRefLineNo:9
+           |vpiRefColumnNo:7
+           |vpiRefEndLineNo:9
+           |vpiRefEndColumnNo:22
+     |vpiRange:
+     \_range: , line:12:44, endln:12:45
+       |vpiParent:
+       \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+       |vpiLeftRange:
+       \_constant: , line:12:44, endln:12:45
+         |vpiParent:
+         \_range: , line:12:44, endln:12:45
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiRightRange:
+       \_operation: 
+         |vpiParent:
+         \_range: , line:12:44, endln:12:45
+         |vpiOpType:11
+         |vpiOperand:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_operation: 
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiOperand:
+         \_constant: 
+           |vpiParent:
+           \_operation: 
+           |vpiSize:64
+           |INT:1
+           |vpiConstType:7
+     |vpiName:HwDataAttr
+     |vpiFullName:work@top.HwDataAttr
+     |vpiImported:flash_ctrl_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:12:33, endln:18:5
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiRhs:
+     \_operation: , line:12:49, endln:18:5
+       |vpiParent:
+       \_param_assign: , line:12:33, endln:18:5
+       |vpiTypespec:
+       \_array_typespec: 
+         |vpiParent:
+         \_operation: , line:12:49, endln:18:5
+         |vpiRange:
+         \_range: , line:12:44, endln:12:45
+           |vpiParent:
+           \_array_typespec: 
+           |vpiLeftRange:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+           |vpiRightRange:
+           \_operation: 
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiOpType:11
+             |vpiOperand:
+             \_constant: , line:12:44, endln:12:45
+               |vpiParent:
+               \_operation: 
+               |vpiDecompile:1
+               |vpiSize:64
+               |UINT:1
+               |vpiConstType:9
+             |vpiOperand:
+             \_constant: 
+               |vpiParent:
+               \_operation: 
+               |vpiSize:64
+               |INT:1
+               |vpiConstType:7
+         |vpiElemTypespec:
+         \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiParent:
+           \_array_typespec: 
+           |vpiName:flash_ctrl_pkg::data_region_attr_t
+           |vpiInstance:
+           \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+           |vpiPacked:1
+           |vpiTypespecMember:
+           \_typespec_member: (cfg), line:9:23, endln:9:26
+             |vpiParent:
+             \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+             |vpiName:cfg
+             |vpiTypespec:
+             \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiParent:
+               \_typespec_member: (cfg), line:9:23, endln:9:26
+               |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+               |vpiInstance:
+               \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+               |vpiPacked:1
+               |vpiTypespecMember:
+               \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiParent:
+                 \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                 |vpiName:he_en
+                 |vpiTypespec:
+                 \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiParent:
+                   \_typespec_member: (he_en), line:5:9, endln:5:14
+                   |vpiInstance:
+                   \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiPacked:1
+                   |vpiTypespecMember:
+                   \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiParent:
+                     \_struct_typespec: , line:3:7, endln:3:13
+                     |vpiName:q
+                     |vpiTypespec:
+                     \_logic_typespec: , line:4:10, endln:4:15
+                       |vpiParent:
+                       \_typespec_member: (q), line:4:16, endln:4:17
+                       |vpiInstance:
+                       \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                     |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                     |vpiRefLineNo:4
+                     |vpiRefColumnNo:10
+                     |vpiRefEndLineNo:4
+                     |vpiRefEndColumnNo:15
+                 |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                 |vpiRefLineNo:3
+                 |vpiRefColumnNo:7
+                 |vpiRefEndLineNo:5
+                 |vpiRefEndColumnNo:8
+             |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+             |vpiRefLineNo:9
+             |vpiRefColumnNo:7
+             |vpiRefEndLineNo:9
+             |vpiRefEndColumnNo:22
+       |vpiOpType:75
+       |vpiOperand:
+       \_operation: , line:13:6, endln:17:8
+         |vpiParent:
+         \_operation: , line:12:49, endln:18:5
+         |vpiSize:1
+         |vpiOpType:75
+         |vpiOperand:
+         \_tagged_pattern: , line:14:15, endln:16:17
+           |vpiParent:
+           \_operation: , line:13:6, endln:17:8
+           |vpiPattern:
+           \_operation: , line:14:15, endln:16:17
+             |vpiParent:
+             \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiOpType:75
+             |vpiOperand:
+             \_tagged_pattern: , line:15:26, endln:15:30
+               |vpiParent:
+               \_operation: , line:14:15, endln:16:17
+               |vpiPattern:
+               \_constant: , line:15:26, endln:15:30
+                 |vpiParent:
+                 \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiDecompile:1'b1
+                 |vpiSize:1
+                 |BIN:1
+                 |vpiConstType:3
+               |vpiTypespec:
+               \_string_typespec: (he_en), line:15:19, endln:15:24
+                 |vpiParent:
+                 \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiName:he_en
+           |vpiTypespec:
+           \_string_typespec: (cfg), line:14:10, endln:14:13
+             |vpiParent:
+             \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiName:cfg
+     |vpiLhs:
+     \_parameter: (work@top.HwDataAttr), line:12:33, endln:12:43
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+   |vpiTypedef:
+   \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+   |vpiTypedef:
+   \_import_typespec: (flash_ctrl_pkg), line:29:11, endln:29:28
+   |vpiDefName:work@top
+   |vpiTop:1
+   |vpiNet:
+   \_logic_net: (work@top.o), line:28:25, endln:28:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiTypespec:
+     \_logic_typespec: , line:28:19, endln:28:24
+     |vpiName:o
+     |vpiFullName:work@top.o
+     |vpiNetType:36
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (o), line:28:25, endln:28:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiName:o
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.o), line:28:25, endln:28:26
+       |vpiName:o
+       |vpiFullName:work@top.o
+       |vpiActual:
+       \_logic_net: (work@top.o), line:28:25, endln:28:26
+     |vpiTypedef:
+     \_logic_typespec: , line:28:19, endln:28:24
+   |vpiModule:
+   \_module_inst: work@flash_mp_data_region_sel (work@top.u_hw_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:30:4, endln:33:6
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiName:u_hw_sel
+     |vpiFullName:work@top.u_hw_sel
+     |vpiParameter:
+     \_parameter: (work@top.u_hw_sel.HwDataAttr), line:12:33, endln:12:43
+       |vpiParent:
+       \_module_inst: work@flash_mp_data_region_sel (work@top.u_hw_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:30:4, endln:33:6
+       |vpiSize:1
+       |vpiTypespec:
+       \_array_typespec: 
+         |vpiParent:
+         \_parameter: (work@top.u_hw_sel.HwDataAttr), line:12:33, endln:12:43
+         |vpiRange:
+         \_range: , line:12:44, endln:12:45
+           |vpiParent:
+           \_array_typespec: 
+           |vpiLeftRange:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+           |vpiRightRange:
+           \_operation: 
+             |vpiParent:
+             \_range: , line:12:44, endln:12:45
+             |vpiOpType:11
+             |vpiOperand:
+             \_constant: , line:12:44, endln:12:45
+               |vpiParent:
+               \_operation: 
+               |vpiDecompile:1
+               |vpiSize:64
+               |UINT:1
+               |vpiConstType:9
+             |vpiOperand:
+             \_constant: 
+               |vpiParent:
+               \_operation: 
+               |vpiSize:64
+               |INT:1
+               |vpiConstType:7
+         |vpiElemTypespec:
+         \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+           |vpiParent:
+           \_array_typespec: 
+           |vpiName:flash_ctrl_pkg::data_region_attr_t
+           |vpiInstance:
+           \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+           |vpiPacked:1
+           |vpiTypespecMember:
+           \_typespec_member: (cfg), line:9:23, endln:9:26
+             |vpiParent:
+             \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+             |vpiName:cfg
+             |vpiTypespec:
+             \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+               |vpiParent:
+               \_typespec_member: (cfg), line:9:23, endln:9:26
+               |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+               |vpiInstance:
+               \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+               |vpiPacked:1
+               |vpiTypespecMember:
+               \_typespec_member: (he_en), line:5:9, endln:5:14
+                 |vpiParent:
+                 \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                 |vpiName:he_en
+                 |vpiTypespec:
+                 \_struct_typespec: , line:3:7, endln:3:13
+                   |vpiParent:
+                   \_typespec_member: (he_en), line:5:9, endln:5:14
+                   |vpiInstance:
+                   \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                   |vpiPacked:1
+                   |vpiTypespecMember:
+                   \_typespec_member: (q), line:4:16, endln:4:17
+                     |vpiParent:
+                     \_struct_typespec: , line:3:7, endln:3:13
+                     |vpiName:q
+                     |vpiTypespec:
+                     \_logic_typespec: , line:4:10, endln:4:15
+                       |vpiParent:
+                       \_typespec_member: (q), line:4:16, endln:4:17
+                       |vpiInstance:
+                       \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                     |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                     |vpiRefLineNo:4
+                     |vpiRefColumnNo:10
+                     |vpiRefEndLineNo:4
+                     |vpiRefEndColumnNo:15
+                 |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                 |vpiRefLineNo:3
+                 |vpiRefColumnNo:7
+                 |vpiRefEndLineNo:5
+                 |vpiRefEndColumnNo:8
+             |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+             |vpiRefLineNo:9
+             |vpiRefColumnNo:7
+             |vpiRefEndLineNo:9
+             |vpiRefEndColumnNo:22
+       |vpiRange:
+       \_range: , line:12:44, endln:12:45
+         |vpiParent:
+         \_parameter: (work@top.u_hw_sel.HwDataAttr), line:12:33, endln:12:43
+         |vpiLeftRange:
+         \_constant: , line:12:44, endln:12:45
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:12:44, endln:12:45
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:12:44, endln:12:45
+             |vpiParent:
+             \_operation: 
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiParent:
+             \_operation: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiName:HwDataAttr
+       |vpiFullName:work@top.u_hw_sel.HwDataAttr
+       |vpiImported:flash_ctrl_pkg
+     |vpiParamAssign:
+     \_param_assign: , line:12:33, endln:18:5
+       |vpiParent:
+       \_module_inst: work@flash_mp_data_region_sel (work@top.u_hw_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:30:4, endln:33:6
+       |vpiRhs:
+       \_operation: , line:12:49, endln:18:5
+         |vpiParent:
+         \_param_assign: , line:12:33, endln:18:5
+         |vpiTypespec:
+         \_array_typespec: 
+           |vpiParent:
+           \_operation: , line:12:49, endln:18:5
+           |vpiRange:
+           \_range: , line:12:44, endln:12:45
+             |vpiParent:
+             \_array_typespec: 
+             |vpiLeftRange:
+             \_constant: , line:12:44, endln:12:45
+               |vpiParent:
+               \_range: , line:12:44, endln:12:45
+               |vpiDecompile:0
+               |vpiSize:64
+               |UINT:0
+               |vpiConstType:9
+             |vpiRightRange:
+             \_operation: 
+               |vpiParent:
+               \_range: , line:12:44, endln:12:45
+               |vpiOpType:11
+               |vpiOperand:
+               \_constant: , line:12:44, endln:12:45
+                 |vpiParent:
+                 \_operation: 
+                 |vpiDecompile:1
+                 |vpiSize:64
+                 |UINT:1
+                 |vpiConstType:9
+               |vpiOperand:
+               \_constant: 
+                 |vpiParent:
+                 \_operation: 
+                 |vpiSize:64
+                 |INT:1
+                 |vpiConstType:7
+           |vpiElemTypespec:
+           \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+             |vpiParent:
+             \_array_typespec: 
+             |vpiName:flash_ctrl_pkg::data_region_attr_t
+             |vpiInstance:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiPacked:1
+             |vpiTypespecMember:
+             \_typespec_member: (cfg), line:9:23, endln:9:26
+               |vpiParent:
+               \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+               |vpiName:cfg
+               |vpiTypespec:
+               \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                 |vpiParent:
+                 \_typespec_member: (cfg), line:9:23, endln:9:26
+                 |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+                 |vpiInstance:
+                 \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                 |vpiPacked:1
+                 |vpiTypespecMember:
+                 \_typespec_member: (he_en), line:5:9, endln:5:14
+                   |vpiParent:
+                   \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                   |vpiName:he_en
+                   |vpiTypespec:
+                   \_struct_typespec: , line:3:7, endln:3:13
+                     |vpiParent:
+                     \_typespec_member: (he_en), line:5:9, endln:5:14
+                     |vpiInstance:
+                     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                     |vpiPacked:1
+                     |vpiTypespecMember:
+                     \_typespec_member: (q), line:4:16, endln:4:17
+                       |vpiParent:
+                       \_struct_typespec: , line:3:7, endln:3:13
+                       |vpiName:q
+                       |vpiTypespec:
+                       \_logic_typespec: , line:4:10, endln:4:15
+                         |vpiParent:
+                         \_typespec_member: (q), line:4:16, endln:4:17
+                         |vpiInstance:
+                         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                       |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                       |vpiRefLineNo:4
+                       |vpiRefColumnNo:10
+                       |vpiRefEndLineNo:4
+                       |vpiRefEndColumnNo:15
+                   |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                   |vpiRefLineNo:3
+                   |vpiRefColumnNo:7
+                   |vpiRefEndLineNo:5
+                   |vpiRefEndColumnNo:8
+               |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+               |vpiRefLineNo:9
+               |vpiRefColumnNo:7
+               |vpiRefEndLineNo:9
+               |vpiRefEndColumnNo:22
+         |vpiOpType:75
+         |vpiOperand:
+         \_operation: , line:13:6, endln:17:8
+           |vpiParent:
+           \_operation: , line:12:49, endln:18:5
+           |vpiSize:1
+           |vpiOpType:75
+           |vpiOperand:
+           \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiParent:
+             \_operation: , line:13:6, endln:17:8
+             |vpiPattern:
+             \_operation: , line:14:15, endln:16:17
+               |vpiParent:
+               \_tagged_pattern: , line:14:15, endln:16:17
+               |vpiOpType:75
+               |vpiOperand:
+               \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiParent:
+                 \_operation: , line:14:15, endln:16:17
+                 |vpiPattern:
+                 \_constant: , line:15:26, endln:15:30
+                   |vpiParent:
+                   \_tagged_pattern: , line:15:26, endln:15:30
+                   |vpiDecompile:1'b1
+                   |vpiSize:1
+                   |BIN:1
+                   |vpiConstType:3
+                 |vpiTypespec:
+                 \_string_typespec: (he_en), line:15:19, endln:15:24
+                   |vpiParent:
+                   \_tagged_pattern: , line:15:26, endln:15:30
+                   |vpiName:he_en
+             |vpiTypespec:
+             \_string_typespec: (cfg), line:14:10, endln:14:13
+               |vpiParent:
+               \_tagged_pattern: , line:14:15, endln:16:17
+               |vpiName:cfg
+       |vpiLhs:
+       \_parameter: (work@top.u_hw_sel.HwDataAttr), line:12:33, endln:12:43
+     |vpiTypedef:
+     \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+     |vpiTypedef:
+     \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+     |vpiTypedef:
+     \_import_typespec: (flash_ctrl_pkg), line:21:40, endln:21:57
+     |vpiDefName:work@flash_mp_data_region_sel
+     |vpiDefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+     |vpiDefLineNo:21
+     |vpiNet:
+     \_logic_net: (work@top.u_hw_sel.x), line:23:17, endln:23:18
+       |vpiParent:
+       \_module_inst: work@flash_mp_data_region_sel (work@top.u_hw_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:30:4, endln:33:6
+       |vpiTypespec:
+       \_logic_typespec: , line:23:11, endln:23:16
+       |vpiName:x
+       |vpiFullName:work@top.u_hw_sel.x
+       |vpiNetType:36
+     |vpiArrayNet:
+     \_array_net: (work@top.u_hw_sel.region_attrs_i), line:22:29, endln:22:43
+       |vpiParent:
+       \_module_inst: work@flash_mp_data_region_sel (work@top.u_hw_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:30:4, endln:33:6
+       |vpiSize:1
+       |vpiName:region_attrs_i
+       |vpiFullName:work@top.u_hw_sel.region_attrs_i
+       |vpiRange:
+       \_range: , line:22:45, endln:22:46
+         |vpiLeftRange:
+         \_constant: , line:22:45, endln:22:46
+           |vpiParent:
+           \_range: , line:22:45, endln:22:46
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiRightRange:
+         \_operation: 
+           |vpiParent:
+           \_range: , line:22:45, endln:22:46
+           |vpiOpType:11
+           |vpiOperand:
+           \_constant: , line:22:45, endln:22:46
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+           |vpiOperand:
+           \_constant: 
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+       |vpiNet:
+       \_struct_net: (work@top.u_hw_sel.region_attrs_i.region_attrs_i), line:22:29, endln:22:47
+         |vpiParent:
+         \_array_net: (work@top.u_hw_sel.region_attrs_i), line:22:29, endln:22:43
+         |vpiTypespec:
+         \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+         |vpiName:region_attrs_i
+         |vpiFullName:work@top.u_hw_sel.region_attrs_i.region_attrs_i
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:28:1, endln:34:10
+     |vpiPort:
+     \_port: (region_attrs_i), line:22:29, endln:22:43
+       |vpiParent:
+       \_module_inst: work@flash_mp_data_region_sel (work@top.u_hw_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:30:4, endln:33:6
+       |vpiName:region_attrs_i
+       |vpiDirection:1
+       |vpiHighConn:
+       \_operation: , line:31:23, endln:31:33
+         |vpiTypespec:
+         \_array_typespec: 
+           |vpiParent:
+           \_operation: , line:31:23, endln:31:33
+           |vpiRange:
+           \_range: , line:12:44, endln:12:45
+             |vpiParent:
+             \_array_typespec: 
+             |vpiLeftRange:
+             \_constant: , line:12:44, endln:12:45
+               |vpiParent:
+               \_range: , line:12:44, endln:12:45
+               |vpiDecompile:0
+               |vpiSize:64
+               |UINT:0
+               |vpiConstType:9
+             |vpiRightRange:
+             \_operation: 
+               |vpiParent:
+               \_range: , line:12:44, endln:12:45
+               |vpiOpType:11
+               |vpiOperand:
+               \_constant: , line:12:44, endln:12:45
+                 |vpiParent:
+                 \_operation: 
+                 |vpiDecompile:1
+                 |vpiSize:64
+                 |UINT:1
+                 |vpiConstType:9
+               |vpiOperand:
+               \_constant: 
+                 |vpiParent:
+                 \_operation: 
+                 |vpiSize:64
+                 |INT:1
+                 |vpiConstType:7
+           |vpiElemTypespec:
+           \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+             |vpiParent:
+             \_array_typespec: 
+             |vpiName:flash_ctrl_pkg::data_region_attr_t
+             |vpiInstance:
+             \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+             |vpiPacked:1
+             |vpiTypespecMember:
+             \_typespec_member: (cfg), line:9:23, endln:9:26
+               |vpiParent:
+               \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+               |vpiName:cfg
+               |vpiTypespec:
+               \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                 |vpiParent:
+                 \_typespec_member: (cfg), line:9:23, endln:9:26
+                 |vpiName:flash_ctrl_pkg::mp_region_cfg_t
+                 |vpiInstance:
+                 \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                 |vpiPacked:1
+                 |vpiTypespecMember:
+                 \_typespec_member: (he_en), line:5:9, endln:5:14
+                   |vpiParent:
+                   \_struct_typespec: (flash_ctrl_pkg::mp_region_cfg_t), line:2:12, endln:2:18
+                   |vpiName:he_en
+                   |vpiTypespec:
+                   \_struct_typespec: , line:3:7, endln:3:13
+                     |vpiParent:
+                     \_typespec_member: (he_en), line:5:9, endln:5:14
+                     |vpiInstance:
+                     \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                     |vpiPacked:1
+                     |vpiTypespecMember:
+                     \_typespec_member: (q), line:4:16, endln:4:17
+                       |vpiParent:
+                       \_struct_typespec: , line:3:7, endln:3:13
+                       |vpiName:q
+                       |vpiTypespec:
+                       \_logic_typespec: , line:4:10, endln:4:15
+                         |vpiParent:
+                         \_typespec_member: (q), line:4:16, endln:4:17
+                         |vpiInstance:
+                         \_package: flash_ctrl_pkg (flash_ctrl_pkg::), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:1:1, endln:19:28
+                       |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                       |vpiRefLineNo:4
+                       |vpiRefColumnNo:10
+                       |vpiRefEndLineNo:4
+                       |vpiRefEndColumnNo:15
+                   |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+                   |vpiRefLineNo:3
+                   |vpiRefColumnNo:7
+                   |vpiRefEndLineNo:5
+                   |vpiRefEndColumnNo:8
+               |vpiRefFile:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+               |vpiRefLineNo:9
+               |vpiRefColumnNo:7
+               |vpiRefEndLineNo:9
+               |vpiRefEndColumnNo:22
+         |vpiOpType:75
+         |vpiOperand:
+         \_operation: , line:13:6, endln:17:8
+           |vpiParent:
+           \_operation: , line:31:23, endln:31:33
+           |vpiSize:1
+           |vpiOpType:75
+           |vpiOperand:
+           \_tagged_pattern: , line:14:15, endln:16:17
+             |vpiParent:
+             \_operation: , line:13:6, endln:17:8
+             |vpiPattern:
+             \_operation: , line:14:15, endln:16:17
+               |vpiParent:
+               \_tagged_pattern: , line:14:15, endln:16:17
+               |vpiOpType:75
+               |vpiOperand:
+               \_tagged_pattern: , line:15:26, endln:15:30
+                 |vpiParent:
+                 \_operation: , line:14:15, endln:16:17
+                 |vpiPattern:
+                 \_constant: , line:15:26, endln:15:30
+                   |vpiParent:
+                   \_tagged_pattern: , line:15:26, endln:15:30
+                   |vpiDecompile:1'b1
+                   |vpiSize:1
+                   |BIN:1
+                   |vpiConstType:3
+                 |vpiTypespec:
+                 \_string_typespec: (he_en), line:15:19, endln:15:24
+                   |vpiParent:
+                   \_tagged_pattern: , line:15:26, endln:15:30
+                   |vpiName:he_en
+             |vpiTypespec:
+             \_string_typespec: (cfg), line:14:10, endln:14:13
+               |vpiParent:
+               \_tagged_pattern: , line:14:15, endln:16:17
+               |vpiName:cfg
+       |vpiLowConn:
+       \_ref_obj: (work@top.u_hw_sel.region_attrs_i), line:31:8, endln:31:22
+         |vpiName:region_attrs_i
+         |vpiFullName:work@top.u_hw_sel.region_attrs_i
+         |vpiActual:
+         \_struct_net: (work@top.u_hw_sel.region_attrs_i.region_attrs_i), line:22:29, endln:22:47
+       |vpiTypedef:
+       \_struct_typespec: (flash_ctrl_pkg::data_region_attr_t), line:8:12, endln:8:18
+     |vpiPort:
+     \_port: (x), line:23:17, endln:23:18
+       |vpiParent:
+       \_module_inst: work@flash_mp_data_region_sel (work@top.u_hw_sel), file:UHDM-integration-tests/tests/NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv, line:30:4, endln:33:6
+       |vpiName:x
+       |vpiDirection:2
+       |vpiHighConn:
+       \_ref_obj: (work@top.o), line:32:10, endln:32:11
+         |vpiName:o
+         |vpiFullName:work@top.o
+         |vpiActual:
+         \_logic_net: (work@top.o), line:28:25, endln:28:26
+       |vpiLowConn:
+       \_ref_obj: (work@top.u_hw_sel.x), line:32:8, endln:32:9
+         |vpiName:x
+         |vpiFullName:work@top.u_hw_sel.x
+         |vpiActual:
+         \_logic_net: (work@top.u_hw_sel.x), line:23:17, endln:23:18
+       |vpiTypedef:
+       \_logic_typespec: , line:23:11, endln:23:16
+     |vpiContAssign:
+     \_cont_assign: , line:25:11, endln:25:36
+Object 'work@top' of type 'design'
+  Object 'builtin' of type 'package'
+  Object 'flash_ctrl_pkg' of type 'package'
+    Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+      Object 'cfg' of type 'typespec_member'
+        Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+          Object 'he_en' of type 'typespec_member'
+            Object '' of type 'struct_typespec'
+              Object 'q' of type 'typespec_member'
+    Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+      Object 'he_en' of type 'typespec_member'
+        Object '' of type 'struct_typespec'
+          Object 'q' of type 'typespec_member'
+    Object 'HwDataAttr' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+        Object 'cfg' of type 'typespec_member'
+          Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+            Object 'he_en' of type 'typespec_member'
+              Object '' of type 'struct_typespec'
+                Object 'q' of type 'typespec_member'
+    Object '' of type 'param_assign'
+      Object 'HwDataAttr' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+          Object 'cfg' of type 'typespec_member'
+            Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+              Object 'he_en' of type 'typespec_member'
+                Object '' of type 'struct_typespec'
+                  Object 'q' of type 'typespec_member'
+      Object '' of type 'operation'
+        Object '' of type 'operation'
+          Object '' of type 'tagged_pattern'
+            Object '' of type 'operation'
+              Object '' of type 'tagged_pattern'
+                Object '' of type 'constant'
+  Object '' of type 'module_inst'
+    Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+      Object 'cfg' of type 'typespec_member'
+        Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+          Object 'he_en' of type 'typespec_member'
+            Object '' of type 'struct_typespec'
+              Object 'q' of type 'typespec_member'
+    Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+      Object 'he_en' of type 'typespec_member'
+        Object '' of type 'struct_typespec'
+          Object 'q' of type 'typespec_member'
+    Object 'flash_ctrl_pkg' of type 'import_typespec'
+    Object 'HwDataAttr' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+        Object 'cfg' of type 'typespec_member'
+          Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+            Object 'he_en' of type 'typespec_member'
+              Object '' of type 'struct_typespec'
+                Object 'q' of type 'typespec_member'
+    Object '' of type 'param_assign'
+      Object 'HwDataAttr' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+          Object 'cfg' of type 'typespec_member'
+            Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+              Object 'he_en' of type 'typespec_member'
+                Object '' of type 'struct_typespec'
+                  Object 'q' of type 'typespec_member'
+      Object '' of type 'operation'
+        Object '' of type 'operation'
+          Object '' of type 'tagged_pattern'
+            Object '' of type 'operation'
+              Object '' of type 'tagged_pattern'
+                Object '' of type 'constant'
+    Object 'region_attrs_i' of type 'logic_net'
+    Object 'x' of type 'logic_net'
+  Object '' of type 'module_inst'
+    Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+      Object 'cfg' of type 'typespec_member'
+        Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+          Object 'he_en' of type 'typespec_member'
+            Object '' of type 'struct_typespec'
+              Object 'q' of type 'typespec_member'
+    Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+      Object 'he_en' of type 'typespec_member'
+        Object '' of type 'struct_typespec'
+          Object 'q' of type 'typespec_member'
+    Object 'flash_ctrl_pkg' of type 'import_typespec'
+    Object 'HwDataAttr' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+        Object 'cfg' of type 'typespec_member'
+          Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+            Object 'he_en' of type 'typespec_member'
+              Object '' of type 'struct_typespec'
+                Object 'q' of type 'typespec_member'
+    Object '' of type 'param_assign'
+      Object 'HwDataAttr' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+          Object 'cfg' of type 'typespec_member'
+            Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+              Object 'he_en' of type 'typespec_member'
+                Object '' of type 'struct_typespec'
+                  Object 'q' of type 'typespec_member'
+      Object '' of type 'operation'
+        Object '' of type 'operation'
+          Object '' of type 'tagged_pattern'
+            Object '' of type 'operation'
+              Object '' of type 'tagged_pattern'
+                Object '' of type 'constant'
+    Object 'o' of type 'logic_net'
+  Object 'work@top' of type 'module_inst'
+    Object 'u_hw_sel' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'HwDataAttr' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'operation'
+              Object '' of type 'constant'
+              Object '' of type 'constant'
+          Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+            Object 'cfg' of type 'typespec_member'
+              Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+                Object 'he_en' of type 'typespec_member'
+                  Object '' of type 'struct_typespec'
+                    Object 'q' of type 'typespec_member'
+        Object '' of type 'operation'
+          Object '' of type 'operation'
+            Object '' of type 'tagged_pattern'
+              Object '' of type 'operation'
+                Object '' of type 'tagged_pattern'
+                  Object '' of type 'constant'
+      Object '' of type 'param_assign'
+        Object 'HwDataAttr' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'operation'
+              Object '' of type 'constant'
+              Object '' of type 'constant'
+          Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+            Object 'cfg' of type 'typespec_member'
+              Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+                Object 'he_en' of type 'typespec_member'
+                  Object '' of type 'struct_typespec'
+                    Object 'q' of type 'typespec_member'
+        Object '' of type 'operation'
+          Object '' of type 'operation'
+            Object '' of type 'tagged_pattern'
+              Object '' of type 'operation'
+                Object '' of type 'tagged_pattern'
+                  Object '' of type 'constant'
+      Object 'x' of type 'logic_net'
+        Object '' of type 'logic_typespec'
+      Object 'region_attrs_i' of type 'array_net'
+        Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+          Object 'cfg' of type 'typespec_member'
+            Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+              Object 'he_en' of type 'typespec_member'
+                Object '' of type 'struct_typespec'
+                  Object 'q' of type 'typespec_member'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+      Object 'region_attrs_i' of type 'port'
+        Object 'flash_ctrl_pkg::data_region_attr_t' of type 'struct_typespec'
+          Object 'cfg' of type 'typespec_member'
+            Object 'flash_ctrl_pkg::mp_region_cfg_t' of type 'struct_typespec'
+              Object 'he_en' of type 'typespec_member'
+                Object '' of type 'struct_typespec'
+                  Object 'q' of type 'typespec_member'
+      Object 'x' of type 'port'
+        Object '' of type 'logic_typespec'
+      Object '' of type 'cont_assign'
+        Object 'x' of type 'ref_obj'
+        Object 'region_attrs_i[0].cfg' of type 'hier_path'
+          Object 'region_attrs_i' of type 'bit_select'
+            Object '' of type 'constant'
+          Object 'cfg' of type 'ref_obj'
+      Object '' of type 'operation'
+        Object '' of type 'operation'
+          Object '' of type 'tagged_pattern'

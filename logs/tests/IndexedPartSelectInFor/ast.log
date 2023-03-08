@@ -1,0 +1,1605 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/IndexedPartSelectInFor/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.26+73 (git sha1 9747e55d9, gcc 12.2.0 -Og -fPIC)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -> skip.
+[TCL: yUsing Yosys read_systemverilog command
+osys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv:1:1: No timescale set for "my_pkg".
+
+[WRN:PA0205] UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv:10:1: No timescale set for "top".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0301] UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv:1:1: Compile package "my_pkg".
+
+[INF:CP0303] UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv:10:1: Compile module "work@top".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv:10:1: Top level module "work@top".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 1.
+
+[NTE:EL0510] Nb instances: 1.
+
+[NTE:EL0511] Nb leaf instances: 0.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 2
+[   NOTE] : 5
+design: (work@top)
+ |vpiName:work@top
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmallPackages:
+ \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:my_pkg
+   |vpiFullName:my_pkg::
+   |vpiParameter:
+   \_parameter: (my_pkg::Shares), line:2:18, endln:2:24
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:2:14, endln:2:17
+       |vpiParent:
+       \_parameter: (my_pkg::Shares), line:2:18, endln:2:24
+       |vpiInstance:
+       \_package: (my_pkg)
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:Shares
+     |vpiFullName:my_pkg::Shares
+   |vpiParameter:
+   \_parameter: (my_pkg::KeyWidth), line:3:18, endln:3:26
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |UINT:64
+     |vpiTypespec:
+     \_int_typespec: , line:3:14, endln:3:17
+       |vpiParent:
+       \_parameter: (my_pkg::KeyWidth), line:3:18, endln:3:26
+       |vpiInstance:
+       \_package: (my_pkg)
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:KeyWidth
+     |vpiFullName:my_pkg::KeyWidth
+   |vpiParamAssign:
+   \_param_assign: , line:2:18, endln:2:28
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |vpiRhs:
+     \_constant: , line:2:27, endln:2:28
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:2:14, endln:2:17
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (my_pkg::Shares), line:2:18, endln:2:24
+   |vpiParamAssign:
+   \_param_assign: , line:3:18, endln:3:31
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |vpiRhs:
+     \_constant: , line:3:29, endln:3:31
+       |vpiDecompile:64
+       |vpiSize:32
+       |UINT:64
+       |vpiTypespec:
+       \_int_typespec: , line:3:14, endln:3:17
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (my_pkg::KeyWidth), line:3:18, endln:3:26
+   |vpiTypedef:
+   \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |vpiName:my_pkg::hw_key_req_t
+     |vpiInstance:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |vpiPacked:1
+     |vpiTypespecMember:
+     \_typespec_member: (key), line:6:40, endln:6:43
+       |vpiParent:
+       \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+       |vpiName:key
+       |vpiTypespec:
+       \_logic_typespec: , line:6:7, endln:6:39
+         |vpiParent:
+         \_typespec_member: (key), line:6:40, endln:6:43
+         |vpiInstance:
+         \_package: (my_pkg)
+         |vpiRange:
+         \_range: , line:6:13, endln:6:25
+           |vpiParent:
+           \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+           |vpiLeftRange:
+           \_operation: , line:6:14, endln:6:22
+             |vpiParent:
+             \_range: , line:6:13, endln:6:25
+             |vpiOpType:11
+             |vpiOperand:
+             \_ref_obj: (my_pkg::my_pkg::hw_key_req_t::Shares), line:6:14, endln:6:20
+               |vpiParent:
+               \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+               |vpiName:Shares
+               |vpiFullName:my_pkg::my_pkg::hw_key_req_t::Shares
+             |vpiOperand:
+             \_constant: , line:6:21, endln:6:22
+               |vpiParent:
+               \_operation: , line:6:14, endln:6:22
+               |vpiDecompile:1
+               |vpiSize:64
+               |UINT:1
+               |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:6:23, endln:6:24
+             |vpiParent:
+             \_range: , line:6:13, endln:6:25
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+         |vpiRange:
+         \_range: , line:6:25, endln:6:39
+           |vpiParent:
+           \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+           |vpiLeftRange:
+           \_operation: , line:6:26, endln:6:36
+             |vpiParent:
+             \_range: , line:6:25, endln:6:39
+             |vpiOpType:11
+             |vpiOperand:
+             \_ref_obj: (my_pkg::my_pkg::hw_key_req_t::KeyWidth), line:6:26, endln:6:34
+               |vpiParent:
+               \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+               |vpiName:KeyWidth
+               |vpiFullName:my_pkg::my_pkg::hw_key_req_t::KeyWidth
+             |vpiOperand:
+             \_constant: , line:6:35, endln:6:36
+               |vpiParent:
+               \_operation: , line:6:26, endln:6:36
+               |vpiDecompile:1
+               |vpiSize:64
+               |UINT:1
+               |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:6:37, endln:6:38
+             |vpiParent:
+             \_range: , line:6:25, endln:6:39
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiRefFile:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv
+       |vpiRefLineNo:6
+       |vpiRefColumnNo:7
+       |vpiRefEndLineNo:6
+       |vpiRefEndColumnNo:39
+   |vpiDefName:my_pkg
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmtopPackages:
+ \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:my_pkg
+   |vpiFullName:my_pkg::
+   |vpiParameter:
+   \_parameter: (my_pkg::Shares), line:2:18, endln:2:24
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:2:14, endln:2:17
+       |vpiParent:
+       \_parameter: (my_pkg::Shares), line:2:18, endln:2:24
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:Shares
+     |vpiFullName:my_pkg::Shares
+   |vpiParameter:
+   \_parameter: (my_pkg::KeyWidth), line:3:18, endln:3:26
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |UINT:64
+     |vpiTypespec:
+     \_int_typespec: , line:3:14, endln:3:17
+       |vpiParent:
+       \_parameter: (my_pkg::KeyWidth), line:3:18, endln:3:26
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:KeyWidth
+     |vpiFullName:my_pkg::KeyWidth
+   |vpiParamAssign:
+   \_param_assign: , line:2:18, endln:2:28
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |vpiRhs:
+     \_constant: , line:2:27, endln:2:28
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:2:14, endln:2:17
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (my_pkg::Shares), line:2:18, endln:2:24
+   |vpiParamAssign:
+   \_param_assign: , line:3:18, endln:3:31
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |vpiRhs:
+     \_constant: , line:3:29, endln:3:31
+       |vpiDecompile:64
+       |vpiSize:32
+       |UINT:64
+       |vpiTypespec:
+       \_int_typespec: , line:3:14, endln:3:17
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (my_pkg::KeyWidth), line:3:18, endln:3:26
+   |vpiTypedef:
+   \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiName:my_pkg::hw_key_req_t
+     |vpiInstance:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+     |vpiPacked:1
+     |vpiTypespecMember:
+     \_typespec_member: (key), line:6:40, endln:6:43
+       |vpiParent:
+       \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+       |vpiName:key
+       |vpiTypespec:
+       \_logic_typespec: , line:6:7, endln:6:39
+         |vpiParent:
+         \_typespec_member: (key), line:6:40, endln:6:43
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+         |vpiRange:
+         \_range: , line:6:13, endln:6:25
+           |vpiParent:
+           \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+           |vpiLeftRange:
+           \_constant: , line:6:14, endln:6:20
+             |vpiParent:
+             \_range: , line:6:13, endln:6:25
+             |vpiDecompile:1
+             |vpiSize:64
+             |INT:1
+             |vpiConstType:7
+           |vpiRightRange:
+           \_constant: , line:6:23, endln:6:24
+             |vpiParent:
+             \_range: , line:6:13, endln:6:25
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+         |vpiRange:
+         \_range: , line:6:25, endln:6:39
+           |vpiParent:
+           \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+           |vpiLeftRange:
+           \_constant: , line:6:26, endln:6:34
+             |vpiParent:
+             \_range: , line:6:25, endln:6:39
+             |vpiDecompile:63
+             |vpiSize:64
+             |INT:63
+             |vpiConstType:7
+           |vpiRightRange:
+           \_constant: , line:6:37, endln:6:38
+             |vpiParent:
+             \_range: , line:6:25, endln:6:39
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiRefFile:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv
+       |vpiRefLineNo:6
+       |vpiRefColumnNo:7
+       |vpiRefEndLineNo:6
+       |vpiRefEndColumnNo:39
+   |vpiDefName:my_pkg
+   |vpiTop:1
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@top
+   |vpiParameter:
+   \_parameter: (work@top.KeyWidth), line:3:18, endln:3:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |UINT:64
+     |vpiTypespec:
+     \_int_typespec: , line:3:14, endln:3:17
+       |vpiParent:
+       \_parameter: (work@top.KeyWidth), line:3:18, endln:3:26
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:KeyWidth
+     |vpiFullName:work@top.KeyWidth
+     |vpiImported:my_pkg
+   |vpiParameter:
+   \_parameter: (work@top.Shares), line:2:18, endln:2:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:2:14, endln:2:17
+       |vpiParent:
+       \_parameter: (work@top.Shares), line:2:18, endln:2:24
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:Shares
+     |vpiFullName:work@top.Shares
+     |vpiImported:my_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:2:18, endln:2:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiRhs:
+     \_constant: , line:2:27, endln:2:28
+       |vpiParent:
+       \_param_assign: , line:2:18, endln:2:28
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:2:14, endln:2:17
+         |vpiParent:
+         \_constant: , line:2:27, endln:2:28
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+         |vpiSigned:1
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.Shares), line:2:18, endln:2:24
+       |vpiParent:
+       \_param_assign: , line:2:18, endln:2:28
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:2:14, endln:2:17
+         |vpiParent:
+         \_parameter: (work@top.Shares), line:2:18, endln:2:24
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+         |vpiSigned:1
+       |vpiSigned:1
+       |vpiName:Shares
+       |vpiFullName:work@top.Shares
+       |vpiImported:my_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:3:18, endln:3:31
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiRhs:
+     \_constant: , line:3:29, endln:3:31
+       |vpiParent:
+       \_param_assign: , line:3:18, endln:3:31
+       |vpiDecompile:64
+       |vpiSize:32
+       |UINT:64
+       |vpiTypespec:
+       \_int_typespec: , line:3:14, endln:3:17
+         |vpiParent:
+         \_constant: , line:3:29, endln:3:31
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+         |vpiSigned:1
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.KeyWidth), line:3:18, endln:3:26
+       |vpiParent:
+       \_param_assign: , line:3:18, endln:3:31
+       |UINT:64
+       |vpiTypespec:
+       \_int_typespec: , line:3:14, endln:3:17
+         |vpiParent:
+         \_parameter: (work@top.KeyWidth), line:3:18, endln:3:26
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+         |vpiSigned:1
+       |vpiSigned:1
+       |vpiName:KeyWidth
+       |vpiFullName:work@top.KeyWidth
+       |vpiImported:my_pkg
+   |vpiTypedef:
+   \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:11:11, endln:11:20
+   |vpiDefName:work@top
+   |vpiNet:
+   \_logic_net: (work@top.o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiName:o
+     |vpiFullName:work@top.o
+   |vpiNet:
+   \_logic_net: (work@top.keymgr_key_i), line:12:17, endln:12:29
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiName:keymgr_key_i
+     |vpiFullName:work@top.keymgr_key_i
+   |vpiPort:
+   \_port: (o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiName:o
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.o), line:10:23, endln:10:24
+     |vpiTypedef:
+     \_int_typespec: , line:10:19, endln:10:22
+       |vpiSigned:1
+   |vpiProcess:
+   \_always: , line:13:4, endln:17:7
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiStmt:
+     \_named_begin: (work@top.key_sideload_get), line:13:16, endln:17:7
+       |vpiParent:
+       \_always: , line:13:4, endln:17:7
+       |vpiName:key_sideload_get
+       |vpiFullName:work@top.key_sideload_get
+       |vpiStmt:
+       \_for_stmt: (work@top.key_sideload_get), line:14:7, endln:14:10
+         |vpiParent:
+         \_named_begin: (work@top.key_sideload_get), line:13:16, endln:17:7
+         |vpiFullName:work@top.key_sideload_get
+         |vpiForInitStmt:
+         \_assign_stmt: , line:14:12, endln:14:21
+           |vpiParent:
+           \_for_stmt: (work@top.key_sideload_get), line:14:7, endln:14:10
+           |vpiRhs:
+           \_constant: , line:14:20, endln:14:21
+             |vpiParent:
+             \_assign_stmt: , line:14:12, endln:14:21
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+           |vpiLhs:
+           \_int_var: (work@top.key_sideload_get.i), line:14:16, endln:14:17
+             |vpiParent:
+             \_assign_stmt: , line:14:12, endln:14:21
+             |vpiTypespec:
+             \_int_typespec: , line:14:12, endln:14:15
+               |vpiSigned:1
+             |vpiName:i
+             |vpiFullName:work@top.key_sideload_get.i
+             |vpiSigned:1
+         |vpiForIncStmt:
+         \_operation: , line:14:30, endln:14:33
+           |vpiParent:
+           \_for_stmt: (work@top.key_sideload_get), line:14:7, endln:14:10
+           |vpiOpType:62
+           |vpiOperand:
+           \_ref_obj: (work@top.key_sideload_get.i), line:14:30, endln:14:31
+             |vpiParent:
+             \_operation: , line:14:30, endln:14:33
+             |vpiName:i
+             |vpiFullName:work@top.key_sideload_get.i
+             |vpiActual:
+             \_int_var: (work@top.key_sideload_get.i), line:14:16, endln:14:17
+         |vpiCondition:
+         \_operation: , line:14:23, endln:14:28
+           |vpiParent:
+           \_for_stmt: (work@top.key_sideload_get), line:14:7, endln:14:10
+           |vpiOpType:20
+           |vpiOperand:
+           \_ref_obj: (work@top.key_sideload_get.i), line:14:23, endln:14:24
+             |vpiParent:
+             \_operation: , line:14:23, endln:14:28
+             |vpiName:i
+             |vpiFullName:work@top.key_sideload_get.i
+             |vpiActual:
+             \_int_var: (work@top.key_sideload_get.i), line:14:16, endln:14:17
+           |vpiOperand:
+           \_constant: , line:14:27, endln:14:28
+             |vpiParent:
+             \_operation: , line:14:23, endln:14:28
+             |vpiDecompile:1
+             |vpiSize:64
+             |UINT:1
+             |vpiConstType:9
+         |vpiStmt:
+         \_begin: (work@top.key_sideload_get), line:14:35, endln:16:10
+           |vpiParent:
+           \_for_stmt: (work@top.key_sideload_get), line:14:7, endln:14:10
+           |vpiFullName:work@top.key_sideload_get
+           |vpiStmt:
+           \_assignment: , line:15:10, endln:15:47
+             |vpiParent:
+             \_begin: (work@top.key_sideload_get), line:14:35, endln:16:10
+             |vpiOpType:82
+             |vpiBlocking:1
+             |vpiRhs:
+             \_hier_path: (keymgr_key_i.key[0][+:32]), line:15:14, endln:15:47
+               |vpiParent:
+               \_begin: (work@top.key_sideload_get), line:14:35, endln:16:10
+               |vpiName:keymgr_key_i.key[0][+:32]
+               |vpiActual:
+               \_ref_obj: (keymgr_key_i), line:15:14, endln:15:26
+                 |vpiParent:
+                 \_hier_path: (keymgr_key_i.key[0][+:32]), line:15:14, endln:15:47
+                 |vpiName:keymgr_key_i
+               |vpiActual:
+               \_bit_select: (key), line:15:27, endln:15:30
+                 |vpiParent:
+                 \_ref_obj: (work@top.key_sideload_get.key[0])
+                   |vpiParent:
+                   \_hier_path: (keymgr_key_i.key[0][+:32]), line:15:14, endln:15:47
+                   |vpiName:key[0]
+                   |vpiFullName:work@top.key_sideload_get.key[0]
+                 |vpiName:key
+                 |vpiIndex:
+                 \_constant: , line:15:31, endln:15:32
+                   |vpiDecompile:0
+                   |vpiSize:64
+                   |UINT:0
+                   |vpiConstType:9
+               |vpiActual:
+               \_indexed_part_select: , line:15:27, endln:15:46
+                 |vpiConstantSelect:1
+                 |vpiIndexedPartSelectType:1
+                 |vpiBaseExpr:
+                 \_operation: , line:15:34, endln:15:40
+                   |vpiOpType:25
+                   |vpiOperand:
+                   \_ref_obj: (i), line:15:34, endln:15:35
+                     |vpiParent:
+                     \_operation: , line:15:34, endln:15:40
+                     |vpiName:i
+                     |vpiActual:
+                     \_logic_net: (i)
+                   |vpiOperand:
+                   \_constant: , line:15:38, endln:15:40
+                     |vpiParent:
+                     \_operation: , line:15:34, endln:15:40
+                     |vpiDecompile:32
+                     |vpiSize:64
+                     |UINT:32
+                     |vpiConstType:9
+                 |vpiWidthExpr:
+                 \_constant: , line:15:44, endln:15:46
+                   |vpiDecompile:32
+                   |vpiSize:64
+                   |UINT:32
+                   |vpiConstType:9
+             |vpiLhs:
+             \_ref_obj: (work@top.key_sideload_get.o), line:15:10, endln:15:11
+               |vpiParent:
+               \_begin: (work@top.key_sideload_get), line:14:35, endln:16:10
+               |vpiName:o
+               |vpiFullName:work@top.key_sideload_get.o
+               |vpiActual:
+               \_int_var: (work@top.o), line:10:23, endln:10:24
+     |vpiAlwaysType:2
+ |uhdmtopModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+   |vpiName:work@top
+   |vpiVariables:
+   \_int_var: (work@top.o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiTypespec:
+     \_int_typespec: , line:10:19, endln:10:22
+       |vpiSigned:1
+     |vpiName:o
+     |vpiFullName:work@top.o
+     |vpiSigned:1
+     |vpiVisibility:1
+   |vpiParameter:
+   \_parameter: (work@top.KeyWidth), line:3:18, endln:3:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |UINT:64
+     |vpiTypespec:
+     \_int_typespec: , line:3:14, endln:3:17
+       |vpiParent:
+       \_parameter: (work@top.KeyWidth), line:3:18, endln:3:26
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:KeyWidth
+     |vpiFullName:work@top.KeyWidth
+     |vpiImported:my_pkg
+   |vpiParameter:
+   \_parameter: (work@top.Shares), line:2:18, endln:2:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:2:14, endln:2:17
+       |vpiParent:
+       \_parameter: (work@top.Shares), line:2:18, endln:2:24
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+       |vpiSigned:1
+     |vpiSigned:1
+     |vpiName:Shares
+     |vpiFullName:work@top.Shares
+     |vpiImported:my_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:2:18, endln:2:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiRhs:
+     \_constant: , line:2:27, endln:2:28
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:2:14, endln:2:17
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.Shares), line:2:18, endln:2:24
+   |vpiParamAssign:
+   \_param_assign: , line:3:18, endln:3:31
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiRhs:
+     \_constant: , line:3:29, endln:3:31
+       |vpiDecompile:64
+       |vpiSize:32
+       |UINT:64
+       |vpiTypespec:
+       \_int_typespec: , line:3:14, endln:3:17
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.KeyWidth), line:3:18, endln:3:26
+   |vpiTypedef:
+   \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:11:11, endln:11:20
+   |vpiDefName:work@top
+   |vpiTop:1
+   |vpiNet:
+   \_struct_net: (work@top.keymgr_key_i), line:12:17, endln:12:29
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiTypespec:
+     \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+     |vpiName:keymgr_key_i
+     |vpiFullName:work@top.keymgr_key_i
+   |vpiNet:
+   \_logic_net: (i)
+     |vpiName:i
+     |vpiNetType:1
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (o), line:10:23, endln:10:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:10:1, endln:18:10
+     |vpiName:o
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.o), line:10:23, endln:10:24
+       |vpiName:o
+       |vpiFullName:work@top.o
+       |vpiActual:
+       \_int_var: (work@top.o), line:10:23, endln:10:24
+     |vpiTypedef:
+     \_int_typespec: , line:10:19, endln:10:22
+       |vpiSigned:1
+   |vpiProcess:
+   \_always: , line:13:4, endln:17:7
+   |vpiContAssign:
+   \_cont_assign: , line:12:17, endln:12:29
+     |vpiNetDeclAssign:1
+     |vpiRhs:
+     \_constant: , line:12:32, endln:12:52
+       |vpiParent:
+       \_cont_assign: , line:12:17, endln:12:29
+       |vpiDecompile:128'h123456789abcdef
+       |vpiSize:128
+       |HEX:123456789abcdef
+       |vpiConstType:5
+     |vpiLhs:
+     \_struct_net: (keymgr_key_i), line:12:17, endln:12:29
+       |vpiParent:
+       \_cont_assign: , line:12:17, endln:12:29
+       |vpiTypespec:
+       \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+         |vpiParent:
+         \_struct_net: (keymgr_key_i), line:12:17, endln:12:29
+         |vpiName:my_pkg::hw_key_req_t
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+         |vpiPacked:1
+         |vpiTypespecMember:
+         \_typespec_member: (key), line:6:40, endln:6:43
+           |vpiParent:
+           \_struct_typespec: (my_pkg::hw_key_req_t), line:5:12, endln:5:18
+           |vpiName:key
+           |vpiTypespec:
+           \_logic_typespec: , line:6:7, endln:6:39
+             |vpiParent:
+             \_typespec_member: (key), line:6:40, endln:6:43
+             |vpiInstance:
+             \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv, line:1:1, endln:8:11
+             |vpiRange:
+             \_range: , line:6:13, endln:6:25
+               |vpiParent:
+               \_logic_typespec: , line:6:7, endln:6:39
+               |vpiLeftRange:
+               \_constant: , line:6:14, endln:6:20
+                 |vpiParent:
+                 \_range: , line:6:13, endln:6:25
+                 |vpiDecompile:1
+                 |vpiSize:64
+                 |INT:1
+                 |vpiConstType:7
+               |vpiRightRange:
+               \_constant: , line:6:23, endln:6:24
+                 |vpiParent:
+                 \_range: , line:6:13, endln:6:25
+                 |vpiDecompile:0
+                 |vpiSize:64
+                 |UINT:0
+                 |vpiConstType:9
+             |vpiRange:
+             \_range: , line:6:25, endln:6:39
+               |vpiParent:
+               \_logic_typespec: , line:6:7, endln:6:39
+               |vpiLeftRange:
+               \_constant: , line:6:26, endln:6:34
+                 |vpiParent:
+                 \_range: , line:6:25, endln:6:39
+                 |vpiDecompile:63
+                 |vpiSize:64
+                 |INT:63
+                 |vpiConstType:7
+               |vpiRightRange:
+               \_constant: , line:6:37, endln:6:38
+                 |vpiParent:
+                 \_range: , line:6:25, endln:6:39
+                 |vpiDecompile:0
+                 |vpiSize:64
+                 |UINT:0
+                 |vpiConstType:9
+           |vpiRefFile:UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv
+           |vpiRefLineNo:6
+           |vpiRefColumnNo:7
+           |vpiRefEndLineNo:6
+           |vpiRefEndColumnNo:39
+       |vpiName:keymgr_key_i
+Object 'work@top' of type 'design'
+  Object 'builtin' of type 'package'
+  Object 'my_pkg' of type 'package'
+    Object 'my_pkg::hw_key_req_t' of type 'struct_typespec'
+      Object 'key' of type 'typespec_member'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'Shares' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object 'KeyWidth' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'Shares' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'KeyWidth' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+  Object '' of type 'module_inst'
+    Object 'my_pkg::hw_key_req_t' of type 'struct_typespec'
+      Object 'key' of type 'typespec_member'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'my_pkg' of type 'import_typespec'
+    Object 'KeyWidth' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object 'Shares' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'Shares' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'KeyWidth' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'o' of type 'logic_net'
+    Object 'keymgr_key_i' of type 'logic_net'
+    Object '' of type 'always'
+      Object 'key_sideload_get' of type 'named_begin'
+        Object '' of type 'for_stmt'
+          Object '' of type 'assign_stmt'
+            Object 'i' of type 'int_var'
+            Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object 'i' of type 'ref_obj'
+            Object '' of type 'constant'
+          Object '' of type 'operation'
+            Object 'i' of type 'ref_obj'
+Warning: UHDM-integration-tests/tests/IndexedPartSelectInFor/top.sv:14: Post-incrementation operations are handled as pre-incrementation.
+          Object '' of type 'begin'
+            Object '' of type 'assignment'
+              Object 'o' of type 'ref_obj'
+              Object 'keymgr_key_i.key[0][+:32]' of type 'hier_path'
+                Object 'keymgr_key_i' of type 'ref_obj'
+                Object 'key' of type 'bit_select'
+                  Object '' of type 'constant'
+                Object '' of type 'indexed_part_select'
+VPI ERROR: Bad usage of vpi_get_str
+VPI ERROR: Bad usage of vpi_get_str
+VPI ERROR: Bad usage of vpi_get_str
+                  Object '' of type 'operation'
+                    Object 'i' of type 'ref_obj'
+                    Object '' of type 'constant'
+                  Object '' of type 'constant'
+  Object 'work@top' of type 'module_inst'
+    Object 'KeyWidth' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object 'Shares' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'Shares' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'KeyWidth' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'o' of type 'port'
+      Object '' of type 'int_typespec'
+    Object 'keymgr_key_i' of type 'struct_net'
+      Object 'my_pkg::hw_key_req_t' of type 'struct_typespec'
+        Object 'key' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+    Object 'i' of type 'logic_net'
+    Object '' of type 'cont_assign'
+      Object 'keymgr_key_i' of type 'struct_net'
+        Object 'my_pkg::hw_key_req_t' of type 'struct_typespec'
+          Object 'key' of type 'typespec_member'
+            Object '' of type 'range'
+              Object '' of type 'constant'
+              Object '' of type 'constant'
+            Object '' of type 'range'
+              Object '' of type 'constant'
+              Object '' of type 'constant'
+      Object '' of type 'constant'
+    Object 'o' of type 'int_var'

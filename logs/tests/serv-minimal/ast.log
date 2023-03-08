@@ -1,0 +1,4 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/serv-minimal/src/serv_1.1.0/rtl/serv_ctrl.v UHDM-integration-tests/tests/serv-minimal/src/serv_1.1.0/rtl/serv_top.v UHDM-integration-tests/tests/serv-minimal/src/serv_1.1.0/rtl/serv_rf_top.v UHDM-integration-tests/tests/serv-minimal/src/servant_1.1.0/servant/servant.v UHDM-integration-tests/tests/serv-minimal/src/servant_1.1.0/bench/servant_sim.v" TOP_MODULE="servant_sim" PARSER=yosys-plugin SURELOG_FLAGS="-Pmemsize=32768" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/serv-minimal/yosys_script.tcl)
