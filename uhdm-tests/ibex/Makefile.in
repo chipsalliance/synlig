@@ -42,28 +42,6 @@ define download_and_unpack_archive_from_url_fetched_from_url
 	@echo
 endef
 
-# Warnings emitted by env creation stage are written to this file and reported at the end.
-ENV_DEFERRED_WARNINGS_FILE := ${root_dir}/env/symbiflow/DEFERRED_WARNINGS.txt
-
-# Checks whether file with warnings has been created; displays and removes it if so.
-define display_and_remove_env_deferred_warnings
-	@if [[ -e ${ENV_DEFERRED_WARNINGS_FILE} ]]; then \
-		printf '\n%*s\n' "$${COLUMNS:-80}" '' | tr ' ' '-'; \
-		while read -r line; do \
-			if [[ -t 1 ]]; then \
-				printf '\x1b[33mWARNING: \x1b[1m%s\x1b[0m\n' "$$line"; \
-			else \
-				printf '!! WARNING !! %s\n' "$$line"; \
-			fi; \
-		done < ${ENV_DEFERRED_WARNINGS_FILE}; \
-		printf '%*s\n\n' "$${COLUMNS:-80}" '' | tr ' ' '-'; \
-		rm ${ENV_DEFERRED_WARNINGS_FILE}; \
-	fi
-endef
-
-clean::
-	rm -f ${ENV_DEFERRED_WARNINGS_FILE}
-
 ${root_dir}/env/symbiflow:
 	mkdir -p $@
 
@@ -73,14 +51,6 @@ download-f4pga: | ${root_dir}/env/symbiflow
 		'https://github.com/f4pga/f4pga-arch-defs/releases/download/latest/symbiflow-install-xc7-latest', \
 		'${root_dir}/env/symbiflow/symbiflow-install-xc7-latest.url', \
 		'${root_dir}/env/symbiflow')
-
-	( cd ${root_dir}/env/symbiflow/share/f4pga/techmaps/xc7_vpr/techmap/ && \
-		patch -p1 < ${curr_dir}/AddSimDeviceParameterToBufgce.patch || { \
-			warn_msg='`AddSimDeviceParameterToBufgce.patch` does not apply. Perhaps it is no longer needed?'; \
-			printf '::warning file=%s::%s\n' '$(this_makefile)' "$$warn_msg"; \
-			printf '%s: %s\n' '$(this_makefile)' "$$warn_msg" > ${ENV_DEFERRED_WARNINGS_FILE}; \
-		} \
-	)
 
 	# Do not install yosys nor yosys-f4pga-plugins from conda, we'll use our own builds.
 	sed -ie '/yosys/ d' ${root_dir}/env/symbiflow/xc7_env/xc7_environment.yml
@@ -104,7 +74,6 @@ env:: download-f4pga
 	${IN_CONDA_ENV} conda env config vars set \
 		F4PGA_INSTALL_DIR=${root_dir}/env/symbiflow \
 		F4PGA_SHARE_DIR=${root_dir}/env/symbiflow/share/f4pga
-	${display_and_remove_env_deferred_warnings}
 
 # Ibex build
 
