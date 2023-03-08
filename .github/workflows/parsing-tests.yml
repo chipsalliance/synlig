@@ -113,7 +113,6 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 1
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up common Ubuntu configuration
         run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
@@ -149,6 +148,7 @@ jobs:
           git config --global user.email "action@example.com" &&
           git config --global user.name "github action"
           if [ -n "$(git status logs/ --porcelain)" ]; then
+            git checkout --progress --force -B ${{ github.head_ref }} ${{ github.ref }}
             git commit logs/ -m "Update logs" &&
             git push origin
           fi
