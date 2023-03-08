@@ -142,6 +142,15 @@ jobs:
         env:
           TARGET: uhdm/yosys/test-ast
 
+      - name: Update logs
+        run: |
+          git config --global user.email "action@example.com" &&
+          git config --global user.name "github action"
+          if [ -n "$(git status logs/ --porcelain)" ]; then
+            git commit logs/ -m "Update logs" &&
+            git push origin
+          fi
+
       - name: Rename test results
         if: ${{ always() }}
         run: |
