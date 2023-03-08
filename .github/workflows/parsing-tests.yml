@@ -150,7 +150,7 @@ jobs:
           if [ -n "$(git status logs/ --porcelain)" ]; then
             git checkout -B kr/process_module
             git commit logs/ -m "Update logs" &&
-            git push origin
+            git push --set-upstream origin kr/process_module
           fi
 
       - name: Rename test results
