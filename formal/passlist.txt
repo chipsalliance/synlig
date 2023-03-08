@@ -707,3 +707,6 @@ yosys:verific/case.sv
 yosys:verific/range_case.sv
 yosys:memlib/memlib_multilut.v
 UHDM-integration-tests:MemoryInGenblock/top.sv
+yosys:sim/aldff.v
+yosys:sim/aldffe.v
+yosys:memories/firrtl_938.v
