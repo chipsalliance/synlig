@@ -904,7 +904,7 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:5.1-7.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:5.23-5.24> str='\o' output signed port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:5.23-5.24> str='\o' output signed port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/InterfaceAssign/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:0.0-0.0>
@@ -945,7 +945,7 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\sw_test_status_if'.
 Dumping AST before simplification:
     AST_INTERFACE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:0.0-0.0> str='\sw_test_status_if'
-      AST_WIRE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:1.40-1.41> str='\x' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:1.40-1.41> str='\x' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/InterfaceAssign/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/InterfaceAssign/top.sv:0.0-0.0>

@@ -1017,7 +1017,7 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/InterfaceParameterSetValue/top.sv:6.1-9.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/InterfaceParameterSetValue/top.sv:6.23-6.24> str='\o' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/InterfaceParameterSetValue/top.sv:6.23-6.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/InterfaceParameterSetValue/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/InterfaceParameterSetValue/top.sv:0.0-0.0>

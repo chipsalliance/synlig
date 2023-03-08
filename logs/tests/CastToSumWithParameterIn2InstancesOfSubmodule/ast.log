@@ -1477,9 +1477,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:4.27-4.28> str='\a' output logic port=2 multirange=[ 0 5 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1490,9 +1490,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> range=[4:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:4.17-4.26> basic_prep range=[4:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:6.11-6.27>
         AST_IDENTIFIER <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:6.11-6.12> str='\a'
         AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
@@ -1533,7 +1533,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> basic_prep range=[4:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:4.17-4.26> basic_prep range=[4:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:6.11-6.27> basic_prep
@@ -1564,9 +1564,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:4.27-4.28> str='\a' output logic port=1 multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1577,9 +1577,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:4.17-4.26> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:6.11-6.27>
         AST_IDENTIFIER <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:6.11-6.12> str='\a'
         AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
@@ -1620,7 +1620,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:4.17-4.26> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:6.11-6.27> basic_prep
@@ -1652,9 +1652,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:9.25-9.30> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:9.53-9.54> str='\p' output logic port=4 multirange=[ 0 5 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1665,9 +1665,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> range=[4:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
-          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:9.47-9.52> basic_prep range=[4:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
+          AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:10.4-10.38> str='\u_sub1'
         AST_CELLTYPE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> str='$paramod\submodule\P=32'd1'
         AST_ARGUMENT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:10.4-10.38> str='\a'
@@ -1703,7 +1703,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:9.25-9.30> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:9.53-9.54> str='\p' output logic basic_prep port=4 range=[4:0] multirange=[ 0 5 ] multirange_swapped=[ 0 ]
@@ -1716,7 +1716,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> basic_prep range=[4:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:9.47-9.52> basic_prep range=[4:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
           AST_CONSTANT <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/CastToSumWithParameterIn2InstancesOfSubmodule/top.sv:10.4-10.38> str='\u_sub1' basic_prep

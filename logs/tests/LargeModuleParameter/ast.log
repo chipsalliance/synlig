@@ -1,7 +1,7 @@
 rm -rf UHDM-integration-tests/build
 mkdir -p UHDM-integration-tests/build
-(export TOP_FILE="UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
-cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/yosys_script.tcl)
+(export TOP_FILE="UHDM-integration-tests/tests/LargeModuleParameter/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/LargeModuleParameter/yosys_script.tcl)
 
  /----------------------------------------------------------------------------\
  |                                                                            |
@@ -287,15 +287,15 @@ cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c 
 1. Executing Verilog with UHDM frontend.
 [INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
 
-[WRN:PA0205] UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:1:1: No timescale set for "my_pkg".
+[WRN:PA0205] UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1:1: No timescale set for "dut".
 
-[WRN:PA0205] UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13:1: No timescale set for "top".
+[WRN:PA0205] UHDM-integration-tests/tests/LargeModuleParameter/top.sv:4:1: No timescale set for "top".
 
 [INF:CP0300] Compilation...
 
-[INF:CP0301] UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:1:1: Compile package "my_pkg".
+[INF:CP0303] UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1:1: Compile module "work@dut".
 
-[INF:CP0303] UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13:1: Compile module "work@top".
+[INF:CP0303] UHDM-integration-tests/tests/LargeModuleParameter/top.sv:4:1: Compile module "work@top".
 
 [INF:CP0302] Compile class "work@mailbox".
 
@@ -305,15 +305,15 @@ cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c 
 
 [INF:EL0526] Design Elaboration...
 
-[NTE:EL0503] UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13:1: Top level module "work@top".
+[NTE:EL0503] UHDM-integration-tests/tests/LargeModuleParameter/top.sv:4:1: Top level module "work@top".
 
 [NTE:EL0508] Nb Top level modules: 1.
 
-[NTE:EL0509] Max instance depth: 1.
+[NTE:EL0509] Max instance depth: 2.
 
-[NTE:EL0510] Nb instances: 1.
+[NTE:EL0510] Nb instances: 7.
 
-[NTE:EL0511] Nb leaf instances: 1.
+[NTE:EL0511] Nb leaf instances: 6.
 
 [INF:UH0706] Creating UHDM Model...
 
@@ -331,130 +331,6 @@ design: (work@top)
    |vpiName:builtin
    |vpiFullName:builtin::
    |vpiDefName:builtin
- |uhdmallPackages:
- \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-   |vpiParent:
-   \_design: (work@top)
-   |vpiName:my_pkg
-   |vpiFullName:my_pkg::
-   |vpiParameter:
-   \_parameter: (my_pkg::SeedBank), line:6:24, endln:6:32
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |UINT:0
-     |vpiTypespec:
-     \_bit_typespec: , line:6:14, endln:6:23
-       |vpiParent:
-       \_parameter: (my_pkg::SeedBank), line:6:24, endln:6:32
-       |vpiInstance:
-       \_package: (my_pkg)
-       |vpiRange:
-       \_range: , line:6:18, endln:6:23
-         |vpiLeftRange:
-         \_constant: , line:6:19, endln:6:20
-           |vpiParent:
-           \_range: , line:6:18, endln:6:23
-           |vpiDecompile:1
-           |vpiSize:64
-           |UINT:1
-           |vpiConstType:9
-         |vpiRightRange:
-         \_constant: , line:6:21, endln:6:22
-           |vpiParent:
-           \_range: , line:6:18, endln:6:23
-           |vpiDecompile:0
-           |vpiSize:64
-           |UINT:0
-           |vpiConstType:9
-       |vpiSigned:1
-     |vpiName:SeedBank
-     |vpiFullName:my_pkg::SeedBank
-   |vpiParameter:
-   \_parameter: (my_pkg::SeedInfoPageSel), line:8:26, endln:8:41
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |vpiTypespec:
-     \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-       |vpiParent:
-       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-       |vpiName:my_pkg::page_addr_t
-       |vpiInstance:
-       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-       |vpiPacked:1
-       |vpiTypespecMember:
-       \_typespec_member: (addr), line:3:19, endln:3:23
-         |vpiParent:
-         \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-         |vpiName:addr
-         |vpiTypespec:
-         \_logic_typespec: , line:3:7, endln:3:18
-           |vpiParent:
-           \_typespec_member: (addr), line:3:19, endln:3:23
-           |vpiInstance:
-           \_package: (my_pkg)
-           |vpiRange:
-           \_range: , line:3:13, endln:3:18
-             |vpiParent:
-             \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-             |vpiLeftRange:
-             \_constant: , line:3:14, endln:3:15
-               |vpiParent:
-               \_range: , line:3:13, endln:3:18
-               |vpiDecompile:3
-               |vpiSize:64
-               |UINT:3
-               |vpiConstType:9
-             |vpiRightRange:
-             \_constant: , line:3:16, endln:3:17
-               |vpiParent:
-               \_range: , line:3:13, endln:3:18
-               |vpiDecompile:0
-               |vpiSize:64
-               |UINT:0
-               |vpiConstType:9
-         |vpiRefFile:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv
-         |vpiRefLineNo:3
-         |vpiRefColumnNo:7
-         |vpiRefEndLineNo:3
-         |vpiRefEndColumnNo:18
-     |vpiName:SeedInfoPageSel
-     |vpiFullName:my_pkg::SeedInfoPageSel
-   |vpiParamAssign:
-   \_param_assign: , line:6:24, endln:6:36
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |vpiRhs:
-     \_constant: , line:6:35, endln:6:36
-       |vpiDecompile:0
-       |vpiSize:2
-       |UINT:0
-       |vpiTypespec:
-       \_bit_typespec: , line:6:14, endln:6:23
-       |vpiConstType:9
-     |vpiLhs:
-     \_parameter: (my_pkg::SeedBank), line:6:24, endln:6:32
-   |vpiParamAssign:
-   \_param_assign: , line:8:26, endln:10:5
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |vpiRhs:
-     \_operation: , line:8:44, endln:10:5
-       |vpiOpType:75
-       |vpiOperand:
-       \_tagged_pattern: , line:9:13, endln:9:30
-         |vpiPattern:
-         \_constant: , line:9:13, endln:9:30
-           |vpiSize:4
-           |BIN:0011
-           |vpiConstType:3
-         |vpiTypespec:
-         \_string_typespec: (addr), line:9:7, endln:9:11
-           |vpiName:addr
-     |vpiLhs:
-     \_parameter: (my_pkg::SeedInfoPageSel), line:8:26, endln:8:41
-   |vpiTypedef:
-   \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-   |vpiDefName:my_pkg
  |uhdmtopPackages:
  \_package: builtin (builtin::)
    |vpiParent:
@@ -493,131 +369,6 @@ design: (work@top)
      \_package: builtin (builtin::)
      |vpiName:system
      |vpiFullName:builtin::system
- |uhdmtopPackages:
- \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-   |vpiParent:
-   \_design: (work@top)
-   |vpiName:my_pkg
-   |vpiFullName:my_pkg::
-   |vpiParameter:
-   \_parameter: (my_pkg::SeedBank), line:6:24, endln:6:32
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |UINT:0
-     |vpiTypespec:
-     \_bit_typespec: , line:6:14, endln:6:23
-       |vpiParent:
-       \_parameter: (my_pkg::SeedBank), line:6:24, endln:6:32
-       |vpiInstance:
-       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-       |vpiRange:
-       \_range: , line:6:18, endln:6:23
-         |vpiLeftRange:
-         \_constant: , line:6:19, endln:6:20
-           |vpiParent:
-           \_range: , line:6:18, endln:6:23
-           |vpiDecompile:1
-           |vpiSize:64
-           |UINT:1
-           |vpiConstType:9
-         |vpiRightRange:
-         \_constant: , line:6:21, endln:6:22
-           |vpiParent:
-           \_range: , line:6:18, endln:6:23
-           |vpiDecompile:0
-           |vpiSize:64
-           |UINT:0
-           |vpiConstType:9
-       |vpiSigned:1
-     |vpiName:SeedBank
-     |vpiFullName:my_pkg::SeedBank
-   |vpiParameter:
-   \_parameter: (my_pkg::SeedInfoPageSel), line:8:26, endln:8:41
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |vpiTypespec:
-     \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-       |vpiParent:
-       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-       |vpiName:my_pkg::page_addr_t
-       |vpiInstance:
-       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-       |vpiPacked:1
-       |vpiTypespecMember:
-       \_typespec_member: (addr), line:3:19, endln:3:23
-         |vpiParent:
-         \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-         |vpiName:addr
-         |vpiTypespec:
-         \_logic_typespec: , line:3:7, endln:3:18
-           |vpiParent:
-           \_typespec_member: (addr), line:3:19, endln:3:23
-           |vpiInstance:
-           \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-           |vpiRange:
-           \_range: , line:3:13, endln:3:18
-             |vpiParent:
-             \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-             |vpiLeftRange:
-             \_constant: , line:3:14, endln:3:15
-               |vpiParent:
-               \_range: , line:3:13, endln:3:18
-               |vpiDecompile:3
-               |vpiSize:64
-               |UINT:3
-               |vpiConstType:9
-             |vpiRightRange:
-             \_constant: , line:3:16, endln:3:17
-               |vpiParent:
-               \_range: , line:3:13, endln:3:18
-               |vpiDecompile:0
-               |vpiSize:64
-               |UINT:0
-               |vpiConstType:9
-         |vpiRefFile:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv
-         |vpiRefLineNo:3
-         |vpiRefColumnNo:7
-         |vpiRefEndLineNo:3
-         |vpiRefEndColumnNo:18
-     |vpiName:SeedInfoPageSel
-     |vpiFullName:my_pkg::SeedInfoPageSel
-   |vpiParamAssign:
-   \_param_assign: , line:6:24, endln:6:36
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |vpiRhs:
-     \_constant: , line:6:35, endln:6:36
-       |vpiDecompile:0
-       |vpiSize:2
-       |UINT:0
-       |vpiTypespec:
-       \_bit_typespec: , line:6:14, endln:6:23
-       |vpiConstType:9
-     |vpiLhs:
-     \_parameter: (my_pkg::SeedBank), line:6:24, endln:6:32
-   |vpiParamAssign:
-   \_param_assign: , line:8:26, endln:10:5
-     |vpiParent:
-     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:1:1, endln:11:11
-     |vpiRhs:
-     \_operation: , line:8:44, endln:10:5
-       |vpiOpType:75
-       |vpiOperand:
-       \_tagged_pattern: , line:9:13, endln:9:30
-         |vpiPattern:
-         \_constant: , line:9:13, endln:9:30
-           |vpiSize:4
-           |BIN:0011
-           |vpiConstType:3
-         |vpiTypespec:
-         \_string_typespec: (addr), line:9:7, endln:9:11
-           |vpiName:addr
-     |vpiLhs:
-     \_parameter: (my_pkg::SeedInfoPageSel), line:8:26, endln:8:41
-   |vpiTypedef:
-   \_struct_typespec: (my_pkg::page_addr_t), line:2:12, endln:2:18
-   |vpiDefName:my_pkg
-   |vpiTop:1
  |uhdmallClasses:
  \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
    |vpiParent:
@@ -984,476 +735,713 @@ design: (work@top)
        \_int_typespec: 
          |vpiSigned:1
  |uhdmallModules:
- \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:13:1, endln:15:10
+ \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:1:1, endln:2:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@dut
+   |vpiParameter:
+   \_parameter: (work@dut.PARAM), line:1:38, endln:1:43
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:1:1, endln:2:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:24, endln:1:37
+       |vpiParent:
+       \_parameter: (work@dut.PARAM), line:1:38, endln:1:43
+       |vpiRange:
+       \_range: , line:1:30, endln:1:37
+         |vpiLeftRange:
+         \_constant: , line:1:31, endln:1:34
+           |vpiParent:
+           \_range: , line:1:30, endln:1:37
+           |vpiDecompile:255
+           |vpiSize:64
+           |UINT:255
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:1:35, endln:1:36
+           |vpiParent:
+           \_range: , line:1:30, endln:1:37
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:PARAM
+     |vpiFullName:work@dut.PARAM
+   |vpiParamAssign:
+   \_param_assign: , line:1:38, endln:1:43
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:1:1, endln:2:10
+     |vpiLhs:
+     \_parameter: (work@dut.PARAM), line:1:38, endln:1:43
+   |vpiDefName:work@dut
+ |uhdmallModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
    |vpiParent:
    \_design: (work@top)
    |vpiFullName:work@top
    |vpiDefName:work@top
-   |vpiNet:
-   \_logic_net: (work@top.o), line:13:23, endln:13:24
-     |vpiParent:
-     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:13:1, endln:15:10
-     |vpiName:o
-     |vpiFullName:work@top.o
-   |vpiPort:
-   \_port: (o), line:13:23, endln:13:24
-     |vpiParent:
-     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:13:1, endln:15:10
-     |vpiName:o
-     |vpiDirection:2
-     |vpiLowConn:
-     \_ref_obj: 
-       |vpiActual:
-       \_logic_net: (work@top.o), line:13:23, endln:13:24
-     |vpiTypedef:
-     \_int_typespec: , line:13:19, endln:13:22
-       |vpiSigned:1
-   |vpiContAssign:
-   \_cont_assign: , line:14:11, endln:14:44
-     |vpiParent:
-     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:13:1, endln:15:10
-     |vpiRhs:
-     \_operation: , line:14:15, endln:14:44
-       |vpiParent:
-       \_cont_assign: , line:14:11, endln:14:44
-       |vpiTypespec:
-       \_int_typespec: , line:14:15, endln:14:18
-         |vpiSigned:1
-       |vpiOpType:67
-       |vpiOperand:
-       \_ref_obj: (my_pkg::SeedInfoPageSel), line:14:20, endln:14:28
-         |vpiParent:
-         \_operation: , line:14:15, endln:14:44
-         |vpiName:my_pkg::SeedInfoPageSel
-         |vpiActual:
-         \_parameter: (my_pkg::SeedInfoPageSel), line:8:26, endln:8:41
-     |vpiLhs:
-     \_ref_obj: (work@top.o), line:14:11, endln:14:12
-       |vpiParent:
-       \_cont_assign: , line:14:11, endln:14:44
-       |vpiName:o
-       |vpiFullName:work@top.o
-       |vpiActual:
-       \_int_var: (work@top.o), line:13:23, endln:13:24
  |uhdmtopModules:
- \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:13:1, endln:15:10
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
    |vpiName:work@top
-   |vpiVariables:
-   \_int_var: (work@top.o), line:13:23, endln:13:24
-     |vpiParent:
-     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:13:1, endln:15:10
-     |vpiTypespec:
-     \_int_typespec: , line:13:19, endln:13:22
-       |vpiSigned:1
-     |vpiName:o
-     |vpiFullName:work@top.o
-     |vpiSigned:1
-     |vpiVisibility:1
    |vpiDefName:work@top
    |vpiTop:1
    |vpiTopModule:1
-   |vpiPort:
-   \_port: (o), line:13:23, endln:13:24
+   |vpiModule:
+   \_module_inst: work@dut (work@top.d1), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:6:1, endln:6:23
      |vpiParent:
-     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv, line:13:1, endln:15:10
-     |vpiName:o
-     |vpiDirection:2
-     |vpiLowConn:
-     \_ref_obj: (work@top.o), line:13:23, endln:13:24
-       |vpiName:o
-       |vpiFullName:work@top.o
-       |vpiActual:
-       \_int_var: (work@top.o), line:13:23, endln:13:24
-     |vpiTypedef:
-     \_int_typespec: , line:13:19, endln:13:22
-       |vpiSigned:1
-   |vpiContAssign:
-   \_cont_assign: , line:14:11, endln:14:44
-     |vpiRhs:
-     \_operation: , line:14:15, endln:14:44
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+     |vpiName:d1
+     |vpiFullName:work@top.d1
+     |vpiParameter:
+     \_parameter: (work@top.d1.PARAM), line:1:38, endln:1:43
        |vpiParent:
-       \_cont_assign: , line:14:11, endln:14:44
+       \_module_inst: work@dut (work@top.d1), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:6:1, endln:6:23
        |vpiTypespec:
-       \_int_typespec: , line:14:15, endln:14:18
+       \_logic_typespec: , line:1:24, endln:1:37
          |vpiParent:
-         \_operation: , line:14:15, endln:14:44
-         |vpiSigned:1
-       |vpiOpType:67
-       |vpiOperand:
-       \_ref_obj: (my_pkg::SeedInfoPageSel), line:14:20, endln:14:28
-         |vpiParent:
-         \_operation: , line:14:15, endln:14:44
-         |vpiName:my_pkg::SeedInfoPageSel
-         |vpiActual:
-         \_parameter: (my_pkg::SeedInfoPageSel), line:8:26, endln:8:41
-     |vpiLhs:
-     \_ref_obj: (o), line:14:11, endln:14:12
+         \_parameter: (work@top.d1.PARAM), line:1:38, endln:1:43
+         |vpiRange:
+         \_range: , line:1:30, endln:1:37
+           |vpiParent:
+           \_logic_typespec: , line:1:24, endln:1:37
+           |vpiLeftRange:
+           \_constant: , line:1:31, endln:1:34
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:255
+             |vpiSize:64
+             |UINT:255
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:1:35, endln:1:36
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiName:PARAM
+       |vpiFullName:work@top.d1.PARAM
+     |vpiParamAssign:
+     \_param_assign: , line:1:38, endln:1:43
        |vpiParent:
-       \_cont_assign: , line:14:11, endln:14:44
-       |vpiName:o
-       |vpiActual:
-       \_int_var: (work@top.o), line:13:23, endln:13:24
+       \_module_inst: work@dut (work@top.d1), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:6:1, endln:6:23
+       |vpiOverriden:1
+       |vpiRhs:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:256
+         |UINT:0
+         |vpiTypespec:
+         \_logic_typespec: , line:1:24, endln:1:37
+         |vpiConstType:9
+       |vpiLhs:
+       \_parameter: (work@top.d1.PARAM), line:1:38, endln:1:43
+     |vpiDefName:work@dut
+     |vpiDefFile:UHDM-integration-tests/tests/LargeModuleParameter/top.sv
+     |vpiDefLineNo:1
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+   |vpiModule:
+   \_module_inst: work@dut (work@top.d2), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:7:1, endln:7:23
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+     |vpiName:d2
+     |vpiFullName:work@top.d2
+     |vpiParameter:
+     \_parameter: (work@top.d2.PARAM), line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d2), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:7:1, endln:7:23
+       |vpiTypespec:
+       \_logic_typespec: , line:1:24, endln:1:37
+         |vpiParent:
+         \_parameter: (work@top.d2.PARAM), line:1:38, endln:1:43
+         |vpiRange:
+         \_range: , line:1:30, endln:1:37
+           |vpiParent:
+           \_logic_typespec: , line:1:24, endln:1:37
+           |vpiLeftRange:
+           \_constant: , line:1:31, endln:1:34
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:255
+             |vpiSize:64
+             |UINT:255
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:1:35, endln:1:36
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiName:PARAM
+       |vpiFullName:work@top.d2.PARAM
+     |vpiParamAssign:
+     \_param_assign: , line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d2), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:7:1, endln:7:23
+       |vpiOverriden:1
+       |vpiRhs:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:256
+         |UINT:1
+         |vpiTypespec:
+         \_logic_typespec: , line:1:24, endln:1:37
+         |vpiConstType:9
+       |vpiLhs:
+       \_parameter: (work@top.d2.PARAM), line:1:38, endln:1:43
+     |vpiDefName:work@dut
+     |vpiDefFile:UHDM-integration-tests/tests/LargeModuleParameter/top.sv
+     |vpiDefLineNo:1
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+   |vpiModule:
+   \_module_inst: work@dut (work@top.d3), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:8:1, endln:8:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+     |vpiName:d3
+     |vpiFullName:work@top.d3
+     |vpiParameter:
+     \_parameter: (work@top.d3.PARAM), line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d3), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:8:1, endln:8:32
+       |vpiTypespec:
+       \_logic_typespec: , line:1:24, endln:1:37
+         |vpiParent:
+         \_parameter: (work@top.d3.PARAM), line:1:38, endln:1:43
+         |vpiRange:
+         \_range: , line:1:30, endln:1:37
+           |vpiParent:
+           \_logic_typespec: , line:1:24, endln:1:37
+           |vpiLeftRange:
+           \_constant: , line:1:31, endln:1:34
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:255
+             |vpiSize:64
+             |UINT:255
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:1:35, endln:1:36
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiName:PARAM
+       |vpiFullName:work@top.d3.PARAM
+     |vpiParamAssign:
+     \_param_assign: , line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d3), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:8:1, endln:8:32
+       |vpiOverriden:1
+       |vpiRhs:
+       \_constant: 
+         |vpiDecompile:4294967295
+         |vpiSize:256
+         |UINT:4294967295
+         |vpiTypespec:
+         \_logic_typespec: , line:1:24, endln:1:37
+         |vpiConstType:9
+       |vpiLhs:
+       \_parameter: (work@top.d3.PARAM), line:1:38, endln:1:43
+     |vpiDefName:work@dut
+     |vpiDefFile:UHDM-integration-tests/tests/LargeModuleParameter/top.sv
+     |vpiDefLineNo:1
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+   |vpiModule:
+   \_module_inst: work@dut (work@top.d4), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:9:1, endln:9:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+     |vpiName:d4
+     |vpiFullName:work@top.d4
+     |vpiParameter:
+     \_parameter: (work@top.d4.PARAM), line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d4), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:9:1, endln:9:32
+       |vpiTypespec:
+       \_logic_typespec: , line:1:24, endln:1:37
+         |vpiParent:
+         \_parameter: (work@top.d4.PARAM), line:1:38, endln:1:43
+         |vpiRange:
+         \_range: , line:1:30, endln:1:37
+           |vpiParent:
+           \_logic_typespec: , line:1:24, endln:1:37
+           |vpiLeftRange:
+           \_constant: , line:1:31, endln:1:34
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:255
+             |vpiSize:64
+             |UINT:255
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:1:35, endln:1:36
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiName:PARAM
+       |vpiFullName:work@top.d4.PARAM
+     |vpiParamAssign:
+     \_param_assign: , line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d4), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:9:1, endln:9:32
+       |vpiOverriden:1
+       |vpiRhs:
+       \_constant: 
+         |vpiDecompile:4294967296
+         |vpiSize:256
+         |UINT:4294967296
+         |vpiTypespec:
+         \_logic_typespec: , line:1:24, endln:1:37
+         |vpiConstType:9
+       |vpiLhs:
+       \_parameter: (work@top.d4.PARAM), line:1:38, endln:1:43
+     |vpiDefName:work@dut
+     |vpiDefFile:UHDM-integration-tests/tests/LargeModuleParameter/top.sv
+     |vpiDefLineNo:1
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+   |vpiModule:
+   \_module_inst: work@dut (work@top.d5), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:10:1, endln:10:34
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+     |vpiName:d5
+     |vpiFullName:work@top.d5
+     |vpiParameter:
+     \_parameter: (work@top.d5.PARAM), line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d5), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:10:1, endln:10:34
+       |vpiTypespec:
+       \_logic_typespec: , line:1:24, endln:1:37
+         |vpiParent:
+         \_parameter: (work@top.d5.PARAM), line:1:38, endln:1:43
+         |vpiRange:
+         \_range: , line:1:30, endln:1:37
+           |vpiParent:
+           \_logic_typespec: , line:1:24, endln:1:37
+           |vpiLeftRange:
+           \_constant: , line:1:31, endln:1:34
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:255
+             |vpiSize:64
+             |UINT:255
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:1:35, endln:1:36
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiName:PARAM
+       |vpiFullName:work@top.d5.PARAM
+     |vpiParamAssign:
+     \_param_assign: , line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d5), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:10:1, endln:10:34
+       |vpiOverriden:1
+       |vpiRhs:
+       \_constant: 
+         |vpiDecompile:429496729600
+         |vpiSize:256
+         |UINT:429496729600
+         |vpiTypespec:
+         \_logic_typespec: , line:1:24, endln:1:37
+         |vpiConstType:9
+       |vpiLhs:
+       \_parameter: (work@top.d5.PARAM), line:1:38, endln:1:43
+     |vpiDefName:work@dut
+     |vpiDefFile:UHDM-integration-tests/tests/LargeModuleParameter/top.sv
+     |vpiDefLineNo:1
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+   |vpiModule:
+   \_module_inst: work@dut (work@top.d6), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:11:1, endln:11:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
+     |vpiName:d6
+     |vpiFullName:work@top.d6
+     |vpiParameter:
+     \_parameter: (work@top.d6.PARAM), line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d6), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:11:1, endln:11:24
+       |vpiTypespec:
+       \_logic_typespec: , line:1:24, endln:1:37
+         |vpiParent:
+         \_parameter: (work@top.d6.PARAM), line:1:38, endln:1:43
+         |vpiRange:
+         \_range: , line:1:30, endln:1:37
+           |vpiParent:
+           \_logic_typespec: , line:1:24, endln:1:37
+           |vpiLeftRange:
+           \_constant: , line:1:31, endln:1:34
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:255
+             |vpiSize:64
+             |UINT:255
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:1:35, endln:1:36
+             |vpiParent:
+             \_range: , line:1:30, endln:1:37
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiName:PARAM
+       |vpiFullName:work@top.d6.PARAM
+     |vpiParamAssign:
+     \_param_assign: , line:1:38, endln:1:43
+       |vpiParent:
+       \_module_inst: work@dut (work@top.d6), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:11:1, endln:11:24
+       |vpiOverriden:1
+       |vpiRhs:
+       \_constant: 
+         |vpiDecompile:1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+         |vpiSize:256
+         |BIN:1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+         |vpiTypespec:
+         \_logic_typespec: , line:1:24, endln:1:37
+         |vpiConstType:3
+       |vpiLhs:
+       \_parameter: (work@top.d6.PARAM), line:1:38, endln:1:43
+     |vpiDefName:work@dut
+     |vpiDefFile:UHDM-integration-tests/tests/LargeModuleParameter/top.sv
+     |vpiDefLineNo:1
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/LargeModuleParameter/top.sv, line:4:1, endln:13:10
 Object 'work@top' of type 'design'
   Object 'builtin' of type 'package'
-  Object 'my_pkg' of type 'package'
-    Object 'my_pkg::page_addr_t' of type 'struct_typespec'
-      Object 'addr' of type 'typespec_member'
-        Object '' of type 'range'
-          Object '' of type 'constant'
-          Object '' of type 'constant'
-    Object 'SeedBank' of type 'parameter'
+  Object '' of type 'module_inst'
+    Object 'PARAM' of type 'parameter'
       Object '' of type 'range'
         Object '' of type 'constant'
         Object '' of type 'constant'
-      Object '' of type 'bit_typespec'
+    Object '' of type 'param_assign'
+      Object 'PARAM' of type 'parameter'
         Object '' of type 'range'
           Object '' of type 'constant'
           Object '' of type 'constant'
-    Object 'SeedInfoPageSel' of type 'parameter'
-      Object 'my_pkg::page_addr_t' of type 'struct_typespec'
-        Object 'addr' of type 'typespec_member'
+  Object '' of type 'module_inst'
+  Object 'work@top' of type 'module_inst'
+    Object 'd1' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
           Object '' of type 'range'
             Object '' of type 'constant'
             Object '' of type 'constant'
-    Object '' of type 'param_assign'
-      Object 'SeedBank' of type 'parameter'
-        Object '' of type 'range'
-          Object '' of type 'constant'
-          Object '' of type 'constant'
-        Object '' of type 'bit_typespec'
-          Object '' of type 'range'
-            Object '' of type 'constant'
-            Object '' of type 'constant'
-      Object '' of type 'constant'
-        Object '' of type 'bit_typespec'
-          Object '' of type 'range'
-            Object '' of type 'constant'
-            Object '' of type 'constant'
-    Object '' of type 'param_assign'
-      Object 'SeedInfoPageSel' of type 'parameter'
-        Object 'my_pkg::page_addr_t' of type 'struct_typespec'
-          Object 'addr' of type 'typespec_member'
+        Object '' of type 'constant'
+          Object '' of type 'logic_typespec'
             Object '' of type 'range'
               Object '' of type 'constant'
               Object '' of type 'constant'
-      Object '' of type 'operation'
-        Object '' of type 'tagged_pattern'
-          Object '' of type 'constant'
-  Object '' of type 'module_inst'
-    Object 'o' of type 'logic_net'
-  Object 'work@top' of type 'module_inst'
-    Object 'o' of type 'port'
-      Object '' of type 'int_typespec'
-    Object '' of type 'cont_assign'
-      Object 'o' of type 'ref_obj'
-      Object '' of type 'operation'
-        Object 'my_pkg::SeedInfoPageSel' of type 'ref_obj'
-    Object 'o' of type 'int_var'
-Generating RTLIL representation for module `\top'.
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+          Object '' of type 'logic_typespec'
+            Object '' of type 'range'
+              Object '' of type 'constant'
+              Object '' of type 'constant'
+    Object 'd2' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+          Object '' of type 'logic_typespec'
+            Object '' of type 'range'
+              Object '' of type 'constant'
+              Object '' of type 'constant'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+          Object '' of type 'logic_typespec'
+            Object '' of type 'range'
+              Object '' of type 'constant'
+              Object '' of type 'constant'
+    Object 'd3' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'd4' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'd5' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'd6' of type 'module_inst'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+      Object '' of type 'param_assign'
+        Object 'PARAM' of type 'parameter'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object '' of type 'constant'
+Warning: Removing unused module: \dut from the design.
+Generating RTLIL representation for module `$paramod\dut\PARAM=256'd4294967295'.
 Dumping AST before simplification:
-    AST_MODULE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13.1-15.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13.23-13.24> str='\o' output signed port=1 range=[0:0]
-        ATTR \is_simplified_wire:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0>
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_ASSIGN <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:14.11-14.44>
-        AST_IDENTIFIER <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:14.11-14.12> str='\o'
-        AST_IDENTIFIER <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:14.20-14.28> str='\my_pkg::SeedInfoPageSel'
-      AST_TYPEDEF <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:2.12-2.18> str='\my_pkg::page_addr_t' basic_prep
-        AST_STRUCT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:2.12-2.18> basic_prep
-          AST_STRUCT_ITEM <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:3.19-3.23> str='addr' logic basic_prep range=[3:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:6.24-6.36> str='\my_pkg::SeedBank' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.1-2.10> str='$paramod\dut\PARAM=256'd4294967295'
+      AST_PARAMETER <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.38-1.43> str='\PARAM' multirange=[ 0 256 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:6.18-6.23> basic_prep range=[1:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00'(2) basic_prep range=[1:0]
-        AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:6.18-6.23> basic_prep range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:8.26-10.5> str='\my_pkg::SeedInfoPageSel' logic basic_prep range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
-        ATTR \wiretype:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> str='\page_addr_t' bits='010111000111000001100001011001110110010101011111011000010110010001100100011100100101111101110100'(96) basic_prep range=[95:0] int=1685217140
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> basic_prep range=[3:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:8.44-10.5> bits='0011'(4) basic_prep range=[3:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> basic_prep range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'(256) signed range=[255:0] int=4294967295
+        AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
-    module top(o);
+    module \$paramod\dut\PARAM=256'd4294967295 ();
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
-      (* wiretype = "\page_addr_t" *)
-      (* packed_ranges = 1'b 1 *)
-      (* unpacked_ranges = 1'b 1 *)
-      /** AST_PARAMETER **/
-      (* is_simplified_wire = 1 *)
-      output signed [31:0] o;
-      assign o = \my_pkg::SeedInfoPageSel ;
-      /** AST_TYPEDEF **/
     endmodule
 --- END OF AST DUMP ---
 Dumping AST after simplification:
-    AST_MODULE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13.1-15.10> str='\top' basic_prep
-      AST_WIRE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13.23-13.24> str='\o' output signed basic_prep port=1 range=[31:0]
-        ATTR \is_simplified_wire:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> basic_prep range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_ASSIGN <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:14.11-14.44> basic_prep
-        AST_IDENTIFIER <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:14.11-14.12> str='\o' basic_prep
-        AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:14.20-14.28> bits='0011'(4) basic_prep range=[3:0] int=3
-      AST_TYPEDEF <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:2.12-2.18> str='\my_pkg::page_addr_t' basic_prep
-        AST_STRUCT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:2.12-2.18> basic_prep
-          AST_STRUCT_ITEM <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:3.19-3.23> str='addr' logic basic_prep range=[3:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:6.24-6.36> str='\my_pkg::SeedBank' basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.1-2.10> str='$paramod\dut\PARAM=256'd4294967295' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.38-1.43> str='\PARAM' basic_prep range=[255:0] multirange=[ 0 256 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:6.18-6.23> basic_prep range=[1:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00'(2) basic_prep range=[1:0]
-        AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:6.18-6.23> basic_prep range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:8.26-10.5> str='\my_pkg::SeedInfoPageSel' logic basic_prep range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
-        ATTR \wiretype:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> str='\page_addr_t' bits='010111000111000001100001011001110110010101011111011000010110010001100100011100100101111101110100'(96) basic_prep range=[95:0] int=1685217140
-        ATTR \packed_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> basic_prep range=[3:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-              AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-        ATTR \unpacked_ranges:
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:8.44-10.5> bits='0011'(4) basic_prep range=[3:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> basic_prep range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'(256) basic_prep range=[255:0] int=4294967295
+        AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST after simplification:
-    module top(o);
+    module \$paramod\dut\PARAM=256'd4294967295 ();
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
-      (* wiretype = "\page_addr_t" *)
+    endmodule
+--- END OF AST DUMP ---
+Generating RTLIL representation for module `$paramod\dut\PARAM=256'd1'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.1-2.10> str='$paramod\dut\PARAM=256'd1'
+      AST_PARAMETER <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.38-1.43> str='\PARAM' multirange=[ 0 256 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001'(256) range=[255:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module \$paramod\dut\PARAM=256'd1 ();
       (* packed_ranges = 1'b 1 *)
       (* unpacked_ranges = 1'b 1 *)
       /** AST_PARAMETER **/
-      (* is_simplified_wire = 1 *)
-      output signed [31:0] o;
-      assign o = 4'b 0011;
-      /** AST_TYPEDEF **/
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.1-2.10> str='$paramod\dut\PARAM=256'd1' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.38-1.43> str='\PARAM' basic_prep range=[255:0] multirange=[ 0 256 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001'(256) basic_prep range=[255:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module \$paramod\dut\PARAM=256'd1 ();
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+    endmodule
+--- END OF AST DUMP ---
+Generating RTLIL representation for module `$paramod\dut\PARAM=256'd0'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.1-2.10> str='$paramod\dut\PARAM=256'd0'
+      AST_PARAMETER <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.38-1.43> str='\PARAM' multirange=[ 0 256 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000110010000000000000000000000000000000000'(256) range=[255:0]
+        AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module \$paramod\dut\PARAM=256'd0 ();
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.1-2.10> str='$paramod\dut\PARAM=256'd0' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.38-1.43> str='\PARAM' basic_prep range=[255:0] multirange=[ 0 256 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+              AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000110010000000000000000000000000000000000'(256) basic_prep range=[255:0]
+        AST_RANGE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:1.30-1.37> basic_prep range=[255:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+          AST_CONSTANT <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module \$paramod\dut\PARAM=256'd0 ();
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+    endmodule
+--- END OF AST DUMP ---
+Generating RTLIL representation for module `\top'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:4.1-13.10> str='\top'
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:6.1-6.23> str='\d1'
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd0'
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:7.1-7.23> str='\d2'
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd1'
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:8.1-8.32> str='\d3'
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd4294967295'
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:9.1-9.32> str='\d4'
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd0'
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:10.1-10.34> str='\d5'
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd0'
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:11.1-11.24> str='\d6'
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd4294967295'
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module top();
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:4.1-13.10> str='\top' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:6.1-6.23> str='\d1' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd0' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:7.1-7.23> str='\d2' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd1' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:8.1-8.32> str='\d3' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd4294967295' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:9.1-9.32> str='\d4' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd0' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:10.1-10.34> str='\d5' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd0' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:11.1-11.24> str='\d6' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/LargeModuleParameter/top.sv:0.0-0.0> str='$paramod\dut\PARAM=256'd4294967295' basic_prep
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module top();
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+      /** AST_CELL **/
     endmodule
 --- END OF AST DUMP ---
 
-2. Executing PREP pass.
+2. Executing Verilog backend.
 
-2.1. Executing HIERARCHY pass (managing design hierarchy).
+2.1. Executing BMUXMAP pass.
 
-2.1.1. Analyzing design hierarchy..
-Top module:  \top
-
-2.1.2. Analyzing design hierarchy..
-Top module:  \top
-Removed 0 unused modules.
-
-2.2. Executing PROC pass (convert processes to netlists).
-
-2.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
-Cleaned up 0 empty switches.
-
-2.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
-Removed a total of 0 dead cases.
-
-2.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
-Removed 0 redundant assignments.
-Promoted 0 assignments to connections.
-
-2.2.4. Executing PROC_INIT pass (extract init attributes).
-
-2.2.5. Executing PROC_ARST pass (detect async resets in processes).
-
-2.2.6. Executing PROC_ROM pass (convert switches to ROMs).
-Converted 0 switches.
-
-2.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
-
-2.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
-
-2.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
-
-2.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
-
-2.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
-Cleaned up 0 empty switches.
-
-2.2.12. Executing OPT_EXPR pass (perform const folding).
-Optimizing module top.
-
-2.3. Executing OPT_EXPR pass (perform const folding).
-Optimizing module top.
-
-2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module \top..
-
-2.5. Executing CHECK pass (checking for obvious problems).
-Checking module top...
-Found and reported 0 problems.
-
-2.6. Executing OPT pass (performing simple optimizations).
-
-2.6.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module top.
-
-2.6.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `\top'.
-Removed a total of 0 cells.
-
-2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module \top..
-  Creating internal representation of mux trees.
-  No muxes found in this module.
-Removed 0 multiplexer ports.
-
-2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module \top.
-Performed a total of 0 changes.
-
-2.6.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `\top'.
-Removed a total of 0 cells.
-
-2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module \top..
-
-2.6.7. Executing OPT_EXPR pass (perform const folding).
-Optimizing module top.
-
-2.6.8. Finished OPT passes. (There is nothing left to do.)
-
-2.7. Executing WREDUCE pass (reducing word size of cells).
-
-2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module \top..
-
-2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
-
-2.10. Executing OPT pass (performing simple optimizations).
-
-2.10.1. Executing OPT_EXPR pass (perform const folding).
-Optimizing module top.
-
-2.10.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `\top'.
-Removed a total of 0 cells.
-
-2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module \top..
-
-2.10.4. Finished fast OPT passes.
-
-2.11. Printing statistics.
-
-=== top ===
-
-   Number of wires:                  1
-   Number of wire bits:             32
-   Number of public wires:           1
-   Number of public wire bits:      32
-   Number of memories:               0
-   Number of memory bits:            0
-   Number of processes:              0
-   Number of cells:                  0
-
-2.12. Executing CHECK pass (checking for obvious problems).
-Checking module top...
-Found and reported 0 problems.
-
-3. Executing Verilog backend.
-
-3.1. Executing BMUXMAP pass.
-
-3.2. Executing DEMUXMAP pass.
+2.2. Executing DEMUXMAP pass.
 /* Generated by Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
 Dumping module `\top'.
 
-(* top =  1  *)
-(* src = "UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13.1-15.10" *)
-module top(o);
-  (* is_simplified_wire = 32'd1 *)
-  (* src = "UHDM-integration-tests/tests/StructParameterInitializedWithPatternAndReferenced/top.sv:13.23-13.24" *)
-  output [31:0] o;
-  wire [31:0] o;
-  assign o = 32'd3;
+module top();
+  \$paramod\dut\PARAM=256'd0  d1 (
+  );
+  \$paramod\dut\PARAM=256'd1  d2 (
+  );
+  \$paramod\dut\PARAM=256'd4294967295  d3 (
+  );
+  \$paramod\dut\PARAM=256'd0  d4 (
+  );
+  \$paramod\dut\PARAM=256'd0  d5 (
+  );
+  \$paramod\dut\PARAM=256'd4294967295  d6 (
+  );
 endmodule
 
-4. Executing Verilog backend.
-
-4.1. Executing BMUXMAP pass.
-
-4.2. Executing DEMUXMAP pass.
-Dumping module `\top'.
-
-5. Executing SIM pass (simulate the circuit).
-Simulating cycle 0.
-Simulating cycle 1.
-Simulating cycle 2.
-Simulating cycle 3.
-Simulating cycle 4.
-Simulating cycle 5.
-Simulating cycle 6.
-Simulating cycle 7.
-Simulating cycle 8.
-Simulating cycle 9.
-Simulating cycle 10.
-Simulating cycle 11.
-Simulating cycle 12.
-Simulating cycle 13.
-Simulating cycle 14.
-Simulating cycle 15.
-Simulating cycle 16.
-Simulating cycle 17.
-Simulating cycle 18.
-Simulating cycle 19.
-Simulating cycle 20.
-Simulating cycle 21.
-Simulating cycle 22.
-Simulating cycle 23.
-Simulating cycle 24.
-Simulating cycle 25.
-Simulating cycle 26.
-Simulating cycle 27.
-Simulating cycle 28.
-Simulating cycle 29.
-Simulating cycle 30.
-Simulating cycle 31.
-Simulating cycle 32.
-Simulating cycle 33.
-Simulating cycle 34.
-Simulating cycle 35.
-Simulating cycle 36.
-Simulating cycle 37.
-Simulating cycle 38.
-Simulating cycle 39.
-Simulating cycle 40.
-
+Warnings: 1 unique messages, 1 total
 
 Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
 

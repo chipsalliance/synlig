@@ -1703,7 +1703,7 @@ Warning: UHDM-integration-tests/tests/MultipleNets/top.sv:20: Skipping non-synth
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/MultipleNets/top.sv:11.1-25.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:12.17-12.33> str='\simple_logic_net' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:12.17-12.33> str='\simple_logic_net' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:13.23-13.39> str='\packed_logic_net' input logic port=2 multirange=[ 0 3 ] multirange_swapped=[ 0 ]
@@ -1716,9 +1716,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:13.17-13.22> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:14.17-14.35> str='\unpacked_logic_net' input logic port=3 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1729,9 +1729,9 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:14.36-14.41> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:15.29-15.51> str='\packed_array_logic_net' input logic port=4 multirange=[ 0 6 0 5 ] multirange_swapped=[ 0 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1780,9 +1780,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> str='\FIRST' bits='010111000100011001001001010100100101001101010100'(48) basic_prep range=[47:0] int=1230132052
         ATTR \enum_value_0:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> str='\SECOND' bits='01011100010100110100010101000011010011110100111001000100'(56) basic_prep range=[55:0] int=1129270852
-        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:18.27-18.43> str='\struct_net_input' input logic basic_prep range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> str='\struct1' bits='0101110001110011011101000111001001110101011000110111010000110001'(64) basic_prep range=[63:0] int=1969452081
@@ -1793,16 +1793,16 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:19.19-19.36> str='\integer_net_input' input signed port=8 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:19.19-19.36> str='\integer_net_input' input signed port=8 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:20.16-20.30> str='\time_net_input' input logic port=9 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:20.16-20.30> str='\time_net_input' input logic port=9 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ENUM <UHDM-integration-tests/tests/MultipleNets/top.sv:2.5-5.13> str='$enum0' logic basic_prep
@@ -1882,7 +1882,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:13.17-13.22> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:14.17-14.35> str='\unpacked_logic_net' input logic basic_prep port=3 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
@@ -1895,7 +1895,7 @@ Dumping AST after simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleNets/top.sv:14.36-14.41> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleNets/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/MultipleNets/top.sv:15.29-15.51> str='\packed_array_logic_net' input logic basic_prep port=4 range=[29:0] multirange=[ 0 6 0 5 ] multirange_swapped=[ 0 0 ]

@@ -952,13 +952,13 @@ Object 'work@dut' of type 'design'
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <Surelog/tests/OneAnd/dut.v:1.1-5.10> str='\dut'
-      AST_WIRE <Surelog/tests/OneAnd/dut.v:1.24-1.25> str='\a' input logic port=1 range=[-1:0]
+      AST_WIRE <Surelog/tests/OneAnd/dut.v:1.24-1.25> str='\a' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneAnd/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <Surelog/tests/OneAnd/dut.v:1.39-1.40> str='\b' input logic port=2 range=[-1:0]
+      AST_WIRE <Surelog/tests/OneAnd/dut.v:1.39-1.40> str='\b' input logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneAnd/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <Surelog/tests/OneAnd/dut.v:1.55-1.56> str='\o' output logic port=3 range=[-1:0]
+      AST_WIRE <Surelog/tests/OneAnd/dut.v:1.55-1.56> str='\o' output logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneAnd/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <Surelog/tests/OneAnd/dut.v:3.10-3.19>

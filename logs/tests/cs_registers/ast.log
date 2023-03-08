@@ -13841,7 +13841,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001011'(32) signed range=[31:0] int=11
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/cs_registers/dut.sv:2.1-154.13> str='\csr_num_e'
-        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='$enum4' bits='001001000110010101101110011101010110110100110100'(48) range=[47:0] int=1853189428
           ATTR \is_simplified_wire:
@@ -13883,7 +13883,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/cs_registers/dut.sv:199.1-205.15> str='\dbg_cause_e'
-        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='$enum5' bits='001001000110010101101110011101010110110100110101'(48) range=[47:0] int=1853189429
           ATTR \is_simplified_wire:
@@ -13943,7 +13943,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/cs_registers/dut.sv:171.1-176.14> str='\priv_lvl_e'
-        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='$enum6' bits='001001000110010101101110011101010110110100110110'(48) range=[47:0] int=1853189430
           ATTR \is_simplified_wire:
@@ -13982,7 +13982,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/cs_registers/dut.sv:192.1-196.17> str='\x_debug_ver_e'
-        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='$enum7' bits='001001000110010101101110011101010110110100110111'(48) range=[47:0] int=1853189431
           ATTR \is_simplified_wire:
@@ -14001,9 +14001,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001011'(32) range=[31:0] int=11
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:168.24-168.46> str='\CSR_MFIX_BIT_HIGH' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14015,9 +14015,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011110'(32) range=[31:0] int=30
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:167.24-167.46> str='\CSR_MFIX_BIT_LOW' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14029,9 +14029,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) range=[31:0] int=16
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:178.23-178.42> str='\CSR_MISA_MXL' multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14043,9 +14043,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01'(2) signed range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:178.17-178.22> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:164.24-164.45> str='\CSR_MSIX_BIT' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14057,9 +14057,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:156.24-156.52> str='\CSR_MSTATUS_MIE_BIT' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14071,9 +14071,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:157.24-157.52> str='\CSR_MSTATUS_MPIE_BIT' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14085,9 +14085,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) range=[31:0] int=7
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:159.24-159.53> str='\CSR_MSTATUS_MPP_BIT_HIGH' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14099,9 +14099,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001100'(32) range=[31:0] int=12
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:158.24-158.53> str='\CSR_MSTATUS_MPP_BIT_LOW' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14113,9 +14113,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001011'(32) range=[31:0] int=11
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:160.24-160.53> str='\CSR_MSTATUS_MPRV_BIT' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14127,9 +14127,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010001'(32) range=[31:0] int=17
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:161.24-161.53> str='\CSR_MSTATUS_TW_BIT' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14141,9 +14141,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010101'(32) range=[31:0] int=21
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:165.24-165.45> str='\CSR_MTIX_BIT' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14155,9 +14155,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) range=[31:0] int=7
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:189.24-189.48> str='\PMP_CFG_W' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14169,9 +14169,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) range=[31:0] int=8
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:188.24-188.49> str='\PMP_MAX_REGIONS' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14183,12 +14183,12 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) range=[31:0] int=16
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:255.24-255.45> str='\RV32M' range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:255.24-255.45> str='\RV32M' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) signed range=[0:0] int=1
-      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:256.24-256.45> str='\RV32E' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:256.24-256.45> str='\RV32E' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='0'(1) signed range=[0:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/cs_registers/dut.sv:258.25-270.30> str='\MISA_VALUE' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
@@ -14199,9 +14199,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01000000000100000001000100000100'(32) range=[31:0] int=1074794756
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:258.18-258.24> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/cs_registers/dut.sv:272.25-272.81> str='\MISA_VALUE_RESULT' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14211,10 +14211,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01000000000100000001000100000100'(32) signed range=[31:0] int=1074794756
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:209.18-209.21> str='\clk' input logic port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:272.18-272.24> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:209.18-209.21> str='\clk' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:238.14-238.20> str='\dcsr_q' logic basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
@@ -14229,9 +14229,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:274.13-274.23> str='\csr_addr_i' reg basic_prep range=[11:0] multirange=[ 0 12 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\csr_num_e' bits='01011100011000110111001101110010010111110110111001110101011011010101111101100101'(80) basic_prep range=[79:0] int=1970102117
@@ -14516,9 +14516,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\CSR_END' bits='0101110001000011010100110101001001011111010001010100111001000100'(64) basic_prep range=[63:0] int=1598377540
         ATTR \enum_value_111111111111:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\DUMMY_CSR_SETMHPMEVENT31' bits='01011100010001000101010101001101010011010101100101011111010000110101001101010010010111110101001101000101010101000100110101001000010100000100110101000101010101100100010101001110010101000011001100110001'(200) basic_prep range=[199:0] int=1314140977
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[11:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001011'(32) signed range=[31:0] int=11
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:2.19-2.25> basic_prep range=[11:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001011'(32) signed basic_prep range=[31:0] int=11
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:275.14-275.23> str='\mstatus_q' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\status_t' bits='010111000111001101110100011000010111010001110101011100110101111101110100'(72) basic_prep range=[71:0] int=1970495348
@@ -14531,9 +14531,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:276.14-276.19> str='\mie_q' logic basic_prep range=[17:0] multirange=[ 0 18 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\irqs_t' bits='01011100011010010111001001110001011100110101111101110100'(56) basic_prep range=[55:0] int=1903386484
@@ -14546,9 +14546,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[17:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010001'(32) signed range=[31:0] int=17
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[17:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010001'(32) signed basic_prep range=[31:0] int=17
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:277.14-277.17> str='\mip' logic basic_prep range=[17:0] multirange=[ 0 18 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\irqs_t' bits='01011100011010010111001001110001011100110101111101110100'(56) basic_prep range=[55:0] int=1903386484
@@ -14561,9 +14561,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> range=[17:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010001'(32) signed range=[31:0] int=17
-          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[17:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000010001'(32) signed basic_prep range=[31:0] int=17
+          AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:296.14-296.27> str='\csr_rdata_int' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -14590,7 +14590,7 @@ Dumping AST before simplification:
         AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:297.7-297.13>
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:299.14-299.25> str='\illegal_csr' logic range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:299.14-299.25> str='\illegal_csr' logic range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:300.14-300.22> str='\mcause_q' logic
@@ -14606,7 +14606,7 @@ Dumping AST before simplification:
         AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:300.8-300.13>
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:302.14-302.26> str='\debug_mode_i' logic range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:302.14-302.26> str='\debug_mode_i' logic range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:305.51-305.65> str='\pmp_addr_rdata' logic multirange=[ 0 32 0 16 ] multirange_swapped=[ 0 0 ]
@@ -16879,7 +16879,7 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:178.17-178.22> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:188.24-188.49> str='\ibex_pkg::PMP_MAX_REGIONS' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
@@ -18597,7 +18597,7 @@ Dumping AST after simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:178.17-178.22> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:164.24-164.45> str='\CSR_MSIX_BIT' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
@@ -18740,9 +18740,9 @@ Dumping AST after simplification:
         AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:255.24-255.45> str='\RV32M' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:255.24-255.45> str='\RV32M' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) signed basic_prep range=[0:0] int=1
-      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:256.24-256.45> str='\RV32E' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:256.24-256.45> str='\RV32E' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='0'(1) signed basic_prep range=[0:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/cs_registers/dut.sv:258.25-270.30> str='\MISA_VALUE' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
@@ -18753,7 +18753,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01000000000100000001000100000100'(32) basic_prep range=[31:0] int=1074794756
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:258.18-258.24> basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/cs_registers/dut.sv:272.25-272.81> str='\MISA_VALUE_RESULT' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
@@ -18765,7 +18765,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01000000000100000001000100000100'(32) basic_prep range=[31:0] int=1074794756
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:272.18-272.24> basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:209.18-209.21> str='\clk' input logic basic_prep port=1 range=[0:0]
@@ -19070,7 +19070,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\CSR_END' bits='0101110001000011010100110101001001011111010001010100111001000100'(64) basic_prep range=[63:0] int=1598377540
         ATTR \enum_value_111111111111:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> str='\DUMMY_CSR_SETMHPMEVENT31' bits='01011100010001000101010101001101010011010101100101011111010000110101001101010010010111110101001101000101010101000100110101001000010100000100110101000101010101100100010101001110010101000011001100110001'(200) basic_prep range=[199:0] int=1314140977
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[11:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:2.19-2.25> basic_prep range=[11:0]
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000001011'(32) signed basic_prep range=[31:0] int=11
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/cs_registers/dut.sv:275.14-275.23> str='\mstatus_q' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
@@ -21686,7 +21686,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/cs_registers/dut.sv:178.17-178.22> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/cs_registers/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/cs_registers/dut.sv:188.24-188.49> str='\ibex_pkg::PMP_MAX_REGIONS' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]

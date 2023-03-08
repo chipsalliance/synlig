@@ -1752,9 +1752,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.33-1.34> str='\b' output logic port=2 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1765,9 +1765,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.36-1.37> str='\c' output logic port=3 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1778,9 +1778,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.39-1.40> str='\d' output logic port=4 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1791,9 +1791,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:2.26-9.12> str='\x' logic multirange=[ 0 4 0 3 0 2 ] multirange_swapped=[ 0 0 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -2041,7 +2041,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.33-1.34> str='\b' output logic basic_prep port=2 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
@@ -2054,7 +2054,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.36-1.37> str='\c' output logic basic_prep port=3 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
@@ -2067,7 +2067,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.39-1.40> str='\d' output logic basic_prep port=4 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
@@ -2080,7 +2080,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:1.24-1.29> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/LogicPackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/LogicPackedArray/top.sv:2.26-9.12> str='\x' logic reg basic_prep range=[23:0] multirange=[ 0 4 0 3 0 2 ] multirange_swapped=[ 0 0 0 ]

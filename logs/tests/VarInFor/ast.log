@@ -1204,7 +1204,7 @@ Warning: UHDM-integration-tests/tests/VarInFor/top.sv:5: Post-incrementation ope
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/VarInFor/top.sv:12.1-14.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:12.27-12.28> str='\o' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:12.27-12.28> str='\o' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
@@ -1214,7 +1214,7 @@ Dumping AST before simplification:
         AST_IDENTIFIER <UHDM-integration-tests/tests/VarInFor/top.sv:13.11-13.12> str='\o'
         AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
       AST_FUNCTION <UHDM-integration-tests/tests/VarInFor/top.sv:2.4-9.15> str='\prim_util_pkg::_clog2'
-        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:2.23-2.30> str='\prim_util_pkg::_clog2' signed range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:2.23-2.30> str='\prim_util_pkg::_clog2' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
@@ -1230,10 +1230,10 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
@@ -1241,7 +1241,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
         AST_BLOCK <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
           AST_BLOCK <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> str='$unnamed_block$0'
-            AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[-1:0]
+            AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
               AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
@@ -1291,7 +1291,7 @@ Dumping AST after simplification:
         AST_IDENTIFIER <UHDM-integration-tests/tests/VarInFor/top.sv:13.11-13.12> str='\o' basic_prep
         AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) basic_prep range=[31:0] int=3
       AST_FUNCTION <UHDM-integration-tests/tests/VarInFor/top.sv:2.4-9.15> str='\prim_util_pkg::_clog2'
-        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:2.23-2.30> str='\prim_util_pkg::_clog2' signed range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:2.23-2.30> str='\prim_util_pkg::_clog2' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
@@ -1307,10 +1307,10 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
@@ -1318,7 +1318,7 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
         AST_BLOCK <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>
           AST_BLOCK <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> str='$unnamed_block$0'
-            AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[-1:0]
+            AST_WIRE <UHDM-integration-tests/tests/VarInFor/top.sv:3.15-3.21> str='\result' signed range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
               AST_RANGE <UHDM-integration-tests/tests/VarInFor/top.sv:0.0-0.0>

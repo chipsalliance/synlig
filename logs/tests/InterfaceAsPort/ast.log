@@ -1053,7 +1053,7 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:9.1-13.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:9.23-9.24> str='\o' output signed port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:9.23-9.24> str='\o' output signed port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:0.0-0.0>
@@ -1115,7 +1115,7 @@ UHDM-integration-tests/tests/InterfaceAsPort/top.sv:11: Warning: Identifier `\u_
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:5.1-7.10> str='\dut'
-      AST_WIRE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:5.42-5.43> str='\a' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:5.42-5.43> str='\a' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:0.0-0.0>
@@ -1177,7 +1177,7 @@ UHDM-integration-tests/tests/InterfaceAsPort/top.sv:6: Warning: Identifier `\ss_
 Generating RTLIL representation for module `\sim_sram_if'.
 Dumping AST before simplification:
     AST_INTERFACE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:0.0-0.0> str='\sim_sram_if'
-      AST_WIRE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:2.8-2.18> str='\start_addr' range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:2.8-2.18> str='\start_addr' range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/InterfaceAsPort/top.sv:0.0-0.0>

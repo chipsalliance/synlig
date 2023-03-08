@@ -1694,9 +1694,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1725,9 +1725,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1756,9 +1756,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000010'(32) range=[31:0] int=2
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1787,9 +1787,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1818,9 +1818,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1849,9 +1849,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000101'(32) range=[31:0] int=5
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1880,9 +1880,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000110'(32) range=[31:0] int=6
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1911,9 +1911,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000000111'(32) range=[31:0] int=7
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1942,9 +1942,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000001000'(32) range=[31:0] int=8
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>
@@ -1973,9 +1973,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:3.0-3.0> bits='00000000000000000000000000001001'(32) range=[31:0] int=9
-          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.21>
           AST_IDENTIFIER <UHDM-integration-tests/tests/MemoryPort/top.sv:4.13-4.17> str='\a' basic_prep
             AST_RANGE <UHDM-integration-tests/tests/MemoryPort/top.sv:0.0-0.0>

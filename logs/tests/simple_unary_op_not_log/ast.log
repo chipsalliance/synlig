@@ -1029,9 +1029,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:6.18-6.23> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:6.40-6.41> str='\b' output logic port=2 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1042,9 +1042,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:6.34-6.39> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:7.12-7.18>
         AST_IDENTIFIER <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:7.12-7.13> str='\b'
         AST_LOGIC_NOT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:7.16-7.18>
@@ -1075,7 +1075,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:6.18-6.23> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:6.40-6.41> str='\b' output logic basic_prep port=2 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
@@ -1088,7 +1088,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:6.34-6.39> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/simple_unary_op_not_log/simple_unary_op_not_log.sv:7.12-7.18> basic_prep

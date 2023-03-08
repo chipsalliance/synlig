@@ -1083,9 +1083,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000010'(32) range=[31:0] int=2
-        AST_RANGE <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <Surelog/tests/GenerateAssigns/top.v:2.20-2.25> str='\q' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1095,16 +1095,16 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
-        AST_RANGE <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <Surelog/tests/GenerateAssigns/top.v:1.18-1.19> str='\a' input logic port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <Surelog/tests/GenerateAssigns/top.v:1.18-1.19> str='\a' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <Surelog/tests/GenerateAssigns/top.v:1.27-1.28> str='\b' input logic port=2 range=[-1:0]
+      AST_WIRE <Surelog/tests/GenerateAssigns/top.v:1.27-1.28> str='\b' input logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <Surelog/tests/GenerateAssigns/top.v:1.37-1.38> str='\y' output logic port=3 range=[-1:0]
+      AST_WIRE <Surelog/tests/GenerateAssigns/top.v:1.37-1.38> str='\y' output logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/GenerateAssigns/top.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_GENBLOCK <Surelog/tests/GenerateAssigns/top.v:28.5-41.8> str='\u2'

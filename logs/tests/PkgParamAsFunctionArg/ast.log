@@ -1057,11 +1057,11 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:8.1-16.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:8.19-8.20> str='\a' output logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:8.19-8.20> str='\a' output logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_FUNCTION <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.4-12.15> str='\get_first'
-        AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.23-10.28> str='\get_first' logic range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.23-10.28> str='\get_first' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.51-10.52> str='\x' input logic port=2 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -1074,9 +1074,9 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> range=[1:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.45-10.50> basic_prep range=[1:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN_EQ <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:11.7-11.13>
           AST_IDENTIFIER <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> str='\get_first'
           AST_IDENTIFIER <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:11.14-11.18> str='\x'
@@ -1094,7 +1094,7 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:3.29-3.41> bits='10'(2) basic_prep range=[1:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:3.19-3.24> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
@@ -1115,7 +1115,7 @@ Dumping AST after simplification:
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
       AST_FUNCTION <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.4-12.15> str='\get_first'
-        AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.23-10.28> str='\get_first' logic range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.23-10.28> str='\get_first' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_WIRE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.51-10.52> str='\x' input logic port=2 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -1128,9 +1128,9 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> range=[1:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:10.45-10.50> basic_prep range=[1:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+            AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN_EQ <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:11.7-11.13>
           AST_IDENTIFIER <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> str='\get_first'
           AST_IDENTIFIER <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:11.14-11.18> str='\x'
@@ -1148,7 +1148,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:3.29-3.41> bits='10'(2) basic_prep range=[1:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:3.19-3.24> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/PkgParamAsFunctionArg/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---

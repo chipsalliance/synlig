@@ -1103,9 +1103,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:1.25-1.30> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:6.13-6.14> str='\a' logic basic_prep range=[7:0] multirange=[ 0 8 0 2 ] multirange_swapped=[ 0 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> str='\tl_h2d_t' bits='010111000111010001101100010111110110100000110010011001000101111101110100'(72) basic_prep range=[71:0] int=845438836
@@ -1209,7 +1209,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:1.25-1.30> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/IndexedPartSelectOfArrayElement/top.sv:6.13-6.14> str='\a' logic reg basic_prep range=[15:0] multirange=[ 0 8 0 2 ] multirange_swapped=[ 0 0 ]

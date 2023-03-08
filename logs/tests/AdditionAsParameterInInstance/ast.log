@@ -1128,10 +1128,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:1.23-1.24> str='\a' output signed port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:1.23-1.24> str='\a' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0>
@@ -1197,9 +1197,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:8.18-8.23> str='\Y' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1209,10 +1209,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:6.23-6.24> str='\o' output signed port=2 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:6.23-6.24> str='\o' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/AdditionAsParameterInInstance/top.sv:0.0-0.0>

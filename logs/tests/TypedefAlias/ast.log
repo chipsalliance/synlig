@@ -1473,7 +1473,7 @@ Dumping AST before simplification:
       AST_TYPEDEF <UHDM-integration-tests/tests/TypedefAlias/dut.v:10.11-10.17> str='\second_alias_t'
         AST_STRUCT <UHDM-integration-tests/tests/TypedefAlias/dut.v:10.11-10.17> basic_prep
           AST_STRUCT_ITEM <UHDM-integration-tests/tests/TypedefAlias/dut.v:11.17-11.18> str='x' logic basic_prep range=[7:0]
-      AST_WIRE <UHDM-integration-tests/tests/TypedefAlias/dut.v:17.19-17.22> str='\clk' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/TypedefAlias/dut.v:17.19-17.22> str='\clk' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/TypedefAlias/dut.v:17.42-17.43> str='\a' input reg basic_prep port=2 range=[7:0] multirange=[ 0 8 ] multirange_swapped=[ 0 ]
@@ -1494,9 +1494,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> str='\THREE' bits='010111000101010001001000010100100100010101000101'(48) basic_prep range=[47:0] int=1213351237
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> range=[7:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
-          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/TypedefAlias/dut.v:2.21-2.26> basic_prep range=[7:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/TypedefAlias/dut.v:17.65-17.66> str='\b' output reg basic_prep port=3 range=[0:0]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> str='\alias_t' bits='0101110001100001011011000110100101100001011100110101111101110100'(64) basic_prep range=[63:0] int=1634951028
@@ -1512,9 +1512,9 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> range=[7:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
-          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> basic_prep range=[7:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+          AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/TypedefAlias/dut.v:22.23-22.24> str='\d' logic basic_prep range=[7:0] multirange=[ 0 8 0 8 ] multirange_swapped=[ 0 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> str='\third_alias_t' bits='0101110001110100011010000110100101110010011001000101111101100001011011000110100101100001011100110101111101110100'(112) basic_prep range=[111:0] int=1634951028
@@ -1672,7 +1672,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> str='\THREE' bits='010111000101010001001000010100100100010101000101'(48) basic_prep range=[47:0] int=1213351237
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> basic_prep range=[7:0]
+        AST_RANGE <UHDM-integration-tests/tests/TypedefAlias/dut.v:2.21-2.26> basic_prep range=[7:0]
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
           AST_CONSTANT <UHDM-integration-tests/tests/TypedefAlias/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/TypedefAlias/dut.v:17.65-17.66> str='\b' output reg basic_prep port=3 range=[0:0]

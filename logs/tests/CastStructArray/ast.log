@@ -1158,9 +1158,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-          AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastStructArray/top.sv:1.25-1.30> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CastStructArray/top.sv:8.17-8.27> str='\a' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1225,7 +1225,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> basic_prep range=[5:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastStructArray/top.sv:1.25-1.30> basic_prep range=[5:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
           AST_CONSTANT <UHDM-integration-tests/tests/CastStructArray/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CastStructArray/top.sv:8.17-8.27> str='\a' logic reg basic_prep range=[15:0]

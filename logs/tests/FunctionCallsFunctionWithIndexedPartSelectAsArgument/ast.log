@@ -1477,9 +1477,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> range=[15:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed range=[31:0] int=15
-          AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:13.25-13.31> basic_prep range=[15:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed basic_prep range=[31:0] int=15
+          AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:14.11-14.44>
         AST_IDENTIFIER <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:14.11-14.12> str='\o'
         AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='xxxxxxxx11001101'(16) range=[15:0] int=205
@@ -1507,9 +1507,9 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> range=[7:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:2.52-2.57> basic_prep range=[7:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN_EQ <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:3.7-3.13>
           AST_IDENTIFIER <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> str='\my_pkg::sbox4_8bit'
           AST_IDENTIFIER <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:3.14-3.22> str='\state_in'
@@ -1537,9 +1537,9 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> range=[15:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed range=[31:0] int=15
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:6.54-6.60> basic_prep range=[15:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed basic_prep range=[31:0] int=15
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:7.20-7.29> str='\state_out' logic
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1613,7 +1613,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> basic_prep range=[15:0]
+        AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:13.25-13.31> basic_prep range=[15:0]
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed basic_prep range=[31:0] int=15
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:14.11-14.44> basic_prep
@@ -1643,9 +1643,9 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> range=[7:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:2.52-2.57> basic_prep range=[7:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN_EQ <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:3.7-3.13>
           AST_IDENTIFIER <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> str='\my_pkg::sbox4_8bit'
           AST_IDENTIFIER <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:3.14-3.22> str='\state_in'
@@ -1673,9 +1673,9 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> range=[15:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed range=[31:0] int=15
-            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:6.54-6.60> basic_prep range=[15:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed basic_prep range=[31:0] int=15
+            AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:7.20-7.29> str='\state_out' logic
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionCallsFunctionWithIndexedPartSelectAsArgument/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1

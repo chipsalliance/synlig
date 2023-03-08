@@ -1296,10 +1296,10 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='001'(3) range=[2:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:9.23-9.24> str='\o' output signed port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:2.20-2.25> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:9.23-9.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0>
@@ -1335,7 +1335,7 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:2.46-6.48> bits='001'(3) basic_prep range=[2:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:2.20-2.25> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
@@ -1372,7 +1372,7 @@ Dumping AST after simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='001'(3) basic_prep range=[2:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:2.20-2.25> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:9.23-9.24> str='\o' output signed basic_prep port=1 range=[31:0]
@@ -1411,7 +1411,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:2.46-6.48> bits='001'(3) basic_prep range=[2:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/DivisionOfSize/top.sv:2.20-2.25> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/DivisionOfSize/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---

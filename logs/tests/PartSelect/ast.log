@@ -987,9 +987,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/PartSelect/top.sv:1.19-1.24> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/PartSelect/top.sv:2.14-2.15> str='\a' reg
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1040,7 +1040,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/PartSelect/top.sv:1.19-1.24> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/PartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/PartSelect/top.sv:2.14-2.15> str='\a' reg basic_prep range=[7:0]

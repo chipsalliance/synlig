@@ -1588,9 +1588,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:5.25-5.30> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:6.21-6.34> str='\data_i' logic multirange=[ 0 4 0 1 ] multirange_swapped=[ 0 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1617,9 +1617,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:7.0-7.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_CELL <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\u_sub'
           AST_CELLTYPE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> str='\sub'
           AST_ARGUMENT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\data_i'
@@ -1665,9 +1665,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:7.0-7.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_CELL <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\u_sub'
           AST_CELLTYPE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> str='\sub'
           AST_ARGUMENT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\data_i'
@@ -1713,9 +1713,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:7.0-7.0> bits='00000000000000000000000000000010'(32) range=[31:0] int=2
-          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_CELL <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\u_sub'
           AST_CELLTYPE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> str='\sub'
           AST_ARGUMENT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\data_i'
@@ -1761,9 +1761,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:7.0-7.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
-          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_CELL <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\u_sub'
           AST_CELLTYPE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> str='\sub'
           AST_ARGUMENT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:8.7-11.9> str='\data_i'
@@ -1835,7 +1835,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:5.25-5.30> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:6.21-6.34> str='\data_i' logic reg basic_prep range=[3:0] multirange=[ 0 4 0 1 ] multirange_swapped=[ 0 0 ]
@@ -1993,10 +1993,10 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\sub'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:1.1-3.10> str='\sub'
-      AST_WIRE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:1.24-1.30> str='\data_i' input logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:1.24-1.30> str='\data_i' input logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:1.45-1.46> str='\o' output logic port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:1.45-1.46> str='\o' output logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/NestedSelectOnVarInGenscope/top.sv:2.11-2.21>

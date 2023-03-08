@@ -1265,9 +1265,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed range=[31:0] int=16
-        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:13.18-13.30> str='\EccWidth' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1277,10 +1277,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:11.23-11.24> str='\o' output signed port=3 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:11.23-11.24> str='\o' output signed port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0>
@@ -1370,9 +1370,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000010011'(32) signed range=[31:0] int=19
-        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:5.22-5.29> str='\wmask_i' input logic port=1 multirange=[ 0 19 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1383,10 +1383,10 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> range=[18:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000010010'(32) signed range=[31:0] int=18
-          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:6.15-6.16> str='\x' output signed port=2 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:5.10-5.21> basic_prep range=[18:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000010010'(32) signed basic_prep range=[31:0] int=18
+          AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:6.15-6.16> str='\x' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0>
@@ -1434,7 +1434,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> basic_prep range=[18:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:5.10-5.21> basic_prep range=[18:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000010010'(32) signed basic_prep range=[31:0] int=18
           AST_CONSTANT <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ReplicationPassedToInstance/top.sv:6.15-6.16> str='\x' output signed basic_prep port=2 range=[31:0]

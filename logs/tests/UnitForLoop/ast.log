@@ -1021,14 +1021,14 @@ Warning: UHDM-integration-tests/tests/UnitForLoop/dut.v:10: Post-incrementation 
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/UnitForLoop/dut.v:1.1-17.10> str='\dut'
-      AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:1.18-1.19> str='\a' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:1.18-1.19> str='\a' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:1.28-1.29> str='\b' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:1.28-1.29> str='\b' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_FUNCTION <UHDM-integration-tests/tests/UnitForLoop/dut.v:3.1-4.12> str='\f2'
-        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f2' logic range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f2' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:3.18-3.19> str='\i' input signed port=3 multirange=[ 0 32 ] multirange_swapped=[ 0 ]
@@ -1041,9 +1041,9 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:3.25-3.26> str='\j' input signed port=4 multirange=[ 0 32 ] multirange_swapped=[ 0 ]
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1054,15 +1054,15 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_FUNCTION <UHDM-integration-tests/tests/UnitForLoop/dut.v:9.1-13.12> str='\f1'
-        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f1' logic range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f1' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/UnitForLoop/dut.v:10.4-10.7> str='$fordecl_block0'
-          AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:10.14-10.15> str='\i' logic signed range=[-1:0]
+          AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:10.14-10.15> str='\i' logic signed range=[0:0]
             ATTR \is_simplified_wire:
               AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0>
@@ -1108,7 +1108,7 @@ Dumping AST after simplification:
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
       AST_FUNCTION <UHDM-integration-tests/tests/UnitForLoop/dut.v:3.1-4.12> str='\f2'
-        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f2' logic range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f2' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:3.18-3.19> str='\i' input signed port=3 multirange=[ 0 32 ] multirange_swapped=[ 0 ]
@@ -1121,9 +1121,9 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:3.25-3.26> str='\j' input signed port=4 multirange=[ 0 32 ] multirange_swapped=[ 0 ]
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1134,15 +1134,15 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_FUNCTION <UHDM-integration-tests/tests/UnitForLoop/dut.v:9.1-13.12> str='\f1'
-        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f1' logic range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> str='\f1' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/UnitForLoop/dut.v:10.4-10.7> str='$fordecl_block0'
-          AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:10.14-10.15> str='\i' logic signed range=[-1:0]
+          AST_WIRE <UHDM-integration-tests/tests/UnitForLoop/dut.v:10.14-10.15> str='\i' logic signed range=[0:0]
             ATTR \is_simplified_wire:
               AST_CONSTANT <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_RANGE <UHDM-integration-tests/tests/UnitForLoop/dut.v:0.0-0.0>

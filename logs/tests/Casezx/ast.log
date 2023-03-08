@@ -3225,9 +3225,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:1.27-1.32> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:1.55-1.56> str='\y' output logic port=2 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3238,9 +3238,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:1.49-1.54> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:2.1-8.9>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -3308,7 +3308,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:1.27-1.32> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:1.55-1.56> str='\y' output logic reg basic_prep port=2 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -3321,7 +3321,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:1.49-1.54> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:2.1-8.9> basic_prep
@@ -3392,9 +3392,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:51.27-51.32> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:51.55-51.56> str='\y' output logic port=12 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3405,9 +3405,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:51.49-51.54> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:52.1-58.9>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -3475,7 +3475,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:51.27-51.32> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:51.55-51.56> str='\y' output logic reg basic_prep port=12 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -3488,7 +3488,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:51.49-51.54> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:52.1-58.9> basic_prep
@@ -3559,9 +3559,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:11.27-11.32> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:11.55-11.56> str='\y' output logic port=4 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3572,9 +3572,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:11.49-11.54> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:12.1-18.9>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -3642,7 +3642,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:11.27-11.32> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:11.55-11.56> str='\y' output logic reg basic_prep port=4 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -3655,7 +3655,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:11.49-11.54> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:12.1-18.9> basic_prep
@@ -3726,9 +3726,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:41.27-41.32> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:41.55-41.56> str='\y' output logic port=10 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3739,9 +3739,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:41.49-41.54> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:42.1-48.9>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -3809,7 +3809,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:41.27-41.32> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:41.55-41.56> str='\y' output logic reg basic_prep port=10 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -3822,7 +3822,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:41.49-41.54> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:42.1-48.9> basic_prep
@@ -3893,9 +3893,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:21.27-21.32> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:21.55-21.56> str='\y' output logic port=6 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3906,9 +3906,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:21.49-21.54> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:22.1-28.9>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -3976,7 +3976,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:21.27-21.32> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:21.55-21.56> str='\y' output logic reg basic_prep port=6 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -3989,7 +3989,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:21.49-21.54> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:22.1-28.9> basic_prep
@@ -4060,9 +4060,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:31.27-31.32> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:31.55-31.56> str='\y' output logic port=8 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -4073,9 +4073,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:31.49-31.54> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:32.1-38.9>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -4143,7 +4143,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:31.27-31.32> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/Casezx/top.sv:31.55-31.56> str='\y' output logic reg basic_prep port=8 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -4156,7 +4156,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/Casezx/top.sv:31.49-31.54> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/Casezx/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/Casezx/top.sv:32.1-38.9> basic_prep

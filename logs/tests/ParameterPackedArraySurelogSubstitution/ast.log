@@ -1116,9 +1116,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:3.24-3.29> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:6.11-6.19>
         AST_IDENTIFIER <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:6.11-6.12> str='\a'
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='0'(1) range=[0:0]
@@ -1162,7 +1162,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:3.24-3.29> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/ParameterPackedArraySurelogSubstitution/top.sv:6.11-6.19> basic_prep

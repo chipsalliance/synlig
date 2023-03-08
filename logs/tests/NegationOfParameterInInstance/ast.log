@@ -1039,9 +1039,9 @@ Warning: Removing unused module: \dut from the design.
 Generating RTLIL representation for module `$paramod\dut\P=1'd1'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:1.1-4.10> str='$paramod\dut\P=1'd1'
-      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:2.20-2.25> str='\P' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:2.20-2.25> str='\P' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:1.25-1.26> str='\a' output logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:1.25-1.26> str='\a' output logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:3.11-3.16>
@@ -1058,7 +1058,7 @@ Dumping Verilog AST before simplification:
 --- END OF AST DUMP ---
 Dumping AST after simplification:
     AST_MODULE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:1.1-4.10> str='$paramod\dut\P=1'd1' basic_prep
-      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:2.20-2.25> str='\P' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:2.20-2.25> str='\P' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:1.25-1.26> str='\a' output logic basic_prep port=1 range=[0:0]
         ATTR \is_simplified_wire:
@@ -1078,9 +1078,9 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:6.1-13.10> str='\top'
-      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:7.20-7.25> str='\X' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:7.20-7.25> str='\X' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:0.0-0.0> bits='0'(1) range=[0:0]
-      AST_WIRE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:6.25-6.26> str='\o' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:6.25-6.26> str='\o' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_CELL <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:8.4-12.6> str='\u_dut'
@@ -1098,7 +1098,7 @@ Dumping Verilog AST before simplification:
 --- END OF AST DUMP ---
 Dumping AST after simplification:
     AST_MODULE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:6.1-13.10> str='\top' basic_prep
-      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:7.20-7.25> str='\X' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:7.20-7.25> str='\X' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:0.0-0.0> bits='0'(1) basic_prep range=[0:0]
       AST_WIRE <UHDM-integration-tests/tests/NegationOfParameterInInstance/top.sv:6.25-6.26> str='\o' output logic basic_prep port=2 range=[0:0]
         ATTR \is_simplified_wire:

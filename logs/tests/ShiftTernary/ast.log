@@ -1073,13 +1073,13 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/ShiftTernary/top.sv:1.1-7.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/ShiftTernary/top.sv:2.14-2.16> str='\oL' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/ShiftTernary/top.sv:2.14-2.16> str='\oL' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ShiftTernary/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ShiftTernary/top.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/ShiftTernary/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/ShiftTernary/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ShiftTernary/top.sv:3.14-3.16> str='\oR' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/ShiftTernary/top.sv:3.14-3.16> str='\oR' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ShiftTernary/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ShiftTernary/top.sv:0.0-0.0>

@@ -1577,7 +1577,7 @@ Object 'work@dut' of type 'design'
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:9.1-25.10> str='\dut'
-      AST_ENUM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.3-10.71> str='$enum0' signed range=[-1:0]
+      AST_ENUM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.3-10.71> str='$enum0' signed range=[0:0]
         AST_ENUM_ITEM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.27-10.43> str='\enum_const_0' signed range=[-1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.27-10.43> bits='00000000000000000000000000000000'(32) signed range=[31:0]
           AST_RANGE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.19-10.24>
@@ -1589,7 +1589,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.3-10.71> str='\enum_e'
-        AST_WIRE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) range=[47:0] int=1853189424
           ATTR \is_simplified_wire:
@@ -1618,7 +1618,7 @@ Dumping AST before simplification:
         AST_RANGE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_LOCALPARAM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:13.21-13.46> str='\IndexParam' range=[-1:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:13.21-13.46> str='\IndexParam' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='01'(2) range=[1:0] int=1
       AST_LOCALPARAM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:15.18-15.51> str='\IAmConst' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
@@ -1629,10 +1629,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) range=[31:0] int=8
-        AST_RANGE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:9.19-9.20> str='\o' output logic port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:9.19-9.20> str='\o' output logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_CELL <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:22.3-22.25> str='\foo_instance'
@@ -1661,7 +1661,7 @@ Dumping Verilog AST before simplification:
 --- END OF AST DUMP ---
 Dumping AST after simplification:
     AST_MODULE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:9.1-25.10> str='\dut' basic_prep
-      AST_ENUM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.3-10.71> str='$enum0' signed basic_prep range=[-1:0]
+      AST_ENUM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.3-10.71> str='$enum0' signed basic_prep range=[0:0]
         AST_ENUM_ITEM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:10.27-10.43> str='\enum_const_0' signed basic_prep range=[1:0]
           ATTR \enum_base_type:
             AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
@@ -1704,7 +1704,7 @@ Dumping AST after simplification:
         AST_RANGE <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_LOCALPARAM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:13.21-13.46> str='\IndexParam' basic_prep range=[-1:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:13.21-13.46> str='\IndexParam' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
       AST_LOCALPARAM <UHDM-integration-tests/tests/ModuleInstantiationAndIndirectParams/dut.sv:15.18-15.51> str='\IAmConst' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:

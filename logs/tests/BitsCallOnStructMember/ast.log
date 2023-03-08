@@ -1146,7 +1146,7 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:12.1-18.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:12.23-12.24> str='\o' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:12.23-12.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0>
@@ -1162,9 +1162,9 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> range=[17:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='00000000000000000000000000010001'(32) signed range=[31:0] int=17
-          AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> basic_prep range=[17:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='00000000000000000000000000010001'(32) signed basic_prep range=[31:0] int=17
+          AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:14.11-14.37>
         AST_IDENTIFIER <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:14.11-14.12> str='\o'
         AST_CONSTANT <UHDM-integration-tests/tests/BitsCallOnStructMember/top.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) range=[31:0] int=16

@@ -872,10 +872,10 @@ Object 'work@dut' of type 'design'
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/OneSysFunc/dut.v:1.1-3.10> str='\dut'
-      AST_WIRE <UHDM-integration-tests/tests/OneSysFunc/dut.v:1.19-1.20> str='\a' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneSysFunc/dut.v:1.19-1.20> str='\a' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneSysFunc/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/OneSysFunc/dut.v:1.29-1.30> str='\b' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneSysFunc/dut.v:1.29-1.30> str='\b' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneSysFunc/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/OneSysFunc/dut.v:2.9-2.25>

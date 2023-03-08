@@ -923,10 +923,11 @@ Object 'work@top' of type 'design'
         Object '' of type 'operation'
           Object '' of type 'constant'
           Object '' of type 'constant'
+UHDM-integration-tests/tests/MultiAssignmentPatternOfConcat/top.sv:2: Warning: Limited support for multirange wires that don't start from 0
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/MultiAssignmentPatternOfConcat/top.sv:1.1-4.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/MultiAssignmentPatternOfConcat/top.sv:1.23-1.24> str='\o' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultiAssignmentPatternOfConcat/top.sv:1.23-1.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultiAssignmentPatternOfConcat/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/MultiAssignmentPatternOfConcat/top.sv:0.0-0.0>
@@ -1266,7 +1267,7 @@ Simulating cycle 38.
 Simulating cycle 39.
 Simulating cycle 40.
 
-Warnings: 1 unique messages, 2 total
+Warnings: 2 unique messages, 3 total
 
 Yosys 0.27+3 (git sha1 b58664d44, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
 

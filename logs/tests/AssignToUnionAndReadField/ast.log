@@ -998,9 +998,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:1.25-1.30> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_UNION <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:4.6-4.8> str='\un' basic_prep
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1033,9 +1033,9 @@ Dumping AST before simplification:
         AST_RANGE <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_RANGE <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
 Dumping Verilog AST before simplification:
     module top(o);
@@ -1070,7 +1070,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:1.25-1.30> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_UNION <UHDM-integration-tests/tests/AssignToUnionAndReadField/top.sv:4.6-4.8> str='\un' basic_prep

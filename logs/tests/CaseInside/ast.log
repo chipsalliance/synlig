@@ -1144,9 +1144,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:1.26-1.31> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CaseInside/top.sv:1.58-1.59> str='\y' output logic port=2 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1157,9 +1157,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:1.52-1.57> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/CaseInside/top.sv:2.3-6.10>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -1217,7 +1217,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:1.26-1.31> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CaseInside/top.sv:1.58-1.59> str='\y' output logic reg basic_prep port=2 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -1230,7 +1230,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/CaseInside/top.sv:1.52-1.57> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/CaseInside/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/CaseInside/top.sv:2.3-6.10> basic_prep

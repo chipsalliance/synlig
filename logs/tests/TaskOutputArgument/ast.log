@@ -930,7 +930,7 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:7.1-11.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:7.19-7.20> str='\o' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:7.19-7.20> str='\o' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_INITIAL <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:8.4-10.7>
@@ -938,7 +938,7 @@ Dumping AST before simplification:
           AST_TCALL <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:9.7-9.13> str='\my_pkg::assign_1'
             AST_IDENTIFIER <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:9.24-9.25> str='\o'
       AST_TASK <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:2.4-4.11> str='\my_pkg::assign_1'
-        AST_WIRE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:2.31-2.32> str='\x' output logic port=1 range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:2.31-2.32> str='\x' output logic port=1 range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_ASSIGN_LE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:3.7-3.22>
@@ -970,7 +970,7 @@ Dumping AST after simplification:
           AST_TCALL <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:9.7-9.13> basic_prep
             AST_IDENTIFIER <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:9.24-9.25> str='\o' basic_prep
       AST_TASK <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:2.4-4.11> str='\my_pkg::assign_1'
-        AST_WIRE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:2.31-2.32> str='\x' output logic port=1 range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:2.31-2.32> str='\x' output logic port=1 range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_ASSIGN_LE <UHDM-integration-tests/tests/TaskOutputArgument/top.sv:3.7-3.22>
