@@ -148,6 +148,7 @@ jobs:
           git config --global user.email "action@example.com" &&
           git config --global user.name "github action"
           if [ -n "$(git status logs/ --porcelain)" ]; then
+            git checkout -B $GITHUB_REF_NAME
             git commit logs/ -m "Update logs" &&
             git push origin
           fi
