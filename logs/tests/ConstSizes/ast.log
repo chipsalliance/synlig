@@ -1335,9 +1335,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> range=[63:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.25-1.31> basic_prep range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.54-1.55> str='\b' output logic port=2 multirange=[ 0 64 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1348,9 +1348,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> range=[63:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.47-1.53> basic_prep range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.76-1.77> str='\c' output logic port=3 multirange=[ 0 64 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1361,9 +1361,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> range=[63:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.69-1.75> basic_prep range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.98-1.99> str='\d' output logic port=4 multirange=[ 0 64 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1374,9 +1374,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> range=[63:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.91-1.97> basic_prep range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/ConstSizes/dut.v:2.11-2.38>
         AST_IDENTIFIER <UHDM-integration-tests/tests/ConstSizes/dut.v:2.11-2.12> str='\a'
         AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='0110101011010101110101100001010100001001010100100001000000111100'(64) range=[63:0] int=156373052
@@ -1426,7 +1426,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.25-1.31> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.54-1.55> str='\b' output logic basic_prep port=2 range=[63:0] multirange=[ 0 64 ] multirange_swapped=[ 0 ]
@@ -1439,7 +1439,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.47-1.53> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.76-1.77> str='\c' output logic basic_prep port=3 range=[63:0] multirange=[ 0 64 ] multirange_swapped=[ 0 ]
@@ -1452,7 +1452,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.69-1.75> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.98-1.99> str='\d' output logic basic_prep port=4 range=[63:0] multirange=[ 0 64 ] multirange_swapped=[ 0 ]
@@ -1465,7 +1465,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/ConstSizes/dut.v:1.91-1.97> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ConstSizes/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/ConstSizes/dut.v:2.11-2.38> basic_prep

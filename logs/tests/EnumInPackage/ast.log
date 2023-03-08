@@ -1531,7 +1531,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000110'(32) signed range=[31:0] int=6
             AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/EnumInPackage/dut.sv:16.5-19.13> str='\enum2'
-        AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='$enum3' bits='001001000110010101101110011101010110110100110011'(48) range=[47:0] int=1853189427
           ATTR \is_simplified_wire:
@@ -1586,9 +1586,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\FIRST' bits='010111000100011001001001010100100101001101010100'(48) basic_prep range=[47:0] int=1230132052
         ATTR \enum_value_11100:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\SECOND' bits='01011100010100110100010101000011010011110100111001000100'(56) basic_prep range=[55:0] int=1129270852
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> range=[4:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:2.23-2.28> basic_prep range=[4:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:22.18-22.22> str='\var2' output reg basic_prep port=2 range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\enum1' bits='010111000110010101101110011101010110110100110001'(48) basic_prep range=[47:0] int=1853189425
@@ -1605,9 +1605,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\THIRD' bits='010111000101010001001000010010010101001001000100'(48) basic_prep range=[47:0] int=1212764740
         ATTR \enum_value_111000:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\FOURTH' bits='01011100010001100100111101010101010100100101010001001000'(56) basic_prep range=[55:0] int=1431458888
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:9.23-9.28> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:22.24-22.28> str='\var3' output reg basic_prep port=3 range=[6:0] multirange=[ 0 7 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\enum2' bits='010111000110010101101110011101010110110100110010'(48) basic_prep range=[47:0] int=1853189426
@@ -1624,9 +1624,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\FIFTH' bits='010111000100011001001001010001100101010001001000'(48) basic_prep range=[47:0] int=1229345864
         ATTR \enum_value_1100011:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\SIXTH' bits='010111000101001101001001010110000101010001001000'(48) basic_prep range=[47:0] int=1230525512
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> range=[6:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000110'(32) signed range=[31:0] int=6
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:16.23-16.28> basic_prep range=[6:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000110'(32) signed basic_prep range=[31:0] int=6
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:22.30-22.34> str='\var4' output reg basic_prep port=4 range=[7:0] multirange=[ 0 8 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\enum3' bits='010111000110010101101110011101010110110100110011'(48) basic_prep range=[47:0] int=1853189427
@@ -1643,9 +1643,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\SEVENTH' bits='0101110001010011010001010101011001000101010011100101010001001000'(64) basic_prep range=[63:0] int=1162761288
         ATTR \enum_value_11010011:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\EIGHTH' bits='01011100010001010100100101000111010010000101010001001000'(56) basic_prep range=[55:0] int=1195922504
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> range=[7:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:23.23-23.28> basic_prep range=[7:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/EnumInPackage/dut.sv:35.12-35.30>
         AST_IDENTIFIER <UHDM-integration-tests/tests/EnumInPackage/dut.sv:35.12-35.16> str='\var1'
         AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00111'(5) range=[4:0] int=7
@@ -1892,7 +1892,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\FIRST' bits='010111000100011001001001010100100101001101010100'(48) basic_prep range=[47:0] int=1230132052
         ATTR \enum_value_11100:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\SECOND' bits='01011100010100110100010101000011010011110100111001000100'(56) basic_prep range=[55:0] int=1129270852
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> basic_prep range=[4:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:2.23-2.28> basic_prep range=[4:0]
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:22.18-22.22> str='\var2' output reg basic_prep port=2 range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
@@ -1911,7 +1911,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\THIRD' bits='010111000101010001001000010010010101001001000100'(48) basic_prep range=[47:0] int=1212764740
         ATTR \enum_value_111000:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\FOURTH' bits='01011100010001100100111101010101010100100101010001001000'(56) basic_prep range=[55:0] int=1431458888
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> basic_prep range=[5:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:9.23-9.28> basic_prep range=[5:0]
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:22.24-22.28> str='\var3' output reg basic_prep port=3 range=[6:0] multirange=[ 0 7 ] multirange_swapped=[ 0 ]
@@ -1930,7 +1930,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\FIFTH' bits='010111000100011001001001010001100101010001001000'(48) basic_prep range=[47:0] int=1229345864
         ATTR \enum_value_1100011:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\SIXTH' bits='010111000101001101001001010110000101010001001000'(48) basic_prep range=[47:0] int=1230525512
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> basic_prep range=[6:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:16.23-16.28> basic_prep range=[6:0]
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000110'(32) signed basic_prep range=[31:0] int=6
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:22.30-22.34> str='\var4' output reg basic_prep port=4 range=[7:0] multirange=[ 0 8 ] multirange_swapped=[ 0 ]
@@ -1949,7 +1949,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\SEVENTH' bits='0101110001010011010001010101011001000101010011100101010001001000'(64) basic_prep range=[63:0] int=1162761288
         ATTR \enum_value_11010011:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> str='\EIGHTH' bits='01011100010001010100100101000111010010000101010001001000'(56) basic_prep range=[55:0] int=1195922504
-        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> basic_prep range=[7:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumInPackage/dut.sv:23.23-23.28> basic_prep range=[7:0]
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
           AST_CONSTANT <UHDM-integration-tests/tests/EnumInPackage/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/EnumInPackage/dut.sv:35.12-35.30> basic_prep

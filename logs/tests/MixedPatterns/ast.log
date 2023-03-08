@@ -1086,9 +1086,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/MixedPatterns/top.sv:1.19-1.24> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/MixedPatterns/top.sv:9.14-9.15> str='\c' logic basic_prep range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> str='\struct_t' bits='010111000111001101110100011100100111010101100011011101000101111101110100'(72) basic_prep range=[71:0] int=1668570996
@@ -1099,9 +1099,9 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/MixedPatterns/top.sv:11.12-11.40>
         AST_IDENTIFIER <UHDM-integration-tests/tests/MixedPatterns/top.sv:11.12-11.13> str='\c'
         AST_CONCAT <UHDM-integration-tests/tests/MixedPatterns/top.sv:11.16-11.40>
@@ -1146,7 +1146,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/MixedPatterns/top.sv:1.19-1.24> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/MixedPatterns/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/MixedPatterns/top.sv:9.14-9.15> str='\c' logic basic_prep range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]

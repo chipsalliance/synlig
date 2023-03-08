@@ -952,7 +952,7 @@ Warning: Removing unused module: \dmidpi from the design.
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:7.1-12.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:7.23-7.24> str='\o' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:7.23-7.24> str='\o' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:0.0-0.0>
@@ -995,7 +995,7 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\rv_dm'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:1.1-2.10> str='\rv_dm'
-      AST_WIRE <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:1.26-1.31> str='\clk_i' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:1.26-1.31> str='\clk_i' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/BindModuleWithInputPortsInGenScope/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
 --- END OF AST DUMP ---

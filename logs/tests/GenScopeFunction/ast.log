@@ -941,10 +941,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
-        AST_RANGE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:1.23-1.24> str='\o' output signed port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:1.23-1.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0>
@@ -955,7 +955,7 @@ Dumping AST before simplification:
           AST_IDENTIFIER <UHDM-integration-tests/tests/GenScopeFunction/top.sv:9.14-9.15> str='\o'
           AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
         AST_FUNCTION <UHDM-integration-tests/tests/GenScopeFunction/top.sv:5.7-7.18> str='\get1'
-          AST_WIRE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:5.26-5.29> str='\get1' signed range=[-1:0]
+          AST_WIRE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:5.26-5.29> str='\get1' signed range=[0:0]
             ATTR \is_simplified_wire:
               AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_RANGE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0>
@@ -1000,7 +1000,7 @@ Dumping AST after simplification:
         AST_IDENTIFIER <UHDM-integration-tests/tests/GenScopeFunction/top.sv:9.14-9.15> str='\o' basic_prep
         AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
       AST_FUNCTION <UHDM-integration-tests/tests/GenScopeFunction/top.sv:5.7-7.18> str='\gen_block.get1'
-        AST_WIRE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:5.26-5.29> str='\gen_block.get1' signed range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:5.26-5.29> str='\gen_block.get1' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/GenScopeFunction/top.sv:0.0-0.0>

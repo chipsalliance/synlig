@@ -843,13 +843,13 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:6.1-12.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:7.5-7.11> str='\a' range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:7.5-7.11> str='\a' range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:8.5-8.10> str='\b' range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:8.5-8.10> str='\b' range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/unary_op_plus/unary_op_plus.sv:0.0-0.0>

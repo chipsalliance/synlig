@@ -895,10 +895,10 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/conditional_if/if.sv:6.1-12.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/conditional_if/if.sv:7.10-7.11> str='\a' logic range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/conditional_if/if.sv:7.10-7.11> str='\a' logic range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/conditional_if/if.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/conditional_if/if.sv:8.9-8.14> str='\b' reg range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/conditional_if/if.sv:8.9-8.14> str='\b' reg range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/conditional_if/if.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/conditional_if/if.sv:7.10-7.11>

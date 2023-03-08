@@ -1524,13 +1524,13 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:22.1-33.16> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:22.23-22.24> str='\o' output signed port=4 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:22.23-22.24> str='\o' output signed port=4 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:22.37-22.38> str='\p' output signed port=5 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:22.37-22.38> str='\p' output signed port=5 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0>
@@ -1548,9 +1548,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> range=[0:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:23.25-23.30> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:24.4-26.6> str='\u_prim_lc_sync_clk_byp_ack'
         AST_CELLTYPE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> str='\prim_lc_sync'
         AST_ARGUMENT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:24.4-26.6> str='\lc_en_o'
@@ -1646,7 +1646,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> basic_prep range=[0:0]
+        AST_RANGE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:23.25-23.30> basic_prep range=[0:0]
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:24.4-26.6> str='\u_prim_lc_sync_clk_byp_ack' basic_prep
@@ -1866,7 +1866,7 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> str='\lc_tx_t' bits='0101110001101100011000110101111101110100011110000101111101110100'(64) basic_prep range=[63:0] int=1954045812
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:11.15-11.16> str='\o' output signed port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:11.15-11.16> str='\o' output signed port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/VarPassedTo2Submodules/top.sv:0.0-0.0>

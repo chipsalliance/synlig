@@ -1988,7 +1988,7 @@ Dumping AST before simplification:
         AST_RANGE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> range=[383:0]
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000101111111'(32) signed range=[31:0] int=383
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.26-9.27> str='\x' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:9.26-9.27> str='\x' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0>
@@ -2164,7 +2164,7 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:15.1-19.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:15.23-15.24> str='\o' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:15.23-15.24> str='\o' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/2DParameterOfInstance/top.sv:0.0-0.0>

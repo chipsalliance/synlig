@@ -952,9 +952,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/UnsizedConstant/top.sv:1.25-1.31> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/UnsizedConstant/top.sv:2.11-2.17>
         AST_IDENTIFIER <UHDM-integration-tests/tests/UnsizedConstant/top.sv:2.11-2.12> str='\o'
         AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='11111111111111111111111111111111'(32) signed range=[31:0] int=4294967295
@@ -991,7 +991,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> basic_prep range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/UnsizedConstant/top.sv:1.25-1.31> basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/UnsizedConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/UnsizedConstant/top.sv:2.11-2.17> basic_prep

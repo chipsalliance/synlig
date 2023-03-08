@@ -5389,9 +5389,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
-        AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:3.17-3.25> str='\DW' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5401,9 +5401,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000100000'(32) signed range=[31:0] int=32
-        AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:7.18-7.31> str='\Instances' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5413,9 +5413,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:5.19-5.25> str='\data_i' output logic port=1 multirange=[ 0 32 0 8 ] multirange_swapped=[ 0 1 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5519,9 +5519,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:16.0-16.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_GENBLOCK <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.44-25.8> str='\gen_input_bufs[0]'
           AST_LOCALPARAM <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.0-17.0> str='\j' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
             ATTR \packed_ranges:
@@ -5532,9 +5532,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.0-17.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_GENBLOCK <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.46-24.10> str='\gen_data_bufs[0]'
             AST_LOCALPARAM <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> str='\k' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
               ATTR \packed_ranges:
@@ -5545,9 +5545,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5593,9 +5593,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5642,9 +5642,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.0-17.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_GENBLOCK <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.46-24.10> str='\gen_data_bufs[0]'
             AST_LOCALPARAM <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> str='\k' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
               ATTR \packed_ranges:
@@ -5655,9 +5655,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5704,9 +5704,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5753,9 +5753,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:16.0-16.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_GENBLOCK <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.44-25.8> str='\gen_input_bufs[0]'
           AST_LOCALPARAM <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.0-17.0> str='\j' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
             ATTR \packed_ranges:
@@ -5766,9 +5766,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.0-17.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_GENBLOCK <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.46-24.10> str='\gen_data_bufs[0]'
             AST_LOCALPARAM <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> str='\k' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
               ATTR \packed_ranges:
@@ -5779,9 +5779,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5828,9 +5828,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5877,9 +5877,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:17.0-17.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_GENBLOCK <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.46-24.10> str='\gen_data_bufs[0]'
             AST_LOCALPARAM <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> str='\k' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
               ATTR \packed_ranges:
@@ -5890,9 +5890,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5939,9 +5939,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:18.0-18.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_WIRE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:19.23-19.32> str='\req_buf_a' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -5988,9 +5988,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:28.0-28.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:29.20-29.35> str='\data_buf_da' logic
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6024,9 +6024,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:30.0-30.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:31.22-31.37> str='\data_buf_db' logic
             ATTR \packed_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6060,9 +6060,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6099,9 +6099,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6138,9 +6138,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:30.0-30.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:31.22-31.37> str='\data_buf_db' logic
             ATTR \packed_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6174,9 +6174,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6213,9 +6213,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6252,9 +6252,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:28.0-28.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:29.20-29.35> str='\data_buf_da' logic
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6288,9 +6288,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:30.0-30.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:31.22-31.37> str='\data_buf_db' logic
             ATTR \packed_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6324,9 +6324,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6363,9 +6363,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6402,9 +6402,9 @@ Dumping AST before simplification:
             ATTR \unpacked_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
             AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:30.0-30.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:31.22-31.37> str='\data_buf_db' logic
             ATTR \packed_ranges:
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6438,9 +6438,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -6477,9 +6477,9 @@ Dumping AST before simplification:
               ATTR \unpacked_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
               AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:32.0-32.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> range=[31:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_RANGE <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> basic_prep range=[31:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+                AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
             AST_MEMORY <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:33.24-33.39> str='\data_buf_dc' logic
               ATTR \packed_ranges:
                 AST_CONSTANT <UHDM-integration-tests/tests/ReadmemhInGenblock/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1

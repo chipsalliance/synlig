@@ -1859,9 +1859,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <Surelog/tests/OneNetRange/dut.v:15.59-15.62> str='\inp' input logic port=3 multirange=[ 0 1 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1872,9 +1872,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:15.47-15.58> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <Surelog/tests/OneNetRange/dut.v:15.87-15.90> str='\out' output logic port=4 multirange=[ 0 1 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1885,9 +1885,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:15.75-15.86> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <Surelog/tests/OneNetRange/dut.v:16.10-16.19>
         AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:16.10-16.13> str='\out'
         AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:16.16-16.19> str='\inp'
@@ -1932,9 +1932,9 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> basic_prep range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:15.47-15.58> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <Surelog/tests/OneNetRange/dut.v:15.87-15.90> str='\out' output logic basic_prep port=4 range=[0:0] multirange=[ 0 1 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -1945,9 +1945,9 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> basic_prep range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:15.75-15.86> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <Surelog/tests/OneNetRange/dut.v:16.10-16.19> basic_prep
         AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:16.10-16.13> str='\out' basic_prep
         AST_IDENTIFIER <Surelog/tests/OneNetRange/dut.v:16.16-16.19> str='\inp' basic_prep
@@ -1980,9 +1980,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_INTERFACEPORT <Surelog/tests/OneNetRange/dut.v:11.49-11.53> str='\conn' input output port=5
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -2065,9 +2065,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <Surelog/tests/OneNetRange/dut.v:2.59-2.60> str='\i' input logic port=8 multirange=[ 0 1 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -2078,9 +2078,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:2.47-2.58> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <Surelog/tests/OneNetRange/dut.v:2.85-2.86> str='\o' output reg port=9 multirange=[ 0 1 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -2091,9 +2091,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:2.73-2.84> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\middle1'
         AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\middle\width=32'd1'
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\conn'
@@ -2146,9 +2146,9 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> basic_prep range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:2.47-2.58> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <Surelog/tests/OneNetRange/dut.v:2.85-2.86> str='\o' output reg basic_prep port=9 range=[0:0] multirange=[ 0 1 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -2159,9 +2159,9 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <Surelog/tests/OneNetRange/dut.v:0.0-0.0> basic_prep range=[0:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-          AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_RANGE <Surelog/tests/OneNetRange/dut.v:2.73-2.84> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\middle1' basic_prep
         AST_CELLTYPE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='$paramod\middle\width=32'd1' basic_prep
         AST_ARGUMENT <Surelog/tests/OneNetRange/dut.v:4.3-4.43> str='\conn' basic_prep
@@ -2193,10 +2193,10 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\ConnectTB'.
 Dumping AST before simplification:
     AST_INTERFACE <UHDM-integration-tests/../Surelog/tests/OneNetRange/dut.v:0.0-0.0> str='\ConnectTB'
-      AST_WIRE <Surelog/tests/OneNetRange/dut.v:8.68-8.73> str='\con_i' input logic port=1 range=[-1:0]
+      AST_WIRE <Surelog/tests/OneNetRange/dut.v:8.68-8.73> str='\con_i' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <Surelog/tests/OneNetRange/dut.v:8.98-8.103> str='\con_o' output logic port=2 range=[-1:0]
+      AST_WIRE <Surelog/tests/OneNetRange/dut.v:8.98-8.103> str='\con_o' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <Surelog/tests/OneNetRange/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
 --- END OF AST DUMP ---

@@ -981,9 +981,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> range=[63:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:1.25-1.31> basic_prep range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_GENBLOCK <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:2.35-5.7> str='\gen_lfsr_chunks[0]'
         AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.31-3.67> str='\LfsrChunkSeed' multirange=[ 0 64 ] multirange_swapped=[ 0 ]
           ATTR \packed_ranges:
@@ -994,9 +994,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='0001001000110100010101100111100010011010101111001101111011110000'(64) range=[63:0] int=2596069104
-          AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> range=[63:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.24-3.30> basic_prep range=[63:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.31-3.44> str='\LfsrChunkSeed' logic multirange=[ 0 64 ] multirange_swapped=[ 0 ]
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1006,9 +1006,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.31-3.44> bits='00000111010110111100110100010101'(32) signed unsized range=[31:0] int=123456789
-          AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> range=[63:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.24-3.30> basic_prep range=[63:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:2.0-2.0> str='\c' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
           ATTR \packed_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1018,9 +1018,9 @@ Dumping AST before simplification:
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:2.0-2.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-          AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> range=[31:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_ASSIGN <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:4.14-4.31>
           AST_IDENTIFIER <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:4.14-4.15> str='\o'
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='0001001000110100010101100111100010011010101111001101111011110000'(64) range=[63:0] int=2596069104
@@ -1046,7 +1046,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:1.25-1.31> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_GENBLOCK <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:2.35-5.7> str='\gen_lfsr_chunks[0]' basic_prep
@@ -1059,7 +1059,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='0001001000110100010101100111100010011010101111001101111011110000'(64) basic_prep range=[63:0] int=2596069104
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.24-3.30> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.31-3.44> str='\gen_lfsr_chunks[0].LfsrChunkSeed' logic basic_prep range=[63:0] multirange=[ 0 64 ] multirange_swapped=[ 0 ]
@@ -1071,7 +1071,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='0000000000000000000000000000000000000111010110111100110100010101'(64) basic_prep range=[63:0] int=123456789
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:3.24-3.30> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterInGenScopeInitializedWithLongConstant/top.sv:2.0-2.0> str='\gen_lfsr_chunks[0].c' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]

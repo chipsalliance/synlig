@@ -1161,9 +1161,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:3.28-3.43> str='\WidthRatio' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1173,9 +1173,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000010100'(32) range=[31:0] int=20
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:4.30-4.62> str='\FullDepth' multirange=[ 0 6 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1185,9 +1185,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='010100'(6) range=[5:0] int=20
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:4.19-4.29> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:4.20-4.26> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:1.31-1.32> str='\o' output logic port=1 multirange=[ 0 6 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1198,9 +1198,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:1.25-1.30> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:5.11-5.24>
         AST_IDENTIFIER <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:5.11-5.12> str='\o'
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='010100'(6) range=[5:0] int=20
@@ -1258,8 +1258,8 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='010100'(6) basic_prep range=[5:0] int=20
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> basic_prep range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:4.19-4.29> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:4.20-4.26> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:1.31-1.32> str='\o' output logic basic_prep port=1 range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
@@ -1271,7 +1271,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> basic_prep range=[5:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:1.25-1.30> basic_prep range=[5:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/ParameterInitializedByPartSelectOfParameters/top.sv:5.11-5.24> basic_prep

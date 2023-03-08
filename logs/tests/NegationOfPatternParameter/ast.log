@@ -1028,9 +1028,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='01'(2) range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:2.20-2.25> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:1.31-1.32> str='\o' output logic port=1 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1041,9 +1041,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:1.25-1.30> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:3.11-3.17>
         AST_IDENTIFIER <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:3.11-3.12> str='\o'
         AST_BIT_NOT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:3.15-3.17>
@@ -1072,7 +1072,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:2.20-2.25> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:1.31-1.32> str='\o' output logic basic_prep port=1 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -1085,7 +1085,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:1.25-1.30> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/NegationOfPatternParameter/top.sv:3.11-3.17> basic_prep

@@ -966,9 +966,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:5.6-5.11> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/OneShift/dut.v:6.11-6.12> str='\o' output reg port=2 multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -979,9 +979,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:6.5-6.10> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/OneShift/dut.v:8.8-8.18>
         AST_IDENTIFIER <UHDM-integration-tests/tests/OneShift/dut.v:8.8-8.9> str='\o'
         AST_SHIFT_LEFT <UHDM-integration-tests/tests/OneShift/dut.v:8.12-8.18>
@@ -1015,7 +1015,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:5.6-5.11> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/OneShift/dut.v:6.11-6.12> str='\o' output reg basic_prep port=2 range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
@@ -1028,7 +1028,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneShift/dut.v:6.5-6.10> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/OneShift/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/OneShift/dut.v:8.8-8.18> basic_prep

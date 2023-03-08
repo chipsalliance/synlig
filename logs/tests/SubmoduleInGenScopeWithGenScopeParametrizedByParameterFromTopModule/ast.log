@@ -1514,7 +1514,7 @@ Dumping AST before simplification:
         AST_ENUM_ITEM <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:3.7-3.22> str='\BidirStd' logic
           AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:3.7-3.22> bits='1'(1) range=[0:0] int=1
       AST_TYPEDEF <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:2.4-4.17> str='\pad_type_e'
-        AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> str='$enum3' bits='001001000110010101101110011101010110110100110011'(48) range=[47:0] int=1853189427
           ATTR \is_simplified_wire:
@@ -1522,9 +1522,9 @@ Dumping AST before simplification:
           AST_RANGE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> range=[31:0]
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:29.25-29.36> str='\PadType' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:29.25-29.36> str='\PadType' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:27.35-27.36> str='\o' output logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:27.35-27.36> str='\o' output logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_GENBLOCK <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:31.4-37.7> str='\gen_outer_if'
@@ -1595,7 +1595,7 @@ Dumping AST after simplification:
           AST_RANGE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> basic_prep range=[31:0]
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:29.25-29.36> str='\PadType' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:29.25-29.36> str='\PadType' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:27.35-27.36> str='\o' output logic basic_prep port=1 range=[0:0]
         ATTR \is_simplified_wire:
@@ -1660,7 +1660,7 @@ Dumping AST before simplification:
         AST_ENUM_ITEM <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:3.7-3.22> str='\BidirStd' logic
           AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:3.7-3.22> bits='1'(1) range=[0:0] int=1
       AST_TYPEDEF <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:2.4-4.17> str='\pad_type_e'
-        AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> str='$enum2' bits='001001000110010101101110011101010110110100110010'(48) range=[47:0] int=1853189426
           ATTR \is_simplified_wire:
@@ -1668,9 +1668,9 @@ Dumping AST before simplification:
           AST_RANGE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> range=[31:0]
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:16.25-16.45> str='\PadTypeInGeneric' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:16.25-16.45> str='\PadTypeInGeneric' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:14.43-14.44> str='\o' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:14.43-14.44> str='\o' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_GENBLOCK <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:17.4-24.9> str='\gen_inner_if_true'
@@ -1740,7 +1740,7 @@ Dumping AST after simplification:
           AST_RANGE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> basic_prep range=[31:0]
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:16.25-16.45> str='\PadTypeInGeneric' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:16.25-16.45> str='\PadTypeInGeneric' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:14.43-14.44> str='\o' output logic basic_prep port=2 range=[0:0]
         ATTR \is_simplified_wire:
@@ -1804,7 +1804,7 @@ Dumping AST before simplification:
         AST_ENUM_ITEM <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:3.7-3.22> str='\BidirStd' logic
           AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:3.7-3.22> bits='1'(1) range=[0:0] int=1
       AST_TYPEDEF <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:2.4-4.17> str='\pad_type_e'
-        AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> str='$enum4' bits='001001000110010101101110011101010110110100110100'(48) range=[47:0] int=1853189428
           ATTR \is_simplified_wire:
@@ -1826,10 +1826,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> range=[0:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:40.25-40.26> str='\o' output logic port=3 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:40.25-40.26> str='\o' output logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_CELL <UHDM-integration-tests/tests/SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.sv:44.4-48.6> str='\u_prim_pad_attr'

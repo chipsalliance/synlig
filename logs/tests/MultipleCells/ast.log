@@ -1293,13 +1293,13 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.53-6.56> str='\inp' input logic port=3 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.53-6.56> str='\inp' input logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.69-6.72> str='\out' output logic port=4 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.69-6.72> str='\out' output logic port=4 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_GENBLOCK <UHDM-integration-tests/tests/MultipleCells/top.sv:9.3-10.23> str='\genblk2'
@@ -1371,13 +1371,13 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-        AST_RANGE <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.53-6.56> str='\inp' input logic port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.53-6.56> str='\inp' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.69-6.72> str='\out' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:6.69-6.72> str='\out' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_GENBLOCK <UHDM-integration-tests/tests/MultipleCells/top.sv:7.3-8.22> str='\genblk1'
@@ -1438,13 +1438,13 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/MultipleCells/top.sv:1.1-4.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:1.24-1.25> str='\i' input logic port=5 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:1.24-1.25> str='\i' input logic port=5 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:1.38-1.40> str='\o1' output reg port=6 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:1.38-1.40> str='\o1' output reg port=6 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:1.53-1.55> str='\o2' output reg port=7 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/MultipleCells/top.sv:1.53-1.55> str='\o2' output reg port=7 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/MultipleCells/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_CELL <UHDM-integration-tests/tests/MultipleCells/top.sv:2.4-2.52> str='\asgn0'

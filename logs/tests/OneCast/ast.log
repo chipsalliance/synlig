@@ -1601,9 +1601,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/OneCast/dut.v:6.14-6.21> str='\TWO' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1613,9 +1613,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/OneCast/dut.v:7.14-7.23> str='\THREE' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1625,9 +1625,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_LOCALPARAM <UHDM-integration-tests/tests/OneCast/dut.v:8.14-8.22> str='\FOUR' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1637,10 +1637,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_LOCALPARAM <UHDM-integration-tests/tests/OneCast/dut.v:10.14-10.30> str='\DUMMY' range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/OneCast/dut.v:10.14-10.30> str='\DUMMY' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/OneCast/dut.v:4.14-4.15> str='\b' output reg port=2 multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
@@ -1652,10 +1652,10 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/OneCast/dut.v:1.13-1.14> str='\a' input logic port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:4.7-4.13> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneCast/dut.v:1.13-1.14> str='\a' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/OneCast/dut.v:12.10-17.23>
@@ -1765,7 +1765,7 @@ Dumping AST after simplification:
         AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_LOCALPARAM <UHDM-integration-tests/tests/OneCast/dut.v:10.14-10.30> str='\DUMMY' basic_prep range=[-1:0]
+      AST_LOCALPARAM <UHDM-integration-tests/tests/OneCast/dut.v:10.14-10.30> str='\DUMMY' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/OneCast/dut.v:4.14-4.15> str='\b' output reg basic_prep port=2 range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
@@ -1777,7 +1777,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> basic_prep range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneCast/dut.v:4.7-4.13> basic_prep range=[31:0]
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/OneCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/OneCast/dut.v:1.13-1.14> str='\a' input logic basic_prep port=1 range=[0:0]

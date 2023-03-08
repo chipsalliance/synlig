@@ -1910,10 +1910,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:34.33-34.34> str='\o' output signed port=3 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:34.33-34.34> str='\o' output signed port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0>
@@ -2114,7 +2114,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:2.4-4.14> str='\enum1_e'
-        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> str='$enum2' bits='001001000110010101101110011101010110110100110010'(48) range=[47:0] int=1853189426
           ATTR \is_simplified_wire:
@@ -2136,7 +2136,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:10.4-12.14> str='\enum2_e'
-        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> str='$enum3' bits='001001000110010101101110011101010110110100110011'(48) range=[47:0] int=1853189427
           ATTR \is_simplified_wire:
@@ -2161,10 +2161,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:44.30-44.31> str='\o' output signed port=4 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:44.30-44.31> str='\o' output signed port=4 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0>
@@ -2443,7 +2443,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:2.4-4.14> str='\enum1_e'
-        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> str='$enum4' bits='001001000110010101101110011101010110110100110100'(48) range=[47:0] int=1853189428
           ATTR \is_simplified_wire:
@@ -2465,7 +2465,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:10.4-12.14> str='\enum2_e'
-        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> str='$enum5' bits='001001000110010101101110011101010110110100110101'(48) range=[47:0] int=1853189429
           ATTR \is_simplified_wire:
@@ -2490,10 +2490,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:55.23-55.24> str='\o' output signed port=5 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:55.23-55.24> str='\o' output signed port=5 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0>
@@ -2767,10 +2767,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:24.34-24.35> str='\o' output signed port=2 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:24.34-24.35> str='\o' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0>
@@ -2966,10 +2966,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:19.41-19.42> str='\o' output signed port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:19.41-19.42> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top.sv:0.0-0.0>

@@ -1141,9 +1141,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:1.19-1.24> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:1.41-1.42> str='\c' output logic port=2 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1154,9 +1154,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> range=[3:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
-          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:1.35-1.40> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:2.14-2.15> str='\a' reg
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1226,7 +1226,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:1.19-1.24> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:1.41-1.42> str='\c' output logic basic_prep port=2 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
@@ -1239,7 +1239,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:1.35-1.40> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/IndexedPartSelect/top.sv:2.14-2.15> str='\a' reg basic_prep range=[7:0]

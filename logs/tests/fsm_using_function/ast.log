@@ -2605,9 +2605,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/fsm_using_function/dut.v:25.11-25.25> str='\IDLE' multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -2617,9 +2617,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='001'(3) signed range=[2:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/fsm_using_function/dut.v:25.26-25.39> str='\GNT0' multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -2629,9 +2629,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='010'(3) signed range=[2:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/fsm_using_function/dut.v:25.40-25.53> str='\GNT1' multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -2641,25 +2641,25 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='100'(3) signed range=[2:0] int=4
-        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.9-20.14> str='\clock' input logic port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.9-20.14> str='\clock' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.15-20.20> str='\reset' input logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.15-20.20> str='\reset' input logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.21-20.26> str='\req_0' input logic port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.21-20.26> str='\req_0' input logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.27-20.32> str='\req_1' input logic port=4 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.27-20.32> str='\req_1' input logic port=4 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:22.9-22.14> str='\gnt_0' output reg port=5 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:22.9-22.14> str='\gnt_0' output reg port=5 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:22.15-22.20> str='\gnt_1' output reg port=6 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:22.15-22.20> str='\gnt_1' output reg port=6 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:27.27-27.32> str='\state' reg
@@ -2716,13 +2716,13 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> range=[2:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:34.12-34.17> str='\req_0' input port=8 range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:33.10-33.20> basic_prep range=[2:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:33.11-33.17> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
+            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:34.12-34.17> str='\req_0' input port=8 range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:35.12-35.17> str='\req_1' input port=9 range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:35.12-35.17> str='\req_1' input port=9 range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CASE <UHDM-integration-tests/tests/fsm_using_function/dut.v:36.3-55.10>
@@ -3007,8 +3007,8 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='001'(3) basic_prep range=[2:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/fsm_using_function/dut.v:25.26-25.39> str='\GNT0' basic_prep range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -3019,8 +3019,8 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='010'(3) basic_prep range=[2:0] int=2
         AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/fsm_using_function/dut.v:25.40-25.53> str='\GNT1' basic_prep range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
@@ -3031,8 +3031,8 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='100'(3) basic_prep range=[2:0] int=4
         AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:20.9-20.14> str='\clock' input logic basic_prep port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
@@ -3105,13 +3105,13 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> range=[2:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:34.12-34.17> str='\req_0' input port=8 range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:33.10-33.20> basic_prep range=[2:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:33.11-33.17> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
+            AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:34.12-34.17> str='\req_0' input port=8 range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:35.12-35.17> str='\req_1' input port=9 range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:35.12-35.17> str='\req_1' input port=9 range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CASE <UHDM-integration-tests/tests/fsm_using_function/dut.v:36.3-55.10>
@@ -3435,8 +3435,8 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> basic_prep range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/fsm_using_function/dut.v:33.10-33.20> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:33.11-33.17> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/fsm_using_function/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/fsm_using_function/dut.v:34.12-34.17> str='\fsm_function$func$UHDM-integration-tests/tests/fsm_using_function/dut.v:30$2.req_0' reg basic_prep range=[0:0]
         ATTR \nosync:

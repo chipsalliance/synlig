@@ -1012,9 +1012,9 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:1.1-7.10> str='\top'
-      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:2.14-2.20> str='\A' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:2.14-2.20> str='\A' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000001110000100000'(32) signed unsized range=[31:0] int=7200
-      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:3.14-3.20> str='\B' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:3.14-3.20> str='\B' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000011100001000'(32) signed unsized range=[31:0] int=1800
       AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:4.19-4.28> str='\C' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
@@ -1025,10 +1025,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
-        AST_RANGE <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:1.23-1.24> str='\o' output signed port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:1.23-1.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0>
@@ -1052,9 +1052,9 @@ Dumping Verilog AST before simplification:
 --- END OF AST DUMP ---
 Dumping AST after simplification:
     AST_MODULE <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:1.1-7.10> str='\top' basic_prep
-      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:2.14-2.20> str='\A' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:2.14-2.20> str='\A' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000001110000100000'(32) signed unsized basic_prep range=[31:0] int=7200
-      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:3.14-3.20> str='\B' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:3.14-3.20> str='\B' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:0.0-0.0> bits='00000000000000000000011100001000'(32) signed unsized basic_prep range=[31:0] int=1800
       AST_LOCALPARAM <UHDM-integration-tests/tests/ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv:4.19-4.28> str='\C' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:

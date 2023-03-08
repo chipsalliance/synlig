@@ -1340,7 +1340,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
             AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/EnumWidth/top.sv:2.3-8.15> str='\numbers_e'
-        AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) range=[47:0] int=1853189424
           ATTR \is_simplified_wire:
@@ -1363,19 +1363,19 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
             AST_STRUCT_ITEM <UHDM-integration-tests/tests/EnumWidth/top.sv:15.18-15.26> str='b_member' basic_prep range=[31:29]
             AST_STRUCT_ITEM <UHDM-integration-tests/tests/EnumWidth/top.sv:16.18-16.27> str='b_padding' logic basic_prep range=[28:0]
-      AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:1.23-1.31> str='\foo_size' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:1.23-1.31> str='\foo_size' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:1.44-1.52> str='\bar_size' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:1.44-1.52> str='\bar_size' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:1.65-1.74> str='\enum_size' output signed port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/EnumWidth/top.sv:1.65-1.74> str='\enum_size' output signed port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0>
@@ -1391,9 +1391,9 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/EnumWidth/top.sv:26.10-26.33>
         AST_IDENTIFIER <UHDM-integration-tests/tests/EnumWidth/top.sv:26.10-26.18> str='\foo_size'
         AST_CONSTANT <UHDM-integration-tests/tests/EnumWidth/top.sv:0.0-0.0> bits='00000000000000000000000000100000'(32) range=[31:0] int=32

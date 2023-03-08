@@ -1243,7 +1243,7 @@ Object 'work@dut' of type 'design'
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/PackageCast/dut.v:5.1-7.10> str='\dut'
-      AST_WIRE <UHDM-integration-tests/tests/PackageCast/dut.v:5.24-5.27> str='\clk' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/PackageCast/dut.v:5.24-5.27> str='\clk' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/PackageCast/dut.v:5.46-5.47> str='\a' input logic port=2 multirange=[ 0 8 ] multirange_swapped=[ 0 ]
@@ -1256,9 +1256,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> range=[7:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
-          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:5.40-5.45> basic_prep range=[7:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/PackageCast/dut.v:5.68-5.69> str='\b' output reg basic_prep port=3 range=[7:0] multirange=[ 0 8 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> str='\enum_t' bits='01011100011001010110111001110101011011010101111101110100'(56) basic_prep range=[55:0] int=1970102132
@@ -1281,9 +1281,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> str='\FOUR' bits='0101110001000110010011110101010101010010'(40) basic_prep range=[39:0] int=1179604306
         ATTR \enum_value_00000100:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> str='\FIVE' bits='0101110001000110010010010101011001000101'(40) basic_prep range=[39:0] int=1179211333
-        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> range=[7:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
-          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:2.22-2.27> basic_prep range=[7:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+          AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/PackageCast/dut.v:6.11-6.30>
         AST_IDENTIFIER <UHDM-integration-tests/tests/PackageCast/dut.v:6.11-6.12> str='\b'
         AST_IDENTIFIER <UHDM-integration-tests/tests/PackageCast/dut.v:6.28-6.29> str='\a'
@@ -1381,7 +1381,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> basic_prep range=[7:0]
+        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:5.40-5.45> basic_prep range=[7:0]
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/PackageCast/dut.v:5.68-5.69> str='\b' output reg basic_prep port=3 range=[7:0] multirange=[ 0 8 ] multirange_swapped=[ 0 ]
@@ -1406,7 +1406,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> str='\FOUR' bits='0101110001000110010011110101010101010010'(40) basic_prep range=[39:0] int=1179604306
         ATTR \enum_value_00000100:
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> str='\FIVE' bits='0101110001000110010010010101011001000101'(40) basic_prep range=[39:0] int=1179211333
-        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> basic_prep range=[7:0]
+        AST_RANGE <UHDM-integration-tests/tests/PackageCast/dut.v:2.22-2.27> basic_prep range=[7:0]
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
           AST_CONSTANT <UHDM-integration-tests/tests/PackageCast/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/PackageCast/dut.v:6.11-6.30> basic_prep

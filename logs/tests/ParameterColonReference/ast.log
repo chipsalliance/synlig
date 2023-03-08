@@ -947,7 +947,7 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/ParameterColonReference/top.sv:5.1-7.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/ParameterColonReference/top.sv:5.19-5.20> str='\a' output logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterColonReference/top.sv:5.19-5.20> str='\a' output logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/ParameterColonReference/top.sv:6.11-6.24>
@@ -964,7 +964,7 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='1111'(4) basic_prep range=[3:0] int=15
-        AST_RANGE <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterColonReference/top.sv:2.20-2.25> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---
@@ -995,7 +995,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='1111'(4) basic_prep range=[3:0] int=15
-        AST_RANGE <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> basic_prep range=[3:0]
+        AST_RANGE <UHDM-integration-tests/tests/ParameterColonReference/top.sv:2.20-2.25> basic_prep range=[3:0]
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterColonReference/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
 --- END OF AST DUMP ---

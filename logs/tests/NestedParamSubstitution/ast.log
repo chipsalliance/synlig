@@ -1542,9 +1542,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='10'(2) signed range=[1:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:2.20-2.25> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:1.32-1.33> str='\a' output logic port=1 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1555,9 +1555,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:1.26-1.31> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:3.11-3.17>
         AST_IDENTIFIER <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:3.11-3.12> str='\a'
         AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='10'(2) range=[1:0] int=2
@@ -1585,7 +1585,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='10'(2) basic_prep range=[1:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:2.20-2.25> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:1.32-1.33> str='\a' output logic basic_prep port=1 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -1598,7 +1598,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:1.26-1.31> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:3.11-3.17> basic_prep
@@ -1629,9 +1629,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='01'(2) signed range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:7.20-7.25> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:6.32-6.33> str='\b' output logic port=2 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1642,9 +1642,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:6.26-6.31> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:8.4-12.6> str='\u_dut1'
         AST_CELLTYPE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> str='$paramod\dut1\P1=2'd2'
         AST_ARGUMENT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:8.4-12.6> str='\a'
@@ -1673,7 +1673,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:7.20-7.25> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:6.32-6.33> str='\b' output logic basic_prep port=2 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -1686,7 +1686,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:6.26-6.31> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:8.4-12.6> str='\u_dut1' basic_prep
@@ -1718,9 +1718,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='01'(2) range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:16.20-16.25> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:15.31-15.32> str='\o' output logic port=3 multirange=[ 0 2 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1731,9 +1731,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> range=[1:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:15.25-15.30> basic_prep range=[1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:17.4-21.6> str='\u_dut2'
         AST_CELLTYPE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> str='$paramod\dut2\P2=2'd1'
         AST_ARGUMENT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:17.4-21.6> str='\b'
@@ -1762,7 +1762,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='01'(2) basic_prep range=[1:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:16.20-16.25> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:15.31-15.32> str='\o' output logic basic_prep port=3 range=[1:0] multirange=[ 0 2 ] multirange_swapped=[ 0 ]
@@ -1775,7 +1775,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> basic_prep range=[1:0]
+        AST_RANGE <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:15.25-15.30> basic_prep range=[1:0]
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
           AST_CONSTANT <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/NestedParamSubstitution/top.sv:17.4-21.6> str='\u_dut2' basic_prep

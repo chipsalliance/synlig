@@ -1926,40 +1926,40 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.1-28.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.25-1.26> str='\a' output logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.25-1.26> str='\a' output logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.28-1.29> str='\b' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.28-1.29> str='\b' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.31-1.32> str='\c' output logic port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.31-1.32> str='\c' output logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.34-1.35> str='\d' output logic port=4 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.34-1.35> str='\d' output logic port=4 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.37-1.38> str='\e' output logic port=5 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.37-1.38> str='\e' output logic port=5 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.40-1.41> str='\f' output logic port=6 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.40-1.41> str='\f' output logic port=6 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.43-1.44> str='\g' output logic port=7 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.43-1.44> str='\g' output logic port=7 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.46-1.47> str='\h' output logic port=8 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.46-1.47> str='\h' output logic port=8 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.49-1.50> str='\i' output logic port=9 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.49-1.50> str='\i' output logic port=9 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.52-1.53> str='\j' output logic port=10 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.52-1.53> str='\j' output logic port=10 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.55-1.56> str='\k' output logic port=11 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.55-1.56> str='\k' output logic port=11 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.58-1.59> str='\l' output logic port=12 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.58-1.59> str='\l' output logic port=12 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_INITIAL <UHDM-integration-tests/tests/compound_assignments/top.sv:2.4-27.7>

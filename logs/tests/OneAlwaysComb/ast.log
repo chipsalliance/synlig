@@ -1015,16 +1015,16 @@ Object 'work@dut' of type 'design'
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:2.1-14.10> str='\dut'
-      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:2.20-2.21> str='\d' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:2.20-2.21> str='\d' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:3.21-3.25> str='\rstn' input logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:3.21-3.25> str='\rstn' input logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:4.21-4.24> str='\clk' input logic port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:4.21-4.24> str='\clk' input logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:5.26-5.27> str='\q' output reg port=4 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:5.26-5.27> str='\q' output reg port=4 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ALWAYS <UHDM-integration-tests/tests/OneAlwaysComb/dut.v:7.3-13.10>

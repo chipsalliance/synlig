@@ -1214,13 +1214,13 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.26-1.27> str='\a' input logic port=3 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.26-1.27> str='\a' input logic port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.28-1.29> str='\b' output logic port=4 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.28-1.29> str='\b' output logic port=4 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:4.11-4.16>
@@ -1287,13 +1287,13 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_RANGE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.26-1.27> str='\a' input logic port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.26-1.27> str='\a' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.28-1.29> str='\b' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:1.28-1.29> str='\b' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:4.11-4.16>
@@ -1351,13 +1351,13 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:7.1-14.10> str='\dut'
-      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:10.8-10.9> str='\c' reg range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:10.8-10.9> str='\c' reg range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:7.13-7.14> str='\a' input logic port=5 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:7.13-7.14> str='\a' input logic port=5 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:7.16-7.17> str='\b' output logic port=6 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:7.16-7.17> str='\b' output logic port=6 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_CELL <UHDM-integration-tests/tests/CellNamedLikeModule/dut.v:12.4-12.35> str='\mod'

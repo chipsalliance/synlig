@@ -1409,7 +1409,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
             AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='\opcode_e'
-        AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> str='$enum1' bits='001001000110010101101110011101010110110100110001'(48) range=[47:0] int=1853189425
           ATTR \is_simplified_wire:
@@ -1428,9 +1428,9 @@ Dumping AST before simplification:
         ATTR \is_imported:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) range=[31:0] int=2
-        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:6.14-6.15> str='\a' input logic port=1 multirange=[ 0 6 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1441,9 +1441,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:6.8-6.13> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:7.13-7.14> str='\b' output reg port=2 multirange=[ 0 3 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1454,9 +1454,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> range=[2:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
-          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:7.7-7.12> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/OneImport/dut.sv:8.10-9.36>
         AST_IDENTIFIER <UHDM-integration-tests/tests/OneImport/dut.sv:8.10-8.11> str='\b'
         AST_BIT_OR <UHDM-integration-tests/tests/OneImport/dut.sv:8.14-9.36>
@@ -1594,7 +1594,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[5:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:6.8-6.13> basic_prep range=[5:0]
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:7.13-7.14> str='\b' output reg basic_prep port=2 range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
@@ -1607,7 +1607,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[2:0]
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:7.7-7.12> basic_prep range=[2:0]
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
           AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/OneImport/dut.sv:8.10-9.36> basic_prep

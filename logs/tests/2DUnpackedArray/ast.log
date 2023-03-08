@@ -1018,10 +1018,10 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:1.1-5.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:1.18-1.21> str='\clk' input logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:1.18-1.21> str='\clk' input logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-      AST_WIRE <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:1.30-1.31> str='\o' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:1.30-1.31> str='\o' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/2DUnpackedArray/top.sv:2.10-2.17> str='\a' logic multirange=[ 0 3 0 2 ] multirange_swapped=[ 0 0 ]

@@ -1432,10 +1432,10 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='11111'(5) signed range=[4:0] int=31
-        AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> range=[4:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
-          AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.31-1.32> str='\a' output signed port=1 range=[-1:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:2.20-2.25> basic_prep range=[4:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
+          AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.31-1.32> str='\a' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0>
@@ -1466,7 +1466,7 @@ Dumping AST after simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='11111'(5) basic_prep range=[4:0] int=31
-        AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> basic_prep range=[4:0]
+        AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:2.20-2.25> basic_prep range=[4:0]
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:1.31-1.32> str='\a' output signed basic_prep port=1 range=[31:0]
@@ -1506,7 +1506,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:19.4-21.13> str='\enum_t'
-        AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$enum1' bits='001001000110010101101110011101010110110100110001'(48) range=[47:0] int=1853189425
           ATTR \is_simplified_wire:
@@ -1514,9 +1514,9 @@ Dumping AST before simplification:
           AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:19.23-19.28>
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:23.21-23.43> str='\CTRL_RESET' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:23.21-23.43> str='\CTRL_RESET' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='11111'(5) range=[4:0] int=31
-      AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:18.23-18.24> str='\o' output signed port=3 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:18.23-18.24> str='\o' output signed port=3 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0>
@@ -1576,7 +1576,7 @@ Dumping AST after simplification:
           AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:19.23-19.28> basic_prep range=[4:0]
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:23.21-23.43> str='\CTRL_RESET' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:23.21-23.43> str='\CTRL_RESET' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='11111'(5) basic_prep range=[4:0] int=31
       AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:18.23-18.24> str='\o' output signed basic_prep port=3 range=[31:0]
         ATTR \is_simplified_wire:
@@ -1659,7 +1659,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:7.4-9.13> str='\enum_t'
-        AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) range=[47:0] int=1853189424
           ATTR \is_simplified_wire:
@@ -1667,9 +1667,9 @@ Dumping AST before simplification:
           AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:7.23-7.28>
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:11.21-11.39> str='\RESVAL' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:11.21-11.39> str='\RESVAL' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='11111'(5) range=[4:0] int=31
-      AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.38-6.39> str='\b' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.38-6.39> str='\b' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0>
@@ -1718,7 +1718,7 @@ Dumping AST after simplification:
           AST_RANGE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:7.23-7.28> basic_prep range=[4:0]
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
             AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
-      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:11.21-11.39> str='\RESVAL' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:11.21-11.39> str='\RESVAL' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:0.0-0.0> bits='11111'(5) basic_prep range=[4:0] int=31
       AST_WIRE <UHDM-integration-tests/tests/EnumParameterInNestedModules/top.sv:6.38-6.39> str='\b' output signed basic_prep port=2 range=[31:0]
         ATTR \is_simplified_wire:

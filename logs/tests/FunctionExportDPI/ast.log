@@ -883,14 +883,14 @@ Object 'work@top' of type 'design'
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:1.1-9.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:1.23-1.24> str='\o' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:1.23-1.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_FUNCTION <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:2.4-2.34> str='\get_1'
-        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:3.13-3.16> str='\get_1' signed range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:3.13-3.16> str='\get_1' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0>
@@ -900,7 +900,7 @@ Dumping AST before simplification:
           AST_IDENTIFIER <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> str='\get_1'
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_FUNCTION <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:7.4-7.46> str='\get_2'
-        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:7.36-7.39> str='\get_2' signed range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:7.36-7.39> str='\get_2' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0>
@@ -928,7 +928,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_FUNCTION <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:2.4-2.34> str='\get_1'
-        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:3.13-3.16> str='\get_1' signed range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:3.13-3.16> str='\get_1' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0>
@@ -938,7 +938,7 @@ Dumping AST after simplification:
           AST_IDENTIFIER <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> str='\get_1'
           AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_FUNCTION <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:7.4-7.46> str='\get_2'
-        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:7.36-7.39> str='\get_2' signed range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:7.36-7.39> str='\get_2' signed range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
           AST_RANGE <UHDM-integration-tests/tests/FunctionExportDPI/top.sv:0.0-0.0>

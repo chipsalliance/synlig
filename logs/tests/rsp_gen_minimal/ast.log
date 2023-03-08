@@ -3777,9 +3777,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[56:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000111000'(32) signed range=[31:0] int=56
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:2.16-2.22> basic_prep range=[56:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000111000'(32) signed basic_prep range=[31:0] int=56
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:3.23-3.29> str='\data_o' output logic port=3 multirange=[ 0 64 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -3790,9 +3790,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[63:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed range=[31:0] int=63
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:3.16-3.22> basic_prep range=[63:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:6.3-15.6>
         ATTR \always_comb:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
@@ -3925,9 +3925,9 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:52.70-52.72> str='\tl' input logic basic_prep range=[65:0] multirange=[ 0 66 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_t' bits='010111000111010001101100010111110110010000110010011010000101111101110100'(72) basic_prep range=[71:0] int=845700980
@@ -3940,9 +3940,9 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:53.23-53.30> str='\payload' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_rsp_intg_t' bits='010111000111010001101100010111110110010000110010011010000101111101110010011100110111000001011111011010010110111001110100011001110101111101110100'(144) basic_prep range=[143:0] int=1952931700
@@ -3953,10 +3953,10 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0>
@@ -3973,10 +3973,10 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_ASSIGN_EQ <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:55.5-55.22>
@@ -4058,7 +4058,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[56:0]
+        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:2.16-2.22> basic_prep range=[56:0]
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000111000'(32) signed basic_prep range=[31:0] int=56
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:3.23-3.29> str='\data_o' output logic reg basic_prep port=3 range=[63:0] multirange=[ 0 64 ] multirange_swapped=[ 0 ]
@@ -4071,7 +4071,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[63:0]
+        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:3.16-3.22> basic_prep range=[63:0]
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000111111'(32) signed basic_prep range=[31:0] int=63
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ALWAYS <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:6.3-15.6> basic_prep
@@ -4206,9 +4206,9 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:52.70-52.72> str='\tl' input logic basic_prep range=[65:0] multirange=[ 0 66 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_t' bits='010111000111010001101100010111110110010000110010011010000101111101110100'(72) basic_prep range=[71:0] int=845700980
@@ -4221,9 +4221,9 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:53.23-53.30> str='\payload' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_rsp_intg_t' bits='010111000111010001101100010111110110010000110010011010000101111101110010011100110111000001011111011010010110111001110100011001110101111101110100'(144) basic_prep range=[143:0] int=1952931700
@@ -4234,10 +4234,10 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0>
@@ -4254,10 +4254,10 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_ASSIGN_EQ <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:55.5-55.22>
@@ -4372,7 +4372,7 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
       AST_TYPEDEF <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:21.3-24.15> str='\tl_d_op_e'
-        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> reg range=[-1:0]
+        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> reg range=[0:0]
           ATTR \enum_type:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='$enum1' bits='001001000110010101101110011101010110110100110001'(48) range=[47:0] int=1853189425
           ATTR \is_simplified_wire:
@@ -4394,9 +4394,9 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:69.19-69.23> str='\tl_o' output logic basic_prep range=[65:0] multirange=[ 0 66 ] multirange_swapped=[ 0 ]
         ATTR \wiretype:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_t' bits='010111000111010001101100010111110110010000110010011010000101111101110100'(72) basic_prep range=[71:0] int=845700980
@@ -4409,9 +4409,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:72.17-72.25> str='\rsp_intg' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -4435,9 +4435,9 @@ Dumping AST before simplification:
               AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:74.18-74.32> str='\unused_payload' logic
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -4470,9 +4470,9 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:52.70-52.72> str='\tl' input logic basic_prep range=[65:0] multirange=[ 0 66 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_t' bits='010111000111010001101100010111110110010000110010011010000101111101110100'(72) basic_prep range=[71:0] int=845700980
@@ -4485,9 +4485,9 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:53.23-53.30> str='\payload' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_rsp_intg_t' bits='010111000111010001101100010111110110010000110010011010000101111101110010011100110111000001011111011010010110111001110100011001110101111101110100'(144) basic_prep range=[143:0] int=1952931700
@@ -4498,10 +4498,10 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0>
@@ -4518,10 +4518,10 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_ASSIGN_EQ <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:55.5-55.22>
@@ -4641,9 +4641,9 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:52.70-52.72> str='\tl' input logic basic_prep range=[65:0] multirange=[ 0 66 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_t' bits='010111000111010001101100010111110110010000110010011010000101111101110100'(72) basic_prep range=[71:0] int=845700980
@@ -4656,9 +4656,9 @@ Dumping AST before simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:53.23-53.30> str='\payload' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_rsp_intg_t' bits='010111000111010001101100010111110110010000110010011010000101111101110010011100110111000001011111011010010110111001110100011001110101111101110100'(144) basic_prep range=[143:0] int=1952931700
@@ -4669,10 +4669,10 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0>
@@ -4689,10 +4689,10 @@ Dumping AST before simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_ASSIGN_EQ <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:55.5-55.22>
@@ -4922,9 +4922,9 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:52.70-52.72> str='\tl' input logic basic_prep range=[65:0] multirange=[ 0 66 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_t' bits='010111000111010001101100010111110110010000110010011010000101111101110100'(72) basic_prep range=[71:0] int=845700980
@@ -4937,9 +4937,9 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:53.23-53.30> str='\payload' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_rsp_intg_t' bits='010111000111010001101100010111110110010000110010011010000101111101110010011100110111000001011111011010010110111001110100011001110101111101110100'(144) basic_prep range=[143:0] int=1952931700
@@ -4950,10 +4950,10 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0>
@@ -4970,10 +4970,10 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_ASSIGN_EQ <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:55.5-55.22>
@@ -5092,9 +5092,9 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:52.70-52.72> str='\tl' input logic basic_prep range=[65:0] multirange=[ 0 66 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_t' bits='010111000111010001101100010111110110010000110010011010000101111101110100'(72) basic_prep range=[71:0] int=845700980
@@ -5107,9 +5107,9 @@ Dumping AST after simplification:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[65:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed range=[31:0] int=65
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[65:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000001000001'(32) signed basic_prep range=[31:0] int=65
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
         AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:53.23-53.30> str='\payload' logic basic_prep range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
           ATTR \wiretype:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> str='\tl_d2h_rsp_intg_t' bits='010111000111010001101100010111110110010000110010011010000101111101110010011100110111000001011111011010010110111001110100011001110101111101110100'(144) basic_prep range=[143:0] int=1952931700
@@ -5120,10 +5120,10 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
           ATTR \unpacked_ranges:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
-          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+          AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
           ATTR \is_simplified_wire:
             AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_BLOCK <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0>
@@ -5140,10 +5140,10 @@ Dumping AST after simplification:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> range=[5:0]
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
-                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[-1:0]
+              AST_RANGE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> basic_prep range=[5:0]
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+                AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_WIRE <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:54.11-54.22> str='\unused_tlul' logic range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
             AST_ASSIGN_EQ <UHDM-integration-tests/tests/rsp_gen_minimal/dut.v:55.5-55.22>

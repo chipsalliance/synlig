@@ -981,9 +981,9 @@ Warning: Removing unused module: \dut from the design.
 Generating RTLIL representation for module `$paramod\dut\P=32'd7200'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:1.1-4.10> str='$paramod\dut\P=32'd7200'
-      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:2.14-2.20> str='\P' range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:2.14-2.20> str='\P' range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:0.0-0.0> bits='00000000000000000001110000100000'(32) signed unsized range=[31:0] int=7200
-      AST_WIRE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:1.23-1.24> str='\a' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:1.23-1.24> str='\a' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:0.0-0.0>
@@ -1003,7 +1003,7 @@ Dumping Verilog AST before simplification:
 --- END OF AST DUMP ---
 Dumping AST after simplification:
     AST_MODULE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:1.1-4.10> str='$paramod\dut\P=32'd7200' basic_prep
-      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:2.14-2.20> str='\P' basic_prep range=[-1:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:2.14-2.20> str='\P' basic_prep range=[0:0]
         AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:0.0-0.0> bits='00000000000000000001110000100000'(32) signed unsized basic_prep range=[31:0] int=7200
       AST_WIRE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:1.23-1.24> str='\a' output signed basic_prep port=1 range=[31:0]
         ATTR \is_simplified_wire:
@@ -1026,7 +1026,7 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:6.1-8.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:6.23-6.24> str='\o' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:6.23-6.24> str='\o' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/ParameterWithUnderscoreValue/top.sv:0.0-0.0>

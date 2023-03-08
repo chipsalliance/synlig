@@ -1161,13 +1161,13 @@ Warning: UHDM-integration-tests/tests/BreakNested/top.sv:7: Post-incrementation 
 Generating RTLIL representation for module `\top'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/BreakNested/top.sv:1.1-17.10> str='\top'
-      AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:1.23-1.24> str='\a' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:1.23-1.24> str='\a' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0>
           AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
           AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:1.37-1.38> str='\b' output signed port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:1.37-1.38> str='\b' output signed port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0>
@@ -1182,7 +1182,7 @@ Dumping AST before simplification:
             AST_IDENTIFIER <UHDM-integration-tests/tests/BreakNested/top.sv:4.7-4.8> str='\b'
             AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
           AST_BLOCK <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13> str='$repeatdecl_block0'
-            AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13> str='$break' reg range=[-1:0]
+            AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13> str='$break' reg range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
               AST_RANGE <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13>
@@ -1192,7 +1192,7 @@ Dumping AST before simplification:
             AST_ASSIGN_EQ <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13>
               AST_IDENTIFIER <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13> str='$break'
               AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-            AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13> str='$continue' reg range=[-1:0]
+            AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13> str='$continue' reg range=[0:0]
               ATTR \is_simplified_wire:
                 AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
               AST_RANGE <UHDM-integration-tests/tests/BreakNested/top.sv:5.7-5.13>
@@ -1220,7 +1220,7 @@ Dumping AST before simplification:
                           AST_BLOCK <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0>
                             AST_BLOCK <UHDM-integration-tests/tests/BreakNested/top.sv:6.22-13.13>
                               AST_BLOCK <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='$fordecl_block1'
-                                AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='$break' reg range=[-1:0]
+                                AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='$break' reg range=[0:0]
                                   ATTR \is_simplified_wire:
                                     AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
                                   AST_RANGE <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='\top'
@@ -1230,14 +1230,14 @@ Dumping AST before simplification:
                                 AST_ASSIGN_EQ <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='\top'
                                   AST_IDENTIFIER <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='$break'
                                   AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-                                AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='$continue' reg range=[-1:0]
+                                AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='$continue' reg range=[0:0]
                                   ATTR \is_simplified_wire:
                                     AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
                                   AST_RANGE <UHDM-integration-tests/tests/BreakNested/top.sv:7.13-7.16> str='\top'
                                     AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
                                     AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
                                   AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) range=[31:0]
-                                AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:7.22-7.23> str='\i' logic signed range=[-1:0]
+                                AST_WIRE <UHDM-integration-tests/tests/BreakNested/top.sv:7.22-7.23> str='\i' logic signed range=[0:0]
                                   ATTR \is_simplified_wire:
                                     AST_CONSTANT <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
                                   AST_RANGE <UHDM-integration-tests/tests/BreakNested/top.sv:0.0-0.0>

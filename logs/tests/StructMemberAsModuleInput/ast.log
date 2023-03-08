@@ -997,7 +997,7 @@ Dumping AST before simplification:
       AST_TYPEDEF <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:6.12-6.18> str='\alert_rx_t'
         AST_STRUCT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:6.12-6.18> basic_prep
           AST_STRUCT_ITEM <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:7.16-7.22> str='ping_p' logic basic_prep range=[0:0]
-      AST_WIRE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:5.26-5.27> str='\o' output logic port=2 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:5.26-5.27> str='\o' output logic port=2 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_WIRE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:10.16-10.26> str='\alert_rx_i' logic basic_prep range=[0:0] multirange=[ 0 1 ] multirange_swapped=[ 0 ]
@@ -1012,9 +1012,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> range=[0:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> basic_prep range=[0:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_CELL <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:12.4-12.33> str='\d'
         AST_CELLTYPE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> str='\dut'
         AST_ARGUMENT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:12.4-12.33> str='\o'
@@ -1097,7 +1097,7 @@ Dumping Verilog AST after simplification:
 Generating RTLIL representation for module `\dut'.
 Dumping AST before simplification:
     AST_MODULE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:1.1-3.10> str='\dut'
-      AST_WIRE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:1.26-1.27> str='\o' output logic port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:1.26-1.27> str='\o' output logic port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
       AST_ASSIGN <UHDM-integration-tests/tests/StructMemberAsModuleInput/top.sv:2.11-2.19>

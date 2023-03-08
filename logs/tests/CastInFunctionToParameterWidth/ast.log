@@ -1130,9 +1130,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
-        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_PARAMETER <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:3.27-3.41> str='\PTR_WIDTH' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1142,9 +1142,9 @@ Dumping AST before simplification:
         ATTR \unpacked_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) range=[31:0] int=15
-        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> range=[31:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
-          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_WIRE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:5.33-5.34> str='\o' output logic port=1 multirange=[ 0 15 ] multirange_swapped=[ 0 ]
         ATTR \packed_ranges:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
@@ -1155,9 +1155,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> range=[14:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000001110'(32) signed range=[31:0] int=14
-          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:5.17-5.32> basic_prep range=[14:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000001110'(32) signed basic_prep range=[31:0] int=14
+          AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_FUNCTION <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:9.4-11.15> str='\get_casted_depth'
         AST_WIRE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:9.23-9.38> str='\get_casted_depth' logic
           ATTR \packed_ranges:
@@ -1235,7 +1235,7 @@ Dumping AST after simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> basic_prep range=[14:0]
+        AST_RANGE <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:5.17-5.32> basic_prep range=[14:0]
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000001110'(32) signed basic_prep range=[31:0] int=14
           AST_CONSTANT <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_FUNCTION <UHDM-integration-tests/tests/CastInFunctionToParameterWidth/top.sv:9.4-11.15> str='\get_casted_depth'

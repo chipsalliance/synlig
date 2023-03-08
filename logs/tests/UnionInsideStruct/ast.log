@@ -1312,7 +1312,7 @@ Dumping AST before simplification:
             AST_STRUCT_ITEM <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:6.10-6.12> str='b2' signed basic_prep range=[15:8]
             AST_STRUCT_ITEM <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:7.10-7.12> str='b3' signed basic_prep range=[7:0]
           AST_STRUCT_ITEM <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:12.9-12.10> str='i' signed basic_prep range=[31:0]
-      AST_WIRE <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:1.23-1.24> str='\o' output signed port=1 range=[-1:0]
+      AST_WIRE <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:1.23-1.24> str='\o' output signed port=1 range=[0:0]
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
         AST_RANGE <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0>
@@ -1330,9 +1330,9 @@ Dumping AST before simplification:
           AST_CONSTANT <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
         ATTR \is_simplified_wire:
           AST_CONSTANT <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
-        AST_RANGE <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> range=[39:0]
-          AST_CONSTANT <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000100111'(32) signed range=[31:0] int=39
-          AST_CONSTANT <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_RANGE <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> basic_prep range=[39:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000100111'(32) signed basic_prep range=[31:0] int=39
+          AST_CONSTANT <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
       AST_ASSIGN <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:30.10-30.23>
         AST_IDENTIFIER <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:30.10-30.11> str='\o'
         AST_IDENTIFIER <UHDM-integration-tests/tests/UnionInsideStruct/dut.sv:30.14-30.23> str='\bar' basic_prep
