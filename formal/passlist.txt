@@ -714,3 +714,4 @@ sv2v:lex/block_comment.v
 sv2v:core/multipack_delayed.v
 sv2v:core/multipack_delayed.sv
 sv2v:lex/block_comment.sv
+UHDM-integration-tests:WireNotStartingFromZero/top.sv
