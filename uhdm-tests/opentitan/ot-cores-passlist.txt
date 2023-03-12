@@ -129,3 +129,8 @@ lowrisc:ip:usb_fs_nb_pe:0.1
 lowrisc:tlul:socket_m1:0.1
 lowrisc:prim:flash:0
 lowrisc:tlul:adapter_host:0.1
+lowrisc:systems_custom_tiny:ast_pkg:0
+lowrisc:systems_custom_tiny:top_custom_tiny_pkg:0.1
+lowrisc:lint:comportable:0.1
+lowrisc:lint:common:0.1
+lowrisc:systems_custom_tiny:clkmgr_pkg:0.1

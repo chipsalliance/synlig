@@ -1,59 +1,25 @@
-From 7d8b9c4c7c346c8c8508e140278b0a9dc2bfe982 Mon Sep 17 00:00:00 2001
-From: Robert Szczepanski <rszczepanski@antmicro.com>
-Date: Thu, 26 Jan 2023 17:46:58 +0100
-Subject: [PATCH] Add core files for processing Earlgrey in Yosys
-
-Co-authored-by: Robert Szczepanski <rszczepanski@antmicro.com>
----
- hw/top_earlgrey/chip_earlgrey_yosys.core | 39 ++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
- create mode 100644 hw/top_earlgrey/chip_earlgrey_yosys.core
-
-diff --git a/hw/top_earlgrey/chip_earlgrey_yosys.core b/hw/top_earlgrey/chip_earlgrey_yosys.core
-new file mode 100644
-index 000000000..4c931dde8
---- /dev/null
-+++ b/hw/top_earlgrey/chip_earlgrey_yosys.core
-@@ -0,0 +1,39 @@
-+CAPI=2:
-+# Copyright lowRISC contributors.
-+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
-+# SPDX-License-Identifier: Apache-2.0
-+name: "lowrisc:systems:chip_earlgrey_yosys:0.1"
-+description: "Earl Grey toplevel for synthesis with Yosys"
-+filesets:
-+  files_synth_yosys:
-+    depend:
-+      - lowrisc:systems:top_earlgrey:0.1
-+      - lowrisc:systems:top_earlgrey_pkg
-+      - lowrisc:prim:clock_div
-+      - lowrisc:systems:ast
-+      - lowrisc:systems:scan_role_pkg
-+
-+parameters:
-+  AST_BYPASS_CLK:
-+    datatype: bool
-+    paramtype: vlogdefine
-+  IBEX_CUSTOM_PMP_RESET_VALUES:
-+    datatype: bool
-+    default: true
-+    paramtype: vlogdefine
-+
-+targets:
-+  default: &default_target
-+    filesets:
-+      - files_synth_yosys
-+    parameters:
-+      - IBEX_CUSTOM_PMP_RESET_VALUES
-+      - AST_BYPASS_CLK=true
-+    toplevel: top_earlgrey
-+
-+  synth:
-+    <<: *default_target
+diff --git a/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core b/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core
+index 47ef3473b..3f2da9c9e 100644
+--- a/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core
++++ b/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core
+@@ -83,7 +83,7 @@ targets:
+       - AST_BYPASS_CLK=true
+ 
+   synth:
+-    default_tool: vivado
 +    default_tool: yosys
-+    tools:
+     filesets:
+       - files_rtl_nexysvideo
+       - files_constraints
+@@ -96,8 +96,9 @@ targets:
+       - IBEX_CUSTOM_PMP_RESET_VALUES
+       - AST_BYPASS_CLK=true
+     tools:
+-      vivado:
+-        part: "xc7a200tsbg484-1"
 +      yosys:
 +        arch: "xilinx"
--- 
-2.30.2
-
++        # part: "xc7a200tsbg484-1"
+ 
+   lint:
+     <<: *default_target
