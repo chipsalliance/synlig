@@ -1,0 +1,61 @@
+From f9324e4f214ddebf64c8612b10b73416045f5c2e Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Tue, 14 Mar 2023 15:30:23 +0100
+Subject: [PATCH 15/18] Update top custom_tiny
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ .../chip_custom_tiny_nexysvideo.core             | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core b/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core
+index 47ef3473b..f6542798e 100644
+--- a/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core
++++ b/hw/top_custom_tiny/chip_custom_tiny_nexysvideo.core
+@@ -52,12 +52,12 @@ parameters:
+   BootRomInitFile:
+     datatype: str
+     description: Scrambled boot ROM initialization file in 40 bit vmem hex format
+-    default: "../../../../../build-bin/sw/device/lib/testing/test_rom/test_rom_fpga_cw310.scr.39.vmem"
++    default: "../../../../../../uhdm-tests/opentitan/boot_rom_fpga_nexysvideo.32.vmem"
+     paramtype: vlogparam
+   OtpCtrlMemInitFile:
+     datatype: str
+     description: OTP initialization file in vmem hex format
+-    default: "../../../../../build-bin/sw/device/otp_img/otp_img_fpga_cw310.vmem"
++    default: "../../../../../../uhdm-tests/opentitan/boot_rom_fpga_nexysvideo.32.vmem"
+     paramtype: vlogparam
+   # For value definition, please see ip/prim/rtl/prim_pkg.sv
+   PRIM_DEFAULT_IMPL:
+@@ -83,11 +83,11 @@ targets:
+       - AST_BYPASS_CLK=true
+ 
+   synth:
+-    default_tool: vivado
++    default_tool: yosys
+     filesets:
+       - files_rtl_nexysvideo
+       - files_constraints
+-      - files_tcl
++      #- files_tcl
+     toplevel: chip_custom_tiny_nexysvideo
+     parameters:
+       - BootRomInitFile
+@@ -96,8 +96,12 @@ targets:
+       - IBEX_CUSTOM_PMP_RESET_VALUES
+       - AST_BYPASS_CLK=true
+     tools:
+-      vivado:
+-        part: "xc7a200tsbg484-1"
++      yosys:
++        arch: "xilinx"
++        yosys_read_options: []
++        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
++        surelog_options: ['-DSYNTHESIS']
++        # part: "xc7a200tsbg484-1"
+ 
+   lint:
+     <<: *default_target
+-- 
+2.39.0
+

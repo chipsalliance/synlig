@@ -1,0 +1,26 @@
+From 56a56fe62e88eaebda117fa5a3b262cbcb375ac7 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Wed, 15 Mar 2023 14:11:57 +0100
+Subject: [PATCH 13/18] Comment out output to constant after optimization
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ hw/ip/pwrmgr/rtl/pwrmgr.sv | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/ip/pwrmgr/rtl/pwrmgr.sv b/hw/ip/pwrmgr/rtl/pwrmgr.sv
+index 8763812a0..c999747dc 100644
+--- a/hw/ip/pwrmgr/rtl/pwrmgr.sv
++++ b/hw/ip/pwrmgr/rtl/pwrmgr.sv
+@@ -508,7 +508,7 @@ module pwrmgr
+     .ack_pwrup_i          (slow_ack_pwrup),
+     .req_pwrdn_i          (slow_req_pwrdn),
+     .ack_pwrdn_o          (slow_ack_pwrdn),
+-    .rst_req_o            (slow_rst_req),
++    .rst_req_o            (/*slow_rst_req*/),
+     .fsm_invalid_o        (slow_fsm_invalid),
+     .clr_req_i            (slow_clr_req),
+     .usb_ip_clk_en_o      (slow_usb_ip_clk_en),
+-- 
+2.39.0
+

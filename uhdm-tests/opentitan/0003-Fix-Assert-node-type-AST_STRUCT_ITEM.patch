@@ -1,0 +1,26 @@
+From 88e6192658d6e878399545d1ef95e26a18d02c28 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Tue, 14 Mar 2023 11:16:26 +0100
+Subject: [PATCH 03/18] Fix Assert node->type == AST_STRUCT_ITEM
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv b/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
+index e142cba06..0f5c4aca9 100644
+--- a/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
++++ b/hw/ip/flash_ctrl/rtl/flash_ctrl_pkg.sv
+@@ -383,7 +383,7 @@ package flash_ctrl_pkg;
+     logic [BusFullWidth-1:0] prog_data;
+     logic                 prog_last;
+     flash_prog_e          prog_type;
+-    mp_region_cfg_t [MpRegions:0] region_cfgs;
++    logic [375:0] region_cfgs;
+     logic [KeyWidth-1:0]  addr_key;
+     logic [KeyWidth-1:0]  data_key;
+     logic [KeyWidth-1:0]  rand_addr_key;
+-- 
+2.39.0
+

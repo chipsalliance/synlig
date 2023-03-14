@@ -1,0 +1,26 @@
+From 3c65637d90b37e1eb9634d4365c1b17d601b21dc Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Tue, 14 Mar 2023 15:30:39 +0100
+Subject: [PATCH 16/18] Update python-requirements.txt
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ python-requirements.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/python-requirements.txt b/python-requirements.txt
+index 991fa5a79..6c065e5aa 100644
+--- a/python-requirements.txt
++++ b/python-requirements.txt
+@@ -50,7 +50,7 @@ anytree==2.8.0
+ git+https://github.com/lowRISC/fusesoc.git@ot-0.3
+ 
+ # Development version with OT-specific changes
+-git+https://github.com/antmicro/edalize.git@yosys_systemverilog
++git+https://github.com/antmicro/edalize.git@uhdm_support
+ 
+ # Development version of minimal ChipWhisperer toolchain with latest features
+ # and bug fixes. We fix the version for improved stability and manually update
+-- 
+2.39.0
+

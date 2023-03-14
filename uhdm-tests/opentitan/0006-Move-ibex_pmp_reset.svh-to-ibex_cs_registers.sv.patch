@@ -1,0 +1,81 @@
+From 9f6e3819102aec6e2723fb594cc93c2238eeb591 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Tue, 14 Mar 2023 12:26:30 +0100
+Subject: [PATCH 06/18] Move ibex_pmp_reset.svh to ibex_cs_registers.sv
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ .../lowrisc_ibex/rtl/ibex_cs_registers.sv     | 55 +++++++++++++++++--
+ 1 file changed, 50 insertions(+), 5 deletions(-)
+
+diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
+index 5cecca07f..0333b08e7 100644
+--- a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
++++ b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
+@@ -1071,13 +1071,58 @@ module ibex_cs_registers #(
+   // PMP registers
+   // -----------------
+ 
++  localparam pmp_cfg_t pmp_cfg_rst[16] = '{
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 0
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 1
++    '{lock: 1'b1, mode: PMP_MODE_NAPOT, exec: 1'b1, write: 1'b0, read: 1'b1}, // rgn 2  [ROM: LRX]
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 3
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 4
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 5
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 6
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 7
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 8
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 9
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 10
++    '{lock: 1'b1, mode: PMP_MODE_TOR,   exec: 1'b0, write: 1'b1, read: 1'b1}, // rgn 11 [MMIO: LRW]
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 12
++    '{lock: 1'b1, mode: PMP_MODE_NAPOT, exec: 1'b1, write: 1'b1, read: 1'b1}, // rgn 13 [DV_ROM: LRWX]
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}, // rgn 14
++    '{lock: 1'b0, mode: PMP_MODE_OFF,   exec: 1'b0, write: 1'b0, read: 1'b0}  // rgn 15
++  };
++
++  // Addresses are given in byte granularity for readibility. A minimum of two
++  // bits will be stripped off the bottom (PMPGranularity == 0) with more stripped
++  // off at coarser granularities.
++  //
++  // Note: The size of region 2 below must match `_epmp_reset_rx_size` in
++  // `sw/device/silicon_creator/rom/rom.ld`
++  localparam [33:0] pmp_addr_rst[16] = '{
++    34'h00000000, // rgn 0
++    34'h00000000, // rgn 1
++    34'h000083fc, // rgn 2  [ROM: base=0x0000_8000 size=0x800 (2KiB)]
++    34'h00000000, // rgn 3
++    34'h00000000, // rgn 4
++    34'h00000000, // rgn 5
++    34'h00000000, // rgn 6
++    34'h00000000, // rgn 7
++    34'h00000000, // rgn 8
++    34'h00000000, // rgn 9
++    34'h40000000, // rgn 10 [MMIO: lo=0x4000_0000]
++    34'h42010000, // rgn 11 [MMIO: hi=0x4201_0000]
++    34'h00000000, // rgn 12
++    34'h000107fc, // rgn 13 [DV_ROM: base=0x0001_0000 size=0x1000 (4KiB)]
++    34'h00000000, // rgn 14
++    34'h00000000  // rgn 15
++  };
++
++  localparam pmp_mseccfg_t pmp_mseccfg_rst = '{rlb : 1'b1, mmwp: 1'b1, mml: 1'b0};
+   if (PMPEnable) begin : g_pmp_registers
+     // PMP reset values
+-    `ifdef IBEX_CUSTOM_PMP_RESET_VALUES
+-      `include "ibex_pmp_reset.svh"
+-    `else
+-      `include "ibex_pmp_reset_default.svh"
+-    `endif
++    //`ifdef IBEX_CUSTOM_PMP_RESET_VALUES
++    //  `include "ibex_pmp_reset.svh"
++    //`else
++    //  `include "ibex_pmp_reset_default.svh"
++    //`endif
+ 
+     pmp_mseccfg_t                pmp_mseccfg_q, pmp_mseccfg_d;
+     logic                        pmp_mseccfg_we;
+-- 
+2.39.0
+
