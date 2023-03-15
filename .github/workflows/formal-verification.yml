@@ -24,9 +24,9 @@ jobs:
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-highmem-4"
+      GHA_MACHINE_TYPE: "n2-highmem-8"
       PARSER: yosys-plugin
-      TEST_SUITE: ${{ matrix.test-suite }}
+      TEST_SUITE_DIR: ${{ matrix.test-suite }}
       TEST_SUITE_NAME: ${{ matrix.name }}
 
     steps:
@@ -65,7 +65,11 @@ jobs:
         run: |
           chmod +x image/bin/sv2v
           source .github/scripts/common.sh
-          ./run_fv_tests.sh "$TEST_SUITE" "$TEST_SUITE_NAME"
+          export PATH="$PWD/image/bin:$PATH"
+          ./run_fv_tests.mk -j$(nproc) \
+              TEST_SUITE_DIR:="$(realpath ${TEST_SUITE_DIR})" \
+              TEST_SUITE_NAME:="${TEST_SUITE_NAME}" \
+              test
 
       - name: Generate list of performed tests
         run: |
