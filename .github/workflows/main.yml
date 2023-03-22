@@ -67,7 +67,6 @@ jobs:
               Surelog \
               yosys \
               yosys-f4pga-plugins \
-              sv2v \
               ;
 
       - name: Checkout custom branches in submodules (if requested)
@@ -91,7 +90,7 @@ jobs:
           # Make sure we always use https:// instead of git://
           git config --global url.https://github.com/.insteadOf git://github.com/
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-          ./build_binaries.sh --build-sv2v
+          ./build_binaries.sh
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue
           # See https://github.com/actions/upload-artifact/issues/38
@@ -105,6 +104,83 @@ jobs:
             binaries.tar
 
       - name: Upload load graphs
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg
+
+  build-sv2v:
+    name: Build sv2v
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-highmem-8"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y git wget
+
+      - name: 'Read submodule revisions'
+        id: rev
+        run: |
+           CACHE_HASH_LENGTH=20
+           repo_hash="$(git submodule status sv2v)"
+           # Skip first character which is ' ' or '+'
+           repo_hash="${repo_hash:1:$CACHE_HASH_LENGTH}"
+           printf '::set-output name=%s::%s\n' 'sv2v-submodule-rev' "${repo_hash}"
+
+      - name: Try restoring build results from cache
+        id: cache-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: image/bin/sv2v
+          key: sv2v@${{ steps.rev.outputs.sv2v-submodule-rev }}
+
+      - name: Checkout submodules
+        if: ${{ steps.cache-restore.outputs.cache-hit != 'true' }}
+        run: |
+          git submodule update -j 8 --depth 1 --init --recursive \
+              sv2v \
+              ;
+
+      - name: Build binaries
+        if: ${{ steps.cache-restore.outputs.cache-hit != 'true' }}
+        run: |
+          mkdir -p $PWD/image/bin
+          export PATH=$PWD/install/bin:/usr/local/bin:${PATH}
+          wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
+          make -j$(nproc --all) -C $PWD/sv2v
+          cp $PWD/sv2v/bin/sv2v image/bin
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: sv2v
+          path: |
+            image/bin/sv2v
+
+      - name: Save build results to cache
+        if: ${{ steps.cache-restore.outputs.cache-hit != 'true' && ! (failure() || cancelled()) }}
+        uses: actions/cache/save@v3
+        with:
+          path: image/bin/sv2v
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+
+      - name: Upload load graphs
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v2
         with:
           name: plots
@@ -119,7 +195,9 @@ jobs:
   tests-formal-verification:
     name: Formal Verification Tests
     uses: ./.github/workflows/formal-verification.yml
-    needs: build-binaries
+    needs:
+      - build-binaries
+      - build-sv2v
 
   tests-large-designs:
     name: Large Designs Tests

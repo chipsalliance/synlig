@@ -55,8 +55,15 @@ jobs:
       - name: Extract
         run: tar -xf binaries.tar
 
+      - name: Download sv2v
+        uses: actions/download-artifact@v2
+        with:
+          name: sv2v
+          path: image/bin/
+
       - name: Test
         run: |
+          chmod +x image/bin/sv2v
           source .github/scripts/common.sh
           ./run_fv_tests.sh "$TEST_SUITE" "$TEST_SUITE_NAME"
 
