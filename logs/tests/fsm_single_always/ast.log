@@ -1,0 +1,3113 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/fsm_single_always/dut.v" TOP_MODULE="fsm_using_single_always" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/fsm_single_always/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -Using Yosys read_systemverilog command
+> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/fsm_single_always/dut.v:8:1: No timescale set for "fsm_using_single_always".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0303] UHDM-integration-tests/tests/fsm_single_always/dut.v:8:1: Compile module "work@fsm_using_single_always".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/fsm_single_always/dut.v:8:1: Top level module "work@fsm_using_single_always".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 1.
+
+[NTE:EL0510] Nb instances: 1.
+
+[NTE:EL0511] Nb leaf instances: 0.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 1
+[   NOTE] : 5
+design: (work@fsm_using_single_always)
+ |vpiName:work@fsm_using_single_always
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@fsm_using_single_always)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@fsm_using_single_always)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@fsm_using_single_always)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@fsm_using_single_always)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@fsm_using_single_always)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+   |vpiParent:
+   \_design: (work@fsm_using_single_always)
+   |vpiFullName:work@fsm_using_single_always
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.SIZE), line:25:11, endln:25:15
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |UINT:3
+     |vpiTypespec:
+     \_int_typespec: 
+     |vpiName:SIZE
+     |vpiFullName:work@fsm_using_single_always.SIZE
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.IDLE), line:26:11, endln:26:15
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |BIN:001
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiRange:
+       \_range: 
+         |vpiLeftRange:
+         \_constant: 
+           |INT:2
+         |vpiRightRange:
+         \_constant: 
+           |INT:0
+     |vpiName:IDLE
+     |vpiFullName:work@fsm_using_single_always.IDLE
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.GNT0), line:26:26, endln:26:30
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |BIN:010
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiRange:
+       \_range: 
+         |vpiLeftRange:
+         \_constant: 
+           |INT:2
+         |vpiRightRange:
+         \_constant: 
+           |INT:0
+     |vpiName:GNT0
+     |vpiFullName:work@fsm_using_single_always.GNT0
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.GNT1), line:26:40, endln:26:44
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |BIN:100
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiRange:
+       \_range: 
+         |vpiLeftRange:
+         \_constant: 
+           |INT:2
+         |vpiRightRange:
+         \_constant: 
+           |INT:0
+     |vpiName:GNT1
+     |vpiFullName:work@fsm_using_single_always.GNT1
+   |vpiParamAssign:
+   \_param_assign: , line:25:11, endln:25:19
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:25:18, endln:25:19
+       |vpiDecompile:3
+       |vpiSize:32
+       |UINT:3
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.SIZE), line:25:11, endln:25:15
+   |vpiParamAssign:
+   \_param_assign: , line:26:11, endln:26:25
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:26:19, endln:26:25
+       |vpiDecompile:3'b001
+       |vpiSize:3
+       |BIN:001
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:3
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.IDLE), line:26:11, endln:26:15
+   |vpiParamAssign:
+   \_param_assign: , line:26:26, endln:26:39
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:26:33, endln:26:39
+       |vpiDecompile:3'b010
+       |vpiSize:3
+       |BIN:010
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:3
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.GNT0), line:26:26, endln:26:30
+   |vpiParamAssign:
+   \_param_assign: , line:26:40, endln:26:53
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:26:47, endln:26:53
+       |vpiDecompile:3'b100
+       |vpiSize:3
+       |BIN:100
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:3
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.GNT1), line:26:40, endln:26:44
+   |vpiDefName:work@fsm_using_single_always
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.clock), line:21:9, endln:21:14
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:clock
+     |vpiFullName:work@fsm_using_single_always.clock
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.reset), line:21:15, endln:21:20
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:reset
+     |vpiFullName:work@fsm_using_single_always.reset
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.req_0), line:21:21, endln:21:26
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:req_0
+     |vpiFullName:work@fsm_using_single_always.req_0
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.req_1), line:21:27, endln:21:32
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:req_1
+     |vpiFullName:work@fsm_using_single_always.req_1
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.gnt_0), line:23:9, endln:23:14
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:gnt_0
+     |vpiFullName:work@fsm_using_single_always.gnt_0
+     |vpiNetType:48
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.gnt_1), line:23:15, endln:23:20
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:gnt_1
+     |vpiFullName:work@fsm_using_single_always.gnt_1
+     |vpiNetType:48
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:state
+     |vpiFullName:work@fsm_using_single_always.state
+     |vpiNetType:48
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.next_state), line:29:27, endln:29:37
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:next_state
+     |vpiFullName:work@fsm_using_single_always.next_state
+     |vpiNetType:48
+   |vpiPort:
+   \_port: (clock), line:9:1, endln:9:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:clock
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.clock), line:21:9, endln:21:14
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (reset), line:10:1, endln:10:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:reset
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.reset), line:21:15, endln:21:20
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (req_0), line:11:1, endln:11:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:req_0
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.req_0), line:21:21, endln:21:26
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (req_1), line:12:1, endln:12:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:req_1
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.req_1), line:21:27, endln:21:32
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (gnt_0), line:13:1, endln:13:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:gnt_0
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.gnt_0), line:23:9, endln:23:14
+     |vpiTypedef:
+     \_logic_typespec: , line:19:9, endln:19:9
+   |vpiPort:
+   \_port: (gnt_1), line:14:1, endln:14:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:gnt_1
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.gnt_1), line:23:15, endln:23:20
+     |vpiTypedef:
+     \_logic_typespec: , line:19:9, endln:19:9
+   |vpiProcess:
+   \_always: , line:31:1, endln:62:4
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiStmt:
+     \_event_control: , line:31:8, endln:31:25
+       |vpiParent:
+       \_always: , line:31:1, endln:62:4
+       |vpiCondition:
+       \_operation: , line:31:11, endln:31:24
+         |vpiParent:
+         \_event_control: , line:31:8, endln:31:25
+         |vpiOpType:39
+         |vpiOperand:
+         \_ref_obj: (work@fsm_using_single_always.clock), line:31:19, endln:31:24
+           |vpiParent:
+           \_operation: , line:31:11, endln:31:24
+           |vpiName:clock
+           |vpiFullName:work@fsm_using_single_always.clock
+           |vpiActual:
+           \_logic_net: (work@fsm_using_single_always.clock), line:21:9, endln:21:14
+       |vpiStmt:
+       \_named_begin: (work@fsm_using_single_always.FSM), line:32:1, endln:62:4
+         |vpiParent:
+         \_event_control: , line:31:8, endln:31:25
+         |vpiName:FSM
+         |vpiFullName:work@fsm_using_single_always.FSM
+         |vpiStmt:
+         \_if_else: , line:33:1, endln:61:8
+           |vpiParent:
+           \_named_begin: (work@fsm_using_single_always.FSM), line:32:1, endln:62:4
+           |vpiCondition:
+           \_operation: , line:33:5, endln:33:18
+             |vpiParent:
+             \_if_else: , line:33:1, endln:61:8
+             |vpiOpType:14
+             |vpiOperand:
+             \_ref_obj: (work@fsm_using_single_always.FSM.reset), line:33:5, endln:33:10
+               |vpiParent:
+               \_named_begin: (work@fsm_using_single_always.FSM), line:32:1, endln:62:4
+               |vpiName:reset
+               |vpiFullName:work@fsm_using_single_always.FSM.reset
+               |vpiActual:
+               \_logic_net: (work@fsm_using_single_always.reset), line:21:15, endln:21:20
+             |vpiOperand:
+             \_constant: , line:33:14, endln:33:18
+               |vpiParent:
+               \_operation: , line:33:5, endln:33:18
+               |vpiDecompile:1'b1
+               |vpiSize:1
+               |BIN:1
+               |vpiConstType:3
+           |vpiStmt:
+           \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+             |vpiParent:
+             \_if_else: , line:33:1, endln:61:8
+             |vpiFullName:work@fsm_using_single_always.FSM
+             |vpiStmt:
+             \_assignment: , line:34:3, endln:34:19
+               |vpiParent:
+               \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+               |vpiOpType:82
+               |vpiRhs:
+               \_ref_obj: (work@fsm_using_single_always.FSM.IDLE), line:34:15, endln:34:19
+                 |vpiParent:
+                 \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+                 |vpiName:IDLE
+                 |vpiFullName:work@fsm_using_single_always.FSM.IDLE
+               |vpiLhs:
+               \_ref_obj: (work@fsm_using_single_always.FSM.state), line:34:3, endln:34:8
+                 |vpiParent:
+                 \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+                 |vpiName:state
+                 |vpiFullName:work@fsm_using_single_always.FSM.state
+                 |vpiActual:
+                 \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+               |vpiDelayControl:
+               \_delay_control: , line:34:12, endln:34:14
+                 |vpiParent:
+                 \_assignment: , line:34:3, endln:34:19
+                 |#1
+             |vpiStmt:
+             \_assignment: , line:35:3, endln:35:13
+               |vpiParent:
+               \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+               |vpiOpType:82
+               |vpiRhs:
+               \_constant: , line:35:12, endln:35:13
+                 |vpiParent:
+                 \_assignment: , line:35:3, endln:35:13
+                 |vpiDecompile:0
+                 |vpiSize:64
+                 |UINT:0
+                 |vpiConstType:9
+               |vpiLhs:
+               \_ref_obj: (work@fsm_using_single_always.FSM.gnt_0), line:35:3, endln:35:8
+                 |vpiParent:
+                 \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+                 |vpiName:gnt_0
+                 |vpiFullName:work@fsm_using_single_always.FSM.gnt_0
+                 |vpiActual:
+                 \_logic_net: (work@fsm_using_single_always.gnt_0), line:23:9, endln:23:14
+             |vpiStmt:
+             \_assignment: , line:36:3, endln:36:13
+               |vpiParent:
+               \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+               |vpiOpType:82
+               |vpiRhs:
+               \_constant: , line:36:12, endln:36:13
+                 |vpiParent:
+                 \_assignment: , line:36:3, endln:36:13
+                 |vpiDecompile:0
+                 |vpiSize:64
+                 |UINT:0
+                 |vpiConstType:9
+               |vpiLhs:
+               \_ref_obj: (work@fsm_using_single_always.FSM.gnt_1), line:36:3, endln:36:8
+                 |vpiParent:
+                 \_begin: (work@fsm_using_single_always.FSM), line:33:20, endln:37:4
+                 |vpiName:gnt_1
+                 |vpiFullName:work@fsm_using_single_always.FSM.gnt_1
+                 |vpiActual:
+                 \_logic_net: (work@fsm_using_single_always.gnt_1), line:23:15, endln:23:20
+           |vpiElseStmt:
+           \_case_stmt: , line:38:2, endln:61:8
+             |vpiParent:
+             \_if_else: , line:33:1, endln:61:8
+             |vpiCaseType:1
+             |vpiCondition:
+             \_ref_obj: (work@fsm_using_single_always.FSM.state), line:38:7, endln:38:12
+               |vpiParent:
+               \_if_else: , line:33:1, endln:61:8
+               |vpiName:state
+               |vpiFullName:work@fsm_using_single_always.FSM.state
+               |vpiActual:
+               \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+             |vpiCaseItem:
+             \_case_item: , line:39:4, endln:47:18
+               |vpiParent:
+               \_case_stmt: , line:38:2, endln:61:8
+               |vpiExpr:
+               \_ref_obj: (work@fsm_using_single_always.FSM.IDLE), line:39:4, endln:39:8
+                 |vpiParent:
+                 \_if_else: , line:33:1, endln:61:8
+                 |vpiName:IDLE
+                 |vpiFullName:work@fsm_using_single_always.FSM.IDLE
+               |vpiStmt:
+               \_if_else: , line:39:11, endln:47:18
+                 |vpiParent:
+                 \_case_item: , line:39:4, endln:47:18
+                 |vpiCondition:
+                 \_operation: , line:39:15, endln:39:28
+                   |vpiParent:
+                   \_if_else: , line:39:11, endln:47:18
+                   |vpiOpType:14
+                   |vpiOperand:
+                   \_ref_obj: (work@fsm_using_single_always.FSM.req_0), line:39:15, endln:39:20
+                     |vpiParent:
+                     \_case_item: , line:39:4, endln:47:18
+                     |vpiName:req_0
+                     |vpiFullName:work@fsm_using_single_always.FSM.req_0
+                     |vpiActual:
+                     \_logic_net: (work@fsm_using_single_always.req_0), line:21:21, endln:21:26
+                   |vpiOperand:
+                   \_constant: , line:39:24, endln:39:28
+                     |vpiParent:
+                     \_operation: , line:39:15, endln:39:28
+                     |vpiDecompile:1'b1
+                     |vpiSize:1
+                     |BIN:1
+                     |vpiConstType:3
+                 |vpiStmt:
+                 \_begin: (work@fsm_using_single_always.FSM), line:39:30, endln:42:18
+                   |vpiParent:
+                   \_if_else: , line:39:11, endln:47:18
+                   |vpiFullName:work@fsm_using_single_always.FSM
+                   |vpiStmt:
+                   \_assignment: , line:40:17, endln:40:33
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:39:30, endln:42:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.GNT0), line:40:29, endln:40:33
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:39:30, endln:42:18
+                       |vpiName:GNT0
+                       |vpiFullName:work@fsm_using_single_always.FSM.GNT0
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.state), line:40:17, endln:40:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:39:30, endln:42:18
+                       |vpiName:state
+                       |vpiFullName:work@fsm_using_single_always.FSM.state
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                     |vpiDelayControl:
+                     \_delay_control: , line:40:26, endln:40:28
+                       |vpiParent:
+                       \_assignment: , line:40:17, endln:40:33
+                       |#1
+                   |vpiStmt:
+                   \_assignment: , line:41:17, endln:41:27
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:39:30, endln:42:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_constant: , line:41:26, endln:41:27
+                       |vpiParent:
+                       \_assignment: , line:41:17, endln:41:27
+                       |vpiDecompile:1
+                       |vpiSize:64
+                       |UINT:1
+                       |vpiConstType:9
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.gnt_0), line:41:17, endln:41:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:39:30, endln:42:18
+                       |vpiName:gnt_0
+                       |vpiFullName:work@fsm_using_single_always.FSM.gnt_0
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.gnt_0), line:23:9, endln:23:14
+                 |vpiElseStmt:
+                 \_if_else: , line:42:24, endln:47:18
+                   |vpiParent:
+                   \_if_else: , line:39:11, endln:47:18
+                   |vpiCondition:
+                   \_operation: , line:42:28, endln:42:41
+                     |vpiParent:
+                     \_if_else: , line:42:24, endln:47:18
+                     |vpiOpType:14
+                     |vpiOperand:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.req_1), line:42:28, endln:42:33
+                       |vpiParent:
+                       \_if_else: , line:39:11, endln:47:18
+                       |vpiName:req_1
+                       |vpiFullName:work@fsm_using_single_always.FSM.req_1
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.req_1), line:21:27, endln:21:32
+                     |vpiOperand:
+                     \_constant: , line:42:37, endln:42:41
+                       |vpiParent:
+                       \_operation: , line:42:28, endln:42:41
+                       |vpiDecompile:1'b1
+                       |vpiSize:1
+                       |BIN:1
+                       |vpiConstType:3
+                   |vpiStmt:
+                   \_begin: (work@fsm_using_single_always.FSM), line:42:43, endln:45:18
+                     |vpiParent:
+                     \_if_else: , line:42:24, endln:47:18
+                     |vpiFullName:work@fsm_using_single_always.FSM
+                     |vpiStmt:
+                     \_assignment: , line:43:17, endln:43:27
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:42:43, endln:45:18
+                       |vpiOpType:82
+                       |vpiRhs:
+                       \_constant: , line:43:26, endln:43:27
+                         |vpiParent:
+                         \_assignment: , line:43:17, endln:43:27
+                         |vpiDecompile:1
+                         |vpiSize:64
+                         |UINT:1
+                         |vpiConstType:9
+                       |vpiLhs:
+                       \_ref_obj: (work@fsm_using_single_always.FSM.gnt_1), line:43:17, endln:43:22
+                         |vpiParent:
+                         \_begin: (work@fsm_using_single_always.FSM), line:42:43, endln:45:18
+                         |vpiName:gnt_1
+                         |vpiFullName:work@fsm_using_single_always.FSM.gnt_1
+                         |vpiActual:
+                         \_logic_net: (work@fsm_using_single_always.gnt_1), line:23:15, endln:23:20
+                     |vpiStmt:
+                     \_assignment: , line:44:17, endln:44:33
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:42:43, endln:45:18
+                       |vpiOpType:82
+                       |vpiRhs:
+                       \_ref_obj: (work@fsm_using_single_always.FSM.GNT1), line:44:29, endln:44:33
+                         |vpiParent:
+                         \_begin: (work@fsm_using_single_always.FSM), line:42:43, endln:45:18
+                         |vpiName:GNT1
+                         |vpiFullName:work@fsm_using_single_always.FSM.GNT1
+                       |vpiLhs:
+                       \_ref_obj: (work@fsm_using_single_always.FSM.state), line:44:17, endln:44:22
+                         |vpiParent:
+                         \_begin: (work@fsm_using_single_always.FSM), line:42:43, endln:45:18
+                         |vpiName:state
+                         |vpiFullName:work@fsm_using_single_always.FSM.state
+                         |vpiActual:
+                         \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                       |vpiDelayControl:
+                       \_delay_control: , line:44:26, endln:44:28
+                         |vpiParent:
+                         \_assignment: , line:44:17, endln:44:33
+                         |#1
+                   |vpiElseStmt:
+                   \_begin: (work@fsm_using_single_always.FSM), line:45:24, endln:47:18
+                     |vpiParent:
+                     \_if_else: , line:42:24, endln:47:18
+                     |vpiFullName:work@fsm_using_single_always.FSM
+                     |vpiStmt:
+                     \_assignment: , line:46:17, endln:46:33
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:45:24, endln:47:18
+                       |vpiOpType:82
+                       |vpiRhs:
+                       \_ref_obj: (work@fsm_using_single_always.FSM.IDLE), line:46:29, endln:46:33
+                         |vpiParent:
+                         \_begin: (work@fsm_using_single_always.FSM), line:45:24, endln:47:18
+                         |vpiName:IDLE
+                         |vpiFullName:work@fsm_using_single_always.FSM.IDLE
+                       |vpiLhs:
+                       \_ref_obj: (work@fsm_using_single_always.FSM.state), line:46:17, endln:46:22
+                         |vpiParent:
+                         \_begin: (work@fsm_using_single_always.FSM), line:45:24, endln:47:18
+                         |vpiName:state
+                         |vpiFullName:work@fsm_using_single_always.FSM.state
+                         |vpiActual:
+                         \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                       |vpiDelayControl:
+                       \_delay_control: , line:46:26, endln:46:28
+                         |vpiParent:
+                         \_assignment: , line:46:17, endln:46:33
+                         |#1
+             |vpiCaseItem:
+             \_case_item: , line:48:4, endln:53:18
+               |vpiParent:
+               \_case_stmt: , line:38:2, endln:61:8
+               |vpiExpr:
+               \_ref_obj: (work@fsm_using_single_always.FSM.GNT0), line:48:4, endln:48:8
+                 |vpiParent:
+                 \_if_else: , line:33:1, endln:61:8
+                 |vpiName:GNT0
+                 |vpiFullName:work@fsm_using_single_always.FSM.GNT0
+               |vpiStmt:
+               \_if_else: , line:48:11, endln:53:18
+                 |vpiParent:
+                 \_case_item: , line:48:4, endln:53:18
+                 |vpiCondition:
+                 \_operation: , line:48:15, endln:48:28
+                   |vpiParent:
+                   \_if_else: , line:48:11, endln:53:18
+                   |vpiOpType:14
+                   |vpiOperand:
+                   \_ref_obj: (work@fsm_using_single_always.FSM.req_0), line:48:15, endln:48:20
+                     |vpiParent:
+                     \_case_item: , line:48:4, endln:53:18
+                     |vpiName:req_0
+                     |vpiFullName:work@fsm_using_single_always.FSM.req_0
+                     |vpiActual:
+                     \_logic_net: (work@fsm_using_single_always.req_0), line:21:21, endln:21:26
+                   |vpiOperand:
+                   \_constant: , line:48:24, endln:48:28
+                     |vpiParent:
+                     \_operation: , line:48:15, endln:48:28
+                     |vpiDecompile:1'b1
+                     |vpiSize:1
+                     |BIN:1
+                     |vpiConstType:3
+                 |vpiStmt:
+                 \_begin: (work@fsm_using_single_always.FSM), line:48:30, endln:50:18
+                   |vpiParent:
+                   \_if_else: , line:48:11, endln:53:18
+                   |vpiFullName:work@fsm_using_single_always.FSM
+                   |vpiStmt:
+                   \_assignment: , line:49:17, endln:49:33
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:48:30, endln:50:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.GNT0), line:49:29, endln:49:33
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:48:30, endln:50:18
+                       |vpiName:GNT0
+                       |vpiFullName:work@fsm_using_single_always.FSM.GNT0
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.state), line:49:17, endln:49:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:48:30, endln:50:18
+                       |vpiName:state
+                       |vpiFullName:work@fsm_using_single_always.FSM.state
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                     |vpiDelayControl:
+                     \_delay_control: , line:49:26, endln:49:28
+                       |vpiParent:
+                       \_assignment: , line:49:17, endln:49:33
+                       |#1
+                 |vpiElseStmt:
+                 \_begin: (work@fsm_using_single_always.FSM), line:50:24, endln:53:18
+                   |vpiParent:
+                   \_if_else: , line:48:11, endln:53:18
+                   |vpiFullName:work@fsm_using_single_always.FSM
+                   |vpiStmt:
+                   \_assignment: , line:51:17, endln:51:27
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:50:24, endln:53:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_constant: , line:51:26, endln:51:27
+                       |vpiParent:
+                       \_assignment: , line:51:17, endln:51:27
+                       |vpiDecompile:0
+                       |vpiSize:64
+                       |UINT:0
+                       |vpiConstType:9
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.gnt_0), line:51:17, endln:51:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:50:24, endln:53:18
+                       |vpiName:gnt_0
+                       |vpiFullName:work@fsm_using_single_always.FSM.gnt_0
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.gnt_0), line:23:9, endln:23:14
+                   |vpiStmt:
+                   \_assignment: , line:52:17, endln:52:33
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:50:24, endln:53:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.IDLE), line:52:29, endln:52:33
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:50:24, endln:53:18
+                       |vpiName:IDLE
+                       |vpiFullName:work@fsm_using_single_always.FSM.IDLE
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.state), line:52:17, endln:52:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:50:24, endln:53:18
+                       |vpiName:state
+                       |vpiFullName:work@fsm_using_single_always.FSM.state
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                     |vpiDelayControl:
+                     \_delay_control: , line:52:26, endln:52:28
+                       |vpiParent:
+                       \_assignment: , line:52:17, endln:52:33
+                       |#1
+             |vpiCaseItem:
+             \_case_item: , line:54:4, endln:59:18
+               |vpiParent:
+               \_case_stmt: , line:38:2, endln:61:8
+               |vpiExpr:
+               \_ref_obj: (work@fsm_using_single_always.FSM.GNT1), line:54:4, endln:54:8
+                 |vpiParent:
+                 \_if_else: , line:33:1, endln:61:8
+                 |vpiName:GNT1
+                 |vpiFullName:work@fsm_using_single_always.FSM.GNT1
+               |vpiStmt:
+               \_if_else: , line:54:11, endln:59:18
+                 |vpiParent:
+                 \_case_item: , line:54:4, endln:59:18
+                 |vpiCondition:
+                 \_operation: , line:54:15, endln:54:28
+                   |vpiParent:
+                   \_if_else: , line:54:11, endln:59:18
+                   |vpiOpType:14
+                   |vpiOperand:
+                   \_ref_obj: (work@fsm_using_single_always.FSM.req_1), line:54:15, endln:54:20
+                     |vpiParent:
+                     \_case_item: , line:54:4, endln:59:18
+                     |vpiName:req_1
+                     |vpiFullName:work@fsm_using_single_always.FSM.req_1
+                     |vpiActual:
+                     \_logic_net: (work@fsm_using_single_always.req_1), line:21:27, endln:21:32
+                   |vpiOperand:
+                   \_constant: , line:54:24, endln:54:28
+                     |vpiParent:
+                     \_operation: , line:54:15, endln:54:28
+                     |vpiDecompile:1'b1
+                     |vpiSize:1
+                     |BIN:1
+                     |vpiConstType:3
+                 |vpiStmt:
+                 \_begin: (work@fsm_using_single_always.FSM), line:54:30, endln:56:18
+                   |vpiParent:
+                   \_if_else: , line:54:11, endln:59:18
+                   |vpiFullName:work@fsm_using_single_always.FSM
+                   |vpiStmt:
+                   \_assignment: , line:55:17, endln:55:33
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:54:30, endln:56:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.GNT1), line:55:29, endln:55:33
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:54:30, endln:56:18
+                       |vpiName:GNT1
+                       |vpiFullName:work@fsm_using_single_always.FSM.GNT1
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.state), line:55:17, endln:55:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:54:30, endln:56:18
+                       |vpiName:state
+                       |vpiFullName:work@fsm_using_single_always.FSM.state
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                     |vpiDelayControl:
+                     \_delay_control: , line:55:26, endln:55:28
+                       |vpiParent:
+                       \_assignment: , line:55:17, endln:55:33
+                       |#1
+                 |vpiElseStmt:
+                 \_begin: (work@fsm_using_single_always.FSM), line:56:24, endln:59:18
+                   |vpiParent:
+                   \_if_else: , line:54:11, endln:59:18
+                   |vpiFullName:work@fsm_using_single_always.FSM
+                   |vpiStmt:
+                   \_assignment: , line:57:17, endln:57:27
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:56:24, endln:59:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_constant: , line:57:26, endln:57:27
+                       |vpiParent:
+                       \_assignment: , line:57:17, endln:57:27
+                       |vpiDecompile:0
+                       |vpiSize:64
+                       |UINT:0
+                       |vpiConstType:9
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.gnt_1), line:57:17, endln:57:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:56:24, endln:59:18
+                       |vpiName:gnt_1
+                       |vpiFullName:work@fsm_using_single_always.FSM.gnt_1
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.gnt_1), line:23:15, endln:23:20
+                   |vpiStmt:
+                   \_assignment: , line:58:17, endln:58:33
+                     |vpiParent:
+                     \_begin: (work@fsm_using_single_always.FSM), line:56:24, endln:59:18
+                     |vpiOpType:82
+                     |vpiRhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.IDLE), line:58:29, endln:58:33
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:56:24, endln:59:18
+                       |vpiName:IDLE
+                       |vpiFullName:work@fsm_using_single_always.FSM.IDLE
+                     |vpiLhs:
+                     \_ref_obj: (work@fsm_using_single_always.FSM.state), line:58:17, endln:58:22
+                       |vpiParent:
+                       \_begin: (work@fsm_using_single_always.FSM), line:56:24, endln:59:18
+                       |vpiName:state
+                       |vpiFullName:work@fsm_using_single_always.FSM.state
+                       |vpiActual:
+                       \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                     |vpiDelayControl:
+                     \_delay_control: , line:58:26, endln:58:28
+                       |vpiParent:
+                       \_assignment: , line:58:17, endln:58:33
+                       |#1
+             |vpiCaseItem:
+             \_case_item: , line:60:4, endln:60:31
+               |vpiParent:
+               \_case_stmt: , line:38:2, endln:61:8
+               |vpiStmt:
+               \_assignment: , line:60:14, endln:60:30
+                 |vpiParent:
+                 \_case_item: , line:60:4, endln:60:31
+                 |vpiOpType:82
+                 |vpiRhs:
+                 \_ref_obj: (work@fsm_using_single_always.FSM.IDLE), line:60:26, endln:60:30
+                   |vpiParent:
+                   \_case_item: , line:60:4, endln:60:31
+                   |vpiName:IDLE
+                   |vpiFullName:work@fsm_using_single_always.FSM.IDLE
+                 |vpiLhs:
+                 \_ref_obj: (work@fsm_using_single_always.FSM.state), line:60:14, endln:60:19
+                   |vpiParent:
+                   \_case_item: , line:60:4, endln:60:31
+                   |vpiName:state
+                   |vpiFullName:work@fsm_using_single_always.FSM.state
+                   |vpiActual:
+                   \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+                 |vpiDelayControl:
+                 \_delay_control: , line:60:23, endln:60:25
+                   |vpiParent:
+                   \_assignment: , line:60:14, endln:60:30
+                   |#1
+     |vpiAlwaysType:1
+ |uhdmtopModules:
+ \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+   |vpiName:work@fsm_using_single_always
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.SIZE), line:25:11, endln:25:15
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |UINT:3
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiParent:
+       \_parameter: (work@fsm_using_single_always.SIZE), line:25:11, endln:25:15
+     |vpiName:SIZE
+     |vpiFullName:work@fsm_using_single_always.SIZE
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.IDLE), line:26:11, endln:26:15
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |BIN:001
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiParent:
+       \_parameter: (work@fsm_using_single_always.IDLE), line:26:11, endln:26:15
+       |vpiRange:
+       \_range: 
+         |vpiParent:
+         \_int_typespec: 
+         |vpiLeftRange:
+         \_constant: 
+           |vpiParent:
+           \_range: 
+           |INT:2
+         |vpiRightRange:
+         \_constant: 
+           |vpiParent:
+           \_range: 
+           |INT:0
+     |vpiName:IDLE
+     |vpiFullName:work@fsm_using_single_always.IDLE
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.GNT0), line:26:26, endln:26:30
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |BIN:010
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiParent:
+       \_parameter: (work@fsm_using_single_always.GNT0), line:26:26, endln:26:30
+       |vpiRange:
+       \_range: 
+         |vpiParent:
+         \_int_typespec: 
+         |vpiLeftRange:
+         \_constant: 
+           |vpiParent:
+           \_range: 
+           |INT:2
+         |vpiRightRange:
+         \_constant: 
+           |vpiParent:
+           \_range: 
+           |INT:0
+     |vpiName:GNT0
+     |vpiFullName:work@fsm_using_single_always.GNT0
+   |vpiParameter:
+   \_parameter: (work@fsm_using_single_always.GNT1), line:26:40, endln:26:44
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |BIN:100
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiParent:
+       \_parameter: (work@fsm_using_single_always.GNT1), line:26:40, endln:26:44
+       |vpiRange:
+       \_range: 
+         |vpiParent:
+         \_int_typespec: 
+         |vpiLeftRange:
+         \_constant: 
+           |vpiParent:
+           \_range: 
+           |INT:2
+         |vpiRightRange:
+         \_constant: 
+           |vpiParent:
+           \_range: 
+           |INT:0
+     |vpiName:GNT1
+     |vpiFullName:work@fsm_using_single_always.GNT1
+   |vpiParamAssign:
+   \_param_assign: , line:25:11, endln:25:19
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:25:18, endln:25:19
+       |vpiDecompile:3
+       |vpiSize:32
+       |UINT:3
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.SIZE), line:25:11, endln:25:15
+   |vpiParamAssign:
+   \_param_assign: , line:26:11, endln:26:25
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:26:19, endln:26:25
+       |vpiDecompile:3'b001
+       |vpiSize:3
+       |BIN:001
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:3
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.IDLE), line:26:11, endln:26:15
+   |vpiParamAssign:
+   \_param_assign: , line:26:26, endln:26:39
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:26:33, endln:26:39
+       |vpiDecompile:3'b010
+       |vpiSize:3
+       |BIN:010
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:3
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.GNT0), line:26:26, endln:26:30
+   |vpiParamAssign:
+   \_param_assign: , line:26:40, endln:26:53
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiRhs:
+     \_constant: , line:26:47, endln:26:53
+       |vpiDecompile:3'b100
+       |vpiSize:3
+       |BIN:100
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:3
+     |vpiLhs:
+     \_parameter: (work@fsm_using_single_always.GNT1), line:26:40, endln:26:44
+   |vpiDefName:work@fsm_using_single_always
+   |vpiTop:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.clock), line:21:9, endln:21:14
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:21:1, endln:21:5
+     |vpiName:clock
+     |vpiFullName:work@fsm_using_single_always.clock
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.reset), line:21:15, endln:21:20
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:21:1, endln:21:5
+     |vpiName:reset
+     |vpiFullName:work@fsm_using_single_always.reset
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.req_0), line:21:21, endln:21:26
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:21:1, endln:21:5
+     |vpiName:req_0
+     |vpiFullName:work@fsm_using_single_always.req_0
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.req_1), line:21:27, endln:21:32
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:21:1, endln:21:5
+     |vpiName:req_1
+     |vpiFullName:work@fsm_using_single_always.req_1
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.gnt_0), line:23:9, endln:23:14
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:23:1, endln:23:4
+     |vpiName:gnt_0
+     |vpiFullName:work@fsm_using_single_always.gnt_0
+     |vpiNetType:48
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.gnt_1), line:23:15, endln:23:20
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:23:1, endln:23:4
+     |vpiName:gnt_1
+     |vpiFullName:work@fsm_using_single_always.gnt_1
+     |vpiNetType:48
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.state), line:28:27, endln:28:32
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:28:1, endln:28:17
+       |vpiRange:
+       \_range: , line:28:7, endln:28:17
+         |vpiLeftRange:
+         \_constant: , line:28:8, endln:28:12
+           |vpiParent:
+           \_range: , line:28:7, endln:28:17
+           |vpiDecompile:2
+           |vpiSize:64
+           |INT:2
+           |vpiConstType:7
+         |vpiRightRange:
+         \_constant: , line:28:15, endln:28:16
+           |vpiParent:
+           \_range: , line:28:7, endln:28:17
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:state
+     |vpiFullName:work@fsm_using_single_always.state
+     |vpiNetType:48
+   |vpiNet:
+   \_logic_net: (work@fsm_using_single_always.next_state), line:29:27, endln:29:37
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiTypespec:
+     \_logic_typespec: , line:29:1, endln:29:17
+       |vpiRange:
+       \_range: , line:29:7, endln:29:17
+         |vpiLeftRange:
+         \_constant: , line:29:8, endln:29:12
+           |vpiParent:
+           \_range: , line:29:7, endln:29:17
+           |vpiDecompile:2
+           |vpiSize:64
+           |INT:2
+           |vpiConstType:7
+         |vpiRightRange:
+         \_constant: , line:29:15, endln:29:16
+           |vpiParent:
+           \_range: , line:29:7, endln:29:17
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:next_state
+     |vpiFullName:work@fsm_using_single_always.next_state
+     |vpiNetType:48
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (clock), line:9:1, endln:9:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:clock
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@fsm_using_single_always.clock), line:9:1, endln:9:6
+       |vpiName:clock
+       |vpiFullName:work@fsm_using_single_always.clock
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.clock), line:21:9, endln:21:14
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (reset), line:10:1, endln:10:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:reset
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@fsm_using_single_always.reset), line:10:1, endln:10:6
+       |vpiName:reset
+       |vpiFullName:work@fsm_using_single_always.reset
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.reset), line:21:15, endln:21:20
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (req_0), line:11:1, endln:11:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:req_0
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@fsm_using_single_always.req_0), line:11:1, endln:11:6
+       |vpiName:req_0
+       |vpiFullName:work@fsm_using_single_always.req_0
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.req_0), line:21:21, endln:21:26
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (req_1), line:12:1, endln:12:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:req_1
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@fsm_using_single_always.req_1), line:12:1, endln:12:6
+       |vpiName:req_1
+       |vpiFullName:work@fsm_using_single_always.req_1
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.req_1), line:21:27, endln:21:32
+     |vpiTypedef:
+     \_logic_typespec: , line:17:9, endln:17:9
+   |vpiPort:
+   \_port: (gnt_0), line:13:1, endln:13:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:gnt_0
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@fsm_using_single_always.gnt_0), line:13:1, endln:13:6
+       |vpiName:gnt_0
+       |vpiFullName:work@fsm_using_single_always.gnt_0
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.gnt_0), line:23:9, endln:23:14
+     |vpiTypedef:
+     \_logic_typespec: , line:19:9, endln:19:9
+   |vpiPort:
+   \_port: (gnt_1), line:14:1, endln:14:6
+     |vpiParent:
+     \_module_inst: work@fsm_using_single_always (work@fsm_using_single_always), file:UHDM-integration-tests/tests/fsm_single_always/dut.v, line:8:1, endln:64:10
+     |vpiName:gnt_1
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@fsm_using_single_always.gnt_1), line:14:1, endln:14:6
+       |vpiName:gnt_1
+       |vpiFullName:work@fsm_using_single_always.gnt_1
+       |vpiActual:
+       \_logic_net: (work@fsm_using_single_always.gnt_1), line:23:15, endln:23:20
+     |vpiTypedef:
+     \_logic_typespec: , line:19:9, endln:19:9
+   |vpiProcess:
+   \_always: , line:31:1, endln:62:4
+Object 'work@fsm_using_single_always' of type 'design'
+  Object 'builtin' of type 'package'
+  Object '' of type 'module_inst'
+    Object 'SIZE' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object 'IDLE' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'GNT0' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'GNT1' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object '' of type 'param_assign'
+      Object 'SIZE' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'IDLE' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'constant'
+    Object '' of type 'param_assign'
+      Object 'GNT0' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'constant'
+    Object '' of type 'param_assign'
+      Object 'GNT1' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'constant'
+    Object 'clock' of type 'logic_net'
+    Object 'reset' of type 'logic_net'
+    Object 'req_0' of type 'logic_net'
+    Object 'req_1' of type 'logic_net'
+    Object 'gnt_0' of type 'logic_net'
+    Object 'gnt_1' of type 'logic_net'
+    Object 'state' of type 'logic_net'
+    Object 'next_state' of type 'logic_net'
+    Object '' of type 'always'
+      Object '' of type 'event_control'
+        Object '' of type 'operation'
+          Object 'clock' of type 'ref_obj'
+        Object 'FSM' of type 'named_begin'
+          Object '' of type 'if_else'
+            Object '' of type 'operation'
+              Object 'reset' of type 'ref_obj'
+              Object '' of type 'constant'
+            Object '' of type 'begin'
+              Object '' of type 'assignment'
+                Object 'state' of type 'ref_obj'
+                Object 'IDLE' of type 'ref_obj'
+              Object '' of type 'assignment'
+                Object 'gnt_0' of type 'ref_obj'
+                Object '' of type 'constant'
+              Object '' of type 'assignment'
+                Object 'gnt_1' of type 'ref_obj'
+                Object '' of type 'constant'
+            Object '' of type 'case_stmt'
+              Object 'state' of type 'ref_obj'
+              Object '' of type 'case_item'
+                Object 'IDLE' of type 'ref_obj'
+                Object '' of type 'if_else'
+                  Object '' of type 'operation'
+                    Object 'req_0' of type 'ref_obj'
+                    Object '' of type 'constant'
+                  Object '' of type 'begin'
+                    Object '' of type 'assignment'
+                      Object 'state' of type 'ref_obj'
+                      Object 'GNT0' of type 'ref_obj'
+                    Object '' of type 'assignment'
+                      Object 'gnt_0' of type 'ref_obj'
+                      Object '' of type 'constant'
+                  Object '' of type 'if_else'
+                    Object '' of type 'operation'
+                      Object 'req_1' of type 'ref_obj'
+                      Object '' of type 'constant'
+                    Object '' of type 'begin'
+                      Object '' of type 'assignment'
+                        Object 'gnt_1' of type 'ref_obj'
+                        Object '' of type 'constant'
+                      Object '' of type 'assignment'
+                        Object 'state' of type 'ref_obj'
+                        Object 'GNT1' of type 'ref_obj'
+                    Object '' of type 'begin'
+                      Object '' of type 'assignment'
+                        Object 'state' of type 'ref_obj'
+                        Object 'IDLE' of type 'ref_obj'
+              Object '' of type 'case_item'
+                Object 'GNT0' of type 'ref_obj'
+                Object '' of type 'if_else'
+                  Object '' of type 'operation'
+                    Object 'req_0' of type 'ref_obj'
+                    Object '' of type 'constant'
+                  Object '' of type 'begin'
+                    Object '' of type 'assignment'
+                      Object 'state' of type 'ref_obj'
+                      Object 'GNT0' of type 'ref_obj'
+                  Object '' of type 'begin'
+                    Object '' of type 'assignment'
+                      Object 'gnt_0' of type 'ref_obj'
+                      Object '' of type 'constant'
+                    Object '' of type 'assignment'
+                      Object 'state' of type 'ref_obj'
+                      Object 'IDLE' of type 'ref_obj'
+              Object '' of type 'case_item'
+                Object 'GNT1' of type 'ref_obj'
+                Object '' of type 'if_else'
+                  Object '' of type 'operation'
+                    Object 'req_1' of type 'ref_obj'
+                    Object '' of type 'constant'
+                  Object '' of type 'begin'
+                    Object '' of type 'assignment'
+                      Object 'state' of type 'ref_obj'
+                      Object 'GNT1' of type 'ref_obj'
+                  Object '' of type 'begin'
+                    Object '' of type 'assignment'
+                      Object 'gnt_1' of type 'ref_obj'
+                      Object '' of type 'constant'
+                    Object '' of type 'assignment'
+                      Object 'state' of type 'ref_obj'
+                      Object 'IDLE' of type 'ref_obj'
+              Object '' of type 'case_item'
+                Object '' of type 'assignment'
+                  Object 'state' of type 'ref_obj'
+                  Object 'IDLE' of type 'ref_obj'
+  Object 'work@fsm_using_single_always' of type 'module_inst'
+    Object 'SIZE' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object 'IDLE' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'GNT0' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'GNT1' of type 'parameter'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object '' of type 'param_assign'
+      Object 'SIZE' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'IDLE' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'constant'
+    Object '' of type 'param_assign'
+      Object 'GNT0' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'constant'
+    Object '' of type 'param_assign'
+      Object 'GNT1' of type 'parameter'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'constant'
+    Object 'clock' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'reset' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'req_0' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'req_1' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'gnt_0' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'gnt_1' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'clock' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'reset' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'req_0' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'req_1' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'gnt_0' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'gnt_1' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'state' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'next_state' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+Generating RTLIL representation for module `\fsm_using_single_always'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/fsm_single_always/dut.v:8.1-64.10> str='\fsm_using_single_always'
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:25.11-25.19> str='\SIZE' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000011'(32) range=[31:0] int=3
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:26.11-26.25> str='\IDLE' multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='001'(3) signed range=[2:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:26.26-26.39> str='\GNT0' multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='010'(3) signed range=[2:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:26.40-26.53> str='\GNT1' multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='100'(3) signed range=[2:0] int=4
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.9-21.14> str='\clock' input logic port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.15-21.20> str='\reset' input logic port=2 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.21-21.26> str='\req_0' input logic port=3 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.27-21.32> str='\req_1' input logic port=4 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:23.9-23.14> str='\gnt_0' output reg port=5 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:23.15-23.20> str='\gnt_1' output reg port=6 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:28.27-28.32> str='\state' reg
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:28.7-28.17>
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:28.7-28.17>
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:29.27-29.37> str='\next_state' reg
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:29.7-29.17>
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:29.7-29.17>
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_ALWAYS <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4>
+        AST_POSEDGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.11-31.24>
+          AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.19-31.24> str='\clock'
+        AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.8-31.25>
+          AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:32.1-62.4> str='\FSM'
+            AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.1-61.8>
+              AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.5-33.18>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.5-33.10> str='\reset'
+                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+              AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                  AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.20-37.4>
+                    AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:34.3-34.19>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:34.3-34.8> str='\state'
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:34.15-34.19> str='\IDLE'
+                    AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:35.3-35.13>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:35.3-35.8> str='\gnt_0'
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                    AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:36.3-36.13>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:36.3-36.8> str='\gnt_1'
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                  AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8>
+                    AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:38.7-38.12> str='\state'
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.4-47.18>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.4-39.8> str='\IDLE'
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                        AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.11-47.18>
+                          AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.15-39.28>
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.15-39.20> str='\req_0'
+                              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.30-42.18>
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:40.17-40.33>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:40.17-40.22> str='\state'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:40.29-40.33> str='\GNT0'
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:41.17-41.27>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:41.17-41.22> str='\gnt_0'
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                              AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.24-47.18>
+                                AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                                  AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.28-42.41>
+                                    AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.28-42.33> str='\req_1'
+                                    AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                                AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                                  AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                                    AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.43-45.18>
+                                      AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:43.17-43.27>
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:43.17-43.22> str='\gnt_1'
+                                        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                                      AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:44.17-44.33>
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:44.17-44.22> str='\state'
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:44.29-44.33> str='\GNT1'
+                                AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                                  AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                                  AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                                    AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:45.24-47.18>
+                                      AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:46.17-46.33>
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:46.17-46.22> str='\state'
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:46.29-46.33> str='\IDLE'
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.4-53.18>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.4-48.8> str='\GNT0'
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                        AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.11-53.18>
+                          AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.15-48.28>
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.15-48.20> str='\req_0'
+                              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.30-50.18>
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:49.17-49.33>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:49.17-49.22> str='\state'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:49.29-49.33> str='\GNT0'
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:50.24-53.18>
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:51.17-51.27>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:51.17-51.22> str='\gnt_0'
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:52.17-52.33>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:52.17-52.22> str='\state'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:52.29-52.33> str='\IDLE'
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.4-59.18>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.4-54.8> str='\GNT1'
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                        AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.11-59.18>
+                          AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.15-54.28>
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.15-54.20> str='\req_1'
+                              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.30-56.18>
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:55.17-55.33>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:55.17-55.22> str='\state'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:55.29-55.33> str='\GNT1'
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:56.24-59.18>
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:57.17-57.27>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:57.17-57.22> str='\gnt_1'
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:58.17-58.33>
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:58.17-58.22> str='\state'
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:58.29-58.33> str='\IDLE'
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.4-60.31>
+                      AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0>
+                        AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.14-60.30>
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.14-60.19> str='\state'
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.26-60.30> str='\IDLE'
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module fsm_using_single_always(clock, reset, req_0, req_1, gnt_0, gnt_1);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* is_simplified_wire = 1 *)
+      input clock;
+      (* is_simplified_wire = 1 *)
+      input reset;
+      (* is_simplified_wire = 1 *)
+      input req_0;
+      (* is_simplified_wire = 1 *)
+      input req_1;
+      (* is_simplified_wire = 1 *)
+      output reg gnt_0;
+      (* is_simplified_wire = 1 *)
+      output reg gnt_1;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      reg [2:0] state;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      reg [2:0] next_state;
+      always @(posedge clock)
+        case (|((reset)==(1'b 1)))
+          1'b 1:
+            begin
+              state <= IDLE;
+              gnt_0 <= 0;
+              gnt_1 <= 0;
+            end
+          default:
+            case (state)
+              IDLE:
+                case (|((req_0)==(1'b 1)))
+                  1'b 1:
+                    begin
+                      state <= GNT0;
+                      gnt_0 <= 1;
+                    end
+                  default:
+                    case (|((req_1)==(1'b 1)))
+                      1'b 1:
+                        begin
+                          gnt_1 <= 1;
+                          state <= GNT1;
+                        end
+                      default:
+                        state <= IDLE;
+                    endcase
+                endcase
+              GNT0:
+                case (|((req_0)==(1'b 1)))
+                  1'b 1:
+                    state <= GNT0;
+                  default:
+                    begin
+                      gnt_0 <= 0;
+                      state <= IDLE;
+                    end
+                endcase
+              GNT1:
+                case (|((req_1)==(1'b 1)))
+                  1'b 1:
+                    state <= GNT1;
+                  default:
+                    begin
+                      gnt_1 <= 0;
+                      state <= IDLE;
+                    end
+                endcase
+              default:
+                state <= IDLE;
+            endcase
+        endcase
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/fsm_single_always/dut.v:8.1-64.10> str='\fsm_using_single_always' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:25.11-25.19> str='\SIZE' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000011'(32) basic_prep range=[31:0] int=3
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:26.11-26.25> str='\IDLE' basic_prep range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='001'(3) basic_prep range=[2:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:26.26-26.39> str='\GNT0' basic_prep range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='010'(3) basic_prep range=[2:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/fsm_single_always/dut.v:26.40-26.53> str='\GNT1' basic_prep range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='100'(3) basic_prep range=[2:0] int=4
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) unsized basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) unsized basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.9-21.14> str='\clock' input logic basic_prep port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.15-21.20> str='\reset' input logic basic_prep port=2 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.21-21.26> str='\req_0' input logic basic_prep port=3 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:21.27-21.32> str='\req_1' input logic basic_prep port=4 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:23.9-23.14> str='\gnt_0' output reg basic_prep port=5 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:23.15-23.20> str='\gnt_1' output reg basic_prep port=6 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:28.27-28.32> str='\state' reg basic_prep range=[2:0]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:28.7-28.17> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:28.7-28.17> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/fsm_single_always/dut.v:29.27-29.37> str='\next_state' reg basic_prep range=[2:0]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:29.7-29.17> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:29.7-29.17> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ALWAYS <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4> basic_prep
+        AST_POSEDGE <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.11-31.24> basic_prep
+          AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.19-31.24> str='\clock' basic_prep
+        AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:31.8-31.25> basic_prep
+          AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:32.1-62.4> basic_prep
+            AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.1-61.8> basic_prep
+              AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.5-33.18> basic_prep
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.5-33.10> str='\reset' basic_prep
+                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+              AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                  AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:33.20-37.4> basic_prep
+                    AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:34.3-34.19> basic_prep
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:34.3-34.8> str='\state' basic_prep
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:34.15-34.19> bits='001'(3) basic_prep range=[2:0] int=1
+                    AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:35.3-35.13> basic_prep
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:35.3-35.8> str='\gnt_0' basic_prep
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+                    AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:36.3-36.13> basic_prep
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:36.3-36.8> str='\gnt_1' basic_prep
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                  AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8> basic_prep
+                    AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:38.7-38.12> str='\state' basic_prep
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.4-47.18> basic_prep
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.4-39.8> bits='001'(3) basic_prep range=[2:0] int=1
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                        AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.11-47.18> basic_prep
+                          AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.15-39.28> basic_prep
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.15-39.20> str='\req_0' basic_prep
+                              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:39.30-42.18> basic_prep
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:40.17-40.33> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:40.17-40.22> str='\state' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:40.29-40.33> bits='010'(3) basic_prep range=[2:0] int=2
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:41.17-41.27> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:41.17-41.22> str='\gnt_0' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                              AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.24-47.18> basic_prep
+                                AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                                  AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.28-42.41> basic_prep
+                                    AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.28-42.33> str='\req_1' basic_prep
+                                    AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                                AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                                  AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                                    AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:42.43-45.18> basic_prep
+                                      AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:43.17-43.27> basic_prep
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:43.17-43.22> str='\gnt_1' basic_prep
+                                        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+                                      AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:44.17-44.33> basic_prep
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:44.17-44.22> str='\state' basic_prep
+                                        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:44.29-44.33> bits='100'(3) basic_prep range=[2:0] int=4
+                                AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                                  AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                                  AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                                    AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:45.24-47.18> basic_prep
+                                      AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:46.17-46.33> basic_prep
+                                        AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:46.17-46.22> str='\state' basic_prep
+                                        AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:46.29-46.33> bits='001'(3) basic_prep range=[2:0] int=1
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.4-53.18> basic_prep
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.4-48.8> bits='010'(3) basic_prep range=[2:0] int=2
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                        AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.11-53.18> basic_prep
+                          AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.15-48.28> basic_prep
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.15-48.20> str='\req_0' basic_prep
+                              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:48.30-50.18> basic_prep
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:49.17-49.33> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:49.17-49.22> str='\state' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:49.29-49.33> bits='010'(3) basic_prep range=[2:0] int=2
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:50.24-53.18> basic_prep
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:51.17-51.27> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:51.17-51.22> str='\gnt_0' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:52.17-52.33> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:52.17-52.22> str='\state' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:52.29-52.33> bits='001'(3) basic_prep range=[2:0] int=1
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.4-59.18> basic_prep
+                      AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.4-54.8> bits='100'(3) basic_prep range=[2:0] int=4
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                        AST_CASE <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.11-59.18> basic_prep
+                          AST_REDUCE_BOOL <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_EQ <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.15-54.28> basic_prep
+                              AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.15-54.20> str='\req_1' basic_prep
+                              AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:54.30-56.18> basic_prep
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:55.17-55.33> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:55.17-55.22> str='\state' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:55.29-55.33> bits='100'(3) basic_prep range=[2:0] int=4
+                          AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                            AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                              AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:56.24-59.18> basic_prep
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:57.17-57.27> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:57.17-57.22> str='\gnt_1' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+                                AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:58.17-58.33> basic_prep
+                                  AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:58.17-58.22> str='\state' basic_prep
+                                  AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:58.29-58.33> bits='001'(3) basic_prep range=[2:0] int=1
+                    AST_COND <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.4-60.31> basic_prep
+                      AST_DEFAULT <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                      AST_BLOCK <UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0> basic_prep
+                        AST_ASSIGN_LE <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.14-60.30> basic_prep
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.14-60.19> str='\state' basic_prep
+                          AST_CONSTANT <UHDM-integration-tests/tests/fsm_single_always/dut.v:60.26-60.30> bits='001'(3) basic_prep range=[2:0] int=1
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module fsm_using_single_always(clock, reset, req_0, req_1, gnt_0, gnt_1);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* is_simplified_wire = 1 *)
+      input clock;
+      (* is_simplified_wire = 1 *)
+      input reset;
+      (* is_simplified_wire = 1 *)
+      input req_0;
+      (* is_simplified_wire = 1 *)
+      input req_1;
+      (* is_simplified_wire = 1 *)
+      output reg gnt_0;
+      (* is_simplified_wire = 1 *)
+      output reg gnt_1;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      reg [2:0] state;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      reg [2:0] next_state;
+      always @(posedge clock)
+        case (|((reset)==(1'b 1)))
+          1'b 1:
+            begin
+              state <= 3'b 001;
+              gnt_0 <= 0;
+              gnt_1 <= 0;
+            end
+          default:
+            case (state)
+              3'b 001:
+                case (|((req_0)==(1'b 1)))
+                  1'b 1:
+                    begin
+                      state <= 3'b 010;
+                      gnt_0 <= 1;
+                    end
+                  default:
+                    case (|((req_1)==(1'b 1)))
+                      1'b 1:
+                        begin
+                          gnt_1 <= 1;
+                          state <= 3'b 100;
+                        end
+                      default:
+                        state <= 3'b 001;
+                    endcase
+                endcase
+              3'b 010:
+                case (|((req_0)==(1'b 1)))
+                  1'b 1:
+                    state <= 3'b 010;
+                  default:
+                    begin
+                      gnt_0 <= 0;
+                      state <= 3'b 001;
+                    end
+                endcase
+              3'b 100:
+                case (|((req_1)==(1'b 1)))
+                  1'b 1:
+                    state <= 3'b 100;
+                  default:
+                    begin
+                      gnt_1 <= 0;
+                      state <= 3'b 001;
+                    end
+                endcase
+              default:
+                state <= 3'b 001;
+            endcase
+        endcase
+    endmodule
+--- END OF AST DUMP ---
+
+2. Executing PREP pass.
+
+2.1. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1.1. Analyzing design hierarchy..
+Top module:  \fsm_using_single_always
+
+2.1.2. Analyzing design hierarchy..
+Top module:  \fsm_using_single_always
+Removed 0 unused modules.
+
+2.2. Executing PROC pass (convert processes to netlists).
+
+2.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 6 switch rules as full_case in process $proc$UHDM-integration-tests/tests/fsm_single_always/dut.v:31$1 in module fsm_using_single_always.
+Removed a total of 0 dead cases.
+
+2.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 0 assignments to connections.
+
+2.2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~6 debug messages>
+
+2.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\fsm_using_single_always.$proc$UHDM-integration-tests/tests/fsm_single_always/dut.v:31$1'.
+     1/3: $0\state[2:0]
+     2/3: $0\gnt_1[0:0]
+     3/3: $0\gnt_0[0:0]
+
+2.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+2.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\fsm_using_single_always.\gnt_0' using process `\fsm_using_single_always.$proc$UHDM-integration-tests/tests/fsm_single_always/dut.v:31$1'.
+  created $dff cell `$procdff$57' with positive edge clock.
+Creating register for signal `\fsm_using_single_always.\gnt_1' using process `\fsm_using_single_always.$proc$UHDM-integration-tests/tests/fsm_single_always/dut.v:31$1'.
+  created $dff cell `$procdff$58' with positive edge clock.
+Creating register for signal `\fsm_using_single_always.\state' using process `\fsm_using_single_always.$proc$UHDM-integration-tests/tests/fsm_single_always/dut.v:31$1'.
+  created $dff cell `$procdff$59' with positive edge clock.
+
+2.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 6 empty switches in `\fsm_using_single_always.$proc$UHDM-integration-tests/tests/fsm_single_always/dut.v:31$1'.
+Removing empty process `fsm_using_single_always.$proc$UHDM-integration-tests/tests/fsm_single_always/dut.v:31$1'.
+Cleaned up 6 empty switches.
+
+2.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fsm_using_single_always.
+<suppressed ~5 debug messages>
+
+2.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fsm_using_single_always.
+
+2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fsm_using_single_always..
+Removed 0 unused cells and 21 unused wires.
+<suppressed ~2 debug messages>
+
+2.5. Executing CHECK pass (checking for obvious problems).
+Checking module fsm_using_single_always...
+Found and reported 0 problems.
+
+2.6. Executing OPT pass (performing simple optimizations).
+
+2.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fsm_using_single_always.
+
+2.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fsm_using_single_always'.
+<suppressed ~12 debug messages>
+Removed a total of 4 cells.
+
+2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \fsm_using_single_always..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~3 debug messages>
+
+2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \fsm_using_single_always.
+Performed a total of 0 changes.
+
+2.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fsm_using_single_always'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fsm_using_single_always..
+Removed 0 unused cells and 5 unused wires.
+<suppressed ~1 debug messages>
+
+2.6.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fsm_using_single_always.
+
+2.6.8. Rerunning OPT passes. (Maybe there is more to do..)
+
+2.6.9. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \fsm_using_single_always..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+2.6.10. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \fsm_using_single_always.
+Performed a total of 0 changes.
+
+2.6.11. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fsm_using_single_always'.
+Removed a total of 0 cells.
+
+2.6.12. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fsm_using_single_always..
+
+2.6.13. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fsm_using_single_always.
+
+2.6.14. Finished OPT passes. (There is nothing left to do.)
+
+2.7. Executing WREDUCE pass (reducing word size of cells).
+Removed top 1 bits (of 3) from mux cell fsm_using_single_always.$procmux$14 ($mux).
+Removed top 1 bits (of 3) from port B of cell fsm_using_single_always.$procmux$16_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell fsm_using_single_always.$procmux$23_CMP0 ($eq).
+Removed top 1 bits (of 3) from wire fsm_using_single_always.$procmux$14_Y.
+
+2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fsm_using_single_always..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+2.10. Executing OPT pass (performing simple optimizations).
+
+2.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fsm_using_single_always.
+
+2.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fsm_using_single_always'.
+Removed a total of 0 cells.
+
+2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fsm_using_single_always..
+
+2.10.4. Finished fast OPT passes.
+
+2.11. Printing statistics.
+
+=== fsm_using_single_always ===
+
+   Number of wires:                 24
+   Number of wire bits:             36
+   Number of public wires:           7
+   Number of public wire bits:       9
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 20
+     $dff                            3
+     $eq                             3
+     $mux                           11
+     $pmux                           3
+
+2.12. Executing CHECK pass (checking for obvious problems).
+Checking module fsm_using_single_always...
+Found and reported 0 problems.
+
+3. Executing Verilog backend.
+
+3.1. Executing BMUXMAP pass.
+
+3.2. Executing DEMUXMAP pass.
+/* Generated by Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
+Dumping module `\fsm_using_single_always'.
+
+(* top =  1  *)
+(* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:8.1-64.10" *)
+module fsm_using_single_always(clock, reset, req_0, req_1, gnt_0, gnt_1);
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4" *)
+  wire _00_;
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4" *)
+  wire _01_;
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4" *)
+  wire [2:0] _02_;
+  wire [2:0] _03_;
+  wire [2:0] _04_;
+  wire _05_;
+  wire _06_;
+  wire [2:0] _07_;
+  wire [2:0] _08_;
+  wire _09_;
+  wire _10_;
+  wire _11_;
+  wire _12_;
+  wire _13_;
+  wire _14_;
+  wire _15_;
+  wire _16_;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:21.9-21.14" *)
+  input clock;
+  wire clock;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:23.9-23.14" *)
+  output gnt_0;
+  reg gnt_0;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:23.15-23.20" *)
+  output gnt_1;
+  reg gnt_1;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:21.21-21.26" *)
+  input req_0;
+  wire req_0;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:21.27-21.32" *)
+  input req_1;
+  wire req_1;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:21.15-21.20" *)
+  input reset;
+  wire reset;
+  (* is_simplified_wire = 32'd1 *)
+  (* packed_ranges = 1'h1 *)
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:28.27-28.32" *)
+  (* unpacked_ranges = 1'h1 *)
+  reg [2:0] state;
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4" *)
+  always @(posedge clock)
+    gnt_0 <= _00_;
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4" *)
+  always @(posedge clock)
+    gnt_1 <= _01_;
+  (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:31.1-62.4" *)
+  always @(posedge clock)
+    state <= _02_;
+  function [2:0] _20_;
+    input [2:0] a;
+    input [8:0] b;
+    input [2:0] s;
+    (* full_case = 32'd1 *)
+    (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:54.4-59.18|UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8" *)
+    (* parallel_case *)
+    casez (s)
+      3'b??1:
+        _20_ = b[2:0];
+      3'b?1?:
+        _20_ = b[5:3];
+      3'b1??:
+        _20_ = b[8:6];
+      default:
+        _20_ = a;
+    endcase
+  endfunction
+  assign _04_ = _20_(3'h1, { _08_, 1'h0, _03_[1:0], _07_ }, { _09_, _06_, _05_ });
+  assign _05_ = state == (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:54.4-59.18|UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8" *) 3'h4;
+  assign _03_[1:0] = req_0 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:48.11-53.18" *) 2'h2 : 2'h1;
+  assign _06_ = state == (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:48.4-53.18|UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8" *) 2'h2;
+  assign _07_ = req_1 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:42.24-47.18" *) 3'h4 : 3'h1;
+  assign _08_ = req_0 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:39.11-47.18" *) 3'h2 : _07_;
+  assign _09_ = state == (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:39.4-47.18|UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8" *) 1'h1;
+  assign _02_ = reset ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:33.1-61.8" *) 3'h1 : _04_;
+  assign _10_ = req_1 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:54.11-59.18" *) gnt_1 : 1'h0;
+  function [0:0] _29_;
+    input [0:0] a;
+    input [1:0] b;
+    input [1:0] s;
+    (* full_case = 32'd1 *)
+    (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:54.4-59.18|UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8" *)
+    (* parallel_case *)
+    casez (s)
+      2'b?1:
+        _29_ = b[0:0];
+      2'b1?:
+        _29_ = b[1:1];
+      default:
+        _29_ = a;
+    endcase
+  endfunction
+  assign _11_ = _29_(gnt_1, { _13_, _10_ }, { _09_, _05_ });
+  assign _12_ = req_1 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:42.24-47.18" *) 1'h1 : gnt_1;
+  assign _13_ = req_0 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:39.11-47.18" *) gnt_1 : _12_;
+  assign _01_ = reset ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:33.1-61.8" *) 1'h0 : _11_;
+  assign _14_ = req_0 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:48.11-53.18" *) gnt_0 : 1'h0;
+  function [0:0] _34_;
+    input [0:0] a;
+    input [1:0] b;
+    input [1:0] s;
+    (* full_case = 32'd1 *)
+    (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:48.4-53.18|UHDM-integration-tests/tests/fsm_single_always/dut.v:38.2-61.8" *)
+    (* parallel_case *)
+    casez (s)
+      2'b?1:
+        _34_ = b[0:0];
+      2'b1?:
+        _34_ = b[1:1];
+      default:
+        _34_ = a;
+    endcase
+  endfunction
+  assign _15_ = _34_(gnt_0, { _16_, _14_ }, { _09_, _06_ });
+  assign _16_ = req_0 ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:39.11-47.18" *) 1'h1 : gnt_0;
+  assign _00_ = reset ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/fsm_single_always/dut.v:0.0-0.0|UHDM-integration-tests/tests/fsm_single_always/dut.v:33.1-61.8" *) 1'h0 : _15_;
+  assign _03_[2] = 1'h0;
+endmodule
+
+4. Executing Verilog backend.
+
+4.1. Executing BMUXMAP pass.
+
+4.2. Executing DEMUXMAP pass.
+Dumping module `\fsm_using_single_always'.
+
+5. Executing SIM pass (simulate the circuit).
+Simulating cycle 0.
+Simulating cycle 1.
+Simulating cycle 2.
+Simulating cycle 3.
+Simulating cycle 4.
+Simulating cycle 5.
+Simulating cycle 6.
+Simulating cycle 7.
+Simulating cycle 8.
+Simulating cycle 9.
+Simulating cycle 10.
+Simulating cycle 11.
+Simulating cycle 12.
+Simulating cycle 13.
+Simulating cycle 14.
+Simulating cycle 15.
+Simulating cycle 16.
+Simulating cycle 17.
+Simulating cycle 18.
+Simulating cycle 19.
+Simulating cycle 20.
+Simulating cycle 21.
+Simulating cycle 22.
+Simulating cycle 23.
+Simulating cycle 24.
+Simulating cycle 25.
+Simulating cycle 26.
+Simulating cycle 27.
+Simulating cycle 28.
+Simulating cycle 29.
+Simulating cycle 30.
+Simulating cycle 31.
+Simulating cycle 32.
+Simulating cycle 33.
+Simulating cycle 34.
+Simulating cycle 35.
+Simulating cycle 36.
+Simulating cycle 37.
+Simulating cycle 38.
+Simulating cycle 39.
+Simulating cycle 40.
+
+
+Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+

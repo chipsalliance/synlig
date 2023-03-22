@@ -1,0 +1,2581 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/compound_assignments/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/compound_assignments/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -Using Yosys read_systemverilog command
+> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/compound_assignments/top.sv:1:1: No timescale set for "top".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0303] UHDM-integration-tests/tests/compound_assignments/top.sv:1:1: Compile module "work@top".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/compound_assignments/top.sv:1:1: Top level module "work@top".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 1.
+
+[NTE:EL0510] Nb instances: 1.
+
+[NTE:EL0511] Nb leaf instances: 0.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 1
+[   NOTE] : 5
+design: (work@top)
+ |vpiName:work@top
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@top
+   |vpiDefName:work@top
+   |vpiNet:
+   \_logic_net: (work@top.a), line:1:25, endln:1:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:a
+     |vpiFullName:work@top.a
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.b), line:1:28, endln:1:29
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:b
+     |vpiFullName:work@top.b
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.c), line:1:31, endln:1:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:c
+     |vpiFullName:work@top.c
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.d), line:1:34, endln:1:35
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:d
+     |vpiFullName:work@top.d
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.e), line:1:37, endln:1:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:e
+     |vpiFullName:work@top.e
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.f), line:1:40, endln:1:41
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:f
+     |vpiFullName:work@top.f
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.g), line:1:43, endln:1:44
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:g
+     |vpiFullName:work@top.g
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.h), line:1:46, endln:1:47
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:h
+     |vpiFullName:work@top.h
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.i), line:1:49, endln:1:50
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:i
+     |vpiFullName:work@top.i
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.j), line:1:52, endln:1:53
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:j
+     |vpiFullName:work@top.j
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.k), line:1:55, endln:1:56
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:k
+     |vpiFullName:work@top.k
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.l), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:l
+     |vpiFullName:work@top.l
+     |vpiNetType:36
+   |vpiPort:
+   \_port: (a), line:1:25, endln:1:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:a
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.a), line:1:25, endln:1:26
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (b), line:1:28, endln:1:29
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.b), line:1:28, endln:1:29
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (c), line:1:31, endln:1:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:c
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.c), line:1:31, endln:1:32
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (d), line:1:34, endln:1:35
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:d
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.d), line:1:34, endln:1:35
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (e), line:1:37, endln:1:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:e
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.e), line:1:37, endln:1:38
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (f), line:1:40, endln:1:41
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:f
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.f), line:1:40, endln:1:41
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (g), line:1:43, endln:1:44
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:g
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.g), line:1:43, endln:1:44
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (h), line:1:46, endln:1:47
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:h
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.h), line:1:46, endln:1:47
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (i), line:1:49, endln:1:50
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:i
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.i), line:1:49, endln:1:50
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (j), line:1:52, endln:1:53
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:j
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.j), line:1:52, endln:1:53
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (k), line:1:55, endln:1:56
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:k
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.k), line:1:55, endln:1:56
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (l), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:l
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.l), line:1:58, endln:1:59
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiProcess:
+   \_initial: , line:2:4, endln:27:7
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiStmt:
+     \_begin: (work@top), line:2:12, endln:27:7
+       |vpiParent:
+       \_initial: , line:2:4, endln:27:7
+       |vpiFullName:work@top
+       |vpiStmt:
+       \_assignment: , line:3:7, endln:3:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:3:12, endln:3:13
+           |vpiParent:
+           \_assignment: , line:3:7, endln:3:13
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.a), line:3:7, endln:3:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:a
+           |vpiFullName:work@top.a
+           |vpiActual:
+           \_logic_net: (work@top.a), line:1:25, endln:1:26
+       |vpiStmt:
+       \_assignment: , line:4:7, endln:4:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:11
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:4:12, endln:4:13
+           |vpiParent:
+           \_assignment: , line:4:7, endln:4:13
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.a), line:4:7, endln:4:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:a
+           |vpiFullName:work@top.a
+           |vpiActual:
+           \_logic_net: (work@top.a), line:1:25, endln:1:26
+       |vpiStmt:
+       \_assignment: , line:5:7, endln:5:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:5:12, endln:5:13
+           |vpiParent:
+           \_assignment: , line:5:7, endln:5:13
+           |vpiDecompile:4
+           |vpiSize:64
+           |UINT:4
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.b), line:5:7, endln:5:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:b
+           |vpiFullName:work@top.b
+           |vpiActual:
+           \_logic_net: (work@top.b), line:1:28, endln:1:29
+       |vpiStmt:
+       \_assignment: , line:6:7, endln:6:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:12
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:6:12, endln:6:13
+           |vpiParent:
+           \_assignment: , line:6:7, endln:6:13
+           |vpiDecompile:2
+           |vpiSize:64
+           |UINT:2
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.b), line:6:7, endln:6:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:b
+           |vpiFullName:work@top.b
+           |vpiActual:
+           \_logic_net: (work@top.b), line:1:28, endln:1:29
+       |vpiStmt:
+       \_assignment: , line:7:7, endln:7:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:7:12, endln:7:13
+           |vpiParent:
+           \_assignment: , line:7:7, endln:7:13
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.c), line:7:7, endln:7:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:c
+           |vpiFullName:work@top.c
+           |vpiActual:
+           \_logic_net: (work@top.c), line:1:31, endln:1:32
+       |vpiStmt:
+       \_assignment: , line:8:7, endln:8:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:13
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:8:12, endln:8:13
+           |vpiParent:
+           \_assignment: , line:8:7, endln:8:13
+           |vpiDecompile:2
+           |vpiSize:64
+           |UINT:2
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.c), line:8:7, endln:8:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:c
+           |vpiFullName:work@top.c
+           |vpiActual:
+           \_logic_net: (work@top.c), line:1:31, endln:1:32
+       |vpiStmt:
+       \_assignment: , line:9:7, endln:9:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:9:12, endln:9:13
+           |vpiParent:
+           \_assignment: , line:9:7, endln:9:13
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.d), line:9:7, endln:9:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:d
+           |vpiFullName:work@top.d
+           |vpiActual:
+           \_logic_net: (work@top.d), line:1:34, endln:1:35
+       |vpiStmt:
+       \_assignment: , line:10:7, endln:10:14
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:22
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:10:13, endln:10:14
+           |vpiParent:
+           \_assignment: , line:10:7, endln:10:14
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.d), line:10:7, endln:10:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:d
+           |vpiFullName:work@top.d
+           |vpiActual:
+           \_logic_net: (work@top.d), line:1:34, endln:1:35
+       |vpiStmt:
+       \_assignment: , line:11:7, endln:11:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:11:12, endln:11:13
+           |vpiParent:
+           \_assignment: , line:11:7, endln:11:13
+           |vpiDecompile:8
+           |vpiSize:64
+           |UINT:8
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.e), line:11:7, endln:11:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:e
+           |vpiFullName:work@top.e
+           |vpiActual:
+           \_logic_net: (work@top.e), line:1:37, endln:1:38
+       |vpiStmt:
+       \_assignment: , line:12:7, endln:12:14
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:23
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:12:13, endln:12:14
+           |vpiParent:
+           \_assignment: , line:12:7, endln:12:14
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.e), line:12:7, endln:12:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:e
+           |vpiFullName:work@top.e
+           |vpiActual:
+           \_logic_net: (work@top.e), line:1:37, endln:1:38
+       |vpiStmt:
+       \_assignment: , line:13:7, endln:13:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:13:12, endln:13:13
+           |vpiParent:
+           \_assignment: , line:13:7, endln:13:13
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.f), line:13:7, endln:13:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:f
+           |vpiFullName:work@top.f
+           |vpiActual:
+           \_logic_net: (work@top.f), line:1:40, endln:1:41
+       |vpiStmt:
+       \_assignment: , line:14:7, endln:14:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:24
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:14:12, endln:14:13
+           |vpiParent:
+           \_assignment: , line:14:7, endln:14:13
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.f), line:14:7, endln:14:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:f
+           |vpiFullName:work@top.f
+           |vpiActual:
+           \_logic_net: (work@top.f), line:1:40, endln:1:41
+       |vpiStmt:
+       \_assignment: , line:15:7, endln:15:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:15:12, endln:15:13
+           |vpiParent:
+           \_assignment: , line:15:7, endln:15:13
+           |vpiDecompile:2
+           |vpiSize:64
+           |UINT:2
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.g), line:15:7, endln:15:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:g
+           |vpiFullName:work@top.g
+           |vpiActual:
+           \_logic_net: (work@top.g), line:1:43, endln:1:44
+       |vpiStmt:
+       \_assignment: , line:16:7, endln:16:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:25
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:16:12, endln:16:13
+           |vpiParent:
+           \_assignment: , line:16:7, endln:16:13
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.g), line:16:7, endln:16:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:g
+           |vpiFullName:work@top.g
+           |vpiActual:
+           \_logic_net: (work@top.g), line:1:43, endln:1:44
+       |vpiStmt:
+       \_assignment: , line:17:7, endln:17:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:17:12, endln:17:13
+           |vpiParent:
+           \_assignment: , line:17:7, endln:17:13
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.h), line:17:7, endln:17:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:h
+           |vpiFullName:work@top.h
+           |vpiActual:
+           \_logic_net: (work@top.h), line:1:46, endln:1:47
+       |vpiStmt:
+       \_assignment: , line:18:7, endln:18:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:28
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:18:12, endln:18:13
+           |vpiParent:
+           \_assignment: , line:18:7, endln:18:13
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.h), line:18:7, endln:18:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:h
+           |vpiFullName:work@top.h
+           |vpiActual:
+           \_logic_net: (work@top.h), line:1:46, endln:1:47
+       |vpiStmt:
+       \_assignment: , line:19:7, endln:19:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:19:12, endln:19:13
+           |vpiParent:
+           \_assignment: , line:19:7, endln:19:13
+           |vpiDecompile:6
+           |vpiSize:64
+           |UINT:6
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.i), line:19:7, endln:19:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:i
+           |vpiFullName:work@top.i
+           |vpiActual:
+           \_logic_net: (work@top.i), line:1:49, endln:1:50
+       |vpiStmt:
+       \_assignment: , line:20:7, endln:20:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:29
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:20:12, endln:20:13
+           |vpiParent:
+           \_assignment: , line:20:7, endln:20:13
+           |vpiDecompile:4
+           |vpiSize:64
+           |UINT:4
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.i), line:20:7, endln:20:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:i
+           |vpiFullName:work@top.i
+           |vpiActual:
+           \_logic_net: (work@top.i), line:1:49, endln:1:50
+       |vpiStmt:
+       \_assignment: , line:21:7, endln:21:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:21:12, endln:21:13
+           |vpiParent:
+           \_assignment: , line:21:7, endln:21:13
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.j), line:21:7, endln:21:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:j
+           |vpiFullName:work@top.j
+           |vpiActual:
+           \_logic_net: (work@top.j), line:1:52, endln:1:53
+       |vpiStmt:
+       \_assignment: , line:22:7, endln:22:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:30
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:22:12, endln:22:13
+           |vpiParent:
+           \_assignment: , line:22:7, endln:22:13
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.j), line:22:7, endln:22:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:j
+           |vpiFullName:work@top.j
+           |vpiActual:
+           \_logic_net: (work@top.j), line:1:52, endln:1:53
+       |vpiStmt:
+       \_assignment: , line:23:7, endln:23:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:23:12, endln:23:13
+           |vpiParent:
+           \_assignment: , line:23:7, endln:23:13
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.k), line:23:7, endln:23:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:k
+           |vpiFullName:work@top.k
+           |vpiActual:
+           \_logic_net: (work@top.k), line:1:55, endln:1:56
+       |vpiStmt:
+       \_assignment: , line:24:7, endln:24:15
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:41
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:24:14, endln:24:15
+           |vpiParent:
+           \_assignment: , line:24:7, endln:24:15
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.k), line:24:7, endln:24:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:k
+           |vpiFullName:work@top.k
+           |vpiActual:
+           \_logic_net: (work@top.k), line:1:55, endln:1:56
+       |vpiStmt:
+       \_assignment: , line:25:7, endln:25:13
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:82
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:25:12, endln:25:13
+           |vpiParent:
+           \_assignment: , line:25:7, endln:25:13
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.l), line:25:7, endln:25:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:l
+           |vpiFullName:work@top.l
+           |vpiActual:
+           \_logic_net: (work@top.l), line:1:58, endln:1:59
+       |vpiStmt:
+       \_assignment: , line:26:7, endln:26:15
+         |vpiParent:
+         \_begin: (work@top), line:2:12, endln:27:7
+         |vpiOpType:42
+         |vpiBlocking:1
+         |vpiRhs:
+         \_constant: , line:26:14, endln:26:15
+           |vpiParent:
+           \_assignment: , line:26:7, endln:26:15
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+         |vpiLhs:
+         \_ref_obj: (work@top.l), line:26:7, endln:26:8
+           |vpiParent:
+           \_begin: (work@top), line:2:12, endln:27:7
+           |vpiName:l
+           |vpiFullName:work@top.l
+           |vpiActual:
+           \_logic_net: (work@top.l), line:1:58, endln:1:59
+ |uhdmtopModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+   |vpiName:work@top
+   |vpiDefName:work@top
+   |vpiTop:1
+   |vpiNet:
+   \_logic_net: (work@top.a), line:1:25, endln:1:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:a
+     |vpiFullName:work@top.a
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.b), line:1:28, endln:1:29
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:b
+     |vpiFullName:work@top.b
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.c), line:1:31, endln:1:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:c
+     |vpiFullName:work@top.c
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.d), line:1:34, endln:1:35
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:d
+     |vpiFullName:work@top.d
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.e), line:1:37, endln:1:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:e
+     |vpiFullName:work@top.e
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.f), line:1:40, endln:1:41
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:f
+     |vpiFullName:work@top.f
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.g), line:1:43, endln:1:44
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:g
+     |vpiFullName:work@top.g
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.h), line:1:46, endln:1:47
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:h
+     |vpiFullName:work@top.h
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.i), line:1:49, endln:1:50
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:i
+     |vpiFullName:work@top.i
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.j), line:1:52, endln:1:53
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:j
+     |vpiFullName:work@top.j
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.k), line:1:55, endln:1:56
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:k
+     |vpiFullName:work@top.k
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.l), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiTypespec:
+     \_logic_typespec: , line:1:19, endln:1:24
+     |vpiName:l
+     |vpiFullName:work@top.l
+     |vpiNetType:36
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (a), line:1:25, endln:1:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:a
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.a), line:1:25, endln:1:26
+       |vpiName:a
+       |vpiFullName:work@top.a
+       |vpiActual:
+       \_logic_net: (work@top.a), line:1:25, endln:1:26
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (b), line:1:28, endln:1:29
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.b), line:1:28, endln:1:29
+       |vpiName:b
+       |vpiFullName:work@top.b
+       |vpiActual:
+       \_logic_net: (work@top.b), line:1:28, endln:1:29
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (c), line:1:31, endln:1:32
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:c
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.c), line:1:31, endln:1:32
+       |vpiName:c
+       |vpiFullName:work@top.c
+       |vpiActual:
+       \_logic_net: (work@top.c), line:1:31, endln:1:32
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (d), line:1:34, endln:1:35
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:d
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.d), line:1:34, endln:1:35
+       |vpiName:d
+       |vpiFullName:work@top.d
+       |vpiActual:
+       \_logic_net: (work@top.d), line:1:34, endln:1:35
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (e), line:1:37, endln:1:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:e
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.e), line:1:37, endln:1:38
+       |vpiName:e
+       |vpiFullName:work@top.e
+       |vpiActual:
+       \_logic_net: (work@top.e), line:1:37, endln:1:38
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (f), line:1:40, endln:1:41
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:f
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.f), line:1:40, endln:1:41
+       |vpiName:f
+       |vpiFullName:work@top.f
+       |vpiActual:
+       \_logic_net: (work@top.f), line:1:40, endln:1:41
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (g), line:1:43, endln:1:44
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:g
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.g), line:1:43, endln:1:44
+       |vpiName:g
+       |vpiFullName:work@top.g
+       |vpiActual:
+       \_logic_net: (work@top.g), line:1:43, endln:1:44
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (h), line:1:46, endln:1:47
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:h
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.h), line:1:46, endln:1:47
+       |vpiName:h
+       |vpiFullName:work@top.h
+       |vpiActual:
+       \_logic_net: (work@top.h), line:1:46, endln:1:47
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (i), line:1:49, endln:1:50
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:i
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.i), line:1:49, endln:1:50
+       |vpiName:i
+       |vpiFullName:work@top.i
+       |vpiActual:
+       \_logic_net: (work@top.i), line:1:49, endln:1:50
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (j), line:1:52, endln:1:53
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:j
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.j), line:1:52, endln:1:53
+       |vpiName:j
+       |vpiFullName:work@top.j
+       |vpiActual:
+       \_logic_net: (work@top.j), line:1:52, endln:1:53
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (k), line:1:55, endln:1:56
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:k
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.k), line:1:55, endln:1:56
+       |vpiName:k
+       |vpiFullName:work@top.k
+       |vpiActual:
+       \_logic_net: (work@top.k), line:1:55, endln:1:56
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiPort:
+   \_port: (l), line:1:58, endln:1:59
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/compound_assignments/top.sv, line:1:1, endln:28:10
+     |vpiName:l
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.l), line:1:58, endln:1:59
+       |vpiName:l
+       |vpiFullName:work@top.l
+       |vpiActual:
+       \_logic_net: (work@top.l), line:1:58, endln:1:59
+     |vpiTypedef:
+     \_logic_typespec: , line:1:19, endln:1:24
+   |vpiProcess:
+   \_initial: , line:2:4, endln:27:7
+Object 'work@top' of type 'design'
+  Object 'builtin' of type 'package'
+  Object '' of type 'module_inst'
+    Object 'a' of type 'logic_net'
+    Object 'b' of type 'logic_net'
+    Object 'c' of type 'logic_net'
+    Object 'd' of type 'logic_net'
+    Object 'e' of type 'logic_net'
+    Object 'f' of type 'logic_net'
+    Object 'g' of type 'logic_net'
+    Object 'h' of type 'logic_net'
+    Object 'i' of type 'logic_net'
+    Object 'j' of type 'logic_net'
+    Object 'k' of type 'logic_net'
+    Object 'l' of type 'logic_net'
+    Object '' of type 'initial'
+      Object '' of type 'begin'
+        Object '' of type 'assignment'
+          Object 'a' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'a' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'b' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'b' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'c' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'c' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'd' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'd' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'e' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'e' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'f' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'f' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'g' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'g' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'h' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'h' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'i' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'i' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'j' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'j' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'k' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'k' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'l' of type 'ref_obj'
+          Object '' of type 'constant'
+        Object '' of type 'assignment'
+          Object 'l' of type 'ref_obj'
+          Object '' of type 'constant'
+  Object 'work@top' of type 'module_inst'
+    Object 'a' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'b' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'c' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'd' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'e' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'f' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'g' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'h' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'i' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'j' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'k' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'l' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'a' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'b' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'c' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'd' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'e' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'f' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'g' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'h' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'i' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'j' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'k' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'l' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+Generating RTLIL representation for module `\top'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.1-28.10> str='\top'
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.25-1.26> str='\a' output logic port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.28-1.29> str='\b' output logic port=2 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.31-1.32> str='\c' output logic port=3 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.34-1.35> str='\d' output logic port=4 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.37-1.38> str='\e' output logic port=5 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.40-1.41> str='\f' output logic port=6 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.43-1.44> str='\g' output logic port=7 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.46-1.47> str='\h' output logic port=8 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.49-1.50> str='\i' output logic port=9 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.52-1.53> str='\j' output logic port=10 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.55-1.56> str='\k' output logic port=11 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.58-1.59> str='\l' output logic port=12 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_INITIAL <UHDM-integration-tests/tests/compound_assignments/top.sv:2.4-27.7>
+        AST_BLOCK <UHDM-integration-tests/tests/compound_assignments/top.sv:2.12-27.7>
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:3.7-3.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:3.7-3.8> str='\a'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:4.7-4.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:4.7-4.8> str='\a'
+            AST_SUB <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:4.7-4.8> str='\a'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:5.7-5.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:5.7-5.8> str='\b'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:6.7-6.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:6.7-6.8> str='\b'
+            AST_DIV <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:6.7-6.8> str='\b'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:7.7-7.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:7.7-7.8> str='\c'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:8.7-8.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:8.7-8.8> str='\c'
+            AST_MOD <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:8.7-8.8> str='\c'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:9.7-9.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:9.7-9.8> str='\d'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:10.7-10.14>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:10.7-10.8> str='\d'
+            AST_SHIFT_LEFT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:10.7-10.8> str='\d'
+              AST_TO_UNSIGNED <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+                AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:11.7-11.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:11.7-11.8> str='\e'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:12.7-12.14>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:12.7-12.8> str='\e'
+            AST_SHIFT_RIGHT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:12.7-12.8> str='\e'
+              AST_TO_UNSIGNED <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+                AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:13.7-13.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:13.7-13.8> str='\f'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:14.7-14.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:14.7-14.8> str='\f'
+            AST_ADD <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:14.7-14.8> str='\f'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:15.7-15.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:15.7-15.8> str='\g'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:16.7-16.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:16.7-16.8> str='\g'
+            AST_MUL <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:16.7-16.8> str='\g'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:17.7-17.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:17.7-17.8> str='\h'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed range=[31:0] int=3
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:18.7-18.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:18.7-18.8> str='\h'
+            AST_BIT_AND <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:18.7-18.8> str='\h'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:19.7-19.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:19.7-19.8> str='\i'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000110'(32) signed range=[31:0] int=6
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:20.7-20.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:20.7-20.8> str='\i'
+            AST_BIT_OR <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:20.7-20.8> str='\i'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed range=[31:0] int=4
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:21.7-21.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:21.7-21.8> str='\j'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:22.7-22.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:22.7-22.8> str='\j'
+            AST_BIT_XOR <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:22.7-22.8> str='\j'
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:23.7-23.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:23.7-23.8> str='\k'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:24.7-24.15>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:24.7-24.8> str='\k'
+            AST_SHIFT_SLEFT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:24.7-24.8> str='\k'
+              AST_TO_UNSIGNED <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+                AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:25.7-25.13>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:25.7-25.8> str='\l'
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:26.7-26.15>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:26.7-26.8> str='\l'
+            AST_SHIFT_SRIGHT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:26.7-26.8> str='\l'
+              AST_TO_UNSIGNED <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0>
+                AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module top(a, b, c, d, e, f, g, h, i, j, k, l);
+      (* is_simplified_wire = 1 *)
+      output a;
+      (* is_simplified_wire = 1 *)
+      output b;
+      (* is_simplified_wire = 1 *)
+      output c;
+      (* is_simplified_wire = 1 *)
+      output d;
+      (* is_simplified_wire = 1 *)
+      output e;
+      (* is_simplified_wire = 1 *)
+      output f;
+      (* is_simplified_wire = 1 *)
+      output g;
+      (* is_simplified_wire = 1 *)
+      output h;
+      (* is_simplified_wire = 1 *)
+      output i;
+      (* is_simplified_wire = 1 *)
+      output j;
+      (* is_simplified_wire = 1 *)
+      output k;
+      (* is_simplified_wire = 1 *)
+      output l;
+      initial
+        begin
+          a = 1;
+          a = (a)-(1);
+          b = 4;
+          b = (b)/(2);
+          c = 5;
+          c = (c)%(2);
+          d = 1;
+          d = (d)<<(/** AST_TO_UNSIGNED **/);
+          e = 8;
+          e = (e)>>(/** AST_TO_UNSIGNED **/);
+          f = 1;
+          f = (f)+(1);
+          g = 2;
+          g = (g)*(3);
+          h = 3;
+          h = (h)&(1);
+          i = 6;
+          i = (i)|(4);
+          j = 1;
+          j = (j)^(0);
+          k = 5;
+          k = (k)<<<(/** AST_TO_UNSIGNED **/);
+          l = 5;
+          l = (l)>>>(/** AST_TO_UNSIGNED **/);
+        end
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.1-28.10> str='\top' basic_prep
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.25-1.26> str='\a' output logic reg basic_prep port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.28-1.29> str='\b' output logic reg basic_prep port=2 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.31-1.32> str='\c' output logic reg basic_prep port=3 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.34-1.35> str='\d' output logic reg basic_prep port=4 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.37-1.38> str='\e' output logic reg basic_prep port=5 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.40-1.41> str='\f' output logic reg basic_prep port=6 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.43-1.44> str='\g' output logic reg basic_prep port=7 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.46-1.47> str='\h' output logic reg basic_prep port=8 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.49-1.50> str='\i' output logic reg basic_prep port=9 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.52-1.53> str='\j' output logic reg basic_prep port=10 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.55-1.56> str='\k' output logic reg basic_prep port=11 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/compound_assignments/top.sv:1.58-1.59> str='\l' output logic reg basic_prep port=12 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_INITIAL <UHDM-integration-tests/tests/compound_assignments/top.sv:2.4-27.7> basic_prep
+        AST_BLOCK <UHDM-integration-tests/tests/compound_assignments/top.sv:2.12-27.7> basic_prep
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:3.7-3.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:3.7-3.8> str='\a' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:4.7-4.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:4.7-4.8> str='\a' basic_prep
+            AST_SUB <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:4.7-4.8> str='\a' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:5.7-5.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:5.7-5.8> str='\b' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:6.7-6.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:6.7-6.8> str='\b' basic_prep
+            AST_DIV <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:6.7-6.8> str='\b' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:7.7-7.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:7.7-7.8> str='\c' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:8.7-8.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:8.7-8.8> str='\c' basic_prep
+            AST_MOD <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:8.7-8.8> str='\c' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:9.7-9.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:9.7-9.8> str='\d' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:10.7-10.14> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:10.7-10.8> str='\d' basic_prep
+            AST_SHIFT_LEFT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:10.7-10.8> str='\d' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:11.7-11.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:11.7-11.8> str='\e' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed basic_prep range=[31:0] int=8
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:12.7-12.14> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:12.7-12.8> str='\e' basic_prep
+            AST_SHIFT_RIGHT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:12.7-12.8> str='\e' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:13.7-13.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:13.7-13.8> str='\f' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:14.7-14.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:14.7-14.8> str='\f' basic_prep
+            AST_ADD <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:14.7-14.8> str='\f' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:15.7-15.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:15.7-15.8> str='\g' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:16.7-16.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:16.7-16.8> str='\g' basic_prep
+            AST_MUL <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:16.7-16.8> str='\g' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:17.7-17.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:17.7-17.8> str='\h' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:18.7-18.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:18.7-18.8> str='\h' basic_prep
+            AST_BIT_AND <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:18.7-18.8> str='\h' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:19.7-19.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:19.7-19.8> str='\i' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000110'(32) signed basic_prep range=[31:0] int=6
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:20.7-20.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:20.7-20.8> str='\i' basic_prep
+            AST_BIT_OR <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:20.7-20.8> str='\i' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) signed basic_prep range=[31:0] int=4
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:21.7-21.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:21.7-21.8> str='\j' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:22.7-22.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:22.7-22.8> str='\j' basic_prep
+            AST_BIT_XOR <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:22.7-22.8> str='\j' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:23.7-23.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:23.7-23.8> str='\k' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:24.7-24.15> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:24.7-24.8> str='\k' basic_prep
+            AST_SHIFT_SLEFT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:24.7-24.8> str='\k' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:25.7-25.13> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:25.7-25.8> str='\l' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_ASSIGN_EQ <UHDM-integration-tests/tests/compound_assignments/top.sv:26.7-26.15> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:26.7-26.8> str='\l' basic_prep
+            AST_SHIFT_SRIGHT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/compound_assignments/top.sv:26.7-26.8> str='\l' basic_prep
+              AST_CONSTANT <UHDM-integration-tests/tests/compound_assignments/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module top(a, b, c, d, e, f, g, h, i, j, k, l);
+      (* is_simplified_wire = 1 *)
+      output reg a;
+      (* is_simplified_wire = 1 *)
+      output reg b;
+      (* is_simplified_wire = 1 *)
+      output reg c;
+      (* is_simplified_wire = 1 *)
+      output reg d;
+      (* is_simplified_wire = 1 *)
+      output reg e;
+      (* is_simplified_wire = 1 *)
+      output reg f;
+      (* is_simplified_wire = 1 *)
+      output reg g;
+      (* is_simplified_wire = 1 *)
+      output reg h;
+      (* is_simplified_wire = 1 *)
+      output reg i;
+      (* is_simplified_wire = 1 *)
+      output reg j;
+      (* is_simplified_wire = 1 *)
+      output reg k;
+      (* is_simplified_wire = 1 *)
+      output reg l;
+      initial
+        begin
+          a = 1;
+          a = (a)-(1);
+          b = 4;
+          b = (b)/(2);
+          c = 5;
+          c = (c)%(2);
+          d = 1;
+          d = (d)<<(1);
+          e = 8;
+          e = (e)>>(1);
+          f = 1;
+          f = (f)+(1);
+          g = 2;
+          g = (g)*(3);
+          h = 3;
+          h = (h)&(1);
+          i = 6;
+          i = (i)|(4);
+          j = 1;
+          j = (j)^(0);
+          k = 5;
+          k = (k)<<<(1);
+          l = 5;
+          l = (l)>>>(1);
+        end
+    endmodule
+--- END OF AST DUMP ---
+
+2. Executing PREP pass.
+
+2.1. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1.1. Analyzing design hierarchy..
+Top module:  \top
+
+2.1.2. Analyzing design hierarchy..
+Top module:  \top
+Removed 0 unused modules.
+
+2.2. Executing PROC pass (convert processes to netlists).
+
+2.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+2.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 12 assignments to connections.
+
+2.2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+2.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+
+2.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\top.\a' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\b' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\c' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\d' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\e' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\f' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\g' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\h' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\i' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\j' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\k' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+No latch inferred for signal `\top.\l' from process `\top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+
+2.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+2.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `top.$proc$UHDM-integration-tests/tests/compound_assignments/top.sv:2$1'.
+Cleaned up 0 empty switches.
+
+2.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+<suppressed ~12 debug messages>
+
+2.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 24 unused wires.
+<suppressed ~1 debug messages>
+
+2.5. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Found and reported 0 problems.
+
+2.6. Executing OPT pass (performing simple optimizations).
+
+2.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+2.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.6.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.6.8. Finished OPT passes. (There is nothing left to do.)
+
+2.7. Executing WREDUCE pass (reducing word size of cells).
+
+2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+2.10. Executing OPT pass (performing simple optimizations).
+
+2.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.10.4. Finished fast OPT passes.
+
+2.11. Printing statistics.
+
+=== top ===
+
+   Number of wires:                 12
+   Number of wire bits:             12
+   Number of public wires:          12
+   Number of public wire bits:      12
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+2.12. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Found and reported 0 problems.
+
+3. Executing Verilog backend.
+
+3.1. Executing BMUXMAP pass.
+
+3.2. Executing DEMUXMAP pass.
+/* Generated by Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
+Dumping module `\top'.
+
+(* top =  1  *)
+(* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.1-28.10" *)
+module top(a, b, c, d, e, f, g, h, i, j, k, l);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.25-1.26" *)
+  output a;
+  wire a;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.28-1.29" *)
+  output b;
+  wire b;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.31-1.32" *)
+  output c;
+  wire c;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.34-1.35" *)
+  output d;
+  wire d;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.37-1.38" *)
+  output e;
+  wire e;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.40-1.41" *)
+  output f;
+  wire f;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.43-1.44" *)
+  output g;
+  wire g;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.46-1.47" *)
+  output h;
+  wire h;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.49-1.50" *)
+  output i;
+  wire i;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.52-1.53" *)
+  output j;
+  wire j;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.55-1.56" *)
+  output k;
+  wire k;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/compound_assignments/top.sv:1.58-1.59" *)
+  output l;
+  wire l;
+  assign a = 1'h0;
+  assign b = 1'h0;
+  assign c = 1'h1;
+  assign d = 1'h0;
+  assign e = 1'h0;
+  assign f = 1'h0;
+  assign g = 1'h0;
+  assign h = 1'h1;
+  assign i = 1'h0;
+  assign j = 1'h1;
+  assign k = 1'h0;
+  assign l = 1'h0;
+endmodule
+
+4. Executing Verilog backend.
+
+4.1. Executing BMUXMAP pass.
+
+4.2. Executing DEMUXMAP pass.
+Dumping module `\top'.
+
+5. Executing SIM pass (simulate the circuit).
+Simulating cycle 0.
+Simulating cycle 1.
+Simulating cycle 2.
+Simulating cycle 3.
+Simulating cycle 4.
+Simulating cycle 5.
+Simulating cycle 6.
+Simulating cycle 7.
+Simulating cycle 8.
+Simulating cycle 9.
+Simulating cycle 10.
+Simulating cycle 11.
+Simulating cycle 12.
+Simulating cycle 13.
+Simulating cycle 14.
+Simulating cycle 15.
+Simulating cycle 16.
+Simulating cycle 17.
+Simulating cycle 18.
+Simulating cycle 19.
+Simulating cycle 20.
+Simulating cycle 21.
+Simulating cycle 22.
+Simulating cycle 23.
+Simulating cycle 24.
+Simulating cycle 25.
+Simulating cycle 26.
+Simulating cycle 27.
+Simulating cycle 28.
+Simulating cycle 29.
+Simulating cycle 30.
+Simulating cycle 31.
+Simulating cycle 32.
+Simulating cycle 33.
+Simulating cycle 34.
+Simulating cycle 35.
+Simulating cycle 36.
+Simulating cycle 37.
+Simulating cycle 38.
+Simulating cycle 39.
+Simulating cycle 40.
+
+
+Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
