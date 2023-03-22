@@ -1,0 +1,1944 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/OneNetModport/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/OneNetModport/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -Using Yosys read_systemverilog command
+> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/OneNetModport/top.sv:13:1: No timescale set for "ConnectTB".
+
+[WRN:PA0205] UHDM-integration-tests/tests/OneNetModport/top.sv:26:1: No timescale set for "DUT".
+
+[WRN:PA0205] UHDM-integration-tests/tests/OneNetModport/top.sv:30:1: No timescale set for "SUB".
+
+[WRN:PA0205] UHDM-integration-tests/tests/OneNetModport/top.sv:34:1: No timescale set for "top".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0304] UHDM-integration-tests/tests/OneNetModport/top.sv:13:1: Compile interface "work@ConnectTB".
+
+[INF:CP0303] UHDM-integration-tests/tests/OneNetModport/top.sv:26:1: Compile module "work@DUT".
+
+[INF:CP0303] UHDM-integration-tests/tests/OneNetModport/top.sv:30:1: Compile module "work@SUB".
+
+[INF:CP0303] UHDM-integration-tests/tests/OneNetModport/top.sv:34:1: Compile module "work@top".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/OneNetModport/top.sv:34:1: Top level module "work@top".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 3.
+
+[NTE:EL0510] Nb instances: 3.
+
+[NTE:EL0511] Nb leaf instances: 1.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 4
+[   NOTE] : 5
+design: (work@top)
+ |vpiName:work@top
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallInterfaces:
+ \_interface_inst: work@ConnectTB (work@ConnectTB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:13:1, endln:24:13
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@ConnectTB
+   |vpiDefName:work@ConnectTB
+   |vpiNet:
+   \_logic_net: (work@ConnectTB.drive), line:14:9, endln:14:14
+     |vpiParent:
+     \_interface_inst: work@ConnectTB (work@ConnectTB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:13:1, endln:24:13
+     |vpiName:drive
+     |vpiFullName:work@ConnectTB.drive
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@ConnectTB.observe), line:15:9, endln:15:16
+     |vpiParent:
+     \_interface_inst: work@ConnectTB (work@ConnectTB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:13:1, endln:24:13
+     |vpiName:observe
+     |vpiFullName:work@ConnectTB.observe
+     |vpiNetType:36
+   |vpiModport:
+   \_modport: (dut), line:16:11, endln:16:14
+     |vpiParent:
+     \_interface_inst: work@ConnectTB (work@ConnectTB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:13:1, endln:24:13
+     |vpiName:dut
+     |vpiIODecl:
+     \_io_decl: (drive), line:17:11, endln:17:16
+       |vpiDirection:1
+       |vpiName:drive
+     |vpiIODecl:
+     \_io_decl: (observe), line:18:12, endln:18:19
+       |vpiDirection:2
+       |vpiName:observe
+   |vpiModport:
+   \_modport: (tb), line:20:11, endln:20:13
+     |vpiParent:
+     \_interface_inst: work@ConnectTB (work@ConnectTB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:13:1, endln:24:13
+     |vpiName:tb
+     |vpiIODecl:
+     \_io_decl: (drive), line:21:12, endln:21:17
+       |vpiDirection:2
+       |vpiName:drive
+     |vpiIODecl:
+     \_io_decl: (observe), line:22:11, endln:22:18
+       |vpiDirection:1
+       |vpiName:observe
+ |uhdmallModules:
+ \_module_inst: work@DUT (work@DUT), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:26:1, endln:28:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@DUT
+   |vpiDefName:work@DUT
+   |vpiNet:
+   \_logic_net: (work@DUT.intf), line:26:27, endln:26:31
+     |vpiParent:
+     \_module_inst: work@DUT (work@DUT), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:26:1, endln:28:10
+     |vpiName:intf
+     |vpiFullName:work@DUT.intf
+   |vpiPort:
+   \_port: (intf), line:26:27, endln:26:31
+     |vpiParent:
+     \_module_inst: work@DUT (work@DUT), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:26:1, endln:28:10
+     |vpiName:intf
+     |vpiDirection:3
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_modport: (dut), line:16:11, endln:16:14
+     |vpiTypedef:
+     \_interface_typespec: (dut), line:26:23, endln:26:26
+       |vpiParent:
+       \_interface_typespec: (ConnectTB), line:26:13, endln:26:22
+       |vpiName:dut
+       |vpiIsModPort:1
+ |uhdmallModules:
+ \_module_inst: work@SUB (work@SUB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:30:1, endln:32:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@SUB
+   |vpiDefName:work@SUB
+   |vpiNet:
+   \_logic_net: (work@SUB.inp), line:30:24, endln:30:27
+     |vpiParent:
+     \_module_inst: work@SUB (work@SUB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:30:1, endln:32:10
+     |vpiName:inp
+     |vpiFullName:work@SUB.inp
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@SUB.out), line:30:40, endln:30:43
+     |vpiParent:
+     \_module_inst: work@SUB (work@SUB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:30:1, endln:32:10
+     |vpiName:out
+     |vpiFullName:work@SUB.out
+     |vpiNetType:48
+   |vpiPort:
+   \_port: (inp), line:30:24, endln:30:27
+     |vpiParent:
+     \_module_inst: work@SUB (work@SUB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:30:1, endln:32:10
+     |vpiName:inp
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@SUB.inp), line:30:24, endln:30:27
+     |vpiTypedef:
+     \_logic_typespec: , line:30:19, endln:30:23
+   |vpiPort:
+   \_port: (out), line:30:40, endln:30:43
+     |vpiParent:
+     \_module_inst: work@SUB (work@SUB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:30:1, endln:32:10
+     |vpiName:out
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@SUB.out), line:30:40, endln:30:43
+     |vpiTypedef:
+     \_logic_typespec: , line:30:36, endln:30:39
+   |vpiContAssign:
+   \_cont_assign: , line:31:10, endln:31:19
+     |vpiParent:
+     \_module_inst: work@SUB (work@SUB), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:30:1, endln:32:10
+     |vpiRhs:
+     \_ref_obj: (work@SUB.inp), line:31:16, endln:31:19
+       |vpiParent:
+       \_cont_assign: , line:31:10, endln:31:19
+       |vpiName:inp
+       |vpiFullName:work@SUB.inp
+       |vpiActual:
+       \_logic_net: (work@top.dut.sub1.inp), line:30:24, endln:30:27
+     |vpiLhs:
+     \_ref_obj: (work@SUB.out), line:31:10, endln:31:13
+       |vpiParent:
+       \_cont_assign: , line:31:10, endln:31:19
+       |vpiName:out
+       |vpiFullName:work@SUB.out
+       |vpiActual:
+       \_logic_net: (work@top.dut.sub1.out), line:30:40, endln:30:43
+ |uhdmallModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@top
+   |vpiDefName:work@top
+   |vpiNet:
+   \_logic_net: (work@top.a), line:34:23, endln:34:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:a
+     |vpiFullName:work@top.a
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@top.b), line:34:37, endln:34:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:b
+     |vpiFullName:work@top.b
+     |vpiNetType:48
+   |vpiPort:
+   \_port: (a), line:34:23, endln:34:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:a
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.a), line:34:23, endln:34:24
+     |vpiTypedef:
+     \_logic_typespec: , line:34:18, endln:34:22
+   |vpiPort:
+   \_port: (b), line:34:37, endln:34:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.b), line:34:37, endln:34:38
+     |vpiTypedef:
+     \_logic_typespec: , line:34:33, endln:34:36
+   |vpiContAssign:
+   \_cont_assign: , line:36:10, endln:36:26
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiRhs:
+     \_ref_obj: (work@top.a), line:36:25, endln:36:26
+       |vpiParent:
+       \_cont_assign: , line:36:10, endln:36:26
+       |vpiName:a
+       |vpiFullName:work@top.a
+       |vpiActual:
+       \_logic_net: (work@top.a), line:34:23, endln:34:24
+     |vpiLhs:
+     \_hier_path: (conntb.drive), line:36:10, endln:36:22
+       |vpiParent:
+       \_cont_assign: , line:36:10, endln:36:26
+       |vpiName:conntb.drive
+       |vpiActual:
+       \_ref_obj: (conntb)
+         |vpiParent:
+         \_hier_path: (conntb.drive), line:36:10, endln:36:22
+         |vpiName:conntb
+       |vpiActual:
+       \_ref_obj: (drive)
+         |vpiName:drive
+   |vpiContAssign:
+   \_cont_assign: , line:37:10, endln:37:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiRhs:
+     \_hier_path: (conntb.observe), line:37:14, endln:37:28
+       |vpiParent:
+       \_cont_assign: , line:37:10, endln:37:28
+       |vpiName:conntb.observe
+       |vpiActual:
+       \_ref_obj: (conntb), line:37:14, endln:37:20
+         |vpiParent:
+         \_hier_path: (conntb.observe), line:37:14, endln:37:28
+         |vpiName:conntb
+       |vpiActual:
+       \_ref_obj: (observe), line:37:21, endln:37:28
+         |vpiName:observe
+     |vpiLhs:
+     \_ref_obj: (work@top.b), line:37:10, endln:37:11
+       |vpiParent:
+       \_cont_assign: , line:37:10, endln:37:28
+       |vpiName:b
+       |vpiFullName:work@top.b
+       |vpiActual:
+       \_logic_net: (work@top.b), line:34:37, endln:34:38
+ |uhdmtopModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+   |vpiName:work@top
+   |vpiDefName:work@top
+   |vpiTop:1
+   |vpiNet:
+   \_logic_net: (work@top.a), line:34:23, endln:34:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiTypespec:
+     \_logic_typespec: , line:34:18, endln:34:22
+     |vpiName:a
+     |vpiFullName:work@top.a
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@top.b), line:34:37, endln:34:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiTypespec:
+     \_logic_typespec: , line:34:33, endln:34:36
+     |vpiName:b
+     |vpiFullName:work@top.b
+     |vpiNetType:48
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (a), line:34:23, endln:34:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:a
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@top.a), line:34:23, endln:34:24
+       |vpiName:a
+       |vpiFullName:work@top.a
+       |vpiActual:
+       \_logic_net: (work@top.a), line:34:23, endln:34:24
+     |vpiTypedef:
+     \_logic_typespec: , line:34:18, endln:34:22
+   |vpiPort:
+   \_port: (b), line:34:37, endln:34:38
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.b), line:34:37, endln:34:38
+       |vpiName:b
+       |vpiFullName:work@top.b
+       |vpiActual:
+       \_logic_net: (work@top.b), line:34:37, endln:34:38
+     |vpiTypedef:
+     \_logic_typespec: , line:34:33, endln:34:36
+   |vpiInterface:
+   \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:3, endln:35:22
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:conntb
+     |vpiFullName:work@top.conntb
+     |vpiVariables:
+     \_logic_var: (work@top.conntb.drive), line:14:9, endln:14:14
+       |vpiParent:
+       \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:3, endln:35:22
+       |vpiTypespec:
+       \_logic_typespec: , line:14:3, endln:14:8
+       |vpiName:drive
+       |vpiFullName:work@top.conntb.drive
+       |vpiVisibility:1
+     |vpiVariables:
+     \_logic_var: (work@top.conntb.observe), line:15:9, endln:15:16
+       |vpiParent:
+       \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:3, endln:35:22
+       |vpiTypespec:
+       \_logic_typespec: , line:15:3, endln:15:8
+       |vpiName:observe
+       |vpiFullName:work@top.conntb.observe
+       |vpiVisibility:1
+     |vpiDefName:work@ConnectTB
+     |vpiDefFile:UHDM-integration-tests/tests/OneNetModport/top.sv
+     |vpiDefLineNo:13
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiModport:
+     \_modport: (dut), line:16:11, endln:16:14
+       |vpiParent:
+       \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:3, endln:35:22
+       |vpiName:dut
+       |vpiIODecl:
+       \_io_decl: (drive), line:17:11, endln:17:16
+         |vpiParent:
+         \_modport: (dut), line:16:11, endln:16:14
+         |vpiDirection:1
+         |vpiName:drive
+       |vpiIODecl:
+       \_io_decl: (observe), line:18:12, endln:18:19
+         |vpiParent:
+         \_modport: (dut), line:16:11, endln:16:14
+         |vpiDirection:2
+         |vpiName:observe
+       |vpiInterface:
+       \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:3, endln:35:22
+     |vpiModport:
+     \_modport: (tb), line:20:11, endln:20:13
+       |vpiParent:
+       \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:3, endln:35:22
+       |vpiName:tb
+       |vpiIODecl:
+       \_io_decl: (drive), line:21:12, endln:21:17
+         |vpiParent:
+         \_modport: (tb), line:20:11, endln:20:13
+         |vpiDirection:2
+         |vpiName:drive
+       |vpiIODecl:
+       \_io_decl: (observe), line:22:11, endln:22:18
+         |vpiParent:
+         \_modport: (tb), line:20:11, endln:20:13
+         |vpiDirection:1
+         |vpiName:observe
+       |vpiInterface:
+       \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:3, endln:35:22
+   |vpiModule:
+   \_module_inst: work@DUT (work@top.dut), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:3, endln:38:19
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiName:dut
+     |vpiFullName:work@top.dut
+     |vpiDefName:work@DUT
+     |vpiDefFile:UHDM-integration-tests/tests/OneNetModport/top.sv
+     |vpiDefLineNo:26
+     |vpiInstance:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:34:1, endln:40:10
+     |vpiPort:
+     \_port: (intf), line:26:27, endln:26:31
+       |vpiParent:
+       \_module_inst: work@DUT (work@top.dut), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:3, endln:38:19
+       |vpiName:intf
+       |vpiDirection:3
+       |vpiHighConn:
+       \_ref_obj: (work@top.conntb), line:38:11, endln:38:17
+         |vpiName:conntb
+         |vpiFullName:work@top.conntb
+         |vpiActual:
+         \_interface_inst: work@ConnectTB (work@top.conntb), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:35:0
+       |vpiLowConn:
+       \_ref_obj: (work@top.dut.intf), line:38:11, endln:38:17
+         |vpiFullName:work@top.dut.intf
+         |vpiActual:
+         \_modport: (dut), line:16:11, endln:16:14
+       |vpiTypedef:
+       \_interface_typespec: (dut), line:26:23, endln:26:26
+         |vpiParent:
+         \_interface_typespec: (ConnectTB), line:26:13, endln:26:22
+         |vpiName:dut
+         |vpiIsModPort:1
+     |vpiInterface:
+     \_interface_inst: work@ConnectTB (work@top.dut.intf), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:0
+       |vpiParent:
+       \_module_inst: work@DUT (work@top.dut), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:3, endln:38:19
+       |vpiName:intf
+       |vpiFullName:work@top.dut.intf
+       |vpiDefName:work@ConnectTB
+       |vpiModport:
+       \_modport: (dut), line:16:11, endln:16:14
+         |vpiParent:
+         \_interface_inst: work@ConnectTB (work@top.dut.intf), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:0
+         |vpiName:dut
+         |vpiIODecl:
+         \_io_decl: (drive), line:17:11, endln:17:16
+           |vpiDirection:1
+           |vpiName:drive
+           |vpiExpr:
+           \_logic_var: (drive), line:14:9, endln:14:14
+             |vpiTypespec:
+             \_logic_typespec: , line:14:3, endln:14:8
+             |vpiName:drive
+             |vpiVisibility:1
+         |vpiIODecl:
+         \_io_decl: (observe), line:18:12, endln:18:19
+           |vpiDirection:2
+           |vpiName:observe
+           |vpiExpr:
+           \_logic_var: (observe), line:15:9, endln:15:16
+             |vpiTypespec:
+             \_logic_typespec: , line:15:3, endln:15:8
+             |vpiName:observe
+             |vpiVisibility:1
+         |vpiInterface:
+         \_interface_inst: work@ConnectTB (work@top.dut.intf), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:0
+     |vpiModule:
+     \_module_inst: work@SUB (work@top.dut.sub1), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:27:3, endln:27:50
+       |vpiParent:
+       \_module_inst: work@DUT (work@top.dut), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:3, endln:38:19
+       |vpiName:sub1
+       |vpiFullName:work@top.dut.sub1
+       |vpiDefName:work@SUB
+       |vpiDefFile:UHDM-integration-tests/tests/OneNetModport/top.sv
+       |vpiDefLineNo:30
+       |vpiNet:
+       \_logic_net: (work@top.dut.sub1.inp), line:30:24, endln:30:27
+         |vpiParent:
+         \_module_inst: work@SUB (work@top.dut.sub1), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:27:3, endln:27:50
+         |vpiTypespec:
+         \_logic_typespec: , line:30:19, endln:30:23
+         |vpiName:inp
+         |vpiFullName:work@top.dut.sub1.inp
+         |vpiNetType:1
+       |vpiNet:
+       \_logic_net: (work@top.dut.sub1.out), line:30:40, endln:30:43
+         |vpiParent:
+         \_module_inst: work@SUB (work@top.dut.sub1), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:27:3, endln:27:50
+         |vpiTypespec:
+         \_logic_typespec: , line:30:36, endln:30:39
+         |vpiName:out
+         |vpiFullName:work@top.dut.sub1.out
+         |vpiNetType:48
+       |vpiInstance:
+       \_module_inst: work@DUT (work@top.dut), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:38:3, endln:38:19
+       |vpiPort:
+       \_port: (inp), line:30:24, endln:30:27
+         |vpiParent:
+         \_module_inst: work@SUB (work@top.dut.sub1), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:27:3, endln:27:50
+         |vpiName:inp
+         |vpiDirection:1
+         |vpiHighConn:
+         \_hier_path: (intf.drive), line:27:17, endln:27:27
+           |vpiName:intf.drive
+           |vpiExpr:
+           \_ref_obj: (work@top.dut.intf), line:38:11, endln:38:17
+           |vpiActual:
+           \_ref_obj: (intf), line:27:17, endln:27:21
+             |vpiParent:
+             \_hier_path: (intf.drive), line:27:17, endln:27:27
+             |vpiName:intf
+           |vpiActual:
+           \_ref_obj: (drive), line:27:22, endln:27:27
+             |vpiName:drive
+           |vpiExpr:
+           \_ref_obj: (work@top.dut.intf), line:38:11, endln:38:17
+         |vpiLowConn:
+         \_ref_obj: (work@top.dut.sub1.inp), line:27:13, endln:27:16
+           |vpiName:inp
+           |vpiFullName:work@top.dut.sub1.inp
+           |vpiActual:
+           \_logic_net: (work@top.dut.sub1.inp), line:30:24, endln:30:27
+         |vpiTypedef:
+         \_logic_typespec: , line:30:19, endln:30:23
+       |vpiPort:
+       \_port: (out), line:30:40, endln:30:43
+         |vpiParent:
+         \_module_inst: work@SUB (work@top.dut.sub1), file:UHDM-integration-tests/tests/OneNetModport/top.sv, line:27:3, endln:27:50
+         |vpiName:out
+         |vpiDirection:2
+         |vpiHighConn:
+         \_hier_path: (intf.observe), line:27:35, endln:27:47
+           |vpiName:intf.observe
+           |vpiExpr:
+           \_ref_obj: (work@top.dut.intf), line:38:11, endln:38:17
+           |vpiActual:
+           \_ref_obj: (intf), line:27:35, endln:27:39
+             |vpiParent:
+             \_hier_path: (intf.observe), line:27:35, endln:27:47
+             |vpiName:intf
+           |vpiActual:
+           \_ref_obj: (observe), line:27:40, endln:27:47
+             |vpiName:observe
+           |vpiExpr:
+           \_ref_obj: (work@top.dut.intf), line:38:11, endln:38:17
+         |vpiLowConn:
+         \_ref_obj: (work@top.dut.sub1.out), line:27:31, endln:27:34
+           |vpiName:out
+           |vpiFullName:work@top.dut.sub1.out
+           |vpiActual:
+           \_logic_net: (work@top.dut.sub1.out), line:30:40, endln:30:43
+         |vpiTypedef:
+         \_logic_typespec: , line:30:36, endln:30:39
+       |vpiContAssign:
+       \_cont_assign: , line:31:10, endln:31:19
+   |vpiContAssign:
+   \_cont_assign: , line:36:10, endln:36:26
+   |vpiContAssign:
+   \_cont_assign: , line:37:10, endln:37:28
+Object 'work@top' of type 'design'
+  Object '' of type 'interface_inst'
+    Object 'drive' of type 'logic_net'
+    Object 'observe' of type 'logic_net'
+    Object 'dut' of type 'modport'
+      Object 'drive' of type 'io_decl'
+      Object 'observe' of type 'io_decl'
+    Object 'tb' of type 'modport'
+      Object 'drive' of type 'io_decl'
+      Object 'observe' of type 'io_decl'
+  Object 'builtin' of type 'package'
+  Object '' of type 'module_inst'
+    Object 'intf' of type 'logic_net'
+  Object '' of type 'module_inst'
+    Object 'inp' of type 'logic_net'
+    Object 'out' of type 'logic_net'
+  Object '' of type 'module_inst'
+    Object 'a' of type 'logic_net'
+    Object 'b' of type 'logic_net'
+  Object 'work@top' of type 'module_inst'
+    Object 'dut' of type 'module_inst'
+      Object 'intf' of type 'interface_inst'
+      Object 'sub1' of type 'module_inst'
+        Object 'inp' of type 'logic_net'
+          Object '' of type 'logic_typespec'
+        Object 'out' of type 'logic_net'
+          Object '' of type 'logic_typespec'
+        Object 'inp' of type 'port'
+          Object '' of type 'logic_typespec'
+        Object 'out' of type 'port'
+          Object '' of type 'logic_typespec'
+        Object '' of type 'cont_assign'
+          Object 'out' of type 'ref_obj'
+          Object 'inp' of type 'ref_obj'
+        Object 'intf.drive' of type 'hier_path'
+          Object 'intf' of type 'ref_obj'
+          Object 'drive' of type 'ref_obj'
+        Object 'intf.observe' of type 'hier_path'
+          Object 'intf' of type 'ref_obj'
+          Object 'observe' of type 'ref_obj'
+      Object 'intf' of type 'port'
+        Object 'dut' of type 'interface_typespec'
+      Object 'conntb' of type 'ref_obj'
+    Object 'conntb' of type 'interface_inst'
+      Object 'drive' of type 'logic_var'
+        Object '' of type 'logic_typespec'
+      Object 'observe' of type 'logic_var'
+        Object '' of type 'logic_typespec'
+    Object 'a' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'b' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'a' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'b' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object '' of type 'cont_assign'
+      Object 'conntb.drive' of type 'hier_path'
+        Object 'conntb' of type 'ref_obj'
+        Object 'drive' of type 'ref_obj'
+      Object 'a' of type 'ref_obj'
+    Object '' of type 'cont_assign'
+      Object 'b' of type 'ref_obj'
+      Object 'conntb.observe' of type 'hier_path'
+        Object 'conntb' of type 'ref_obj'
+        Object 'observe' of type 'ref_obj'
+Generating RTLIL representation for module `\top'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneNetModport/top.sv:34.1-40.10> str='\top'
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:34.23-34.24> str='\a' input logic port=4 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:34.37-34.38> str='\b' output reg port=5 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_CELL <UHDM-integration-tests/tests/OneNetModport/top.sv:38.3-38.19> str='\dut'
+        AST_CELLTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\DUT'
+        AST_ARGUMENT <UHDM-integration-tests/tests/OneNetModport/top.sv:38.3-38.19> str='\intf'
+          AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:38.11-38.17> str='\conntb'
+      AST_CELL <UHDM-integration-tests/tests/OneNetModport/top.sv:35.3-35.22> str='\conntb'
+        AST_CELLTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\ConnectTB'
+      AST_ASSIGN <UHDM-integration-tests/tests/OneNetModport/top.sv:36.10-36.26>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:36.10-36.22> str='\conntb.drive'
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:36.25-36.26> str='\a'
+      AST_ASSIGN <UHDM-integration-tests/tests/OneNetModport/top.sv:37.10-37.28>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:37.10-37.11> str='\b'
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:37.14-37.28> str='\conntb.observe'
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module top(a, b);
+      (* is_simplified_wire = 1 *)
+      input a;
+      (* is_simplified_wire = 1 *)
+      output reg b;
+      /** AST_CELL **/
+      /** AST_CELL **/
+      assign \conntb.drive  = a;
+      assign b = \conntb.observe ;
+    endmodule
+--- END OF AST DUMP ---
+Warning: reg '\b' is assigned in a continuous assignment at UHDM-integration-tests/tests/OneNetModport/top.sv:37.10-37.28.
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneNetModport/top.sv:34.1-40.10> str='\top' basic_prep
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:34.23-34.24> str='\a' input logic basic_prep port=4 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:34.37-34.38> str='\b' output reg basic_prep port=5 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_CELL <UHDM-integration-tests/tests/OneNetModport/top.sv:38.3-38.19> str='\dut' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\DUT' basic_prep
+        AST_ARGUMENT <UHDM-integration-tests/tests/OneNetModport/top.sv:38.3-38.19> str='\intf' basic_prep
+          AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:38.11-38.17> str='\conntb' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/OneNetModport/top.sv:35.3-35.22> str='\conntb' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\ConnectTB' basic_prep
+      AST_ASSIGN <UHDM-integration-tests/tests/OneNetModport/top.sv:36.10-36.26> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:36.10-36.22> str='\conntb.drive' basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:36.25-36.26> str='\a' basic_prep
+      AST_ASSIGN <UHDM-integration-tests/tests/OneNetModport/top.sv:37.10-37.28> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:37.10-37.11> str='\b' basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:37.14-37.28> str='\conntb.observe' basic_prep
+      AST_AUTOWIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\conntb.drive' basic_prep
+      AST_AUTOWIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\conntb.observe' basic_prep
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module top(a, b);
+      (* is_simplified_wire = 1 *)
+      input a;
+      (* is_simplified_wire = 1 *)
+      output reg b;
+      /** AST_AUTOWIRE **/
+      /** AST_AUTOWIRE **/
+      /** AST_CELL **/
+      /** AST_CELL **/
+      assign \conntb.drive  = a;
+      assign b = \conntb.observe ;
+    endmodule
+--- END OF AST DUMP ---
+UHDM-integration-tests/tests/OneNetModport/top.sv:36: Warning: Identifier `\conntb.drive' is implicitly declared.
+UHDM-integration-tests/tests/OneNetModport/top.sv:37: Warning: Identifier `\conntb.observe' is implicitly declared.
+Generating RTLIL representation for module `\SUB'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneNetModport/top.sv:30.1-32.10> str='\SUB'
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:30.24-30.27> str='\inp' input logic port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:30.40-30.43> str='\out' output logic port=2 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_ASSIGN <UHDM-integration-tests/tests/OneNetModport/top.sv:31.10-31.19>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:31.10-31.13> str='\out'
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:31.16-31.19> str='\inp'
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module SUB(inp, out);
+      (* is_simplified_wire = 1 *)
+      input inp;
+      (* is_simplified_wire = 1 *)
+      output out;
+      assign out = inp;
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneNetModport/top.sv:30.1-32.10> str='\SUB' basic_prep
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:30.24-30.27> str='\inp' input logic basic_prep port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:30.40-30.43> str='\out' output logic basic_prep port=2 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_ASSIGN <UHDM-integration-tests/tests/OneNetModport/top.sv:31.10-31.19> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:31.10-31.13> str='\out' basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:31.16-31.19> str='\inp' basic_prep
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module SUB(inp, out);
+      (* is_simplified_wire = 1 *)
+      input inp;
+      (* is_simplified_wire = 1 *)
+      output out;
+      assign out = inp;
+    endmodule
+--- END OF AST DUMP ---
+Generating RTLIL representation for module `\DUT'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneNetModport/top.sv:26.1-28.10> str='\DUT'
+      AST_INTERFACEPORT <UHDM-integration-tests/tests/OneNetModport/top.sv:26.27-26.31> str='\intf' input output port=3
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_WIRETYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\dut'
+        AST_INTERFACEPORTTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\ConnectTB.dut'
+      AST_CELL <UHDM-integration-tests/tests/OneNetModport/top.sv:27.3-27.50> str='\sub1'
+        AST_CELLTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\SUB'
+        AST_ARGUMENT <UHDM-integration-tests/tests/OneNetModport/top.sv:27.3-27.50> str='\inp'
+          AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:27.17-27.27> str='\intf.drive'
+        AST_ARGUMENT <UHDM-integration-tests/tests/OneNetModport/top.sv:27.3-27.50> str='\out'
+          AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:27.35-27.47> str='\intf.observe'
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module DUT();
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_INTERFACEPORT **/
+      /** AST_CELL **/
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneNetModport/top.sv:26.1-28.10> str='\DUT' basic_prep
+      AST_INTERFACEPORT <UHDM-integration-tests/tests/OneNetModport/top.sv:26.27-26.31> str='\intf' input output basic_prep port=3
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_WIRETYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\dut' basic_prep
+        AST_INTERFACEPORTTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\ConnectTB.dut' basic_prep
+      AST_CELL <UHDM-integration-tests/tests/OneNetModport/top.sv:27.3-27.50> str='\sub1' basic_prep
+        AST_CELLTYPE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\SUB' basic_prep
+        AST_ARGUMENT <UHDM-integration-tests/tests/OneNetModport/top.sv:27.3-27.50> str='\inp' basic_prep
+          AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:27.17-27.27> str='\intf.drive' basic_prep
+        AST_ARGUMENT <UHDM-integration-tests/tests/OneNetModport/top.sv:27.3-27.50> str='\out' basic_prep
+          AST_IDENTIFIER <UHDM-integration-tests/tests/OneNetModport/top.sv:27.35-27.47> str='\intf.observe' basic_prep
+      AST_AUTOWIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\intf.drive' basic_prep
+      AST_AUTOWIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\intf.observe' basic_prep
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module DUT();
+      /** AST_AUTOWIRE **/
+      /** AST_AUTOWIRE **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_INTERFACEPORT **/
+      /** AST_CELL **/
+    endmodule
+--- END OF AST DUMP ---
+UHDM-integration-tests/tests/OneNetModport/top.sv:27: Warning: Identifier `\intf.drive' is implicitly declared.
+UHDM-integration-tests/tests/OneNetModport/top.sv:27: Warning: Identifier `\intf.observe' is implicitly declared.
+Generating RTLIL representation for module `\ConnectTB'.
+Dumping AST before simplification:
+    AST_INTERFACE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\ConnectTB'
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:14.9-14.14> str='\drive' logic range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:15.9-15.16> str='\observe' logic range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_MODPORT <UHDM-integration-tests/tests/OneNetModport/top.sv:16.11-16.14> str='\dut'
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:17.11-17.16> str='\drive' input
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:18.12-18.19> str='\observe' output
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+      AST_MODPORT <UHDM-integration-tests/tests/OneNetModport/top.sv:20.11-20.13> str='\tb'
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:21.12-21.17> str='\drive' output
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:22.11-22.18> str='\observe' input
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    /** AST_INTERFACE **/
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_INTERFACE <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> str='\ConnectTB' basic_prep
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:14.9-14.14> str='\drive' logic basic_prep range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneNetModport/top.sv:15.9-15.16> str='\observe' logic basic_prep range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_MODPORT <UHDM-integration-tests/tests/OneNetModport/top.sv:16.11-16.14> str='\dut' basic_prep
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:17.11-17.16> str='\drive' input basic_prep
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:18.12-18.19> str='\observe' output basic_prep
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+      AST_MODPORT <UHDM-integration-tests/tests/OneNetModport/top.sv:20.11-20.13> str='\tb' basic_prep
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:21.12-21.17> str='\drive' output basic_prep
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_MODPORTMEMBER <UHDM-integration-tests/tests/OneNetModport/top.sv:22.11-22.18> str='\observe' input basic_prep
+          ATTR \packed_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+          ATTR \unpacked_ranges:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    /** AST_INTERFACE **/
+--- END OF AST DUMP ---
+
+2. Executing PREP pass.
+
+2.1. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1.1. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \ConnectTB
+Used module:     \DUT
+Used module:         \SUB
+Generating RTLIL representation for module `\top'.
+Warning: reg '\b' is assigned in a continuous assignment at UHDM-integration-tests/tests/OneNetModport/top.sv:37.10-37.28.
+Generating RTLIL representation for module `\DUT'.
+
+2.1.2. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \ConnectTB
+Used module:     \DUT
+Used module:         \SUB
+Generating RTLIL representation for module `\DUT$interfaces$ConnectTB'.
+
+2.1.3. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \ConnectTB
+Used module:     \DUT$interfaces$ConnectTB
+Used module:         \SUB
+
+2.1.4. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \ConnectTB
+Used module:     \DUT$interfaces$ConnectTB
+Used module:         \SUB
+Removing unused module `\DUT'.
+Removed 1 unused modules.
+
+2.2. Executing PROC pass (convert processes to netlists).
+
+2.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+2.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+2.2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+2.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+2.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+2.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+2.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module DUT$interfaces$ConnectTB.
+Optimizing module top.
+Optimizing module SUB.
+Optimizing module ConnectTB.
+
+2.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module DUT$interfaces$ConnectTB.
+Optimizing module top.
+Optimizing module SUB.
+Optimizing module ConnectTB.
+
+2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \DUT$interfaces$ConnectTB..
+Finding unused cells or wires in module \top..
+Finding unused cells or wires in module \SUB..
+Finding unused cells or wires in module \ConnectTB..
+Removed 2 unused cells and 3 unused wires.
+<suppressed ~5 debug messages>
+
+2.5. Executing CHECK pass (checking for obvious problems).
+Checking module ConnectTB...
+Checking module DUT$interfaces$ConnectTB...
+Checking module SUB...
+Checking module top...
+Found and reported 0 problems.
+
+2.6. Executing OPT pass (performing simple optimizations).
+
+2.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module ConnectTB.
+Optimizing module DUT$interfaces$ConnectTB.
+Optimizing module SUB.
+Optimizing module top.
+
+2.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\ConnectTB'.
+Finding identical cells in module `\DUT$interfaces$ConnectTB'.
+Finding identical cells in module `\SUB'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \ConnectTB..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \DUT$interfaces$ConnectTB..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \SUB..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \ConnectTB.
+  Optimizing cells in module \DUT$interfaces$ConnectTB.
+  Optimizing cells in module \SUB.
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+2.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\ConnectTB'.
+Finding identical cells in module `\DUT$interfaces$ConnectTB'.
+Finding identical cells in module `\SUB'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \ConnectTB..
+Finding unused cells or wires in module \DUT$interfaces$ConnectTB..
+Finding unused cells or wires in module \SUB..
+Finding unused cells or wires in module \top..
+
+2.6.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module ConnectTB.
+Optimizing module DUT$interfaces$ConnectTB.
+Optimizing module SUB.
+Optimizing module top.
+
+2.6.8. Finished OPT passes. (There is nothing left to do.)
+
+2.7. Executing WREDUCE pass (reducing word size of cells).
+
+2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \ConnectTB..
+Finding unused cells or wires in module \DUT$interfaces$ConnectTB..
+Finding unused cells or wires in module \SUB..
+Finding unused cells or wires in module \top..
+
+2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+2.10. Executing OPT pass (performing simple optimizations).
+
+2.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module ConnectTB.
+Optimizing module DUT$interfaces$ConnectTB.
+Optimizing module SUB.
+Optimizing module top.
+
+2.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\ConnectTB'.
+Finding identical cells in module `\DUT$interfaces$ConnectTB'.
+Finding identical cells in module `\SUB'.
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \ConnectTB..
+Finding unused cells or wires in module \DUT$interfaces$ConnectTB..
+Finding unused cells or wires in module \SUB..
+Finding unused cells or wires in module \top..
+
+2.10.4. Finished fast OPT passes.
+
+2.11. Printing statistics.
+
+=== ConnectTB ===
+
+   Number of wires:                  0
+   Number of wire bits:              0
+   Number of public wires:           0
+   Number of public wire bits:       0
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== DUT$interfaces$ConnectTB ===
+
+   Number of wires:                  2
+   Number of wire bits:              2
+   Number of public wires:           2
+   Number of public wire bits:       2
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     SUB                             1
+
+=== SUB ===
+
+   Number of wires:                  2
+   Number of wire bits:              2
+   Number of public wires:           2
+   Number of public wire bits:       2
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== top ===
+
+   Number of wires:                  4
+   Number of wire bits:              4
+   Number of public wires:           4
+   Number of public wire bits:       4
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     DUT$interfaces$ConnectTB        1
+
+=== design hierarchy ===
+
+   top                               1
+     DUT$interfaces$ConnectTB        1
+       SUB                           1
+
+   Number of wires:                  8
+   Number of wire bits:              8
+   Number of public wires:           8
+   Number of public wire bits:       8
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+2.12. Executing CHECK pass (checking for obvious problems).
+Checking module ConnectTB...
+Checking module DUT$interfaces$ConnectTB...
+Checking module SUB...
+Checking module top...
+Found and reported 0 problems.
+
+3. Executing Verilog backend.
+
+3.1. Executing BMUXMAP pass.
+
+3.2. Executing DEMUXMAP pass.
+/* Generated by Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
+Dumping module `\ConnectTB'.
+
+(* is_interface =  1  *)
+(* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0" *)
+module ConnectTB();
+endmodule
+Dumping module `\DUT$interfaces$ConnectTB'.
+
+(* interfaces_replaced_in_module =  1  *)
+(* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:26.1-28.10" *)
+module \DUT$interfaces$ConnectTB (\intf.drive , \intf.observe );
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0" *)
+  input \intf.drive ;
+  wire \intf.drive ;
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0" *)
+  output \intf.observe ;
+  wire \intf.observe ;
+  (* module_not_derived = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:27.3-27.50" *)
+  SUB sub1 (
+    .inp(\intf.drive ),
+    .out(\intf.observe )
+  );
+endmodule
+Dumping module `\SUB'.
+
+(* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:30.1-32.10" *)
+module SUB(inp, out);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:30.24-30.27" *)
+  input inp;
+  wire inp;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:30.40-30.43" *)
+  output out;
+  wire out;
+  assign out = inp;
+endmodule
+Dumping module `\top'.
+
+(* top =  1  *)
+(* interfaces_replaced_in_module =  1  *)
+(* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:34.1-40.10" *)
+module top(a, b);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:34.23-34.24" *)
+  input a;
+  wire a;
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:34.37-34.38" *)
+  output b;
+  wire b;
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0" *)
+  wire \conntb.drive ;
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:0.0-0.0" *)
+  wire \conntb.observe ;
+  (* src = "UHDM-integration-tests/tests/OneNetModport/top.sv:38.3-38.19" *)
+  \DUT$interfaces$ConnectTB  dut (
+    .\intf.drive (a),
+    .\intf.observe (\conntb.observe )
+  );
+  assign b = \conntb.observe ;
+  assign \conntb.drive  = a;
+endmodule
+
+4. Executing Verilog backend.
+
+4.1. Executing BMUXMAP pass.
+
+4.2. Executing DEMUXMAP pass.
+Dumping module `\ConnectTB'.
+Dumping module `\DUT$interfaces$ConnectTB'.
+Dumping module `\SUB'.
+Dumping module `\top'.
+
+5. Executing SIM pass (simulate the circuit).
+Simulating cycle 0.
+Simulating cycle 1.
+Simulating cycle 2.
+Simulating cycle 3.
+Simulating cycle 4.
+Simulating cycle 5.
+Simulating cycle 6.
+Simulating cycle 7.
+Simulating cycle 8.
+Simulating cycle 9.
+Simulating cycle 10.
+Simulating cycle 11.
+Simulating cycle 12.
+Simulating cycle 13.
+Simulating cycle 14.
+Simulating cycle 15.
+Simulating cycle 16.
+Simulating cycle 17.
+Simulating cycle 18.
+Simulating cycle 19.
+Simulating cycle 20.
+Simulating cycle 21.
+Simulating cycle 22.
+Simulating cycle 23.
+Simulating cycle 24.
+Simulating cycle 25.
+Simulating cycle 26.
+Simulating cycle 27.
+Simulating cycle 28.
+Simulating cycle 29.
+Simulating cycle 30.
+Simulating cycle 31.
+Simulating cycle 32.
+Simulating cycle 33.
+Simulating cycle 34.
+Simulating cycle 35.
+Simulating cycle 36.
+Simulating cycle 37.
+Simulating cycle 38.
+Simulating cycle 39.
+Simulating cycle 40.
+
+Warnings: 5 unique messages, 6 total
+
+Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+

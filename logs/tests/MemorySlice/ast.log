@@ -1,0 +1,1695 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/MemorySlice/top.sv" TOP_MODULE="top" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/MemorySlice/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -Using Yosys read_systemverilog command
+> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/MemorySlice/top.sv:1:1: No timescale set for "top".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0303] UHDM-integration-tests/tests/MemorySlice/top.sv:1:1: Compile module "work@top".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/MemorySlice/top.sv:1:1: Top level module "work@top".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 1.
+
+[NTE:EL0510] Nb instances: 1.
+
+[NTE:EL0511] Nb leaf instances: 0.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 1
+[   NOTE] : 5
+design: (work@top)
+ |vpiName:work@top
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@top)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+   |vpiParent:
+   \_design: (work@top)
+   |vpiFullName:work@top
+   |vpiParameter:
+   \_parameter: (work@top.N), line:1:24, endln:1:25
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |UINT:8
+     |vpiTypespec:
+     \_int_typespec: 
+     |vpiName:N
+     |vpiFullName:work@top.N
+   |vpiParamAssign:
+   \_param_assign: , line:1:24, endln:1:27
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiRhs:
+     \_constant: , line:1:26, endln:1:27
+       |vpiDecompile:8
+       |vpiSize:32
+       |UINT:8
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.N), line:1:24, endln:1:25
+   |vpiDefName:work@top
+   |vpiNet:
+   \_logic_net: (work@top.ck), line:2:17, endln:2:19
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:ck
+     |vpiFullName:work@top.ck
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.sin), line:2:39, endln:2:42
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:sin
+     |vpiFullName:work@top.sin
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.sout), line:3:24, endln:3:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:sout
+     |vpiFullName:work@top.sout
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.mem), line:4:13, endln:4:16
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:mem
+     |vpiFullName:work@top.mem
+     |vpiNetType:36
+   |vpiPort:
+   \_port: (ck), line:2:17, endln:2:19
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:ck
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.ck), line:2:17, endln:2:19
+     |vpiTypedef:
+     \_logic_typespec: , line:2:11, endln:2:16
+   |vpiPort:
+   \_port: (sin), line:2:39, endln:2:42
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:sin
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.sin), line:2:39, endln:2:42
+     |vpiTypedef:
+     \_logic_typespec: , line:2:27, endln:2:38
+       |vpiRange:
+       \_range: , line:2:33, endln:2:38
+         |vpiLeftRange:
+         \_constant: , line:2:34, endln:2:35
+           |vpiParent:
+           \_range: , line:2:33, endln:2:38
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:2:36, endln:2:37
+           |vpiParent:
+           \_range: , line:2:33, endln:2:38
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (sout), line:3:24, endln:3:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:sout
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@top.sout), line:3:24, endln:3:28
+     |vpiTypedef:
+     \_logic_typespec: , line:3:12, endln:3:23
+       |vpiRange:
+       \_range: , line:3:18, endln:3:23
+         |vpiLeftRange:
+         \_constant: , line:3:19, endln:3:20
+           |vpiParent:
+           \_range: , line:3:18, endln:3:23
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:3:21, endln:3:22
+           |vpiParent:
+           \_range: , line:3:18, endln:3:23
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiProcess:
+   \_always: , line:6:1, endln:10:4
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiStmt:
+     \_event_control: , line:6:11, endln:6:25
+       |vpiParent:
+       \_always: , line:6:1, endln:10:4
+       |vpiCondition:
+       \_operation: , line:6:14, endln:6:24
+         |vpiParent:
+         \_event_control: , line:6:11, endln:6:25
+         |vpiOpType:39
+         |vpiOperand:
+         \_ref_obj: (work@top.ck), line:6:22, endln:6:24
+           |vpiParent:
+           \_operation: , line:6:14, endln:6:24
+           |vpiName:ck
+           |vpiFullName:work@top.ck
+           |vpiActual:
+           \_logic_net: (work@top.ck), line:2:17, endln:2:19
+       |vpiStmt:
+       \_begin: (work@top), line:7:1, endln:10:4
+         |vpiParent:
+         \_event_control: , line:6:11, endln:6:25
+         |vpiFullName:work@top
+         |vpiStmt:
+         \_assignment: , line:8:3, endln:8:29
+           |vpiParent:
+           \_begin: (work@top), line:7:1, endln:10:4
+           |vpiOpType:82
+           |vpiRhs:
+           \_part_select: , line:8:18, endln:8:29
+             |vpiParent:
+             \_ref_obj: mem (work@top.mem), line:8:18, endln:8:21
+               |vpiParent:
+               \_assignment: , line:8:3, endln:8:29
+               |vpiName:mem
+               |vpiFullName:work@top.mem
+               |vpiDefName:mem
+             |vpiConstantSelect:1
+             |vpiLeftRange:
+             \_operation: , line:8:23, endln:8:26
+               |vpiParent:
+               \_begin: (work@top), line:7:1, endln:10:4
+               |vpiOpType:11
+               |vpiOperand:
+               \_ref_obj: (work@top.N), line:8:23, endln:8:24
+                 |vpiParent:
+                 \_begin: (work@top), line:7:1, endln:10:4
+                 |vpiName:N
+                 |vpiFullName:work@top.N
+               |vpiOperand:
+               \_constant: , line:8:25, endln:8:26
+                 |vpiParent:
+                 \_operation: , line:8:23, endln:8:26
+                 |vpiDecompile:2
+                 |vpiSize:64
+                 |UINT:2
+                 |vpiConstType:9
+             |vpiRightRange:
+             \_constant: , line:8:27, endln:8:28
+               |vpiDecompile:0
+               |vpiSize:64
+               |UINT:0
+               |vpiConstType:9
+           |vpiLhs:
+           \_part_select: , line:8:3, endln:8:14
+             |vpiParent:
+             \_ref_obj: mem (work@top.mem)
+               |vpiParent:
+               \_assignment: , line:8:3, endln:8:29
+               |vpiName:mem
+               |vpiFullName:work@top.mem
+               |vpiDefName:mem
+             |vpiConstantSelect:1
+             |vpiLeftRange:
+             \_operation: , line:8:8, endln:8:11
+               |vpiParent:
+               \_begin: (work@top), line:7:1, endln:10:4
+               |vpiOpType:11
+               |vpiOperand:
+               \_ref_obj: (work@top.N), line:8:8, endln:8:9
+                 |vpiParent:
+                 \_begin: (work@top), line:7:1, endln:10:4
+                 |vpiName:N
+                 |vpiFullName:work@top.N
+               |vpiOperand:
+               \_constant: , line:8:10, endln:8:11
+                 |vpiParent:
+                 \_operation: , line:8:8, endln:8:11
+                 |vpiDecompile:1
+                 |vpiSize:64
+                 |UINT:1
+                 |vpiConstType:9
+             |vpiRightRange:
+             \_constant: , line:8:12, endln:8:13
+               |vpiDecompile:1
+               |vpiSize:64
+               |UINT:1
+               |vpiConstType:9
+         |vpiStmt:
+         \_assignment: , line:9:3, endln:9:17
+           |vpiParent:
+           \_begin: (work@top), line:7:1, endln:10:4
+           |vpiOpType:82
+           |vpiRhs:
+           \_ref_obj: (work@top.sin), line:9:14, endln:9:17
+             |vpiParent:
+             \_begin: (work@top), line:7:1, endln:10:4
+             |vpiName:sin
+             |vpiFullName:work@top.sin
+             |vpiActual:
+             \_logic_net: (work@top.sin), line:2:39, endln:2:42
+           |vpiLhs:
+           \_bit_select: (work@top.mem), line:9:3, endln:9:10
+             |vpiParent:
+             \_ref_obj: (work@top.mem)
+               |vpiParent:
+               \_assignment: , line:9:3, endln:9:17
+               |vpiName:mem
+               |vpiFullName:work@top.mem
+             |vpiName:mem
+             |vpiFullName:work@top.mem
+             |vpiIndex:
+             \_constant: , line:9:8, endln:9:9
+               |vpiParent:
+               \_bit_select: (work@top.mem), line:9:3, endln:9:10
+               |vpiDecompile:0
+               |vpiSize:64
+               |UINT:0
+               |vpiConstType:9
+     |vpiAlwaysType:3
+   |vpiContAssign:
+   \_cont_assign: , line:5:8, endln:5:23
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiRhs:
+     \_bit_select: (work@top.mem), line:5:15, endln:5:23
+       |vpiParent:
+       \_ref_obj: (work@top.mem)
+         |vpiParent:
+         \_cont_assign: , line:5:8, endln:5:23
+         |vpiName:mem
+         |vpiFullName:work@top.mem
+       |vpiName:mem
+       |vpiFullName:work@top.mem
+       |vpiIndex:
+       \_operation: , line:5:19, endln:5:22
+         |vpiParent:
+         \_bit_select: (work@top.mem), line:5:15, endln:5:23
+         |vpiOpType:11
+         |vpiOperand:
+         \_ref_obj: (work@top.mem.N), line:5:19, endln:5:20
+           |vpiParent:
+           \_operation: , line:5:19, endln:5:22
+           |vpiName:N
+           |vpiFullName:work@top.mem.N
+         |vpiOperand:
+         \_constant: , line:5:21, endln:5:22
+           |vpiParent:
+           \_operation: , line:5:19, endln:5:22
+           |vpiDecompile:1
+           |vpiSize:64
+           |UINT:1
+           |vpiConstType:9
+     |vpiLhs:
+     \_ref_obj: (work@top.sout), line:5:8, endln:5:12
+       |vpiParent:
+       \_cont_assign: , line:5:8, endln:5:23
+       |vpiName:sout
+       |vpiFullName:work@top.sout
+       |vpiActual:
+       \_logic_net: (work@top.sout), line:3:24, endln:3:28
+ |uhdmtopModules:
+ \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+   |vpiName:work@top
+   |vpiVariables:
+   \_array_var: (work@top.mem), line:4:13, endln:4:24
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiSize:8
+     |vpiTypespec:
+     \_array_typespec: 
+     |vpiName:mem
+     |vpiFullName:work@top.mem
+     |vpiRandType:1
+     |vpiVisibility:1
+     |vpiArrayType:1
+     |vpiRange:
+     \_range: , line:4:17, endln:4:24
+       |vpiLeftRange:
+       \_constant: , line:4:18, endln:4:19
+         |vpiParent:
+         \_range: , line:4:17, endln:4:24
+         |vpiDecompile:7
+         |vpiSize:64
+         |INT:7
+         |vpiConstType:7
+       |vpiRightRange:
+       \_constant: , line:4:22, endln:4:23
+         |vpiParent:
+         \_range: , line:4:17, endln:4:24
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+     |vpiReg:
+     \_logic_var: (work@top.mem), line:4:13, endln:4:16
+       |vpiParent:
+       \_array_var: (work@top.mem), line:4:13, endln:4:24
+       |vpiTypespec:
+       \_logic_typespec: , line:4:1, endln:4:12
+         |vpiRange:
+         \_range: , line:4:7, endln:4:12
+           |vpiLeftRange:
+           \_constant: , line:4:8, endln:4:9
+             |vpiParent:
+             \_range: , line:4:7, endln:4:12
+             |vpiDecompile:3
+             |vpiSize:64
+             |UINT:3
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:4:10, endln:4:11
+             |vpiParent:
+             \_range: , line:4:7, endln:4:12
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiFullName:work@top.mem
+       |vpiRange:
+       \_range: , line:4:7, endln:4:12
+         |vpiLeftRange:
+         \_constant: , line:4:8, endln:4:9
+           |vpiParent:
+           \_range: , line:4:7, endln:4:12
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:4:10, endln:4:11
+           |vpiParent:
+           \_range: , line:4:7, endln:4:12
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiParameter:
+   \_parameter: (work@top.N), line:1:24, endln:1:25
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |UINT:8
+     |vpiTypespec:
+     \_int_typespec: 
+       |vpiParent:
+       \_parameter: (work@top.N), line:1:24, endln:1:25
+     |vpiName:N
+     |vpiFullName:work@top.N
+   |vpiParamAssign:
+   \_param_assign: , line:1:24, endln:1:27
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiRhs:
+     \_constant: , line:1:26, endln:1:27
+       |vpiDecompile:8
+       |vpiSize:32
+       |UINT:8
+       |vpiTypespec:
+       \_int_typespec: 
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@top.N), line:1:24, endln:1:25
+   |vpiDefName:work@top
+   |vpiTop:1
+   |vpiNet:
+   \_logic_net: (work@top.ck), line:2:17, endln:2:19
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiTypespec:
+     \_logic_typespec: , line:2:11, endln:2:16
+     |vpiName:ck
+     |vpiFullName:work@top.ck
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.sin), line:2:39, endln:2:42
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiTypespec:
+     \_logic_typespec: , line:2:27, endln:2:38
+       |vpiRange:
+       \_range: , line:2:33, endln:2:38
+         |vpiLeftRange:
+         \_constant: , line:2:34, endln:2:35
+           |vpiParent:
+           \_range: , line:2:33, endln:2:38
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:2:36, endln:2:37
+           |vpiParent:
+           \_range: , line:2:33, endln:2:38
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:sin
+     |vpiFullName:work@top.sin
+     |vpiNetType:36
+   |vpiNet:
+   \_logic_net: (work@top.sout), line:3:24, endln:3:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiTypespec:
+     \_logic_typespec: , line:3:12, endln:3:23
+       |vpiRange:
+       \_range: , line:3:18, endln:3:23
+         |vpiLeftRange:
+         \_constant: , line:3:19, endln:3:20
+           |vpiParent:
+           \_range: , line:3:18, endln:3:23
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:3:21, endln:3:22
+           |vpiParent:
+           \_range: , line:3:18, endln:3:23
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:sout
+     |vpiFullName:work@top.sout
+     |vpiNetType:36
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (ck), line:2:17, endln:2:19
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:ck
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@top.ck), line:2:17, endln:2:19
+       |vpiName:ck
+       |vpiFullName:work@top.ck
+       |vpiActual:
+       \_logic_net: (work@top.ck), line:2:17, endln:2:19
+     |vpiTypedef:
+     \_logic_typespec: , line:2:11, endln:2:16
+   |vpiPort:
+   \_port: (sin), line:2:39, endln:2:42
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:sin
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@top.sin), line:2:39, endln:2:42
+       |vpiName:sin
+       |vpiFullName:work@top.sin
+       |vpiActual:
+       \_logic_net: (work@top.sin), line:2:39, endln:2:42
+     |vpiTypedef:
+     \_logic_typespec: , line:2:27, endln:2:38
+       |vpiRange:
+       \_range: , line:2:33, endln:2:38
+         |vpiParent:
+         \_port: (sin), line:2:39, endln:2:42
+         |vpiLeftRange:
+         \_constant: , line:2:34, endln:2:35
+           |vpiParent:
+           \_range: , line:2:33, endln:2:38
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:2:36, endln:2:37
+           |vpiParent:
+           \_range: , line:2:33, endln:2:38
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (sout), line:3:24, endln:3:28
+     |vpiParent:
+     \_module_inst: work@top (work@top), file:UHDM-integration-tests/tests/MemorySlice/top.sv, line:1:1, endln:11:10
+     |vpiName:sout
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@top.sout), line:3:24, endln:3:28
+       |vpiName:sout
+       |vpiFullName:work@top.sout
+       |vpiActual:
+       \_logic_net: (work@top.sout), line:3:24, endln:3:28
+     |vpiTypedef:
+     \_logic_typespec: , line:3:12, endln:3:23
+       |vpiRange:
+       \_range: , line:3:18, endln:3:23
+         |vpiParent:
+         \_port: (sout), line:3:24, endln:3:28
+         |vpiLeftRange:
+         \_constant: , line:3:19, endln:3:20
+           |vpiParent:
+           \_range: , line:3:18, endln:3:23
+           |vpiDecompile:3
+           |vpiSize:64
+           |UINT:3
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:3:21, endln:3:22
+           |vpiParent:
+           \_range: , line:3:18, endln:3:23
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiProcess:
+   \_always: , line:6:1, endln:10:4
+   |vpiContAssign:
+   \_cont_assign: , line:5:8, endln:5:23
+Object 'work@top' of type 'design'
+  Object 'builtin' of type 'package'
+  Object '' of type 'module_inst'
+    Object 'N' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'N' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'ck' of type 'logic_net'
+    Object 'sin' of type 'logic_net'
+    Object 'sout' of type 'logic_net'
+    Object 'mem' of type 'logic_net'
+    Object '' of type 'always'
+      Object '' of type 'event_control'
+        Object '' of type 'operation'
+          Object 'ck' of type 'ref_obj'
+        Object '' of type 'begin'
+          Object '' of type 'assignment'
+            Object '' of type 'part_select'
+              Object '' of type 'operation'
+                Object 'N' of type 'ref_obj'
+                Object '' of type 'constant'
+              Object '' of type 'constant'
+            Object '' of type 'part_select'
+              Object '' of type 'operation'
+                Object 'N' of type 'ref_obj'
+                Object '' of type 'constant'
+              Object '' of type 'constant'
+          Object '' of type 'assignment'
+            Object 'mem' of type 'bit_select'
+              Object '' of type 'constant'
+            Object 'sin' of type 'ref_obj'
+  Object 'work@top' of type 'module_inst'
+    Object 'N' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'N' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'ck' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'sin' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'sout' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'ck' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'sin' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'sout' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object '' of type 'cont_assign'
+      Object 'sout' of type 'ref_obj'
+      Object 'mem' of type 'bit_select'
+        Object '' of type 'operation'
+          Object 'N' of type 'ref_obj'
+          Object '' of type 'constant'
+    Object 'mem' of type 'array_var'
+      Object '' of type 'array_typespec'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+Generating RTLIL representation for module `\top'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/MemorySlice/top.sv:1.1-11.10> str='\top'
+      AST_PARAMETER <UHDM-integration-tests/tests/MemorySlice/top.sv:1.24-1.27> str='\N' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) range=[31:0] int=8
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.17-2.19> str='\ck' input logic port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.39-2.42> str='\sin' input logic port=2 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.33-2.38> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.33-2.38> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:3.24-3.28> str='\sout' output logic port=3 multirange=[ 0 4 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:3.18-3.23> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:3.18-3.23> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:4.13-4.24> str='\mem' logic multirange=[ 0 4 0 8 ] multirange_swapped=[ 0 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:4.7-4.12> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:4.17-4.24> basic_prep range=[7:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \force_convert:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/MemorySlice/top.sv:5.8-5.23>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:5.8-5.12> str='\sout'
+        AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:5.15-5.23> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+            AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+              AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                AST_ADD <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                  AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:5.19-5.22>
+                    AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:5.19-5.20> str='\N'
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                  AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+                AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+            AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+              AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:5.19-5.22>
+                AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:5.19-5.20> str='\N'
+                AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+      AST_ALWAYS <UHDM-integration-tests/tests/MemorySlice/top.sv:6.1-10.4>
+        ATTR \always_ff:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+        AST_POSEDGE <UHDM-integration-tests/tests/MemorySlice/top.sv:6.14-6.24>
+          AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:6.22-6.24> str='\ck'
+        AST_BLOCK <UHDM-integration-tests/tests/MemorySlice/top.sv:6.11-6.25>
+          AST_BLOCK <UHDM-integration-tests/tests/MemorySlice/top.sv:7.1-10.4>
+            AST_ASSIGN_LE <UHDM-integration-tests/tests/MemorySlice/top.sv:8.3-8.29>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:8.3-8.14> str='\mem' basic_prep
+                AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                  AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                    AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                      AST_ADD <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                        AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:8.8-8.11>
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:8.8-8.9> str='\N'
+                          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                        AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+                      AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+                  AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:8.18-8.29> str='\mem' basic_prep
+                AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                  AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                    AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                      AST_ADD <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                        AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:8.23-8.26>
+                          AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:8.23-8.24> str='\N'
+                          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed range=[31:0] int=2
+                        AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+                      AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+                  AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+            AST_ASSIGN_LE <UHDM-integration-tests/tests/MemorySlice/top.sv:9.3-9.17>
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:9.3-9.10> str='\mem' basic_prep
+                AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                  AST_SUB <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                    AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                      AST_ADD <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                        AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                        AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+                      AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) range=[31:0] int=1
+                  AST_MUL <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0>
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                    AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) range=[31:0] int=4
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:9.14-9.17> str='\sin'
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module top(ck, sin, sout);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* is_simplified_wire = 1 *)
+      input ck;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      input [3:0] sin;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [3:0] sout;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* force_convert = 1 *)
+      (* is_simplified_wire = 1 *)
+      wire [31:0] mem;
+      assign sout = mem[((((N)-(1))+(1))*(4))-(1):((N)-(1))*(4)];
+      (* always_ff = 1 *)
+      always @(posedge ck)
+        begin
+          mem[((((N)-(1))+(1))*(4))-(1):(1)*(4)] <= mem[((((N)-(2))+(1))*(4))-(1):(0)*(4)];
+          mem[(((0)+(1))*(4))-(1):(0)*(4)] <= sin;
+        end
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/MemorySlice/top.sv:1.1-11.10> str='\top' basic_prep
+      AST_PARAMETER <UHDM-integration-tests/tests/MemorySlice/top.sv:1.24-1.27> str='\N' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) basic_prep range=[31:0] int=8
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.17-2.19> str='\ck' input logic basic_prep port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.39-2.42> str='\sin' input logic basic_prep port=2 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.33-2.38> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:2.33-2.38> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:3.24-3.28> str='\sout' output logic basic_prep port=3 range=[3:0] multirange=[ 0 4 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:3.18-3.23> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:3.18-3.23> basic_prep range=[3:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/MemorySlice/top.sv:4.13-4.24> str='\mem' logic reg basic_prep range=[31:0] multirange=[ 0 4 0 8 ] multirange_swapped=[ 0 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:4.7-4.12> basic_prep range=[3:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) signed basic_prep range=[31:0] int=3
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:4.17-4.24> basic_prep range=[7:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+              AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \force_convert:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/MemorySlice/top.sv:5.8-5.23> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:5.8-5.12> str='\sout' basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:5.15-5.23> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[31:28]
+            AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) basic_prep range=[31:0] int=31
+            AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011100'(32) basic_prep range=[31:0] int=28
+      AST_ALWAYS <UHDM-integration-tests/tests/MemorySlice/top.sv:6.1-10.4> basic_prep
+        ATTR \always_ff:
+          AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) basic_prep range=[31:0] int=1
+        AST_POSEDGE <UHDM-integration-tests/tests/MemorySlice/top.sv:6.14-6.24> basic_prep
+          AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:6.22-6.24> str='\ck' basic_prep
+        AST_BLOCK <UHDM-integration-tests/tests/MemorySlice/top.sv:6.11-6.25> basic_prep
+          AST_BLOCK <UHDM-integration-tests/tests/MemorySlice/top.sv:7.1-10.4> basic_prep
+            AST_ASSIGN_LE <UHDM-integration-tests/tests/MemorySlice/top.sv:8.3-8.29> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:8.3-8.14> str='\mem' basic_prep
+                AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[31:4]
+                  AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) basic_prep range=[31:0] int=31
+                  AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000100'(32) basic_prep range=[31:0] int=4
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:8.18-8.29> str='\mem' basic_prep
+                AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[27:0]
+                  AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000011011'(32) basic_prep range=[31:0] int=27
+                  AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) basic_prep range=[31:0]
+            AST_ASSIGN_LE <UHDM-integration-tests/tests/MemorySlice/top.sv:9.3-9.17> basic_prep
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:9.3-9.10> str='\mem' basic_prep
+                AST_RANGE <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> basic_prep range=[3:0]
+                  AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000011'(32) basic_prep range=[31:0] int=3
+                  AST_CONSTANT <UHDM-integration-tests/tests/MemorySlice/top.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) basic_prep range=[31:0]
+              AST_IDENTIFIER <UHDM-integration-tests/tests/MemorySlice/top.sv:9.14-9.17> str='\sin' basic_prep
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module top(ck, sin, sout);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* is_simplified_wire = 1 *)
+      input ck;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      input [3:0] sin;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [3:0] sout;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* force_convert = 1 *)
+      (* is_simplified_wire = 1 *)
+      reg [31:0] mem;
+      assign sout = mem[31:28];
+      (* always_ff = 1 *)
+      always @(posedge ck)
+        begin
+          mem[31:4] <= mem[27:0];
+          mem[3:0] <= sin;
+        end
+    endmodule
+--- END OF AST DUMP ---
+
+2. Executing Verilog backend.
+
+2.1. Executing BMUXMAP pass.
+
+2.2. Executing DEMUXMAP pass.
+/* Generated by Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
+Dumping module `\top'.
+Warning: Module top contains unmapped RTLIL processes. RTLIL processes
+can't always be mapped directly to Verilog always blocks. Unintended
+changes in simulation behavior are possible! Use "proc" to convert
+processes to logic networks and registers.
+
+module top(ck, sin, sout);
+  reg \$auto$verilog_backend.cc:2097:dump_module$2  = 0;
+  reg [31:0] _0_;
+  input ck;
+  wire ck;
+  reg [31:0] mem;
+  input [3:0] sin;
+  wire [3:0] sin;
+  output [3:0] sout;
+  wire [3:0] sout;
+  always @* begin
+    if (\$auto$verilog_backend.cc:2097:dump_module$2 ) begin end
+    _0_[31:4] = mem[27:0];
+    _0_[3:0] = sin;
+  end
+  always @(posedge ck) begin
+      mem <= _0_;
+  end
+  assign sout = mem[31:28];
+endmodule
+
+Warnings: 1 unique messages, 1 total
+
+Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+

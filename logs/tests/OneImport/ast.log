@@ -1,0 +1,1696 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/OneImport/pkg.sv UHDM-integration-tests/tests/OneImport/dut.sv" TOP_MODULE="dut" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/OneImport/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -Using Yosys read_systemverilog command
+> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/OneImport/pkg.sv:1:1: No timescale set for "my_pkg".
+
+[WRN:PA0205] UHDM-integration-tests/tests/OneImport/dut.sv:1:1: No timescale set for "dut".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0301] UHDM-integration-tests/tests/OneImport/pkg.sv:1:1: Compile package "my_pkg".
+
+[INF:CP0303] UHDM-integration-tests/tests/OneImport/dut.sv:1:1: Compile module "work@dut".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/OneImport/dut.sv:1:1: Top level module "work@dut".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 1.
+
+[NTE:EL0510] Nb instances: 1.
+
+[NTE:EL0511] Nb leaf instances: 1.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 2
+[   NOTE] : 5
+design: (work@dut)
+ |vpiName:work@dut
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmallPackages:
+ \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:my_pkg
+   |vpiFullName:my_pkg::
+   |vpiParameter:
+   \_parameter: (my_pkg::PMP_CFG_W), line:7:24, endln:7:33
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:7:11, endln:7:23
+       |vpiParent:
+       \_parameter: (my_pkg::PMP_CFG_W), line:7:24, endln:7:33
+       |vpiInstance:
+       \_package: (my_pkg)
+     |vpiName:PMP_CFG_W
+     |vpiFullName:my_pkg::PMP_CFG_W
+   |vpiParamAssign:
+   \_param_assign: , line:7:24, endln:7:37
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiRhs:
+     \_constant: , line:7:36, endln:7:37
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:7:11, endln:7:23
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (my_pkg::PMP_CFG_W), line:7:24, endln:7:33
+   |vpiTypedef:
+   \_enum_typespec: (my_pkg::opcode_e), line:2:3, endln:5:14
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiName:my_pkg::opcode_e
+     |vpiInstance:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiBaseTypespec:
+     \_logic_typespec: , line:2:16, endln:2:27
+       |vpiInstance:
+       \_package: (my_pkg)
+       |vpiRange:
+       \_range: , line:2:22, endln:2:27
+         |vpiLeftRange:
+         \_constant: , line:2:23, endln:2:24
+           |vpiParent:
+           \_range: , line:2:22, endln:2:27
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:2:25, endln:2:26
+           |vpiParent:
+           \_range: , line:2:22, endln:2:27
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiEnumConst:
+     \_enum_const: (OPCODE_LOAD), line:3:5, endln:3:28
+       |vpiName:OPCODE_LOAD
+       |HEX:03
+       |vpiDecompile:6'h03
+       |vpiSize:6
+     |vpiEnumConst:
+     \_enum_const: (OPCODE_STORE), line:4:5, endln:4:28
+       |vpiName:OPCODE_STORE
+       |HEX:13
+       |vpiDecompile:6'h13
+       |vpiSize:6
+   |vpiDefName:my_pkg
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmtopPackages:
+ \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:my_pkg
+   |vpiFullName:my_pkg::
+   |vpiParameter:
+   \_parameter: (my_pkg::PMP_CFG_W), line:7:24, endln:7:33
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:7:11, endln:7:23
+       |vpiParent:
+       \_parameter: (my_pkg::PMP_CFG_W), line:7:24, endln:7:33
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiName:PMP_CFG_W
+     |vpiFullName:my_pkg::PMP_CFG_W
+   |vpiParamAssign:
+   \_param_assign: , line:7:24, endln:7:37
+     |vpiParent:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiRhs:
+     \_constant: , line:7:36, endln:7:37
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:7:11, endln:7:23
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (my_pkg::PMP_CFG_W), line:7:24, endln:7:33
+   |vpiTypedef:
+   \_enum_typespec: (my_pkg::opcode_e), line:2:3, endln:5:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiName:my_pkg::opcode_e
+     |vpiInstance:
+     \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiBaseTypespec:
+     \_logic_typespec: , line:2:16, endln:2:27
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+       |vpiRange:
+       \_range: , line:2:22, endln:2:27
+         |vpiLeftRange:
+         \_constant: , line:2:23, endln:2:24
+           |vpiParent:
+           \_range: , line:2:22, endln:2:27
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:2:25, endln:2:26
+           |vpiParent:
+           \_range: , line:2:22, endln:2:27
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiEnumConst:
+     \_enum_const: (OPCODE_LOAD), line:3:5, endln:3:28
+       |vpiName:OPCODE_LOAD
+       |HEX:03
+       |vpiDecompile:6'h03
+       |vpiSize:6
+     |vpiEnumConst:
+     \_enum_const: (OPCODE_STORE), line:4:5, endln:4:28
+       |vpiName:OPCODE_STORE
+       |HEX:13
+       |vpiDecompile:6'h13
+       |vpiSize:6
+   |vpiDefName:my_pkg
+   |vpiTop:1
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiFullName:work@dut
+   |vpiParameter:
+   \_parameter: (work@dut.PMP_CFG_W), line:7:24, endln:7:33
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:7:11, endln:7:23
+       |vpiParent:
+       \_parameter: (work@dut.PMP_CFG_W), line:7:24, endln:7:33
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiName:PMP_CFG_W
+     |vpiFullName:work@dut.PMP_CFG_W
+     |vpiImported:my_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:7:24, endln:7:37
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiRhs:
+     \_constant: , line:7:36, endln:7:37
+       |vpiParent:
+       \_param_assign: , line:7:24, endln:7:37
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:7:11, endln:7:23
+         |vpiParent:
+         \_constant: , line:7:36, endln:7:37
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@dut.PMP_CFG_W), line:7:24, endln:7:33
+       |vpiParent:
+       \_param_assign: , line:7:24, endln:7:37
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:7:11, endln:7:23
+         |vpiParent:
+         \_parameter: (work@dut.PMP_CFG_W), line:7:24, endln:7:33
+         |vpiInstance:
+         \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+       |vpiName:PMP_CFG_W
+       |vpiFullName:work@dut.PMP_CFG_W
+       |vpiImported:my_pkg
+   |vpiTypedef:
+   \_enum_typespec: (my_pkg::opcode_e), line:2:3, endln:5:14
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:2:10, endln:2:19
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:3:10, endln:3:26
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:3:28, endln:3:47
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:3:28, endln:3:47
+   |vpiDefName:work@dut
+   |vpiNet:
+   \_logic_net: (work@dut.a), line:6:14, endln:6:15
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiName:a
+     |vpiFullName:work@dut.a
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@dut.b), line:7:13, endln:7:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiName:b
+     |vpiFullName:work@dut.b
+     |vpiNetType:48
+   |vpiPort:
+   \_port: (a), line:1:13, endln:1:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiName:a
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.a), line:6:14, endln:6:15
+     |vpiTypedef:
+     \_logic_typespec: , line:4:9, endln:4:14
+       |vpiRange:
+       \_range: , line:4:9, endln:4:14
+         |vpiLeftRange:
+         \_constant: , line:4:10, endln:4:11
+           |vpiParent:
+           \_range: , line:4:9, endln:4:14
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:4:12, endln:4:13
+           |vpiParent:
+           \_range: , line:4:9, endln:4:14
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (b), line:1:16, endln:1:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:7:13, endln:7:14
+     |vpiTypedef:
+     \_logic_typespec: , line:5:10, endln:5:15
+       |vpiRange:
+       \_range: , line:5:10, endln:5:15
+         |vpiLeftRange:
+         \_constant: , line:5:11, endln:5:12
+           |vpiParent:
+           \_range: , line:5:10, endln:5:15
+           |vpiDecompile:2
+           |vpiSize:64
+           |UINT:2
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:5:13, endln:5:14
+           |vpiParent:
+           \_range: , line:5:10, endln:5:15
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiContAssign:
+   \_cont_assign: , line:8:10, endln:9:36
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiRhs:
+     \_operation: , line:8:14, endln:9:36
+       |vpiParent:
+       \_cont_assign: , line:8:10, endln:9:36
+       |vpiOpType:29
+       |vpiOperand:
+       \_operation: , line:8:14, endln:8:35
+         |vpiParent:
+         \_operation: , line:8:14, endln:9:36
+         |vpiTypespec:
+         \_integer_typespec: , line:8:14, endln:8:15
+           |INT:3
+         |vpiOpType:67
+         |vpiOperand:
+         \_constant: , line:8:17, endln:8:34
+           |vpiParent:
+           \_operation: , line:8:14, endln:8:35
+           |vpiDecompile:2
+           |vpiSize:32
+           |UINT:2
+           |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:9:16, endln:9:36
+         |vpiParent:
+         \_operation: , line:8:14, endln:9:36
+         |vpiTypespec:
+         \_integer_typespec: , line:9:16, endln:9:17
+           |INT:3
+         |vpiOpType:67
+         |vpiOperand:
+         \_operation: , line:9:19, endln:9:35
+           |vpiParent:
+           \_operation: , line:9:16, endln:9:36
+           |vpiOpType:14
+           |vpiOperand:
+           \_ref_obj: (work@dut.a), line:9:19, endln:9:20
+             |vpiParent:
+             \_operation: , line:9:19, endln:9:35
+             |vpiName:a
+             |vpiFullName:work@dut.a
+             |vpiActual:
+             \_logic_net: (work@dut.a), line:6:14, endln:6:15
+           |vpiOperand:
+           \_ref_obj: (work@dut.OPCODE_LOAD), line:9:24, endln:9:35
+             |vpiParent:
+             \_operation: , line:9:19, endln:9:35
+             |vpiName:OPCODE_LOAD
+             |vpiFullName:work@dut.OPCODE_LOAD
+             |vpiActual:
+             \_enum_const: (OPCODE_LOAD), line:3:5, endln:3:28
+     |vpiLhs:
+     \_ref_obj: (work@dut.b), line:8:10, endln:8:11
+       |vpiParent:
+       \_cont_assign: , line:8:10, endln:9:36
+       |vpiName:b
+       |vpiFullName:work@dut.b
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:7:13, endln:7:14
+ |uhdmtopModules:
+ \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+   |vpiName:work@dut
+   |vpiParameter:
+   \_parameter: (work@dut.PMP_CFG_W), line:7:24, endln:7:33
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |UINT:2
+     |vpiTypespec:
+     \_int_typespec: , line:7:11, endln:7:23
+       |vpiParent:
+       \_parameter: (work@dut.PMP_CFG_W), line:7:24, endln:7:33
+       |vpiInstance:
+       \_package: my_pkg (my_pkg::), file:UHDM-integration-tests/tests/OneImport/pkg.sv, line:1:1, endln:9:11
+     |vpiName:PMP_CFG_W
+     |vpiFullName:work@dut.PMP_CFG_W
+     |vpiImported:my_pkg
+   |vpiParamAssign:
+   \_param_assign: , line:7:24, endln:7:37
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiRhs:
+     \_constant: , line:7:36, endln:7:37
+       |vpiDecompile:2
+       |vpiSize:32
+       |UINT:2
+       |vpiTypespec:
+       \_int_typespec: , line:7:11, endln:7:23
+       |vpiConstType:9
+     |vpiLhs:
+     \_parameter: (work@dut.PMP_CFG_W), line:7:24, endln:7:33
+   |vpiTypedef:
+   \_enum_typespec: (my_pkg::opcode_e), line:2:3, endln:5:14
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:2:10, endln:2:19
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:3:10, endln:3:26
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:3:28, endln:3:47
+   |vpiTypedef:
+   \_import_typespec: (my_pkg), line:3:28, endln:3:47
+   |vpiDefName:work@dut
+   |vpiTop:1
+   |vpiNet:
+   \_logic_net: (work@dut.a), line:6:14, endln:6:15
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiTypespec:
+     \_logic_typespec: , line:6:3, endln:6:13
+       |vpiRange:
+       \_range: , line:6:8, endln:6:13
+         |vpiLeftRange:
+         \_constant: , line:6:9, endln:6:10
+           |vpiParent:
+           \_range: , line:6:8, endln:6:13
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:6:11, endln:6:12
+           |vpiParent:
+           \_range: , line:6:8, endln:6:13
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:a
+     |vpiFullName:work@dut.a
+     |vpiNetType:1
+   |vpiNet:
+   \_logic_net: (work@dut.b), line:7:13, endln:7:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiTypespec:
+     \_logic_typespec: , line:7:3, endln:7:12
+       |vpiRange:
+       \_range: , line:7:7, endln:7:12
+         |vpiLeftRange:
+         \_constant: , line:7:8, endln:7:9
+           |vpiParent:
+           \_range: , line:7:7, endln:7:12
+           |vpiDecompile:2
+           |vpiSize:64
+           |UINT:2
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:7:10, endln:7:11
+           |vpiParent:
+           \_range: , line:7:7, endln:7:12
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:b
+     |vpiFullName:work@dut.b
+     |vpiNetType:48
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (a), line:1:13, endln:1:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiName:a
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@dut.a), line:1:13, endln:1:14
+       |vpiName:a
+       |vpiFullName:work@dut.a
+       |vpiActual:
+       \_logic_net: (work@dut.a), line:6:14, endln:6:15
+     |vpiTypedef:
+     \_logic_typespec: , line:4:9, endln:4:14
+       |vpiRange:
+       \_range: , line:4:9, endln:4:14
+         |vpiParent:
+         \_port: (a), line:1:13, endln:1:14
+         |vpiLeftRange:
+         \_constant: , line:4:10, endln:4:11
+           |vpiParent:
+           \_range: , line:4:9, endln:4:14
+           |vpiDecompile:5
+           |vpiSize:64
+           |UINT:5
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:4:12, endln:4:13
+           |vpiParent:
+           \_range: , line:4:9, endln:4:14
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiPort:
+   \_port: (b), line:1:16, endln:1:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneImport/dut.sv, line:1:1, endln:10:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@dut.b), line:1:16, endln:1:17
+       |vpiName:b
+       |vpiFullName:work@dut.b
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:7:13, endln:7:14
+     |vpiTypedef:
+     \_logic_typespec: , line:5:10, endln:5:15
+       |vpiRange:
+       \_range: , line:5:10, endln:5:15
+         |vpiParent:
+         \_port: (b), line:1:16, endln:1:17
+         |vpiLeftRange:
+         \_constant: , line:5:11, endln:5:12
+           |vpiParent:
+           \_range: , line:5:10, endln:5:15
+           |vpiDecompile:2
+           |vpiSize:64
+           |UINT:2
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:5:13, endln:5:14
+           |vpiParent:
+           \_range: , line:5:10, endln:5:15
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiContAssign:
+   \_cont_assign: , line:8:10, endln:9:36
+     |vpiRhs:
+     \_operation: , line:8:14, endln:9:36
+       |vpiParent:
+       \_cont_assign: , line:8:10, endln:9:36
+       |vpiOpType:29
+       |vpiOperand:
+       \_operation: , line:8:14, endln:8:35
+         |vpiParent:
+         \_operation: , line:8:14, endln:9:36
+         |vpiTypespec:
+         \_integer_typespec: , line:8:14, endln:8:15
+           |vpiParent:
+           \_operation: , line:8:14, endln:8:35
+           |INT:3
+         |vpiOpType:67
+         |vpiOperand:
+         \_constant: , line:8:17, endln:8:34
+           |vpiParent:
+           \_operation: , line:8:14, endln:8:35
+           |vpiDecompile:2
+           |vpiSize:32
+           |UINT:2
+           |vpiConstType:9
+       |vpiOperand:
+       \_operation: , line:9:16, endln:9:36
+         |vpiParent:
+         \_operation: , line:8:14, endln:9:36
+         |vpiTypespec:
+         \_integer_typespec: , line:9:16, endln:9:17
+           |vpiParent:
+           \_operation: , line:9:16, endln:9:36
+           |INT:3
+         |vpiOpType:67
+         |vpiOperand:
+         \_operation: , line:9:19, endln:9:35
+           |vpiParent:
+           \_operation: , line:9:16, endln:9:36
+           |vpiOpType:14
+           |vpiOperand:
+           \_ref_obj: (a), line:9:19, endln:9:20
+             |vpiParent:
+             \_operation: , line:9:19, endln:9:35
+             |vpiName:a
+           |vpiOperand:
+           \_ref_obj: (OPCODE_LOAD), line:9:24, endln:9:35
+             |vpiParent:
+             \_operation: , line:9:19, endln:9:35
+             |vpiName:OPCODE_LOAD
+     |vpiLhs:
+     \_ref_obj: (b), line:8:10, endln:8:11
+       |vpiParent:
+       \_cont_assign: , line:8:10, endln:9:36
+       |vpiName:b
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:7:13, endln:7:14
+Object 'work@dut' of type 'design'
+  Object 'builtin' of type 'package'
+  Object 'my_pkg' of type 'package'
+    Object 'my_pkg::opcode_e' of type 'enum_typespec'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object 'OPCODE_LOAD' of type 'enum_const'
+      Object 'OPCODE_STORE' of type 'enum_const'
+    Object 'PMP_CFG_W' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'PMP_CFG_W' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+  Object '' of type 'module_inst'
+    Object 'my_pkg::opcode_e' of type 'enum_typespec'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object 'OPCODE_LOAD' of type 'enum_const'
+      Object 'OPCODE_STORE' of type 'enum_const'
+    Object 'my_pkg' of type 'import_typespec'
+    Object 'my_pkg' of type 'import_typespec'
+    Object 'my_pkg' of type 'import_typespec'
+    Object 'my_pkg' of type 'import_typespec'
+    Object 'PMP_CFG_W' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'PMP_CFG_W' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'a' of type 'logic_net'
+    Object 'b' of type 'logic_net'
+  Object 'work@dut' of type 'module_inst'
+    Object 'PMP_CFG_W' of type 'parameter'
+      Object '' of type 'int_typespec'
+    Object '' of type 'param_assign'
+      Object 'PMP_CFG_W' of type 'parameter'
+        Object '' of type 'int_typespec'
+      Object '' of type 'constant'
+        Object '' of type 'int_typespec'
+    Object 'a' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'b' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'a' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'b' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object '' of type 'cont_assign'
+      Object 'b' of type 'ref_obj'
+      Object '' of type 'operation'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object '' of type 'operation'
+            Object 'a' of type 'ref_obj'
+            Object 'OPCODE_LOAD' of type 'ref_obj'
+Generating RTLIL representation for module `\dut'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneImport/dut.sv:1.1-10.10> str='\dut'
+      AST_ENUM <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='$enum1' logic
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27>
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> str='\OPCODE_LOAD' logic range=[-1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> bits='000011'(6) range=[5:0] int=3
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> str='\OPCODE_STORE' logic range=[-1:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> bits='010011'(6) range=[5:0] int=19
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_TYPEDEF <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='\opcode_e'
+        AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> reg range=[0:0]
+          ATTR \enum_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> str='$enum1' bits='001001000110010101101110011101010110110100110001'(48) range=[47:0] int=1853189425
+          ATTR \is_simplified_wire:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/OneImport/pkg.sv:7.24-7.37> str='\PMP_CFG_W' multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_imported:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) range=[31:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:6.14-6.15> str='\a' input logic port=1 multirange=[ 0 6 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:6.8-6.13> basic_prep range=[5:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:6.8-6.13> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:7.13-7.14> str='\b' output reg port=2 multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:7.7-7.12> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:7.7-7.12> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/OneImport/dut.sv:8.10-9.36>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneImport/dut.sv:8.10-8.11> str='\b'
+        AST_BIT_OR <UHDM-integration-tests/tests/OneImport/dut.sv:8.14-9.36>
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) range=[31:0] int=2
+          AST_EQ <UHDM-integration-tests/tests/OneImport/dut.sv:9.19-9.35>
+            AST_IDENTIFIER <UHDM-integration-tests/tests/OneImport/dut.sv:9.19-9.20> str='\a'
+            AST_IDENTIFIER <UHDM-integration-tests/tests/OneImport/dut.sv:9.24-9.35> str='\OPCODE_LOAD'
+      AST_ENUM <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='$enum0' logic basic_prep
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> str='\my_pkg::OPCODE_LOAD' logic basic_prep range=[5:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> bits='000011'(6) basic_prep range=[5:0] int=3
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> str='\my_pkg::OPCODE_STORE' logic basic_prep range=[5:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> bits='010011'(6) basic_prep range=[5:0] int=19
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_TYPEDEF <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='\my_pkg::opcode_e' basic_prep
+        AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> reg basic_prep range=[5:0]
+          ATTR \enum_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          ATTR \is_simplified_wire:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/OneImport/pkg.sv:7.24-7.37> str='\my_pkg::PMP_CFG_W' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module dut(a, b);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_imported = 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      input [5:0] a;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output reg [2:0] b;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_ENUM **/
+      /** AST_TYPEDEF **/
+      assign b = (2)|((a)==(OPCODE_LOAD));
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_ENUM **/
+      /** AST_TYPEDEF **/
+    endmodule
+--- END OF AST DUMP ---
+Warning: reg '\b' is assigned in a continuous assignment at UHDM-integration-tests/tests/OneImport/dut.sv:8.10-9.36.
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneImport/dut.sv:1.1-10.10> str='\dut' basic_prep
+      AST_ENUM <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='$enum1' logic basic_prep
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> str='\OPCODE_LOAD' logic basic_prep range=[5:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:0.0-0.0> str='$enum1' bits='001001000110010101101110011101010110110100110001'(48) basic_prep range=[47:0] int=1853189425
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> bits='000011'(6) basic_prep range=[5:0] int=3
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> str='\OPCODE_STORE' logic basic_prep range=[5:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:0.0-0.0> str='$enum1' bits='001001000110010101101110011101010110110100110001'(48) basic_prep range=[47:0] int=1853189425
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> bits='010011'(6) basic_prep range=[5:0] int=19
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_TYPEDEF <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='\opcode_e' basic_prep
+        AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> reg basic_prep range=[5:0]
+          ATTR \enum_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> str='$enum1' bits='001001000110010101101110011101010110110100110001'(48) basic_prep range=[47:0] int=1853189425
+          ATTR \is_simplified_wire:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/OneImport/pkg.sv:7.24-7.37> str='\PMP_CFG_W' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_imported:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:6.14-6.15> str='\a' input logic basic_prep port=1 range=[5:0] multirange=[ 0 6 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:6.8-6.13> basic_prep range=[5:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:6.8-6.13> basic_prep range=[5:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:7.13-7.14> str='\b' output reg basic_prep port=2 range=[2:0] multirange=[ 0 3 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:7.7-7.12> basic_prep range=[2:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:7.7-7.12> basic_prep range=[2:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) signed basic_prep range=[31:0] int=2
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/OneImport/dut.sv:8.10-9.36> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneImport/dut.sv:8.10-8.11> str='\b' basic_prep
+        AST_BIT_OR <UHDM-integration-tests/tests/OneImport/dut.sv:8.14-9.36> basic_prep
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
+          AST_EQ <UHDM-integration-tests/tests/OneImport/dut.sv:9.19-9.35> basic_prep
+            AST_IDENTIFIER <UHDM-integration-tests/tests/OneImport/dut.sv:9.19-9.20> str='\a' basic_prep
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:9.24-9.35> bits='000011'(6) basic_prep range=[5:0] int=3
+      AST_ENUM <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='$enum0' logic basic_prep
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> str='\my_pkg::OPCODE_LOAD' logic basic_prep range=[5:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:3.5-3.28> bits='000011'(6) basic_prep range=[5:0] int=3
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_ENUM_ITEM <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> str='\my_pkg::OPCODE_STORE' logic basic_prep range=[5:0]
+          ATTR \enum_base_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/pkg.sv:4.5-4.28> bits='010011'(6) basic_prep range=[5:0] int=19
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_TYPEDEF <UHDM-integration-tests/tests/OneImport/pkg.sv:2.3-5.14> str='\my_pkg::opcode_e' basic_prep
+        AST_WIRE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> reg basic_prep range=[5:0]
+          ATTR \enum_type:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> str='$enum0' bits='001001000110010101101110011101010110110100110000'(48) basic_prep range=[47:0] int=1853189424
+          ATTR \is_simplified_wire:
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+          AST_RANGE <UHDM-integration-tests/tests/OneImport/pkg.sv:2.22-2.27> basic_prep range=[5:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000101'(32) signed basic_prep range=[31:0] int=5
+            AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_PARAMETER <UHDM-integration-tests/tests/OneImport/pkg.sv:7.24-7.37> str='\my_pkg::PMP_CFG_W' basic_prep range=[31:0] multirange=[ 0 32 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+              AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000010'(32) basic_prep range=[31:0] int=2
+        AST_RANGE <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> basic_prep range=[31:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000011111'(32) signed basic_prep range=[31:0] int=31
+          AST_CONSTANT <UHDM-integration-tests/tests/OneImport/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module dut(a, b);
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_imported = 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_PARAMETER **/
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      input [5:0] a;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output reg [2:0] b;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_ENUM **/
+      /** AST_TYPEDEF **/
+      assign b = (2)|((a)==(6'b 000011));
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      /** AST_ENUM **/
+      /** AST_TYPEDEF **/
+    endmodule
+--- END OF AST DUMP ---
+
+Warnings: 1 unique messages, 1 total
+
+Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+

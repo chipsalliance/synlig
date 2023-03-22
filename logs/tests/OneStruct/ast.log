@@ -1,0 +1,2254 @@
+rm -rf UHDM-integration-tests/build
+mkdir -p UHDM-integration-tests/build
+(export TOP_FILE="UHDM-integration-tests/tests/OneStruct/dut.sv" TOP_MODULE="dut" PARSER=yosys-plugin SURELOG_FLAGS="" && \
+cd UHDM-integration-tests/build && UHDM-integration-tests/../image/bin/yosys -c UHDM-integration-tests/tests/OneStruct/yosys_script.tcl)
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_exe' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `abc9_ops' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `aigmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `alumacc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_eqn' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `anlogic_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `assertpmux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `async2sync' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `attrmvcp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `autoname' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `blackbox' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bugpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `bwmuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `check' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chformal' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `chtype' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clean_zerowidth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clk2fflogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `clkbufmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connect_rpc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `connwrappers' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_fixup' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `coolrunner2_sop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `copy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `cutpoint' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `debug' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `delete' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `deminout' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `demuxmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `design' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffinit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflegalize' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dfflibmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dffunmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `dump' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `echo' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ecp5_gsr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `edgetypes' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `efinix_fixcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_add' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_induct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_make' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_mark' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_purge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_remove' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_simple' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_status' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `equiv_struct' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `expose' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_counter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_fa' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extract_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `extractinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flatten' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `flowmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fmcombine' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `formalff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `freduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_detect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_expand' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_export' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_extract' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_info' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fsm_recode' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `fst2tb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `gatemate_foldinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `glift' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `greenpak4_dffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `help' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hierarchy' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `hilomap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `history' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_braminit' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ice40_wrapcarry' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `insbuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `iopadmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `log' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `logger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ls' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `ltp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `lut2mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `maccmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bmux2rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_bram' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_collect' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_libmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_map' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_memx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_narrow' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_nordff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `memory_unpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `miter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `mutate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxcover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `muxpack' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `nlutmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `onehot' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_demorgan' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_expr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_ffinv' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_lut_ins' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_feedback' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_priority' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_mem_widen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_merge' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_muxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_reduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `opt_share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `paramap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `peepopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `plugin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmux2shiftx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `pmuxtree' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `portlist' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `prep' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `printattrs' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_arst' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_clean' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dff' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_dlatch' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_init' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_memwr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_mux' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_prune' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rmdead' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `proc_rom' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qbfsat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `qwp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_liberty' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rename' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `rmports' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scatter' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scc' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `scratchpad' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `script' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `select' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setattr' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setparam' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `setundef' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `share' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `show' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `shregmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sim' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `simplemap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitcells' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `splitnets' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `sta' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `stat' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `submod' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `supercover' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_achronix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_anlogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_coolrunner2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_easic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ecp5' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_efinix' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_fabulous' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gatemate' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_gowin' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_greenpak4' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_ice40' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_intel_alm' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_machxo2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_nexus' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_quicklogic' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_sf2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `synth_xilinx' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tcl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `techmap' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tee' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_abcloop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_autotb' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_cell' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `test_pmgen' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `torder' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `tribuf' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `uniquify' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verific' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defaults' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `verilog_defines' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `viz' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wbflip' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `wreduce' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_aiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_blif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_btor' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_cxxrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_edif' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_file' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_firrtl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_ilang' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_intersynth' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_jny' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_json' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_rtlil' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_simplec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smt2' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_smv' -Using Yosys read_systemverilog command
+> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_spice' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_table' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_verilog' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `write_xaiger' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dffopt' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_dsp' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xilinx_srl' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `xprop' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `zinit' -> skip.
+
+1. Executing Verilog with UHDM frontend.
+[INF:CM0023] Creating log file UHDM-integration-tests/build/slpp_all/surelog.log.
+
+[WRN:PA0205] UHDM-integration-tests/tests/OneStruct/dut.sv:1:1: No timescale set for "dut".
+
+[INF:CP0300] Compilation...
+
+[INF:CP0303] UHDM-integration-tests/tests/OneStruct/dut.sv:1:1: Compile module "work@dut".
+
+[INF:CP0302] Compile class "work@mailbox".
+
+[INF:CP0302] Compile class "work@process".
+
+[INF:CP0302] Compile class "work@semaphore".
+
+[NTE:CP0309] UHDM-integration-tests/tests/OneStruct/dut.sv:1:16: Implicit port type (wire) for "b".
+
+[INF:EL0526] Design Elaboration...
+
+[NTE:EL0503] UHDM-integration-tests/tests/OneStruct/dut.sv:1:1: Top level module "work@dut".
+
+[NTE:EL0508] Nb Top level modules: 1.
+
+[NTE:EL0509] Max instance depth: 1.
+
+[NTE:EL0510] Nb instances: 1.
+
+[NTE:EL0511] Nb leaf instances: 0.
+
+[INF:UH0706] Creating UHDM Model...
+
+[  FATAL] : 0
+[ SYNTAX] : 0
+[  ERROR] : 0
+[WARNING] : 1
+[   NOTE] : 6
+design: (work@dut)
+ |vpiName:work@dut
+ |uhdmallPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+ |uhdmtopPackages:
+ \_package: builtin (builtin::)
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:builtin
+   |vpiFullName:builtin::
+   |vpiDefName:builtin
+   |vpiTop:1
+   |vpiClassDefn:
+   \_class_defn: (builtin::any_sverilog_class)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:any_sverilog_class
+     |vpiFullName:builtin::any_sverilog_class
+   |vpiClassDefn:
+   \_class_defn: (builtin::array)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:array
+     |vpiFullName:builtin::array
+   |vpiClassDefn:
+   \_class_defn: (builtin::queue)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:queue
+     |vpiFullName:builtin::queue
+   |vpiClassDefn:
+   \_class_defn: (builtin::string)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:string
+     |vpiFullName:builtin::string
+   |vpiClassDefn:
+   \_class_defn: (builtin::system)
+     |vpiParent:
+     \_package: builtin (builtin::)
+     |vpiName:system
+     |vpiFullName:builtin::system
+ |uhdmallClasses:
+ \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@mailbox
+   |vpiMethod:
+   \_function: (work@mailbox::new)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@mailbox::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (bound)
+       |vpiDirection:1
+       |vpiName:bound
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@mailbox::num)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:num
+     |vpiFullName:work@mailbox::num
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@mailbox::put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@mailbox::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_put)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_put
+     |vpiFullName:work@mailbox::try_put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_logic_var: 
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:1
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@mailbox::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_get)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@mailbox::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_task: (work@mailbox::peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:peek
+     |vpiFullName:work@mailbox::peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+   |vpiMethod:
+   \_function: (work@mailbox::try_peek)
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_peek
+     |vpiFullName:work@mailbox::try_peek
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@mailbox), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (message)
+       |vpiDirection:6
+       |vpiName:message
+ |uhdmallClasses:
+ \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@process
+   |vpiTypedef:
+   \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:state
+     |vpiEnumConst:
+     \_enum_const: (FINISHED)
+       |vpiName:FINISHED
+       |INT:0
+       |vpiDecompile:0
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (RUNNING)
+       |vpiName:RUNNING
+       |INT:1
+       |vpiDecompile:1
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (WAITING)
+       |vpiName:WAITING
+       |INT:2
+       |vpiDecompile:2
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (SUSPENDED)
+       |vpiName:SUSPENDED
+       |INT:3
+       |vpiDecompile:3
+       |vpiSize:64
+     |vpiEnumConst:
+     \_enum_const: (KILLED)
+       |vpiName:KILLED
+       |INT:4
+       |vpiDecompile:4
+       |vpiSize:64
+   |vpiMethod:
+   \_function: (work@process::self)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:self
+     |vpiFullName:work@process::self
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_function: (work@process::status)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:status
+     |vpiFullName:work@process::status
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_enum_var: 
+       |vpiTypespec:
+       \_enum_typespec: (state)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::kill)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:kill
+     |vpiFullName:work@process::kill
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::await)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:await
+     |vpiFullName:work@process::await
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::suspend)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:suspend
+     |vpiFullName:work@process::suspend
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+   |vpiMethod:
+   \_task: (work@process::resume)
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:resume
+     |vpiFullName:work@process::resume
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@process), file:UHDM-integration-tests/build/builtin.sv
+ |uhdmallClasses:
+ \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiName:work@semaphore
+   |vpiMethod:
+   \_function: (work@semaphore::new)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:new
+     |vpiFullName:work@semaphore::new
+     |vpiMethod:1
+     |vpiReturn:
+     \_class_var: 
+       |vpiTypespec:
+       \_class_typespec: 
+         |vpiClassDefn:
+         \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::put)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:put
+     |vpiFullName:work@semaphore::put
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_task: (work@semaphore::get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:get
+     |vpiFullName:work@semaphore::get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+   |vpiMethod:
+   \_function: (work@semaphore::try_get)
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiName:try_get
+     |vpiFullName:work@semaphore::try_get
+     |vpiMethod:1
+     |vpiVisibility:1
+     |vpiReturn:
+     \_int_var: 
+       |vpiTypespec:
+       \_int_typespec: 
+         |vpiSigned:1
+       |vpiSigned:1
+     |vpiParent:
+     \_class_defn: (work@semaphore), file:UHDM-integration-tests/build/builtin.sv
+     |vpiIODecl:
+     \_io_decl: (keyCount)
+       |vpiDirection:1
+       |vpiName:keyCount
+       |vpiExpr:
+       \_constant: 
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiTypedef:
+       \_int_typespec: 
+         |vpiSigned:1
+ |uhdmallModules:
+ \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+   |vpiParent:
+   \_design: (work@dut)
+   |vpiFullName:work@dut
+   |vpiTypedef:
+   \_struct_typespec: (mem_s), line:5:11, endln:5:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:mem_s
+     |vpiInstance:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiPacked:1
+     |vpiTypespecMember:
+     \_typespec_member: (addr), line:6:17, endln:6:21
+       |vpiParent:
+       \_struct_typespec: (mem_s), line:5:11, endln:5:17
+       |vpiName:addr
+       |vpiTypespec:
+       \_logic_typespec: , line:6:5, endln:6:16
+         |vpiParent:
+         \_typespec_member: (addr), line:6:17, endln:6:21
+         |vpiRange:
+         \_range: , line:6:11, endln:6:16
+           |vpiParent:
+           \_struct_typespec: (mem_s), line:5:11, endln:5:17
+           |vpiLeftRange:
+           \_constant: , line:6:12, endln:6:13
+             |vpiParent:
+             \_range: , line:6:11, endln:6:16
+             |vpiDecompile:7
+             |vpiSize:64
+             |UINT:7
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:6:14, endln:6:15
+             |vpiParent:
+             \_range: , line:6:11, endln:6:16
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiRefFile:UHDM-integration-tests/tests/OneStruct/dut.sv
+       |vpiRefLineNo:6
+       |vpiRefColumnNo:5
+       |vpiRefEndLineNo:6
+       |vpiRefEndColumnNo:16
+     |vpiTypespecMember:
+     \_typespec_member: (data), line:7:17, endln:7:21
+       |vpiParent:
+       \_struct_typespec: (mem_s), line:5:11, endln:5:17
+       |vpiName:data
+       |vpiTypespec:
+       \_logic_typespec: , line:7:5, endln:7:16
+         |vpiParent:
+         \_typespec_member: (data), line:7:17, endln:7:21
+         |vpiRange:
+         \_range: , line:7:11, endln:7:16
+           |vpiParent:
+           \_struct_typespec: (mem_s), line:5:11, endln:5:17
+           |vpiLeftRange:
+           \_constant: , line:7:12, endln:7:13
+             |vpiParent:
+             \_range: , line:7:11, endln:7:16
+             |vpiDecompile:7
+             |vpiSize:64
+             |UINT:7
+             |vpiConstType:9
+           |vpiRightRange:
+           \_constant: , line:7:14, endln:7:15
+             |vpiParent:
+             \_range: , line:7:11, endln:7:16
+             |vpiDecompile:0
+             |vpiSize:64
+             |UINT:0
+             |vpiConstType:9
+       |vpiRefFile:UHDM-integration-tests/tests/OneStruct/dut.sv
+       |vpiRefLineNo:7
+       |vpiRefColumnNo:5
+       |vpiRefEndLineNo:7
+       |vpiRefEndColumnNo:16
+     |vpiTypespecMember:
+     \_typespec_member: (wr), line:8:11, endln:8:13
+       |vpiParent:
+       \_struct_typespec: (mem_s), line:5:11, endln:5:17
+       |vpiName:wr
+       |vpiTypespec:
+       \_logic_typespec: , line:8:5, endln:8:10
+         |vpiParent:
+         \_typespec_member: (wr), line:8:11, endln:8:13
+       |vpiRefFile:UHDM-integration-tests/tests/OneStruct/dut.sv
+       |vpiRefLineNo:8
+       |vpiRefColumnNo:5
+       |vpiRefEndLineNo:8
+       |vpiRefEndColumnNo:10
+   |vpiDefName:work@dut
+   |vpiNet:
+   \_logic_net: (work@dut.packed_mem), line:11:15, endln:11:25
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:packed_mem
+     |vpiFullName:work@dut.packed_mem
+   |vpiNet:
+   \_logic_net: (work@dut.memArray), line:12:9, endln:12:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:memArray
+     |vpiFullName:work@dut.memArray
+   |vpiNet:
+   \_logic_net: (work@dut.memMulti), line:13:9, endln:13:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:memMulti
+     |vpiFullName:work@dut.memMulti
+   |vpiNet:
+   \_logic_net: (work@dut.mem), line:15:9, endln:15:12
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:mem
+     |vpiFullName:work@dut.mem
+   |vpiNet:
+   \_logic_net: (work@dut.a), line:1:13, endln:1:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:a
+     |vpiFullName:work@dut.a
+   |vpiNet:
+   \_logic_net: (work@dut.b), line:1:16, endln:1:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:b
+     |vpiFullName:work@dut.b
+   |vpiPort:
+   \_port: (a), line:1:13, endln:1:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:a
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.a), line:1:13, endln:1:14
+     |vpiTypedef:
+     \_logic_typespec: , line:2:9, endln:2:9
+   |vpiPort:
+   \_port: (b), line:1:16, endln:1:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: 
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:1:16, endln:1:17
+     |vpiTypedef:
+     \_logic_typespec: , line:3:10, endln:3:16
+       |vpiRange:
+       \_range: , line:3:10, endln:3:16
+         |vpiLeftRange:
+         \_constant: , line:3:11, endln:3:13
+           |vpiParent:
+           \_range: , line:3:10, endln:3:16
+           |vpiDecompile:16
+           |vpiSize:64
+           |UINT:16
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:3:14, endln:3:15
+           |vpiParent:
+           \_range: , line:3:10, endln:3:16
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiProcess:
+   \_always: , line:17:3, endln:25:6
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiStmt:
+     \_event_control: , line:17:10, endln:17:14
+       |vpiParent:
+       \_always: , line:17:3, endln:25:6
+       |vpiCondition:
+       \_ref_obj: (work@dut.a), line:17:12, endln:17:13
+         |vpiParent:
+         \_event_control: , line:17:10, endln:17:14
+         |vpiName:a
+         |vpiFullName:work@dut.a
+         |vpiActual:
+         \_logic_net: (work@dut.a), line:1:13, endln:1:14
+       |vpiStmt:
+       \_begin: (work@dut), line:17:15, endln:25:6
+         |vpiParent:
+         \_event_control: , line:17:10, endln:17:14
+         |vpiFullName:work@dut
+         |vpiStmt:
+         \_if_else: , line:18:5, endln:24:8
+           |vpiParent:
+           \_begin: (work@dut), line:17:15, endln:25:6
+           |vpiCondition:
+           \_operation: , line:18:9, endln:18:18
+             |vpiParent:
+             \_if_else: , line:18:5, endln:24:8
+             |vpiOpType:14
+             |vpiOperand:
+             \_ref_obj: (work@dut.a), line:18:9, endln:18:10
+               |vpiParent:
+               \_begin: (work@dut), line:17:15, endln:25:6
+               |vpiName:a
+               |vpiFullName:work@dut.a
+               |vpiActual:
+               \_logic_net: (work@dut.a), line:1:13, endln:1:14
+             |vpiOperand:
+             \_constant: , line:18:14, endln:18:18
+               |vpiParent:
+               \_operation: , line:18:9, endln:18:18
+               |vpiDecompile:1'b0
+               |vpiSize:1
+               |BIN:0
+               |vpiConstType:3
+           |vpiStmt:
+           \_begin: (work@dut), line:18:21, endln:21:8
+             |vpiParent:
+             \_if_else: , line:18:5, endln:24:8
+             |vpiFullName:work@dut
+             |vpiStmt:
+             \_assignment: , line:19:7, endln:19:19
+               |vpiParent:
+               \_begin: (work@dut), line:18:21, endln:21:8
+               |vpiOpType:82
+               |vpiBlocking:1
+               |vpiRhs:
+               \_constant: , line:19:18, endln:19:19
+                 |vpiParent:
+                 \_assignment: , line:19:7, endln:19:19
+                 |vpiDecompile:0
+                 |vpiSize:64
+                 |UINT:0
+                 |vpiConstType:9
+               |vpiLhs:
+               \_hier_path: (mem.addr), line:19:7, endln:19:15
+                 |vpiParent:
+                 \_begin: (work@dut), line:18:21, endln:21:8
+                 |vpiName:mem.addr
+                 |vpiActual:
+                 \_ref_obj: (mem)
+                   |vpiParent:
+                   \_hier_path: (mem.addr), line:19:7, endln:19:15
+                   |vpiName:mem
+                 |vpiActual:
+                 \_ref_obj: (addr)
+                   |vpiName:addr
+             |vpiStmt:
+             \_assignment: , line:20:7, endln:20:19
+               |vpiParent:
+               \_begin: (work@dut), line:18:21, endln:21:8
+               |vpiOpType:82
+               |vpiBlocking:1
+               |vpiRhs:
+               \_constant: , line:20:18, endln:20:19
+                 |vpiParent:
+                 \_assignment: , line:20:7, endln:20:19
+                 |vpiDecompile:0
+                 |vpiSize:64
+                 |UINT:0
+                 |vpiConstType:9
+               |vpiLhs:
+               \_hier_path: (mem.data), line:20:7, endln:20:15
+                 |vpiParent:
+                 \_begin: (work@dut), line:18:21, endln:21:8
+                 |vpiName:mem.data
+                 |vpiActual:
+                 \_ref_obj: (mem)
+                   |vpiParent:
+                   \_hier_path: (mem.data), line:20:7, endln:20:15
+                   |vpiName:mem
+                 |vpiActual:
+                 \_ref_obj: (data)
+                   |vpiName:data
+           |vpiElseStmt:
+           \_begin: (work@dut), line:21:14, endln:24:8
+             |vpiParent:
+             \_if_else: , line:18:5, endln:24:8
+             |vpiFullName:work@dut
+             |vpiStmt:
+             \_assignment: , line:22:7, endln:22:21
+               |vpiParent:
+               \_begin: (work@dut), line:21:14, endln:24:8
+               |vpiOpType:82
+               |vpiBlocking:1
+               |vpiRhs:
+               \_constant: , line:22:18, endln:22:21
+                 |vpiParent:
+                 \_assignment: , line:22:7, endln:22:21
+                 |vpiDecompile:128
+                 |vpiSize:64
+                 |UINT:128
+                 |vpiConstType:9
+               |vpiLhs:
+               \_hier_path: (mem.addr), line:22:7, endln:22:15
+                 |vpiParent:
+                 \_begin: (work@dut), line:21:14, endln:24:8
+                 |vpiName:mem.addr
+                 |vpiActual:
+                 \_ref_obj: (mem)
+                   |vpiParent:
+                   \_hier_path: (mem.addr), line:22:7, endln:22:15
+                   |vpiName:mem
+                 |vpiActual:
+                 \_ref_obj: (addr)
+                   |vpiName:addr
+             |vpiStmt:
+             \_assignment: , line:23:7, endln:23:21
+               |vpiParent:
+               \_begin: (work@dut), line:21:14, endln:24:8
+               |vpiOpType:82
+               |vpiBlocking:1
+               |vpiRhs:
+               \_constant: , line:23:18, endln:23:21
+                 |vpiParent:
+                 \_assignment: , line:23:7, endln:23:21
+                 |vpiDecompile:255
+                 |vpiSize:64
+                 |UINT:255
+                 |vpiConstType:9
+               |vpiLhs:
+               \_hier_path: (mem.data), line:23:7, endln:23:15
+                 |vpiParent:
+                 \_begin: (work@dut), line:21:14, endln:24:8
+                 |vpiName:mem.data
+                 |vpiActual:
+                 \_ref_obj: (mem)
+                   |vpiParent:
+                   \_hier_path: (mem.data), line:23:7, endln:23:15
+                   |vpiName:mem
+                 |vpiActual:
+                 \_ref_obj: (data)
+                   |vpiName:data
+     |vpiAlwaysType:1
+   |vpiContAssign:
+   \_cont_assign: , line:27:10, endln:27:20
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiRhs:
+     \_ref_obj: (work@dut.a), line:27:19, endln:27:20
+       |vpiParent:
+       \_cont_assign: , line:27:10, endln:27:20
+       |vpiName:a
+       |vpiFullName:work@dut.a
+       |vpiActual:
+       \_logic_net: (work@dut.a), line:1:13, endln:1:14
+     |vpiLhs:
+     \_hier_path: (mem.wr), line:27:10, endln:27:16
+       |vpiParent:
+       \_cont_assign: , line:27:10, endln:27:20
+       |vpiName:mem.wr
+       |vpiActual:
+       \_ref_obj: (mem)
+         |vpiParent:
+         \_hier_path: (mem.wr), line:27:10, endln:27:16
+         |vpiName:mem
+       |vpiActual:
+       \_ref_obj: (wr)
+         |vpiName:wr
+   |vpiContAssign:
+   \_cont_assign: , line:28:10, endln:28:24
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiRhs:
+     \_hier_path: (mem.wr), line:28:18, endln:28:24
+       |vpiParent:
+       \_cont_assign: , line:28:10, endln:28:24
+       |vpiName:mem.wr
+       |vpiActual:
+       \_ref_obj: (mem), line:28:18, endln:28:21
+         |vpiParent:
+         \_hier_path: (mem.wr), line:28:18, endln:28:24
+         |vpiName:mem
+       |vpiActual:
+       \_ref_obj: (wr), line:28:22, endln:28:24
+         |vpiName:wr
+     |vpiLhs:
+     \_bit_select: (work@dut.b), line:28:10, endln:28:15
+       |vpiParent:
+       \_ref_obj: (work@dut.b)
+         |vpiParent:
+         \_cont_assign: , line:28:10, endln:28:24
+         |vpiName:b
+         |vpiFullName:work@dut.b
+       |vpiName:b
+       |vpiFullName:work@dut.b
+       |vpiIndex:
+       \_constant: , line:28:12, endln:28:14
+         |vpiParent:
+         \_bit_select: (work@dut.b), line:28:10, endln:28:15
+         |vpiDecompile:16
+         |vpiSize:64
+         |UINT:16
+         |vpiConstType:9
+   |vpiContAssign:
+   \_cont_assign: , line:29:10, endln:29:28
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiRhs:
+     \_hier_path: (mem.data), line:29:20, endln:29:28
+       |vpiParent:
+       \_cont_assign: , line:29:10, endln:29:28
+       |vpiName:mem.data
+       |vpiActual:
+       \_ref_obj: (mem), line:29:20, endln:29:23
+         |vpiParent:
+         \_hier_path: (mem.data), line:29:20, endln:29:28
+         |vpiName:mem
+       |vpiActual:
+       \_ref_obj: (data), line:29:24, endln:29:28
+         |vpiName:data
+     |vpiLhs:
+     \_part_select: , line:29:10, endln:29:17
+       |vpiParent:
+       \_ref_obj: b (work@dut.b)
+         |vpiParent:
+         \_cont_assign: , line:29:10, endln:29:28
+         |vpiName:b
+         |vpiFullName:work@dut.b
+         |vpiDefName:b
+       |vpiConstantSelect:1
+       |vpiLeftRange:
+       \_constant: , line:29:12, endln:29:14
+         |vpiDecompile:15
+         |vpiSize:64
+         |UINT:15
+         |vpiConstType:9
+       |vpiRightRange:
+       \_constant: , line:29:15, endln:29:16
+         |vpiDecompile:8
+         |vpiSize:64
+         |UINT:8
+         |vpiConstType:9
+   |vpiContAssign:
+   \_cont_assign: , line:30:10, endln:30:27
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiRhs:
+     \_hier_path: (mem.addr), line:30:19, endln:30:27
+       |vpiParent:
+       \_cont_assign: , line:30:10, endln:30:27
+       |vpiName:mem.addr
+       |vpiActual:
+       \_ref_obj: (mem), line:30:19, endln:30:22
+         |vpiParent:
+         \_hier_path: (mem.addr), line:30:19, endln:30:27
+         |vpiName:mem
+       |vpiActual:
+       \_ref_obj: (addr), line:30:23, endln:30:27
+         |vpiName:addr
+     |vpiLhs:
+     \_part_select: , line:30:10, endln:30:16
+       |vpiParent:
+       \_ref_obj: b (work@dut.b)
+         |vpiParent:
+         \_cont_assign: , line:30:10, endln:30:27
+         |vpiName:b
+         |vpiFullName:work@dut.b
+         |vpiDefName:b
+       |vpiConstantSelect:1
+       |vpiLeftRange:
+       \_constant: , line:30:12, endln:30:13
+         |vpiDecompile:7
+         |vpiSize:64
+         |UINT:7
+         |vpiConstType:9
+       |vpiRightRange:
+       \_constant: , line:30:14, endln:30:15
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+ |uhdmtopModules:
+ \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+   |vpiName:work@dut
+   |vpiVariables:
+   \_packed_array_var: (work@dut.packed_mem), line:11:15, endln:11:25
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:packed_mem
+     |vpiFullName:work@dut.packed_mem
+     |vpiVisibility:1
+     |vpiRange:
+     \_range: , line:11:9, endln:11:14
+       |vpiLeftRange:
+       \_constant: , line:11:10, endln:11:11
+         |vpiParent:
+         \_range: , line:11:9, endln:11:14
+         |vpiDecompile:1
+         |vpiSize:64
+         |UINT:1
+         |vpiConstType:9
+       |vpiRightRange:
+       \_constant: , line:11:12, endln:11:13
+         |vpiParent:
+         \_range: , line:11:9, endln:11:14
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+     |vpiElement:
+     \_struct_var: (work@dut.packed_mem)
+       |vpiParent:
+       \_packed_array_var: (work@dut.packed_mem), line:11:15, endln:11:25
+       |vpiTypespec:
+       \_struct_typespec: (mem_s), line:5:11, endln:5:17
+       |vpiFullName:work@dut.packed_mem
+   |vpiTypedef:
+   \_struct_typespec: (mem_s), line:5:11, endln:5:17
+   |vpiDefName:work@dut
+   |vpiTop:1
+   |vpiNet:
+   \_struct_net: (work@dut.mem), line:15:9, endln:15:12
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiTypespec:
+     \_struct_typespec: (mem_s), line:5:11, endln:5:17
+     |vpiName:mem
+     |vpiFullName:work@dut.mem
+   |vpiNet:
+   \_logic_net: (work@dut.a), line:1:13, endln:1:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiTypespec:
+     \_logic_typespec: , line:2:9, endln:2:9
+     |vpiName:a
+     |vpiFullName:work@dut.a
+   |vpiNet:
+   \_logic_net: (work@dut.b), line:1:16, endln:1:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiTypespec:
+     \_logic_typespec: , line:3:10, endln:3:16
+       |vpiRange:
+       \_range: , line:3:10, endln:3:16
+         |vpiLeftRange:
+         \_constant: , line:3:11, endln:3:13
+           |vpiParent:
+           \_range: , line:3:10, endln:3:16
+           |vpiDecompile:16
+           |vpiSize:64
+           |UINT:16
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:3:14, endln:3:15
+           |vpiParent:
+           \_range: , line:3:10, endln:3:16
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+     |vpiName:b
+     |vpiFullName:work@dut.b
+   |vpiArrayNet:
+   \_array_net: (work@dut.memArray), line:12:9, endln:12:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiSize:8
+     |vpiName:memArray
+     |vpiFullName:work@dut.memArray
+     |vpiRange:
+     \_range: , line:12:18, endln:12:19
+       |vpiLeftRange:
+       \_constant: , line:12:18, endln:12:19
+         |vpiParent:
+         \_range: , line:12:18, endln:12:19
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiRightRange:
+       \_operation: 
+         |vpiParent:
+         \_range: , line:12:18, endln:12:19
+         |vpiOpType:11
+         |vpiOperand:
+         \_constant: , line:12:18, endln:12:19
+           |vpiDecompile:8
+           |vpiSize:64
+           |UINT:8
+           |vpiConstType:9
+         |vpiOperand:
+         \_constant: 
+           |vpiSize:64
+           |INT:1
+           |vpiConstType:7
+     |vpiNet:
+     \_struct_net: (work@dut.memArray.memArray), line:12:9, endln:12:20
+       |vpiParent:
+       \_array_net: (work@dut.memArray), line:12:9, endln:12:17
+       |vpiTypespec:
+       \_struct_typespec: (mem_s), line:5:11, endln:5:17
+       |vpiName:memArray
+       |vpiFullName:work@dut.memArray.memArray
+   |vpiArrayNet:
+   \_array_net: (work@dut.memMulti), line:13:9, endln:13:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiSize:200
+     |vpiName:memMulti
+     |vpiFullName:work@dut.memMulti
+     |vpiRange:
+     \_range: , line:13:18, endln:13:20
+       |vpiLeftRange:
+       \_constant: , line:13:18, endln:13:19
+         |vpiParent:
+         \_range: , line:13:18, endln:13:20
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiRightRange:
+       \_operation: 
+         |vpiParent:
+         \_range: , line:13:18, endln:13:20
+         |vpiOpType:11
+         |vpiOperand:
+         \_constant: , line:13:18, endln:13:20
+           |vpiDecompile:10
+           |vpiSize:64
+           |UINT:10
+           |vpiConstType:9
+         |vpiOperand:
+         \_constant: 
+           |vpiSize:64
+           |INT:1
+           |vpiConstType:7
+     |vpiRange:
+     \_range: , line:13:22, endln:13:24
+       |vpiLeftRange:
+       \_constant: , line:13:22, endln:13:23
+         |vpiParent:
+         \_range: , line:13:22, endln:13:24
+         |vpiDecompile:0
+         |vpiSize:64
+         |UINT:0
+         |vpiConstType:9
+       |vpiRightRange:
+       \_operation: 
+         |vpiParent:
+         \_range: , line:13:22, endln:13:24
+         |vpiOpType:11
+         |vpiOperand:
+         \_constant: , line:13:22, endln:13:24
+           |vpiDecompile:20
+           |vpiSize:64
+           |UINT:20
+           |vpiConstType:9
+         |vpiOperand:
+         \_constant: 
+           |vpiSize:64
+           |INT:1
+           |vpiConstType:7
+     |vpiNet:
+     \_struct_net: (work@dut.memMulti.memMulti), line:13:9, endln:13:21
+       |vpiParent:
+       \_array_net: (work@dut.memMulti), line:13:9, endln:13:17
+       |vpiTypespec:
+       \_struct_typespec: (mem_s), line:5:11, endln:5:17
+       |vpiName:memMulti
+       |vpiFullName:work@dut.memMulti.memMulti
+   |vpiTopModule:1
+   |vpiPort:
+   \_port: (a), line:1:13, endln:1:14
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:a
+     |vpiDirection:1
+     |vpiLowConn:
+     \_ref_obj: (work@dut.a), line:1:13, endln:1:14
+       |vpiName:a
+       |vpiFullName:work@dut.a
+       |vpiActual:
+       \_logic_net: (work@dut.a), line:1:13, endln:1:14
+     |vpiTypedef:
+     \_logic_typespec: , line:2:9, endln:2:9
+   |vpiPort:
+   \_port: (b), line:1:16, endln:1:17
+     |vpiParent:
+     \_module_inst: work@dut (work@dut), file:UHDM-integration-tests/tests/OneStruct/dut.sv, line:1:1, endln:32:10
+     |vpiName:b
+     |vpiDirection:2
+     |vpiLowConn:
+     \_ref_obj: (work@dut.b), line:1:16, endln:1:17
+       |vpiName:b
+       |vpiFullName:work@dut.b
+       |vpiActual:
+       \_logic_net: (work@dut.b), line:1:16, endln:1:17
+     |vpiTypedef:
+     \_logic_typespec: , line:3:10, endln:3:16
+       |vpiRange:
+       \_range: , line:3:10, endln:3:16
+         |vpiParent:
+         \_port: (b), line:1:16, endln:1:17
+         |vpiLeftRange:
+         \_constant: , line:3:11, endln:3:13
+           |vpiParent:
+           \_range: , line:3:10, endln:3:16
+           |vpiDecompile:16
+           |vpiSize:64
+           |UINT:16
+           |vpiConstType:9
+         |vpiRightRange:
+         \_constant: , line:3:14, endln:3:15
+           |vpiParent:
+           \_range: , line:3:10, endln:3:16
+           |vpiDecompile:0
+           |vpiSize:64
+           |UINT:0
+           |vpiConstType:9
+   |vpiProcess:
+   \_always: , line:17:3, endln:25:6
+   |vpiContAssign:
+   \_cont_assign: , line:27:10, endln:27:20
+   |vpiContAssign:
+   \_cont_assign: , line:28:10, endln:28:24
+   |vpiContAssign:
+   \_cont_assign: , line:29:10, endln:29:28
+   |vpiContAssign:
+   \_cont_assign: , line:30:10, endln:30:27
+Object 'work@dut' of type 'design'
+  Object 'builtin' of type 'package'
+  Object '' of type 'module_inst'
+    Object 'mem_s' of type 'struct_typespec'
+      Object 'addr' of type 'typespec_member'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object 'data' of type 'typespec_member'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object 'wr' of type 'typespec_member'
+    Object 'packed_mem' of type 'logic_net'
+    Object 'memArray' of type 'logic_net'
+    Object 'memMulti' of type 'logic_net'
+    Object 'mem' of type 'logic_net'
+    Object 'a' of type 'logic_net'
+    Object 'b' of type 'logic_net'
+    Object '' of type 'always'
+      Object '' of type 'event_control'
+        Object 'a' of type 'ref_obj'
+        Object '' of type 'begin'
+          Object '' of type 'if_else'
+            Object '' of type 'operation'
+              Object 'a' of type 'ref_obj'
+              Object '' of type 'constant'
+            Object '' of type 'begin'
+              Object '' of type 'assignment'
+                Object 'mem.addr' of type 'hier_path'
+                  Object 'mem' of type 'ref_obj'
+                  Object 'addr' of type 'ref_obj'
+                Object '' of type 'constant'
+              Object '' of type 'assignment'
+                Object 'mem.data' of type 'hier_path'
+                  Object 'mem' of type 'ref_obj'
+                  Object 'data' of type 'ref_obj'
+                Object '' of type 'constant'
+            Object '' of type 'begin'
+              Object '' of type 'assignment'
+                Object 'mem.addr' of type 'hier_path'
+                  Object 'mem' of type 'ref_obj'
+                  Object 'addr' of type 'ref_obj'
+                Object '' of type 'constant'
+              Object '' of type 'assignment'
+                Object 'mem.data' of type 'hier_path'
+                  Object 'mem' of type 'ref_obj'
+                  Object 'data' of type 'ref_obj'
+                Object '' of type 'constant'
+  Object 'work@dut' of type 'module_inst'
+    Object 'a' of type 'port'
+      Object '' of type 'logic_typespec'
+    Object 'b' of type 'port'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'mem' of type 'struct_net'
+      Object 'mem_s' of type 'struct_typespec'
+        Object 'addr' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'data' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'wr' of type 'typespec_member'
+    Object 'a' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+    Object 'b' of type 'logic_net'
+      Object '' of type 'logic_typespec'
+        Object '' of type 'range'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+    Object 'memArray' of type 'array_net'
+      Object 'mem_s' of type 'struct_typespec'
+        Object 'addr' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'data' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'wr' of type 'typespec_member'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object 'memMulti' of type 'array_net'
+      Object 'mem_s' of type 'struct_typespec'
+        Object 'addr' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'data' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'wr' of type 'typespec_member'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'operation'
+          Object '' of type 'constant'
+          Object '' of type 'constant'
+    Object '' of type 'cont_assign'
+      Object 'mem.wr' of type 'hier_path'
+        Object 'mem' of type 'ref_obj'
+        Object 'wr' of type 'ref_obj'
+      Object 'a' of type 'ref_obj'
+    Object '' of type 'cont_assign'
+      Object 'b' of type 'bit_select'
+        Object '' of type 'constant'
+      Object 'mem.wr' of type 'hier_path'
+        Object 'mem' of type 'ref_obj'
+        Object 'wr' of type 'ref_obj'
+    Object '' of type 'cont_assign'
+      Object '' of type 'part_select'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+      Object 'mem.data' of type 'hier_path'
+        Object 'mem' of type 'ref_obj'
+        Object 'data' of type 'ref_obj'
+    Object '' of type 'cont_assign'
+      Object '' of type 'part_select'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+      Object 'mem.addr' of type 'hier_path'
+        Object 'mem' of type 'ref_obj'
+        Object 'addr' of type 'ref_obj'
+    Object 'packed_mem' of type 'packed_array_var'
+      Object 'mem_s' of type 'struct_typespec'
+        Object 'addr' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'data' of type 'typespec_member'
+          Object '' of type 'range'
+            Object '' of type 'constant'
+            Object '' of type 'constant'
+        Object 'wr' of type 'typespec_member'
+      Object '' of type 'range'
+        Object '' of type 'constant'
+        Object '' of type 'constant'
+Generating RTLIL representation for module `\dut'.
+Dumping AST before simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneStruct/dut.sv:1.1-32.10> str='\dut'
+      AST_TYPEDEF <UHDM-integration-tests/tests/OneStruct/dut.sv:5.11-5.17> str='\mem_s'
+        AST_STRUCT <UHDM-integration-tests/tests/OneStruct/dut.sv:5.11-5.17> basic_prep
+          AST_STRUCT_ITEM <UHDM-integration-tests/tests/OneStruct/dut.sv:6.17-6.21> str='addr' logic basic_prep range=[16:9]
+          AST_STRUCT_ITEM <UHDM-integration-tests/tests/OneStruct/dut.sv:7.17-7.21> str='data' logic basic_prep range=[8:1]
+          AST_STRUCT_ITEM <UHDM-integration-tests/tests/OneStruct/dut.sv:8.11-8.13> str='wr' logic basic_prep range=[0:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:11.15-11.25> str='\packed_mem' logic basic_prep range=[16:0] multirange=[ 0 17 0 2 ] multirange_swapped=[ 0 0 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:11.9-11.14> basic_prep range=[1:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> range=[33:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000100001'(32) signed range=[31:0] int=33
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:12.9-12.17> str='\memArray' logic basic_prep range=[16:0] multirange=[ 0 17 0 8 ] multirange_swapped=[ 0 1 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:12.18-12.19> basic_prep swapped_range=[7:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> range=[135:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000010000111'(32) signed range=[31:0] int=135
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:13.9-13.17> str='\memMulti' logic basic_prep range=[16:0] multirange=[ 0 17 0 20 0 10 ] multirange_swapped=[ 0 1 1 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:13.22-13.24> basic_prep swapped_range=[19:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010011'(32) signed basic_prep range=[31:0] int=19
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:13.18-13.20> basic_prep swapped_range=[9:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed basic_prep range=[31:0] int=9
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> range=[3399:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000110101000111'(32) signed range=[31:0] int=3399
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:15.9-15.12> str='\mem' logic basic_prep range=[16:0] multirange=[ 0 17 ] multirange_swapped=[ 0 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:1.13-1.14> str='\a' input logic port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:1.16-1.17> str='\b' output logic port=2 multirange=[ 0 17 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:3.10-3.16> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:3.10-3.16> basic_prep range=[16:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:27.10-27.20>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:27.10-27.16> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:27.19-27.20> str='\a'
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:28.10-28.24>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:28.10-28.15> str='\b'
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:28.10-28.15>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed range=[31:0] int=16
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:28.18-28.24> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:29.10-29.28>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:29.10-29.17> str='\b'
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:29.10-29.17>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed range=[31:0] int=15
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:29.20-29.28> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:30.10-30.27>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:30.10-30.16> str='\b'
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:30.10-30.16>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed range=[31:0] int=7
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:30.19-30.27> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed range=[31:0] int=16
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed range=[31:0] int=9
+      AST_ALWAYS <UHDM-integration-tests/tests/OneStruct/dut.sv:17.3-25.6>
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:17.12-17.13> str='\a'
+        AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:17.10-17.14>
+          AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:17.15-25.6>
+            AST_CASE <UHDM-integration-tests/tests/OneStruct/dut.sv:18.5-24.8>
+              AST_REDUCE_BOOL <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                AST_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:18.9-18.18>
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:18.9-18.10> str='\a'
+                  AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='0'(1) range=[0:0]
+              AST_COND <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) range=[0:0] int=1
+                AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                  AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:18.21-21.8>
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:19.7-19.19>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:19.7-19.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed range=[31:0] int=16
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed range=[31:0] int=9
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:20.7-20.19>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:20.7-20.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed range=[31:0]
+              AST_COND <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                AST_DEFAULT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                  AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:21.14-24.8>
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:22.7-22.21>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:22.7-22.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed range=[31:0] int=16
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed range=[31:0] int=9
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000010000000'(32) signed range=[31:0] int=128
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:23.7-23.21>
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:23.7-23.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0>
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed range=[31:0] int=8
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed range=[31:0] int=1
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed range=[31:0] int=255
+--- END OF AST DUMP ---
+Dumping Verilog AST before simplification:
+    module dut(a, b);
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      wire [33:0] packed_mem;
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      wire [135:0] memArray;
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      wire [3399:0] memMulti;
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      wire [16:0] mem;
+      (* is_simplified_wire = 1 *)
+      input a;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [16:0] b;
+      /** AST_TYPEDEF **/
+      assign mem[0:0] = a;
+      assign b[16] = mem[0:0];
+      assign b[15:8] = mem[8:1];
+      assign b[7:0] = mem[16:9];
+      always @*
+a        case (|((a)==(1'b 0)))
+          1'b 1:
+            begin
+              mem[16:9] = 0;
+              mem[8:1] = 0;
+            end
+          default:
+            begin
+              mem[16:9] = 128;
+              mem[8:1] = 255;
+            end
+        endcase
+    endmodule
+--- END OF AST DUMP ---
+Dumping AST after simplification:
+    AST_MODULE <UHDM-integration-tests/tests/OneStruct/dut.sv:1.1-32.10> str='\dut' basic_prep
+      AST_TYPEDEF <UHDM-integration-tests/tests/OneStruct/dut.sv:5.11-5.17> str='\mem_s' basic_prep
+        AST_STRUCT <UHDM-integration-tests/tests/OneStruct/dut.sv:5.11-5.17> basic_prep
+          AST_STRUCT_ITEM <UHDM-integration-tests/tests/OneStruct/dut.sv:6.17-6.21> str='addr' logic basic_prep range=[16:9]
+          AST_STRUCT_ITEM <UHDM-integration-tests/tests/OneStruct/dut.sv:7.17-7.21> str='data' logic basic_prep range=[8:1]
+          AST_STRUCT_ITEM <UHDM-integration-tests/tests/OneStruct/dut.sv:8.11-8.13> str='wr' logic basic_prep range=[0:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:11.15-11.25> str='\packed_mem' logic basic_prep range=[33:0] multirange=[ 0 17 0 2 ] multirange_swapped=[ 0 0 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:11.9-11.14> basic_prep range=[1:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[33:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000100001'(32) signed basic_prep range=[31:0] int=33
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:12.9-12.17> str='\memArray' logic basic_prep range=[135:0] multirange=[ 0 17 0 8 ] multirange_swapped=[ 0 1 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:12.18-12.19> basic_prep swapped_range=[7:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[135:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000010000111'(32) signed basic_prep range=[31:0] int=135
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:13.9-13.17> str='\memMulti' logic basic_prep range=[3399:0] multirange=[ 0 17 0 20 0 10 ] multirange_swapped=[ 0 1 1 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:13.22-13.24> basic_prep swapped_range=[19:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010011'(32) signed basic_prep range=[31:0] int=19
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:13.18-13.20> basic_prep swapped_range=[9:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed basic_prep range=[31:0] int=9
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[3399:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000110101000111'(32) signed basic_prep range=[31:0] int=3399
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:15.9-15.12> str='\mem' logic reg basic_prep range=[16:0] multirange=[ 0 17 ] multirange_swapped=[ 0 ]
+        ATTR \wiretype:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> str='\mem_s' bits='010111000110110101100101011011010101111101110011'(48) basic_prep range=[47:0] int=1701666675
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:1.13-1.14> str='\a' input logic basic_prep port=1 range=[0:0]
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_WIRE <UHDM-integration-tests/tests/OneStruct/dut.sv:1.16-1.17> str='\b' output logic basic_prep port=2 range=[16:0] multirange=[ 0 17 ] multirange_swapped=[ 0 ]
+        ATTR \packed_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+            AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:3.10-3.16> basic_prep range=[16:0]
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+              AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        ATTR \unpacked_ranges:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+        ATTR \is_simplified_wire:
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:3.10-3.16> basic_prep range=[16:0]
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:27.10-27.20> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:27.10-27.16> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[0:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:27.19-27.20> str='\a' basic_prep
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:28.10-28.24> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:28.10-28.15> str='\b' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:28.10-28.15> basic_prep range=[16:16]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:28.18-28.24> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[0:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:29.10-29.28> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:29.10-29.17> str='\b' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:29.10-29.17> basic_prep range=[15:8]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001111'(32) signed basic_prep range=[31:0] int=15
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed basic_prep range=[31:0] int=8
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:29.20-29.28> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[8:1]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed basic_prep range=[31:0] int=8
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+      AST_ASSIGN <UHDM-integration-tests/tests/OneStruct/dut.sv:30.10-30.27> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:30.10-30.16> str='\b' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:30.10-30.16> basic_prep range=[7:0]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000111'(32) signed basic_prep range=[31:0] int=7
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:30.19-30.27> str='\mem' basic_prep
+          AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:9]
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+            AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed basic_prep range=[31:0] int=9
+      AST_ALWAYS <UHDM-integration-tests/tests/OneStruct/dut.sv:17.3-25.6> basic_prep
+        AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:17.12-17.13> str='\a' basic_prep
+        AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:17.10-17.14> basic_prep
+          AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:17.15-25.6> basic_prep
+            AST_CASE <UHDM-integration-tests/tests/OneStruct/dut.sv:18.5-24.8> basic_prep
+              AST_REDUCE_BOOL <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep
+                AST_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:18.9-18.18> basic_prep
+                  AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:18.9-18.10> str='\a' basic_prep
+                  AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='0'(1) basic_prep range=[0:0]
+              AST_COND <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep
+                AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='1'(1) basic_prep range=[0:0] int=1
+                AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep
+                  AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:18.21-21.8> basic_prep
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:19.7-19.19> basic_prep
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:19.7-19.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:9]
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed basic_prep range=[31:0] int=9
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:20.7-20.19> basic_prep
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:20.7-20.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[8:1]
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed basic_prep range=[31:0] int=8
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000000'(32) signed basic_prep range=[31:0]
+              AST_COND <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep
+                AST_DEFAULT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep
+                AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep
+                  AST_BLOCK <UHDM-integration-tests/tests/OneStruct/dut.sv:21.14-24.8> basic_prep
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:22.7-22.21> basic_prep
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:22.7-22.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[16:9]
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000010000'(32) signed basic_prep range=[31:0] int=16
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001001'(32) signed basic_prep range=[31:0] int=9
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000010000000'(32) signed basic_prep range=[31:0] int=128
+                    AST_ASSIGN_EQ <UHDM-integration-tests/tests/OneStruct/dut.sv:23.7-23.21> basic_prep
+                      AST_IDENTIFIER <UHDM-integration-tests/tests/OneStruct/dut.sv:23.7-23.15> str='\mem' basic_prep
+                        AST_RANGE <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> basic_prep range=[8:1]
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000001000'(32) signed basic_prep range=[31:0] int=8
+                          AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000000000001'(32) signed basic_prep range=[31:0] int=1
+                      AST_CONSTANT <UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0> bits='00000000000000000000000011111111'(32) signed basic_prep range=[31:0] int=255
+--- END OF AST DUMP ---
+Dumping Verilog AST after simplification:
+    module dut(a, b);
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      wire [33:0] packed_mem;
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      wire [135:0] memArray;
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      wire [3399:0] memMulti;
+      (* wiretype = "\mem_s" *)
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      reg [16:0] mem;
+      (* is_simplified_wire = 1 *)
+      input a;
+      (* packed_ranges = 1'b 1 *)
+      (* unpacked_ranges = 1'b 1 *)
+      (* is_simplified_wire = 1 *)
+      output [16:0] b;
+      /** AST_TYPEDEF **/
+      assign mem[0:0] = a;
+      assign b[16:16] = mem[0:0];
+      assign b[15:8] = mem[8:1];
+      assign b[7:0] = mem[16:9];
+      always @*
+a        case (|((a)==(1'b 0)))
+          1'b 1:
+            begin
+              mem[16:9] = 0;
+              mem[8:1] = 0;
+            end
+          default:
+            begin
+              mem[16:9] = 128;
+              mem[8:1] = 255;
+            end
+        endcase
+    endmodule
+--- END OF AST DUMP ---
+
+2. Executing PREP pass.
+
+2.1. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1.1. Analyzing design hierarchy..
+Top module:  \dut
+
+2.1.2. Analyzing design hierarchy..
+Top module:  \dut
+Removed 0 unused modules.
+
+2.2. Executing PROC pass (convert processes to netlists).
+
+2.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$UHDM-integration-tests/tests/OneStruct/dut.sv:17$1 in module dut.
+Removed a total of 0 dead cases.
+
+2.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 1 assignment to connection.
+
+2.2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~1 debug messages>
+
+2.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\dut.$proc$UHDM-integration-tests/tests/OneStruct/dut.sv:17$1'.
+     1/2: $1\mem[16:1] [7:0]
+     2/2: $1\mem[16:1] [15:8]
+
+2.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\dut.\mem [16:1]' from process `\dut.$proc$UHDM-integration-tests/tests/OneStruct/dut.sv:17$1'.
+
+2.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+2.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `\dut.$proc$UHDM-integration-tests/tests/OneStruct/dut.sv:17$1'.
+Removing empty process `dut.$proc$UHDM-integration-tests/tests/OneStruct/dut.sv:17$1'.
+Cleaned up 1 empty switch.
+
+2.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dut.
+<suppressed ~3 debug messages>
+
+2.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dut.
+
+2.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dut..
+Removed 1 unused cells and 10 unused wires.
+<suppressed ~5 debug messages>
+
+2.5. Executing CHECK pass (checking for obvious problems).
+Checking module dut...
+Found and reported 0 problems.
+
+2.6. Executing OPT pass (performing simple optimizations).
+
+2.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dut.
+
+2.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dut'.
+Removed a total of 0 cells.
+
+2.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dut..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~2 debug messages>
+
+2.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dut.
+Performed a total of 0 changes.
+
+2.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dut'.
+Removed a total of 0 cells.
+
+2.6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dut..
+
+2.6.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dut.
+
+2.6.8. Finished OPT passes. (There is nothing left to do.)
+
+2.7. Executing WREDUCE pass (reducing word size of cells).
+
+2.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dut..
+
+2.9. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+2.10. Executing OPT pass (performing simple optimizations).
+
+2.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dut.
+
+2.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dut'.
+Removed a total of 0 cells.
+
+2.10.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dut..
+
+2.10.4. Finished fast OPT passes.
+
+2.11. Printing statistics.
+
+=== dut ===
+
+   Number of wires:                  3
+   Number of wire bits:             35
+   Number of public wires:           3
+   Number of public wire bits:      35
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  2
+     $mux                            2
+
+2.12. Executing CHECK pass (checking for obvious problems).
+Checking module dut...
+Found and reported 0 problems.
+
+3. Executing Verilog backend.
+
+3.1. Executing BMUXMAP pass.
+
+3.2. Executing DEMUXMAP pass.
+/* Generated by Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os) */
+Dumping module `\dut'.
+
+(* top =  1  *)
+(* src = "UHDM-integration-tests/tests/OneStruct/dut.sv:1.1-32.10" *)
+module dut(a, b);
+  (* is_simplified_wire = 32'd1 *)
+  (* src = "UHDM-integration-tests/tests/OneStruct/dut.sv:1.13-1.14" *)
+  input a;
+  wire a;
+  (* is_simplified_wire = 32'd1 *)
+  (* packed_ranges = 1'h1 *)
+  (* src = "UHDM-integration-tests/tests/OneStruct/dut.sv:1.16-1.17" *)
+  (* unpacked_ranges = 1'h1 *)
+  output [16:0] b;
+  wire [16:0] b;
+  (* is_simplified_wire = 32'd1 *)
+  (* packed_ranges = 1'h1 *)
+  (* src = "UHDM-integration-tests/tests/OneStruct/dut.sv:15.9-15.12" *)
+  (* unpacked_ranges = 1'h1 *)
+  (* wiretype = "\\mem_s" *)
+  wire [16:0] mem;
+  assign b[15:8] = a ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0|UHDM-integration-tests/tests/OneStruct/dut.sv:18.5-24.8" *) 8'hff : 8'h00;
+  assign b[7:0] = a ? (* full_case = 32'd1 *) (* src = "UHDM-integration-tests/tests/OneStruct/dut.sv:0.0-0.0|UHDM-integration-tests/tests/OneStruct/dut.sv:18.5-24.8" *) 8'h80 : 8'h00;
+  assign b[16] = a;
+  assign mem = { b[7:0], b[15:8], a };
+endmodule
+
+4. Executing Verilog backend.
+
+4.1. Executing BMUXMAP pass.
+
+4.2. Executing DEMUXMAP pass.
+Dumping module `\dut'.
+
+5. Executing SIM pass (simulate the circuit).
+Simulating cycle 0.
+Simulating cycle 1.
+Simulating cycle 2.
+Simulating cycle 3.
+Simulating cycle 4.
+Simulating cycle 5.
+Simulating cycle 6.
+Simulating cycle 7.
+Simulating cycle 8.
+Simulating cycle 9.
+Simulating cycle 10.
+Simulating cycle 11.
+Simulating cycle 12.
+Simulating cycle 13.
+Simulating cycle 14.
+Simulating cycle 15.
+Simulating cycle 16.
+Simulating cycle 17.
+Simulating cycle 18.
+Simulating cycle 19.
+Simulating cycle 20.
+Simulating cycle 21.
+Simulating cycle 22.
+Simulating cycle 23.
+Simulating cycle 24.
+Simulating cycle 25.
+Simulating cycle 26.
+Simulating cycle 27.
+Simulating cycle 28.
+Simulating cycle 29.
+Simulating cycle 30.
+Simulating cycle 31.
+Simulating cycle 32.
+Simulating cycle 33.
+Simulating cycle 34.
+Simulating cycle 35.
+Simulating cycle 36.
+Simulating cycle 37.
+Simulating cycle 38.
+Simulating cycle 39.
+Simulating cycle 40.
+
+
+Yosys 0.27+12 (git sha1 ceef00c35, gcc 11.3.0-1ubuntu1~22.04 -fPIC -Os)
+
