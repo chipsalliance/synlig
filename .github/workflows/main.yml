@@ -117,7 +117,7 @@ jobs:
     container: ubuntu:jammy
     env:
       DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-highmem-8"
+      GHA_MACHINE_TYPE: "n2-standard-4"
 
     steps:
       - uses: actions/checkout@v3
