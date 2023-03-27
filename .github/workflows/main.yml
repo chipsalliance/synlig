@@ -162,7 +162,7 @@ jobs:
           mkdir -p $PWD/image/bin
           export PATH=$PWD/install/bin:/usr/local/bin:${PATH}
           wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-          make -j$(nproc --all) -C $PWD/sv2v
+          make -j$(nproc) -C $PWD/sv2v
           cp $PWD/sv2v/bin/sv2v image/bin
 
       - name: Upload binaries
