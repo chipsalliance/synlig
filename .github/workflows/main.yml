@@ -63,7 +63,7 @@ jobs:
 
       - name: Checkout submodules
         run: |
-          git submodule update -j 8 --depth 1 --init --recursive \
+          git submodule update --depth 1 --init --recursive \
               Surelog \
               yosys \
               yosys-f4pga-plugins \
@@ -74,7 +74,7 @@ jobs:
         run: |
           cd yosys-f4pga-plugins
           git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
-          git fetch -j 8 github/antmicro ${{github.event.inputs.plugins_branch}}
+          git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
           git checkout FETCH_HEAD
 
       - name: Setup cache
@@ -86,9 +86,6 @@ jobs:
 
       - name: Build binaries
         run: |
-          # Github dropped support for unauthorized git: https://github.blog/2021-09-01-improving-git-protocol-security-github/
-          # Make sure we always use https:// instead of git://
-          git config --global url.https://github.com/.insteadOf git://github.com/
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
           ./build_binaries.sh
           # By default actions/upload-artifact@v2 do not preserve file permissions
@@ -152,7 +149,7 @@ jobs:
       - name: Checkout submodules
         if: ${{ steps.cache-restore.outputs.cache-hit != 'true' }}
         run: |
-          git submodule update -j 8 --depth 1 --init --recursive \
+          git submodule update --depth 1 --init --recursive \
               sv2v \
               ;
 
