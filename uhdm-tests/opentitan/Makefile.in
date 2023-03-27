@@ -66,10 +66,10 @@ ${VENV_OT_SYNTH}: | ${OPENTITAN}/.gitpatch_synth
 		pip install -r ${OPENTITAN}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@uhdm_support)
 
-uhdm/yosys/synth-opentitan-build-tiny: clean-build | ${OPENTITAN}/.gitpatch_synth ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT_SYNTH}
+uhdm/yosys/synth-opentitan-build-tiny: clean-build | ${OPENTITAN}/.gitpatch_synth ${VENV_OT_SYNTH}
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${VENV_OT_SYNTH}/bin/activate && \
-		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_top --flag=ot_is_custom_tiny --build --tool yosys --target=synth ${TOP} --OtpCtrlMemInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem")
+		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_top --flag=ot_is_custom_tiny --build --tool yosys --target=synth ${TOP})
 
 ${VENV_OT}: | ${OPENTITAN}/.gitpatch
 	virtualenv ${VENV_OT}
