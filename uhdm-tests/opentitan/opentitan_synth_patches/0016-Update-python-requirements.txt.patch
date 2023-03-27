@@ -16,7 +16,7 @@ index 991fa5a79..6c065e5aa 100644
  git+https://github.com/lowRISC/fusesoc.git@ot-0.3
  
  # Development version with OT-specific changes
--git+https://github.com/antmicro/edalize.git@yosys_systemverilog
+-git+https://github.com/lowRISC/edalize.git@v0.4.0
 +git+https://github.com/antmicro/edalize.git@uhdm_support
  
  # Development version of minimal ChipWhisperer toolchain with latest features

@@ -219,8 +219,8 @@ jobs:
           path: |
             **/plot_*.svg
 
-  opentitan_tiny_synth:
-    name: Opentitan tiny (synthesis)
+  opentitan_synth:
+    name: Opentitan (synthesis)
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
