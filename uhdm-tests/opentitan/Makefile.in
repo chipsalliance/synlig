@@ -53,7 +53,6 @@ ${OPENTITAN}/.gitpatch_synth:
                         && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0011-Dont-use-parameter-type.patch \
                         && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0012-Replace-unsupported-stream-op-without-lhs.patch \
                         && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0013-Comment-out-output-to-constant-after-optimization.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0014-Fix-rstmgr_pkg-usage-in-custom_tiny.patch \
                         && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0015-Update-top-custom_tiny.patch \
                         && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0016-Update-python-requirements.txt.patch \
                         && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0017-Fix-ID-not-found.patch \
