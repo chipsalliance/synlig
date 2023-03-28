@@ -1,0 +1,28 @@
+From bced8760685c34eb5a23090790fd4e1de17bb84f Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Wed, 15 Mar 2023 14:11:12 +0100
+Subject: [PATCH 12/18] Replace unsupported stream op without lhs
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ hw/ip/i2c/rtl/i2c_fsm.sv | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hw/ip/i2c/rtl/i2c_fsm.sv b/hw/ip/i2c/rtl/i2c_fsm.sv
+index ad7246bf4..2481d544e 100644
+--- a/hw/ip/i2c/rtl/i2c_fsm.sv
++++ b/hw/ip/i2c/rtl/i2c_fsm.sv
+@@ -439,7 +439,9 @@ module i2c_fsm import i2c_pkg::*;
+ 
+   // Reverse the bit order since data should be sent out MSB first
+   logic [7:0] tx_fifo_rdata;
+-  assign tx_fifo_rdata = {<<1{tx_fifo_rdata_i}};
++  for (genvar i = 7; i >= 0; i--) begin
++    assign tx_fifo_rdata[7-i] = tx_fifo_rdata_i[i];
++  end
+ 
+   // The usage of target_idle_o directly confuses xcelium and leads the
+   // the simulator to a combinational loop. While it may be a tool recognized
+-- 
+2.39.0
+

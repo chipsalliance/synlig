@@ -219,6 +219,69 @@ jobs:
           path: |
             **/plot_*.svg
 
+  opentitan_synth:
+    name: Opentitan (synthesis)
+    runs-on: [self-hosted, Linux, X64]
+    # vivado is linked with libraries used in this version of ubuntu
+    container: ubuntu:jammy
+    env:
+      CC: gcc-9
+      CXX: g++-9
+      DEBIAN_FRONTEND: noninteractive
+      GHA_EXTERNAL_DISK: "tools"
+      GHA_MACHINE_TYPE: "n2-highmem-32"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y software-properties-common
+          add-apt-repository ppa:ubuntu-toolchain-r/test
+          apt-get update -qq
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Build & Test
+        run: |
+          source .github/scripts/common.sh
+          enable_vivado 2017.2
+          pip install virtualenv
+          ./UHDM-integration-tests/.github/ci.sh
+        env:
+          TARGET: uhdm/yosys/synth-opentitan-build-tiny
+          TEST_CASE: tests/opentitan
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
+          path: UHDM-integration-tests/build/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1/synth-yosys/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
+
+      - name: Upload load graphs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: plots
+          path: |
+            **/plot_*.svg
+
   opentitan_parse_report:
     name: Opentitan (parsing report)
     runs-on: [self-hosted, Linux, X64]

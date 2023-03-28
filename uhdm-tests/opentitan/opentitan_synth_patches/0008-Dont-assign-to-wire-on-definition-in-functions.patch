@@ -1,0 +1,77 @@
+From f64edfd988525d1103b097607ae098b56cdb0da9 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Tue, 14 Mar 2023 15:05:58 +0100
+Subject: [PATCH 08/18] Dont assign to wire on definition in functions
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ hw/ip/prim/rtl/prim_cipher_pkg.sv               |  3 ++-
+ hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv |  6 ++++--
+ hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv          | 12 ++++++++----
+ 3 files changed, 14 insertions(+), 7 deletions(-)
+
+diff --git a/hw/ip/prim/rtl/prim_cipher_pkg.sv b/hw/ip/prim/rtl/prim_cipher_pkg.sv
+index 742c92536..3606a1714 100644
+--- a/hw/ip/prim/rtl/prim_cipher_pkg.sv
++++ b/hw/ip/prim/rtl/prim_cipher_pkg.sv
+@@ -270,7 +270,8 @@ package prim_cipher_pkg;
+ 
+   function automatic logic [127:0] present_inv_update_key128(logic [127:0] key_in,
+                                                              logic [4:0]   round_idx);
+-    logic [127:0] key_out = key_in;
++    logic [127:0] key_out;
++    key_out = key_in;
+     // xor in round counter on bits 66 to 62
+     key_out[66:62] ^= round_idx;
+     // sbox on second highest nibble
+diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
+index 0333b08e7..6c20520e2 100644
+--- a/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
++++ b/hw/vendor/lowrisc_ibex/rtl/ibex_cs_registers.sv
+@@ -126,8 +126,10 @@ module ibex_cs_registers #(
+   // Is a PMP config a locked one that allows M-mode execution when MSECCFG.MML is set (either
+   // M mode alone or shared M/U mode execution)?
+   function automatic logic is_mml_m_exec_cfg(ibex_pkg::pmp_cfg_t pmp_cfg);
+-    logic unused_cfg = ^{pmp_cfg.mode};
+-    logic value = 1'b0;
++    logic unused_cfg;
++    logic value;
++    unused_cfg = ^{pmp_cfg.mode};
++    value = 1'b0;
+ 
+     if (pmp_cfg.lock) begin
+       unique case ({pmp_cfg.read, pmp_cfg.write, pmp_cfg.exec})
+diff --git a/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv b/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
+index 74cb6a378..cc70898e9 100644
+--- a/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
++++ b/hw/vendor/lowrisc_ibex/rtl/ibex_pmp.sv
+@@ -70,8 +70,10 @@ module ibex_pmp #(
+                                           ibex_pkg::pmp_req_e  pmp_req_type,
+                                           ibex_pkg::priv_lvl_e priv_mode,
+                                           logic                permission_check);
+-    logic result = 1'b0;
+-    logic unused_cfg = |csr_pmp_cfg.mode;
++    logic result;
++    logic unused_cfg;
++    result = 1'b0;
++    unused_cfg = |csr_pmp_cfg.mode;
+ 
+     if (!csr_pmp_cfg.read && csr_pmp_cfg.write) begin
+       // Special-case shared regions where R = 0, W = 1
+@@ -129,9 +131,11 @@ module ibex_pmp #(
+ 
+     // When MSECCFG.MMWP is set default deny always, otherwise allow for M-mode, deny for other
+     // modes. Also deny unmatched for M-mode whe MSECCFG.MML is set and request type is EXEC.
+-    logic access_fail = csr_pmp_mseccfg_mmwp | (priv_mode != PRIV_LVL_M) |
++    logic access_fail;
++    logic matched;
++    access_fail = csr_pmp_mseccfg_mmwp | (priv_mode != PRIV_LVL_M) |
+                         (csr_pmp_mseccfg_mml && (pmp_req_type == PMP_ACC_EXEC));
+-    logic matched = 1'b0;
++    matched = 1'b0;
+ 
+     // PMP entries are statically prioritized, from 0 to N-1
+     // The lowest-numbered PMP entry which matches an address determines accessibility
+-- 
+2.39.0
+

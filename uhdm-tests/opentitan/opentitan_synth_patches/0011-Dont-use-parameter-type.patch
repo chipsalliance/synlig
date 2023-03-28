@@ -1,0 +1,77 @@
+From d3d12f3b10e95f0bafac088aff4bdaac448f9111 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Tue, 14 Mar 2023 15:07:37 +0100
+Subject: [PATCH 11/18] Dont use parameter type
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ hw/ip/prim/rtl/prim_flop_macros.sv     |  2 --
+ hw/ip/prim/rtl/prim_sparse_fsm_flop.sv | 12 ++++++------
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/hw/ip/prim/rtl/prim_flop_macros.sv b/hw/ip/prim/rtl/prim_flop_macros.sv
+index edae459a2..5e9c88306 100644
+--- a/hw/ip/prim/rtl/prim_flop_macros.sv
++++ b/hw/ip/prim/rtl/prim_flop_macros.sv
+@@ -44,7 +44,6 @@
+ `define PRIM_FLOP_SPARSE_FSM(__name, __d, __q, __type, __resval = `PRIM_FLOP_RESVAL, __clk = `PRIM_FLOP_CLK, __rst_n = `PRIM_FLOP_RST, __alert_trigger_sva_en = 1) \
+   `ifdef SIMULATION                                   \
+     prim_sparse_fsm_flop #(                           \
+-      .StateEnumT(__type),                            \
+       .Width($bits(__type)),                          \
+       .ResetValue($bits(__type)'(__resval)),          \
+       .EnableAlertTriggerSVA(__alert_trigger_sva_en), \
+@@ -59,7 +58,6 @@
+     `ASSERT(``__name``_A, __q === ``__name``.state_o) \
+   `else                                               \
+     prim_sparse_fsm_flop #(                           \
+-      .StateEnumT(__type),                            \
+       .Width($bits(__type)),                          \
+       .ResetValue($bits(__type)'(__resval)),          \
+       .EnableAlertTriggerSVA(__alert_trigger_sva_en)  \
+diff --git a/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv b/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv
+index ca2599e36..5ac647a56 100644
+--- a/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv
++++ b/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv
+@@ -6,7 +6,7 @@
+ 
+ module prim_sparse_fsm_flop #(
+   parameter int               Width      = 1,
+-  parameter type              StateEnumT = logic [Width-1:0],
++  //parameter type              logic [10:0] = logic [Width-1:0],
+   parameter logic [Width-1:0] ResetValue = '0,
+   // This should only be disabled in special circumstances, for example
+   // in non-comportable IPs where an error does not trigger an alert.
+@@ -21,8 +21,8 @@ module prim_sparse_fsm_flop #(
+ ) (
+   input             clk_i,
+   input             rst_ni,
+-  input  StateEnumT state_i,
+-  output StateEnumT state_o
++  input logic [10:0] state_i,
++  output logic [10:0] state_o
+ );
+ 
+   logic unused_err_o;
+@@ -37,15 +37,15 @@ module prim_sparse_fsm_flop #(
+     .d_i(state_i),
+     .q_o(state_raw)
+   );
+-  assign state_o = StateEnumT'(state_raw);
++  assign state_o = state_raw;
+ 
+   `ifdef INC_ASSERT
+   assign unused_err_o = is_undefined_state(state_o);
+ 
+-  function automatic logic is_undefined_state(StateEnumT sig);
++  function automatic logic is_undefined_state(logic [10:0] sig);
+     // This is written with a vector in order to make it amenable to x-prop analysis.
+     logic is_defined = 1'b0;
+-    for (int i = 0, StateEnumT t = t.first(); i < t.num(); i += 1, t = t.next()) begin
++    for (int i = 0, logic [10:0] t = t.first(); i < t.num(); i += 1, t = t.next()) begin
+       is_defined |= (sig === t);
+     end
+     return ~is_defined;
+-- 
+2.39.0
+

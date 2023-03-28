@@ -1,0 +1,35 @@
+From ced3c12df5a5e91e200b6c76f42254c419eee998 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Tue, 14 Mar 2023 12:30:53 +0100
+Subject: [PATCH 07/18] Remove usage of non existance struct elements
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ hw/ip/rstmgr/rtl/rstmgr.sv | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ip/rstmgr/rtl/rstmgr.sv b/hw/ip/rstmgr/rtl/rstmgr.sv
+index 1bbbe6463..0ffadf329 100644
+--- a/hw/ip/rstmgr/rtl/rstmgr.sv
++++ b/hw/ip/rstmgr/rtl/rstmgr.sv
+@@ -169,7 +169,7 @@ module rstmgr
+     ) u_rst_sw_ctrl_reg (
+       .clk_i,
+       .rst_ni(local_rst_n),
+-      .we(reg2hw.sw_rst_ctrl_n[i].qe & reg2hw.sw_rst_regen[i]),
++      .we(reg2hw.sw_rst_ctrl_n[i].qe & reg2hw.sw_rst_regwen[i]),
+       .wd(reg2hw.sw_rst_ctrl_n[i].q),
+       .de('0),
+       .d('0),
+@@ -552,7 +552,7 @@ module rstmgr
+   ) u_cpu_reset_synced (
+     .clk_i,
+     .rst_ni(local_rst_n),
+-    .d_i(cpu_i.rst_cpu_n),
++    .d_i(),
+     .q_o(rst_cpu_nq)
+   );
+ 
+-- 
+2.39.0
+
