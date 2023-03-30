@@ -40,24 +40,7 @@ ${OPENTITAN}/.gitpatch:
 
 ${OPENTITAN}/.gitpatch_synth:
 	cd ${OPENTITAN} \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0001-Fix-Failed-to-detect-width-for-parameter.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0002-Fix-segmentation-fault.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0003-Fix-Assert-node-type-AST_STRUCT_ITEM.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0004-Fix-Couldn-t-find-ancestor-for-tagged-pattern.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0005-Fix-wire-not-found.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0006-Move-ibex_pmp_reset.svh-to-ibex_cs_registers.sv.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0007-Remove-usage-of-non-existance-struct-elements.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0008-Dont-assign-to-wire-on-definition-in-functions.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0009-Dont-use-parameters-in-genblock.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0010-Don-t-use-assignment-pattern-inside-assignment-patte.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0011-Dont-use-parameter-type.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0012-Replace-unsupported-stream-op-without-lhs.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0013-Comment-out-output-to-constant-after-optimization.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0014-Fix-rstmgr_pkg-usage-in-custom_tiny.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0015-Update-top-custom_tiny.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0016-Update-python-requirements.txt.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0017-Fix-ID-not-found.patch \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/0018-Fix-some-out-of-range-access.patch \
+                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/*.patch \
 		&& touch $@
 
 ${VENV_OT_SYNTH}: | ${OPENTITAN}/.gitpatch_synth
