@@ -344,7 +344,7 @@ jobs:
       - name: Create venv
         run: |
           export PATH="$PWD/image/bin:$PATH"
-          cd uhdm-tests/opentitan/opentitan-parsing-test
+          cd uhdm-tests/opentitan/opentitan_parsing_test
 
           make gen-opentitan-deps-mk
 
@@ -353,7 +353,7 @@ jobs:
           export PATH="$PWD/image/bin:$PATH"
           source .github/scripts/common.sh
           enable_vivado 2017.2
-          cd uhdm-tests/opentitan/opentitan-parsing-test
+          cd uhdm-tests/opentitan/opentitan_parsing_test
 
           make -rR -j${PARALLEL_JOBS:-1} -Otarget \
               ${{ matrix.make-args }} \
@@ -364,7 +364,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           export PATH="$PWD/image/bin:$PATH"
-          cd uhdm-tests/opentitan/opentitan-parsing-test
+          cd uhdm-tests/opentitan/opentitan_parsing_test
           make summary
           make summary.md
           cat build/results/summary.md > $GITHUB_STEP_SUMMARY
@@ -378,10 +378,10 @@ jobs:
         with:
           name: opentitan-logs-${{ matrix.file-name }}
           path: |
-            ./uhdm-tests/opentitan/opentitan-parsing-test/build/results
-            ./uhdm-tests/opentitan/opentitan-parsing-test/build/*.log
-            ./uhdm-tests/opentitan/opentitan-parsing-test/build/*.dot
-            ./uhdm-tests/opentitan/opentitan-parsing-test/build/opentitan_deps.mk
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/results
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.log
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.dot
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/opentitan_deps.mk
 
       - name: Upload load graphs
         if: ${{ always() }}
