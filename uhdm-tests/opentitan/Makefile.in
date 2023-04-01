@@ -1,15 +1,11 @@
 curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
-# distinguish two different submodules of opentitan
-OPENTITAN_9d82960888 = ${curr_dir}/opentitan-9d82960888
-OPENTITAN = ${curr_dir}/opentitan
-OPENTITAN_SYNTH_PATCHES_DIR = ${curr_dir}/opentitan_synth_patches
-VENV_OT_9d82960888 = ${root_dir}/venv-opentitan-9d82960888
-VENV_OT = ${root_dir}/venv-opentitan
-VENV_OT_SYNTH = ${root_dir}/venv-opentitan-synth
 
 ##############################
 ###  OPENTITAN_9d82960888  ###
 ##############################
+VENV_OT_9d82960888 = ${root_dir}/venv-opentitan-9d82960888
+OPENTITAN_9d82960888 = ${curr_dir}/opentitan-9d82960888
+
 ${OPENTITAN_9d82960888}/.gitpatch:
 	cd ${OPENTITAN_9d82960888} && git apply ${curr_dir}/0001-Add-opentitan-patch-for-uhdm.patch && touch $@
 
@@ -24,16 +20,16 @@ uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN_9d82960888}/.gitpatc
 		. ${VENV_OT_9d82960888}/bin/activate && \
 		fusesoc --cores-root=${OPENTITAN_9d82960888} run --flag=fileset_ip --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem")
 
-
 #################
 ### OPENTITAN ###
 #################
+VENV_OT_SYNTH = ${root_dir}/venv-opentitan-synth
+OPENTITAN_SYNTH_PATCHES_DIR = ${curr_dir}/opentitan_synth_patches
+OPENTITAN = ${curr_dir}/opentitan
+
 TOP := lowrisc:systems_custom_tiny:chip_custom_tiny_nexysvideo:0.1
 TOP_HW_DIR := ${OPENTITAN}/hw/top_custom_tiny
-TOP_SV := ${OPENTITAN}/hw/top_custom_tiny/rtl/top_custom_tiny.sv
 TOP_HJSON := ${OPENTITAN}/hw/top_custom_tiny/data/top_custom_tiny.hjson
-DEPS_DOT = ${OPENTITAN}/$(subst :,_,${TOP}).dot
-DEPS_SVG = ${root_dir}/opentitan_dependency_graph.svg
 
 ${OPENTITAN}/.gitpatch:
 	cd ${OPENTITAN} && git apply ${curr_dir}/0001-Add-core-files-for-processing-Earlgrey-in-Yosys.patch && git apply ${curr_dir}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch && touch $@
@@ -54,37 +50,3 @@ uhdm/yosys/synth-opentitan-build-tiny: clean-build | ${OPENTITAN}/.gitpatch_synt
 		. ${VENV_OT_SYNTH}/bin/activate && \
 		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_top --flag=ot_is_custom_tiny --build --tool yosys --target=synth ${TOP})
 
-${VENV_OT}: | ${OPENTITAN}/.gitpatch
-	virtualenv ${VENV_OT}
-	(. ${VENV_OT}/bin/activate && \
-		pip install -r ${OPENTITAN}/python-requirements.txt && \
-		pip install pygraphviz && \
-		pip install networkx && \
-		git clone https://github.com/lowRISC/fusesoc.git -b ot-0.3 && \
-		cd fusesoc && \
-		git apply ${curr_dir}/0001-allow-processing-cores-without-top-module.patch && \
-		pip install --upgrade --force-reinstall --no-dependencies . && \
-		cd - && \
-		rm -rf fusesoc)
-
-${TOP_SV}: | ${VENV_OT}
-	(. ${VENV_OT}/bin/activate && \
-	cd ${TOP_HW_DIR} && \
-	../../util/topgen.py -t ${TOP_HJSON} -o . -v)
-
-${DEPS_DOT}: | ${OPENTITAN}/.gitpatch ${VENV_OT}
-	(. ${VENV_OT}/bin/activate && \
-		cd ${OPENTITAN} && \
-		fusesoc --cores-root=. dep graph ${TOP})
-
-opentitan_report ${DEPS_SVG} &: | ${OPENTITAN}/.gitpatch ${DEPS_DOT} ${VENV_OT} ${TOP_SV}
-	(export PATH=${root_dir}/../image/bin:${PATH} && \
-		. ${VENV_OT}/bin/activate && \
-		cd ${OPENTITAN} && \
-		python3 ${curr_dir}/iterate_cores.py ${DEPS_DOT} --skiplist ${curr_dir}/ot-cores-skiplist.txt --passlist ${curr_dir}/ot-cores-passlist.txt && \
-		dot -Tsvg graph.dot > ${DEPS_SVG} && \
-		mv ${OPENTITAN}/build ${root_dir}/opentitan_build && \
-		mv ${OPENTITAN}/result.txt ${root_dir}/opentitan_report.txt)
-
-# generate TOP_SV each time
-.PHONY: ${TOP_SV} opentitan_report

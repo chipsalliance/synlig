@@ -283,16 +283,29 @@ jobs:
             **/plot_*.svg
 
   opentitan_parse_report:
-    name: Opentitan (parsing report)
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
+    strategy:
+      matrix:
+        include:
+          - name: full/top-down
+            file-name: full
+            make-args: 'TOP_DOWN_TEST:=1'
+          - name: quick
+            file-name: quick
+            make-args:
+      fail-fast: false
+    name: Opentitan parsing (${{ matrix.name }})
     env:
       CC: gcc-9
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
-      GHA_MACHINE_TYPE: "n2-highmem-8"
+      GHA_MACHINE_TYPE: "n2-highmem-32"
+      PARALLEL_JOBS: 32
+      # Minimum free RAM (in percents) required to start a test
+      MIN_FREE_MEM_TO_START_TEST: 20
 
     steps:
       - uses: actions/checkout@v3
@@ -309,9 +322,10 @@ jobs:
           apt install -y software-properties-common
           add-apt-repository ppa:ubuntu-toolchain-r/test
           apt-get update -qq
-          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5 graphviz libgraphviz-dev pkg-config
+          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev ninja-build srecord libftdi1-dev git python3-pip libtinfo5 graphviz libgraphviz-dev pkg-config time
           update-alternatives --install /usr/bin/python python /usr/bin/python3 1
           update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          pip install virtualenv
 
       - uses: actions/checkout@v2
         with:
@@ -327,42 +341,47 @@ jobs:
       - name: Extract
         run: tar -xf binaries.tar
 
+      - name: Create venv
+        run: |
+          export PATH="$PWD/image/bin:$PATH"
+          cd uhdm-tests/opentitan/opentitan_parsing_test
+
+          make gen-opentitan-deps-mk
+
       - name: Parse OpenTitan components
         run: |
+          export PATH="$PWD/image/bin:$PATH"
           source .github/scripts/common.sh
           enable_vivado 2017.2
-          pip install virtualenv
-          ./UHDM-integration-tests/.github/ci.sh
-        env:
-          TARGET: opentitan_report
-          TEST_CASE: tests/opentitan
+          cd uhdm-tests/opentitan/opentitan_parsing_test
 
-      - name: Generate summary
+          make -rR -j${PARALLEL_JOBS:-1} -Otarget \
+              ${{ matrix.make-args }} \
+              MIN_FREE_MEM_TO_START_TEST:=${MIN_FREE_MEM_TO_START_TEST} \
+              test || :
+
+      - name: Summary
+        if: ${{ !cancelled() }}
         run: |
-          cat ./UHDM-integration-tests/opentitan_report.txt | tee $GITHUB_STEP_SUMMARY
-          if grep -iq 'Unexpected \(pass\|fail\)' ./UHDM-integration-tests/opentitan_report.txt; then
-            exit 1
-          fi
-
-      - name: Prune the build directory
-        if: ${{ !cancelled() }}
-        run: find ./UHDM-integration-tests/opentitan_build -name "src" | xargs rm -rf
-
-      - name: Upload dependency graph
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: opentitan_dependency_graph.svg
-          path: |
-            ./UHDM-integration-tests/opentitan_dependency_graph.svg
+          export PATH="$PWD/image/bin:$PATH"
+          cd uhdm-tests/opentitan/opentitan_parsing_test
+          make summary
+          make summary.md
+          cat build/results/summary.md > $GITHUB_STEP_SUMMARY
+          rm build/results/summary.md
+          # Exits with non-zero when there are unexpected passes or fails
+          make check-status
 
       - name: Upload logs
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v2
         with:
-          name: opentitan-logs
+          name: opentitan-logs-${{ matrix.file-name }}
           path: |
-            ./UHDM-integration-tests/opentitan_build
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/results
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.log
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.dot
+            ./uhdm-tests/opentitan/opentitan_parsing_test/build/opentitan_deps.mk
 
       - name: Upload load graphs
         if: ${{ always() }}
