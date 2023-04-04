@@ -458,7 +458,6 @@ sv2v:error/size_cast_xpr_lit.sv
 sv2v:core/interface_type_param.v
 sv2v:lex/line.v
 sv2v:core/struct_array_param.v
-sv2v:core/function_void.sv
 sv2v:core/package_self_reference.sv
 sv2v:core/paramtype_stagger.sv
 sv2v:core/unpacked_localparam.sv
