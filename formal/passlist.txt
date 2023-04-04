@@ -715,3 +715,5 @@ sv2v:core/multipack_delayed.v
 sv2v:core/multipack_delayed.sv
 sv2v:lex/block_comment.sv
 UHDM-integration-tests:WireNotStartingFromZero/top.sv
+yosys:opt/opt_share_large_pmux_part.v
+yosys:opt/opt_share_large_pmux_cat.v
