@@ -209,6 +209,40 @@ This method can be used to test changes limited to `yosys-f4pga-plugins` submodu
 
      gh workflow run main --ref master -f plugins_branch=$PLUGINS_BRANCH_NAME
 
+Testing locally
+---------------
+
+Formal Verification
+^^^^^^^^^^^^^^^^^^^
+
+Formal verification tests are started using ``run_fv_tests.mk``, either as an executable or by using make:
+
+.. code-block::
+   :name: run-fv-tests-exec
+
+   ./run_fv_tests.mk [make_args...] \
+         TEST_SUITE_DIR:=<test_suite_dir> \
+         [TEST_SUITE_NAME:=<test_suite_name>] \
+         [target...]
+
+.. code-block::
+   :name: run-fv-tests-make
+
+   make -f ./run_fv_tests.mk [make_args] [args...] [target...]
+
+* ``test_suite_dir`` - Path to a tests directory (e.g. ``./yosys/tests``). Required by all targets except ``help``.
+* ``test_suite_name`` - When specified, it is used as a name of a directory inside ``./build/`` where results are stored. Otherwise results are stored directly inside ``./build/`` directory.
+
+``yosys`` and ``sv2v`` must be present in one of ``PATH`` directories.
+For other dependencies please see ``.github/workflows/formal-verification.yml`` file.
+
+Available Targets
+"""""""""""""""""
+
+* ``help`` - Prints help.
+* ``list`` - Prints tests available in specified ``test_suite_dir``. Each test from the list is itself a valid target.
+* ``test`` - Runs all tests from ``test_suite_dir``.
+
 General & debugging tips
 ------------------------
 
