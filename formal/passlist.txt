@@ -177,7 +177,6 @@ yosys:simple/macros.v
 yosys:asicworld/code_hdl_models_one_hot_cnt.v
 yosys:asicworld/code_verilog_tutorial_mux_21.v
 yosys:asicworld/code_hdl_models_decoder_2to4_gates.v
-yosys:simple/multiplier.v
 yosys:asicworld/code_verilog_tutorial_decoder_always.v
 yosys:simple/graphtest.v
 yosys:asicworld/code_verilog_tutorial_multiply.v
@@ -715,3 +714,5 @@ sv2v:core/multipack_delayed.v
 sv2v:core/multipack_delayed.sv
 sv2v:lex/block_comment.sv
 UHDM-integration-tests:WireNotStartingFromZero/top.sv
+yosys:opt/opt_share_large_pmux_part.v
+yosys:opt/opt_share_large_pmux_cat.v
