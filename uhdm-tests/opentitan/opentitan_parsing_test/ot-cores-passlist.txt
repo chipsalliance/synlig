@@ -121,3 +121,4 @@ lowrisc:tlul:sram2tlul:0.1
 lowrisc:tlul:trans_intg:0.1
 lowrisc:tool:check_tool_requirements:0.1
 pulp-platform:riscv-dbg:0.1:0
+lowrisc:ip:otp_ctrl:1.0
