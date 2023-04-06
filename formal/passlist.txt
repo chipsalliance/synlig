@@ -716,3 +716,4 @@ UHDM-integration-tests:WireNotStartingFromZero/top.sv
 yosys:opt/opt_share_large_pmux_part.v
 yosys:opt/opt_share_large_pmux_cat.v
 UHDM-integration-tests:FunctionWireAssignmentOnDeclaration/top.sv
+UHDM-integration-tests:UnionCustomTypeMultirange/top.sv
