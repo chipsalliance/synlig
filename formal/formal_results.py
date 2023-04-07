@@ -129,7 +129,7 @@ def process_data(results_path, result_keys: list, result_description_keys: list)
 
         full_test_name = f"{test_suite_name}:{test}"
         if (results[test].get("yosys") == "OK" and results[test].get("surelog") == "PASS") or \
-           (results[test].get("sv2v_yosys") == "OK" and results[test].get("sv2v_surelog") == "PASS"):
+           (results[test].get("sv2v_yosys") == "OK" and results[test].get("surelog") == "PASS"):
             if full_test_name not in passlist_contents:
                 passed_should_fail.append(full_test_name)
         else: # Any other result is effectively FAIL
