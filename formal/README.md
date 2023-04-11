@@ -15,16 +15,16 @@ graph TD;
 
     A-->|"FAIL"|B;
     B-->|"OK"|C2;
-    C2-->E;
+    C2-->|"OK"|E;
     B-->|"OK"|G;
-    G-->|"OK"|F;
+    G-->F;
 
     A-->|"OK"|C1;
     C1-->|"OK"|D;
 
-    G-->|"FAIL"|X;
+    C2-->|"FAIL"|X;
     B-->|"FAIL"|X;
-    F-->|"FAIL"|X;
+    E-->|"FAIL"|X;
     C1-->|"FAIL"|X;
     D-->|"FAIL"|X;
 ```
