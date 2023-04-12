@@ -161,7 +161,6 @@ yosys:simple/constmuldivmod.v
 yosys:asicworld/code_hdl_models_serial_crc.v
 yosys:asicworld/code_hdl_models_pri_encoder_using_assign.v
 yosys:sim/sdff.v
-yosys:opt/opt_lut.v
 yosys:asicworld/code_hdl_models_dff_async_reset.v
 yosys:opt/opt_share_diff_port_widths.v
 yosys:asicworld/code_hdl_models_dff_sync_reset.v
@@ -433,7 +432,6 @@ sv2v:core/interface_type_param.v
 sv2v:lex/line.v
 sv2v:core/struct_array_param.v
 sv2v:core/package_self_reference.sv
-sv2v:core/paramtype_stagger.sv
 sv2v:core/simple_loop_jump.v
 sv2v:core/param_list_unpacked.v
 sv2v:core/paramtype_expr.v
@@ -561,7 +559,6 @@ sv2v:lex/string_macro.v
 sv2v:core/paramtype_param_default.v
 sv2v:lib/empty.v
 sv2v:core/class_ident.v
-sv2v:core/paramtype_param_default.sv
 sv2v:core/data_lifetime.sv
 sv2v:core/package_scope.v
 sv2v:core/multi_array_decl.v
@@ -661,3 +658,4 @@ UHDM-integration-tests:ParameterInitializedInSubModuleOfTopOf5LevelHierarchy/top
 UHDM-integration-tests:GenIfInside/top.sv
 UHDM-integration-tests:ParameterRangeUsingDot/top.sv
 sv2v:core/param_list_unpacked.sv
+yosys:simple/operators.v
