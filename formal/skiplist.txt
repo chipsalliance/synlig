@@ -66,3 +66,6 @@ UHDM-integration-tests:ibex/uvm/ibex_decoder_tb.sv
 UHDM-integration-tests:VoidFunction2Returns/top.sv
 UHDM-integration-tests:VoidFunction/top.sv
 UHDM-integration-tests:VoidFunctionWithoutReturn/top.sv
+yosys:opt/opt_lut.v
+sv2v:core/paramtype_param_default.sv
+sv2v:core/paramtype_stagger.sv
