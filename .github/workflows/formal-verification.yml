@@ -3,6 +3,9 @@ name: Formal Verification Tests
 on:
   workflow_call:
 
+env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
+
 jobs:
   tests-formal-verification:
     runs-on: [self-hosted, Linux, X64]
@@ -25,7 +28,6 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-highmem-8"
-      GHA_CUSTOM_LINE_PREFIX: "▌"
       PARSER: yosys-plugin
       TEST_SUITE_DIR: ${{ matrix.test-suite }}
       TEST_SUITE_NAME: ${{ matrix.name }}

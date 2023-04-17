@@ -4,6 +4,7 @@ on:
   workflow_call:
 
 env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
   TESTS_TO_SKIP: ibex swerv synthesis opentitan serv serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass
     Continue AnonymousUnion ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule
     VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes
@@ -31,7 +32,6 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
-      GHA_CUSTOM_LINE_PREFIX: "▌"
       PARSER: surelog
 
     steps:
@@ -107,7 +107,6 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
-      GHA_CUSTOM_LINE_PREFIX: "▌"
       PARSER: yosys-plugin
 
     steps:
