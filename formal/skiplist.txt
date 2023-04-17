@@ -51,10 +51,13 @@
 # UHDM-integration-tests:VoidFunction/top.sv
 # UHDM-integration-tests:VoidFunctionWithoutReturn/top.sv
 ########################################################################################
-# This tests sometimes fails due to how yosys assigns
+# This test sometimes fails due to how yosys assigns
 # wires to cells and the fact, that currently formal verification
 # requires the same order of assignments
 yosys:opt/opt_lut.v
+########################################################################################
+# Type parameters in top modules cause the modules to be renamed
+# and handled incorrectly in verification scripts.
 sv2v:core/paramtype_param_default.sv
 sv2v:core/paramtype_stagger.sv
 ########################################################################################
