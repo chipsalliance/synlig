@@ -676,3 +676,4 @@ UHDM-integration-tests:BitsCallOnParametetrizedTypeFromPackage/top.sv
 UHDM-integration-tests:synthesis/dff.sv
 UHDM-integration-tests:FunctionOnDesignLevel/top.sv
 sv2v:lex/macro_arg_escape.sv
+UHDM-integration-tests:ModuleUsingStuctInput/top.sv
