@@ -31,6 +31,7 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
       PARSER: surelog
 
     steps:
@@ -106,6 +107,7 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
       PARSER: yosys-plugin
 
     steps:

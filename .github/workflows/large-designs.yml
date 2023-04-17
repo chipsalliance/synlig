@@ -139,6 +139,7 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
       GHA_MACHINE_TYPE: "n2-highmem-8"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
 
     steps:
       - uses: actions/checkout@v3
@@ -230,6 +231,7 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
       GHA_MACHINE_TYPE: "n2-highmem-32"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
 
     steps:
       - uses: actions/checkout@v3
@@ -303,6 +305,7 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
       GHA_MACHINE_TYPE: "n2-highmem-32"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
       PARALLEL_JOBS: 32
       # Minimum free RAM (in percents) required to start a test
       MIN_FREE_MEM_TO_START_TEST: 20

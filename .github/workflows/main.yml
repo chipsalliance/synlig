@@ -32,6 +32,7 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
       PLUGIN_ASAN: 1
       GHA_MACHINE_TYPE: "n2-highmem-8"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
 
     steps:
       - uses: actions/checkout@v3
@@ -115,6 +116,7 @@ jobs:
     env:
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-4"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
 
     steps:
       - uses: actions/checkout@v3
@@ -282,6 +284,7 @@ jobs:
     env:
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
+      GHA_CUSTOM_LINE_PREFIX: "▌"
 
     steps:
       - name: Install Yosys and dependencies
