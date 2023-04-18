@@ -3,6 +3,9 @@ name: Formal Verification Tests
 on:
   workflow_call:
 
+env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
+
 jobs:
   tests-formal-verification:
     runs-on: [self-hosted, Linux, X64]

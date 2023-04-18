@@ -6,6 +6,9 @@ on:
       - master
   pull_request:
 
+env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
+
 jobs:
   test-plugin-from-sources:
     runs-on: [self-hosted, Linux, X64]

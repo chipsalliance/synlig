@@ -20,6 +20,9 @@ on:
       - master
   pull_request:
 
+env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
+
 jobs:
   build-binaries:
     name: Build Binaries

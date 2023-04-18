@@ -3,6 +3,9 @@ name: Large Designs Tests
 on:
   workflow_call:
 
+env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
+
 jobs:
   ibex_synth:
     name: Ibex (Vivado synthesis)
