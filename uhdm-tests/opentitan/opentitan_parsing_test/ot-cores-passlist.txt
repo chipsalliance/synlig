@@ -149,3 +149,4 @@ lowrisc:systems_custom_tiny:sensor_ctrl_reg:0.1
 lowrisc:ip:kmac_pkg:0.1
 lowrisc:ip:sha3:0.1
 lowrisc:ip:pinmux:0.1
+lowrisc:ip:otp_ctrl:1.0

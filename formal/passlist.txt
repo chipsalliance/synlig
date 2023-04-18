@@ -676,3 +676,13 @@ UHDM-integration-tests:BitsCallOnParametetrizedTypeFromPackage/top.sv
 UHDM-integration-tests:synthesis/dff.sv
 UHDM-integration-tests:FunctionOnDesignLevel/top.sv
 sv2v:lex/macro_arg_escape.sv
+UHDM-integration-tests:ModuleUsingStuctInput/top.sv
+UHDM-integration-tests:TypeParameterAsPortTypeWithLogicAnonymous/top.sv
+UHDM-integration-tests:TypeParameterAsPortTypeWithLogic/top.sv
+UHDM-integration-tests:TypeParameterAsPortTypeWithEnumOfParametrizedWidth/top.sv
+UHDM-integration-tests:TypeParameterAsPortTypeWithEnum/top.sv
+UHDM-integration-tests:ClogOfParamOfInstanceInitializedByStructMember/top.sv
+sv2v:core/struct_bit_struct.sv
+sv2v:relong/split_struct.sv
+sv2v:relong/gen_struct.sv
+UHDM-integration-tests:TypedefOnFileLevel/top.sv
