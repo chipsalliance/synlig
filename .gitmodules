@@ -28,3 +28,12 @@
 [submodule "uhdm-tests/opentitan/opentitan"]
 	path = uhdm-tests/opentitan/opentitan
 	url = https://github.com/antmicro/opentitan.git
+[submodule "uhdm-tests/black-parrot/black-parrot"]
+	path = uhdm-tests/black-parrot/black-parrot
+	url = https://github.com/black-parrot/black-parrot.git
+[submodule "uhdm-tests/black-parrot/black-parrot-tools"]
+	path = uhdm-tests/black-parrot/black-parrot-tools
+	url = https://github.com/black-parrot/black-parrot-tools
+[submodule "uhdm-tests/black-parrot/black-parrot-sdk"]
+	path = uhdm-tests/black-parrot/black-parrot-sdk
+	url = https://github.com/black-parrot-sdk/black-parrot-sdk.git

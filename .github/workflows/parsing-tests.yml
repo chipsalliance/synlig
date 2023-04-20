@@ -16,7 +16,7 @@ env:
     StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter RealValue BitsCallOnParametetrizedTypeFromPackage
     AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor NestedPatternPassedAsPort StreamOp
     NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect
-    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction
+    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction black-parrot
 
 jobs:
   tests-read-uhdm:
