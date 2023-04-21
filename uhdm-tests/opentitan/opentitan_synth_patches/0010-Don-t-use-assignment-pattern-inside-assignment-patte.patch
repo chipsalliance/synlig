@@ -59,15 +59,6 @@ index 94825c267..6c6b87908 100644
  
  
    ////////////////////////////
-@@ -389,7 +374,7 @@ package flash_ctrl_pkg;
-     logic [BusFullWidth-1:0] prog_data;
-     logic                 prog_last;
-     flash_prog_e          prog_type;
--    mp_region_cfg_t [MpRegions:0] region_cfgs;
-+    logic [375:0] region_cfgs;
-     logic [KeyWidth-1:0]  addr_key;
-     logic [KeyWidth-1:0]  data_key;
-     logic [KeyWidth-1:0]  rand_addr_key;
 diff --git a/hw/top_custom_tiny/rtl/autogen/chip_custom_tiny_nexysvideo.sv b/hw/top_custom_tiny/rtl/autogen/chip_custom_tiny_nexysvideo.sv
 index 4233b44e6..63f91e9ee 100644
 --- a/hw/top_custom_tiny/rtl/autogen/chip_custom_tiny_nexysvideo.sv
