@@ -154,3 +154,4 @@ lowrisc:ip:pinmux_component:0.1
 lowrisc:systems_custom_tiny:rstmgr_pkg:0.1
 lowrisc:systems_custom_tiny:rstmgr_reg:0.1
 lowrisc:systems_custom_tiny:physical_pads:0.1
+lowrisc:ip:otbn:0.1
