@@ -1,0 +1,14 @@
+diff --git a/frontends/ast/genrtlil.cc b/frontends/ast/genrtlil.cc
+index eaf6553ce..ee7121548 100644
+--- a/frontends/ast/genrtlil.cc
++++ b/frontends/ast/genrtlil.cc
+@@ -841,6 +841,9 @@ void AstNode::detectSignWidthWorker(int &width_hint, bool &sign_hint, bool *foun
+ 		}
+ 		if (!id_ast)
+ 			log_file_error(filename, location.first_line, "Failed to resolve identifier %s for width detection!\n", str.c_str());
++		if (id_ast->type == AST_TYPEDEF) {
++			id_ast = id_ast->children[0];
++		}
+ 		if (id_ast->type == AST_PARAMETER || id_ast->type == AST_LOCALPARAM || id_ast->type == AST_ENUM_ITEM) {
+ 			if (id_ast->children.size() > 1 && id_ast->children[1]->range_valid) {
+ 				this_width = id_ast->children[1]->range_left - id_ast->children[1]->range_right + 1;

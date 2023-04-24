@@ -487,13 +487,18 @@ jobs:
             **/plot_*.svg
 
   blackparrot_synth:
-    name: Black Parrot (synthesis)
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
+    strategy:
+      matrix:
+        vars: [ {cfg: e_bp_unicore_cfg, machine: n2-highmem-8}, {cfg: e_bp_multicore_1_cfg, machine: n2-highmem-8}, {cfg: e_bp_multicore_1_cce_ucode_cfg, machine: n2-highmem-8}, {cfg: e_bp_multicore_4_cfg, machine: n2-highmem-32}, {cfg: e_bp_multicore_4_cce_ucode_cfg, machine: n2-highmem-32} ]
+      fail-fast: false
+    name: Black Parrot (${{ matrix.vars.cfg }} - synthesis)
     env:
       CC: gcc-9
       CXX: g++-9
       DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: ${{ matrix.vars.machine }}
 
     steps:
       - uses: actions/checkout@v3
@@ -540,11 +545,12 @@ jobs:
         env:
           TARGET: uhdm/yosys/synth-blackparrot-build
           TEST_CASE: tests/black-parrot
+          BLACKPARROT_CFG: ${{ matrix.vars.cfg }}
 
       - uses: actions/upload-artifact@v2
         with:
-          name: bp_unicore.edif
-          path: uhdm-tests/black-parrot/black-parrot/bp_top/syn/bp_unicore.edif
+          name: bp_${{ matrix.vars.cfg }}.edif
+          path: UHDM-integration-tests/build/bp_${{ matrix.vars.cfg }}.edif
 
       - name: Upload load graphs
         if: ${{ always() }}

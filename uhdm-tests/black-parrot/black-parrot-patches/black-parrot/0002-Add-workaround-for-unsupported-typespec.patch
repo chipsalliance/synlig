@@ -1,0 +1,33 @@
+From 0a5300004fc90bae4b0dbc214ff331e5a25cd5a6 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Wed, 26 Apr 2023 09:17:48 +0200
+Subject: [PATCH 2/4] Add workaround for unsupported typespec
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ bp_common/src/include/bp_common_bedrock_if.svh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/bp_common/src/include/bp_common_bedrock_if.svh b/bp_common/src/include/bp_common_bedrock_if.svh
+index ac7acf8f..5118d0ee 100644
+--- a/bp_common/src/include/bp_common_bedrock_if.svh
++++ b/bp_common/src/include/bp_common_bedrock_if.svh
+@@ -196,10 +196,14 @@
+     `declare_bp_bedrock_header_width(addr_width_mp, mem_fwd_payload_width_lp, mem_fwd)  \
+     `declare_bp_bedrock_header_width(addr_width_mp, mem_rev_payload_width_lp, mem_rev)
+ 
++    //declare_bp_bedrock_mem_payload_s macro defines `bp_bedrock_mem_fwd_payload_s` struct,
++    //and creates typedef `bp_bedrock_mem_rev_payload_s` that is equal to
++    //`bp_bedrock_mem_fwd_payload_s` but Surelog doesn't see it. Use
++    //`bp_bedrock_mem_fwd_payload_s` directly for now.
+   `define declare_bp_bedrock_mem_if(addr_width_mp, did_width_mp, lce_id_width_mp, lce_assoc_mp) \
+     `declare_bp_bedrock_mem_payload_s(did_width_mp, lce_id_width_mp, lce_assoc_mp); \
+     `declare_bp_bedrock_header_s(addr_width_mp, bp_bedrock_mem_fwd_payload_s, mem_fwd); \
+-    `declare_bp_bedrock_header_s(addr_width_mp, bp_bedrock_mem_rev_payload_s, mem_rev) \
++    `declare_bp_bedrock_header_s(addr_width_mp, bp_bedrock_mem_fwd_payload_s, mem_rev) \
+ 
+   `define declare_bp_bedrock_if_widths(addr_width_mp, payload_width_mp, name_mp) \
+     , localparam ``name_mp``_msg_payload_width_lp = payload_width_mp \
+-- 
+2.39.0
+
