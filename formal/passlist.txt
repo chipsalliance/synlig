@@ -686,3 +686,4 @@ sv2v:core/struct_bit_struct.sv
 sv2v:relong/split_struct.sv
 sv2v:relong/gen_struct.sv
 UHDM-integration-tests:TypedefOnFileLevel/top.sv
+UHDM-integration-tests:PatternAssignmentOfStructParam/top.sv
