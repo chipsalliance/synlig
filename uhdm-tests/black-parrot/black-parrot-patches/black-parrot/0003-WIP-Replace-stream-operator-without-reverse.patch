@@ -1,0 +1,86 @@
+From 7c93699a9c0002d110aec5c62843084ece7403ba Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Wed, 26 Apr 2023 15:04:59 +0200
+Subject: [PATCH 3/4] WIP: Replace stream operator without reverse
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ bp_me/src/v/cce/bp_cce_dir_segment.sv       | 2 +-
+ bp_me/src/v/cce/bp_cce_pending_bits.sv      | 4 ++--
+ bp_me/src/v/cce/bp_cce_spec_bits.sv         | 4 ++--
+ bp_me/src/v/network/bp_me_addr_to_cce_id.sv | 2 +-
+ bp_top/test/common/bp_nonsynth_host.sv      | 2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/bp_me/src/v/cce/bp_cce_dir_segment.sv b/bp_me/src/v/cce/bp_cce_dir_segment.sv
+index 94abc422..20394392 100644
+--- a/bp_me/src/v/cce/bp_cce_dir_segment.sv
++++ b/bp_me/src/v/cce/bp_cce_dir_segment.sv
+@@ -126,7 +126,7 @@ module bp_cce_dir_segment
+   logic [lg_num_cce_lp-1:0] cce_id_lo;
+   logic [hash_index_width_lp-1:0] set_id_lo;
+   // NOTE: reverse the address to use the low order bits for striping cache blocks across CCEs
+-  wire [lg_sets_lp-1:0] hash_addr_rev = { <<{addr_i[lg_block_size_in_bytes_lp+:lg_sets_lp]}};
++  wire [lg_sets_lp-1:0] hash_addr_rev = addr_i[lg_block_size_in_bytes_lp+:lg_sets_lp]; // TODO: reverse order
+ 
+   bsg_hash_bank
+     #(.banks_p(num_cce_p) // number of CCE's to spread way groups over
+diff --git a/bp_me/src/v/cce/bp_cce_pending_bits.sv b/bp_me/src/v/cce/bp_cce_pending_bits.sv
+index 517c79df..94edd948 100644
+--- a/bp_me/src/v/cce/bp_cce_pending_bits.sv
++++ b/bp_me/src/v/cce/bp_cce_pending_bits.sv
+@@ -62,8 +62,8 @@ module bp_cce_pending_bits
+   // Address to way group hashing
+   // The address to use as input starts at addr_offset_p and is lg_cce_way_groups_lp bits in length
+   logic [hash_idx_width_lp-1:0] r_wg_lo, w_wg_lo;
+-  wire [lg_cce_way_groups_lp-1:0] r_addr_rev = {<< {r_addr_i[addr_offset_p+:lg_cce_way_groups_lp]}};
+-  wire [lg_cce_way_groups_lp-1:0] w_addr_rev = {<< {w_addr_i[addr_offset_p+:lg_cce_way_groups_lp]}};
++  wire [lg_cce_way_groups_lp-1:0] r_addr_rev = r_addr_i[addr_offset_p+:lg_cce_way_groups_lp];// TODO: reverse order
++  wire [lg_cce_way_groups_lp-1:0] w_addr_rev = w_addr_i[addr_offset_p+:lg_cce_way_groups_lp];// TODO: reverse order
+   logic [lg_num_way_groups_lp-1:0] r_wg, w_wg;
+ 
+   bsg_hash_bank
+diff --git a/bp_me/src/v/cce/bp_cce_spec_bits.sv b/bp_me/src/v/cce/bp_cce_spec_bits.sv
+index c0b87884..f6523067 100644
+--- a/bp_me/src/v/cce/bp_cce_spec_bits.sv
++++ b/bp_me/src/v/cce/bp_cce_spec_bits.sv
+@@ -58,8 +58,8 @@ module bp_cce_spec_bits
+ 
+   // Address to way group hashing
+   logic [hash_idx_width_lp-1:0] r_wg_lo, w_wg_lo;
+-  wire [lg_cce_way_groups_lp-1:0] r_addr_rev = {<< {r_addr_i[addr_offset_p+:lg_cce_way_groups_lp]}};
+-  wire [lg_cce_way_groups_lp-1:0] w_addr_rev = {<< {w_addr_i[addr_offset_p+:lg_cce_way_groups_lp]}};
++  wire [lg_cce_way_groups_lp-1:0] r_addr_rev = r_addr_i[addr_offset_p+:lg_cce_way_groups_lp];// TODO: reverse order
++  wire [lg_cce_way_groups_lp-1:0] w_addr_rev = w_addr_i[addr_offset_p+:lg_cce_way_groups_lp];// TODO: reverse order
+   logic [lg_num_way_groups_lp-1:0] r_wg, w_wg;
+ 
+   bsg_hash_bank
+diff --git a/bp_me/src/v/network/bp_me_addr_to_cce_id.sv b/bp_me/src/v/network/bp_me_addr_to_cce_id.sv
+index d3100ed4..b8cd9e76 100644
+--- a/bp_me/src/v/network/bp_me_addr_to_cce_id.sv
++++ b/bp_me/src/v/network/bp_me_addr_to_cce_id.sv
+@@ -48,7 +48,7 @@ module bp_me_addr_to_cce_id
+   // at the cache block granularity
+   logic [lce_sets_width_p-1:0] hash_addr_li;
+   logic [lg_num_cce_lp-1:0] cce_dst_id_lo;
+-  assign hash_addr_li = {<< {paddr_i[block_offset_lp+:lce_sets_width_p]}};
++  assign hash_addr_li = paddr_i[block_offset_lp+:lce_sets_width_p]; //TODO: reverse order
+   bsg_hash_bank
+     #(.banks_p(num_cce_p) // number of CCE's to spread way groups over
+       ,.width_p(lce_sets_width_p) // width of address input
+diff --git a/bp_top/test/common/bp_nonsynth_host.sv b/bp_top/test/common/bp_nonsynth_host.sv
+index 16dd997f..e62db586 100644
+--- a/bp_top/test/common/bp_nonsynth_host.sv
++++ b/bp_top/test/common/bp_nonsynth_host.sv
+@@ -204,7 +204,7 @@ module bp_nonsynth_host
+      );
+ 
+   // Convert to little endian
+-  wire [dword_width_gp-1:0] bootrom_data_reverse = {<<8{bootrom_data_lo}};
++  wire [dword_width_gp-1:0] bootrom_data_reverse = bootrom_data_lo; // TODO: reverse order
+ 
+   logic [dword_width_gp-1:0] bootrom_final_lo;
+   bsg_bus_pack
+-- 
+2.39.0
+
