@@ -552,6 +552,13 @@ jobs:
           name: bp_${{ matrix.vars.cfg }}.edif
           path: UHDM-integration-tests/build/bp_${{ matrix.vars.cfg }}.edif
 
+      - name: Upload logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: blackparrot_build
+          path: UHDM-integration-tests/build
+
       - name: Upload load graphs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
