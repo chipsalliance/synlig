@@ -480,20 +480,12 @@ def main():
     cancelled = False
     try:
         group_begin(full_test_name, test_id, tests_count)
+        # Run synthesis of test's source files and export Verilog
+        ret_yosys = run_yosys(test_src_file, work_dir)
         ys_prefix = ""
-        ret_yosys = None
         preprocessed_path = None
-        gold_file = os.path.join(os.path.dirname(test_src_file), "gold.v")
-        if os.path.isfile(gold_file):
-            gate_file = "gold.v"
-            shutil.copyfile(gold_file, os.path.join(work_dir, "gold.v"))
-        else:
-            # Run synthesis of test's source files and export Verilog
-            ret_yosys = run_yosys(test_src_file, work_dir)
-            gate_file = ys_prefix + "yosys_gate.v"
         if ret_yosys:
             ys_prefix = "sv2v_"
-            gate_file = ys_prefix + "yosys_gate.v"
             test_result["yosys"] = "FAIL"
             test_result["sv2v_yosys"] = "OK"
             preprocessed_path = preprocess_sv2v(test_src_file, work_dir)
@@ -517,7 +509,7 @@ def main():
         ret_surelog = run_surelog(test_src_file, work_dir)
         if not ret_surelog:
             top_module_name = get_test_top_module(work_dir)
-            ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(gate_file))
+            ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
             test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
         else:
             test_result["surelog"] = "FAIL"
@@ -526,7 +518,7 @@ def main():
             ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
             if not ret_surelog:
                 top_module_name = get_test_top_module(work_dir, "sv2v_")
-                ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(gate_file))
+                ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
                 test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
             else:
                 test_result["sv2v_surelog"] = "FAIL"
