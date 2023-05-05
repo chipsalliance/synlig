@@ -78,7 +78,7 @@ help :
 
 ifeq (${help_only},0)
 
-rel_v_files := $(filter-out %gold.v,$(shell cd ${TEST_SUITE_DIR}; echo */**/*.{v,sv}))
+rel_v_files := $(sort $(subst dut.v,gold.v,$(shell cd ${TEST_SUITE_DIR}; echo */**/*.{v,sv})))
 
 test : ${rel_v_files}
 
