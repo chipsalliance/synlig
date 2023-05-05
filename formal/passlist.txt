@@ -688,3 +688,5 @@ sv2v:relong/gen_struct.sv
 UHDM-integration-tests:TypedefOnFileLevel/top.sv
 UHDM-integration-tests:PatternAssignmentOfStructParam/top.sv
 sv2v:core/net_base_type.v
+yosys:arch/xilinx/bug3670.v
+yosys:verilog/unbased_unsized_shift.sv
