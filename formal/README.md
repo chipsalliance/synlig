@@ -29,6 +29,9 @@ graph TD;
     D-->|"FAIL"|X;
 ```
 
+In cases when a test consists of a pair of *dut.v* and *gold.v* files, we expect from the formal verification to run only the equivalence check on this pair of files, without processing the top design with yosys or sv2v.
+In these cases, *dut.v* is used instead of *surelog_gate.v* and *gold.v* is used instead of *yosys_gate.v*, so the formal verification flow is shortened to the step of `Formal verification: gold.v vs dut.v`.
+
 A table below presents example for [formal/formal_results.py](formal_results.py) script generated on all test from [UHDM-integration-tests](https://github.com/chipsalliance/UHDM-integration-tests). It is generated in markdown style which is parsed in CI summary:
 ```
 # Synthesis results
