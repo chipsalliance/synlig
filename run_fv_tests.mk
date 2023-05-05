@@ -12,6 +12,8 @@ sh_quote = ${chr.quot}$(subst ${chr.quot},${chr.quot}\'${chr.quot},$(strip ${1})
 
 sh_quote_list = $(foreach _v,$(strip ${1}),${chr.quot}$(subst ${chr.quot},${chr.quot}\'${chr.quot},${_v})${chr.quot})
 
+rename_dut_to_gold = $(sort $(foreach _v,$(strip ${1}),$(if $(findstring ${2},${_v}),$(subst dut.v,gold.v,${_v}),${_v})))
+
 #───────────────────────────────────────────────────────────────────────────────
 # Configuration
 #───────────────────────────────────────────────────────────────────────────────
@@ -78,7 +80,9 @@ help :
 
 ifeq (${help_only},0)
 
-rel_v_files := $(sort $(subst dut.v,gold.v,$(shell cd ${TEST_SUITE_DIR}; echo */**/*.{v,sv})))
+dut_to_gold_rename_key := bsg_micro_designs_results
+
+rel_v_files := $(call rename_dut_to_gold,$(shell cd ${TEST_SUITE_DIR}; echo */**/*.{v,sv}),${dut_to_gold_rename_key})
 
 test : ${rel_v_files}
 
