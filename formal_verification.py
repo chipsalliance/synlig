@@ -319,8 +319,6 @@ def get_equiv_result(surelog_out, yosys_out, output_dir, prefix=""):
             return equiv_patterns[pattern]
 
     # Inconclusive, check Surelog output
-    if not os.path.isfile(os.path.join(output_dir, surelog_out)):
-        return status
     with open(os.path.join(output_dir, surelog_out), "r") as surelog_out:
         log = surelog_out.read()
         surelog_out.close()
@@ -481,63 +479,51 @@ def main():
 
     cancelled = False
     try:
-        ret_equiv = None
-        gold_file = os.path.join(os.path.dirname(test_src_file), "gold.v")
-        dut_file = os.path.join(os.path.dirname(test_src_file), "dut.v")
-        if os.path.isfile(gold_file) and os.path.isfile(dut_file):
-            shutil.copyfile(gold_file, os.path.join(work_dir, "gold.v"))
-            shutil.copyfile(dut_file, os.path.join(work_dir, "dut.v"))
-            top_module_name = os.path.basename(os.path.dirname(test_src_file)).removesuffix(".json")
-            ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate=dut_file, yosys_gate=gold_file)
+        group_begin(full_test_name, test_id, tests_count)
+        # Run synthesis of test's source files and export Verilog
+        ret_yosys = run_yosys(test_src_file, work_dir)
+        ys_prefix = ""
+        preprocessed_path = None
+        if ret_yosys:
+            ys_prefix = "sv2v_"
+            test_result["yosys"] = "FAIL"
+            test_result["sv2v_yosys"] = "OK"
+            preprocessed_path = preprocess_sv2v(test_src_file, work_dir)
+            if preprocessed_path == None:
+                test_result["sv2v_yosys"] = "SV2V_FAIL"
+                test_result["surelog"] = "SKIPPED"
+                test_result["sv2v_surelog"] = "SKIPPED"
+                return 0
+
+            ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
+            if ret_yosys:
+                test_result["sv2v_yosys"] = "FAIL"
+                test_result["surelog"] = "SKIPPED"
+                test_result["sv2v_surelog"] = "SKIPPED"
+                return 0
+        else:
             test_result["yosys"] = "OK"
             test_result["sv2v_yosys"] = "SKIPPED"
-            test_result["surelog"] = get_equiv_result("surelog.out", "yosys.out", work_dir)
-            test_result["sv2v_surelog"] = "SKIPPED"
+
+        ret_equiv = None
+        ret_surelog = run_surelog(test_src_file, work_dir)
+        if not ret_surelog:
+            top_module_name = get_test_top_module(work_dir)
+            ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
+            test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
         else:
-            group_begin(full_test_name, test_id, tests_count)
-            # Run synthesis of test's source files and export Verilog
-            ret_yosys = run_yosys(test_src_file, work_dir)
-            ys_prefix = ""
-            preprocessed_path = None
-            if ret_yosys:
-                ys_prefix = "sv2v_"
-                test_result["yosys"] = "FAIL"
-                test_result["sv2v_yosys"] = "OK"
-                preprocessed_path = preprocess_sv2v(test_src_file, work_dir)
-                if preprocessed_path == None:
-                    test_result["sv2v_yosys"] = "SV2V_FAIL"
-                    test_result["surelog"] = "SKIPPED"
-                    test_result["sv2v_surelog"] = "SKIPPED"
-                    return 0
+            test_result["surelog"] = "FAIL"
 
-                ret_yosys = run_yosys(preprocessed_path, work_dir, ys_prefix)
-                if ret_yosys:
-                    test_result["sv2v_yosys"] = "FAIL"
-                    test_result["surelog"] = "SKIPPED"
-                    test_result["sv2v_surelog"] = "SKIPPED"
-                    return 0
-            else:
-                test_result["yosys"] = "OK"
-                test_result["sv2v_yosys"] = "SKIPPED"
-
-            ret_surelog = run_surelog(test_src_file, work_dir)
+        if preprocessed_path:
+            ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
             if not ret_surelog:
-                top_module_name = get_test_top_module(work_dir)
-                ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
-                test_result["surelog"] = get_equiv_result("surelog.out", ys_prefix + "yosys.out", work_dir)
+                top_module_name = get_test_top_module(work_dir, "sv2v_")
+                ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
+                test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
             else:
-                test_result["surelog"] = "FAIL"
-
-            if preprocessed_path:
-                ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
-                if not ret_surelog:
-                    top_module_name = get_test_top_module(work_dir, "sv2v_")
-                    ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))
-                    test_result["sv2v_surelog"] = get_equiv_result("sv2v_surelog.out", ys_prefix + "yosys.out", work_dir, "sv2v_")
-                else:
-                    test_result["sv2v_surelog"] = "FAIL"
-            else:
-                test_result["sv2v_surelog"] = "SKIPPED"
+                test_result["sv2v_surelog"] = "FAIL"
+        else:
+            test_result["sv2v_surelog"] = "SKIPPED"
 
         if ret_equiv is not None:
             test_result.update(run_command_result_to_dict(ret_equiv))
