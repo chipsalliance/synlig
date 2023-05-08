@@ -36,28 +36,3 @@ index 9688b4d9d..d94170ec0 100644
    output dec_lc_id_state_e  dec_lc_id_state_o,
    output dec_lc_cnt_t       dec_lc_cnt_o,
    output logic [5:0]        state_invalid_error_o
-diff --git a/hw/ip/rom_ctrl/rtl/rom_ctrl.sv b/hw/ip/rom_ctrl/rtl/rom_ctrl.sv
-index 747703bc5..3fa77a265 100644
---- a/hw/ip/rom_ctrl/rtl/rom_ctrl.sv
-+++ b/hw/ip/rom_ctrl/rtl/rom_ctrl.sv
-@@ -422,14 +422,14 @@ module rom_ctrl
-     localparam int unsigned TopBitInt = 32 * i + 31;
-     localparam bit [7:0] TopBit = TopBitInt[7:0];
- 
--    assign hw2reg.digest[i].d = digest_d[TopBit -: 32];
-+    assign hw2reg.digest[i].d = digest_d[TopBitInt -: 32];
-     assign hw2reg.digest[i].de = digest_de;
- 
-     assign hw2reg.exp_digest[i].d = exp_digest_word_d;
-     assign hw2reg.exp_digest[i].de = exp_digest_de && (i[2:0] == exp_digest_idx);
- 
--    assign digest_q[TopBit -: 32] = reg2hw.digest[i].q;
--    assign exp_digest_q[TopBit -: 32] = reg2hw.exp_digest[i].q;
-+    assign digest_q[TopBitInt -: 32] = reg2hw.digest[i].q;
-+    assign exp_digest_q[TopBitInt -: 32] = reg2hw.exp_digest[i].q;
-   end
- 
-   logic bus_integrity_error;
--- 
-2.39.0
-
