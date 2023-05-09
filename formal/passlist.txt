@@ -690,3 +690,6 @@ UHDM-integration-tests:PatternAssignmentOfStructParam/top.sv
 sv2v:core/net_base_type.v
 yosys:arch/xilinx/bug3670.v
 yosys:verilog/unbased_unsized_shift.sv
+UHDM-integration-tests:StreamOperatorBitReverseFunction/dut.sv
+UHDM-integration-tests:StreamOp/dut.sv
+sv2v:core/package_ident.sv
