@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       plugins_branch:
-        description: 'yosys-f4pga-plugins branch'
+        description: 'yosys-f4pga-plugins branch or URL'
         required: false
         default: ''
   push:
@@ -72,13 +72,17 @@ jobs:
               yosys-f4pga-plugins \
               ;
 
-      - name: Checkout custom branches in submodules (if requested)
+      - name: Override submodule revisions (if requested)
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
+        env:
+          PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
         run: |
-          cd yosys-f4pga-plugins
-          git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
-          git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
-          git checkout FETCH_HEAD
+          source ./.github/scripts/submodule-revision-override.inc.bash
+
+          override-submodule-if-requested \
+              'yosys-f4pga-plugins' \
+              "$yosys_f4pga_plugins_default_gh_user" "$yosys_f4pga_plugins_default_gh_repo" \
+              "$PLUGINS_BRANCH_SPEC"
 
       - name: Setup cache
         uses: actions/cache@v2

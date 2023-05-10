@@ -196,18 +196,17 @@ Using plugins submodule override
 
 This method can be used to test changes limited to `yosys-f4pga-plugins` submodule.
 
-- Push your changes in `yosys-f4pga-plugins` into a branch in https://github.com/antmicro/yosys-f4pga-plugins/
 - Perform steps from "Start a workflow manually (using Github Web UI)" above, but:
 
   - Select "master" (or any other branch with submodule revisions you would like to use in the CI) in the "Use workflow from" dropdown.
-  - In the same pop-up, under "yosys-f4pga-plugins branch", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/. This branch will be checked out in `yosys-f4pga-plugins` submodule.
+  - In the same pop-up, under "yosys-f4pga-plugins branch or URL", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/, or a Github URL to a revision (in the form `https://github.com/<USER>/<REPO>/tree/<REVISION>`) from any repository. The typed value can skip `https://github.com` prefix (but not the `/`). The passed revision will be checked out in `yosys-f4pga-plugins` submodule.
 
 - Alternatively, use Github CLI:
 
   .. code-block:: bash
      :name: gh-cli-start-workflow-with-plugins-branch
 
-     gh workflow run main --ref master -f plugins_branch=$PLUGINS_BRANCH_NAME
+     gh workflow run main --ref master -f plugins_branch=$PLUGINS_BRANCH_NAME_OR_URL
 
 Testing locally
 ---------------
