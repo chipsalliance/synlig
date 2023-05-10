@@ -37,3 +37,6 @@
 [submodule "uhdm-tests/black-parrot/black-parrot-sdk"]
 	path = uhdm-tests/black-parrot/black-parrot-sdk
 	url = https://github.com/black-parrot-sdk/black-parrot-sdk.git
+[submodule "bsg_micro_designs"]
+	path = bsg_micro_designs
+	url = https://github.com/bsg-idea/bsg_micro_designs.git
