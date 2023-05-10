@@ -12,7 +12,6 @@ ${VENV_BLACKPARROT_SYNTH}:
 uhdm/yosys/synth-blackparrot-build: clean-build | ${VENV_BLACKPARROT_SYNTH}
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${VENV_BLACKPARROT_SYNTH}/bin/activate && \
-		cd ${BLACKPARROT}/external/basejump_stl/ && git apply ${curr_dir}/0001-Replace-stream-op.patch && \
 		cd ${BLACKPARROT}/ && git apply ${curr_dir}/0002-Use-typedef-instead-of-anonymous-enum.patch && \
 		cd ${BLACKPARROT}/bp_top/syn/ && SURELOG_OPTS=-synth $(MAKE) parse.surelog CFG=e_bp_unicore_cfg && \
 		yosys -p "plugin -i systemverilog" \
