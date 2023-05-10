@@ -1,18 +1,24 @@
 name: 'main'
 run-name: >
   ${{ github.event_name == 'workflow_dispatch' &&
-        format('{0}{1}',
+        format('{0}{1}{2}',
           github.ref_name,
-          (github.event.inputs.plugins_branch && format('; plugins: {0}', github.event.inputs.plugins_branch) || '')
+          (github.event.inputs.plugins_branch && format( '; plugins: {0}', github.event.inputs.plugins_branch ) || ''),
+          (github.event.inputs.uhdm_tests_branch && format( '; uhdm_tests: {0}', github.event.inputs.uhdm_tests_branch ) || '')
         )
       || ''
   }}
+
 
 on:
   workflow_dispatch:
     inputs:
       plugins_branch:
         description: 'yosys-f4pga-plugins branch or URL'
+        required: false
+        default: ''
+      uhdm_tests_branch:
+        description: 'UHDM-integration-tests branch or URL'
         required: false
         default: ''
   push:
@@ -194,11 +200,15 @@ jobs:
   tests-parsing:
     name: Parsing Tests
     uses: ./.github/workflows/parsing-tests.yml
+    with:
+      uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
     needs: build-binaries
 
   tests-formal-verification:
     name: Formal Verification Tests
     uses: ./.github/workflows/formal-verification.yml
+    with:
+      uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
     needs:
       - build-binaries
       - build-sv2v

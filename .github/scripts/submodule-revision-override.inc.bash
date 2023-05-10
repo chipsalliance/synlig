@@ -1,6 +1,8 @@
 # Defaults
 declare -r yosys_f4pga_plugins_default_gh_user=antmicro
 declare -r yosys_f4pga_plugins_default_gh_repo=yosys-f4pga-plugins
+declare -r uhdm_tests_default_gh_user=antmicro
+declare -r uhdm_tests_default_gh_repo=uhdm-integration
 
 
 # parse-custom-branch-spec USER_OUT_VAR_NAME REPO_OUT_VAR_NAME BRANCH_OUT_VAR_NAME BRANCH_SPEC
