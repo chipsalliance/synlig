@@ -264,6 +264,12 @@ jobs:
       - build-binaries
       - build-sv2v
 
+  tests-bsg-micro-designs-diff:
+    name: Diff generated BSG Micro Designs tests
+    uses: ./.github/workflows/bsg-test-diff.yml
+    needs:
+      - build-binaries
+
   tests-large-designs:
     name: Large Designs Tests
     uses: ./.github/workflows/large-designs.yml
