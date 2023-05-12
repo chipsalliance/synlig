@@ -251,7 +251,6 @@ yosys:simple/signedexpr.v
 yosys:simple/scopes.v
 yosys:simple/loop_var_shadow.v
 sv2v:core/net_or_var.sv
-yosys:simple/case_expr_non_const.v
 yosys:various/attrib07_func_call.v
 yosys:various/reg_wire_error.sv
 yosys:simple/arraycells.v
