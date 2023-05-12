@@ -261,3 +261,5 @@ UHDM-integration-tests:bsg/bsg_micro_designs_results/bsg_mux2_gatestack.json/dut
 UHDM-integration-tests:bsg/bsg_micro_designs_results/bsg_decode_with_v.json/dut.v
 UHDM-integration-tests:bsg/bsg_micro_designs_results/bsg_1_to_n_tagged.json/gold.v
 UHDM-integration-tests:bsg/bsg_micro_designs_results/bsg_decode_with_v.json/gold.v
+# Yosys mishandles a negative signed constant which is interpreted correctly by the plugin.
+yosys:simple/case_expr_non_const.v
