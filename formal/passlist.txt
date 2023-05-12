@@ -692,4 +692,7 @@ yosys:verilog/unbased_unsized_shift.sv
 UHDM-integration-tests:StreamOperatorBitReverseFunction/dut.sv
 UHDM-integration-tests:StreamOp/dut.sv
 sv2v:core/package_ident.sv
-yosys:arch/gowin/compare.v
+UHDM-integration-tests:StructArrayParameterInitializedByPatternPassedAsPort/top.sv
+UHDM-integration-tests:ParameterOfParametrizedTypeInSubmodule/top.sv
+UHDM-integration-tests:NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+UHDM-integration-tests:ParameterOfParametrizedType/top.sv
