@@ -191,23 +191,25 @@ Start a workflow manually (using Github CLI)
 
    gh workflow run main --ref $YOUR_BRANCH_NAME
 
-Using plugins submodule override
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Overriding plugins and UHDM-integration-tests submodule revisions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This method can be used to test changes limited to `yosys-f4pga-plugins` submodule.
+This method can be used to test changes limited to `yosys-f4pga-plugins` or `UHDM-integration-tests` submodules.
 
-- Push your changes in `yosys-f4pga-plugins` into a branch in https://github.com/antmicro/yosys-f4pga-plugins/
 - Perform steps from "Start a workflow manually (using Github Web UI)" above, but:
 
   - Select "master" (or any other branch with submodule revisions you would like to use in the CI) in the "Use workflow from" dropdown.
-  - In the same pop-up, under "yosys-f4pga-plugins branch", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/. This branch will be checked out in `yosys-f4pga-plugins` submodule.
+  - In the same pop-up, under "yosys-f4pga-plugins branch or URL", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/, or a Github URL to a revision (in the form `https://github.com/<USER>/<REPO>/tree/<REVISION>`) from any repository. The typed value can skip `https://github.com` prefix (but not the `/`). The passed revision will be checked out in `yosys-f4pga-plugins` submodule.
+    "UHDM-integration-tests branch or URL" field works in the same way.
 
 - Alternatively, use Github CLI:
 
   .. code-block:: bash
      :name: gh-cli-start-workflow-with-plugins-branch
 
-     gh workflow run main --ref master -f plugins_branch=$PLUGINS_BRANCH_NAME
+     gh workflow run main --ref master \
+             -f plugins_branch=$PLUGINS_BRANCH_NAME_OR_URL \
+             -f uhdm_tests_branch=$UHDM_TESTS_BRANCH_NAME_OR_URL
 
 Testing locally
 ---------------

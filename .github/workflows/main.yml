@@ -1,18 +1,24 @@
 name: 'main'
 run-name: >
   ${{ github.event_name == 'workflow_dispatch' &&
-        format('{0}{1}',
+        format('{0}{1}{2}',
           github.ref_name,
-          (github.event.inputs.plugins_branch && format('; plugins: {0}', github.event.inputs.plugins_branch) || '')
+          (github.event.inputs.plugins_branch && format( '; plugins: {0}', github.event.inputs.plugins_branch ) || ''),
+          (github.event.inputs.uhdm_tests_branch && format( '; uhdm_tests: {0}', github.event.inputs.uhdm_tests_branch ) || '')
         )
       || ''
   }}
+
 
 on:
   workflow_dispatch:
     inputs:
       plugins_branch:
-        description: 'yosys-f4pga-plugins branch'
+        description: 'yosys-f4pga-plugins branch or URL'
+        required: false
+        default: ''
+      uhdm_tests_branch:
+        description: 'UHDM-integration-tests branch or URL'
         required: false
         default: ''
   push:
@@ -24,6 +30,37 @@ env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
 
 jobs:
+  emit-workflow-info:
+    name: Emit Workflow Info
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: [self-hosted, Linux, X64]
+    container: 'bitnami/git:2.40.1-debian-11-r4'
+    env:
+      PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
+      UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+          fetch-depth: 1
+
+      - run: |
+          source ./.github/scripts/submodule-revision-override.inc.bash
+
+          {
+            emit-custom-branch-info-begin
+            emit-custom-branch-info-entry \
+                'yosys-f4pga-plugins' \
+                "$yosys_f4pga_plugins_default_gh_user" "$yosys_f4pga_plugins_default_gh_repo" \
+                "$PLUGINS_BRANCH_SPEC"
+            emit-custom-branch-info-entry \
+                'UHDM-integration-tests' \
+                "$uhdm_tests_default_gh_user" "$uhdm_tests_default_gh_repo" \
+                "$UHDM_TESTS_BRANCH_SPEC"
+            emit-custom-branch-info-end
+          } > $GITHUB_STEP_SUMMARY
+
   build-binaries:
     name: Build Binaries
     runs-on: [self-hosted, Linux, X64]
@@ -72,13 +109,17 @@ jobs:
               yosys-f4pga-plugins \
               ;
 
-      - name: Checkout custom branches in submodules (if requested)
+      - name: Override submodule revisions (if requested)
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
+        env:
+          PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
         run: |
-          cd yosys-f4pga-plugins
-          git remote add github/antmicro https://github.com/antmicro/yosys-f4pga-plugins.git
-          git fetch github/antmicro ${{github.event.inputs.plugins_branch}}
-          git checkout FETCH_HEAD
+          source ./.github/scripts/submodule-revision-override.inc.bash
+
+          override-submodule-if-requested \
+              'yosys-f4pga-plugins' \
+              "$yosys_f4pga_plugins_default_gh_user" "$yosys_f4pga_plugins_default_gh_repo" \
+              "$PLUGINS_BRANCH_SPEC"
 
       - name: Setup cache
         uses: actions/cache@v2
@@ -190,11 +231,15 @@ jobs:
   tests-parsing:
     name: Parsing Tests
     uses: ./.github/workflows/parsing-tests.yml
+    with:
+      uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
     needs: build-binaries
 
   tests-formal-verification:
     name: Formal Verification Tests
     uses: ./.github/workflows/formal-verification.yml
+    with:
+      uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
     needs:
       - build-binaries
       - build-sv2v

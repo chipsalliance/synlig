@@ -2,6 +2,12 @@ name: Formal Verification Tests
 
 on:
   workflow_call:
+    inputs:
+      uhdm_tests_branch:
+        description: 'UHDM-integration-tests branch or URL'
+        required: false
+        type: 'string'
+        default: ''
 
 env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
@@ -55,6 +61,18 @@ jobs:
               sv2v \
               UHDM-integration-tests \
               ;
+
+      - name: Override submodule revisions (if requested)
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.uhdm_tests_branch != ''}}
+        env:
+          UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
+        run: |
+          source ./.github/scripts/submodule-revision-override.inc.bash
+
+          override-submodule-if-requested \
+              'UHDM-integration-tests' \
+              "$uhdm_tests_default_gh_user" "$uhdm_tests_default_gh_repo" \
+              "$UHDM_TESTS_BRANCH_SPEC"
 
       - name: Download binaries
         uses: actions/download-artifact@v2
