@@ -155,3 +155,4 @@ lowrisc:tool:check_tool_requirements:0.1
 lowrisc:top_earlgrey:xbar_main:0.1
 lowrisc:top_earlgrey:xbar_peri:0.1
 pulp-platform:riscv-dbg:0.1:0
+lowrisc:ip:flash_ctrl:0.1
