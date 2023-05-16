@@ -697,3 +697,8 @@ UHDM-integration-tests:ParameterOfParametrizedTypeInSubmodule/top.sv
 UHDM-integration-tests:StructArrayParameterInitializedByPatternPassedAsPort/top.sv
 UHDM-integration-tests:NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
 UHDM-integration-tests:ParameterOfParametrizedType/top.sv
+UHDM-integration-tests:StructPackedOutput/top.sv
+UHDM-integration-tests:StreamOpImplicitSliceSize/dut.sv
+UHDM-integration-tests:AnonymousEnum/top.sv
+UHDM-integration-tests:FileLevelParameter/top.sv
+UHDM-integration-tests:StreamOpInitialAlways/dut.sv
