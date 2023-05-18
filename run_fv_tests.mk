@@ -18,6 +18,7 @@ sh_quote_list = $(foreach _v,$(strip ${1}),${chr.quot}$(subst ${chr.quot},${chr.
 
 TEST_SUITE_DIR ?=
 TEST_SUITE_NAME ?=
+TEST_FILE_NAME ?= "*.{v,sv}"
 
 REPO_DIR := ${this_mk.dir}
 
@@ -61,7 +62,7 @@ help :
 	tab=$$'\t'
 	printf '%s\n' \
 			'USAGE' \
-			"$${tab}$${argv0} -j<parallel_jobs_num> TEST_SUITE_DIR:=<test_suite_dir> TEST_SUITE_NAME:=<test_suite_name> [target]" \
+			"$${tab}$${argv0} -j<parallel_jobs_num> TEST_SUITE_DIR:=<test_suite_dir> TEST_SUITE_NAME:=<test_suite_name> TEST_FILE_NAME:=<test_file_name> [target]" \
 			'' \
 			'GENERIC TARGETS' \
 			'' \
@@ -78,7 +79,7 @@ help :
 
 ifeq (${help_only},0)
 
-rel_v_files := $(shell cd ${TEST_SUITE_DIR}; echo */**/*.{v,sv})
+rel_v_files := $(shell cd ${TEST_SUITE_DIR}; echo */**/${TEST_FILE_NAME})
 
 test : ${rel_v_files}
 

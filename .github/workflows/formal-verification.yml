@@ -21,10 +21,16 @@ jobs:
         include:
           - name: UHDM-integration-tests
             test-suite: UHDM-integration-tests/tests
+            test-file-name: "*.{v,sv}"
           - name: sv2v
             test-suite: sv2v/test
+            test-file-name: "*.{v,sv}"
           - name: yosys
             test-suite: yosys/tests
+            test-file-name: "*.{v,sv}"
+          - name: bsg_micro_designs
+            test-suite: bsg_micro_designs
+            test-file-name: top.v
       fail-fast: false
     name: ${{ matrix.name }}
     env:
@@ -37,6 +43,7 @@ jobs:
       PARSER: yosys-plugin
       TEST_SUITE_DIR: ${{ matrix.test-suite }}
       TEST_SUITE_NAME: ${{ matrix.name }}
+      TEST_FILE_NAME: ${{ matrix.test-file-name }}
 
     steps:
       - uses: actions/checkout@v3
@@ -60,6 +67,7 @@ jobs:
               yosys \
               sv2v \
               UHDM-integration-tests \
+              bsg_micro_designs \
               ;
 
       - name: Override submodule revisions (if requested)
@@ -97,6 +105,7 @@ jobs:
           ./run_fv_tests.mk -j$(nproc) \
               TEST_SUITE_DIR:="$(realpath ${TEST_SUITE_DIR})" \
               TEST_SUITE_NAME:="${TEST_SUITE_NAME}" \
+              TEST_FILE_NAME:="${TEST_FILE_NAME}" \
               test
 
       - name: Generate list of performed tests
