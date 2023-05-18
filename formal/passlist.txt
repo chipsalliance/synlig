@@ -702,3 +702,4 @@ UHDM-integration-tests:StreamOpImplicitSliceSize/dut.sv
 UHDM-integration-tests:AnonymousEnum/top.sv
 UHDM-integration-tests:FileLevelParameter/top.sv
 UHDM-integration-tests:StreamOpInitialAlways/dut.sv
+UHDM-integration-tests:FileLevelUnionWithMultirange/top.sv
