@@ -703,3 +703,11 @@ UHDM-integration-tests:AnonymousEnum/top.sv
 UHDM-integration-tests:FileLevelParameter/top.sv
 UHDM-integration-tests:StreamOpInitialAlways/dut.sv
 UHDM-integration-tests:FileLevelUnionWithMultirange/top.sv
+UHDM-integration-tests:MemberSelectOf2DStructPackedArray/top.sv
+UHDM-integration-tests:FunctionWithOverriddenParameter/top.sv
+UHDM-integration-tests:AssignBitsCallToSubmoduleParameter/top.sv
+UHDM-integration-tests:BitSelectPartSelectInFunction/top.sv
+yosys:simple/case_expr_query.sv
+yosys:various/countbits.sv
+yosys:simple/case_expr_extend.sv
+yosys:verilog/mem_bounds.sv
