@@ -35,6 +35,27 @@ def gen_test_with_top_module():
         if re.search("input|output", test_line):
             ins_outs.append(test_line)
             args.append(test_line.split()[len(test_line.split())-1])
+        if re.search("module", test_line):
+            x = test_line.find("#") 
+            if x >= 0:
+                i = test_module.index(test_line)
+                test_module.remove(test_line)
+                test_line = test_line[:x] + "\n"
+                test_module.insert(i, test_line)
+
+                y = test_line.find(")\n")
+                if y < 0:
+                    j = i+1
+                    body_start = test_module[j].find(")\n")
+                    while True:
+                        if j >= len(test_module):
+                            break
+                        if body_start >= 0:
+                            test_module.remove(test_module[j])
+                            test_module.insert(j, "\n")
+                            x = test_module[j].find(")\n")
+                            break
+                        j = j+1
 
     top_module = list()
     top_module.append("module top\n")
