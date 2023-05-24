@@ -299,6 +299,13 @@ jobs:
           TARGET: uhdm/yosys/synth-opentitan-build-tiny
           TEST_CASE: tests/opentitan
 
+      - name: Upload logs
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: opentitan_synth_logs
+          path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/*
+
       - uses: actions/upload-artifact@v2
         with:
           name: lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
