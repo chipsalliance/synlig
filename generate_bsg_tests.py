@@ -56,6 +56,8 @@ def gen_test_with_top_module():
                             x = test_module[j].find(")\n")
                             break
                         j = j+1
+        if re.search("BSG_ABSTRACT_MODULE", test_line):
+            test_module.remove(test_line)
 
     top_module = list()
     top_module.append("module top\n")
@@ -81,8 +83,14 @@ def gen_test_with_top_module():
     top_module.append("endmodule\n")
     top_module.append("\n")
 
+
+    parameters = list()
+    parameters.append("parameter width_p = 16\n") # fixme
+
     preprocessed_file = os.path.splitext(test_file)[0] + "_top.v"
     with open(preprocessed_file, "w") as v_file_top:
+        for line in parameters:
+            v_file_top.writelines(line)
         for line in top_module:
             v_file_top.writelines(line)
         for line in test_module:
