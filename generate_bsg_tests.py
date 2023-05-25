@@ -15,84 +15,45 @@ from yosys_systemverilog.run_command import run_command
 
 def gen_test_with_top_module():
 
-    
     test_name = "bsg_adder_cin"
     test_suite_dir = "bsg_micro_designs/bsg_misc"
     test_ref_dir = "UHDM-integration-tests/tests/bsg/bsg_micro_designs_results"
     output_dir = "build/tests/bsg_micro_designs"
     
     test_file = os.path.join(test_suite_dir, test_name + "/src", test_name + ".v")
+    print(test_file)
     with open(test_file) as v_file:
         test_module = v_file.readlines()
         v_file.close()
 
-    indent = "  "
-    width_p = 16 # fixme
 
-    ins_outs = list()
-    args = list()
+    param_val = 16 # fixme
+
     for test_line in test_module:
-        if re.search("input|output", test_line):
-            ins_outs.append(test_line)
-            args.append(test_line.split()[len(test_line.split())-1])
-        if re.search("module", test_line):
-            x = test_line.find("#") 
-            if x >= 0:
-                i = test_module.index(test_line)
-                test_module.remove(test_line)
-                test_line = test_line[:x] + "\n"
-                test_module.insert(i, test_line)
 
-                y = test_line.find(")\n")
-                if y < 0:
-                    j = i+1
-                    body_start = test_module[j].find(")\n")
-                    while True:
-                        if j >= len(test_module):
-                            break
-                        if body_start >= 0:
-                            test_module.remove(test_module[j])
-                            test_module.insert(j, "\n")
-                            x = test_module[j].find(")\n")
-                            break
-                        j = j+1
         if re.search("BSG_ABSTRACT_MODULE", test_line):
             test_module.remove(test_line)
+        if re.search("`BSG_INV_PARAM", test_line):
+            idx = test_module.index(test_line)
+            i_start = test_line.find("#(") + 2
+            m_start = test_line.find("`BSG_INV_PARAM")
+            p_start = m_start + 1 + test_line[m_start:].find("(")
+            p_stop = test_line[p_start:].find(")")
+            param = test_line[p_start:][:p_stop] + "=%d" % param_val
+            if test_line[p_start:][p_stop:].find(")\n") > 0:
+                # don't check next line as it is the end of init params
+                param = param + ")"
+            #else:
+                # check next lines as it is not the end of the init params
+            # subst makro with param and value
+            test_line = test_line[:i_start] + param + "\n"
+            test_module[idx] = test_line
 
-    top_module = list()
-    top_module.append("module top\n")
-    top_module.append("(\n")
-    for arg in args:
-        top_module.append(indent + arg + ",\n")
-    top_module.append(");\n")
-    for in_out in ins_outs:
-        x = in_out.find("input")
-        if x < 0:
-            x = in_out.find("output")
-            if x < 0:
-                x = 0
-        top_module.append(indent + in_out[x:].strip() + ";\n")
-
-    top_module.append(indent + test_name + "\n")
-    top_module.append(indent + "wrapper\n")
-    top_module.append(indent + "(\n")
-
-    for arg in args:
-        top_module.append(indent + indent + "." + arg + "(" + arg + ")" + ",\n")
-    top_module.append(indent + ");\n")
-    top_module.append("endmodule\n")
-    top_module.append("\n")
-
-
-    parameters = list()
-    parameters.append("parameter width_p = 16\n") # fixme
-
-    preprocessed_file = os.path.splitext(test_file)[0] + "_top.v"
+    preprocessed_file = os.path.splitext(test_file)[0] + "_preprocessed.v"
+    print(preprocessed_file)
     with open(preprocessed_file, "w") as v_file_top:
-        for line in parameters:
-            v_file_top.writelines(line)
-        for line in top_module:
-            v_file_top.writelines(line)
+        #for line in parameters:
+        #    v_file_top.writelines(line)
         for line in test_module:
             v_file_top.writelines(line)
 
