@@ -54,6 +54,9 @@ def gen_test_with_top_module():
                         param = param + ")"
                     #else:
                         # check next lines as it is not the end of the init params
+                    elif next_param:
+                        param = ", " + param
+                    next_param = True
                     break
             # subst makro with param and value
             test_line = test_line[:i_start] + param + "\n"
