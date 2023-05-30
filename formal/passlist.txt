@@ -711,3 +711,5 @@ yosys:simple/case_expr_query.sv
 yosys:various/countbits.sv
 yosys:simple/case_expr_extend.sv
 yosys:verilog/mem_bounds.sv
+UHDM-integration-tests:EnumVariantInPackage/top.sv
+UHDM-integration-tests:UnsizedConst/top.sv
