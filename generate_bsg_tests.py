@@ -2,6 +2,7 @@
 
 import subprocess
 import argparse
+import json
 import sys
 import os
 import re
@@ -26,7 +27,11 @@ def gen_test_with_top_module():
         test_module = v_file.readlines()
         v_file.close()
 
+    json_cfg_file = os.path.join(test_suite_dir, test_name , test_name + ".json")
+    with open(json_cfg_file, "r") as file:
+        cfg_data = json.load(file)
 
+    parameters = cfg_data["run_config"][0]["parameters"]
     param_val = 16 # fixme
 
     for test_line in test_module:
@@ -39,12 +44,17 @@ def gen_test_with_top_module():
             m_start = test_line.find("`BSG_INV_PARAM")
             p_start = m_start + 1 + test_line[m_start:].find("(")
             p_stop = test_line[p_start:].find(")")
-            param = test_line[p_start:][:p_stop] + "=%d" % param_val
-            if test_line[p_start:][p_stop:].find(")\n") > 0:
-                # don't check next line as it is the end of init params
-                param = param + ")"
-            #else:
-                # check next lines as it is not the end of the init params
+            for p in parameters:
+                s = p.split("=")
+                test_param = test_line[p_start:].find(s[0])
+                if test_param >= 0:
+                    param = test_line[p_start:][:p_stop] + "=%s" % s[1]
+                    if test_line[p_start:][p_stop:].find(")\n") > 0:
+                        # don't check next line as it is the end of init params
+                        param = param + ")"
+                    #else:
+                        # check next lines as it is not the end of the init params
+                    break
             # subst makro with param and value
             test_line = test_line[:i_start] + param + "\n"
             test_module[idx] = test_line
