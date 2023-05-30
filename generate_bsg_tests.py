@@ -21,54 +21,84 @@ def gen_test_with_top_module():
     test_ref_dir = "UHDM-integration-tests/tests/bsg/bsg_micro_designs_results"
     output_dir = "build/tests/bsg_micro_designs"
     
-    test_file = os.path.join(test_suite_dir, test_name + "/src", test_name + ".v")
-    print(test_file)
-    with open(test_file) as v_file:
-        test_module = v_file.readlines()
-        v_file.close()
 
     json_cfg_file = os.path.join(test_suite_dir, test_name , test_name + ".json")
     with open(json_cfg_file, "r") as file:
         cfg_data = json.load(file)
 
+    fileset = cfg_data["filelist"]
     parameters = cfg_data["run_config"][0]["parameters"]
-    param_val = 16 # fixme
+    for filename in fileset:
+        if filename == "src/bsg_defines.v":
+            continue
+        test_file = os.path.join(test_suite_dir, test_name + "/" +filename)
+        with open(test_file) as v_file:
+            test_module = v_file.readlines()
+            v_file.close()
+    
+        next_param = False
+        for test_line in test_module:
+    
+            if re.search("BSG_ABSTRACT_MODULE", test_line):
+                test_module.remove(test_line)
+            if re.search("`BSG_INV_PARAM", test_line):
+                idx = test_module.index(test_line)
+                i_start = test_line.find("#(") + 2
+                m_start = test_line.find("`BSG_INV_PARAM")
+                p_start = m_start + 1 + test_line[m_start:].find("(")
+                p_stop = test_line[p_start:].find(")")
+                for p in parameters:
+                    s = p.split("=")
+                    test_param = test_line[p_start:].find(s[0])
+                    if test_param >= 0:
+                        param = test_line[p_start:][:p_stop] + "=%s" % s[1]
+                        if test_line[p_start:][p_stop:].find(")\n") > 0:
+                            param = param + ")"
+                        elif next_param:
+                            param = ", " + param
+                        next_param = True
+                        break
+                test_line = test_line[:i_start] + param + "\n"
+                test_module[idx] = test_line
+    
+        preprocessed_file = test_file
+        with open(preprocessed_file, "w") as v_file_top:
+            for line in test_module:
+                v_file_top.writelines(line)
 
-    for test_line in test_module:
+    run_sv_plugin(test_name, fileset, test_suite_dir, output_dir)
 
-        if re.search("BSG_ABSTRACT_MODULE", test_line):
-            test_module.remove(test_line)
-        if re.search("`BSG_INV_PARAM", test_line):
-            idx = test_module.index(test_line)
-            i_start = test_line.find("#(") + 2
-            m_start = test_line.find("`BSG_INV_PARAM")
-            p_start = m_start + 1 + test_line[m_start:].find("(")
-            p_stop = test_line[p_start:].find(")")
-            for p in parameters:
-                s = p.split("=")
-                test_param = test_line[p_start:].find(s[0])
-                if test_param >= 0:
-                    param = test_line[p_start:][:p_stop] + "=%s" % s[1]
-                    if test_line[p_start:][p_stop:].find(")\n") > 0:
-                        # don't check next line as it is the end of init params
-                        param = param + ")"
-                    #else:
-                        # check next lines as it is not the end of the init params
-                    elif next_param:
-                        param = ", " + param
-                    next_param = True
-                    break
-            # subst makro with param and value
-            test_line = test_line[:i_start] + param + "\n"
-            test_module[idx] = test_line
+def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
 
-    preprocessed_file = os.path.splitext(test_file)[0] + "_preprocessed.v"
-    print(preprocessed_file)
-    with open(preprocessed_file, "w") as v_file_top:
-        #for line in parameters:
-        #    v_file_top.writelines(line)
-        for line in test_module:
-            v_file_top.writelines(line)
+    output_dest = os.path.join(output_dir, test_name, test_name)
+    input_v_files = ""
+    for f in fileset:
+        input_v_files = input_v_files + test_suite_dir + "/" + test_name + "/" + f + " " 
+   
+    script = [
+        "plugin -i systemverilog",
+        "read_systemverilog %s" % (input_v_files),
+        "synth -top %s -flatten" % (test_name),
+        "write_verilog -noattr %s/dut.v" % (output_dest),
+    ]
+    
+    script_path = os.path.join(output_dest, "surelog.ys")
+
+    if not Path(output_dest).exists():
+        Path(output_dest).mkdir(parents=True)
+    
+    with open(script_path, "w") as script_file:
+        script_file.write("\n".join(script))
+        script_file.close()
+    
+    run_command(
+            ["yosys", "-s", script_path, "-q", "-q", "-l", f"{output_dest}/surelog.out"],
+            timeout=10*60,
+            vmem_limit_kb=2*1024*1024,
+            capture_stderr=True,
+            oom_score_adj=500
+        )
+
 
 
 def gen_tests(test_suite_dir, output_dir):
