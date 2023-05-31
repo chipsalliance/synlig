@@ -8,6 +8,16 @@ on:
         required: false
         type: 'string'
         default: ''
+      plugins_branch:
+        description: 'yosys-f4pga-plugins branch or URL'
+        required: false
+        type: 'string'
+        default: ''
+    secrets:
+      SSH_DEPLOY_KEY:
+        description: 'SSH key used to push logs'
+        required: true
+
 
 env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
@@ -193,6 +203,11 @@ jobs:
           mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
 
       - uses: actions/upload-artifact@v3
+        with:
+          name: parsing-logs
+          path: logs
+
+      - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: test-results
@@ -205,6 +220,67 @@ jobs:
           name: plots
           path: |
             **/plot_*.svg
+
+  push-logs:
+    name: Generate AST diff
+    runs-on: ubuntu-latest
+    needs:
+      - tests-read-systemverilog
+    steps:
+      - name: Download test results
+        uses: /actions/download-artifact@v3
+        with:
+          name: parsing-logs
+          path: logs
+      - name: Push branch
+        run: |
+          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          PUSH_BRANCH=$branch
+          if [[ ! -z "$PLUGINS_BRANCH_SPEC" ]]; then
+            PUSH_BRANCH="$PUSH_BRANCH+plugins+$PLUGINS_BRANCH_SPEC"
+          fi
+          if [[ ! -z "$UHDM_TESTS_BRANCH_SPEC" ]]; then
+            PUSH_BRANCH="$PUSH_BRANCH+tests+$UHDM_TESTS_BRANCH_SPEC"
+          fi
+          echo "PUSH_BRANCH=$PUSH_BRANCH" >> "$GITHUB_ENV"
+          COMMENT_MSG="Logs difference between main branch: https://github.com/${{ github.repository }}-logs/compare/$PUSH_BRANCH"
+          echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
+          PUSH_LOGS=false
+          # currently pushing logs when submodules are overriten using url is not supported
+          if [[ ! "$PLUGINS_BRANCH_SPEC" =~ "https://" && ! "$UHDM_TESTS_BRANCH_SPEC" =~ "https://" ]]; then
+            PUSH_LOGS=true
+          fi
+          echo "PUSH_LOGS=$PUSH_LOGS" >> "$GITHUB_ENV"
+        env:
+          PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
+          UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
+
+      - name: Push logs
+        uses: cpina/github-action-push-to-another-repository@main
+        if: ${{ env.PUSH_LOGS == 'true' }}
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: 'logs'
+          destination-github-username: ${{ github.repository_owner }}
+          destination-repository-name: 'yosys-systemverilog-logs'
+          commit-message: 'Update logs'
+          user-email: 41898282+github-actions[bot]@users.noreply.github.com
+          target-branch: ${{ env.PUSH_BRANCH }}
+          create-target-branch-if-needed: true
+
+      - name: Post comment
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: KeisukeYamashita/create-comment@v1
+        with:
+          check-only-first-line: "true"
+          unique: "true"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment: ${{ env.COMMENT_MSG }}
+
+      - name: Create summary
+        run:
+          echo "${{ env.COMMENT_MSG }}" >> $GITHUB_STEP_SUMMARY
 
   generate-tests-summary:
     name: Summary Generation

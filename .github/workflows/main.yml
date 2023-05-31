@@ -251,8 +251,13 @@ jobs:
   tests-parsing:
     name: Parsing Tests
     uses: ./.github/workflows/parsing-tests.yml
+    secrets:
+      SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+    permissions:
+      pull-requests: write
     with:
       uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
+      plugins_branch: ${{github.event.inputs.plugins_branch}}
     needs: build-binaries
 
   tests-formal-verification:
