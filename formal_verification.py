@@ -141,6 +141,8 @@ def run_surelog(test_path, output_dir, prefix=""):
         "plugin -i systemverilog",
         "tee -o %s/%ssurelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, prefix, test_path),
         "hierarchy -auto-top",
+        "proc",
+        "clean",
         "write_verilog %s/%ssurelog_gate.v" % (output_dir, prefix),
     ]
 
@@ -177,6 +179,8 @@ def run_yosys(test_path, output_dir, prefix=""):
     script = [
         "tee -o %s/%syosys_ast.txt read_verilog -dump_ast1 -sv %s" % (output_dir, prefix, test_path),
         "hierarchy -auto-top",
+        "proc",
+        "clean",
         "write_verilog %s/%syosys_gate.v" % (output_dir, prefix),
     ]
 
