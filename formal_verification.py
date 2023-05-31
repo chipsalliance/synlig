@@ -140,7 +140,7 @@ def run_surelog(test_path, output_dir, prefix=""):
     script = [
         "plugin -i systemverilog",
         "tee -o %s/%ssurelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, prefix, test_path),
-        "synth_xilinx",
+        "hierarchy -auto-top",
         "write_verilog %s/%ssurelog_gate.v" % (output_dir, prefix),
     ]
 
@@ -176,7 +176,7 @@ def run_yosys(test_path, output_dir, prefix=""):
 
     script = [
         "tee -o %s/%syosys_ast.txt read_verilog -dump_ast1 -sv %s" % (output_dir, prefix, test_path),
-        "synth_xilinx",
+        "hierarchy -auto-top",
         "write_verilog %s/%syosys_gate.v" % (output_dir, prefix),
     ]
 
@@ -249,8 +249,8 @@ def run_equiv(top_module, output_dir, surelog_gate="surelog_gate.v", yosys_gate=
         "splitnets -ports;;",
         "design -stash surelog",
         f"read_verilog -sv {yosys_gate_file} {cells[0]} {cells[1]}",
-        "splitnets -ports;;",
         f"prep -flatten -top {top_module}",
+        "splitnets -ports;;",
         "design -stash yosys",
         f"design -copy-from surelog -as surelog {top_module}",
         f"design -copy-from yosys -as yosys {top_module}",
