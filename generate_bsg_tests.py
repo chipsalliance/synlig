@@ -43,10 +43,15 @@ def gen_test_with_top_module():
                 test_module.remove(test_line)
             if re.search("`BSG_INV_PARAM", test_line):
                 idx = test_module.index(test_line)
-                i_start = test_line.find("#(") + 2
+                i_start = test_line.find("#(")
+                if i_start >= 0:
+                    i_start = i_start + 2
+                else:
+                    i_start = test_line.find(",") + 1
                 m_start = test_line.find("`BSG_INV_PARAM")
                 p_start = m_start + 1 + test_line[m_start:].find("(")
                 p_stop = test_line[p_start:].find(")")
+                param = test_line[p_start:p_start+p_stop]
                 for p in parameters:
                     s = p.split("=")
                     test_param = test_line[p_start:].find(s[0])
@@ -54,8 +59,6 @@ def gen_test_with_top_module():
                         param = test_line[p_start:][:p_stop] + "=%s" % s[1]
                         if test_line[p_start:][p_stop:].find(")\n") > 0:
                             param = param + ")"
-                        elif next_param:
-                            param = ", " + param
                         next_param = True
                         break
                 test_line = test_line[:i_start] + param + "\n"
