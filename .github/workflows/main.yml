@@ -26,6 +26,10 @@ on:
       - master
   pull_request:
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
 
