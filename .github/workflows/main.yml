@@ -61,6 +61,26 @@ jobs:
             emit-custom-branch-info-end
           } > $GITHUB_STEP_SUMMARY
 
+  style-check:
+    name: Style check
+    runs-on: [self-hosted, Linux, X64]
+    container: bitnami/git:2.40.1-debian-11-r4
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Sort check
+        run: |
+          ./.github/scripts/sort_passlists.sh
+          if ! git diff --exit-code; then
+            echo
+            echo "Sort locally using: ./.github/scripts/sort_passlists.sh"
+            echo
+            false
+          fi
+
   build-binaries:
     name: Build Binaries
     runs-on: [self-hosted, Linux, X64]
