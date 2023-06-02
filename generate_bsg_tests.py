@@ -40,6 +40,11 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
     
             if re.search("BSG_ABSTRACT_MODULE", test_line):
                 test_module.remove(test_line)
+            if re.search(r"^module.*", test_line):
+                print("-> %s" % test_line)
+                # processing below should be included in this condition, so we substitute only initial params of the module
+                # also, the processing should be continued for lines, till the end bracket ')' is found
+                # module_init = True
             if re.search("`BSG_INV_PARAM", test_line):
                 idx = test_module.index(test_line)
                 i_start = test_line.find("#(")
@@ -61,7 +66,21 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                         break
                 test_line = test_line[:i_start] + param + "\n"
                 test_module[idx] = test_line
-    
+            if re.search("parameter", test_line):
+                idx = test_module.index(test_line)
+                parameters_names = list()
+                parameters_values = list()
+                for p in parameters:
+                    parameters_names.append(p.split("=")[0])
+                    parameters_values.append(p.split("=")[1])
+                found_params = re.findall(r"(\w+)=(\d+)", test_line)
+                for fp in found_params:
+                    if fp[0] in parameters_names:
+                        i = parameters_names.index(fp[0])
+                        v_start = test_line.find(fp[1])
+                        v_stop = v_start + len(fp[1])
+                        test_line = test_line[:v_start] + parameters_values[i] + test_line[v_stop:]
+                        test_module[idx] = test_line
         preprocessed_file = test_file
         with open(preprocessed_file, "w") as v_file_top:
             for line in test_module:
