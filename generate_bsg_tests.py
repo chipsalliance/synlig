@@ -36,6 +36,7 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
             print("Warning: '%s' is not present in the source directory." % filename)
             return
     
+        module_init = True
         for test_line in test_module:
     
             if re.search("BSG_ABSTRACT_MODULE", test_line):
@@ -45,6 +46,7 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                 # processing below should be included in this condition, so we substitute only initial params of the module
                 # also, the processing should be continued for lines, till the end bracket ')' is found
                 # module_init = True
+                module_init = True
             if re.search("`BSG_INV_PARAM", test_line):
                 idx = test_module.index(test_line)
                 i_start = test_line.find("#(")
@@ -63,10 +65,11 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                         param = test_line[p_start:][:p_stop] + "=%s" % s[1]
                         if test_line[p_start:][p_stop:].find(")\n") > 0:
                             param = param + ")"
+                            module_init = False
                         break
                 test_line = test_line[:i_start] + param + "\n"
                 test_module[idx] = test_line
-            if re.search("parameter", test_line):
+            if re.search("parameter", test_line) and module_init:
                 idx = test_module.index(test_line)
                 parameters_names = list()
                 parameters_values = list()
@@ -81,6 +84,9 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                         v_stop = v_start + len(fp[1])
                         test_line = test_line[:v_start] + parameters_values[i] + test_line[v_stop:]
                         test_module[idx] = test_line
+            if re.search("\)\n", test_line) and module_init:
+                module_init = False
+
         preprocessed_file = test_file
         with open(preprocessed_file, "w") as v_file_top:
             for line in test_module:
