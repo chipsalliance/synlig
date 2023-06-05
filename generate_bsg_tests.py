@@ -47,7 +47,7 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                 # also, the processing should be continued for lines, till the end bracket ')' is found
                 # module_init = True
                 module_init = True
-            if re.search("`BSG_INV_PARAM", test_line):
+            while re.search("`BSG_INV_PARAM", test_line):
                 idx = test_module.index(test_line)
                 i_start = test_line.find("#(")
                 if i_start >= 0:
