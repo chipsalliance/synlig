@@ -64,10 +64,9 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                     if test_param >= 0:
                         param = test_line[p_start:][:p_stop] + "=%s" % s[1]
                         break
-                if test_line[p_start:][p_stop:].find(")\n") > 0:
-                    param = param + ")"
+                if test_line[p_start:][p_stop+1:].find(")") >= 0:
                     module_init = False
-                test_line = test_line[:i_start] + param + "\n"
+                test_line = test_line[:i_start] + param + test_line[p_start:][p_stop+1:]
                 test_module[idx] = test_line
             if re.search("parameter", test_line) and module_init:
                 idx = test_module.index(test_line)
