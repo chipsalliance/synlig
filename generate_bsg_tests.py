@@ -42,7 +42,6 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
             if re.search("BSG_ABSTRACT_MODULE", test_line):
                 test_module.remove(test_line)
             if re.search(r"^module.*", test_line):
-                print("-> %s" % test_line)
                 # processing below should be included in this condition, so we substitute only initial params of the module
                 # also, the processing should be continued for lines, till the end bracket ')' is found
                 # module_init = True
@@ -118,7 +117,7 @@ def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
         script_file.close()
     
     result = run_command(
-            ["yosys", "-s", script_path, "-q", "-q", "-l", f"{output_dest}/surelog.out"],
+            ["yosys", "-s", script_path, "-l", f"{output_dest}/surelog.out"],
             timeout=10*60,
             vmem_limit_kb=2*1024*1024,
             capture_stderr=True,
