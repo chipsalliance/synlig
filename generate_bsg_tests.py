@@ -125,37 +125,29 @@ def diff_tests(test_dir, ref_dir, gen_v_dir):
 
     difflist = list()
     passlist = list()
+    faultlist = list()
 
-    for ref_test in Path(ref_dir).rglob("gold.v"):
-        test_name = os.path.basename(os.path.dirname(ref_test))
-        preprocess_test(ref_test)
+    for test_name in os.listdir(ref_dir):
 
-        # Find the catalogue in the test directory basing on the directory of the referencial gold.v
-        for p in Path(test_dir).rglob(test_name):
-            for gen_test in Path(os.path.dirname(p)).rglob("top.v"):
-                preprocess_test(gen_test)
-                sp = subprocess.run(["diff %s %s > %s.diff" % (ref_test, gen_test, gen_test)], shell=True)
+        ref_v_path = os.path.join(ref_dir, test_name, "dut.v")
+        gen_v_name = os.path.join(test_name.removesuffix(".json"), "dut.v")
+        gen_v_path = os.path.join(gen_v_dir, gen_v_name)
 
-                # Diff dut.v files only for the tests with matching top.v and gold.v (from the reference test set)
-                if check_ref_test("%s.diff" % gen_test):
-                    ref_v_path = os.path.join(os.path.dirname(ref_test), "dut.v")
-                    gen_v_name = os.path.join(test_name.removesuffix(".json"), "dut.v")
-                    gen_v_path = os.path.join(gen_v_dir, gen_v_name)
+        if os.path.isfile(ref_v_path) and os.path.isfile(gen_v_path):
+            preprocess_test(ref_v_path)
+            preprocess_test(gen_v_path)
+            diffpath = "%s.diff" % gen_v_path
+            sp = subprocess.run(["diff %s %s > %s" % (ref_v_path, gen_v_path, diffpath)], shell=True)
 
-                    if os.path.isfile(ref_v_path) and os.path.isfile(gen_v_path):
-                        preprocess_test(ref_v_path)
-                        preprocess_test(gen_v_path)
-                        diffpath = "%s.diff" % gen_v_path
-                        sp = subprocess.run(["diff %s %s > %s" % (ref_v_path, gen_v_path, diffpath)], shell=True)
+            if not os.stat(diffpath).st_size == 0:
+                difflist.append(os.path.dirname(gen_v_name))
+            else:
+                passlist.append(os.path.dirname(gen_v_name))
 
-                        if not os.stat(diffpath).st_size == 0:
-                            difflist.append("%s.diff" % gen_v_name)
-                        else:
-                            passlist.append("%s.diff" % gen_v_name)
-                    else:
-                        name = "%s.diff" % gen_test
+        elif os.path.isfile(ref_v_path):
+            faultlist.append(test_name.removesuffix(".json"))
 
-    list_diffs_and_passes(difflist, passlist, test_dir, gen_v_dir)
+    list_diffs_and_passes(difflist, passlist, faultlist, test_dir, gen_v_dir)
 
 
 def preprocess_test(filename):
@@ -169,13 +161,15 @@ def check_ref_test(name):
     return True if not os.stat(name).st_size else False
 
 
-def list_diffs_and_passes(difflist, passlist, test_suite, output_dir):
+def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir):
 
     difflist_name = "%s/%s_difflist.txt" % (output_dir, os.path.basename(test_suite))
     passlist_name = "%s/%s_passlist.txt" % (output_dir, os.path.basename(test_suite))
+    faultlist_name = "%s/%s_failures.txt" % (output_dir, os.path.basename(test_suite))
 
     difflist.sort()
     passlist.sort()
+    faultlist.sort()
 
     with open(difflist_name, "w") as diff_file:
         diff_file.writelines(line + "\n" for line in difflist)
@@ -185,11 +179,19 @@ def list_diffs_and_passes(difflist, passlist, test_suite, output_dir):
         pass_file.writelines(line + "\n" for line in passlist)
         pass_file.close()
 
+    with open(faultlist_name, "w") as fault_file:
+        fault_file.writelines(line + "\n" for line in faultlist)
+        fault_file.close()
+
     if not os.stat(difflist_name).st_size == 0:
         # Print warning in style of GH actions annotation
         print("::warning::Some generated tests differ from the reference. Check the list of diffs in `%s` in the `bsg-tests-diffs` artifacts."
               % os.path.basename(difflist_name))
 
+    if not os.stat(faultlist_name).st_size == 0:
+        # Print warning in style of GH actions annotation
+        print("::warning::Some tests were not generated. Check `%s` in the `bsg-tests-diffs` artifacts."
+              % os.path.basename(faultlist_name))
 
 def main():
 
