@@ -118,13 +118,17 @@ def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
         script_file.write("\n".join(script))
         script_file.close()
     
-    run_command(
+    result = run_command(
             ["yosys", "-s", script_path, "-q", "-q", "-l", f"{output_dest}/surelog.out"],
             timeout=10*60,
             vmem_limit_kb=2*1024*1024,
             capture_stderr=True,
             oom_score_adj=500
         )
+    if result.stderr:
+        print(test_name)
+        for line in result.stderr.decode("UTF-8").splitlines():
+            print(f"┆ \x1b[33m{line}\x1b[0m")
 
 
 def diff_tests(test_dir, ref_dir, gen_v_dir):
