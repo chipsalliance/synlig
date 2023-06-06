@@ -54,6 +54,11 @@ jobs:
           export PATH="$PWD/image/bin:$PATH"
           python3 ./generate_bsg_tests.py
 
+      - name: Summary
+        if: ${{ !cancelled() }}
+        run: |
+          cat build/tests/bsg_micro_designs/bsg_micro_designs_summary.md > $GITHUB_STEP_SUMMARY
+
       - name: Upload BSG Micro Design tests' diffs
         uses: actions/upload-artifact@v2
         with:

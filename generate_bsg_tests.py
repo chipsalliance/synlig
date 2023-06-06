@@ -163,35 +163,28 @@ def check_ref_test(name):
 
 def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir):
 
-    difflist_name = "%s/%s_difflist.txt" % (output_dir, os.path.basename(test_suite))
-    passlist_name = "%s/%s_passlist.txt" % (output_dir, os.path.basename(test_suite))
-    faultlist_name = "%s/%s_failures.txt" % (output_dir, os.path.basename(test_suite))
+    summary_name = "%s/%s_summary.md" % (output_dir, os.path.basename(test_suite))
 
     difflist.sort()
     passlist.sort()
     faultlist.sort()
 
-    with open(difflist_name, "w") as diff_file:
-        diff_file.writelines(line + "\n" for line in difflist)
-        diff_file.close()
+    with open(summary_name, "w") as sum_file:
+        if len(passlist):
+            sum_file.writelines("### Generated tests that are the same as the reference\n")
+            sum_file.writelines(":heavy_check_mark: " + line + "\n" for line in passlist)
+        if len(difflist):
+            sum_file.writelines("### Generated tests that differ from the reference\n")
+            sum_file.writelines(":heavy_exclamation_mark: " + line + "\n" for line in difflist)
+        if len(faultlist):
+            sum_file.writelines("### Tests that failed to be generated\n")
+            sum_file.writelines(":x: " + line + "\n" for line in faultlist)
+        sum_file.close()
 
-    with open(passlist_name, "w") as pass_file:
-        pass_file.writelines(line + "\n" for line in passlist)
-        pass_file.close()
-
-    with open(faultlist_name, "w") as fault_file:
-        fault_file.writelines(line + "\n" for line in faultlist)
-        fault_file.close()
-
-    if not os.stat(difflist_name).st_size == 0:
+    if len(difflist) or len(faultlist):
         # Print warning in style of GH actions annotation
-        print("::warning::Some generated tests differ from the reference. Check the list of diffs in `%s` in the `bsg-tests-diffs` artifacts."
-              % os.path.basename(difflist_name))
-
-    if not os.stat(faultlist_name).st_size == 0:
-        # Print warning in style of GH actions annotation
-        print("::warning::Some tests were not generated. Check `%s` in the `bsg-tests-diffs` artifacts."
-              % os.path.basename(faultlist_name))
+        print("::warning::Some generated tests differ from the reference or were not generated at all. Check the test statuses in the workflow summary or `%s` in the `bsg-tests-diffs` artifacts."
+              % os.path.basename(summary_name))
 
 def main():
 
