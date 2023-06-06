@@ -475,6 +475,7 @@ yosys:arch/gowin/compare.v
 yosys:arch/ice40/rom.v
 yosys:arch/xilinx/bug3670.v
 yosys:arch/xilinx/mul_unsigned.v
+yosys:asicworld/code_hdl_models_cam.v
 yosys:asicworld/code_hdl_models_clk_div.v
 yosys:asicworld/code_hdl_models_decoder_2to4_gates.v
 yosys:asicworld/code_hdl_models_decoder_using_assign.v
