@@ -223,16 +223,27 @@ jobs:
 
   push-logs:
     name: Generate AST diff
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
     needs:
       - tests-read-systemverilog
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
       - name: Download test results
         uses: /actions/download-artifact@v3
         with:
           name: parsing-logs
           path: logs
-      - name: Push branch
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt install -y git
+
+      - name: Generate push branch name
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           PUSH_BRANCH=$branch
@@ -243,7 +254,8 @@ jobs:
             PUSH_BRANCH="$PUSH_BRANCH+tests+$UHDM_TESTS_BRANCH_SPEC"
           fi
           echo "PUSH_BRANCH=$PUSH_BRANCH" >> "$GITHUB_ENV"
-          COMMENT_MSG="Logs difference between main branch: https://github.com/${{ github.repository }}-logs/compare/$PUSH_BRANCH"
+          CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository_owner }}/yosys-systemverilog-logs master | cut -d $'\t' -f1)
+          COMMENT_MSG="Logs difference between main branch:\nhttps://github.com/${{ github.repository }}-logs/compare/$CURRENT_LOGS_SHA..$PUSH_BRANCH"
           echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
           PUSH_LOGS=false
           # currently pushing logs when submodules are overriten using url is not supported
@@ -256,31 +268,43 @@ jobs:
           UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
 
       - name: Push logs
-        uses: cpina/github-action-push-to-another-repository@main
-        if: ${{ env.PUSH_LOGS == 'true' }}
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        with:
-          source-directory: 'logs'
-          destination-github-username: ${{ github.repository_owner }}
-          destination-repository-name: 'yosys-systemverilog-logs'
-          commit-message: 'Update logs'
-          user-email: 41898282+github-actions[bot]@users.noreply.github.com
-          target-branch: ${{ env.PUSH_BRANCH }}
-          create-target-branch-if-needed: true
+        run: |
+          .github/scripts/push_to_another_repository.sh ${{ github.repository_owner }} ${{ env.PUSH_BRANCH }} ${{ github.run_id }} logs
 
       - name: Post comment
         if: ${{ github.event_name == 'pull_request' }}
-        uses: KeisukeYamashita/create-comment@v1
+        uses: actions/github-script@v6
         with:
-          check-only-first-line: "true"
-          unique: "true"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          comment: ${{ env.COMMENT_MSG }}
+          script: |
+            const newComment = '${{ env.COMMENT_MSG }}';
+            const { data: comments } = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number
+            });
+            const newFirstLine = newComment.split('\n')[0];
+            for (const comment of comments) {
+              const oldFirstLine = comment.body.split('\n')[0];
+              if (oldFirstLine == newFirstLine) {
+                github.rest.issues.deleteComment({
+                  comment_id: comment.id,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo
+                });
+              }
+            }
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '${{ env.COMMENT_MSG }}'
+            });
 
       - name: Create summary
         run:
-          echo "${{ env.COMMENT_MSG }}" >> $GITHUB_STEP_SUMMARY
+          echo $'${{ env.COMMENT_MSG }}' >> $GITHUB_STEP_SUMMARY
 
   generate-tests-summary:
     name: Summary Generation
