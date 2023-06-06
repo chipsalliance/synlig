@@ -488,7 +488,6 @@ yosys:asicworld/code_hdl_models_encoder_using_case.v
 yosys:asicworld/code_hdl_models_encoder_using_if.v
 yosys:asicworld/code_hdl_models_full_adder_gates.v
 yosys:asicworld/code_hdl_models_full_subtracter_gates.v
-yosys:asicworld/code_hdl_models_GrayCounter.v
 yosys:asicworld/code_hdl_models_gray_counter.v
 yosys:asicworld/code_hdl_models_half_adder_gates.v
 yosys:asicworld/code_hdl_models_lfsr.v
@@ -532,7 +531,6 @@ yosys:asicworld/code_verilog_tutorial_escape_id.v
 yosys:asicworld/code_verilog_tutorial_explicit.v
 yosys:asicworld/code_verilog_tutorial_first_counter.v
 yosys:asicworld/code_verilog_tutorial_flip_flop.v
-yosys:asicworld/code_verilog_tutorial_fsm_full.v
 yosys:asicworld/code_verilog_tutorial_if_else.v
 yosys:asicworld/code_verilog_tutorial_multiply.v
 yosys:asicworld/code_verilog_tutorial_mux_21.v
@@ -602,7 +600,6 @@ yosys:sim/sdffe.v
 yosys:simple/aes_kexp128.v
 yosys:simple/always01.v
 yosys:simple/always02.v
-yosys:simple/always03.v
 yosys:simple/arraycells.v
 yosys:simple/arrays01.v
 yosys:simple/arrays02.sv
@@ -654,14 +651,12 @@ yosys:simple/module_scope_case.v
 yosys:simple/named_genblk.v
 yosys:simple/nested_genblk_resolve.v
 yosys:simple/omsp_dbg_uart.v
-yosys:simple/operators.v
 yosys:simple/param_attr.v
 yosys:simple/repwhile.v
 yosys:simple/retime.v
 yosys:simple/rotate.v
 yosys:simple/scopes.v
 yosys:simple/signedexpr.v
-yosys:simple/sincos.v
 yosys:simple/specify.v
 yosys:simple/string_format.v
 yosys:simple/subbytes.v
