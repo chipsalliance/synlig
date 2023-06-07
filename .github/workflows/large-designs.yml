@@ -409,10 +409,7 @@ jobs:
         with:
           name: opentitan-logs-${{ matrix.file-name }}
           path: |
-            ./uhdm-tests/opentitan/opentitan_parsing_test/build/results
-            ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.log
-            ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.dot
-            ./uhdm-tests/opentitan/opentitan_parsing_test/build/opentitan_deps.mk
+            ./uhdm-tests/opentitan/opentitan_parsing_test/**
 
       - name: Upload load graphs
         if: ${{ always() }}
