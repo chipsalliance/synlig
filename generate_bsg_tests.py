@@ -170,18 +170,18 @@ def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir)
     faultlist.sort()
 
     with open(summary_name, "w") as sum_file:
-        if len(passlist):
+        if passlist:
             sum_file.writelines("### Generated tests that are the same as the reference\n")
             sum_file.writelines(":heavy_check_mark: " + line + "\n" for line in passlist)
-        if len(difflist):
+        if difflist:
             sum_file.writelines("### Generated tests that differ from the reference\n")
             sum_file.writelines(":heavy_exclamation_mark: " + line + "\n" for line in difflist)
-        if len(faultlist):
+        if faultlist:
             sum_file.writelines("### Tests that failed to be generated\n")
             sum_file.writelines(":x: " + line + "\n" for line in faultlist)
         sum_file.close()
 
-    if len(difflist) or len(faultlist):
+    if difflist or faultlist:
         # Print warning in style of GH actions annotation
         print("::warning::Some generated tests differ from the reference or were not generated at all. Check the test statuses in the workflow summary or `%s` in the `bsg-tests-diffs` artifacts."
               % os.path.basename(summary_name))
