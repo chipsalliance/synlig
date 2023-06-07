@@ -156,11 +156,6 @@ def preprocess_test(filename):
     sp = subprocess.run(["sed -i -e '/\(\* .* \*\)/d' -e '/^\s*$/d' %s" % filename], shell=True)
 
 
-def check_ref_test(name):
-
-    return True if not os.stat(name).st_size else False
-
-
 def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir):
 
     summary_name = "%s/%s_summary.md" % (output_dir, os.path.basename(test_suite))
