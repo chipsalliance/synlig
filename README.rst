@@ -167,10 +167,21 @@ Using dedicated branch
 
 Create a new branch and point submodules to revisions with your changes. Then pick one of the following methods.
 
+To change a submodule:
+
+- Change submodule's remote to point to your fork: ``git submodule set-url -- SUBMODULE_PATH URL``. Use https URL, which is available on github when you click green "❬❭ Code ▾" button.
+  Example: ``git submodule set-url ./yosys-f4pga-plugins https://github.com/antmicro/yosys-f4pga-plugins.git``
+- Change current directory to the submodule directory and switch revision to one you want to use. The URL you've added above has been assigned to remote "origin".
+  Example: ``git fetch origin my-branch-name; git checkout FETCH_HEAD``
+- If you want to change more than one submodule, repeat two previous steps for all other submodules you want to change.
+- Change current directory to the top-level ``yosys-systemverilog`` working directory. Stage all performed changes, i.e. ``.gitmodule`` file and directories of every changed submodule. Commit changes.
+  Example: ``git add .gitmodule ./yosys-f4pga-plugins``.
+- Commit and push your changes to your ``yosys-systemverilog`` fork.
+
 Create a Pull Request
 """""""""""""""""""""
 
-Just that. Create a (WIP) Pull Request using your new branch.
+Just that. Create a (Draft/WIP) Pull Request using your new branch. Mention in the description what are you testing, just to let everyone know what this PR is for. E.g. paste a link to the main PR that you are testing.
 
 Start a workflow manually (using Github Web UI)
 """""""""""""""""""""""""""""""""""""""""""""""
