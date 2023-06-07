@@ -174,8 +174,8 @@ To change a submodule:
 - Change current directory to the submodule directory and switch revision to one you want to use. The URL you've added above has been assigned to remote "origin".
   Example: ``git fetch origin my-branch-name; git checkout FETCH_HEAD``
 - If you want to change more than one submodule, repeat two previous steps for all other submodules you want to change.
-- Change current directory to the top-level ``yosys-systemverilog`` working directory. Stage all performed changes, i.e. ``.gitmodule`` file and directories of every changed submodule. Commit changes.
-  Example: ``git add .gitmodule ./yosys-f4pga-plugins``.
+- Change current directory to the top-level ``yosys-systemverilog`` working directory. Stage all performed changes, i.e. ``.gitmodules`` file and directories of every changed submodule. Commit changes.
+  Example: ``git add .gitmodules ./yosys-f4pga-plugins``.
 - Commit and push your changes to your ``yosys-systemverilog`` fork.
 
 Create a Pull Request
