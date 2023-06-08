@@ -33,8 +33,6 @@ jobs:
     strategy:
       fail-fast: false
     env:
-      CC: gcc-9
-      CXX: g++-9
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
@@ -87,33 +85,35 @@ jobs:
         run: tar -xf binaries.tar
 
       - name: Build & Test (yosys)
-        run: |
-          ./.github/scripts/run_group_test.sh
-
         env:
           TARGET: uhdm/yosys/test-ast
-
-      - name: Rename test results
-        if: ${{ always() }}
         run: |
-          mv test-results/test-results.passed test-results/test-results-uhdm.passed || true
-          mv test-results/test-results.failed test-results/test-results-uhdm.failed || true
+          ./.github/scripts/run_group_test.sh \
+              ./build/parsing/read-uhdm \
+              ./test-results/test-results-uhdm \
+              ;
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: test-results
+          name: parsing_test-results
           path: test-results
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: tests-vcddiff-artifacts
-          path: UHDM-integration-tests/artifacts
+          name: parsing_read-uhdm_logs
+          path: build/parsing/read-uhdm/*/*.log
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: parsing_read-uhdm_yosys-sv
+          path: build/parsing/read-uhdm/*/yosys.sv
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: plots
           path: |
@@ -126,8 +126,6 @@ jobs:
     strategy:
       fail-fast: false
     env:
-      CC: gcc-9
-      CXX: g++-9
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
@@ -180,27 +178,35 @@ jobs:
         run: tar -xf binaries.tar
 
       - name: Build & Test (yosys)
-        run: |
-          ./.github/scripts/run_group_test.sh
-
         env:
           TARGET: uhdm/yosys/test-ast
-
-      - name: Rename test results
-        if: ${{ always() }}
         run: |
-          mv test-results/test-results.passed test-results/test-results-systemverilog.passed || true
-          mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
+          ./.github/scripts/run_group_test.sh \
+              ./build/parsing/read-systemverilog \
+              ./test-results/test-results-systemverilog \
+              ;
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: test-results
+          name: parsing_test-results
           path: test-results
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: parsing_read-systemverilog_logs
+          path: build/parsing/read-systemverilog/*/*.log
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: parsing_read-systemverilog_yosys-sv
+          path: build/parsing/read-systemverilog/*/yosys.sv
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: plots
           path: |
@@ -226,7 +232,7 @@ jobs:
       - name: Download test results
         uses: /actions/download-artifact@v3
         with:
-          name: test-results
+          name: parsing_test-results
 
       - name: Generate summary
         run: |
