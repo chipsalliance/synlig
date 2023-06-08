@@ -14,7 +14,7 @@ SYSTEMVERILOG_FAILED_FILE=$TEST_RESULTS_PREFIX-systemverilog.failed
 if [[ -e $UHDM_PASSED_FILE ]]; then
     UHDM_PASSED_NUMBER=$(wc -l < $UHDM_PASSED_FILE)
 else
-    UHDM_FAILED_NUMBER=0
+    UHDM_PASSED_NUMBER=0
 fi
 if [[ -e $SYSTEMVERILOG_PASSED_FILE ]]; then
     SYSTEMVERILOG_PASSED_NUMBER=$(wc -l < $SYSTEMVERILOG_PASSED_FILE)
@@ -101,7 +101,7 @@ for test_name in "${!uhdm_results[@]}"; do
     esac
 done
 
-print_ln() { printf '%s\n' "$@"; }
+print_ln() { (( $# )) && printf '%s\n' "$@" || : ; }
 
 {
     if (( ${#results_00[@]} + ${#results_10[@]} + ${#results_01[@]} > 0 )); then
