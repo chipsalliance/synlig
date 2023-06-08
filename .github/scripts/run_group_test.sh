@@ -1,38 +1,73 @@
 #!/bin/bash
-ROOT_DIR=$(dirname $(dirname $(dirname "$0")))
-if [[ -z $TESTS_TO_SKIP ]]; then
-    TEST_CASES="$(cd UHDM-integration-tests && python list.py -d tests)"
-else
-    TEST_CASES="$(cd UHDM-integration-tests && python list.py -d tests -s $TESTS_TO_SKIP)"
-fi
-TEST_CASES=$(echo $TEST_CASES | sed "s/[][,\"]//g") # Remove characters '[', ']', '"' and ',' from json like array
+shopt -s nullglob
+shopt -s extglob
 
-LOG_DIR=$ROOT_DIR/logs
+declare -r SELF_DIR="$(dirname $(readlink -f ${BASH_SOURCE[0]}))"
+declare -r REPO_DIR="$(realpath $SELF_DIR/../..)"
 
-mkdir -p $LOG_DIR
+# Inputs
+declare -r OUT_DIR="$(realpath -m "$1")"
 
-mkdir -p $ROOT_DIR/test-results
-for TEST_CASE in $TEST_CASES;
-do
-    export TEST_CASE
-    mkdir -p $LOG_DIR/$TEST_CASE
-    ROOT_DIR_ABSOLUTE=$(realpath $ROOT_DIR)/
-    $ROOT_DIR/UHDM-integration-tests/.github/ci.sh \
-        | sed -e "s#${ROOT_DIR_ABSOLUTE}##g" \
-            -e 's/\(End of script\).*//' \
-            -e 's/\(Time spent\).*//' \
-                | tee $LOG_DIR/$TEST_CASE/ast.log
-    TEST_RET=$?
-    TEST_CASE="${TEST_CASE//tests\//}"
-    if [[ $TEST_RET -eq 0 ]]; then
-        printf '%s\t%s\n' "$TEST_CASE" '1' >> $ROOT_DIR/test-results/test-results.passed
-    else
-        printf '%s\t%s\n' "$TEST_CASE" '0' >> $ROOT_DIR/test-results/test-results.failed
-        RET=1
+declare -r RESULTS_FILE="$(realpath -m "$2")"
+
+# Input passed via env:
+# - PARSER
+# - TARGET
+
+# Prepare
+
+tests_to_skip=(${TESTS_TO_SKIP:-})
+filter_pat="$(IFS='|'; printf '%s\n' "${tests_to_skip[*]}")"
+test_cases=( $(cd ${REPO_DIR}/UHDM-integration-tests && echo tests/!(${filter_pat})) )
+
+global_status=0
+mkdir -p "$(dirname "$RESULTS_FILE")"
+
+# Test
+
+cd $REPO_DIR
+for test_case in "${test_cases[@]}"; do
+    printf '::group::%s\n' "$test_case"
+    export test_case
+    test_name="${test_case//tests\//}"
+    test_name="${test_name//\//_}"
+
+    test_out_dir="${OUT_DIR}/${test_name}"
+    mkdir -p "$test_out_dir"
+
+    make -C $REPO_DIR/UHDM-integration-tests \
+            -j $(nproc) \
+            --no-print-directory \
+            YOSYS_BIN:="${REPO_DIR}/image/bin/yosys -Q" \
+            ENABLE_READLINE=0 \
+            PRETTY=0 \
+            PARSER=$PARSER \
+            TEST=$test_case \
+            $TARGET > "${test_out_dir}/yosys.log"
+    (( $? == 0 )) && test_ok=1 || test_ok=0
+
+    sed -i -n \
+        -e "s#${REPO_DIR}/##g" \
+        -e '/1. Executing Verilog with UHDM frontend./,$ {/^End of script/d; /^Time spent/d; p}' \
+        "${test_out_dir}/yosys.log"
+
+    # UHDM-integration-tests/Makefile runs yosys with CWD set to `UHDM-integration-tests/build` directory.
+    # Some tests write `yosys.sv` file in the CWD.
+    if [[ -e $REPO_DIR/UHDM-integration-tests/build/yosys.sv ]]; then
+        mv "$REPO_DIR/UHDM-integration-tests/build/yosys.sv" "${test_out_dir}/"
     fi
+
+    if (( $test_ok == 0 )); then
+        printf '\x1b[0;39;1;3mUp to last 50 lines of yosys log:\x1b[0m\n'
+        tail -n 50 ${test_out_dir}/yosys.log
+        global_status=1
+    fi
+
+    printf '%d\t%d\t%s\n' "$test_ok" "$test_name" >> "$RESULTS_FILE"
+    printf '::endgroup::\n'
 done
 
 # Leave with non-zero error status if any test failed
-if [[ $RET -ne 0 ]]; then
+if [[ $global_status -ne 0 ]]; then
     exit 1
 fi
