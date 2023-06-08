@@ -174,7 +174,8 @@ jobs:
       - name: Build binaries
         run: |
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-          ./build_binaries.sh
+          make -rR -j$(nproc) -Oline -f build_binaries.mk \
+              install-surelog install-yosys install-plugins
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue
           # See https://github.com/actions/upload-artifact/issues/38
