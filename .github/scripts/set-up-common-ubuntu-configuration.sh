@@ -59,6 +59,7 @@ begin_group 'Add extra APT configuration'
 #-----------------------------------------------------------------------------
 
 apt_ci_config=/etc/apt/apt.conf.d/99-ci
+apt_base_dir=${GITHUB_WORKSPACE}/.apt_cache
 
 declare -rA ci_apt_conf=(
 	# Enable parallel download from different mirrors.
@@ -70,10 +71,23 @@ declare -rA ci_apt_conf=(
 
 	# Disables ipv6 (ubuntu servers have problems with it, and it is used by default).
 	[Acquire::ForceIPv4]='true'
+
+	# Store APT repo lists and cache in a directory accesible from Github Actions.
+	[Dir::State]="${apt_base_dir}/state"
+	[Dir::Cache]="${apt_base_dir}/cache"
+	[Dir::Cache::pkgcache]='pkgcache.bin'
+	[APT::Keep-Downloaded-Packages]='true'
 )
 for k in "${!ci_apt_conf[@]}"; do
 	printf '%s "%s";\n' "$k" "${ci_apt_conf[$k]//"/\\"}"
 done | tee "$apt_ci_config"
+
+# Move existing APT state and cachedirectories to the new path.
+mkdir -m 755 -p ${apt_base_dir}
+mv -f /var/lib/apt ${apt_base_dir}/state
+mv -f /var/cache/apt ${apt_base_dir}/cache
+# Let _apt user access the directory
+chmod 755 /root
 
 end_group
 
