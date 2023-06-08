@@ -44,8 +44,8 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+      - name: Set up common Ubuntu configuration and APT cache
+        uses: ./.github/actions/set-up-common-ubuntu-configuration-and-apt-cache
 
       - name: Install dependencies
         run: |
@@ -134,8 +134,8 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+      - name: Set up common Ubuntu configuration and APT cache
+        uses: ./.github/actions/set-up-common-ubuntu-configuration-and-apt-cache
 
       - name: Install dependencies
         run: |

@@ -81,7 +81,74 @@ jobs:
             false
           fi
 
+  apt-download:
+    name: Download APT packages
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-2"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Download packages
+        run: |
+          apt-get update -q
+          apt-get install -y software-properties-common
+          add-apt-repository -u ppa:ubuntu-toolchain-r/test
+          apt-get install --download-only -y \
+              ant \
+              bison \
+              build-essential \
+              ccache \
+              clang-15 \
+              cmake \
+              default-jre \
+              flex \
+              gcc-9 \
+              git \
+              google-perftools \
+              libffi-dev \
+              libfl-dev \
+              libgoogle-perftools-dev \
+              libreadline-dev \
+              llvm-15 \
+              pkg-config \
+              python3 \
+              python3-dev \
+              python3-pip \
+              swig \
+              tcl-dev \
+              tclsh \
+              uuid \
+              uuid-dev \
+              wget \
+              ;
+
+      - name: Package APT cache
+        id: tar-apt-cache
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          tar cavf .apt_cache.tar .apt_cache
+          printf 'apt-cache-hash=%s\n' \
+              "$(find .apt_cache 2>/dev/null | sha1sum - | cut -c1-40)" \
+              > "$GITHUB_OUTPUT"
+
+      - name: Save APT cache
+        uses: actions/cache/save@v3
+        with:
+          path: .apt_cache.tar
+          key: apt_cache_${{ steps.tar-apt-cache.outputs.apt-cache-hash }}
+
   build-binaries:
+    needs: apt-download
     strategy:
       matrix:
         include:
@@ -114,12 +181,11 @@ jobs:
           submodules: false
           fetch-depth: 1
 
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+      - name: Set up common Ubuntu configuration and APT cache
+        uses: ./.github/actions/set-up-common-ubuntu-configuration-and-apt-cache
 
       - name: Install dependencies
         run: |
-          apt-get update -q
           apt-get install -y software-properties-common
           add-apt-repository -u ppa:ubuntu-toolchain-r/test
           apt-get install -y \
@@ -207,6 +273,7 @@ jobs:
             **/plot_*.svg
 
   build-sv2v:
+    needs: apt-download
     name: Build sv2v
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
@@ -220,13 +287,12 @@ jobs:
           submodules: false
           fetch-depth: 1
 
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+      - name: Set up common Ubuntu configuration and APT cache
+        uses: ./.github/actions/set-up-common-ubuntu-configuration-and-apt-cache
 
       - name: Install dependencies
         run: |
-          apt-get update -qq
-          apt install -y git wget
+          apt-get install -y git wget
 
       - name: 'Read submodule revisions'
         id: rev
@@ -388,9 +454,9 @@ jobs:
     steps:
       - name: Install Yosys and dependencies
         run: |
-          apt update
-          apt upgrade -y
-          apt install -y yosys yosys-dev curl jq wget libreadline-dev
+          apt-get update
+          apt-get upgrade -y
+          apt-get install -y yosys yosys-dev curl jq wget libreadline-dev
       - name: Download and extract UHDM plugin
         run: |
           curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz

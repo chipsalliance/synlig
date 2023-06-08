@@ -1,0 +1,35 @@
+name: "Set up common Ubuntu configuration and APT cache"
+description: "Set up common Ubuntu configuration and APT cache"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up common Ubuntu configuration
+      shell: bash
+      run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+    - name: Restore APT cache
+      uses: actions/cache/restore@v3
+      with:
+        path: .apt_cache.tar
+        key: apt_cache_XXX
+        restore-keys: apt_cache_
+
+    - name: Unpack or update APT cache
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        if [[ -e .apt_cache.tar ]]; then
+          printf '::group::%s\n' 'Unpacking APT cache archive'
+          tar -xv \
+              -f .apt_cache.tar \
+              --preserve-permissions \
+              --same-owner \
+              --overwrite \
+              || :
+          printf '::endgroup::\n'
+        else
+          printf '::group::%s\n' 'Updating APT database'
+          apt-get update -q || :
+          printf '::endgroup::\n'
+        fi
