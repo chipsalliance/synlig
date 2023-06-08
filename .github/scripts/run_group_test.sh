@@ -14,6 +14,22 @@ declare -r failed_results_file="${RESULTS_FILE_PREFIX}.failed"
 # - PARSER
 # - TARGET
 
+# Configure ASAN & LSAN
+
+declare -a asan_options=(
+    detect_stack_use_after_return=1
+    check_initialization_order=1
+    detect_leaks=1
+    suppressions=$REPO_DIR/config/asan.supp
+    log_suffix=.log
+)
+declare -a lsan_options=(
+    suppressions=$REPO_DIR/config/lsan.supp
+)
+export ASAN_OPTIONS="$(IFS=':'; printf '%s' "${asan_options[*]}")"
+export LSAN_OPTIONS="$(IFS=':'; printf '%s' "${lsan_options[*]}")"
+export ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer-15
+
 # Prepare
 
 if [[ -z $TESTS_TO_SKIP ]]; then
@@ -38,6 +54,10 @@ for TEST_CASE in $TEST_CASES; do
     test_out_dir="${OUT_DIR}/${TEST_NAME}"
     mkdir -p "$test_out_dir"
 
+    (
+        # Used only for current test
+        ASAN_OPTIONS+=":log_path=${test_out_dir}/asan"
+
         make -C $REPO_DIR/UHDM-integration-tests -j $(nproc) \
                 YOSYS_BIN:="LD_PRELOAD=${REPO_DIR}/image/lib/libfakedlclose.so ${REPO_DIR}/image/bin/yosys -Q" \
                 ENABLE_READLINE=0 \
@@ -45,6 +65,7 @@ for TEST_CASE in $TEST_CASES; do
                 PARSER=$PARSER \
                 TEST=$TEST_CASE \
                 $TARGET > "${test_out_dir}/yosys.log"
+    )
     TEST_RET=$?
 
     # UHDM-integration-tests/Makefile runs yosys with CWD set to `UHDM-integration-tests/build` directory.

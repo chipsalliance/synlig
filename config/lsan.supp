@@ -1,0 +1,3 @@
+# Surelog issues
+leak:^SURELOG::start_compiler(
+leak:^vpi_get_value$
