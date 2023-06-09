@@ -238,20 +238,23 @@ jobs:
           name: parsing-logs
           path: logs
 
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
       - name: Install dependencies
         run: |
-          apt-get update -qq
-          apt install -y git
+          apt-get update -q
+          apt-get install -y git
 
       - name: Generate push branch name
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           PUSH_BRANCH=$branch
           if [[ ! -z "$PLUGINS_BRANCH_SPEC" ]]; then
-            PUSH_BRANCH="$PUSH_BRANCH+plugins+$PLUGINS_BRANCH_SPEC"
+            PUSH_BRANCH="${PUSH_BRANCH}+plugins+${PLUGINS_BRANCH_SPEC}"
           fi
           if [[ ! -z "$UHDM_TESTS_BRANCH_SPEC" ]]; then
-            PUSH_BRANCH="$PUSH_BRANCH+tests+$UHDM_TESTS_BRANCH_SPEC"
+            PUSH_BRANCH="${PUSH_BRANCH}+tests+${UHDM_TESTS_BRANCH_SPEC}"
           fi
           echo "PUSH_BRANCH=$PUSH_BRANCH" >> "$GITHUB_ENV"
           CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository_owner }}/yosys-systemverilog-logs master | cut -d $'\t' -f1)
@@ -271,36 +274,41 @@ jobs:
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         run: |
-          .github/scripts/push_to_another_repository.sh ${{ github.repository_owner }} ${{ env.PUSH_BRANCH }} ${{ github.run_id }} logs
+          .github/scripts/push_to_logs_repository.sh "$GITHUB_REPOSITORY_OWNER" "$PUSH_BRANCH" "$GITHUB_RUN_ID" logs
 
       - name: Post comment
         if: ${{ github.event_name == 'pull_request' }}
         uses: actions/github-script@v6
         with:
           script: |
-            const newComment = '${{ env.COMMENT_MSG }}';
             const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number
             });
-            const newFirstLine = newComment.split('\n')[0];
+            const newFirstLine = 'Logs difference between main branch:';
+            let commentUpdated = false;
             for (const comment of comments) {
               const oldFirstLine = comment.body.split('\n')[0];
               if (oldFirstLine == newFirstLine) {
-                github.rest.issues.deleteComment({
+                github.rest.issues.updateComment({
                   comment_id: comment.id,
                   owner: context.repo.owner,
-                  repo: context.repo.repo
+                  repo: context.repo.repo,
+                  body: '${{ env.COMMENT_MSG }}'
                 });
+                commentUpdated = true;
+                break;
               }
             }
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '${{ env.COMMENT_MSG }}'
-            });
+            if (!commentUpdated) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '${{ env.COMMENT_MSG }}'
+              });
+            }
 
       - name: Create summary
         run:

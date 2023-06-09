@@ -17,7 +17,11 @@ do
     export TEST_CASE
     mkdir -p $LOG_DIR/$TEST_CASE
     ROOT_DIR_ABSOLUTE=$(realpath $ROOT_DIR)/
-    $ROOT_DIR/UHDM-integration-tests/.github/ci.sh | sed -e 's#'${ROOT_DIR_ABSOLUTE}'##g' | sed -e 's/\(End of script\).*//' | sed -e 's/\(Time spent\).*//' | tee $LOG_DIR/$TEST_CASE/ast.log
+    $ROOT_DIR/UHDM-integration-tests/.github/ci.sh \
+        | sed -e "s#${ROOT_DIR_ABSOLUTE}##g" \
+            -e 's/\(End of script\).*//' \
+            -e 's/\(Time spent\).*//' \
+                | tee $LOG_DIR/$TEST_CASE/ast.log
     TEST_RET=$?
     TEST_CASE="${TEST_CASE//tests\//}"
     if [[ $TEST_RET -eq 0 ]]; then

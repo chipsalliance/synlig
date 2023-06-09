@@ -33,10 +33,11 @@ git config --global user.name "github-actions[bot]"
     # will be created
     git clone --single-branch --depth 1 "$GIT_CMD_REPOSITORY" "$CLONE_DIR"
 } || {
-    echo "::error::Could not clone the destination repository. Command:"
-    echo "::error::git clone --single-branch --branch $PUSH_BRANCH $GIT_CMD_REPOSITORY $CLONE_DIR"
-    echo "::error::(Note that if they exist USER_NAME and API_TOKEN is redacted by GitHub)"
-    echo "::error::Please verify that the target repository exist AND that it contains the destination branch name, and is accesible by the SSH_DEPLOY_KEY"
+    url_enc_line_break='%0A'
+    printf '::error title=%s::%s%s\n'
+        'Could not clone the destination repository.' \
+        "Command: git clone --single-branch --branch ${PUSH_BRANCH@Q} ${GIT_CMD_REPOSITORY@Q} ${CLONE_DIR@Q}${url_enc_line_break}" \
+        'Please verify that the target repository exist AND contains the destination branch name, and is accesible with the configured SSH_DEPLOY_KEY'
     exit 1
 }
 echo "Current remote files"
@@ -53,10 +54,8 @@ cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$TARGET_DIRECTORY"
 cd "$CLONE_DIR"
 echo "Files that will be pushed"
 ls -la
-COMMIT_MESSAGE="Update logs from ORIGIN_COMMIT"
-ORIGIN_COMMIT="https://github.com/$REPOSITORY_OWNER/yosys-systemverilog/actions/runs/$GITHUB_RUN_ID"
-COMMIT_MESSAGE="${COMMIT_MESSAGE/ORIGIN_COMMIT/$ORIGIN_COMMIT}"
-COMMIT_MESSAGE="${COMMIT_MESSAGE/\$GITHUB_REF/$GITHUB_REF}"
+printf -v COMMIT_MESSAGE 'Update logs from https://github.com/%s/actions/runs/%s\n' \
+    "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
 git switch -c "$PUSH_BRANCH" || true
 git add .
 git status
