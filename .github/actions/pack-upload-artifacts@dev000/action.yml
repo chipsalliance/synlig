@@ -21,13 +21,14 @@ runs:
       if: ${{ inputs.archive-type || inputs.archive-name }}
       uses: actions/github-script@v6
       env:
+
         INPUT_NAME: ${{ inputs.name }}
         INPUT_PATH: ${{ inputs.path }}
         INPUT_ARCHIVE_TYPE: ${{ inputs.archive-type }}
         INPUT_ARCHIVE_NAME: ${{ inputs.archive-name }}
       with:
         script: |
-          const script = require(".github/actions/pack-upload-artifacts/archive.js");
+          const script = require(process.env.GITHUB_ACTION_PATH + "/archive.js");
           return await script({github, context, core, glob, io, exec, fetch, require});
 
     - if: ${{ inputs.archive-type || inputs.archive-name }}
