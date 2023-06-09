@@ -20,6 +20,7 @@ sh_quote_list = $(foreach _v,$(strip ${1}),${chr.quot}$(subst ${chr.quot},${chr.
 REPO_DIR := ${this_mk.dir}
 INSTALL_DIR := ${this_mk.dir}/image
 
+ENABLE_ASAN := 0
 SYSTEMVERILOG_PLUGIN_ONLY := 0
 
 CC ?= cc
@@ -28,7 +29,7 @@ export CC
 export CXX
 
 $(info ------------------------------------------------------------------------)
-$(foreach var,REPO_DIR INSTALL_DIR SYSTEMVERILOG_PLUGIN_ONLY CC CXX,\
+$(foreach var,REPO_DIR INSTALL_DIR ENABLE_ASAN SYSTEMVERILOG_PLUGIN_ONLY CC CXX,\
   $(info $(shell \
     printf '${chr.percent}-32s = ${chr.percent}s\n' ${var} $(call sh_quote,${${var}});\
   ))\
@@ -51,6 +52,9 @@ SURELOG_SRC_DIR := ${REPO_DIR}/Surelog
 SURELOG_BUILD_DIR := ${REPO_DIR}/Surelog/build
 
 surelog_build_type:=Release
+ifeq ($(strip ${ENABLE_ASAN}),1)
+surelog_build_type:=Debug
+endif
 
 .PHONY: clean-surelog
 clean-surelog:
@@ -87,6 +91,17 @@ yosys_make_args += \
 		CONFIG:=gcc
 endif
 
+ifeq ($(strip ${ENABLE_ASAN}),1)
+yosys_make_args += \
+		STRIP:=/bin/true \
+		SANITIZER:=address \
+		ENABLE_DEBUG:=1
+
+ifeq ($(findstring clang,${CC}),clang)
+build-yosys install-yosys: export override CXXFLAGS += -fsanitize-address-use-after-return=always
+endif
+endif
+
 .PHONY: clean-yosys
 clean-yosys:
 	${MAKE} -C ${YOSYS_SRC_DIR} ${yosys_make_args} clean
@@ -100,11 +115,39 @@ install-yosys: build-yosys | ${INSTALL_DIR}
 	${MAKE} -C ${YOSYS_SRC_DIR} --no-print-directory ${yosys_make_args} install
 
 #───────────────────────────────────────────────────────────────────────────────
+# fakedlclose
+#───────────────────────────────────────────────────────────────────────────────
+
+FAKEDLCLOSE_SRC_DIR := ${REPO_DIR}/lib/fakedlclose
+
+.PHONY: clean-fakedlclose
+clean-fakedlclose:
+	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} clean
+
+.PHONY: build-fakedlclose
+build-fakedlclose:
+	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR}
+
+.PHONY: install-fakedlclose
+install-fakedlclose: build-fakedlclose | ${INSTALL_DIR}
+	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} INSTALL_DIR:=${INSTALL_DIR} install
+
+#───────────────────────────────────────────────────────────────────────────────
 # Plugins
 #───────────────────────────────────────────────────────────────────────────────
 
 PLUGINS_SRC_DIR := ${REPO_DIR}/yosys-f4pga-plugins
 plugins_make_args := UHDM_INSTALL_DIR:=${INSTALL_DIR} CC:=${CC} CXX:=${CXX}
+
+ifeq ($(strip ${ENABLE_ASAN}),1)
+plugins_make_args += EXTRA_FLAGS:='-g'
+
+plugins_build_deps += build-fakedlclose
+plugins_install_deps += install-fakedlclose
+else
+plugins_build_deps :=
+plugins_install_deps :=
+endif
 
 ifeq ($(strip ${SYSTEMVERILOG_PLUGIN_ONLY}),1)
 plugins_make_clean_targets := clean_systemverilog clean_uhdm
@@ -122,13 +165,13 @@ clean-plugins:
 	${MAKE} -C ${PLUGINS_SRC_DIR} ${plugins_make_args} ${plugins_make_clean_targets}
 
 .PHONY: build-plugins
-build-plugins: install-yosys install-surelog
+build-plugins: install-yosys install-surelog ${plugins_build_deps}
 	cp -u ${YOSYS_SRC_DIR}/passes/pmgen/pmgen.py ${PLUGINS_SRC_DIR}/
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} -C ${PLUGINS_SRC_DIR} --no-print-directory ${plugins_make_args} ${plugins_make_build_targets}
 
 .PHONY: install-plugins
-install-plugins: build-plugins | ${INSTALL_DIR}
+install-plugins: build-plugins ${plugins_install_deps} | ${INSTALL_DIR}
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} -C ${PLUGINS_SRC_DIR} --no-print-directory ${plugins_make_args} ${plugins_make_install_targets}
 

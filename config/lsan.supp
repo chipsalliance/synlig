@@ -1,0 +1,6 @@
+# Surelog issues found by read_systemverilog
+leak:^SURELOG::start_compiler(
+leak:^vpi_get_value$
+leak:^vpi_get_delays$
+# Surelog issues found by read_uhdm
+leak:^UHDM::Serializer::Restore(
