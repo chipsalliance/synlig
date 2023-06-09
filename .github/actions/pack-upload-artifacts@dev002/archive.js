@@ -32,7 +32,7 @@ module.exports = async ({github, context, core, glob, io, exec, fetch, require})
         }
       });
   const g = await glob.create(INPUT_PATH, { followSymbolicLinks: false});
-  const files = g.glob();
+  const files = await g.glob();
 
   let archive_name = "";
   if (clean_archive_name !== "") {

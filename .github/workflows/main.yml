@@ -61,6 +61,23 @@ jobs:
             emit-custom-branch-info-end
           } > $GITHUB_STEP_SUMMARY
 
+          mkdir -p artf
+          touch artf/{a,b,c}
+
+      - name: Test1
+        uses: ./.github/actions/pack-upload-artifacts@dev002
+        with:
+          name: test-artifact
+          path: artf
+          archive-type: tar
+
+      - name: Test2
+        uses: ./.github/actions/pack-upload-artifacts@dev002
+        with:
+          name: test-artifact-2
+          path: artf/*
+          archive-type: tar.xz
+
   style-check:
     name: Style check
     runs-on: [self-hosted, Linux, X64]
@@ -254,7 +271,7 @@ jobs:
               install-surelog install-yosys install-plugins
 
       - name: Upload binaries
-        uses: ./.github/actions/pack-upload-artifacts@dev001
+        uses: ./.github/actions/pack-upload-artifacts@dev002
         with:
           name: ${{ matrix.artifact-name }}
           path: image
