@@ -1,0 +1,44 @@
+name: "Pack and upload artifacts"
+description: ""
+
+inputs:
+  name:
+    required: false
+    default: ${{ github.job }}
+  path:
+    required: true
+  archive-type:
+    required: false
+    default: ''
+  archive-name:
+    required: false
+    default: ''
+
+runs:
+  using: "composite"
+  steps:
+    - id: archive
+      if: ${{ inputs.archive-type || inputs.archive-name }}
+      uses: actions/github-script@v6
+      env:
+        INPUT_NAME: ${{ inputs.name }}
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_ARCHIVE_TYPE: ${{ inputs.archive-type }}
+        INPUT_ARCHIVE_NAME: ${{ inputs.archive-name }}
+      with:
+        script: |
+          const script = require(".github/actions/pack-upload-artifacts/archive.js");
+          return script({github, context, core, glob, io, exec, fetch, require});
+
+    - if: ${{ inputs.archive-type || inputs.archive-name }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.name }}
+        path: ${{ steps.archive.outputs.result }}/*
+
+    # Fallback when not using archiving
+    - if: ${{ ! (inputs.archive-type || inputs.archive-name) }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.name }}
+        path: ${{ inputs.path }}
