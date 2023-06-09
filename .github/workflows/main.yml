@@ -254,7 +254,7 @@ jobs:
               install-surelog install-yosys install-plugins
 
       - name: Upload binaries
-        uses: ./.github/actions/pack-upload-artifacts@dev000
+        uses: ./.github/actions/pack-upload-artifacts@dev001
         with:
           name: ${{ matrix.artifact-name }}
           path: image

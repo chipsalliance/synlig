@@ -21,12 +21,12 @@ runs:
       if: ${{ inputs.archive-type || inputs.archive-name }}
       uses: actions/github-script@v6
       env:
-
         INPUT_NAME: ${{ inputs.name }}
         INPUT_PATH: ${{ inputs.path }}
         INPUT_ARCHIVE_TYPE: ${{ inputs.archive-type }}
         INPUT_ARCHIVE_NAME: ${{ inputs.archive-name }}
       with:
+        result-encoding: string
         script: |
           const script = require(process.env.GITHUB_ACTION_PATH + "/archive.js");
           return await script({github, context, core, glob, io, exec, fetch, require});
@@ -35,7 +35,7 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.name }}
-        path: ${{ steps.archive.outputs.result }}/*
+        path: ${{ steps.archive.outputs.result }}
 
     # Fallback when not using archiving
     - if: ${{ ! (inputs.archive-type || inputs.archive-name) }}

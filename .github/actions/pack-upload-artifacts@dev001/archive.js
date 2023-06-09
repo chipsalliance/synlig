@@ -46,12 +46,12 @@ module.exports = async ({github, context, core, glob, io, exec, fetch, require})
   }
 
   const tar_rc = await exec.exec("tar",
-      ["-c", "-a", "-f", `${tmp_dir}/${archive_name}`, "--verbatim-files-from", "--null", "-T" "-"],
+      ["-c", "-a", "-f", `${tmp_dir}/${archive_name}`, "--verbatim-files-from", "--null", "-T", "-"],
       { input: Buffer.from(files.join("\0")) });
   if (tar_rc != 0) {
     core.setFailed(`tar terminated with status ${tar_rc}`);
     return;
   }
 
-  return tmp_dir;
+  return `${tmp_dir}/${archive_name}`;
 }
