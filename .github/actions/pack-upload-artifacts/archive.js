@@ -1,4 +1,4 @@
-module.exports = ({github, context, core, glob, io, exec, fetch, require}) => {
+module.exports = async ({github, context, core, glob, io, exec, fetch, require}) => {
   const valid_archive_types = ["tar", "tar.xz", "tar.zstd", "tar.gz"];
   const {INPUT_NAME, INPUT_PATH, INPUT_ARCHIVE_TYPE, INPUT_ARCHIVE_NAME, GITHUB_WORKSPACE} = process.env;
 

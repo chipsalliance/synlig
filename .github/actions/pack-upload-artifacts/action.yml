@@ -28,7 +28,7 @@ runs:
       with:
         script: |
           const script = require(".github/actions/pack-upload-artifacts/archive.js");
-          return script({github, context, core, glob, io, exec, fetch, require});
+          return await script({github, context, core, glob, io, exec, fetch, require});
 
     - if: ${{ inputs.archive-type || inputs.archive-name }}
       uses: actions/upload-artifact@v3
