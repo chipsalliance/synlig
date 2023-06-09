@@ -295,7 +295,7 @@ jobs:
                   comment_id: comment.id,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  body: '${{ env.COMMENT_MSG }}'
+                  body: process.env.COMMENT_MSG
                 });
                 commentUpdated = true;
                 break;
@@ -306,7 +306,7 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: '${{ env.COMMENT_MSG }}'
+                body: process.env.COMMENT_MSG
               });
             }
 
