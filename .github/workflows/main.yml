@@ -65,14 +65,14 @@ jobs:
           touch artf/{a,b,c}
 
       - name: Test1
-        uses: ./.github/actions/pack-upload-artifacts@dev002
+        uses: ./.github/actions/pack-upload-artifacts@dev003
         with:
           name: test-artifact
           path: artf
           archive-type: tar
 
       - name: Test2
-        uses: ./.github/actions/pack-upload-artifacts@dev002
+        uses: ./.github/actions/pack-upload-artifacts@dev003
         with:
           name: test-artifact-2
           path: artf/*
@@ -271,7 +271,7 @@ jobs:
               install-surelog install-yosys install-plugins
 
       - name: Upload binaries
-        uses: ./.github/actions/pack-upload-artifacts@dev002
+        uses: ./.github/actions/pack-upload-artifacts@dev003
         with:
           name: ${{ matrix.artifact-name }}
           path: image

@@ -31,6 +31,7 @@ module.exports = async ({github, context, core, glob, io, exec, fetch, require})
           stdout: (data) => { tmp_dir += data.toString(); },
         }
       });
+  tmp_dir = tmp_dir.trim();
   const g = await glob.create(INPUT_PATH, { followSymbolicLinks: false});
   const files = await g.glob();
 
