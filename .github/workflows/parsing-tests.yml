@@ -244,7 +244,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update -q
-          apt-get install -y git
+          apt-get install -y git psmisc
 
       - name: Generate push branch name
         run: |
