@@ -32,7 +32,7 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              bsg_micro_designs \
+              uhdm-tests/bsg_micro_designs/bsg_micro_designs \
               ;
 
       - name: Download binaries
@@ -52,7 +52,7 @@ jobs:
       - name: Summary
         if: ${{ !cancelled() }}
         run: |
-          cat build/tests/bsg_micro_designs/bsg_micro_designs_summary.md > $GITHUB_STEP_SUMMARY
+          cat uhdm-tests/bsg_micro_designs/build/bsg_micro_designs_summary.md > $GITHUB_STEP_SUMMARY
 
       - name: Upload BSG Micro Design tests' diffs
         uses: actions/upload-artifact@v2
