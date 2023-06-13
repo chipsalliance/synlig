@@ -29,7 +29,6 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
         if test_file.is_file():
             with open(test_file) as v_file:
                 test_module = v_file.readlines()
-                v_file.close()
         else:
             print("Warning: '%s' is not present in the source directory of `%s` test." % (filename, test_name))
             return
@@ -109,7 +108,6 @@ def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
 
     with open(script_path, "w") as script_file:
         script_file.write("\n".join(script))
-        script_file.close()
 
     run_command(
             ["yosys", "-s", script_path, "-l", f"{output_dest}/surelog.out"],
@@ -173,7 +171,6 @@ def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir)
         if faultlist:
             sum_file.writelines("### Tests that failed to be generated\n")
             sum_file.writelines(":x: " + line + "\n" for line in faultlist)
-        sum_file.close()
 
     if difflist or faultlist:
         # Print warning in style of GH actions annotation
