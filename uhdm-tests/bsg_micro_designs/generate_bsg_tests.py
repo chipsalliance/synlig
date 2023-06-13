@@ -30,7 +30,7 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
             with open(test_file) as v_file:
                 test_module = v_file.readlines()
         else:
-            print("Warning: '%s' is not present in the source directory of `%s` test." % (filename, test_name))
+            print(f"Warning: '{filename}' is not present in the source directory of `{test_name}` test.")
             return
 
         module_init = True
@@ -55,7 +55,7 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                     s = p.split("=")
                     test_param = test_line[p_start:].find(s[0])
                     if test_param >= 0:
-                        param = test_line[p_start:][:p_stop] + "=%s" % s[1]
+                        param = test_line[p_start:][:p_stop] + f"={s[1]}" 
                         break
                 if test_line[p_start:][p_stop+1:].find(")") >= 0:
                     module_init = False
@@ -96,9 +96,9 @@ def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
 
     script = [
         "plugin -i systemverilog",
-        "read_systemverilog -debug %s" % (input_v_files),
-        "synth -top %s -flatten" % (test_name),
-        "write_verilog -noattr %s/dut.v" % (output_dest),
+        f"read_systemverilog -debug {input_v_files}",
+        f"synth -top {test_name} -flatten",
+        f"write_verilog -noattr {output_dest}/dut.v",
     ]
 
     script_path = output_dest / "surelog.ys"
@@ -133,8 +133,8 @@ def diff_tests(test_dir, ref_dir, gen_v_dir):
         if ref_v_path.is_file() and gen_v_path.is_file():
             preprocess_test(ref_v_path)
             preprocess_test(gen_v_path)
-            diffpath = Path("%s.diff" % gen_v_path)
-            sp = subprocess.run(["diff %s %s > %s" % (ref_v_path, gen_v_path, diffpath)], shell=True)
+            diffpath = Path(f"{gen_v_path}.diff")
+            sp = subprocess.run([f"diff {ref_v_path} {gen_v_path} > {diffpath}"], shell=True)
 
             if not diffpath.stat().st_size == 0:
                 difflist.append(str(gen_v_name.parent))
@@ -155,7 +155,7 @@ def preprocess_test(filename):
 
 def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir):
 
-    summary_name = Path("%s/%s_summary.md" % (output_dir, test_suite.name))
+    summary_name = Path(f"{output_dir}/{test_suite.name}_summary.md")
 
     difflist.sort()
     passlist.sort()
@@ -174,8 +174,7 @@ def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir)
 
     if difflist or faultlist:
         # Print warning in style of GH actions annotation
-        print("::warning::Some generated tests differ from the reference or were not generated at all. Check the test statuses in the workflow summary or `%s` in the `bsg-tests-diffs` artifacts."
-              % summary_name.name)
+        print(f"::warning::Some generated tests differ from the reference or were not generated at all. Check the test statuses in the workflow summary or `{summary_name.name}` in the `bsg-tests-diffs` artifacts.")
 
 def main():
 
