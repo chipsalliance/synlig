@@ -150,7 +150,16 @@ def diff_tests(test_dir, ref_dir, gen_v_dir):
 def preprocess_test(filename):
 
     # Remove comments /* */, (* *) and empty lines
-    sp = subprocess.run(["sed -i -e '/\(\* .* \*\)/d' -e '/^\s*$/d' %s" % filename], shell=True)
+    with open(filename, "r+") as f:
+        lines = f.readlines()
+        for s in lines:
+            idx = lines.index(s)
+            s = re.sub(r"\(\*.+?\*\)|/\*.*?\*/", "", s)
+            s = re.sub(r"^\s*$", "", s)
+            lines[idx] = s
+        f.seek(0)
+        f.writelines(lines)
+        f.truncate()
 
 
 def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir):
