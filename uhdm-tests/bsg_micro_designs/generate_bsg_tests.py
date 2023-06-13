@@ -171,15 +171,24 @@ def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir)
     faultlist.sort()
 
     with open(summary_name, "w") as sum_file:
-        if passlist:
-            sum_file.writelines("### Generated tests that are the same as the reference\n")
-            sum_file.writelines(":heavy_check_mark: " + line + "\n" for line in passlist)
         if difflist:
-            sum_file.writelines("### Generated tests that differ from the reference\n")
-            sum_file.writelines(":heavy_exclamation_mark: " + line + "\n" for line in difflist)
+            sum_file.writelines("<details open><summary><strong>")
+            sum_file.writelines(":heavy_exclamation_mark: Generated tests that differ from the reference\n")
+            sum_file.writelines("</strong></summary><p><ul>\n")
+            sum_file.writelines(f"<li>{line}</li>\n" for line in difflist)
+            sum_file.writelines("</ul></p></details>\n")
         if faultlist:
-            sum_file.writelines("### Tests that failed to be generated\n")
-            sum_file.writelines(":x: " + line + "\n" for line in faultlist)
+            sum_file.writelines("<details open><summary><strong>")
+            sum_file.writelines(":x: Tests that failed to be generated\n")
+            sum_file.writelines("</strong></summary><p><ul>\n")
+            sum_file.writelines(f"<li>{line}</li>\n" for line in faultlist)
+            sum_file.writelines("</ul></p></details>\n")
+        if passlist:
+            sum_file.writelines("<details><summary><strong>")
+            sum_file.writelines(":heavy_check_mark: Generated tests that are the same as the reference\n")
+            sum_file.writelines("</strong></summary><p><ul>\n")
+            sum_file.writelines(f"<li>{line}</li>\n" for line in passlist)
+            sum_file.writelines("</ul></p></details>\n")
 
     if difflist or faultlist:
         # Print warning in style of GH actions annotation
