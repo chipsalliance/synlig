@@ -258,7 +258,7 @@ jobs:
           fi
           echo "PUSH_BRANCH=$PUSH_BRANCH" >> "$GITHUB_ENV"
           CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository_owner }}/yosys-systemverilog-logs master | cut -d $'\t' -f1)
-          COMMENT_MSG="Logs difference between main branch:\nhttps://github.com/${{ github.repository }}-logs/compare/$CURRENT_LOGS_SHA..$PUSH_BRANCH"
+          COMMENT_MSG="https://github.com/${{ github.repository }}-logs/compare/$CURRENT_LOGS_SHA..$PUSH_BRANCH"
           echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
           PUSH_LOGS=false
           # currently pushing logs when submodules are overriten using url is not supported
@@ -266,6 +266,7 @@ jobs:
             PUSH_LOGS=true
           fi
           echo "PUSH_LOGS=$PUSH_LOGS" >> "$GITHUB_ENV"
+          echo "COMMENT_HEADER=Logs difference between main branch:" >> "$GITHUB_ENV"
         env:
           PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
           UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
@@ -286,7 +287,8 @@ jobs:
                 repo: context.repo.repo,
                 issue_number: context.issue.number
             });
-            const newFirstLine = 'Logs difference between main branch:';
+            const newFirstLine = process.env.COMMENT_HEADER;
+            const newComment = newFirstLine + '\n' + process.env.COMMENT_MSG;
             let commentUpdated = false;
             for (const comment of comments) {
               const oldFirstLine = comment.body.split('\n')[0];
@@ -295,7 +297,7 @@ jobs:
                   comment_id: comment.id,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  body: process.env.COMMENT_MSG
+                  body: newComment
                 });
                 commentUpdated = true;
                 break;
@@ -306,13 +308,15 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: process.env.COMMENT_MSG
+                body: newComment
               });
             }
 
       - name: Create summary
-        run:
-          echo $'${{ env.COMMENT_MSG }}' >> $GITHUB_STEP_SUMMARY
+        if: ${{ env.PUSH_LOGS == 'true' }}
+        run: |
+          echo "${{ env.COMMENT_HEADER }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ env.COMMENT_MSG }}" >> $GITHUB_STEP_SUMMARY
 
   generate-tests-summary:
     name: Summary Generation
