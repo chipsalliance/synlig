@@ -11,8 +11,9 @@ REPOSITORY_OWNER="$1"
 PUSH_BRANCH="$2"
 GITHUB_RUN_ID="$3"
 SOURCE_DIRECTORY="$4"
-# for future
-TARGET_DIRECTORY=""
+# replace only target directory in target repository,
+# leave other files in target repository untouched.
+TARGET_DIRECTORY="$5"
 
 # Inspired by: https://github.com/cpina/github-action-push-to-another-repository/blob/main/entrypoint.sh
 mkdir --parents "$HOME/.ssh"
