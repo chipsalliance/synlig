@@ -203,7 +203,7 @@ def main():
     for sub_suite_dir in Path(test_suite_dir).glob("bsg_*"):
         for json_file in Path(sub_suite_dir).rglob("*.json"):
             test_name = json_file.parent.name
-            gen_tests(test_name, sub_suite_dir.relative_to(Path.cwd()), ref_test_dir, output_dir)
+            gen_tests(test_name, sub_suite_dir, ref_test_dir, output_dir)
 
     diff_tests(test_suite_dir, ref_test_dir, output_dir)
 
