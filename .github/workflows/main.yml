@@ -27,7 +27,7 @@ on:
   pull_request:
 
 concurrency:
-  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{github.event.inputs.plugins_branch}}-${{github.event.inputs.uhdm_tests_branch}}
   cancel-in-progress: true
 
 env:
