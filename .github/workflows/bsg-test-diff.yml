@@ -59,4 +59,4 @@ jobs:
         with:
           name: bsg-tests-diffs
           path: |
-            build/tests/bsg_micro_designs
+            uhdm-tests/bsg_micro_designs/build

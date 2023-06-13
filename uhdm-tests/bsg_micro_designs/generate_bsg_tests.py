@@ -4,19 +4,18 @@ import subprocess
 import argparse
 import json
 import sys
-import os
 import re
 
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent / "lib" / "python3"))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent / "lib" / "python3"))
 
 from yosys_systemverilog.run_command import run_command
 
 
 def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
 
-    json_cfg_file = os.path.join(test_suite_dir, test_name , test_name + ".json")
+    json_cfg_file = test_suite_dir / test_name / f"{test_name}.json"
     with open(json_cfg_file, "r") as file:
         cfg_data = json.load(file)
 
@@ -26,8 +25,8 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
     for filename in fileset:
         if filename == "src/bsg_defines.v":
             continue
-        test_file = os.path.join(test_suite_dir, test_name + "/" + filename)
-        if os.path.isfile(test_file):
+        test_file = test_suite_dir / test_name / filename
+        if test_file.is_file():
             with open(test_file) as v_file:
                 test_module = v_file.readlines()
                 v_file.close()
@@ -91,10 +90,10 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
 
 def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
 
-    output_dest = os.path.join(output_dir, test_name)
+    output_dest = output_dir / test_name
     input_v_files = ""
     for f in fileset:
-        input_v_files = input_v_files + test_suite_dir + "/" + test_name + "/" + f + " " 
+        input_v_files = input_v_files + str(test_suite_dir / test_name / f) + " " 
 
     script = [
         "plugin -i systemverilog",
@@ -103,7 +102,7 @@ def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
         "write_verilog -noattr %s/dut.v" % (output_dest),
     ]
 
-    script_path = os.path.join(output_dest, "surelog.ys")
+    script_path = output_dest / "surelog.ys"
 
     if not Path(output_dest).exists():
         Path(output_dest).mkdir(parents=True)
@@ -127,25 +126,25 @@ def diff_tests(test_dir, ref_dir, gen_v_dir):
     passlist = list()
     faultlist = list()
 
-    for test_name in os.listdir(ref_dir):
+    for test_name in ref_dir.iterdir():
 
-        ref_v_path = os.path.join(ref_dir, test_name, "dut.v")
-        gen_v_name = os.path.join(test_name.removesuffix(".json"), "dut.v")
-        gen_v_path = os.path.join(gen_v_dir, gen_v_name)
+        ref_v_path = ref_dir / test_name / "dut.v"
+        gen_v_name = Path(test_name.stem + "/dut.v")
+        gen_v_path = gen_v_dir / gen_v_name
 
-        if os.path.isfile(ref_v_path) and os.path.isfile(gen_v_path):
+        if ref_v_path.is_file() and gen_v_path.is_file():
             preprocess_test(ref_v_path)
             preprocess_test(gen_v_path)
-            diffpath = "%s.diff" % gen_v_path
+            diffpath = Path("%s.diff" % gen_v_path)
             sp = subprocess.run(["diff %s %s > %s" % (ref_v_path, gen_v_path, diffpath)], shell=True)
 
-            if not os.stat(diffpath).st_size == 0:
-                difflist.append(os.path.dirname(gen_v_name))
+            if not diffpath.stat().st_size == 0:
+                difflist.append(str(gen_v_name.parent))
             else:
-                passlist.append(os.path.dirname(gen_v_name))
+                passlist.append(str(gen_v_name.parent))
 
-        elif os.path.isfile(ref_v_path):
-            faultlist.append(test_name.removesuffix(".json"))
+        elif ref_v_path.is_file():
+            faultlist.append(test_name.stem)
 
     list_diffs_and_passes(difflist, passlist, faultlist, test_dir, gen_v_dir)
 
@@ -158,7 +157,7 @@ def preprocess_test(filename):
 
 def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir):
 
-    summary_name = "%s/%s_summary.md" % (output_dir, os.path.basename(test_suite))
+    summary_name = Path("%s/%s_summary.md" % (output_dir, test_suite.name))
 
     difflist.sort()
     passlist.sort()
@@ -179,16 +178,16 @@ def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir)
     if difflist or faultlist:
         # Print warning in style of GH actions annotation
         print("::warning::Some generated tests differ from the reference or were not generated at all. Check the test statuses in the workflow summary or `%s` in the `bsg-tests-diffs` artifacts."
-              % os.path.basename(summary_name))
+              % summary_name.name)
 
 def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--test-suite-dir", type=Path, default=Path.cwd()/"bsg_micro_designs",
             help="Test suite directory to generate verilog netlists from.")
-    parser.add_argument("--ref-test-dir", type=Path, default=Path.cwd()/"UHDM-integration-tests"/"tests"/"bsg"/"bsg_micro_designs_results",
+    parser.add_argument("--ref-test-dir", type=Path, default=Path.cwd().parent.parent/"UHDM-integration-tests"/"tests"/"bsg"/"bsg_micro_designs_results",
             help="Referential test directory to compare generated verilog netlists with.")
-    parser.add_argument("--output-dir", type=Path, default=Path.cwd()/"build"/"tests"/"bsg_micro_designs",
+    parser.add_argument("--output-dir", type=Path, default=Path.cwd()/"build",
             help="Output directory for the generated verilog files.")
     args = parser.parse_args()
 
@@ -198,8 +197,8 @@ def main():
 
     for sub_suite_dir in Path(test_suite_dir).glob("bsg_*"):
         for json_file in Path(sub_suite_dir).rglob("*.json"):
-            test_name = os.path.basename(os.path.dirname(json_file))
-            gen_tests(test_name, os.path.relpath(sub_suite_dir), ref_test_dir, output_dir)
+            test_name = json_file.parent.name
+            gen_tests(test_name, sub_suite_dir.relative_to(Path.cwd()), ref_test_dir, output_dir)
 
     diff_tests(test_suite_dir, ref_test_dir, output_dir)
 
