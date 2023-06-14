@@ -47,7 +47,7 @@ jobs:
       - name: Generate and diff tests
         run: |
           export PATH="$PWD/image/bin:$PATH"
-          python3 ./generate_bsg_tests.py
+          python3 ./uhdm-tests/bsg_micro_designs/generate_bsg_tests.py
 
       - name: Summary
         if: ${{ !cancelled() }}
