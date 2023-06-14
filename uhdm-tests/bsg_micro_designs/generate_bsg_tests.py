@@ -197,11 +197,11 @@ def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir)
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--test-suite-dir", type=Path, default=Path.cwd()/"bsg_micro_designs",
+    parser.add_argument("--test-suite-dir", type=Path, default=Path.cwd()/"uhdm-tests"/"bsg_micro_designs"/"bsg_micro_designs",
             help="Test suite directory to generate verilog netlists from.")
-    parser.add_argument("--ref-test-dir", type=Path, default=Path.cwd().parent.parent/"UHDM-integration-tests"/"tests"/"bsg"/"bsg_micro_designs_results",
+    parser.add_argument("--ref-test-dir", type=Path, default=Path.cwd()/"UHDM-integration-tests"/"tests"/"bsg"/"bsg_micro_designs_results",
             help="Referential test directory to compare generated verilog netlists with.")
-    parser.add_argument("--output-dir", type=Path, default=Path.cwd()/"build",
+    parser.add_argument("--output-dir", type=Path, default=Path.cwd()/"uhdm-tests"/"bsg_micro_designs"/"build",
             help="Output directory for the generated verilog files.")
     args = parser.parse_args()
 
