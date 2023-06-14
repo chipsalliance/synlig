@@ -192,7 +192,7 @@ def list_diffs_and_passes(difflist, passlist, faultlist, test_suite, output_dir)
 
     if difflist or faultlist:
         # Print warning in style of GH actions annotation
-        print(f"::warning::Some generated tests differ from the reference or were not generated at all. Check the test statuses in the workflow summary or `{summary_name.name}` in the `bsg-tests-diffs` artifacts.")
+        print(f"::warning::Some generated tests differ from the reference or were not generated at all. Check the test statuses in the workflow summary or `{summary_name.name}` in the artifacts.")
 
 def main():
 

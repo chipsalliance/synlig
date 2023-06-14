@@ -54,9 +54,19 @@ jobs:
         run: |
           cat uhdm-tests/bsg_micro_designs/build/bsg_micro_designs_summary.md > $GITHUB_STEP_SUMMARY
 
-      - name: Upload BSG Micro Design tests' diffs
+      - name: Upload BSG Micro Design tests' output
         uses: actions/upload-artifact@v2
         with:
-          name: bsg-tests-diffs
+          name: bsg-outputs
           path: |
-            uhdm-tests/bsg_micro_designs/build
+            uhdm-tests/bsg_micro_designs/build/*/dut.v
+            uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
+
+      - name: Upload BSG Micro Design tests' logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: bsg-logs
+          path: |
+            uhdm-tests/bsg_micro_designs/build/*
+            !uhdm-tests/bsg_micro_designs/build/*/dut.v
+            !uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
