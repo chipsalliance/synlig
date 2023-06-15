@@ -1,0 +1,72 @@
+name: BSG test diff check
+
+on:
+  workflow_call:
+
+env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
+
+jobs:
+  diff-bsg-tests:
+    runs-on: [self-hosted, Linux, X64]
+    container: ubuntu:jammy
+    name: Parse and diff BSG Micro Designs
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-standard-2"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Set up common Ubuntu configuration
+        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+
+      - name: Install dependencies
+        run: |
+          apt-get update -q
+          apt install -y build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time jq git gettext-base
+
+      - name: Checkout submodules
+        run: |
+          git submodule update --depth 1 --init --recursive \
+              UHDM-integration-tests \
+              uhdm-tests/bsg_micro_designs/bsg_micro_designs \
+              ;
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Generate and diff tests
+        run: |
+          export PATH="$PWD/image/bin:$PATH"
+          python3 ./uhdm-tests/bsg_micro_designs/generate_bsg_tests.py
+
+      - name: Summary
+        if: ${{ !cancelled() }}
+        run: |
+          cat uhdm-tests/bsg_micro_designs/build/bsg_micro_designs_summary.md > $GITHUB_STEP_SUMMARY
+
+      - name: Upload BSG Micro Design tests' output
+        uses: actions/upload-artifact@v2
+        with:
+          name: bsg-outputs
+          path: |
+            uhdm-tests/bsg_micro_designs/build/*/dut.v
+            uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
+
+      - name: Upload BSG Micro Design tests' logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: bsg-logs
+          path: |
+            uhdm-tests/bsg_micro_designs/build/*
+            !uhdm-tests/bsg_micro_designs/build/*/dut.v
+            !uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
