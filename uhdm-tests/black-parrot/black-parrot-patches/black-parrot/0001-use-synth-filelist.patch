@@ -1,0 +1,14 @@
+diff --git a/bp_top/syn/flist.vcs b/bp_top/syn/flist.vcs
+index f889ef17..a268f121 100644
+--- a/bp_top/syn/flist.vcs
++++ b/bp_top/syn/flist.vcs
+@@ -84,8 +84,7 @@ $BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1r1w_sync_synth.v
+ $BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1r1w_sync.v
+ $BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1r1w_synth.v
+ $BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1rw_sync.v
+-$BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1rw_sync_mask_write_bit.v
+-$BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1rw_sync_mask_write_bit_synth.v
++$BASEJUMP_STL_DIR/hard/ultrascale_plus/bsg_mem/bsg_mem_1rw_sync_mask_write_bit.v
+ $BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1rw_sync_mask_write_byte.v
+ $BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1rw_sync_mask_write_byte_synth.v
+ $BASEJUMP_STL_DIR/bsg_mem/bsg_mem_1rw_sync_synth.v
