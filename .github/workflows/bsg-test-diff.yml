@@ -61,6 +61,7 @@ jobs:
           path: |
             uhdm-tests/bsg_micro_designs/build/*/dut.v
             uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
+            uhdm-tests/bsg_micro_designs/build/*/parameters.txt
 
       - name: Upload BSG Micro Design tests' logs
         uses: actions/upload-artifact@v2
@@ -70,3 +71,4 @@ jobs:
             uhdm-tests/bsg_micro_designs/build/*
             !uhdm-tests/bsg_micro_designs/build/*/dut.v
             !uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
+            !uhdm-tests/bsg_micro_designs/build/*/parameters.txt

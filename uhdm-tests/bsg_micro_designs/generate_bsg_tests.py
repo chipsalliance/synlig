@@ -22,6 +22,12 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
     fileset = cfg_data["filelist"]
     parameters = cfg_data["run_config"][0]["parameters"]
 
+    output_dest = output_dir / test_name
+    if not Path(output_dest).exists():
+        Path(output_dest).mkdir(parents=True)
+    with open(f"{output_dest}/parameters.txt", "w") as p_file:
+        p_file.writelines(param + "\n" for param in parameters)
+
     for filename in fileset:
         if filename == "src/bsg_defines.v":
             continue
