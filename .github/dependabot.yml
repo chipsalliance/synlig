@@ -6,4 +6,4 @@ updates:
     interval: "daily"
   open-pull-requests-limit: 30
   ignore:
-  - dependency-name: "bsg_micro_designs"
+  - dependency-name: "uhdm-tests/bsg_micro_designs/bsg_micro_designs"
