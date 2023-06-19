@@ -280,6 +280,7 @@ UHDM-integration-tests:CppMacroNameAsVariableName/top.sv
 UHDM-integration-tests:DeclarationInFor/top.sv
 UHDM-integration-tests:DivisionOfSize/top.sv
 UHDM-integration-tests:DotMultirange/top.sv
+UHDM-integration-tests:DotRange/top.sv
 UHDM-integration-tests:EmptyTask/top.sv
 UHDM-integration-tests:EnumArray/top.sv
 UHDM-integration-tests:EnumArrayListedElements/top.sv
@@ -440,6 +441,7 @@ UHDM-integration-tests:TypedefInModule/top.sv
 UHDM-integration-tests:TypedefOnFileLevel/top.sv
 UHDM-integration-tests:TypedefPackedDimensions/top.sv
 UHDM-integration-tests:TypedefStructArray/top.sv
+UHDM-integration-tests:TypedefStructParamWithRangeInSubmodule/top.sv
 UHDM-integration-tests:TypedefVariableDimensions/top.sv
 UHDM-integration-tests:TypedefWithParameter/top.sv
 UHDM-integration-tests:TypeParameterAsPortTypeWithEnum/top.sv
