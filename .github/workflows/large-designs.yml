@@ -543,8 +543,8 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: bp_unicore.edif
-          path: uhdm-tests/black-parrot/black-parrot/bp_top/syn/bp_unicore.edif
+          name: bp_e_bp_unicore_cfg.edif
+          path: UHDM-integration-tests/build/bp_e_bp_unicore_cfg.edif
 
       - name: Upload load graphs
         if: ${{ always() }}
