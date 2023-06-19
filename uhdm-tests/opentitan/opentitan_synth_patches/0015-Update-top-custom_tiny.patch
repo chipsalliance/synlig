@@ -51,7 +51,7 @@ index 47ef3473b..f6542798e 100644
 +        arch: "xilinx"
 +        yosys_read_options: []
 +        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
-+        surelog_options: ['-DSYNTHESIS']
++        surelog_options: ['-DSYNTHESIS', '-elabuhdm']
 +        # part: "xc7a200tsbg484-1"
  
    lint:
