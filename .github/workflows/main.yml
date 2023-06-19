@@ -155,6 +155,7 @@ jobs:
       - name: Build binaries
         run: |
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          cd yosys && git apply ../0001-Add-typedef-support-to-detectSignWidthWorker.patch && cd -
           ./build_binaries.sh
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue

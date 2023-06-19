@@ -1,0 +1,93 @@
+From 638f88f8ea7f28d8f10d502033214ca6cc8cc696 Mon Sep 17 00:00:00 2001
+From: Kamil Rakoczy <krakoczy@antmicro.com>
+Date: Wed, 26 Apr 2023 15:06:28 +0200
+Subject: [PATCH 3/3] WIP: start wires from index 0
+
+Signed-off-by: Kamil Rakoczy <krakoczy@antmicro.com>
+---
+ bsg_noc/bsg_mesh_stitch.v | 51 ++++++++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
+
+diff --git a/bsg_noc/bsg_mesh_stitch.v b/bsg_noc/bsg_mesh_stitch.v
+index 6ccb8383..201dce61 100644
+--- a/bsg_noc/bsg_mesh_stitch.v
++++ b/bsg_noc/bsg_mesh_stitch.v
+@@ -14,15 +14,22 @@ module bsg_mesh_stitch
+     , x_max_p = "inv"
+     , y_max_p = "inv"
+     , nets_p  = 1 // optional parameter that allows for multiple networks to be routed together
++    //typedef enum logic[2:0] {P=3'd0, W, E, N, S} Dirs;
++    // recalculate assuming W = 0 and S = 0
++   , parameter logic [2:0] W2 = 0 /*W-W*/
++   , parameter logic [2:0] E2 = E-W
++   , parameter logic [2:0] S2 = 0 /*S-S*/
++   , parameter logic [2:0] N2 = S-N /*S is larger*/
++   , parameter logic [2:0] SW2 = S-W /*S is larger*/
+     )
+-   (input    [y_max_p-1:0][x_max_p-1:0][nets_p-1:0][S:W][width_p-1:0] outs_i // for each node, each direction
+-    , output [y_max_p-1:0][x_max_p-1:0][nets_p-1:0][S:W][width_p-1:0] ins_o
++   (input    [y_max_p-1:0][x_max_p-1:0][nets_p-1:0][SW:0][width_p-1:0] outs_i // for each node, each direction
++    , output [y_max_p-1:0][x_max_p-1:0][nets_p-1:0][SW:0][width_p-1:0] ins_o
+ 
+     // these are the edge of the greater tile
+-    , input  [E:W][y_max_p-1:0][nets_p-1:0][width_p-1:0] hor_i
+-    , output [E:W][y_max_p-1:0][nets_p-1:0][width_p-1:0] hor_o
+-    , input  [S:N][x_max_p-1:0][nets_p-1:0][width_p-1:0] ver_i
+-    , output [S:N][x_max_p-1:0][nets_p-1:0][width_p-1:0] ver_o
++    , input  [E2:W2][y_max_p-1:0][nets_p-1:0][width_p-1:0] hor_i
++    , output [E2:W2][y_max_p-1:0][nets_p-1:0][width_p-1:0] hor_o
++    , input  [N2:S2][x_max_p-1:0][nets_p-1:0][width_p-1:0] ver_i
++    , output [N2:S2][x_max_p-1:0][nets_p-1:0][width_p-1:0] ver_o
+     );
+ 
+    genvar r,c,net;
+@@ -32,30 +39,30 @@ module bsg_mesh_stitch
+ 
+         for (r = 0; r < y_max_p; r=r+1)
+           begin: _r
+-             assign hor_o[E][r][net] = outs_i[r][x_max_p-1][net][E];
+-             assign hor_o[W][r][net] = outs_i[r][0        ][net][W];
++             assign hor_o[E2-1][r][net] = outs_i[r][x_max_p-1][net][E2-1];
++             assign hor_o[W2][r][net] = outs_i[r][0        ][net][W2];
+ 
+              for (c = 0; c < x_max_p; c=c+1)
+                begin: _c
+-                 assign ins_o[r][c][net][S] = (r == y_max_p-1)
+-                                            ? ver_i[S][c][net]
+-                                            : outs_i[(r == y_max_p-1) ? r : r+1][c][net][N]; // ?: for warning
+-                 assign ins_o[r][c][net][N] = (r == 0)
+-                                            ? ver_i[N][c][net]
+-                                            : outs_i[r ? r-1: 0][c][net][S]; // ?: to eliminate warning
+-                 assign ins_o[r][c][net][E] = (c == x_max_p-1)
+-                                            ? hor_i[E][r][net]
+-                                            : outs_i[r][(c == x_max_p-1) ? c : (c+1)][net][W]; // ?: for warning
+-                 assign ins_o[r][c][net][W] = (c == 0)
+-                                            ? hor_i[W][r][net]
+-                                            : outs_i[r][c ? (c-1) :0][net][E]; // ?: to eliminate warning
++                 assign ins_o[r][c][net][N2] = (r == y_max_p-1)
++                                            ? ver_i[N2][c][net]
++                                            : outs_i[(r == y_max_p-1) ? r : r+1][c][net][S2]; // ?: for warning
++                 assign ins_o[r][c][net][S2] = (r == 0)
++                                            ? ver_i[S2][c][net]
++                                            : outs_i[r ? r-1: 0][c][net][N2]; // ?: to eliminate warning
++                 assign ins_o[r][c][net][E2-1] = (c == x_max_p-1)
++                                            ? hor_i[E2-1][r][net]
++                                            : outs_i[r][(c == x_max_p-1) ? c : (c+1)][net][W2]; // ?: for warning
++                 assign ins_o[r][c][net][W2] = (c == 0)
++                                            ? hor_i[W2][r][net]
++                                            : outs_i[r][c ? (c-1) :0][net][E2-1]; // ?: to eliminate warning
+                end // block: c
+           end // block: r
+ 
+         for (c = 0; c < x_max_p; c=c+1)
+           begin: _c
+-             assign ver_o[S][c][net] = outs_i[y_max_p-1][c][net][S];
+-             assign ver_o[N][c][net] = outs_i[0        ][c][net][N];
++             assign ver_o[N2][c][net] = outs_i[y_max_p-1][c][net][N2];
++             assign ver_o[S2][c][net] = outs_i[0        ][c][net][S2];
+           end
+      end // block: _n
+ 
+-- 
+2.39.0
+
