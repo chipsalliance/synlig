@@ -107,11 +107,35 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update -q
-          apt install -y build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget ccache
+          apt-get install -y \
+              ant \
+              bison \
+              build-essential \
+              ccache \
+              cmake \
+              default-jre \
+              flex \
+              git \
+              google-perftools \
+              libffi-dev \
+              libfl-dev \
+              libgoogle-perftools-dev \
+              libreadline-dev \
+              pkg-config \
+              python3 \
+              python3-dev \
+              python3-pip \
+              swig \
+              tcl-dev \
+              tclsh \
+              uuid \
+              uuid-dev \
+              wget \
+              ;
           update-alternatives --install /usr/bin/python python /usr/bin/python3 1
           update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-          pip install orderedmultidict
           pip install --upgrade pip
+          pip install orderedmultidict
           pip install cmake
 
       - name: Create Cache Timestamp
@@ -190,8 +214,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -qq
-          apt install -y git wget
+          apt-get update -q
+          apt-get install -y \
+              git \
+              wget \
+              ;
 
       - name: 'Read submodule revisions'
         id: rev
@@ -364,9 +391,16 @@ jobs:
     steps:
       - name: Install Yosys and dependencies
         run: |
-          apt update
-          apt upgrade -y
-          apt install -y yosys yosys-dev curl jq wget libreadline-dev
+          apt-get update -q
+          apt-get upgrade -y
+          apt-get install -y \
+              curl \
+              jq \
+              libreadline-dev \
+              wget \
+              yosys \
+              yosys-dev \
+              ;
       - name: Download and extract UHDM plugin
         run: |
           curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
