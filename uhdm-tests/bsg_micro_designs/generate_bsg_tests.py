@@ -22,6 +22,10 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
     fileset = cfg_data["filelist"]
     parameters = cfg_data["run_config"][0]["parameters"]
 
+    output_dest = output_dir / test_name
+    if not output_dest.exists():
+        output_dest.mkdir(parents=True)
+
     for filename in fileset:
         if filename == "src/bsg_defines.v":
             continue
@@ -55,7 +59,7 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
                     s = p.split("=")
                     test_param = test_line[p_start:].find(s[0])
                     if test_param >= 0:
-                        param = test_line[p_start:][:p_stop] + f"={s[1]}" 
+                        param = test_line[p_start:][:p_stop] + f"={s[1]}"
                         break
                 if test_line[p_start:][p_stop+1:].find(")") >= 0:
                     module_init = False
@@ -84,7 +88,12 @@ def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):
             for line in test_module:
                 v_file_top.writelines(line)
 
-    run_sv_plugin(test_name, fileset, test_suite_dir, output_dir)
+    dut_v_file = run_sv_plugin(test_name, fileset, test_suite_dir, output_dir)
+
+    # Generate parameters file only when dut.v has been generated
+    if dut_v_file.exists():
+        with open(output_dest / "parameters.txt", "w") as p_file:
+            p_file.writelines(param + "\n" for param in parameters)
 
 
 def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
@@ -92,13 +101,15 @@ def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
     output_dest = output_dir / test_name
     input_v_files = ""
     for f in fileset:
-        input_v_files = input_v_files + str(test_suite_dir / test_name / f) + " " 
+        input_v_files = input_v_files + str(test_suite_dir / test_name / f) + " "
+
+    dut_v_file = output_dest / "dut.v"
 
     script = [
         "plugin -i systemverilog",
         f"read_systemverilog -debug {input_v_files}",
         f"synth -top {test_name} -flatten",
-        f"write_verilog -noattr {output_dest}/dut.v",
+        f"write_verilog -noattr {dut_v_file}",
     ]
 
     script_path = output_dest / "surelog.ys"
@@ -116,6 +127,8 @@ def run_sv_plugin(test_name, fileset, test_suite_dir, output_dir):
             capture_stderr=True,
             oom_score_adj=500
         )
+
+    return dut_v_file
 
 
 def diff_tests(test_dir, ref_dir, gen_v_dir):
