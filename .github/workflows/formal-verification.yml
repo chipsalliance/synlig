@@ -28,8 +28,6 @@ jobs:
       fail-fast: false
     name: ${{ matrix.name }}
     env:
-      CC: gcc-9
-      CXX: g++-9
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
@@ -48,11 +46,27 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -qq
-          apt install -y software-properties-common
-          add-apt-repository ppa:ubuntu-toolchain-r/test
-          apt-get update -qq
-          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev time python3 jq git
+          apt-get update -q
+          apt-get install -y \
+              ant \
+              build-essential \
+              cmake \
+              default-jre \
+              flex \
+              git \
+              google-perftools \
+              jq \
+              libfl-dev \
+              libgoogle-perftools-dev \
+              python3 \
+              python3-dev \
+              swig \
+              tcl-dev \
+              tclsh \
+              time \
+              uuid \
+              uuid-dev \
+              ;
 
       - name: Checkout submodules
         run: |

@@ -43,8 +43,6 @@ jobs:
     strategy:
       fail-fast: false
     env:
-      CC: gcc-9
-      CXX: g++-9
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
@@ -61,11 +59,25 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -qq
-          apt install -y software-properties-common
-          add-apt-repository ppa:ubuntu-toolchain-r/test
-          apt-get update -qq
-          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git
+          apt-get update -q
+          apt-get install -y \
+              ant \
+              build-essential \
+              cmake \
+              default-jre \
+              flex \
+              git \
+              google-perftools \
+              libfl-dev \
+              libgoogle-perftools-dev \
+              python3 \
+              python3-dev \
+              swig \
+              tcl-dev \
+              tclsh \
+              uuid \
+              uuid-dev \
+              ;
           update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
       - name: Checkout submodules
@@ -136,8 +148,6 @@ jobs:
     strategy:
       fail-fast: false
     env:
-      CC: gcc-9
-      CXX: g++-9
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
@@ -154,11 +164,25 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -qq
-          apt install -y software-properties-common
-          add-apt-repository ppa:ubuntu-toolchain-r/test
-          apt-get update -qq
-          apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev uuid uuid-dev tcl-dev flex libfl-dev git
+          apt-get update -q
+          apt-get install -y \
+              ant \
+              build-essential \
+              cmake \
+              default-jre \
+              flex \
+              git \
+              google-perftools \
+              libfl-dev \
+              libgoogle-perftools-dev \
+              python3 \
+              python3-dev \
+              swig \
+              tcl-dev \
+              tclsh \
+              uuid \
+              uuid-dev \
+              ;
           update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
       - name: Checkout submodules
