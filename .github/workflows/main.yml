@@ -86,13 +86,30 @@ jobs:
           fi
 
   build-binaries:
-    name: Build Binaries
+    strategy:
+      matrix:
+        include:
+          - name: 'Build Binaries'
+            artifact-name: 'binaries'
+            cc: 'gcc'
+            cxx: 'g++'
+            apt-extra-deps: 'gcc g++'
+            build-binaries-args: ''
+          - name: 'Build Binaries (ASAN)'
+            artifact-name: 'binaries-asan'
+            cc: 'clang-15'
+            cxx: 'clang++-15'
+            apt-extra-deps: 'clang-15'
+            build-binaries-args: 'ENABLE_ASAN:=1 SYSTEMVERILOG_PLUGIN_ONLY:=1'
+    name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
+      BUILD_BINARIES_ARGS: ${{ matrix.build-binaries-args }}
       CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
       DEBIAN_FRONTEND: noninteractive
-      PLUGIN_ASAN: 1
       GHA_MACHINE_TYPE: "n2-highmem-8"
 
     steps:
@@ -131,18 +148,13 @@ jobs:
               uuid \
               uuid-dev \
               wget \
+              ${{ matrix.apt-extra-deps }} \
               ;
           update-alternatives --install /usr/bin/python python /usr/bin/python3 1
           update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
           pip install --upgrade pip
           pip install orderedmultidict
           pip install cmake
-
-      - name: Create Cache Timestamp
-        id: cache_timestamp
-        uses: nanzm/get-time-action@v1.1
-        with:
-          format: 'YYYY-MM-DD-HH-mm-ss'
 
       - name: Checkout submodules
         run: |
@@ -168,24 +180,25 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: cache_${{ steps.cache_timestamp.outputs.time }}
-          restore-keys: cache_
+          key: cache_${{ matrix.artifact-name }}_${{ github.run_id }}
+          restore-keys: cache_${{ matrix.artifact-name }}_
 
       - name: Build binaries
         run: |
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-          ./build_binaries.sh
+          make -rR -j$(nproc) -Oline -f build_binaries.mk ${BUILD_BINARIES_ARGS} \
+              install-surelog install-yosys install-plugins
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue
           # See https://github.com/actions/upload-artifact/issues/38
-          tar -cvf binaries.tar image
+          tar -cvf ${{ matrix.artifact-name }}.tar image
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
-          name: binaries
+          name: ${{ matrix.artifact-name }}
           path: |
-            binaries.tar
+            ${{ matrix.artifact-name }}.tar
 
       - name: Upload load graphs
         if: ${{ !cancelled() }}

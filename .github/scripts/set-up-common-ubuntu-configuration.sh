@@ -32,21 +32,10 @@ begin_group 'Use regional (US) Ubuntu repository mirrors'
 sources_list=/etc/apt/sources.list
 
 declare -ra mirrors=(
+	## US-central GCE mirror
+	http://us-central1.gce.archive.ubuntu.com/ubuntu/
 	## Official regional mirror
 	http://us.archive.ubuntu.com/ubuntu/
-
-	# The 4 non-ubuntu URLs below were picked because they have highest
-	# throughput from all official US mirrors (20+ Gbps) according
-	# to https://launchpad.net/ubuntu/+archivemirrors.
-
-	## US, 100 Gbps; https://launchpad.net/ubuntu/+mirror/enzu.com
-	http://mirror.enzu.com/ubuntu/
-	## US, 20 Gbps; https://launchpad.net/ubuntu/+mirror/mirror.genesisadaptive.com-archive
-	http://mirror.genesisadaptive.com/ubuntu/
-	## US, 20 Gbps; https://launchpad.net/ubuntu/+mirror/mirror.math.princeton.edu-archive
-	http://mirror.math.princeton.edu/pub/ubuntu/
-	## US, 20 Gbps; https://launchpad.net/ubuntu/+mirror/mirror.pit.teraswitch.com-archive
-	http://mirror.pit.teraswitch.com/ubuntu/
 
 	## Main official repository
 	http://archive.ubuntu.com/ubuntu/
@@ -71,12 +60,20 @@ begin_group 'Add extra APT configuration'
 
 apt_ci_config=/etc/apt/apt.conf.d/99-ci
 
-# Set retry count to 6, and disables ipv6 (ubuntu servers have problems with
-# it, and it is used by default).
-printf '%s\n' \
-		'Acquire::ForceIPv4 "true";' \
-		'Acquire::Retries "6";' \
-		| tee "$apt_ci_config"
+declare -rA ci_apt_conf=(
+	# Enable parallel download from different mirrors.
+	[Acquire::Queue-Mode]='host'
+
+	# Adjust timeouts.
+	[Acquire::Retries]='3'
+	[Acquire::http::Timeout]='15'
+
+	# Disables ipv6 (ubuntu servers have problems with it, and it is used by default).
+	[Acquire::ForceIPv4]='true'
+)
+for k in "${!ci_apt_conf[@]}"; do
+	printf '%s "%s";\n' "$k" "${ci_apt_conf[$k]//"/\\"}"
+done | tee "$apt_ci_config"
 
 end_group
 

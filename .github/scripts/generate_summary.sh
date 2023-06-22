@@ -3,126 +3,134 @@ set -e -u -o pipefail
 shopt -s nullglob
 shopt -s extglob
 
-ROOT_DIR=$(dirname $(dirname $(dirname "$0")))
-TEST_RESULTS_PREFIX=$ROOT_DIR/test-results
-UHDM_PASSED_FILE=$TEST_RESULTS_PREFIX-uhdm.passed
-UHDM_FAILED_FILE=$TEST_RESULTS_PREFIX-uhdm.failed
-SYSTEMVERILOG_PASSED_FILE=$TEST_RESULTS_PREFIX-systemverilog.passed
-SYSTEMVERILOG_FAILED_FILE=$TEST_RESULTS_PREFIX-systemverilog.failed
+declare -r SELF_DIR="$(dirname $(readlink -f ${BASH_SOURCE[0]}))"
+declare -r ROOT_DIR="$(realpath $SELF_DIR/../..)"
 
-# Read passed tests if any exist
-if [[ -e $UHDM_PASSED_FILE ]]; then
-    UHDM_PASSED_NUMBER=$(wc -l < $UHDM_PASSED_FILE)
-else
-    UHDM_FAILED_NUMBER=0
-fi
-if [[ -e $SYSTEMVERILOG_PASSED_FILE ]]; then
-    SYSTEMVERILOG_PASSED_NUMBER=$(wc -l < $SYSTEMVERILOG_PASSED_FILE)
-else
-    SYSTEMVERILOG_PASSED_NUMBER=0
-fi
+declare -r UHDM_RESULTS_FILE=$ROOT_DIR/test-results-uhdm.log
+declare -r SV_RESULTS_FILE=$ROOT_DIR/test-results-systemverilog.log
 
-# Read failed tests if any exist
-if [[ -e $UHDM_FAILED_FILE ]]; then
-    UHDM_FAILED_NUMBER=$(wc -l < $UHDM_FAILED_FILE)
-else
-    UHDM_FAILED_NUMBER=0
-fi
-if [[ -e $SYSTEMVERILOG_FAILED_FILE ]]; then
-    SYSTEMVERILOG_FAILED_NUMBER=$(wc -l < $SYSTEMVERILOG_FAILED_FILE)
-else
-    SYSTEMVERILOG_FAILED_NUMBER=0
-fi
+#───────────────────────────────────────────────────────────────────────────────
 
-TOTAL_FAILED_TESTS=$(($UHDM_FAILED_NUMBER+$SYSTEMVERILOG_FAILED_NUMBER))
-TOTAL_PASSED_TESTS=$(($UHDM_PASSED_NUMBER+$SYSTEMVERILOG_PASSED_NUMBER))
-TOTAL_TESTS=$(($TOTAL_FAILED_TESTS+$TOTAL_PASSED_TESTS))
+function parse_stats() {
+    local -n _test_names="$1"
+    local -n _stats="$2"
+    local -n _test_results="$3"
+    local -n _asan_results="$4"
+    local file="$5"
+
+    while read test_result asan_result test_name; do
+        [[ -z "$test_name" ]] && continue;
+
+        _test_names[$test_name]=1
+
+        _asan_results[$test_name]="$asan_result"
+        _test_results[$test_name]="$test_result"
+
+        if [[ "$test_result" == 1 ]]; then
+            _stats[test_pass]=$(( ${_stats[test_pass]} + 1 ))
+        else
+            _stats[test_fail]=$(( ${_stats[test_fail]} + 1 ))
+        fi
+        [[ "$asan_result" == 1 ]] || _stats[asan_fail]=$(( ${_stats[asan_fail]} + 1 ))
+    done < $file
+}
+
+declare -A test_names=()
+
+declare -A uhdm_test_results=()
+declare -A uhdm_asan_results=()
+declare -A uhdm_stats=(
+    [test_fail]=0
+    [test_pass]=0
+    [asan_fail]=0
+)
+
+declare -A sv_test_results=()
+declare -A sv_asan_results=()
+declare -A sv_stats=(
+    [test_fail]=0
+    [test_pass]=0
+    [asan_fail]=0
+)
+
+parse_stats test_names uhdm_stats uhdm_test_results uhdm_asan_results $UHDM_RESULTS_FILE
+parse_stats test_names sv_stats   sv_test_results   sv_asan_results   $SV_RESULTS_FILE
+
+total_test_fail=$(( ${uhdm_stats[test_fail]} + ${sv_stats[test_fail]} ))
+total_test_pass=$(( ${uhdm_stats[test_pass]} + ${sv_stats[test_pass]} ))
+total_asan_fail=$(( ${uhdm_stats[asan_fail]} + ${sv_stats[asan_fail]} ))
 
 {
-    if [[ ! -e $UHDM_FAILED_FILE && ! -e $SYSTEMVERILOG_FAILED_FILE ]]; then
-        echo ":heavy_check_mark: ALL TESTS PASSED :heavy_check_mark:"
-    else
-        echo ":x: SOME TESTS FAILED :x:"
-    fi
-
+    printf '| Tool/Parser          | Failed | Passed | ASAN issues |\n'
+    printf '|:---------------------|-------:|-------:|------------:|\n'
+    printf '| `read-uhdm`          | %d     | %d     | %d          |\n' "${uhdm_stats[test_fail]}" "${uhdm_stats[test_pass]}" "${uhdm_stats[asan_fail]}"
+    printf '| `read-systemverilog` | %d     | %d     | %d          |\n' "${sv_stats[test_fail]}" "${sv_stats[test_pass]}" "${sv_stats[asan_fail]}"
+    printf '| **Total**            | **%d** | **%d** | **%d**      |\n' "$total_test_fail" "$total_test_pass" "$total_asan_fail"
     printf '\n'
-    printf '| Tool/Parser          | Failed | Passed |\n'
-    printf '|:---------------------|-------:|-------:|\n'
-    printf '| `read-uhdm`          | %d     | %d     |\n' "$UHDM_FAILED_NUMBER" "$UHDM_PASSED_NUMBER"
-    printf '| `read-systemverilog` | %d     | %d     |\n' "$SYSTEMVERILOG_FAILED_NUMBER" "$SYSTEMVERILOG_PASSED_NUMBER"
-    printf '| **Total**            | **%d** | **%d** |\n' "$TOTAL_FAILED_TESTS" "$TOTAL_PASSED_TESTS"
-    printf '\n'
-    printf '%d out of total %d failed.\n\n\n' "$TOTAL_FAILED_TESTS" "$TOTAL_TESTS"
 } >> $GITHUB_STEP_SUMMARY
 
-declare -A uhdm_results=()
-declare -A systemverilog_results=()
-for result_file in "$SYSTEMVERILOG_FAILED_FILE" "$SYSTEMVERILOG_PASSED_FILE"; do
-    if [[ -f "$result_file" ]]; then
-        while read -r test_name test_result; do
-            systemverilog_results[$test_name]=${test_result}
-        done < "$result_file"
+failed_test_lines=()
+passed_test_lines=()
+asan_fail_lines=()
+
+declare -r pass_tag=':heavy_check_mark: PASS'
+declare -r fail_tag=':x: FAIL'
+
+for test_name in "${!test_names[@]}"; do
+    uhdm_ok="${uhdm_test_results[$test_name]:-0}"
+    uhdm_asan_ok="${uhdm_asan_results[$test_name]:-0}"
+    sv_ok="${sv_test_results[$test_name]:-0}"
+    sv_asan_ok="${sv_asan_results[$test_name]:-0}"
+
+    (( uhdm_ok ))      && uhdm_result_tag="$pass_tag"      || uhdm_result_tag="$fail_tag"
+    (( uhdm_asan_ok )) && uhdm_asan_result_tag="$pass_tag" || uhdm_asan_result_tag="$fail_tag"
+    (( sv_ok ))        && sv_result_tag="$pass_tag"        || sv_result_tag="$fail_tag"
+    (( sv_asan_ok ))   && sv_asan_result_tag="$pass_tag"   || sv_asan_result_tag="$fail_tag"
+
+    # Puting digits for sorting purposes before "###". They will be removed after sorting.
+    if (( !uhdm_ok || !sv_ok )); then
+        failed_test_lines+=("${uhdm_ok}${sv_ok} ${test_name} ###| ${uhdm_result_tag} | ${sv_result_tag} | ${test_name} |")
+    else
+        passed_test_lines+=("${uhdm_ok}${sv_ok} ${test_name} ###| ${uhdm_result_tag} | ${sv_result_tag} | ${test_name} |")
+    fi
+    if (( !uhdm_asan_ok || !sv_asan_ok )); then
+        asan_fail_lines+=("${uhdm_asan_ok}${sv_asan_ok} ${test_name} ###| ${uhdm_asan_result_tag} | ${sv_asan_result_tag} | ${test_name} |")
     fi
 done
-for result_file in "$UHDM_FAILED_FILE" "$UHDM_PASSED_FILE"; do
-    if [[ -f "$result_file" ]]; then
-        while read -r test_name test_result; do
-            uhdm_results[$test_name]=${test_result}
-        done < "$result_file"
-    fi
-done
 
-# List of tests with specific combination of results.
-# 0 means "fail", 1 means "pass". Each digit represents one column in the table
-# (`read_uhdm` and `read_systemverilog`, respectivelly).
-declare -a results_00=()
-declare -a results_10=()
-declare -a results_01=()
-declare -a results_11=()
-
-declare -r pass_str=':heavy_check_mark: **PASS**'
-declare -r fail_str=':x: **FAIL**'
-
-# `[^1]` below is used instead of `0` to catch any unexpected values as failures.
-for test_name in "${!uhdm_results[@]}"; do
-    case "${uhdm_results[$test_name]:-0}${systemverilog_results[$test_name]:-0}" in
-        [^1][^1])
-            results_00+=("| $fail_str | $fail_str | $test_name |")
-        ;;
-        1[^1])
-            results_10+=("| $pass_str | $fail_str | $test_name |")
-        ;;
-        [^1]1)
-            results_01+=("| $fail_str | $pass_str | $test_name |")
-        ;;
-        11)
-            results_11+=("| $pass_str | $pass_str | $test_name |")
-        ;;
-    esac
-done
-
-print_ln() { printf '%s\n' "$@"; }
+print_ln() { (( $# )) && printf '%s\n' "$@" || : ; }
 
 {
-    if (( ${#results_00[@]} + ${#results_10[@]} + ${#results_01[@]} > 0 )); then
+    if (( ${#failed_test_lines[@]} > 0 )); then
         print_ln '<details open>'
-        print_ln '<summary><strong>List of failed tests</strong></summary>'
+        print_ln '<summary><strong>List of failed tests</strong></summary><p>'
         print_ln ''
         print_ln '| `read_uhdm` | `read_systemverilog` | Test |'
         print_ln '|:-----------:|:--------------------:|:-----|'
-        print_ln "${results_00[@]}" | sort
-        print_ln "${results_10[@]}" | sort
-        print_ln "${results_01[@]}" | sort
+        print_ln "${failed_test_lines[@]}" | sort | sed -e 's/^.*###//'
         print_ln ''
-        print_ln '</details>'
+        print_ln '</p></details>'
     fi
 
-    print_ln '<details>'
-    print_ln '<summary><strong>List of passed tests</strong></summary>'
-    print_ln ''
-    print_ln '| `read_uhdm` | `read_systemverilog` | Test |'
-    print_ln '|:-----------:|:--------------------:|:-----|'
-    print_ln "${results_11[@]}" | sort
-    print_ln ''
-    print_ln '</details>'
+    if (( ${#asan_fail_lines[@]} > 0 )); then
+        print_ln '<details open>'
+        print_ln '<summary><strong>List of tests with ASAN issues</strong></summary><p>'
+        print_ln ''
+        print_ln '| `read_uhdm` | `read_systemverilog` | Test |'
+        print_ln '|:-----------:|:--------------------:|:-----|'
+        print_ln "${asan_fail_lines[@]}" | sort | sed -e 's/^.*###//'
+        print_ln ''
+        print_ln '</p></details>'
+    fi
+
+    if (( ${#passed_test_lines[@]} > 0 )); then
+        print_ln '<details>'
+        print_ln '<summary><strong>List of passed tests</strong></summary><p>'
+        print_ln ''
+        print_ln '| `read_uhdm` | `read_systemverilog` | Test |'
+        print_ln '|:-----------:|:--------------------:|:-----|'
+        print_ln "${passed_test_lines[@]}" | sort | sed -e 's/^.*###//'
+        print_ln ''
+        print_ln '</p></details>'
+    fi
 } >> $GITHUB_STEP_SUMMARY

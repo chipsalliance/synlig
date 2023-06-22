@@ -70,6 +70,7 @@ jobs:
               google-perftools \
               libfl-dev \
               libgoogle-perftools-dev \
+              llvm-15 \
               python3 \
               python3-dev \
               swig \
@@ -102,40 +103,43 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-asan
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-asan.tar
 
       - name: Build & Test (yosys)
-        run: |
-          ./.github/scripts/run_group_test.sh
-
         env:
           TARGET: uhdm/yosys/test-ast
-
-      - name: Rename test results
-        if: ${{ always() }}
         run: |
-          mv test-results/test-results.passed test-results/test-results-uhdm.passed || true
-          mv test-results/test-results.failed test-results/test-results-uhdm.failed || true
+          ./.github/scripts/run_group_test.sh \
+              ./build/parsing/read-uhdm \
+              ./build/parsing/test-results-uhdm.log \
+              ;
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: test-results
-          path: test-results
+          name: parsing_test-results
+          path: build/parsing/test-results-uhdm.log
+          retention-days: 1
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: tests-vcddiff-artifacts
-          path: UHDM-integration-tests/artifacts
+          name: parsing_read-uhdm_logs
+          path: build/parsing/read-uhdm/*/*.log
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: parsing_read-uhdm_yosys-sv
+          path: build/parsing/read-uhdm/*/yosys.sv
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: plots
           path: |
@@ -175,6 +179,7 @@ jobs:
               google-perftools \
               libfl-dev \
               libgoogle-perftools-dev \
+              llvm-15 \
               python3 \
               python3-dev \
               swig \
@@ -207,39 +212,43 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-asan
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-asan.tar
 
       - name: Build & Test (yosys)
-        run: |
-          ./.github/scripts/run_group_test.sh
-
         env:
           TARGET: uhdm/yosys/test-ast
-
-      - name: Rename test results
-        if: ${{ always() }}
         run: |
-          mv test-results/test-results.passed test-results/test-results-systemverilog.passed || true
-          mv test-results/test-results.failed test-results/test-results-systemverilog.failed || true
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: parsing-logs
-          path: logs
+          ./.github/scripts/run_group_test.sh \
+              ./build/parsing/read-systemverilog \
+              ./build/parsing/test-results-systemverilog.log \
+              ;
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: test-results
-          path: test-results
+          name: parsing_test-results
+          path: ./build/parsing/test-results-systemverilog.log
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: parsing_read-systemverilog_logs
+          path: build/parsing/read-systemverilog/*/*.log
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: parsing_read-systemverilog_yosys-sv
+          path: build/parsing/read-systemverilog/*/yosys.sv
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: plots
           path: |
@@ -259,7 +268,7 @@ jobs:
       - name: Download test results
         uses: /actions/download-artifact@v3
         with:
-          name: parsing-logs
+          name: parsing_read-systemverilog_logs
           path: logs
 
       - name: Set up common Ubuntu configuration
@@ -300,7 +309,9 @@ jobs:
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         run: |
-          .github/scripts/push_to_logs_repository.sh "$GITHUB_REPOSITORY_OWNER" "$PUSH_BRANCH" "$GITHUB_RUN_ID" logs/tests tests
+          # Do not push asan logs
+          rm -f logs/*/*asan*
+          .github/scripts/push_to_logs_repository.sh "$GITHUB_REPOSITORY_OWNER" "$PUSH_BRANCH" "$GITHUB_RUN_ID" logs tests
 
       - name: Post comment
         if: ${{ github.event_name == 'pull_request' }}
@@ -363,7 +374,7 @@ jobs:
       - name: Download test results
         uses: /actions/download-artifact@v3
         with:
-          name: test-results
+          name: parsing_test-results
 
       - name: Generate summary
         run: |
