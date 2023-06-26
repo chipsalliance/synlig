@@ -353,8 +353,8 @@ jobs:
           DISTRO_CODENAME=$(lsb_release --short --codename | sed -e's/[^A-Za-z0-9]//g')
           FULL_TARBALL=yosys-uhdm-integration-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
           PLUGIN_TARBALL=yosys-uhdm-plugin-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
-          # Create a tag of form ad2466e-2021-12-06
-          TAG="${TAG:-$(git show -s --date=short --format=%h-%cd)}"
+          # Create a tag of form 2021-12-06-ad2466e
+          TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
           echo "TAG=$TAG" >> $GITHUB_ENV
           ls -lah image
