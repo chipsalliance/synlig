@@ -111,6 +111,7 @@ sv2v:core/param_list_unpacked.v
 sv2v:core/shadow_recurse.v
 sv2v:core/sign_cast.sv
 sv2v:core/sign_cast.v
+sv2v:core/simple_loop_jump.sv
 sv2v:core/simple_loop_jump.v
 sv2v:core/string.v
 sv2v:core/string_type.sv
@@ -388,6 +389,7 @@ UHDM-integration-tests:ParameterUnpackedLogicArray/top.sv
 UHDM-integration-tests:ParameterUnsignedInt/top.sv
 UHDM-integration-tests:ParameterWithUnderscoreValue/top.sv
 UHDM-integration-tests:ParameterWithUnderscoreValueDivided/top.sv
+UHDM-integration-tests:ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv
 UHDM-integration-tests:PartSelect/top.sv
 UHDM-integration-tests:PartSelectOfMember/top.sv
 UHDM-integration-tests:PartSelectOfPartSelectedBitSelect/top.sv
@@ -656,6 +658,7 @@ yosys:simple/named_genblk.v
 yosys:simple/nested_genblk_resolve.v
 yosys:simple/omsp_dbg_uart.v
 yosys:simple/param_attr.v
+yosys:simple/realexpr.v
 yosys:simple/repwhile.v
 yosys:simple/retime.v
 yosys:simple/rotate.v
