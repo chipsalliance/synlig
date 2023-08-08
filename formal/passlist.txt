@@ -81,7 +81,6 @@ sv2v:core/package_export_wildcard.sv
 sv2v:core/package_export_wildcard.v
 sv2v:core/package_global.sv
 sv2v:core/package_global.v
-sv2v:core/package_ident.sv
 sv2v:core/package_ident.v
 sv2v:core/package_implied.sv
 sv2v:core/package_implied.v
