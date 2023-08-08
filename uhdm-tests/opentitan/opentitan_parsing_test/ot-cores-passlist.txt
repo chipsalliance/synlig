@@ -36,6 +36,7 @@ lowrisc:ip:otbn_pkg:0.1
 lowrisc:ip:otp_ctrl:1.0
 lowrisc:ip:otp_ctrl_pkg:1.0
 lowrisc:ip:pattgen:0.1
+lowrisc:ip:pinmux:0.1
 lowrisc:ip:pinmux_component:0.1
 lowrisc:ip:pinmux_reg:0.1
 lowrisc:ip:pwrmgr:0.1
@@ -131,6 +132,7 @@ lowrisc:prim:util_get_scramble_params:0
 lowrisc:prim:xnor2:0
 lowrisc:prim:xor2:0
 lowrisc:prim:xoshiro256pp:0
+lowrisc:systems_custom_tiny:ast:0.1
 lowrisc:systems_custom_tiny:ast_pkg:0
 lowrisc:systems_custom_tiny:clkmgr:0.1
 lowrisc:systems_custom_tiny:clkmgr_pkg:0.1
