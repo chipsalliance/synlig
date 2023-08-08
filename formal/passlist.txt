@@ -621,7 +621,6 @@ yosys:simple/case_expr_extend.sv
 yosys:simple/case_expr_query.sv
 yosys:simple/case_large.v
 yosys:simple/constmuldivmod.v
-yosys:simple/constpower.v
 yosys:simple/const_branch_finish.v
 yosys:simple/const_fold_func.v
 yosys:simple/defvalue.sv
