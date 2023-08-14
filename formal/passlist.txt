@@ -81,7 +81,6 @@ sv2v:core/package_export_wildcard.sv
 sv2v:core/package_export_wildcard.v
 sv2v:core/package_global.sv
 sv2v:core/package_global.v
-sv2v:core/package_ident.sv
 sv2v:core/package_ident.v
 sv2v:core/package_implied.sv
 sv2v:core/package_implied.v
@@ -111,6 +110,7 @@ sv2v:core/param_list_unpacked.v
 sv2v:core/shadow_recurse.v
 sv2v:core/sign_cast.sv
 sv2v:core/sign_cast.v
+sv2v:core/simple_loop_jump.sv
 sv2v:core/simple_loop_jump.v
 sv2v:core/string.v
 sv2v:core/string_type.sv
@@ -388,6 +388,7 @@ UHDM-integration-tests:ParameterUnpackedLogicArray/top.sv
 UHDM-integration-tests:ParameterUnsignedInt/top.sv
 UHDM-integration-tests:ParameterWithUnderscoreValue/top.sv
 UHDM-integration-tests:ParameterWithUnderscoreValueDivided/top.sv
+UHDM-integration-tests:ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv
 UHDM-integration-tests:PartSelect/top.sv
 UHDM-integration-tests:PartSelectOfMember/top.sv
 UHDM-integration-tests:PartSelectOfPartSelectedBitSelect/top.sv
@@ -620,7 +621,6 @@ yosys:simple/case_expr_extend.sv
 yosys:simple/case_expr_query.sv
 yosys:simple/case_large.v
 yosys:simple/constmuldivmod.v
-yosys:simple/constpower.v
 yosys:simple/const_branch_finish.v
 yosys:simple/const_fold_func.v
 yosys:simple/defvalue.sv
@@ -656,6 +656,7 @@ yosys:simple/named_genblk.v
 yosys:simple/nested_genblk_resolve.v
 yosys:simple/omsp_dbg_uart.v
 yosys:simple/param_attr.v
+yosys:simple/realexpr.v
 yosys:simple/repwhile.v
 yosys:simple/retime.v
 yosys:simple/rotate.v
