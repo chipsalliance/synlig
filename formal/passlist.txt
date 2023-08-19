@@ -316,6 +316,7 @@ UHDM-integration-tests:ImportedFunctionCallInModuleAndSubmodule/top.sv
 UHDM-integration-tests:ImportedFunctionUsesAnotherFunction/top.sv
 UHDM-integration-tests:ImportedParameter/top.sv
 UHDM-integration-tests:ImportParametrizedTypeAndDeclareParamWithTheSameName/top.sv
+UHDM-integration-tests:ImportTypeOfPort/top.sv
 UHDM-integration-tests:IndexedPartSelect/top.sv
 UHDM-integration-tests:IndexedPartSelectInUniqueCase/top.sv
 UHDM-integration-tests:IndexedPartSelectOfMember/top.sv
