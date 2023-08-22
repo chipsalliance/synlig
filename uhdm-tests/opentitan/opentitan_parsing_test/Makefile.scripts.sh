@@ -159,6 +159,7 @@ _process_core() {
 		_logf_stderr_msg '\x1b[33;2mWaiting for more free memory (currently free: %d%%) before starting \x1b[22m%s\x1b[0m\n' \
 				"$(_get_available_mem_percent)" \
 				"$TARGET_CORE_NAME" \
+				;
 		sleep 10
 	done
 
@@ -249,6 +250,7 @@ _append_core_deps_to_list() {
 
 	local -a deps
 	while read dep; do
+		[[ -z "$dep" ]] && continue
 		deps+=("$dep")
 	done < $(get_core_deps_file "$core")
 
