@@ -92,7 +92,7 @@ jobs:
 
   test-plugin-debian:
     runs-on: [self-hosted, Linux, X64]
-    container: debian:sid
+    container: debian:latest
     env:
       DEBIAN_FRONTEND: noninteractive
       PIPX_BIN_DIR: /usr/local/bin
