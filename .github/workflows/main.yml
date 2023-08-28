@@ -395,7 +395,7 @@ jobs:
   install-plugin:
     name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
-    container: debian:sid
+    container: debian:latest
     needs: release
     env:
       DEBIAN_FRONTEND: noninteractive
