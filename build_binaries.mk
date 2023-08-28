@@ -21,7 +21,13 @@ REPO_DIR := ${this_mk.dir}
 INSTALL_DIR := ${this_mk.dir}/image
 
 ENABLE_ASAN := 0
+ENABLE_DEBUG := 0
 SYSTEMVERILOG_PLUGIN_ONLY := 0
+
+ifeq ($(strip ${ENABLE_ASAN}),1)
+# Force debug config when using ASAN
+override ENABLE_DEBUG := 1
+endif
 
 CC ?= cc
 CXX ?= c++
@@ -52,7 +58,7 @@ SURELOG_SRC_DIR := ${REPO_DIR}/Surelog
 SURELOG_BUILD_DIR := ${REPO_DIR}/Surelog/build
 
 surelog_build_type:=Release
-ifeq ($(strip ${ENABLE_ASAN}),1)
+ifeq ($(strip ${ENABLE_DEBUG}),1)
 surelog_build_type:=Debug
 endif
 
@@ -93,18 +99,27 @@ endif
 
 ifeq ($(strip ${ENABLE_ASAN}),1)
 yosys_make_args += \
-		STRIP:=/bin/true \
-		SANITIZER:=address \
-		ENABLE_DEBUG:=1
+		SANITIZER:=address
 
 ifeq ($(findstring clang,${CC}),clang)
 build-yosys install-yosys: export override CXXFLAGS += -fsanitize-address-use-after-return=always
 endif
 endif
 
+ifeq ($(strip ${ENABLE_DEBUG}),1)
+yosys_make_args += \
+		STRIP:=/bin/true \
+		ENABLE_DEBUG:=1
+endif
+
 .PHONY: clean-yosys
 clean-yosys:
-	${MAKE} -C ${YOSYS_SRC_DIR} ${yosys_make_args} clean
+	${MAKE} -C ${YOSYS_SRC_DIR} ${yosys_make_args} clean || :
+	(
+		cd ${YOSYS_SRC_DIR}
+		git clean -fdX *
+		rm -rf abc
+	)
 
 .PHONY: build-yosys
 build-yosys:
@@ -122,7 +137,7 @@ FAKEDLCLOSE_SRC_DIR := ${REPO_DIR}/lib/fakedlclose
 
 .PHONY: clean-fakedlclose
 clean-fakedlclose:
-	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} clean
+	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} clean || :
 
 .PHONY: build-fakedlclose
 build-fakedlclose:
@@ -140,13 +155,15 @@ PLUGINS_SRC_DIR := ${REPO_DIR}/yosys-f4pga-plugins
 plugins_make_args := UHDM_INSTALL_DIR:=${INSTALL_DIR} CC:=${CC} CXX:=${CXX}
 
 ifeq ($(strip ${ENABLE_ASAN}),1)
-plugins_make_args += EXTRA_FLAGS:='-g'
-
 plugins_build_deps += build-fakedlclose
 plugins_install_deps += install-fakedlclose
 else
 plugins_build_deps :=
 plugins_install_deps :=
+endif
+
+ifeq ($(strip ${ENABLE_DEBUG}),1)
+plugins_make_args += EXTRA_FLAGS:='-g -Og'
 endif
 
 ifeq ($(strip ${SYSTEMVERILOG_PLUGIN_ONLY}),1)
@@ -162,7 +179,7 @@ endif
 .PHONY: clean-plugins
 clean-plugins:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
-	${MAKE} -C ${PLUGINS_SRC_DIR} ${plugins_make_args} ${plugins_make_clean_targets}
+	${MAKE} -C ${PLUGINS_SRC_DIR} ${plugins_make_args} ${plugins_make_clean_targets} || :
 
 .PHONY: build-plugins
 build-plugins: install-yosys install-surelog ${plugins_build_deps}
