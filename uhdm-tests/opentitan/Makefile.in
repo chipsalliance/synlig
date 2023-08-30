@@ -3,8 +3,8 @@ curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
 ##############################
 ###  OPENTITAN_9d82960888  ###
 ##############################
-VENV_OT_9d82960888 = ${root_dir}/venv-opentitan-9d82960888
-OPENTITAN_9d82960888 = ${curr_dir}/opentitan-9d82960888
+VENV_OT_9d82960888 = ${root_dir}/venv-opentitan_9d82960888
+OPENTITAN_9d82960888 = ${root_dir}/../third_party/opentitan_9d82960888
 
 ${OPENTITAN_9d82960888}/.gitpatch:
 	cd ${OPENTITAN_9d82960888} && git apply ${curr_dir}/0001-Add-opentitan-patch-for-uhdm.patch && touch $@
@@ -25,7 +25,7 @@ uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN_9d82960888}/.gitpatc
 #################
 VENV_OT_SYNTH = ${root_dir}/venv-opentitan-synth
 OPENTITAN_SYNTH_PATCHES_DIR = ${curr_dir}/opentitan_synth_patches
-OPENTITAN = ${curr_dir}/opentitan
+OPENTITAN = ${root_dir}/../third_party/opentitan
 
 TOP := lowrisc:systems_custom_tiny:chip_custom_tiny_nexysvideo:0.1
 TOP_HW_DIR := ${OPENTITAN}/hw/top_custom_tiny

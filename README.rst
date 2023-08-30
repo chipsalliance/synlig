@@ -73,7 +73,7 @@ You can build all required binaries using provided ``build_binaries.sh`` script.
    :name: build-binaries
 
    #Make sure submodules are inited and updated to the latest version
-   git submodule update --init --recursive Surelog yosys yosys-f4pga-plugins UHDM-integration-tests
+   git submodule update --init --recursive third_party/{surelog,yosys} yosys-f4pga-plugins UHDM-integration-tests
    ./build_binaries.sh
 
 To use yosys built from a submodule, make sure to either use absolute paths, or update the ``PATH`` variable before use.

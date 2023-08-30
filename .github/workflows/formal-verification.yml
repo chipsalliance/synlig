@@ -22,9 +22,9 @@ jobs:
           - name: UHDM-integration-tests
             test-suite: UHDM-integration-tests/tests
           - name: sv2v
-            test-suite: sv2v/test
+            test-suite: third_party/sv2v/test
           - name: yosys
-            test-suite: yosys/tests
+            test-suite: third_party/yosys/tests
       fail-fast: false
     name: ${{ matrix.name }}
     env:
@@ -71,8 +71,8 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              yosys \
-              sv2v \
+              third_party/yosys \
+              third_party/sv2v \
               UHDM-integration-tests \
               ;
 

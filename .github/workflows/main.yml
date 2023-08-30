@@ -159,8 +159,8 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              Surelog \
-              yosys \
+              third_party/surelog \
+              third_party/yosys \
               yosys-f4pga-plugins \
               ;
 
@@ -237,7 +237,7 @@ jobs:
         id: rev
         run: |
            CACHE_HASH_LENGTH=20
-           repo_hash="$(git submodule status sv2v)"
+           repo_hash="$(git submodule status third_party/sv2v)"
            # Skip first character which is ' ' or '+'
            repo_hash="${repo_hash:1:$CACHE_HASH_LENGTH}"
            printf '::set-output name=%s::%s\n' 'sv2v-submodule-rev' "${repo_hash}"
@@ -253,7 +253,7 @@ jobs:
         if: ${{ steps.cache-restore.outputs.cache-hit != 'true' }}
         run: |
           git submodule update --depth 1 --init --recursive \
-              sv2v \
+              third_party/sv2v \
               ;
 
       - name: Build binaries

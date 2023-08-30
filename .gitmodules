@@ -1,11 +1,11 @@
 [submodule "yosys"]
-	path = yosys
+	path = third_party/yosys
 	url = https://github.com/YosysHQ/yosys.git
 [submodule "Surelog"]
-	path = Surelog
+	path = third_party/surelog
 	url = https://github.com/chipsalliance/Surelog.git
 [submodule "sv2v"]
-	path = sv2v
+	path = third_party/sv2v
 	url = https://github.com/zachjs/sv2v.git
 [submodule "UHDM-integration-tests"]
 	path = UHDM-integration-tests
@@ -14,29 +14,29 @@
 	path = yosys-f4pga-plugins
 	url = https://github.com/chipsalliance/yosys-f4pga-plugins.git
 [submodule "make-env"]
-	path = uhdm-tests/ibex/make-env
+	path = third_party/make_env
 	url = https://github.com/SymbiFlow/make-env.git
 [submodule "uhdm-tests/ibex/ibex"]
-	path = uhdm-tests/ibex/ibex
+	path = third_party/ibex
 	url = https://github.com/lowRISC/ibex.git
 [submodule "uhdm-tests/opentitan/opentitan-9d82960888"]
-	path = uhdm-tests/opentitan/opentitan-9d82960888
+	path = third_party/opentitan_9d82960888
 	url = https://github.com/lowRISC/opentitan.git
 [submodule "uhdm-tests/swerv/Cores-SweRV"]
-	path = uhdm-tests/swerv/Cores-SweRV
+	path = third_party/swerv
 	url = https://github.com/chipsalliance/Cores-SweRV.git
 [submodule "uhdm-tests/opentitan/opentitan"]
-	path = uhdm-tests/opentitan/opentitan
+	path = third_party/opentitan
 	url = https://github.com/antmicro/opentitan.git
 [submodule "uhdm-tests/black-parrot/black-parrot"]
-	path = uhdm-tests/black-parrot/black-parrot
+	path = third_party/black_parrot
 	url = https://github.com/black-parrot/black-parrot.git
 [submodule "uhdm-tests/black-parrot/black-parrot-tools"]
-	path = uhdm-tests/black-parrot/black-parrot-tools
+	path = third_party/black_parrot_tools
 	url = https://github.com/black-parrot/black-parrot-tools
 [submodule "uhdm-tests/black-parrot/black-parrot-sdk"]
-	path = uhdm-tests/black-parrot/black-parrot-sdk
+	path = third_party/black_parrot_sdk
 	url = https://github.com/black-parrot-sdk/black-parrot-sdk.git
 [submodule "uhdm-tests/bsg_micro_designs/bsg_micro_designs"]
-	path = uhdm-tests/bsg_micro_designs/bsg_micro_designs
+	path = third_party/bsg_micro_designs
 	url = https://github.com/bsg-idea/bsg_micro_designs.git

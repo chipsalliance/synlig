@@ -48,8 +48,8 @@ ${INSTALL_DIR}:
 # Surelog
 #───────────────────────────────────────────────────────────────────────────────
 
-SURELOG_SRC_DIR := ${REPO_DIR}/Surelog
-SURELOG_BUILD_DIR := ${REPO_DIR}/Surelog/build
+SURELOG_SRC_DIR := ${REPO_DIR}/third_party/surelog
+SURELOG_BUILD_DIR := ${REPO_DIR}/third_party/surelog/build
 
 surelog_build_type:=Release
 ifeq ($(strip ${ENABLE_ASAN}),1)
@@ -77,7 +77,7 @@ install-surelog: build-surelog | ${INSTALL_DIR}
 # Yosys
 #───────────────────────────────────────────────────────────────────────────────
 
-YOSYS_SRC_DIR := ${REPO_DIR}/yosys
+YOSYS_SRC_DIR := ${REPO_DIR}/third_party/yosys
 yosys_make_args := PREFIX:=${INSTALL_DIR}
 
 ifeq ($(findstring clang,${CC}),clang)

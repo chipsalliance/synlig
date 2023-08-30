@@ -28,7 +28,7 @@ BUILD_DIR := ${this_mk.dir}/build
 OPENTITAN_DEPS_MK_FILE := ${BUILD_DIR}/opentitan-deps.mk
 PASSLIST_FILE := ${this_mk.dir}/ot-cores-passlist.txt
 SKIPLIST_FILE := ${this_mk.dir}/ot-cores-skiplist.txt
-export OPENTITAN_DIR := $(abspath ${this_mk.dir}/../opentitan)
+export OPENTITAN_DIR := $(abspath ${this_mk.dir}/../../../third_party/opentitan)
 
 # -1 == no minimum
 export MIN_FREE_MEM_TO_START_TEST := -1

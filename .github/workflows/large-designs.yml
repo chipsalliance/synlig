@@ -55,8 +55,8 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/ibex/make-env \
-              uhdm-tests/ibex/ibex \
+              third_party/make_env \
+              third_party/ibex \
               ;
 
       - name: Download binaries
@@ -91,8 +91,8 @@ jobs:
           path: |
             **/plot_*.svg
 
-  ibex_synth_symbiflow:
-    name: Ibex (Symbiflow synthesis)
+  ibex_synth_f4pga:
+    name: Ibex (F4PGA synthesis)
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
@@ -137,8 +137,8 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/ibex/make-env \
-              uhdm-tests/ibex/ibex \
+              third_party/make_env \
+              third_party/ibex \
               ;
 
       - name: Download binaries
@@ -227,7 +227,7 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/opentitan/opentitan-9d82960888 \
+              third_party/opentitan_9d82960888 \
               ;
 
       - name: Download binaries
@@ -341,7 +341,7 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/opentitan/opentitan \
+              third_party/opentitan \
               ;
 
       - name: Download binaries
@@ -445,7 +445,7 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/opentitan/opentitan \
+              third_party/opentitan \
               ;
 
       - name: Download binaries
@@ -554,7 +554,7 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/swerv/Cores-SweRV \
+              third_party/swerv \
               ;
 
       - name: Download binaries
@@ -634,11 +634,11 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/black-parrot/black-parrot \
+              third_party/black_parrot \
               ;
           git submodule update --depth 1 --init \
-              uhdm-tests/black-parrot/black-parrot-tools \
-              uhdm-tests/black-parrot/black-parrot-sdk \
+              third_party/black_parrot_tools \
+              third_party/black_parrot_sdk \
               ;
 
       - name: Download binaries

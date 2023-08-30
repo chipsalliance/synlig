@@ -29,16 +29,16 @@ for arg in $@; do
 done
 
 #Surelog
-cd Surelog
+cd third_party/surelog
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DCMAKE_POSITION_INDEPENDENT_CODE=ON -S . -B build
 cmake --build build -j $(nproc)
 cmake --install build
-cd ..
+cd ../..
 #Yosys
 if [ "$SKIP_YOSYS" -eq "0" ]; then
-cd yosys
+cd third_party/yosys
 make CONFIG=gcc PREFIX=$INSTALL_PATH install -j $(nproc)
-cd ..
+cd ../..
 fi
 #UHDM plugin
 if [ "$PLUGIN_ASAN" -eq "1" ]; then
