@@ -507,8 +507,8 @@ jobs:
           path: |
             **/plot_*.svg
 
-  swerv_synth:
-    name: Swerv (synthesis)
+  veer_synth:
+    name: VeeR-EH1 (synthesis)
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
     env:
@@ -554,7 +554,7 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              third_party/swerv \
+              third_party/veer \
               ;
 
       - name: Download binaries
@@ -571,13 +571,13 @@ jobs:
           pip install virtualenv
           ./UHDM-integration-tests/.github/ci.sh
         env:
-          TARGET: uhdm/yosys/swerv
-          TEST_CASE: tests/swerv
+          TARGET: uhdm/yosys/veer
+          TEST_CASE: tests/veer
 
       - uses: actions/upload-artifact@v2
         with:
-          name: chipsalliance.org_cores_SweRV_EH1_1.8.edif
-          path: UHDM-integration-tests/build/chipsalliance.org_cores_SweRV_EH1_1.8/synth-vivado/chipsalliance.org_cores_SweRV_EH1_1.8.edif
+          name: chipsalliance.org_cores_VeeR_EH1_1.9.edif
+          path: UHDM-integration-tests/build/chipsalliance.org_cores_VeeR_EH1_1.9/synth-vivado/chipsalliance.org_cores_VeeR_EH1_1.9.edif
 
       - name: Upload load graphs
         if: ${{ always() }}

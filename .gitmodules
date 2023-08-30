@@ -23,7 +23,7 @@
 	path = third_party/opentitan_9d82960888
 	url = https://github.com/lowRISC/opentitan.git
 [submodule "uhdm-tests/swerv/Cores-SweRV"]
-	path = third_party/swerv
+	path = third_party/veer
 	url = https://github.com/chipsalliance/Cores-SweRV.git
 [submodule "uhdm-tests/opentitan/opentitan"]
 	path = third_party/opentitan
@@ -40,3 +40,6 @@
 [submodule "uhdm-tests/bsg_micro_designs/bsg_micro_designs"]
 	path = third_party/bsg_micro_designs
 	url = https://github.com/bsg-idea/bsg_micro_designs.git
+[submodule "third_party/veer"]
+	path = third_party/veer
+	url = https://github.com/chipsalliance/Cores-VeeR-EH1
