@@ -40,7 +40,7 @@ If you are sure yosys is installed and configured, you should download and unpac
    :name: download-plugin
 
    apt install -y curl jq tar wget
-   curl https://api.github.com/repos/antmicro/yosys-systemverilog/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+   curl https://api.github.com/repos/chipsalliance/systemverilog-plugin/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
 
 After downloading the plugin, the next step is to install plugin with superuser privileges:
 

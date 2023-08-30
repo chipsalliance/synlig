@@ -416,7 +416,7 @@ jobs:
               ;
       - name: Download and extract UHDM plugin
         run: |
-          curl https://api.github.com/repos/antmicro/yosys-uhdm-plugin-integration/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+          curl https://api.github.com/repos/chipsalliance/systemverilog-plugin/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
       - name: Install it
         run: |
           ./install_plugin.sh
