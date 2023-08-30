@@ -23,7 +23,7 @@ chmod 600 "$DEPLOY_KEY_FILE"
 SSH_KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
 ssh-keyscan -H "github.com" > "$SSH_KNOWN_HOSTS_FILE"
 export GIT_SSH_COMMAND="ssh -i "$DEPLOY_KEY_FILE" -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_FILE"
-GIT_CMD_REPOSITORY="git@github.com:$REPOSITORY_OWNER/yosys-systemverilog-logs.git"
+GIT_CMD_REPOSITORY="git@github.com:$REPOSITORY_OWNER/systemverilog-plugin-logs.git"
 CLONE_DIR=$(mktemp -d)
 git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git config --global user.name "github-actions[bot]"
