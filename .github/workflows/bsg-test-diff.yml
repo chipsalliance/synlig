@@ -52,7 +52,7 @@ jobs:
         run: |
           git submodule update --depth 1 --init --recursive \
               UHDM-integration-tests \
-              uhdm-tests/bsg_micro_designs/bsg_micro_designs \
+              third_party/bsg_micro_designs \
               ;
 
       - name: Download binaries

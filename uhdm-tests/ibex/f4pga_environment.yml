@@ -3,5 +3,5 @@ dependencies:
   - python=3
   - pip
   - pip:
-    - -r ./ibex/python-requirements.txt
+    - -r ../../third_party/ibex/python-requirements.txt
     - -r f4pga_requirements.txt

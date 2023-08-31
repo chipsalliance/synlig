@@ -1,5 +1,5 @@
 curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
-DESIGN_DIR = ${curr_dir}/Cores-SweRV
+DESIGN_DIR = ${root_dir}/../third_party/swerv
 VENV = ${root_dir}/venv-swerv
 TOP := top_earlgrey_nexysvideo
 

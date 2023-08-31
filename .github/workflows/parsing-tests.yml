@@ -84,7 +84,7 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              Surelog \
+              third_party/surelog \
               UHDM-integration-tests \
               ;
 
@@ -193,7 +193,7 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              Surelog \
+              third_party/surelog \
               UHDM-integration-tests \
               ;
 

@@ -1,6 +1,6 @@
 this_makefile := $(lastword $(MAKEFILE_LIST))
 curr_dir := $(dir $(this_makefile))
-IBEX = ${curr_dir}/ibex
+IBEX = ${root_dir}/../third_party/ibex
 
 #############################
 ####      SYNTHESIS      ####
@@ -64,7 +64,7 @@ TOP_DIR := ${root_dir}
 REQUIREMENTS_FILE := ${curr_dir}/f4pga_requirements.txt
 ENVIRONMENT_FILE := ${curr_dir}/f4pga_environment.yml
 
-include ${curr_dir}/make-env/conda.mk
+include ${root_dir}/../third_party/make_env/conda.mk
 
 # We need to apply the patch before Conda uses ${REQUIREMENTS_FILE}
 ${REQUIREMENTS_FILE}: ${IBEX}/.requirementspatch
