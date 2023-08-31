@@ -17,7 +17,7 @@
  *
  */
 
-#include "uhdmcommonfrontend.h"
+#include "uhdm_common_frontend.h"
 
 namespace systemverilog_plugin
 {

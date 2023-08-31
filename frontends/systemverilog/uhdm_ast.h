@@ -5,7 +5,7 @@
 #include <vector>
 #undef cover
 
-#include "uhdmastshared.h"
+#include "uhdm_ast_shared.h"
 #include <memory>
 #include <uhdm/uhdm.h>
 

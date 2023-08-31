@@ -14,15 +14,13 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-PLUGIN_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-
 NAME = systemverilog
-SOURCES = UhdmAst.cc \
-          uhdmastfrontend.cc \
-          uhdmcommonfrontend.cc \
-          uhdmsurelogastfrontend.cc \
-          third_party/yosys/const2ast.cc \
-          third_party/yosys/simplify.cc
+SOURCES = uhdm_ast.cc \
+          uhdm_ast_frontend.cc \
+          uhdm_common_frontend.cc \
+          uhdm_surelog_ast_frontend.cc \
+          ../../third_party/yosys_mod/const2ast.cc \
+          ../../third_party/yosys_mod/simplify.cc
 
 # Directory to search for Surelog and UHDM libraries
 UHDM_INSTALL_DIR ?= /usr/local
@@ -50,7 +48,7 @@ ifeq (,$(wildcard $(YOSYS_CONFIG)))
 endif
 
 CXX ?= $(shell $(YOSYS_CONFIG) --cxx)
-CXXFLAGS := $(shell $(YOSYS_CONFIG) --cxxflags) $(CXXFLAGS) #-DSDC_DEBUG
+CXXFLAGS := -I../../third_party/yosys_mod $(shell $(YOSYS_CONFIG) --cxxflags) $(CXXFLAGS) #-DSDC_DEBUG
 LDFLAGS := $(shell $(YOSYS_CONFIG) --ldflags) $(LDFLAGS)
 LDLIBS := $(shell $(YOSYS_CONFIG) --ldlibs) $(LDLIBS)
 EXTRA_FLAGS ?=
@@ -58,7 +56,7 @@ EXTRA_FLAGS ?=
 YOSYS_DATA_DIR = $(DESTDIR)$(shell $(YOSYS_CONFIG) --datdir)
 YOSYS_PLUGINS_DIR = $(YOSYS_DATA_DIR)/plugins
 
-BUILD_DIR := $(PLUGIN_DIR)/../../build/systemverilog-plugin
+BUILD_DIR := ../../build/systemverilog-plugin
 
 # Filled below with all object file paths
 _ALL_OBJECTS :=
@@ -73,8 +71,8 @@ all: build
 # Object files
 
 define _process-single-source-file
-_source_abs := $(abspath $(addprefix $(PLUGIN_DIR)/,$(source)))
-_object_abs := $(abspath $(addprefix $(BUILD_DIR)/,$(source).o))
+_source_abs := $(abspath $(source))
+_object_abs := $(abspath $(addprefix $(BUILD_DIR)/,$(notdir $(source).o)))
 _object_dir := $(abspath $(dir $(_object_abs)))
 _ALL_OBJECTS += $(_object_abs)
 _ALL_BUILD_SUBDIRS += $(_object_dir)
@@ -107,15 +105,10 @@ $(NAME).so: $(SO_LIB)
 # Tests
 
 .PHONY: test test_clean
-ifneq ($(wildcard $(PLUGIN_DIR)/tests/Makefile),)
 test:
 	@$(MAKE) -C tests all
 test_clean:
 	$(MAKE) -C tests clean
-else
-test:
-test_clean:
-endif
 
 # Build
 

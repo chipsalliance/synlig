@@ -17,7 +17,7 @@
  *
  */
 
-#include "UhdmAst.h"
+#include "uhdm_ast.h"
 #include "frontends/ast/ast.h"
 #include "kernel/yosys.h"
 #include "uhdm/SynthSubset.h"
