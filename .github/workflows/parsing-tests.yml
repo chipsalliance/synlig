@@ -290,7 +290,7 @@ jobs:
             PUSH_BRANCH="${PUSH_BRANCH}+tests+${UHDM_TESTS_BRANCH_SPEC}"
           fi
           echo "PUSH_BRANCH=$PUSH_BRANCH" >> "$GITHUB_ENV"
-          CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository_owner }}/yosys-systemverilog-logs master | cut -d $'\t' -f1)
+          CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository }}-logs master | cut -d $'\t' -f1)
           COMMENT_MSG="https://github.com/${{ github.repository }}-logs/compare/$CURRENT_LOGS_SHA..$PUSH_BRANCH"
           echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
           PUSH_LOGS=false
