@@ -1,9 +1,8 @@
 name: 'main'
 run-name: >
   ${{ github.event_name == 'workflow_dispatch' &&
-        format('{0}{1}{2}',
+        format('{0}{1}',
           github.ref_name,
-          (github.event.inputs.plugins_branch && format( '; plugins: {0}', github.event.inputs.plugins_branch ) || ''),
           (github.event.inputs.uhdm_tests_branch && format( '; uhdm_tests: {0}', github.event.inputs.uhdm_tests_branch ) || '')
         )
       || ''
@@ -13,10 +12,6 @@ run-name: >
 on:
   workflow_dispatch:
     inputs:
-      plugins_branch:
-        description: 'yosys-f4pga-plugins branch or URL'
-        required: false
-        default: ''
       uhdm_tests_branch:
         description: 'UHDM-integration-tests branch or URL'
         required: false
@@ -27,7 +22,7 @@ on:
   pull_request:
 
 concurrency:
-  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{github.event.inputs.plugins_branch}}-${{github.event.inputs.uhdm_tests_branch}}
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{github.event.inputs.uhdm_tests_branch}}
   cancel-in-progress: true
 
 env:
@@ -40,7 +35,6 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     container: 'bitnami/git:2.40.1-debian-11-r4'
     env:
-      PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
       UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
 
     steps:
@@ -54,10 +48,6 @@ jobs:
 
           {
             emit-custom-branch-info-begin
-            emit-custom-branch-info-entry \
-                'yosys-f4pga-plugins' \
-                "$yosys_f4pga_plugins_default_gh_user" "$yosys_f4pga_plugins_default_gh_repo" \
-                "$PLUGINS_BRANCH_SPEC"
             emit-custom-branch-info-entry \
                 'UHDM-integration-tests' \
                 "$uhdm_tests_default_gh_user" "$uhdm_tests_default_gh_repo" \
@@ -94,13 +84,13 @@ jobs:
             cc: 'gcc'
             cxx: 'g++'
             apt-extra-deps: 'gcc g++'
-            build-binaries-args: ''
+            build-binaries-args: 'SYSTEMVERILOG_PLUGIN_ONLY:=0'
           - name: 'Build Binaries (ASAN)'
             artifact-name: 'binaries-asan'
             cc: 'clang-15'
             cxx: 'clang++-15'
             apt-extra-deps: 'clang-15'
-            build-binaries-args: 'ENABLE_ASAN:=1 SYSTEMVERILOG_PLUGIN_ONLY:=1'
+            build-binaries-args: 'ENABLE_ASAN:=1'
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
@@ -161,20 +151,8 @@ jobs:
           git submodule update --depth 1 --init --recursive \
               third_party/surelog \
               third_party/yosys \
-              yosys-f4pga-plugins \
+              third_party/yosys_f4pga_plugins \
               ;
-
-      - name: Override submodule revisions (if requested)
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.plugins_branch != ''}}
-        env:
-          PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
-        run: |
-          source ./.github/scripts/submodule-revision-override.inc.bash
-
-          override-submodule-if-requested \
-              'yosys-f4pga-plugins' \
-              "$yosys_f4pga_plugins_default_gh_user" "$yosys_f4pga_plugins_default_gh_repo" \
-              "$PLUGINS_BRANCH_SPEC"
 
       - name: Setup cache
         uses: actions/cache@v2
@@ -296,7 +274,6 @@ jobs:
       pull-requests: write
     with:
       uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
-      plugins_branch: ${{github.event.inputs.plugins_branch}}
     needs: build-binaries
 
   tests-formal-verification:

@@ -1,6 +1,4 @@
 # Defaults
-declare -r yosys_f4pga_plugins_default_gh_user=antmicro
-declare -r yosys_f4pga_plugins_default_gh_repo=yosys-f4pga-plugins
 declare -r uhdm_tests_default_gh_user=antmicro
 declare -r uhdm_tests_default_gh_repo=uhdm-integration
 
