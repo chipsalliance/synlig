@@ -21,7 +21,7 @@ REPO_DIR := ${this_mk.dir}
 INSTALL_DIR := ${this_mk.dir}/image
 
 ENABLE_ASAN := 0
-SYSTEMVERILOG_PLUGIN_ONLY := 0
+SYSTEMVERILOG_PLUGIN_ONLY := 1
 
 CC ?= cc
 CXX ?= c++
@@ -136,7 +136,7 @@ install-fakedlclose: build-fakedlclose | ${INSTALL_DIR}
 # Plugins
 #───────────────────────────────────────────────────────────────────────────────
 
-PLUGINS_SRC_DIR := ${REPO_DIR}/yosys-f4pga-plugins
+PLUGINS_SRC_DIR := ${REPO_DIR}/third_party/yosys_f4pga_plugins
 plugins_make_args := UHDM_INSTALL_DIR:=${INSTALL_DIR} CC:=${CC} CXX:=${CXX}
 
 ifeq ($(strip ${ENABLE_ASAN}),1)
@@ -149,29 +149,32 @@ plugins_build_deps :=
 plugins_install_deps :=
 endif
 
-ifeq ($(strip ${SYSTEMVERILOG_PLUGIN_ONLY}),1)
-plugins_make_clean_targets := clean_systemverilog clean_uhdm
-plugins_make_build_targets := systemverilog.so uhdm.so
-plugins_make_install_targets := install_systemverilog install_uhdm
+ifeq ($(strip ${SYSTEMVERILOG_PLUGIN_ONLY}),0)
+plugins := fasm xdc params sdc ql-iob design_introspection integrateinv ql-qlf dsp-ff uhdm
 else
-plugins_make_clean_targets := clean
-plugins_make_build_targets := plugins
-plugins_make_install_targets := install
+plugins := uhdm
 endif
+
+plugins_make_clean_targets := $(foreach plugin,$(plugins),clean_$(plugin))
+plugins_make_build_targets := $(foreach plugin,$(plugins),$(plugin).so)
+plugins_make_install_targets := $(foreach plugin,$(plugins),install_$(plugin))
 
 .PHONY: clean-plugins
 clean-plugins:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} -C ${PLUGINS_SRC_DIR} ${plugins_make_args} ${plugins_make_clean_targets}
+	${MAKE} -C frontends/systemverilog ${plugins_make_args} clean
 
 .PHONY: build-plugins
 build-plugins: install-yosys install-surelog ${plugins_build_deps}
 	cp -u ${YOSYS_SRC_DIR}/passes/pmgen/pmgen.py ${PLUGINS_SRC_DIR}/
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} -C ${PLUGINS_SRC_DIR} --no-print-directory ${plugins_make_args} ${plugins_make_build_targets}
+	${MAKE} -C frontends/systemverilog --no-print-directory ${plugins_make_args} build
 
 .PHONY: install-plugins
 install-plugins: build-plugins ${plugins_install_deps} | ${INSTALL_DIR}
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} -C ${PLUGINS_SRC_DIR} --no-print-directory ${plugins_make_args} ${plugins_make_install_targets}
+	${MAKE} -C frontends/systemverilog --no-print-directory ${plugins_make_args} install
 

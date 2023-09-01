@@ -73,7 +73,7 @@ You can build all required binaries using provided ``build_binaries.sh`` script.
    :name: build-binaries
 
    #Make sure submodules are inited and updated to the latest version
-   git submodule update --init --recursive third_party/{surelog,yosys} yosys-f4pga-plugins UHDM-integration-tests
+   git submodule update --init --recursive third_party/{surelog,yosys} UHDM-integration-tests
    ./build_binaries.sh
 
 To use yosys built from a submodule, make sure to either use absolute paths, or update the ``PATH`` variable before use.
@@ -119,7 +119,7 @@ As a simple example, we run Verilog code synthesis using the plugin.
 .. code-block:: bash
    :name: example-verilog
 
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog yosys-f4pga-plugins/systemverilog-plugin/tests/counter/counter.v"
+   yosys -p "plugin -i systemverilog" -p "read_systemverilog frontends/systemverilog/tests/counter/counter.v"
 
 In the second example, we need to first convert SystemVerilog file into UHDM using Surelog and then read it into Yosys.
 
@@ -147,9 +147,9 @@ To parse a multi-file with the ``read_systemverilog`` command, all files have to
 
     plugin -i systemverilog
     # Read each file separately
-    read_systemverilog -defer yosys-f4pga-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation.v
-    read_systemverilog -defer yosys-f4pga-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-buf.sv
-    read_systemverilog -defer yosys-f4pga-plugins/systemverilog-plugin/tests/separate-compilation/separate-compilation-pkg.sv
+    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation.v
+    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation-buf.sv
+    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation-pkg.sv
     # Finish reading files, elaborate the design
     read_systemverilog -link
     # Continue Yosys flow...
@@ -157,7 +157,7 @@ To parse a multi-file with the ``read_systemverilog`` command, all files have to
 
 The :code:`-defer` flag is experimental.
 If you encounter any problems with it, please compare the results with a single `read_systemverilog` command,
-check the `open issues <https://github.com/chipsalliance/yosys-f4pga-plugins/issues>`_, and open a new issue if needed.
+check the `open issues <https://github.com/chipsalliance/systemverilog-plugin/issues>`_, and open a new issue if needed.
 
 Testing in CI/Github Actions
 ----------------------------
@@ -170,12 +170,12 @@ Create a new branch and point submodules to revisions with your changes. Then pi
 To change a submodule:
 
 - Change submodule's remote to point to your fork: ``git submodule set-url -- SUBMODULE_PATH URL``. Use https URL, which is available on github when you click green "❬❭ Code ▾" button.
-  Example: ``git submodule set-url ./yosys-f4pga-plugins https://github.com/antmicro/yosys-f4pga-plugins.git``
+  Example: ``git submodule set-url ./UHDM-integration-tests https://github.com/antmicro/UHDM-integration-tests.git``
 - Change current directory to the submodule directory and switch revision to one you want to use. The URL you've added above has been assigned to remote "origin".
   Example: ``git fetch origin my-branch-name; git checkout FETCH_HEAD``
 - If you want to change more than one submodule, repeat two previous steps for all other submodules you want to change.
 - Change current directory to the top-level ``yosys-systemverilog`` working directory. Stage all performed changes, i.e. ``.gitmodules`` file and directories of every changed submodule. Commit changes.
-  Example: ``git add .gitmodules ./yosys-f4pga-plugins``.
+  Example: ``git add .gitmodules ./UHDM-integration-tests``.
 - Commit and push your changes to your ``yosys-systemverilog`` fork.
 
 Create a Pull Request
@@ -202,24 +202,22 @@ Start a workflow manually (using Github CLI)
 
    gh workflow run main --ref $YOUR_BRANCH_NAME
 
-Overriding plugins and UHDM-integration-tests submodule revisions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Overriding UHDM-integration-tests submodule revision
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This method can be used to test changes limited to `yosys-f4pga-plugins` or `UHDM-integration-tests` submodules.
+This method can be used to test changes limited to the `UHDM-integration-tests` submodule.
 
 - Perform steps from "Start a workflow manually (using Github Web UI)" above, but:
 
   - Select "master" (or any other branch with submodule revisions you would like to use in the CI) in the "Use workflow from" dropdown.
-  - In the same pop-up, under "yosys-f4pga-plugins branch or URL", type the name of the branch from https://github.com/antmicro/yosys-f4pga-plugins/, or a Github URL to a revision (in the form `https://github.com/<USER>/<REPO>/tree/<REVISION>`) from any repository. The typed value can skip `https://github.com` prefix (but not the `/`). The passed revision will be checked out in `yosys-f4pga-plugins` submodule.
-    "UHDM-integration-tests branch or URL" field works in the same way.
+  - In the same pop-up, under "UHDM-integration-tests branch or URL", type the name of the branch from https://github.com/antmicro/UHDM-integration-tests/, or a Github URL to a revision (in the form `https://github.com/<USER>/<REPO>/tree/<REVISION>`) from any repository. The typed value can skip `https://github.com` prefix (but not the `/`). The passed revision will be checked out in `UHDM-integration-tests` submodule.
 
 - Alternatively, use Github CLI:
 
   .. code-block:: bash
-     :name: gh-cli-start-workflow-with-plugins-branch
+     :name: gh-cli-start-workflow-with-tests-branch
 
      gh workflow run main --ref master \
-             -f plugins_branch=$PLUGINS_BRANCH_NAME_OR_URL \
              -f uhdm_tests_branch=$UHDM_TESTS_BRANCH_NAME_OR_URL
 
 Testing locally
@@ -251,7 +249,6 @@ For other dependencies please see ``.github/workflows/formal-verification.yml`` 
 
 Available Targets
 """""""""""""""""
-
 * ``help`` - Prints help.
 * ``list`` - Prints tests available in specified ``test_suite_dir``. Each test from the list is itself a valid target.
 * ``test`` - Runs all tests from ``test_suite_dir``.
@@ -259,6 +256,6 @@ Available Targets
 General & debugging tips
 ------------------------
 
-#. ``systemverilog-plugin`` needs to be compiled with the same version of the Surelog, that was used to generate UHDM file. When you are updating Surelog version, you also need to recompile yosys-f4pga-plugins.
+#. ``systemverilog-plugin`` needs to be compiled with the same version of the Surelog, that was used to generate UHDM file. When you are updating Surelog version, you also need to recompile the plugin.
 #. You can print the UHDM tree by adding ``-debug`` flag to ``read_uhdm`` or ``read_systemverilog``. This flag also prints the converted Yosys AST.
 #. Order of the files matters. Surelog requires that all definitions need to be already defined when file is parsed (if file ``B`` is defining type used in file ``A``, file ``B`` needs to be parsed before file ``A``).

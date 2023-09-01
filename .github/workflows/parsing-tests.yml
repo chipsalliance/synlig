@@ -8,11 +8,6 @@ on:
         required: false
         type: 'string'
         default: ''
-      plugins_branch:
-        description: 'yosys-f4pga-plugins branch or URL'
-        required: false
-        type: 'string'
-        default: ''
     secrets:
       SSH_DEPLOY_KEY:
         description: 'SSH key used to push logs'
@@ -283,9 +278,6 @@ jobs:
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           PUSH_BRANCH=$branch
-          if [[ ! -z "$PLUGINS_BRANCH_SPEC" ]]; then
-            PUSH_BRANCH="${PUSH_BRANCH}+plugins+${PLUGINS_BRANCH_SPEC}"
-          fi
           if [[ ! -z "$UHDM_TESTS_BRANCH_SPEC" ]]; then
             PUSH_BRANCH="${PUSH_BRANCH}+tests+${UHDM_TESTS_BRANCH_SPEC}"
           fi
@@ -295,13 +287,12 @@ jobs:
           echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
           PUSH_LOGS=false
           # currently pushing logs when submodules are overriten using url is not supported
-          if [[ ! "$PLUGINS_BRANCH_SPEC" =~ "https://" && ! "$UHDM_TESTS_BRANCH_SPEC" =~ "https://" ]]; then
+          if [[ ! "$UHDM_TESTS_BRANCH_SPEC" =~ "https://" ]]; then
             PUSH_LOGS=true
           fi
           echo "PUSH_LOGS=$PUSH_LOGS" >> "$GITHUB_ENV"
           echo "COMMENT_HEADER=Logs difference between main branch:" >> "$GITHUB_ENV"
         env:
-          PLUGINS_BRANCH_SPEC: ${{github.event.inputs.plugins_branch}}
           UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
 
       - name: Push logs
