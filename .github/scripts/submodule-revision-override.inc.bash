@@ -1,6 +1,6 @@
 # Defaults
-declare -r uhdm_tests_default_gh_user=antmicro
-declare -r uhdm_tests_default_gh_repo=uhdm-integration
+declare -r surelog_default_gh_user=chipsalliance
+declare -r surelog_default_gh_repo=Surelog
 
 
 # parse-custom-branch-spec USER_OUT_VAR_NAME REPO_OUT_VAR_NAME BRANCH_OUT_VAR_NAME BRANCH_SPEC

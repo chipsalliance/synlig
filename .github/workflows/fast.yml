@@ -1,0 +1,71 @@
+name: Fast tests
+
+on:
+  workflow_call:
+    inputs:
+      surelog_branch:
+        description: 'Surelog branch or URL'
+        required: false
+        type: string
+        default: ''
+
+env:
+  GHA_CUSTOM_LINE_PREFIX: "▌"
+
+jobs:
+  emit-workflow-info:
+    name: Emit Workflow Info
+    if: ${{ inputs.surelog_branch != '' }}
+    runs-on: [self-hosted, Linux, X64]
+    container: 'bitnami/git:2.40.1-debian-11-r4'
+    env:
+      SURELOG_BRANCH_SPEC: ${{inputs.surelog_branch}}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+          fetch-depth: 1
+
+      - run: |
+          source ./.github/scripts/submodule-revision-override.inc.bash
+          {
+            emit-custom-branch-info-begin
+            emit-custom-branch-info-entry \
+                'third_party/surelog' \
+                "$surelog_default_gh_user" "$surelog_default_gh_repo" \
+                "$SURELOG_BRANCH_SPEC"
+            emit-custom-branch-info-end
+          } > $GITHUB_STEP_SUMMARY
+
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yml
+    permissions:
+      pull-requests: write
+    with:
+      surelog_branch: ${{ inputs.surelog_branch }}
+
+  tests-parsing:
+    name: Parsing Tests
+    uses: ./.github/workflows/parsing-tests.yml
+    permissions:
+      pull-requests: write
+    with:
+      surelog_branch: ${{ inputs.surelog_branch }}
+    needs: build
+
+  tests-formal-verification:
+    name: Formal Verification Tests
+    uses: ./.github/workflows/formal-verification.yml
+    needs: build
+
+  tests-ibex:
+    name: Ibex Tests
+    uses: ./.github/workflows/ibex.yml
+    needs: build
+
+  tests-veer:
+    name: VeeR Tests
+    uses: ./.github/workflows/veer.yml
+    needs: build

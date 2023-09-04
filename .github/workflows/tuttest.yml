@@ -35,7 +35,7 @@ jobs:
         run: |
           tuttest README.rst dependencies | bash -
 
-      - name: Build Binaries
+      - name: Build binaries
         run: |
           tuttest README.rst build-binaries | bash -
 

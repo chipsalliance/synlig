@@ -1,4 +1,4 @@
-name: Large Designs Tests
+name: OpenTitan Tests
 
 on:
   workflow_call:
@@ -7,175 +7,12 @@ env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
 
 jobs:
-  ibex_synth:
-    name: Ibex (Vivado synthesis)
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    env:
-      DEBIAN_FRONTEND: noninteractive
-      GHA_EXTERNAL_DISK: "tools"
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-      - name: Install dependencies
-        run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libcairo2-dev \
-              libfl-dev \
-              libgoogle-perftools-dev \
-              libtinfo5 \
-              pkg-config \
-              python3 \
-              python3-dev \
-              python3-pip \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-      - name: Checkout submodules
-        run: |
-          git submodule update --depth 1 --init --recursive \
-              third_party/make_env \
-              third_party/ibex \
-              ;
-
-      - name: Download binaries
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries
-
-      # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries.tar
-
-      - name: Build & Test
-        run: |
-          source .github/scripts/common.sh
-          enable_vivado 2017.2
-          pip install virtualenv
-          make -C uhdm-tests uhdm/yosys/synth-ibex-build TEST=ibex \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: lowrisc_ibex_top_artya7_surelog_0.1.bit
-          path: uhdm-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
-
-      - name: Upload load graphs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: plots
-          path: |
-            **/plot_*.svg
-
-  ibex_synth_f4pga:
-    name: Ibex (F4PGA synthesis)
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    env:
-      DEBIAN_FRONTEND: noninteractive
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-      - name: Install dependencies
-        run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libgoogle-perftools-dev \
-              python3 \
-              python3-dev \
-              python3-pip \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              wget \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-      - name: Checkout submodules
-        run: |
-          git submodule update --depth 1 --init --recursive \
-              third_party/make_env \
-              third_party/ibex \
-              ;
-
-      - name: Download binaries
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries
-
-      # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries.tar
-
-      - name: Setup build environment
-        run: |
-          # Environment creation has to be run with one job to avoid race conditions.
-          # See: https://github.com/SymbiFlow/make-env/pull/40
-          # Even with the fix more jobs doesn't help with anything.
-          make -C ./uhdm-tests env TEST=ibex -j1
-
-      - name: Build & Test
-        run: |
-          make -C uhdm-tests uhdm/yosys/synth-ibex-f4pga TEST=ibex \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: top_artya7.bit
-          path: ./uhdm-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
-
-      - name: Upload load graphs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: plots
-          path: |
-            **/plot_*.svg
-
   opentitan_9d82960888_synth:
-    name: Opentitan 9d82960888 (synthesis)
+    name: OpenTitan 9d82960888 (synthesis)
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
-    if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
     env:
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
@@ -283,7 +120,7 @@ jobs:
             **/plot_*.svg
 
   opentitan_synth:
-    name: Opentitan (synthesis)
+    name: OpenTitan (synthesis)
     runs-on: [self-hosted, Linux, X64]
     # vivado is linked with libraries used in this version of ubuntu
     container: ubuntu:jammy
@@ -379,7 +216,7 @@ jobs:
             file-name: quick
             make-args:
       fail-fast: false
-    name: Opentitan parsing (${{ matrix.name }})
+    name: OpenTitan parsing (${{ matrix.name }})
     env:
       DEBIAN_FRONTEND: noninteractive
       GHA_EXTERNAL_DISK: "tools"
@@ -486,164 +323,6 @@ jobs:
             ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.log
             ./uhdm-tests/opentitan/opentitan_parsing_test/build/*.dot
             ./uhdm-tests/opentitan/opentitan_parsing_test/build/opentitan_deps.mk
-
-      - name: Upload load graphs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: plots
-          path: |
-            **/plot_*.svg
-
-  veer_synth:
-    name: VeeR-EH1 (synthesis)
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    env:
-      DEBIAN_FRONTEND: noninteractive
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-      - name: Install dependencies
-        run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              ninja-build \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-      - name: Checkout submodules
-        run: |
-          git submodule update --depth 1 --init --recursive \
-              third_party/veer \
-              ;
-
-      - name: Download binaries
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries
-
-      # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries.tar
-
-      - name: Build & Test
-        run: |
-          pip install virtualenv
-          make -C uhdm-tests uhdm/yosys/veer TEST=veer \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: chipsalliance.org_cores_VeeR_EH1_1.9.edif
-          path: uhdm-tests/build/chipsalliance.org_cores_VeeR_EH1_1.9/synth-vivado/chipsalliance.org_cores_VeeR_EH1_1.9.edif
-
-      - name: Upload load graphs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: plots
-          path: |
-            **/plot_*.svg
-
-  blackparrot_synth:
-    name: Black Parrot (synthesis)
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    env:
-      DEBIAN_FRONTEND: noninteractive
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-      - name: Install dependencies
-        run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              ninja-build \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-      - name: Checkout submodules
-        run: |
-          git submodule update --depth 1 --init --recursive \
-              third_party/black_parrot \
-              ;
-          git submodule update --depth 1 --init \
-              third_party/black_parrot_tools \
-              third_party/black_parrot_sdk \
-              ;
-
-      - name: Download binaries
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries
-
-      # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries.tar
-
-      - name: Build & Test
-        run: |
-          pip install virtualenv
-          make -C uhdm-tests uhdm/yosys/synth-blackparrot-build TEST=black-parrot \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: bp_e_bp_unicore_cfg.edif
-          path: uhdm-tests/build/bp_e_bp_unicore_cfg.edif
 
       - name: Upload load graphs
         if: ${{ always() }}

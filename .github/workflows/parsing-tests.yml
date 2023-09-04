@@ -2,10 +2,12 @@ name: Parsing Tests
 
 on:
   workflow_call:
-    secrets:
-      SSH_DEPLOY_KEY:
-        description: 'SSH key used to push logs'
-        required: true
+    inputs:
+      surelog_branch:
+        description: 'Surelog branch or URL'
+        required: false
+        type: string
+        default: ''
 
 
 env:
@@ -74,6 +76,17 @@ jobs:
           git submodule update --depth 1 --init --recursive \
               third_party/surelog \
               ;
+
+      - name: Override submodule revisions (if requested)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.surelog_branch != ''}}
+        env:
+          SURELOG_BRANCH_SPEC: ${{inputs.surelog_branch}}
+        run: |
+          source ./.github/scripts/submodule-revision-override.inc.bash
+          override-submodule-if-requested \
+              'third_party/surelog' \
+              "$surelog_default_gh_user" "$surelog_default_gh_repo" \
+              "$SURELOG_BRANCH_SPEC"
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -176,6 +189,17 @@ jobs:
         with:
           name: binaries-asan
 
+      - name: Override submodule revisions (if requested)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.surelog_branch != ''}}
+        env:
+          SURELOG_BRANCH_SPEC: ${{inputs.surelog_branch}}
+        run: |
+          source ./.github/scripts/submodule-revision-override.inc.bash
+          override-submodule-if-requested \
+              'third_party/surelog' \
+              "$surelog_default_gh_user" "$surelog_default_gh_repo" \
+              "$SURELOG_BRANCH_SPEC"
+
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
         run: tar -xf binaries-asan.tar
@@ -245,22 +269,16 @@ jobs:
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           PUSH_BRANCH=$branch
+          if [[ ! -z "$SURELOG_BRANCH_SPEC" ]]; then
+            PUSH_BRANCH="${PUSH_BRANCH}+tests+${SURELOG_BRANCH_SPEC}"
+          fi
           echo "PUSH_BRANCH=$PUSH_BRANCH" >> "$GITHUB_ENV"
           CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository }}-logs master | cut -d $'\t' -f1)
           COMMENT_MSG="https://github.com/${{ github.repository }}-logs/compare/$CURRENT_LOGS_SHA..$PUSH_BRANCH"
           echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
-          PUSH_LOGS=false
-          echo "PUSH_LOGS=$PUSH_LOGS" >> "$GITHUB_ENV"
           echo "COMMENT_HEADER=Logs difference between main branch:" >> "$GITHUB_ENV"
-
-      - name: Push logs
-        if: ${{ env.PUSH_LOGS == 'true' }}
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        run: |
-          # Do not push asan logs
-          rm -f logs/*/*asan*
-          .github/scripts/push_to_logs_repository.sh "$GITHUB_REPOSITORY_OWNER" "$PUSH_BRANCH" "$GITHUB_RUN_ID" logs tests
+          SURELOG_BRANCH_SPEC: ${{inputs.surelog_branch}}
 
       - name: Post comment
         if: ${{ github.event_name == 'pull_request' }}
@@ -296,12 +314,6 @@ jobs:
                 body: newComment
               });
             }
-
-      - name: Create summary
-        if: ${{ env.PUSH_LOGS == 'true' }}
-        run: |
-          echo "${{ env.COMMENT_HEADER }}" >> $GITHUB_STEP_SUMMARY
-          echo "${{ env.COMMENT_MSG }}" >> $GITHUB_STEP_SUMMARY
 
   generate-tests-summary:
     name: Summary Generation
