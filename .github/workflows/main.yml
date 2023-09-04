@@ -1,28 +1,16 @@
 name: 'main'
-run-name: >
-  ${{ github.event_name == 'workflow_dispatch' &&
-        format('{0}{1}',
-          github.ref_name,
-          (github.event.inputs.uhdm_tests_branch && format( '; uhdm_tests: {0}', github.event.inputs.uhdm_tests_branch ) || '')
-        )
-      || ''
-  }}
+run-name: ${{ github.event_name == 'workflow_dispatch' && github.ref_name || '' }}
 
 
 on:
   workflow_dispatch:
-    inputs:
-      uhdm_tests_branch:
-        description: 'UHDM-integration-tests branch or URL'
-        required: false
-        default: ''
   push:
     branches:
       - master
   pull_request:
 
 concurrency:
-  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{github.event.inputs.uhdm_tests_branch}}
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -34,26 +22,12 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: [self-hosted, Linux, X64]
     container: 'bitnami/git:2.40.1-debian-11-r4'
-    env:
-      UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
 
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: false
           fetch-depth: 1
-
-      - run: |
-          source ./.github/scripts/submodule-revision-override.inc.bash
-
-          {
-            emit-custom-branch-info-begin
-            emit-custom-branch-info-entry \
-                'UHDM-integration-tests' \
-                "$uhdm_tests_default_gh_user" "$uhdm_tests_default_gh_repo" \
-                "$UHDM_TESTS_BRANCH_SPEC"
-            emit-custom-branch-info-end
-          } > $GITHUB_STEP_SUMMARY
 
   style-check:
     name: Style check
@@ -272,15 +246,11 @@ jobs:
       SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
     permissions:
       pull-requests: write
-    with:
-      uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
     needs: build-binaries
 
   tests-formal-verification:
     name: Formal Verification Tests
     uses: ./.github/workflows/formal-verification.yml
-    with:
-      uhdm_tests_branch: ${{github.event.inputs.uhdm_tests_branch}}
     needs:
       - build-binaries
       - build-sv2v
@@ -401,3 +371,15 @@ jobs:
         run: yosys -p "plugin -i systemverilog"
       - name: Run Yosys and load (deprecated) UHDM plugin
         run: yosys -p "plugin -i uhdm"
+
+  # needed for test linting
+  upload-event-file:
+    name: Upload GHA event file
+    runs-on: ubuntu-latest
+    steps:
+      - run: cp "$GITHUB_EVENT_PATH" ./event.json
+      - name: Upload event file as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: event.json
+          path: event.json

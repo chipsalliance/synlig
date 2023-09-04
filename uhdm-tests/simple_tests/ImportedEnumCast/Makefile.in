@@ -1,0 +1,4 @@
+TOP_FILE := $(TEST_DIR)/top.sv
+TOP_MODULE := top
+# Work around Surelog bug, works only for this simple test
+#SURELOG_FLAGS := -elabuhdm

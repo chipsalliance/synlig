@@ -1,4 +1,4 @@
-curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
+curr_dir:=$(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 ###################
 ### BLACKPARROT ###
 ###################

@@ -1,0 +1,122 @@
+
+
+module top
+(
+  clk_i,
+  en_i,
+  data_i,
+  data_o
+);
+
+  input [15:0] data_i;
+  output [15:0] data_o;
+  input clk_i;
+  input en_i;
+
+  bsg_dff_en_bypass
+  wrapper
+  (
+    .data_i(data_i),
+    .data_o(data_o),
+    .clk_i(clk_i),
+    .en_i(en_i)
+  );
+
+
+endmodule
+
+
+
+module bsg_dff_en_width_p16_harden_p0_strength_p0
+(
+  clk_i,
+  data_i,
+  en_i,
+  data_o
+);
+
+  input [15:0] data_i;
+  output [15:0] data_o;
+  input clk_i;
+  input en_i;
+  wire [15:0] data_o;
+  reg data_o_15_sv2v_reg,data_o_14_sv2v_reg,data_o_13_sv2v_reg,data_o_12_sv2v_reg,
+  data_o_11_sv2v_reg,data_o_10_sv2v_reg,data_o_9_sv2v_reg,data_o_8_sv2v_reg,
+  data_o_7_sv2v_reg,data_o_6_sv2v_reg,data_o_5_sv2v_reg,data_o_4_sv2v_reg,data_o_3_sv2v_reg,
+  data_o_2_sv2v_reg,data_o_1_sv2v_reg,data_o_0_sv2v_reg;
+  assign data_o[15] = data_o_15_sv2v_reg;
+  assign data_o[14] = data_o_14_sv2v_reg;
+  assign data_o[13] = data_o_13_sv2v_reg;
+  assign data_o[12] = data_o_12_sv2v_reg;
+  assign data_o[11] = data_o_11_sv2v_reg;
+  assign data_o[10] = data_o_10_sv2v_reg;
+  assign data_o[9] = data_o_9_sv2v_reg;
+  assign data_o[8] = data_o_8_sv2v_reg;
+  assign data_o[7] = data_o_7_sv2v_reg;
+  assign data_o[6] = data_o_6_sv2v_reg;
+  assign data_o[5] = data_o_5_sv2v_reg;
+  assign data_o[4] = data_o_4_sv2v_reg;
+  assign data_o[3] = data_o_3_sv2v_reg;
+  assign data_o[2] = data_o_2_sv2v_reg;
+  assign data_o[1] = data_o_1_sv2v_reg;
+  assign data_o[0] = data_o_0_sv2v_reg;
+
+  always @(posedge clk_i) begin
+    if(en_i) begin
+      data_o_15_sv2v_reg <= data_i[15];
+      data_o_14_sv2v_reg <= data_i[14];
+      data_o_13_sv2v_reg <= data_i[13];
+      data_o_12_sv2v_reg <= data_i[12];
+      data_o_11_sv2v_reg <= data_i[11];
+      data_o_10_sv2v_reg <= data_i[10];
+      data_o_9_sv2v_reg <= data_i[9];
+      data_o_8_sv2v_reg <= data_i[8];
+      data_o_7_sv2v_reg <= data_i[7];
+      data_o_6_sv2v_reg <= data_i[6];
+      data_o_5_sv2v_reg <= data_i[5];
+      data_o_4_sv2v_reg <= data_i[4];
+      data_o_3_sv2v_reg <= data_i[3];
+      data_o_2_sv2v_reg <= data_i[2];
+      data_o_1_sv2v_reg <= data_i[1];
+      data_o_0_sv2v_reg <= data_i[0];
+    end 
+  end
+
+
+endmodule
+
+
+
+module bsg_dff_en_bypass
+(
+  clk_i,
+  en_i,
+  data_i,
+  data_o
+);
+
+  input [15:0] data_i;
+  output [15:0] data_o;
+  input clk_i;
+  input en_i;
+  wire [15:0] data_o,data_r;
+  wire N0,N1,N2,N3;
+
+  bsg_dff_en_width_p16_harden_p0_strength_p0
+  dff
+  (
+    .clk_i(clk_i),
+    .data_i(data_i),
+    .en_i(en_i),
+    .data_o(data_r)
+  );
+
+  assign data_o = (N0)? data_i : 
+                  (N1)? data_r : 1'b0;
+  assign N0 = N3;
+  assign N1 = N2;
+  assign N2 = ~en_i;
+  assign N3 = en_i;
+
+endmodule
+

@@ -73,7 +73,7 @@ You can build all required binaries using provided ``build_binaries.sh`` script.
    :name: build-binaries
 
    #Make sure submodules are inited and updated to the latest version
-   git submodule update --init --recursive third_party/{surelog,yosys} UHDM-integration-tests
+   git submodule update --init --recursive third_party/{surelog,yosys}
    ./build_binaries.sh
 
 To use yosys built from a submodule, make sure to either use absolute paths, or update the ``PATH`` variable before use.
@@ -104,7 +104,7 @@ In order to use the systemverilog plugin in Yosys, you need to first load it ins
 After it's loaded, Yosys is extended with 2 additional commands:
 
 * ``read_systemverilog [options] [filenames]`` - reads SystemVerilog files directly in Yosys. It executes Surelog with provided filenames and converts them (in memory) into UHDM file. This UHDM file is converted into Yosys AST. Note: arguments to this command should be exactly the same as for Surelog binary.
-* ``read_uhdm  [options] [filename]`` - reads UHDM file generated using Surelog and converts it into Yosys AST (more information about conversion can be found: `here <https://github.com/chipsalliance/UHDM-integration-tests#uhdm-yosys>`_).
+* ``read_uhdm  [options] [filename]`` - reads UHDM file generated using Surelog and converts it into Yosys AST.
 
 Generating UHDM file
 ^^^^^^^^^^^^^^^^^^^^
@@ -126,7 +126,7 @@ In the second example, we need to first convert SystemVerilog file into UHDM usi
 .. code-block:: bash
    :name: example-uhdm-ver1
 
-   surelog -parse UHDM-integration-tests/tests/onenet/top.sv
+   surelog -parse uhdm-tests/simple_tests/onenet/top.sv
    yosys -p "plugin -i systemverilog" -p "read_uhdm slpp_all/surelog.uhdm"
 
 This is equivalent to:
@@ -134,7 +134,7 @@ This is equivalent to:
 .. code-block:: bash
    :name: example-uhdm-ver2
 
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog UHDM-integration-tests/tests/onenet/top.sv"
+   yosys -p "plugin -i systemverilog" -p "read_systemverilog uhdm-tests/simple_tests/onenet/top.sv"
 
 After loading it into Yosys, you can process it further using regular Yosys commands.
 
@@ -158,67 +158,6 @@ To parse a multi-file with the ``read_systemverilog`` command, all files have to
 The :code:`-defer` flag is experimental.
 If you encounter any problems with it, please compare the results with a single `read_systemverilog` command,
 check the `open issues <https://github.com/chipsalliance/systemverilog-plugin/issues>`_, and open a new issue if needed.
-
-Testing in CI/Github Actions
-----------------------------
-
-Using dedicated branch
-^^^^^^^^^^^^^^^^^^^^^^
-
-Create a new branch and point submodules to revisions with your changes. Then pick one of the following methods.
-
-To change a submodule:
-
-- Change submodule's remote to point to your fork: ``git submodule set-url -- SUBMODULE_PATH URL``. Use https URL, which is available on github when you click green "❬❭ Code ▾" button.
-  Example: ``git submodule set-url ./UHDM-integration-tests https://github.com/antmicro/UHDM-integration-tests.git``
-- Change current directory to the submodule directory and switch revision to one you want to use. The URL you've added above has been assigned to remote "origin".
-  Example: ``git fetch origin my-branch-name; git checkout FETCH_HEAD``
-- If you want to change more than one submodule, repeat two previous steps for all other submodules you want to change.
-- Change current directory to the top-level ``yosys-systemverilog`` working directory. Stage all performed changes, i.e. ``.gitmodules`` file and directories of every changed submodule. Commit changes.
-  Example: ``git add .gitmodules ./UHDM-integration-tests``.
-- Commit and push your changes to your ``yosys-systemverilog`` fork.
-
-Create a Pull Request
-"""""""""""""""""""""
-
-Just that. Create a (Draft/WIP) Pull Request using your new branch. Mention in the description what are you testing, just to let everyone know what this PR is for. E.g. paste a link to the main PR that you are testing.
-
-Start a workflow manually (using Github Web UI)
-"""""""""""""""""""""""""""""""""""""""""""""""
-
-In Github Web UI, on the repository page:
-
-- Open the "Actions" tab.
-- Select "main" on the Actions list on the left.
-- At the top of the workflows list click the "Run workflow" button.
-- Select your branch in the "Use workflow from" dropdown.
-- Click the "Run workflow" button.
-
-Start a workflow manually (using Github CLI)
-""""""""""""""""""""""""""""""""""""""""""""
-
-.. code-block:: bash
-   :name: gh-cli-start-workflow
-
-   gh workflow run main --ref $YOUR_BRANCH_NAME
-
-Overriding UHDM-integration-tests submodule revision
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This method can be used to test changes limited to the `UHDM-integration-tests` submodule.
-
-- Perform steps from "Start a workflow manually (using Github Web UI)" above, but:
-
-  - Select "master" (or any other branch with submodule revisions you would like to use in the CI) in the "Use workflow from" dropdown.
-  - In the same pop-up, under "UHDM-integration-tests branch or URL", type the name of the branch from https://github.com/antmicro/UHDM-integration-tests/, or a Github URL to a revision (in the form `https://github.com/<USER>/<REPO>/tree/<REVISION>`) from any repository. The typed value can skip `https://github.com` prefix (but not the `/`). The passed revision will be checked out in `UHDM-integration-tests` submodule.
-
-- Alternatively, use Github CLI:
-
-  .. code-block:: bash
-     :name: gh-cli-start-workflow-with-tests-branch
-
-     gh workflow run main --ref master \
-             -f uhdm_tests_branch=$UHDM_TESTS_BRANCH_NAME_OR_URL
 
 Testing locally
 ---------------

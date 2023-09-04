@@ -1,0 +1,14 @@
+name: trigger-lint
+on:
+  pull_request:
+
+jobs:
+  upload_event_file:
+    runs-on: ubuntu-latest
+    steps:
+      - run: cp "$GITHUB_EVENT_PATH" ./event.json
+      - name: Upload event file as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: event.json
+          path: event.json

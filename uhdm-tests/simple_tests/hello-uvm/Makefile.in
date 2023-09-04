@@ -1,0 +1,2 @@
+TOP_FILE := $(root_dir)/tests/hello-uvm/top.sv
+TOP_MODULE := top

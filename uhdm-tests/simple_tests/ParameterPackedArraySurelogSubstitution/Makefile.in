@@ -1,0 +1,4 @@
+TOP_FILE := $(TEST_DIR)/top.sv
+TOP_MODULE := top
+
+# Surelog flag "--disable-feature=parametersubstitution" is not used purposely

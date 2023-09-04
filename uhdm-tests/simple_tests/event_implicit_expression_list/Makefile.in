@@ -1,0 +1,2 @@
+TOP_FILE := $(TEST_DIR)/event_implicit.sv
+TOP_MODULE := top

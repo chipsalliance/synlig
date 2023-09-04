@@ -54,7 +54,6 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              UHDM-integration-tests \
               third_party/make_env \
               third_party/ibex \
               ;
@@ -73,15 +72,13 @@ jobs:
           source .github/scripts/common.sh
           enable_vivado 2017.2
           pip install virtualenv
-          ./UHDM-integration-tests/.github/ci.sh
-        env:
-          TARGET: uhdm/yosys/synth-ibex-build
-          TEST_CASE: tests/ibex
+          make -C uhdm-tests uhdm/yosys/synth-ibex-build TEST=ibex \
+              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 
       - uses: actions/upload-artifact@v2
         with:
           name: lowrisc_ibex_top_artya7_surelog_0.1.bit
-          path: UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
+          path: uhdm-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
 
       - name: Upload load graphs
         if: ${{ always() }}
@@ -97,7 +94,6 @@ jobs:
     container: ubuntu:jammy
     env:
       DEBIAN_FRONTEND: noninteractive
-      TEST_CASE: tests/ibex
 
     steps:
       - uses: actions/checkout@v3
@@ -136,7 +132,6 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              UHDM-integration-tests \
               third_party/make_env \
               third_party/ibex \
               ;
@@ -155,17 +150,17 @@ jobs:
           # Environment creation has to be run with one job to avoid race conditions.
           # See: https://github.com/SymbiFlow/make-env/pull/40
           # Even with the fix more jobs doesn't help with anything.
-          make -C ./UHDM-integration-tests -j1 TEST=${TEST_CASE} env
+          make -C ./uhdm-tests env TEST=ibex -j1
 
       - name: Build & Test
-        env:
-          TARGET: uhdm/yosys/synth-ibex-symbiflow
-        run: ./UHDM-integration-tests/.github/ci.sh
+        run: |
+          make -C uhdm-tests uhdm/yosys/synth-ibex-f4pga TEST=ibex \
+              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 
       - uses: actions/upload-artifact@v2
         with:
           name: top_artya7.bit
-          path: ./UHDM-integration-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
+          path: ./uhdm-tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
 
       - name: Upload load graphs
         if: ${{ always() }}
@@ -226,7 +221,6 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              UHDM-integration-tests \
               third_party/opentitan_9d82960888 \
               ;
 
@@ -244,14 +238,12 @@ jobs:
           source .github/scripts/common.sh
           enable_vivado 2017.2
           pip install virtualenv
-          ./UHDM-integration-tests/.github/ci.sh
-        env:
-          TARGET: uhdm/yosys/synth-opentitan-build
-          TEST_CASE: tests/opentitan
+          make -C uhdm-tests uhdm/yosys/synth-opentitan-build TEST=opentitan \
+              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 
       - name: Generate AST
         run: |
-          FILE_NAME=UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/yosys.log
+          FILE_NAME=uhdm-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/yosys.log
           start=$(grep -n "AST_MODULE" $FILE_NAME |cut -f1 -d:|head -n 1)
           end=$(grep -n "AST_" $FILE_NAME |cut -f1 -d:|tail -n 1)
 
@@ -280,7 +272,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
-          path: UHDM-integration-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
+          path: uhdm-tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
 
       - name: Upload load graphs
         if: ${{ always() }}
@@ -340,7 +332,6 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              UHDM-integration-tests \
               third_party/opentitan \
               ;
 
@@ -358,15 +349,13 @@ jobs:
           source .github/scripts/common.sh
           enable_vivado 2017.2
           pip install virtualenv
-          ./UHDM-integration-tests/.github/ci.sh
-        env:
-          TARGET: uhdm/yosys/synth-opentitan-build-tiny
-          TEST_CASE: tests/opentitan
+          make -C uhdm-tests uhdm/yosys/synth-opentitan-build-tiny TEST=opentitan \
+              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 
       - uses: actions/upload-artifact@v2
         with:
           name: lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
-          path: UHDM-integration-tests/build/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1/synth-yosys/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
+          path: uhdm-tests/build/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1/synth-yosys/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
 
       - name: Upload load graphs
         if: ${{ always() }}
@@ -444,7 +433,6 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              UHDM-integration-tests \
               third_party/opentitan \
               ;
 
@@ -553,7 +541,6 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              UHDM-integration-tests \
               third_party/veer \
               ;
 
@@ -569,15 +556,13 @@ jobs:
       - name: Build & Test
         run: |
           pip install virtualenv
-          ./UHDM-integration-tests/.github/ci.sh
-        env:
-          TARGET: uhdm/yosys/veer
-          TEST_CASE: tests/veer
+          make -C uhdm-tests uhdm/yosys/veer TEST=veer \
+              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 
       - uses: actions/upload-artifact@v2
         with:
           name: chipsalliance.org_cores_VeeR_EH1_1.9.edif
-          path: UHDM-integration-tests/build/chipsalliance.org_cores_VeeR_EH1_1.9/synth-vivado/chipsalliance.org_cores_VeeR_EH1_1.9.edif
+          path: uhdm-tests/build/chipsalliance.org_cores_VeeR_EH1_1.9/synth-vivado/chipsalliance.org_cores_VeeR_EH1_1.9.edif
 
       - name: Upload load graphs
         if: ${{ always() }}
@@ -633,7 +618,6 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              UHDM-integration-tests \
               third_party/black_parrot \
               ;
           git submodule update --depth 1 --init \
@@ -653,15 +637,13 @@ jobs:
       - name: Build & Test
         run: |
           pip install virtualenv
-          ./UHDM-integration-tests/.github/ci.sh
-        env:
-          TARGET: uhdm/yosys/synth-blackparrot-build
-          TEST_CASE: tests/black-parrot
+          make -C uhdm-tests uhdm/yosys/synth-blackparrot-build TEST=black-parrot \
+              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 
       - uses: actions/upload-artifact@v2
         with:
           name: bp_e_bp_unicore_cfg.edif
-          path: UHDM-integration-tests/build/bp_e_bp_unicore_cfg.edif
+          path: uhdm-tests/build/bp_e_bp_unicore_cfg.edif
 
       - name: Upload load graphs
         if: ${{ always() }}

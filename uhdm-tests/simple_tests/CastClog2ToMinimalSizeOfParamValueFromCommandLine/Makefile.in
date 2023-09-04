@@ -1,0 +1,5 @@
+TOP_FILE := $(TEST_DIR)/top.sv
+TOP_MODULE := top
+
+SURELOG_FLAGS := -PX=5
+VERILATOR_FLAGS := -GX=5

@@ -1,0 +1,13 @@
+TOP_FILE := \
+    $(TEST_DIR)/src/serv_1.1.0/rtl/serv_ctrl.v \
+    $(TEST_DIR)/src/serv_1.1.0/rtl/serv_top.v \
+    $(TEST_DIR)/src/serv_1.1.0/rtl/serv_rf_top.v \
+    $(TEST_DIR)/src/servant_1.1.0/servant/servant.v \
+    $(TEST_DIR)/src/servant_1.1.0/bench/servant_sim.v
+
+TOP_MODULE := servant_sim
+MAIN_FILE := $(TEST_DIR)/src/servant_1.1.0/bench/servant_tb.cpp
+
+VERILATOR_FLAGS := $(TEST_DIR)/src/serv_1.1.0/data/verilator_waiver.vlt --trace
+VERILATED_FLAGS := +timeout=5000 +vcd=build/dump.vcd
+SURELOG_FLAGS := -Pmemsize=32768

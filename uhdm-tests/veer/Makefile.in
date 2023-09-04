@@ -1,4 +1,4 @@
-curr_dir:=$(dir $(lastword $(MAKEFILE_LIST)))
+curr_dir:=$(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 DESIGN_DIR = ${root_dir}/../third_party/veer
 VENV = ${root_dir}/venv-veer
 TOP := top_earlgrey_nexysvideo
