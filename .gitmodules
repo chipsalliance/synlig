@@ -22,9 +22,6 @@
 [submodule "uhdm-tests/opentitan/opentitan-9d82960888"]
 	path = third_party/opentitan_9d82960888
 	url = https://github.com/lowRISC/opentitan.git
-[submodule "uhdm-tests/swerv/Cores-SweRV"]
-	path = third_party/veer
-	url = https://github.com/chipsalliance/Cores-SweRV.git
 [submodule "uhdm-tests/opentitan/opentitan"]
 	path = third_party/opentitan
 	url = https://github.com/antmicro/opentitan.git
