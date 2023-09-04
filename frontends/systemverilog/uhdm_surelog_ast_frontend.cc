@@ -17,10 +17,10 @@
  *
  */
 
-#include "UhdmAst.h"
+#include "uhdm_ast.h"
 #include "frontends/ast/ast.h"
 #include "kernel/yosys.h"
-#include "uhdmcommonfrontend.h"
+#include "uhdm_common_frontend.h"
 
 #if defined(_MSC_VER)
 #include <direct.h>

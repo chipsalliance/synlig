@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 
-#include "UhdmAst.h"
+#include "uhdm_ast.h"
 #include "frontends/ast/ast.h"
 #include "libs/sha1/sha1.h"
 
@@ -20,8 +20,8 @@
 #include <uhdm/uhdm.h>
 #include <uhdm/vpi_user.h>
 
-#include "third_party/yosys/const2ast.h"
-#include "third_party/yosys/simplify.h"
+#include "const2ast.h"
+#include "simplify.h"
 
 YOSYS_NAMESPACE_BEGIN
 namespace VERILOG_FRONTEND

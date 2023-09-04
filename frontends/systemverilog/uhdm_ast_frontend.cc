@@ -19,7 +19,7 @@
 
 #include "uhdm/uhdm-version.h" // UHDM_VERSION define
 #include "uhdm/vpi_visitor.h"  // visit_object
-#include "uhdmcommonfrontend.h"
+#include "uhdm_common_frontend.h"
 
 namespace systemverilog_plugin
 {
