@@ -1,0 +1,10 @@
+# We test here if packages parsed by uhdm can work
+# with modules parsed by original parser.
+#
+# Original verilator frontend changes object name
+# when there is "__" in it.
+
+TOP_FILE := $(TEST_DIR)/my_pkg.sv
+TOP_MODULE := top
+
+VERILATOR_FLAGS := $(TEST_DIR)/top.sv

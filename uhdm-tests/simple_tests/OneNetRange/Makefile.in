@@ -1,0 +1,2 @@
+TOP_FILE := $(root_dir)/../third_party/surelog/tests/OneNetRange/dut.v
+TOP_MODULE := dut

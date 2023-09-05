@@ -1,5 +1,5 @@
 this_makefile := $(lastword $(MAKEFILE_LIST))
-curr_dir := $(dir $(this_makefile))
+curr_dir := $(abspath $(dir $(this_makefile)))
 IBEX = ${root_dir}/../third_party/ibex
 
 #############################
@@ -42,23 +42,23 @@ define download_and_unpack_archive_from_url_fetched_from_url
 	@echo
 endef
 
-${root_dir}/env/symbiflow:
+${root_dir}/env/f4pga:
 	mkdir -p $@
 
 .PHONY: download-f4pga
-download-f4pga: | ${root_dir}/env/symbiflow
+download-f4pga: | ${root_dir}/env/f4pga
 	$(call download_and_unpack_archive_from_url_fetched_from_url, \
 		'https://github.com/f4pga/f4pga-arch-defs/releases/download/latest/symbiflow-install-xc7-latest', \
-		'${root_dir}/env/symbiflow/symbiflow-install-xc7-latest.url', \
-		'${root_dir}/env/symbiflow')
+		'${root_dir}/env/f4pga/symbiflow-install-xc7-latest.url', \
+		'${root_dir}/env/f4pga')
 
 	# Do not install yosys nor yosys-f4pga-plugins from conda, we'll use our own builds.
-	sed -ie '/yosys/ d' ${root_dir}/env/symbiflow/xc7_env/xc7_environment.yml
+	sed -ie '/yosys/ d' ${root_dir}/env/f4pga/xc7_env/xc7_environment.yml
 
 	$(call download_and_unpack_archive_from_url_fetched_from_url, \
 		'https://github.com/f4pga/f4pga-arch-defs/releases/download/latest/symbiflow-xc7a50t_test-latest', \
-		'${root_dir}/env/symbiflow/symbiflow-xc7a50t_test-latest.url', \
-		'${root_dir}/env/symbiflow')
+		'${root_dir}/env/f4pga/symbiflow-xc7a50t_test-latest.url', \
+		'${root_dir}/env/f4pga')
 
 TOP_DIR := ${root_dir}
 REQUIREMENTS_FILE := ${curr_dir}/f4pga_requirements.txt
@@ -71,23 +71,23 @@ ${REQUIREMENTS_FILE}: ${IBEX}/.requirementspatch
 
 # Install conda packages from f4pga/xc7 environment and set environment variables.
 env:: download-f4pga
-	${IN_CONDA_ENV} conda env update --name ${CONDA_ENV_NAME} --file ${root_dir}/env/symbiflow/xc7_env/xc7_environment.yml </dev/null | cat
+	${IN_CONDA_ENV} conda env update --name ${CONDA_ENV_NAME} --file ${root_dir}/env/f4pga/xc7_env/xc7_environment.yml </dev/null | cat
 	# Update edalize installed by Ibex to our own fork.
 	${IN_CONDA_ENV} pip install git+https://github.com/antmicro/edalize@symbiflow-read_verilog_with_uhdm </dev/null | cat
 	${IN_CONDA_ENV} conda env config vars set \
-		F4PGA_INSTALL_DIR=${root_dir}/env/symbiflow \
-		F4PGA_SHARE_DIR=${root_dir}/env/symbiflow/share/f4pga </dev/null | cat
+		F4PGA_INSTALL_DIR=${root_dir}/env/f4pga \
+		F4PGA_SHARE_DIR=${root_dir}/env/f4pga/share/f4pga </dev/null | cat
 
 # Ibex build
 
 ${IBEX}/.requirementspatch:
 	cd ${IBEX} && git apply ${curr_dir}/dont_install_riscv_dv_requirements.patch && touch $@
 
-${IBEX}/.gitsymbiflowpatch: ${IBEX}/.gitpatch
+${IBEX}/.gitf4pgapatch: ${IBEX}/.gitpatch
 	cd ${IBEX} && git apply ${curr_dir}/prim_generic_clock_gating.patch
 	cd ${IBEX} && git apply ${curr_dir}/pins_artya7_xdc.patch && touch $@
 
-uhdm/yosys/synth-ibex-symbiflow: clean-build ${IBEX}/.gitsymbiflowpatch
+uhdm/yosys/synth-ibex-f4pga: clean-build ${IBEX}/.gitf4pgapatch
 	# We're using ${IN_CONDA_ENV} to enter the conda environment instead of using virtualenv.
 	(export PATH=${root_dir}/../image/bin:${PATH} \
 		&& ${IN_CONDA_ENV} fusesoc --verbose --cores-root=${IBEX} \

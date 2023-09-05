@@ -29,7 +29,7 @@ graph TD;
     D-->|"FAIL"|X;
 ```
 
-A table below presents example for [formal/formal_results.py](formal_results.py) script generated on all test from [UHDM-integration-tests](https://github.com/chipsalliance/UHDM-integration-tests). It is generated in markdown style which is parsed in CI summary:
+A table below presents example for [formal/formal_results.py](formal_results.py) script generated on all simple tests. It is generated in markdown style which is parsed in CI summary:
 ```
 # Synthesis results
 | Result   | Yosys | sv2v + Yosys |                   Description                    |

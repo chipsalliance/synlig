@@ -1,0 +1,6 @@
+TOP_FILE := $(TEST_DIR)/top.sv
+TOP_MODULE := top
+
+# The loop from the test is infinite,
+# but it is in uncalled task
+VERILATOR_FLAGS := -Wno-INFINITELOOP

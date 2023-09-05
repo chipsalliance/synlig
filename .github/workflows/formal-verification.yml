@@ -2,12 +2,6 @@ name: Formal Verification Tests
 
 on:
   workflow_call:
-    inputs:
-      uhdm_tests_branch:
-        description: 'UHDM-integration-tests branch or URL'
-        required: false
-        type: 'string'
-        default: ''
 
 env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
@@ -19,8 +13,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: UHDM-integration-tests
-            test-suite: UHDM-integration-tests/tests
+          - name: simple
+            test-suite: uhdm-tests/simple_tests
           - name: sv2v
             test-suite: third_party/sv2v/test
           - name: yosys
@@ -73,20 +67,7 @@ jobs:
           git submodule update --depth 1 --init --recursive \
               third_party/yosys \
               third_party/sv2v \
-              UHDM-integration-tests \
               ;
-
-      - name: Override submodule revisions (if requested)
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.uhdm_tests_branch != ''}}
-        env:
-          UHDM_TESTS_BRANCH_SPEC: ${{github.event.inputs.uhdm_tests_branch}}
-        run: |
-          source ./.github/scripts/submodule-revision-override.inc.bash
-
-          override-submodule-if-requested \
-              'UHDM-integration-tests' \
-              "$uhdm_tests_default_gh_user" "$uhdm_tests_default_gh_repo" \
-              "$UHDM_TESTS_BRANCH_SPEC"
 
       - name: Download binaries
         uses: actions/download-artifact@v2
