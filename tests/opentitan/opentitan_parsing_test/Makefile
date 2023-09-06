@@ -25,9 +25,9 @@ sh_quote_list = $(foreach _v,$(strip ${1}),${chr.quot}$(subst ${chr.quot},${chr.
 # General paths and constants
 PATCH_DIR := $(abspath ${this_mk.dir}/..)
 BUILD_DIR := ${this_mk.dir}/build
-OPENTITAN_DEPS_MK_FILE := ${BUILD_DIR}/opentitan-deps.mk
-PASSLIST_FILE := ${this_mk.dir}/ot-cores-passlist.txt
-SKIPLIST_FILE := ${this_mk.dir}/ot-cores-skiplist.txt
+OPENTITAN_DEPS_MK_FILE := ${BUILD_DIR}/opentitan_deps.mk
+PASSLIST_FILE := ${this_mk.dir}/ot_cores_passlist.txt
+SKIPLIST_FILE := ${this_mk.dir}/ot_cores_skiplist.txt
 export OPENTITAN_DIR := $(abspath ${this_mk.dir}/../../../third_party/opentitan)
 
 # -1 == no minimum
@@ -44,8 +44,8 @@ DESIGN_CORE_HJSON := ${DESIGN_CORE_HW_DIR}/data/top_custom_tiny.hjson
 # Derived values
 DESIGN_CORE := $(subst :,.,${DESIGN_CORE_NAME})
 FUSESOC_DEPS_DOT := ${OPENTITAN_DIR}/$(subst :,_,${DESIGN_CORE_NAME}).dot
-DEPS_DOT := ${BUILD_DIR}/opentitan-deps.dot
-export VENV_DIR := ${BUILD_DIR}/opentitan-venv
+DEPS_DOT := ${BUILD_DIR}/opentitan_deps.dot
+export VENV_DIR := ${BUILD_DIR}/opentitan_venv
 
 #───────────────────────────────────────────────────────────────────────────────
 # Cores lists
@@ -147,8 +147,8 @@ opentitan_patch := ${OPENTITAN_DIR}/.gitpatch
 ${opentitan_patch} :
 	cd ${OPENTITAN_DIR}
 	orig_rev=$$(git rev-parse HEAD)
-	git apply ${PATCH_DIR}/0001-Add-core-files-for-processing-Earlgrey-in-Yosys.patch
-	git apply ${PATCH_DIR}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch
+	git apply ${PATCH_DIR}/0001_Add_core_files_for_processing_Earlgrey_in_Yosys.patch
+	git apply ${PATCH_DIR}/0002_use_Edalize_fork_for_SystemVerilog_in_Yosys.patch
 	printf '%s\n' "$$orig_rev" > $@
 
 .PHONY: clean-opentitan-patch
@@ -176,7 +176,7 @@ ${VENV_DIR} : | ${BUILD_DIR}
 		git clone --depth 1 https://github.com/lowRISC/fusesoc.git -b ot-0.3
 		(
 			cd fusesoc
-			git apply ${PATCH_DIR}/0001-allow-processing-cores-without-top-module.patch
+			git apply ${PATCH_DIR}/0001_allow_processing_cores_without_top_module.patch
 			pip install --upgrade --force-reinstall --no-dependencies .
 		)
 	)

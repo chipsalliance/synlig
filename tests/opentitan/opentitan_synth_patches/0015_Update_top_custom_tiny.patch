@@ -29,7 +29,7 @@ index 47ef3473b..f6542798e 100644
    PRIM_DEFAULT_IMPL:
 @@ -83,11 +83,11 @@ targets:
        - AST_BYPASS_CLK=true
- 
+
    synth:
 -    default_tool: vivado
 +    default_tool: yosys
@@ -53,9 +53,9 @@ index 47ef3473b..f6542798e 100644
 +        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
 +        surelog_options: ['-DSYNTHESIS']
 +        # part: "xc7a200tsbg484-1"
- 
+
    lint:
      <<: *default_target
--- 
+--
 2.39.0
 

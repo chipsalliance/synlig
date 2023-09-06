@@ -9,7 +9,7 @@ cd $REPO_DIR
 
 files_to_sort_check=(
     tests/formal/passlist.txt
-    tests/opentitan/opentitan_parsing_test/ot-cores-passlist.txt
+    tests/opentitan/opentitan_parsing_test/ot_cores_passlist.txt
 )
 
 for f in "${files_to_sort_check[@]}"; do
