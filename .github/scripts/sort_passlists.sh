@@ -8,8 +8,8 @@ declare -r REPO_DIR=$SELF_DIR/../..
 cd $REPO_DIR
 
 files_to_sort_check=(
-    formal/passlist.txt
-    uhdm-tests/opentitan/opentitan_parsing_test/ot-cores-passlist.txt
+    tests/formal/passlist.txt
+    tests/opentitan/opentitan_parsing_test/ot-cores-passlist.txt
 )
 
 for f in "${files_to_sort_check[@]}"; do

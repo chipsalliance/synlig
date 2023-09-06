@@ -126,7 +126,7 @@ In the second example, we need to first convert SystemVerilog file into UHDM usi
 .. code-block:: bash
    :name: example-uhdm-ver1
 
-   surelog -parse uhdm-tests/simple_tests/onenet/top.sv
+   surelog -parse tests/simple_tests/onenet/top.sv
    yosys -p "plugin -i systemverilog" -p "read_uhdm slpp_all/surelog.uhdm"
 
 This is equivalent to:
@@ -134,7 +134,7 @@ This is equivalent to:
 .. code-block:: bash
    :name: example-uhdm-ver2
 
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog uhdm-tests/simple_tests/onenet/top.sv"
+   yosys -p "plugin -i systemverilog" -p "read_systemverilog tests/simple_tests/onenet/top.sv"
 
 After loading it into Yosys, you can process it further using regular Yosys commands.
 

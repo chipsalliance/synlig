@@ -10,7 +10,8 @@ import time
 
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent / "lib" / "python3"))
+repo_dir = Path(__file__).resolve().parent.parent.parent
+sys.path.append(str(repo_dir / "lib" / "python3"))
 
 from yosys_systemverilog.run_command import run_command
 
@@ -446,7 +447,7 @@ def main():
     # Directory for storing result.
     output_path = args.output_dir.resolve()
 
-    skiplist = get_skiplist(Path(__file__).parent/"formal"/"skiplist.txt")
+    skiplist = get_skiplist(repo_dir/"tests"/"formal"/"skiplist.txt")
 
     if args.test_suite_name:
         test_suite_work_dir = output_path/args.test_suite_name

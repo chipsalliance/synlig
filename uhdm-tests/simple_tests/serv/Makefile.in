@@ -1,1 +1,0 @@
-include $(root_dir)/../uhdm-tests/serv/Makefile.in

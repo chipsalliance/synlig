@@ -1,6 +1,6 @@
 # Formal verification basics
 
-Flow graph for [formal_verification.py](../formal_verification.py) is presented on a diagram below. All end nodes that are not connected to `FAIL CI` node, will keep CI green but results in logs might still contain some errors for non-required checks.
+Flow graph for [run.py](run.py) is presented on a diagram below. All end nodes that are not connected to `FAIL CI` node, will keep CI green but results in logs might still contain some errors for non-required checks.
 ```mermaid
 graph TD;
     A["Read top design by Yosys"]
@@ -29,7 +29,7 @@ graph TD;
     D-->|"FAIL"|X;
 ```
 
-A table below presents example for [formal/formal_results.py](formal_results.py) script generated on all simple tests. It is generated in markdown style which is parsed in CI summary:
+A table below presents example for [results.py](results.py) script generated on all simple tests. It is generated in markdown style which is parsed in CI summary:
 ```
 # Synthesis results
 | Result   | Yosys | sv2v + Yosys |                   Description                    |

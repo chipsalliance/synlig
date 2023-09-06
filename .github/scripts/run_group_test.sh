@@ -36,7 +36,7 @@ export ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer-15
 
 tests_to_skip=(${TESTS_TO_SKIP:-})
 filter_pat="$(IFS='|'; printf '%s\n' "${tests_to_skip[*]}")"
-test_cases=( $(cd ${REPO_DIR}/uhdm-tests && echo simple_tests/!(${filter_pat})) )
+test_cases=( $(cd ${REPO_DIR}/tests && echo simple_tests/!(${filter_pat})) )
 
 global_status=0
 mkdir -p "$(dirname "$RESULTS_FILE")"
@@ -61,7 +61,7 @@ for test_case in "${test_cases[@]}"; do
         # systemverilog.so from being unloaded by yosys as part of cleanup
         # before termination. ASAN needs it to be in memory to correctly
         # symbolize function addresses.
-        make -C $REPO_DIR/uhdm-tests \
+        make -C $REPO_DIR/tests \
                 -j $(nproc) \
                 --no-print-directory \
                 YOSYS_BIN:="LD_PRELOAD=${REPO_DIR}/image/lib/libfakedlclose.so ${REPO_DIR}/image/bin/yosys -Q" \
@@ -95,10 +95,10 @@ for test_case in "${test_cases[@]}"; do
         fi
     fi
 
-    # uhdm-tests/Makefile runs yosys with CWD set to `uhdm-tests/build` directory.
+    # tests/Makefile runs yosys with CWD set to `tests/build` directory.
     # Some tests write `yosys.sv` file in the CWD.
-    if [[ -e $REPO_DIR/uhdm-tests/build/yosys.sv ]]; then
-        mv "$REPO_DIR/uhdm-tests/build/yosys.sv" "${test_out_dir}/"
+    if [[ -e $REPO_DIR/tests/build/yosys.sv ]]; then
+        mv "$REPO_DIR/tests/build/yosys.sv" "${test_out_dir}/"
     fi
 
     if (( $asan_ok == 0 )); then

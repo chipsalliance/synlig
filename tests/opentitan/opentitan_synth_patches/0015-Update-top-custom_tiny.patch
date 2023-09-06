@@ -17,13 +17,13 @@ index 47ef3473b..f6542798e 100644
      datatype: str
      description: Scrambled boot ROM initialization file in 40 bit vmem hex format
 -    default: "../../../../../build-bin/sw/device/lib/testing/test_rom/test_rom_fpga_cw310.scr.39.vmem"
-+    default: "../../../../../../uhdm-tests/opentitan/opentitan_synth_vmem_files/test_rom_fpga_cw310.39.scr.vmem"
++    default: "../../../../../../tests/opentitan/opentitan_synth_vmem_files/test_rom_fpga_cw310.39.scr.vmem"
      paramtype: vlogparam
    OtpCtrlMemInitFile:
      datatype: str
      description: OTP initialization file in vmem hex format
 -    default: "../../../../../build-bin/sw/device/otp_img/otp_img_fpga_cw310.vmem"
-+    default: "../../../../../../uhdm-tests/opentitan/opentitan_synth_vmem_files/otp_img_fpga_cw310.vmem"
++    default: "../../../../../../tests/opentitan/opentitan_synth_vmem_files/otp_img_fpga_cw310.vmem"
      paramtype: vlogparam
    # For value definition, please see ip/prim/rtl/prim_pkg.sv
    PRIM_DEFAULT_IMPL:

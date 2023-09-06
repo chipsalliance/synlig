@@ -66,28 +66,28 @@ jobs:
       - name: Generate and diff tests
         run: |
           export PATH="$PWD/image/bin:$PATH"
-          python3 ./uhdm-tests/bsg_micro_designs/generate_bsg_tests.py
+          python3 ./tests/bsg_micro_designs/generate_bsg_tests.py
 
       - name: Summary
         if: ${{ !cancelled() }}
         run: |
-          cat uhdm-tests/bsg_micro_designs/build/bsg_micro_designs_summary.md > $GITHUB_STEP_SUMMARY
+          cat tests/bsg_micro_designs/build/bsg_micro_designs_summary.md > $GITHUB_STEP_SUMMARY
 
       - name: Upload BSG Micro Design tests' output
         uses: actions/upload-artifact@v2
         with:
           name: bsg-outputs
           path: |
-            uhdm-tests/bsg_micro_designs/build/*/dut.v
-            uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
-            uhdm-tests/bsg_micro_designs/build/*/parameters.txt
+            tests/bsg_micro_designs/build/*/dut.v
+            tests/bsg_micro_designs/build/*/dut.v.diff
+            tests/bsg_micro_designs/build/*/parameters.txt
 
       - name: Upload BSG Micro Design tests' logs
         uses: actions/upload-artifact@v2
         with:
           name: bsg-logs
           path: |
-            uhdm-tests/bsg_micro_designs/build/*
-            !uhdm-tests/bsg_micro_designs/build/*/dut.v
-            !uhdm-tests/bsg_micro_designs/build/*/dut.v.diff
-            !uhdm-tests/bsg_micro_designs/build/*/parameters.txt
+            tests/bsg_micro_designs/build/*
+            !tests/bsg_micro_designs/build/*/dut.v
+            !tests/bsg_micro_designs/build/*/dut.v.diff
+            !tests/bsg_micro_designs/build/*/parameters.txt
