@@ -243,6 +243,7 @@ simple:unary_op_minus/unary_op_minus.sv
 simple:unary_op_not_log/unary_op_not_log.sv
 simple:unary_op_plus/unary_op_plus.sv
 simple:UnionInsideStruct/dut.sv
+simple:UnionParameter/top.sv
 simple:UnitForLoop/dut.v
 simple:UnpackedArray/top.sv
 simple:UnsizedConst/top.sv
