@@ -103,7 +103,7 @@ ifeq (${help_only},0)
 ${rel_v_files} : % : ${TEST_SUITE_DIR}/%
 	@#
 	cd ${REPO_DIR}
-	python3 ./formal_verification.py \
+	python3 ./tests/formal/run.py \
 			--test-suite-name=$(call sh_quote,${TEST_SUITE_NAME}) \
 			--test-suite-dir=$(call sh_quote,${TEST_SUITE_DIR}) \
 			$< \

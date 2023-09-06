@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - name: simple
-            test-suite: uhdm-tests/simple_tests
+            test-suite: tests/simple_tests
           - name: sv2v
             test-suite: third_party/sv2v/test
           - name: yosys
@@ -132,7 +132,7 @@ jobs:
       - name: Check results and print a summary
         run: |
           set -o pipefail
-          python3 ./formal/formal_results.py "build/tests/${TEST_SUITE_NAME}" | tee $GITHUB_STEP_SUMMARY
+          python3 ./tests/formal/results.py "build/tests/${TEST_SUITE_NAME}" | tee $GITHUB_STEP_SUMMARY
 
   passlist-check:
     name: Passlist Check
@@ -154,7 +154,7 @@ jobs:
       - name: Compare lists
         run: |
           sort *.performed_tests_list.txt > performed_tests_list.txt
-          grep -o '^[^ #]\+' formal/passlist.txt | sort > sorted_passlist.txt
+          grep -o '^[^ #]\+' tests/formal/passlist.txt | sort > sorted_passlist.txt
           readarray not_performed_tests < <(comm -13 performed_tests_list.txt sorted_passlist.txt)
           if (( ${#not_performed_tests[@]} > 0 )); then
             printf '\x1b[1mTests from passlist.txt that were not performed:\x1b[0m\n'

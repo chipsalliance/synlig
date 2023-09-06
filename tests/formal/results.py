@@ -119,7 +119,7 @@ def process_data(results_path, result_keys: list, result_description_keys: list)
     failed_should_pass = []
     passed_should_fail = []
     passlist_contents = set()
-    with open("formal/passlist.txt", "r") as passlist:
+    with open("tests/formal/passlist.txt", "r") as passlist:
         passlist_contents = {line.strip() for line in passlist}
 
     for test in results.keys():

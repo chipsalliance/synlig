@@ -3,9 +3,7 @@ curr_dir:=$(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 ### BLACKPARROT ###
 ###################
 BLACKPARROT = ${root_dir}/../third_party/black_parrot
-BLACKPARROT_PATCHES_DIR = ${curr_dir}/black-parrot-patches/black-parrot/
-BLACKPARROT_BASEJUMP = ${BLACKPARROT}/external/basejump_stl/
-BLACKPARROT_BASEJUMP_PATCHES_DIR = ${curr_dir}/black-parrot-patches/basejump_stl
+BLACKPARROT_PATCHES_DIR = ${curr_dir}/black_parrot_patches/
 BLACKPARROT_CFG ?= e_bp_unicore_cfg
 BLACKPARROT_UHDM = ${root_dir}/build/surelog/bp_tethered.${BLACKPARROT_CFG}.none.parse/out/slpp_unit/surelog.uhdm
 

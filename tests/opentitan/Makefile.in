@@ -7,7 +7,7 @@ VENV_OT_9d82960888 = ${root_dir}/venv-opentitan_9d82960888
 OPENTITAN_9d82960888 = ${root_dir}/../third_party/opentitan_9d82960888
 
 ${OPENTITAN_9d82960888}/.gitpatch:
-	cd ${OPENTITAN_9d82960888} && git apply ${curr_dir}/0001-Add-opentitan-patch-for-uhdm.patch && touch $@
+	cd ${OPENTITAN_9d82960888} && git apply ${curr_dir}/0001_Add_opentitan_patch_for_uhdm.patch && touch $@
 
 ${VENV_OT_9d82960888}:
 	virtualenv ${VENV_OT_9d82960888}
@@ -32,11 +32,11 @@ TOP_HW_DIR := ${OPENTITAN}/hw/top_custom_tiny
 TOP_HJSON := ${OPENTITAN}/hw/top_custom_tiny/data/top_custom_tiny.hjson
 
 ${OPENTITAN}/.gitpatch:
-	cd ${OPENTITAN} && git apply ${curr_dir}/0001-Add-core-files-for-processing-Earlgrey-in-Yosys.patch && git apply ${curr_dir}/0002-use-Edalize-fork-for-SystemVerilog-in-Yosys.patch && touch $@
+	cd ${OPENTITAN} && git apply ${curr_dir}/0001_Add_core_files_for_processing_Earlgrey_in_Yosys.patch && git apply ${curr_dir}/0002_use_Edalize_fork_for_SystemVerilog_in_Yosys.patch && touch $@
 
 ${OPENTITAN}/.gitpatch_synth:
 	cd ${OPENTITAN} \
-                        && git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/*.patch \
+		&& git apply ${OPENTITAN_SYNTH_PATCHES_DIR}/*.patch \
 		&& touch $@
 
 ${VENV_OT_SYNTH}: | ${OPENTITAN}/.gitpatch_synth

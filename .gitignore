@@ -1,5 +1,5 @@
-/uhdm-tests/build/
-/uhdm-tests/opentitan/opentitan-parsing-test/build/
+/tests/build/
+/tests/opentitan/opentitan-parsing-test/build/
 __pycache__
 /build
 /image
