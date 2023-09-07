@@ -2045,7 +2045,7 @@ AST::AstNode *UhdmAst::find_ancestor(const std::unordered_set<AST::AstNodeType> 
 void UhdmAst::process_design()
 {
     current_node = make_ast_node(AST::AST_DESIGN);
-    visit_one_to_many({UHDM::uhdmallInterfaces, UHDM::uhdmtopPackages, UHDM::uhdmallModules, UHDM::uhdmtopModules, vpiTaskFunc}, obj_h,
+    visit_one_to_many({vpiTaskFunc, UHDM::uhdmallModules, UHDM::uhdmallInterfaces, UHDM::uhdmtopPackages, UHDM::uhdmtopModules}, obj_h,
                       [&](AST::AstNode *node) {
                           if (node) {
                               shared.top_nodes[node->str] = node;
@@ -2169,7 +2169,7 @@ void UhdmAst::process_module()
             current_node->children.erase(process_it, current_node->children.end());
             auto old_top = shared.current_top_node;
             shared.current_top_node = current_node;
-            visit_one_to_many({vpiModule, vpiInterface, vpiParameter, vpiParamAssign, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray,
+            visit_one_to_many({vpiParameter, vpiParamAssign, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiModule, vpiInterface, vpiGenScopeArray,
                                vpiContAssign, vpiVariables},
                               obj_h, [&](AST::AstNode *node) {
                                   if (node) {
@@ -2203,7 +2203,7 @@ void UhdmAst::process_module()
                     move_type_to_new_typedef(current_node, node);
                 }
             });
-            visit_one_to_many({vpiModule, vpiParameter, vpiParamAssign, vpiNet, vpiArrayNet, vpiProcess}, obj_h, [&](AST::AstNode *node) {
+            visit_one_to_many({vpiTaskFunc, vpiModule, vpiParameter, vpiParamAssign, vpiNet, vpiArrayNet, vpiProcess}, obj_h, [&](AST::AstNode *node) {
                 if (node) {
                     if (get_attribute(node, attr_id::is_type_parameter)) {
                         // Don't process type parameters.
