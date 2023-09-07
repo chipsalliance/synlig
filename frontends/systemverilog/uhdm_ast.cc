@@ -4817,6 +4817,7 @@ void UhdmAst::process_parameter()
             packed_ranges.push_back(make_range(63, 0));
             break;
         }
+        case vpiUnionTypespec:
         case vpiStructTypespec: {
             visit_one_to_one({vpiTypespec}, obj_h, [&](AST::AstNode *node) {
                 if (node && !node->str.empty()) {
