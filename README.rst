@@ -1,7 +1,10 @@
-SystemVerilog support for Yosys
+SystemVerilog plugin for Yosys
 ===============================
 
-This repository puts together all the moving parts needed to get SystemVerilog support enabled in Yosys.
+SystemVerilog and `UHDM <https://github.com/chipsalliance/UHDM`_ frontend
+plugin for `Yosys <https://github.com/YosysHQ/yosys`_. Uses `Surelog
+<https://github.com/chipsalliance/Surelog`_, a SystemVerilog 2017 preprocessor,
+parser and elaborator.
 
 Installation
 ------------
