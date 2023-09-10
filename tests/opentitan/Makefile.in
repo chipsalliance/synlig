@@ -13,7 +13,7 @@ ${VENV_OT_9d82960888}:
 	virtualenv ${VENV_OT_9d82960888}
 	. ${VENV_OT_9d82960888}/bin/activate && \
 	pip install -r ${OPENTITAN_9d82960888}/python-requirements.txt && \
-	pip install git+https://github.com/antmicro/edalize@uhdm_support
+	pip install git+https://github.com/antmicro/edalize@svplugin_support
 
 uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN_9d82960888}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT_9d82960888}
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
@@ -43,7 +43,7 @@ ${VENV_OT_SYNTH}: | ${OPENTITAN}/.gitpatch_synth
 	virtualenv ${VENV_OT_SYNTH}
 	(. ${VENV_OT_SYNTH}/bin/activate && \
 		pip install -r ${OPENTITAN}/python-requirements.txt && \
-		pip install git+https://github.com/antmicro/edalize@uhdm_support)
+		pip install git+https://github.com/antmicro/edalize@svplugin_support)
 
 uhdm/yosys/synth-opentitan-build-tiny: clean-build | ${OPENTITAN}/.gitpatch_synth ${VENV_OT_SYNTH}
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
