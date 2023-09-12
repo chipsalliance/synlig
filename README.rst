@@ -43,7 +43,7 @@ If you are sure yosys is installed and configured, you should download and unpac
    :name: download-plugin
 
    apt install -y curl jq tar wget
-   curl https://api.github.com/repos/chipsalliance/systemverilog-plugin/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+   curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
 
 After downloading the plugin, the next step is to install plugin with superuser privileges:
 
@@ -70,7 +70,7 @@ Install dependencies
 Build required binaries
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You can build all required binaries using provided ``build_binaries.sh`` script. This script will build Surelog, Yosys and the systemverilog-plugin and place them into ``image`` folder. You need to add this folder into your ``PATH`` variable to make sure you are using correct versions of the binaries.
+You can build all required binaries using provided ``build_binaries.sh`` script. This script will build Surelog, Yosys and Synlig and place them into ``image`` folder. You need to add this folder into your ``PATH`` variable to make sure you are using correct versions of the binaries.
 
 .. code-block:: bash
    :name: build-binaries
@@ -90,8 +90,8 @@ To use yosys built from a submodule, make sure to either use absolute paths, or 
 Usage
 -----
 
-Loading systemverilog-plugin into Yosys
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Loading Synlig into Yosys
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Yosys can now be started by executing the ``yosys`` command.
 In order to use the systemverilog plugin in Yosys, you need to first load it inside Yosys. This can be done in Yosys prompt by executing the following commands:
@@ -160,7 +160,7 @@ To parse a multi-file with the ``read_systemverilog`` command, all files have to
 
 The :code:`-defer` flag is experimental.
 If you encounter any problems with it, please compare the results with a single `read_systemverilog` command,
-check the `open issues <https://github.com/chipsalliance/systemverilog-plugin/issues>`_, and open a new issue if needed.
+check the `open issues <https://github.com/chipsalliance/synlig/issues>`_, and open a new issue if needed.
 
 Testing locally
 ---------------
@@ -198,6 +198,6 @@ Available Targets
 General & debugging tips
 ------------------------
 
-#. ``systemverilog-plugin`` needs to be compiled with the same version of the Surelog, that was used to generate UHDM file. When you are updating Surelog version, you also need to recompile the plugin.
+#. ``synlig`` needs to be compiled with the same version of the Surelog, that was used to generate UHDM file. When you are updating Surelog version, you also need to recompile the plugin.
 #. You can print the UHDM tree by adding ``-debug`` flag to ``read_uhdm`` or ``read_systemverilog``. This flag also prints the converted Yosys AST.
 #. Order of the files matters. Surelog requires that all definitions need to be already defined when file is parsed (if file ``B`` is defining type used in file ``A``, file ``B`` needs to be parsed before file ``A``).
