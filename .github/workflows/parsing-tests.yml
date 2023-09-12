@@ -249,12 +249,9 @@ jobs:
           CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository }}-logs master | cut -d $'\t' -f1)
           COMMENT_MSG="https://github.com/${{ github.repository }}-logs/compare/$CURRENT_LOGS_SHA..$PUSH_BRANCH"
           echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
-          PUSH_LOGS=false
-          echo "PUSH_LOGS=$PUSH_LOGS" >> "$GITHUB_ENV"
           echo "COMMENT_HEADER=Logs difference between main branch:" >> "$GITHUB_ENV"
 
       - name: Push logs
-        if: ${{ env.PUSH_LOGS == 'true' }}
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         run: |
@@ -298,7 +295,6 @@ jobs:
             }
 
       - name: Create summary
-        if: ${{ env.PUSH_LOGS == 'true' }}
         run: |
           echo "${{ env.COMMENT_HEADER }}" >> $GITHUB_STEP_SUMMARY
           echo "${{ env.COMMENT_MSG }}" >> $GITHUB_STEP_SUMMARY
