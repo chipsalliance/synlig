@@ -75,7 +75,7 @@ for test_case in "${test_cases[@]}"; do
 
     sed -i -n \
         -e "s#${REPO_DIR}/##g" \
-        -e '/1. Executing Verilog with UHDM frontend./,$ {/^End of script/d; /^Time spent/d; p}' \
+        -E -e '/1. Executing (Verilog with )?UHDM frontend./,$ {/^End of script/d; /^Time spent/d; p}' \
         "${test_out_dir}/yosys.log"
 
     # ASAN log contains PID in the name. There should be only one log, but even
