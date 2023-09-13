@@ -332,7 +332,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: yosys-uhdm-*.tar.gz
+          file: synlig-*.tar.gz
           tag: ${{ env.TAG }}
           release_name: ${{ env.RELEASE_NAME }}
           body: ${{ env.RELEASE_BODY }}
