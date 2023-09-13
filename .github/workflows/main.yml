@@ -72,7 +72,7 @@ jobs:
       CC: ${{ matrix.cc }}
       CXX: ${{ matrix.cxx }}
       BUILD_BINARIES_ARGS: ${{ matrix.build-binaries-args }}
-      CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
+      CCACHE_DIR: "${{ github.workspace }}/.cache/"
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-highmem-8"
 
