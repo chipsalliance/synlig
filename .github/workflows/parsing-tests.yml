@@ -246,7 +246,7 @@ jobs:
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           PUSH_BRANCH=$branch
           echo "PUSH_BRANCH=$PUSH_BRANCH" >> "$GITHUB_ENV"
-          CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository }}-logs master | cut -d $'\t' -f1)
+          CURRENT_LOGS_SHA=$(git ls-remote https://github.com/${{ github.repository }}-logs main | cut -d $'\t' -f1)
           COMMENT_MSG="https://github.com/${{ github.repository }}-logs/compare/$CURRENT_LOGS_SHA..$PUSH_BRANCH"
           echo "COMMENT_MSG=$COMMENT_MSG" >> "$GITHUB_ENV"
           echo "COMMENT_HEADER=Logs difference between main branch:" >> "$GITHUB_ENV"
