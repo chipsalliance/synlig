@@ -72,7 +72,7 @@ jobs:
       CC: ${{ matrix.cc }}
       CXX: ${{ matrix.cxx }}
       BUILD_BINARIES_ARGS: ${{ matrix.build-binaries-args }}
-      CCACHE_DIR: "/root/yosys-uhdm-plugin-integration/yosys-uhdm-plugin-integration/.cache/"
+      CCACHE_DIR: "${{ github.workspace }}/.cache/"
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-highmem-8"
 
@@ -214,8 +214,8 @@ jobs:
           mkdir -p $PWD/image/bin
           export PATH=$PWD/install/bin:/usr/local/bin:${PATH}
           wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-          make -j$(nproc) -C $PWD/sv2v
-          cp $PWD/sv2v/bin/sv2v image/bin
+          make -j$(nproc) -C $PWD/third_party/sv2v
+          cp $PWD/third_party/sv2v/bin/sv2v image/bin
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
