@@ -305,7 +305,7 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           ls -lah image
           tar -zcvf $FULL_TARBALL image
-          tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so image/share/yosys/plugins/systemverilog.so install_plugin.sh
+          tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/systemverilog.so install_plugin.sh
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:
@@ -368,8 +368,6 @@ jobs:
           ./install_plugin.sh
       - name: Run Yosys and load SystemVerilog plugin
         run: yosys -p "plugin -i systemverilog"
-      - name: Run Yosys and load (deprecated) UHDM plugin
-        run: yosys -p "plugin -i uhdm"
 
   # needed for test linting
   upload-event-file:
