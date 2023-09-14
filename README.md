@@ -76,7 +76,6 @@ You need to add this folder to your `PATH` variable to ensure you are using corr
 To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
 
 <!-- name="path-setup" -->
-
 ``` bash
    export PATH=`pwd`/image/bin:$PATH
 ```
