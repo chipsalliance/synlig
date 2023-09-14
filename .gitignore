@@ -3,3 +3,5 @@
 __pycache__
 /build
 /image
+.cache/
+compile_commands.json
