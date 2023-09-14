@@ -33,19 +33,19 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          tuttest README.rst dependencies | bash -
+          tuttest README.md dependencies | bash -
 
       - name: Build Binaries
         run: |
-          tuttest README.rst build-binaries | bash -
+          tuttest README.md build-binaries | bash -
 
       - name: Test Binaries
         run: |
-          tuttest README.rst load-plugin | (. <(tuttest README.rst path-setup) && yosys)
-          (tuttest README.rst path-setup; tuttest README.rst example-verilog) | bash -
-          (tuttest README.rst path-setup; tuttest README.rst example-uhdm-ver1) | bash -
-          (tuttest README.rst path-setup; tuttest README.rst example-uhdm-ver2) | bash -
-          tuttest README.rst example-multiple-files | (. <(tuttest README.rst path-setup) && yosys)
+          tuttest README.md load-plugin | (. <(tuttest README.md path-setup) && yosys)
+          (tuttest README.md path-setup; tuttest README.md example-verilog) | bash -
+          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver1) | bash -
+          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver2) | bash -
+          tuttest README.md example-multiple-files | (. <(tuttest README.md path-setup) && yosys)
 
   test-plugin-ubuntu:
     runs-on: [self-hosted, Linux, X64]
@@ -70,21 +70,21 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          tuttest README.rst install-yosys-ubuntu | bash -
+          tuttest README.md install-yosys-ubuntu | bash -
 
       - name: Install Plugin
         run: |
-          tuttest README.rst download-plugin | bash -
-          tuttest README.rst install-plugin | bash -
+          tuttest README.md download-plugin | bash -
+          tuttest README.md install-plugin | bash -
 
       - name: Load Plugin
         run: |
-          tuttest README.rst load-plugin | yosys
+          tuttest README.md load-plugin | yosys
 
       - name: Test Plugin
         run: |
-          tuttest README.rst example-verilog | bash -
-          tuttest README.rst example-multiple-files | yosys
+          tuttest README.md example-verilog | bash -
+          tuttest README.md example-multiple-files | yosys
 
   test-plugin-debian:
     runs-on: [self-hosted, Linux, X64]
@@ -107,18 +107,18 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          tuttest README.rst install-yosys-debian | bash -
+          tuttest README.md install-yosys-debian | bash -
 
       - name: Install Plugin
         run: |
-          tuttest README.rst download-plugin | bash -
-          tuttest README.rst install-plugin | bash -
+          tuttest README.md download-plugin | bash -
+          tuttest README.md install-plugin | bash -
 
       - name: Load Plugin
         run: |
-          tuttest README.rst load-plugin | yosys
+          tuttest README.md load-plugin | yosys
 
       - name: Test Plugin
         run: |
-          tuttest README.rst example-verilog | bash -
-          tuttest README.rst example-multiple-files | yosys
+          tuttest README.md example-verilog | bash -
+          tuttest README.md example-multiple-files | yosys
