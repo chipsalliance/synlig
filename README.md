@@ -144,7 +144,7 @@ Files can be loaded one by one using the `-defer` flag.
 Once all files are uploaded, you should call `read_systemverilog -link` to elaborate them. 
 The described flow looks like so:
 
-<!-- name="example-uhdm-ver2" -->
+<!-- name="example-multiple-files" -->
 ``` tcl
     plugin -i systemverilog
     # Read each file separately
