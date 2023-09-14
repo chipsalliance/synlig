@@ -21,7 +21,6 @@ REPO_DIR := ${this_mk.dir}
 INSTALL_DIR := ${this_mk.dir}/image
 
 ENABLE_ASAN := 0
-SYSTEMVERILOG_PLUGIN_ONLY := 1
 
 CC ?= cc
 CXX ?= c++
@@ -29,7 +28,7 @@ export CC
 export CXX
 
 $(info ------------------------------------------------------------------------)
-$(foreach var,REPO_DIR INSTALL_DIR ENABLE_ASAN SYSTEMVERILOG_PLUGIN_ONLY CC CXX,\
+$(foreach var,REPO_DIR INSTALL_DIR ENABLE_ASAN CC CXX,\
   $(info $(shell \
     printf '${chr.percent}-32s = ${chr.percent}s\n' ${var} $(call sh_quote,${${var}});\
   ))\
@@ -133,48 +132,42 @@ install-fakedlclose: build-fakedlclose | ${INSTALL_DIR}
 	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} INSTALL_DIR:=${INSTALL_DIR} install
 
 #───────────────────────────────────────────────────────────────────────────────
-# Plugins
+# Plugin
 #───────────────────────────────────────────────────────────────────────────────
 
-PLUGINS_SRC_DIR := ${REPO_DIR}/third_party/yosys_f4pga_plugins
-plugins_make_args := UHDM_INSTALL_DIR:=${INSTALL_DIR} CC:=${CC} CXX:=${CXX}
+plugin_make_args := UHDM_INSTALL_DIR:=${INSTALL_DIR} CC:=${CC} CXX:=${CXX}
 
 ifeq ($(strip ${ENABLE_ASAN}),1)
-plugins_make_args += EXTRA_FLAGS:='-g'
+plugin_make_args += EXTRA_FLAGS:='-g'
 
-plugins_build_deps += build-fakedlclose
-plugins_install_deps += install-fakedlclose
+plugin_build_deps += build-fakedlclose
+plugin_install_deps += install-fakedlclose
 else
-plugins_build_deps :=
-plugins_install_deps :=
+plugin_build_deps :=
+plugin_install_deps :=
 endif
 
-ifeq ($(strip ${SYSTEMVERILOG_PLUGIN_ONLY}),0)
-plugins := fasm xdc params sdc ql-iob design_introspection integrateinv ql-qlf dsp-ff uhdm
-else
-plugins := uhdm
-endif
-
-plugins_make_clean_targets := $(foreach plugin,$(plugins),clean_$(plugin))
-plugins_make_build_targets := $(foreach plugin,$(plugins),$(plugin).so)
-plugins_make_install_targets := $(foreach plugin,$(plugins),install_$(plugin))
-
-.PHONY: clean-plugins
-clean-plugins:
+clean-plugin:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
-	${MAKE} -C ${PLUGINS_SRC_DIR} ${plugins_make_args} ${plugins_make_clean_targets}
-	${MAKE} -C frontends/systemverilog ${plugins_make_args} clean
+	${MAKE} -C frontends/systemverilog ${plugin_make_args} clean
+
+.PHONY: build-plugin
+build-plugin: install-yosys install-surelog ${plugin_build_deps}
+	export PATH=${INSTALL_DIR}/bin:$${PATH}
+	${MAKE} -C frontends/systemverilog --no-print-directory ${plugin_make_args} build
+
+.PHONY: install-plugin
+install-plugin: build-plugin ${plugin_install_deps} | ${INSTALL_DIR}
+	export PATH=${INSTALL_DIR}/bin:$${PATH}
+	${MAKE} -C frontends/systemverilog --no-print-directory ${plugin_make_args} install
+
+# For backwards compatibility
+.PHONY: clean-plugins
+clean-plugins: clean-plugin
 
 .PHONY: build-plugins
-build-plugins: install-yosys install-surelog ${plugins_build_deps}
-	cp -u ${YOSYS_SRC_DIR}/passes/pmgen/pmgen.py ${PLUGINS_SRC_DIR}/
-	export PATH=${INSTALL_DIR}/bin:$${PATH}
-	${MAKE} -C ${PLUGINS_SRC_DIR} --no-print-directory ${plugins_make_args} ${plugins_make_build_targets}
-	${MAKE} -C frontends/systemverilog --no-print-directory ${plugins_make_args} build
+build-plugins: build-plugin
 
 .PHONY: install-plugins
-install-plugins: build-plugins ${plugins_install_deps} | ${INSTALL_DIR}
-	export PATH=${INSTALL_DIR}/bin:$${PATH}
-	${MAKE} -C ${PLUGINS_SRC_DIR} --no-print-directory ${plugins_make_args} ${plugins_make_install_targets}
-	${MAKE} -C frontends/systemverilog --no-print-directory ${plugins_make_args} install
+install-plugins: install-plugin
 

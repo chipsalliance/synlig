@@ -113,7 +113,7 @@ test_clean:
 # Build
 
 .PHONY: build
-build: $(NAME).so
+build: $(SO_LIB)
 
 # Installation
 

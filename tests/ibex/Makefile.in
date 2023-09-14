@@ -14,7 +14,7 @@ uhdm/yosys/synth-ibex: clean-build ${IBEX}/.gitpatch
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \
 		pip install -r ${IBEX}/python-requirements.txt && \
-		pip install git+https://github.com/antmicro/edalize@uhdm_support && \
+		pip install git+https://github.com/antmicro/edalize@svplugin_support && \
 		fusesoc --cores-root=${IBEX} run --build --tool yosys --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem")
 
 uhdm/yosys/synth-ibex-build: clean-build ${IBEX}/.gitpatch
@@ -22,7 +22,7 @@ uhdm/yosys/synth-ibex-build: clean-build ${IBEX}/.gitpatch
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \
 		pip install -r ${IBEX}/python-requirements.txt && \
-		pip install git+https://github.com/antmicro/edalize@uhdm_support && \
+		pip install git+https://github.com/antmicro/edalize@svplugin_support && \
 		fusesoc --cores-root=${IBEX} run --build --tool vivado --target=synth lowrisc:ibex:top_artya7_surelog --part xc7a35ticsg324-1L --SRAMInitFile="${curr_dir}/led.vmem")
 
 ##############################
@@ -60,6 +60,12 @@ download-f4pga: | ${root_dir}/env/f4pga
 		'${root_dir}/env/f4pga/symbiflow-xc7a50t_test-latest.url', \
 		'${root_dir}/env/f4pga')
 
+.PHONY: install-plugins
+install-plugins:
+	export PATH=${root_dir}/../image/bin:${PATH} && \
+		make -C ${root_dir}/../third_party/yosys_f4pga_plugins \
+			install_xdc install_fasm install_params install_sdc install_design_introspection
+
 TOP_DIR := ${root_dir}
 REQUIREMENTS_FILE := ${curr_dir}/f4pga_requirements.txt
 ENVIRONMENT_FILE := ${curr_dir}/f4pga_environment.yml
@@ -70,7 +76,7 @@ include ${root_dir}/../third_party/make_env/conda.mk
 ${REQUIREMENTS_FILE}: ${IBEX}/.requirementspatch
 
 # Install conda packages from f4pga/xc7 environment and set environment variables.
-env:: download-f4pga
+env:: download-f4pga install-plugins
 	${IN_CONDA_ENV} conda env update --name ${CONDA_ENV_NAME} --file ${root_dir}/env/f4pga/xc7_env/xc7_environment.yml </dev/null | cat
 	# Update edalize installed by Ibex to our own fork.
 	${IN_CONDA_ENV} pip install git+https://github.com/antmicro/edalize@symbiflow-read_verilog_with_uhdm </dev/null | cat
