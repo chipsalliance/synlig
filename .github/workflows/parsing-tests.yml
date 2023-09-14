@@ -220,6 +220,7 @@ jobs:
     name: Generate AST diff
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
+    if: github.event.pull_request.head.repo.full_name == github.repository
     needs:
       - tests-read-systemverilog
     steps:
