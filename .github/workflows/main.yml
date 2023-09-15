@@ -297,15 +297,15 @@ jobs:
           DISTRO=$(lsb_release --short --id)
           DISTRO_RELEASE=$(lsb_release --short --release)
           DISTRO_CODENAME=$(lsb_release --short --codename | sed -e's/[^A-Za-z0-9]//g')
-          FULL_TARBALL=yosys-uhdm-integration-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
-          PLUGIN_TARBALL=yosys-uhdm-plugin-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+          FULL_TARBALL=synlig-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
+          PLUGIN_TARBALL=synlig-plugin-$GIT_VERSION-$DISTRO-$DISTRO_RELEASE-$DISTRO_CODENAME-$DISTRO_ARCH.tar.gz
           # Create a tag of form 2021-12-06-ad2466e
           TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
           echo "TAG=$TAG" >> $GITHUB_ENV
           ls -lah image
           tar -zcvf $FULL_TARBALL image
-          tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/uhdm.so image/share/yosys/plugins/systemverilog.so install_plugin.sh
+          tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/systemverilog.so install_plugin.sh
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:
@@ -362,14 +362,12 @@ jobs:
               ;
       - name: Download and extract UHDM plugin
         run: |
-          curl https://api.github.com/repos/chipsalliance/systemverilog-plugin/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+          curl https://api.github.com/repos/chipsalliance/synlig/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
       - name: Install it
         run: |
           ./install_plugin.sh
       - name: Run Yosys and load SystemVerilog plugin
         run: yosys -p "plugin -i systemverilog"
-      - name: Run Yosys and load (deprecated) UHDM plugin
-        run: yosys -p "plugin -i uhdm"
 
   # needed for test linting
   upload-event-file:
