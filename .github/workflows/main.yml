@@ -13,9 +13,6 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  GHA_CUSTOM_LINE_PREFIX: "▌"
-
 jobs:
   emit-workflow-info:
     name: Emit Workflow Info
