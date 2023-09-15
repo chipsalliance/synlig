@@ -118,7 +118,7 @@ build: $(SO_LIB)
 # Installation
 
 $(YOSYS_PLUGINS_DIR)/$(NAME).so: $(SO_LIB) | $(YOSYS_PLUGINS_DIR)
-	install -D $(SO_LIB) $@
+	install $(SO_LIB) $@
 
 .PHONY: install_plugin
 install_plugin: $(YOSYS_PLUGINS_DIR)/$(NAME).so

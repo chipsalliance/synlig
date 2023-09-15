@@ -65,6 +65,7 @@ jobs:
             cxx: 'clang++-15'
             apt-extra-deps: 'clang-15'
             build-binaries-args: 'ENABLE_ASAN:=1'
+
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
@@ -158,6 +159,47 @@ jobs:
           name: plots
           path: |
             **/plot_*.svg
+
+  build-binaries-macos:
+    strategy:
+      matrix:
+        os:
+          - macos-11
+        # TODO compilers
+
+    name: 'Build Binaries (macOS)'
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+          fetch-depth: 1
+
+      - name: Setup homebrew cache
+        uses: actions/cache@v3
+        with:
+          path: |
+              ~/Library/Caches/Homebrew/boost--*
+              ~/Library/Caches/Homebrew/downloads/*--boost-*
+          key: brew-${{ matrix.os }}
+          restore-keys: brew-
+
+      - name: Install Mac Dependencies
+        run: |
+          brew install uhdm surelog yosys
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+
+      - name: Setup cache
+        uses: hendrikmuhs/ccache-action@v1
+        with:
+          key: ccache-${{ matrix.os }}
+
+      - name: Build binaries
+        run: |
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          make -C frontends/systemverilog install-plugin
 
   build-sv2v:
     name: Build sv2v
