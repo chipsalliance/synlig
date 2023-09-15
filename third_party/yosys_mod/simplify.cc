@@ -709,27 +709,27 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 		ast_node->str = std::string();
 	}
 
-	// print messages if this a call to $display() or $write()
-	// This code implements only a small subset of Verilog-2005 $display() format specifiers,
-	// but should be good enough for most uses
-	if ((ast_node->type == Yosys::AST::AST_TCALL) && ((ast_node->str == "$display") || (ast_node->str == "$write")))
-	{
-		int nargs = GetSize(ast_node->children);
-		if (nargs < 1)
-			log_file_error(ast_node->filename, ast_node->location.first_line, "System task `%s' got %d arguments, expected >= 1.\n",
-					ast_node->str.c_str(), int(ast_node->children.size()));
+	auto type = ast_node->type;
+	auto str = ast_node->str;
 
-		// First argument is the format string
-		Yosys::AST::AstNode *node_string = ast_node->children[0];
-		while (simplify(node_string, true, false, false, stage, width_hint, sign_hint, false)) { }
-		if (node_string->type != Yosys::AST::AST_CONSTANT)
-			log_file_error(ast_node->filename, ast_node->location.first_line, "Failed to evaluate system task `%s' with non-constant 1st argument.\n", ast_node->str.c_str());
-		std::string sformat = node_string->bitsAsConst().decode_string();
-		std::string sout = ast_node->process_format_str(sformat, 1, stage, width_hint, sign_hint);
-		// Finally, print the message (only include a \n for $display, not for $write)
-		log("%s", sout.c_str());
-		if (ast_node->str == "$display")
-			log("\n");
+	// print messages if this a call to $display() or $write() family of functions
+	if ((type == Yosys::AST::AST_TCALL) &&
+	    (str == "$display" || str == "$displayb" || str == "$displayh" || str == "$displayo" ||
+	     str == "$write"   || str == "$writeb"   || str == "$writeh"   || str == "$writeo"))
+	{
+
+		int default_base = 10;
+		if (str.back() == 'b')
+			default_base = 2;
+		else if (str.back() == 'o')
+			default_base = 8;
+		else if (str.back() == 'h')
+			default_base = 16;
+
+		Fmt fmt = ast_node->processFormat(stage, /*sformat_like=*/false, default_base);
+		if (str.substr(0, 8) == "$display")
+			fmt.append_string("\n");
+		log("%s", fmt.render().c_str());
 		ast_node->delete_children();
 		ast_node->str = std::string();
 	}
@@ -3326,13 +3326,8 @@ skip_dynamic_range_lvalue_expansion:;
 			}
 
 			if (ast_node->str == "\\$sformatf") {
-				Yosys::AST::AstNode *node_string = ast_node->children[0];
-				while (simplify(node_string, true, false, false, stage, width_hint, sign_hint, false)) { }
-				if (node_string->type != Yosys::AST::AST_CONSTANT)
-					log_file_error(ast_node->filename, ast_node->location.first_line, "Failed to evaluate system function `%s' with non-constant 1st argument.\n", ast_node->str.c_str());
-				std::string sformat = node_string->bitsAsConst().decode_string();
-				std::string sout = ast_node->process_format_str(sformat, 1, stage, width_hint, sign_hint);
-				newNode = ast_node->mkconst_str(sout);
+				Fmt fmt = ast_node->processFormat(stage, /*sformat_like=*/true);
+				newNode = Yosys::AST::AstNode::mkconst_str(fmt.render());
 				goto apply_newNode;
 			}
 
