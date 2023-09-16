@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+import logging
+import sys
+
+from pathlib import Path
+
+SELF_DIR = Path(__file__).absolute().parent
+CONFIG_FILE = SELF_DIR / "config.toml"
+try:
+	TOP_DIR = next(d for d in SELF_DIR.parents if (d / ".git").exists())
+except StopIteration:
+	logging.critical(f"Failed to find root of repository's worktree.")
+	sys.exit(1)
+
+if __name__ == "__main__":
+	from lib.main import main
+	sys.exit(main(sys.argv, top_dir = TOP_DIR, config_file = CONFIG_FILE))
