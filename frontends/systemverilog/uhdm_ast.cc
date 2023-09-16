@@ -1410,6 +1410,11 @@ void UhdmAst::visit_one_to_one(const std::vector<int> child_node_types, vpiHandl
 {
     for (auto child : child_node_types) {
         vpiHandle itr = vpi_handle(child, parent_handle);
+        if (itr && (vpi_get(vpiType, itr) == vpiRefTypespec)) {
+            vpiHandle itr_rt = itr;
+            itr = vpi_handle(vpiActual, itr);
+            vpi_release_handle(itr_rt);
+        }
         if (itr) {
             UhdmAst uhdm_ast(this, shared, indent + "  ");
             auto *child_node = uhdm_ast.process_object(itr);
@@ -1483,12 +1488,15 @@ AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
     vpi_get_value(obj_h, &val);
     std::string strValType = "'";
     bool is_signed = false;
-    if (vpiHandle typespec_h = vpi_handle(vpiTypespec, obj_h)) {
-        is_signed = vpi_get(vpiSigned, typespec_h);
-        if (is_signed) {
-            strValType += "s";
+    if (vpiHandle ref_typespec_h = vpi_handle(vpiTypespec, obj_h)) {
+        if (vpiHandle typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
+            is_signed = vpi_get(vpiSigned, typespec_h);
+            if (is_signed) {
+                strValType += "s";
+            }
+            vpi_release_handle(typespec_h);
         }
-        vpi_release_handle(typespec_h);
+        vpi_release_handle(ref_typespec_h);
     }
     std::string val_str;
     if (val.format) { // Needed to handle parameter nodes without typespecs and constants
@@ -2410,9 +2418,12 @@ void UhdmAst::process_array_typespec()
             delete node;
         }
     });
-    if (auto elemtypespec_h = vpi_handle(vpiElemTypespec, obj_h)) {
-        visit_one_to_many({vpiRange}, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-        vpi_release_handle(elemtypespec_h);
+    if (auto ref_elemtypespec_h = vpi_handle(vpiElemTypespec, obj_h)) {
+        if (auto elemtypespec_h = vpi_handle(vpiActual, ref_elemtypespec_h)) {
+            visit_one_to_many({ vpiRange }, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            vpi_release_handle(elemtypespec_h);
+        }
+        vpi_release_handle(ref_elemtypespec_h);
     }
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
     add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
@@ -2424,7 +2435,8 @@ void UhdmAst::process_typespec_member()
     std::vector<AST::AstNode *> unpacked_ranges;
     current_node = make_ast_node(AST::AST_STRUCT_ITEM);
     current_node->str = current_node->str.substr(1);
-    vpiHandle typespec_h = vpi_handle(vpiTypespec, obj_h);
+    vpiHandle ref_typespec_h = vpi_handle(vpiTypespec, obj_h);
+    vpiHandle typespec_h = vpi_handle(vpiActual, ref_typespec_h);
     int typespec_type = vpi_get(vpiType, typespec_h);
     const uhdm_handle *const handle = (const uhdm_handle *)typespec_h;
     const UHDM::BaseClass *const object = (const UHDM::BaseClass *)handle->object;
@@ -2535,6 +2547,7 @@ void UhdmAst::process_typespec_member()
     }
     }
     vpi_release_handle(typespec_h);
+    vpi_release_handle(ref_typespec_h);
     add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
 
@@ -2562,7 +2575,8 @@ void UhdmAst::process_enum_typespec()
 
     const uhdm_handle *const handle = (const uhdm_handle *)obj_h;
     const auto *enum_object = (const UHDM::enum_typespec *)handle->object;
-    const auto *typespec = enum_object->Base_typespec();
+    const auto *ref_typespec = enum_object->Base_typespec();
+    const auto *typespec = ref_typespec ? ref_typespec->Actual_typespec() : nullptr;
 
     if (current_node->str.empty()) {
         // anonymous typespec, check if not already created
@@ -2605,7 +2619,7 @@ void UhdmAst::process_enum_typespec()
         // The `reduceExpr` function needs the whole context of the enum typespec
         //   so it's called here instead of `process_operation` or any other more specific function.
 
-        const UHDM::logic_typespec *logic_typespec_obj = enum_object->Base_typespec()->Cast<const UHDM::logic_typespec *>();
+        const UHDM::logic_typespec *logic_typespec_obj = enum_object->Base_typespec()->Actual_typespec()->Cast<const UHDM::logic_typespec *>();
         std::vector<UHDM::range *> ranges;
         // Check if ranges exist, as Ranges() returns a pointer to std::vector.
         if (logic_typespec_obj->Ranges()) {
@@ -3106,15 +3120,18 @@ void UhdmAst::process_array_net(const UHDM::BaseClass *object)
         if (net_type == vpiLogicNet) {
             current_node->is_logic = true;
             current_node->is_signed = vpi_get(vpiSigned, net_h);
-            vpiHandle typespec_h = vpi_handle(vpiTypespec, net_h);
-            if (!typespec_h) {
-                typespec_h = vpi_handle(vpiTypespec, obj_h);
+            vpiHandle ref_typespec_h = vpi_handle(vpiTypespec, net_h);
+            if (!ref_typespec_h) {
+                ref_typespec_h = vpi_handle(vpiTypespec, obj_h);
             }
-            if (typespec_h) {
-                visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-                vpi_release_handle(typespec_h);
-            } else {
-                visit_one_to_many({vpiRange}, net_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            if (ref_typespec_h) {
+                if (vpiHandle typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
+                    visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+                    vpi_release_handle(typespec_h);
+                } else {
+                    visit_one_to_many({vpiRange}, net_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+                }
+                vpi_release_handle(ref_typespec_h);
             }
         } else if (net_type == vpiStructNet) {
             visit_one_to_one({vpiTypespec}, net_h, [&](AST::AstNode *node) {
@@ -3867,8 +3884,8 @@ void UhdmAst::process_cast_op()
         node->cloneInto(current_node);
         delete node;
     });
-    vpiHandle typespec_h = vpi_handle(vpiTypespec, obj_h);
-    vpi_release_handle(typespec_h);
+    vpiHandle ref_typespec_h = vpi_handle(vpiTypespec, obj_h);
+    vpi_release_handle(ref_typespec_h);
 }
 
 void UhdmAst::process_inside_op()
@@ -4328,23 +4345,27 @@ void UhdmAst::process_tagged_pattern()
     }
     current_node = new AST::AstNode(assign_type);
     current_node->children.push_back(lhs_node);
-    auto typespec_h = vpi_handle(vpiTypespec, obj_h);
-    if (vpi_get(vpiType, typespec_h) == vpiStringTypespec) {
-        std::string field_name = vpi_get_str(vpiName, typespec_h);
-        if (field_name != "default") { // TODO: better support of the default keyword
-            auto field = new AST::AstNode(static_cast<AST::AstNodeType>(AST::Extended::AST_DOT));
-            field->str = field_name;
-            current_node->children[0]->children.push_back(field);
+    if (auto ref_typespec_h = vpi_handle(vpiTypespec, obj_h)) {
+        if (auto typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
+            if (vpi_get(vpiType, typespec_h) == vpiStringTypespec) {
+                std::string field_name = vpi_get_str(vpiName, typespec_h);
+                if (field_name != "default") { // TODO: better support of the default keyword
+                    auto field = new AST::AstNode(static_cast<AST::AstNodeType>(AST::Extended::AST_DOT));
+                    field->str = field_name;
+                    current_node->children[0]->children.push_back(field);
+                }
+            } else if (vpi_get(vpiType, typespec_h) == vpiIntegerTypespec) {
+                s_vpi_value val;
+                vpi_get_value(typespec_h, &val);
+                auto range = new AST::AstNode(AST::AST_RANGE);
+                auto index = AST::AstNode::mkconst_int(val.value.integer, false);
+                range->children.push_back(index);
+                current_node->children[0]->children.push_back(range);
+            }
+            vpi_release_handle(typespec_h);
         }
-    } else if (vpi_get(vpiType, typespec_h) == vpiIntegerTypespec) {
-        s_vpi_value val;
-        vpi_get_value(typespec_h, &val);
-        auto range = new AST::AstNode(AST::AST_RANGE);
-        auto index = AST::AstNode::mkconst_int(val.value.integer, false);
-        range->children.push_back(index);
-        current_node->children[0]->children.push_back(range);
+        vpi_release_handle(ref_typespec_h);
     }
-    vpi_release_handle(typespec_h);
     visit_one_to_one({vpiPattern}, obj_h, [&](AST::AstNode *node) { current_node->children.push_back(node); });
 }
 
@@ -4372,9 +4393,14 @@ void UhdmAst::process_logic_var()
         delete node;
     });
     // TODO: Handling below seems similar to other typespec accesses for range. Candidate for extraction to a function.
-    if (auto typespec_h = vpi_handle(vpiTypespec, obj_h)) {
-        visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-        vpi_release_handle(typespec_h);
+    if (auto ref_typespec_h = vpi_handle(vpiTypespec, obj_h)) {
+        if (auto typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
+            visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            vpi_release_handle(typespec_h);
+        } else {
+            visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+        }
+        vpi_release_handle(ref_typespec_h);
     } else {
         visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
     }
@@ -4791,91 +4817,93 @@ void UhdmAst::process_parameter()
     std::vector<AST::AstNode *> packed_ranges;   // comes before wire name
     std::vector<AST::AstNode *> unpacked_ranges; // comes after wire name
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
-    vpiHandle typespec_h = vpi_handle(vpiTypespec, obj_h);
-    if (typespec_h) {
-        int typespec_type = vpi_get(vpiType, typespec_h);
-        switch (typespec_type) {
-        case vpiBitTypespec:
-        case vpiLogicTypespec: {
-            current_node->is_logic = true;
-            visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-            break;
-        }
-        case vpiByteTypespec: {
-            packed_ranges.push_back(make_range(7, 0));
-            break;
-        }
-        case vpiEnumTypespec:
-        case vpiRealTypespec:
-        case vpiStringTypespec: {
-            break;
-        }
-        case vpiIntTypespec:
-        case vpiIntegerTypespec: {
-            visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-            if (packed_ranges.empty()) {
-                packed_ranges.push_back(make_range(31, 0));
+    if (vpiHandle ref_typespec_h = vpi_handle(vpiTypespec, obj_h)) {
+        if (vpiHandle typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
+            int typespec_type = vpi_get(vpiType, typespec_h);
+            switch (typespec_type) {
+            case vpiBitTypespec:
+            case vpiLogicTypespec: {
+                current_node->is_logic = true;
+                visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+                break;
             }
-            break;
-        }
-        case vpiShortIntTypespec: {
-            packed_ranges.push_back(make_range(15, 0));
-            break;
-        }
-        case vpiTimeTypespec:
-        case vpiLongIntTypespec: {
-            packed_ranges.push_back(make_range(63, 0));
-            break;
-        }
-        case vpiUnionTypespec:
-        case vpiStructTypespec: {
-            visit_one_to_one({vpiTypespec}, obj_h, [&](AST::AstNode *node) {
-                if (node && !node->str.empty()) {
-                    auto wiretype_node = make_ast_node(AST::AST_WIRETYPE);
-                    wiretype_node->str = node->str;
-                    current_node->children.push_back(wiretype_node);
+            case vpiByteTypespec: {
+                packed_ranges.push_back(make_range(7, 0));
+                break;
+            }
+            case vpiEnumTypespec:
+            case vpiRealTypespec:
+            case vpiStringTypespec: {
+                break;
+            }
+            case vpiIntTypespec:
+            case vpiIntegerTypespec: {
+                visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+                if (packed_ranges.empty()) {
+                    packed_ranges.push_back(make_range(31, 0));
                 }
-                current_node->is_custom_type = true;
-                auto it = shared.param_types.find(current_node->str);
-                if (it == shared.param_types.end()) {
-                    shared.param_types.insert(std::make_pair(current_node->str, node));
-                } else {
-                    delete node;
-                }
-            });
-            break;
-        }
-        case vpiPackedArrayTypespec:
-        case vpiArrayTypespec: {
-            visit_one_to_one({vpiElemTypespec}, typespec_h, [&](AST::AstNode *node) {
-                if (!node->str.empty()) {
-                    auto wiretype_node = make_ast_node(AST::AST_WIRETYPE);
-                    wiretype_node->str = node->str;
-                    current_node->children.push_back(wiretype_node);
+                break;
+            }
+            case vpiShortIntTypespec: {
+                packed_ranges.push_back(make_range(15, 0));
+                break;
+            }
+            case vpiTimeTypespec:
+            case vpiLongIntTypespec: {
+                packed_ranges.push_back(make_range(63, 0));
+                break;
+            }
+            case vpiUnionTypespec:
+            case vpiStructTypespec: {
+                visit_one_to_one({vpiTypespec}, obj_h, [&](AST::AstNode *node) {
+                    if (node && !node->str.empty()) {
+                        auto wiretype_node = make_ast_node(AST::AST_WIRETYPE);
+                        wiretype_node->str = node->str;
+                        current_node->children.push_back(wiretype_node);
+                    }
                     current_node->is_custom_type = true;
                     auto it = shared.param_types.find(current_node->str);
-                    if (it == shared.param_types.end())
-                        shared.param_types.insert(std::make_pair(current_node->str, node->clone()));
-                }
-                if (node && node->attributes.count(UhdmAst::packed_ranges())) {
-                    for (auto r : node->attributes[UhdmAst::packed_ranges()]->children) {
-                        packed_ranges.push_back(r->clone());
+                    if (it == shared.param_types.end()) {
+                        shared.param_types.insert(std::make_pair(current_node->str, node));
+                    } else {
+                        delete node;
                     }
-                }
-                delete node;
-            });
-            break;
+                });
+                break;
+            }
+            case vpiPackedArrayTypespec:
+            case vpiArrayTypespec: {
+                visit_one_to_one({vpiElemTypespec}, typespec_h, [&](AST::AstNode *node) {
+                    if (!node->str.empty()) {
+                        auto wiretype_node = make_ast_node(AST::AST_WIRETYPE);
+                        wiretype_node->str = node->str;
+                        current_node->children.push_back(wiretype_node);
+                        current_node->is_custom_type = true;
+                        auto it = shared.param_types.find(current_node->str);
+                        if (it == shared.param_types.end())
+                            shared.param_types.insert(std::make_pair(current_node->str, node->clone()));
+                    }
+                    if (node && node->attributes.count(UhdmAst::packed_ranges())) {
+                        for (auto r : node->attributes[UhdmAst::packed_ranges()]->children) {
+                            packed_ranges.push_back(r->clone());
+                        }
+                    }
+                    delete node;
+                });
+                break;
+            }
+            default: {
+                const uhdm_handle *const handle = (const uhdm_handle *)typespec_h;
+                const UHDM::BaseClass *const object = (const UHDM::BaseClass *)handle->object;
+                report_error("%.*s:%d: Encountered unhandled typespec in process_parameter: '%.*s' of type '%s'\n", (int)object->VpiFile().length(),
+                             object->VpiFile().data(), object->VpiLineNo(), (int)object->VpiName().length(), object->VpiName().data(),
+                             UHDM::VpiTypeName(typespec_h).c_str());
+                break;
+            }
+            }
+            vpi_release_handle(typespec_h);
         }
-        default: {
-            const uhdm_handle *const handle = (const uhdm_handle *)typespec_h;
-            const UHDM::BaseClass *const object = (const UHDM::BaseClass *)handle->object;
-            report_error("%.*s:%d: Encountered unhandled typespec in process_parameter: '%.*s' of type '%s'\n", (int)object->VpiFile().length(),
-                         object->VpiFile().data(), object->VpiLineNo(), (int)object->VpiName().length(), object->VpiName().data(),
-                         UHDM::VpiTypeName(typespec_h).c_str());
-            break;
-        }
-        }
-        vpi_release_handle(typespec_h);
+        vpi_release_handle(ref_typespec_h);
     }
     AST::AstNode *constant_node = process_value(obj_h);
     if (constant_node) {
@@ -5140,6 +5168,7 @@ AST::AstNode *UhdmAst::process_object(vpiHandle obj_handle)
     case vpiInterfaceTypespec:
     case vpiRefVar:
     case vpiRefObj:
+    case vpiRefTypespec:
         current_node = make_ast_node(AST::AST_IDENTIFIER);
         break;
     case vpiNet:
