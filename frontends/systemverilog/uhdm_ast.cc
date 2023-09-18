@@ -2045,7 +2045,7 @@ AST::AstNode *UhdmAst::find_ancestor(const std::unordered_set<AST::AstNodeType> 
 void UhdmAst::process_design()
 {
     current_node = make_ast_node(AST::AST_DESIGN);
-    visit_one_to_many({UHDM::uhdmallInterfaces, UHDM::uhdmtopPackages, UHDM::uhdmallModules, UHDM::uhdmtopModules, vpiTaskFunc}, obj_h,
+    visit_one_to_many({UHDM::uhdmallInterfaces, UHDM::uhdmtopPackages, UHDM::uhdmtopModules, vpiTaskFunc}, obj_h,
                       [&](AST::AstNode *node) {
                           if (node) {
                               shared.top_nodes[node->str] = node;
@@ -2193,6 +2193,7 @@ void UhdmAst::process_module()
             delete_attribute(current_node, UhdmAst::partial());
         } else {
             // processing nodes belonging to 'uhdmallModules'
+            // TODO get rid of this? we no longer process uhdmallModules
             current_node = make_ast_node(AST::AST_MODULE);
             current_node->str = type;
             shared.top_nodes[current_node->str] = current_node;
