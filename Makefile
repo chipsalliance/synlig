@@ -399,6 +399,9 @@ build@${t} : ${${ts}.output_files}
 install@${t} : private t := ${t}
 install@${t} : private ts := ${ts}
 install@${t} : build@${t}
+ifdef ${ts}.install_command
+	+@${${ts}.install_command}
+else
 	$(foreach srcdst,${${ts}.install_copy_list},\
 		$(foreach src,$(word 1,$(subst :,${C.SP},${srcdst})),\
 			$(foreach dst,$(call ToAbsPaths,${OUT_DIR}$(word 2,$(subst :,${C.SP},${srcdst}))),\
@@ -407,6 +410,7 @@ install@${t} : build@${t}
 			)\
 		)\
 	)
+endif
 
 
 .PHONY: clean@${t}

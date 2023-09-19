@@ -83,13 +83,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: sv2v
-          path: image/bin/
+          path: out/current/bin/
 
       - name: Test
         run: |
-          chmod +x image/bin/sv2v
+          chmod +x out/current/bin/sv2v
           source .github/scripts/common.sh
-          export PATH="$PWD/image/bin:$PATH"
+          export PATH="$PWD/out/current/bin:$PATH"
           ./run_fv_tests.mk -j$(nproc) \
               TEST_SUITE_DIR:="$(realpath ${TEST_SUITE_DIR})" \
               TEST_SUITE_NAME:="${TEST_SUITE_NAME}" \

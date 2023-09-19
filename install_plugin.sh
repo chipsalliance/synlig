@@ -11,7 +11,7 @@ YOSYS_DATDIR=$(yosys-config --datdir)
 YOSYS_PLUGIN_DIR=$YOSYS_DATDIR/plugins
 
 INSTALL_SCRIPT_DIR=$(dirname $(realpath $0))
-SYSTEMVERILOG_PLUGIN_PATH=$INSTALL_SCRIPT_DIR/image/share/yosys/plugins/systemverilog.so
+SYSTEMVERILOG_PLUGIN_PATH=$INSTALL_SCRIPT_DIR/out/current/share/yosys/plugins/systemverilog.so
 
 mkdir -p $YOSYS_PLUGIN_DIR
 cp -v $SYSTEMVERILOG_PLUGIN_PATH $YOSYS_PLUGIN_DIR

@@ -88,6 +88,6 @@ jobs:
 
       - name: Test sv2v pull and build
         run: |
-          export PATH=`pwd`/image/bin:$PATH
+          export PATH=`pwd`/out/current/bin:$PATH
           tuttest README.md sv2v-update | bash -
           tuttest README.md sv2v-build | bash -

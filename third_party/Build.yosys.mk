@@ -1,6 +1,6 @@
 t       := yosys
 ts      := $(call GetTargetStructName,${t})
-out_dir := $(call GetTargetOutDir,${t})
+out_dir := $(call GetTargetBuildDir,${t})
 
 cxx_is_clang := $(findstring clang,$(notdir ${CXX}))
 
@@ -31,6 +31,9 @@ ${ts}.output_files := \
 ${ts}.output_dirs := \
 	${out_dir} \
 	${${ts}.out_install_dir}
+
+${ts}.install_copy_list := \
+	${${ts}.out_install_dir}*:
 
 ${ts}.make_args := \
 	PREFIX:=${${ts}.out_install_dir} \

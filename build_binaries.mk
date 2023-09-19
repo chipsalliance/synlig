@@ -18,14 +18,21 @@ sh_quote_list = $(foreach _v,$(strip ${1}),${chr.quot}$(subst ${chr.quot},${chr.
 #───────────────────────────────────────────────────────────────────────────────
 
 REPO_DIR := ${this_mk.dir}
-INSTALL_DIR := ${this_mk.dir}/image
+INSTALL_DIR := ${this_mk.dir}/out/current
 
-ENABLE_ASAN := 0
-
-CC ?= cc
-CXX ?= c++
-export CC
-export CXX
+ENABLE_ASAN ?= 0
+ifneq (${CC},)
+build_config += CC:=${CC}
+endif
+ifneq (${CXX},)
+build_config += CXX:=${CXX}
+endif
+ifneq (${LD},)
+build_config += LD:=${LD}
+endif
+ifeq ($(strip ${ENABLE_ASAN}),1)
+build_config += CFG_BUILD_TYPE=asan
+endif
 
 $(info ------------------------------------------------------------------------)
 $(foreach var,REPO_DIR INSTALL_DIR ENABLE_ASAN CC CXX,\
@@ -40,78 +47,39 @@ $(info ------------------------------------------------------------------------)
 .PHONY: all
 all: install-plugins
 
-${INSTALL_DIR}:
-	mkdir -p $@
-
 #───────────────────────────────────────────────────────────────────────────────
 # Surelog
 #───────────────────────────────────────────────────────────────────────────────
 
-SURELOG_SRC_DIR := ${REPO_DIR}/third_party/surelog
-SURELOG_BUILD_DIR := ${REPO_DIR}/third_party/surelog/build
-
-surelog_build_type:=Release
-ifeq ($(strip ${ENABLE_ASAN}),1)
-surelog_build_type:=Debug
-endif
-
 .PHONY: clean-surelog
 clean-surelog:
-	rm -rf ${SURELOG_BUILD_DIR}
+	${MAKE} clean@surelog ${build_config}
 
 .PHONY: build-surelog
 build-surelog:
-	cmake \
-			-DCMAKE_BUILD_TYPE=${surelog_build_type} \
-			-DCMAKE_INSTALL_PREFIX=$(call sh_quote,${INSTALL_DIR}) \
-			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-			-S $(call sh_quote,${SURELOG_SRC_DIR}) -B $(call sh_quote,${SURELOG_BUILD_DIR})
-	$(MAKE) -C $(call sh_quote,${SURELOG_BUILD_DIR}) --no-print-directory
+	${MAKE} build@surelog ${build_config}
 
 .PHONY: install-surelog
-install-surelog: build-surelog | ${INSTALL_DIR}
-	$(MAKE) -C $(call sh_quote,${SURELOG_BUILD_DIR}) --no-print-directory install
+install-surelog:
+	${MAKE} install@surelog ${build_config}
 
 #───────────────────────────────────────────────────────────────────────────────
 # Yosys
 #───────────────────────────────────────────────────────────────────────────────
 
 YOSYS_SRC_DIR := ${REPO_DIR}/third_party/yosys
-yosys_make_args := PREFIX:=${INSTALL_DIR}
-
-ifeq ($(findstring clang,${CC}),clang)
-yosys_make_args += \
-		CONFIG:=clang \
-		CC:=${CC} \
-		CXX:=${CC} \
-		LD:=${CXX}
-else
-yosys_make_args += \
-		CONFIG:=gcc
-endif
-
-ifeq ($(strip ${ENABLE_ASAN}),1)
-yosys_make_args += \
-		STRIP:=/bin/true \
-		SANITIZER:=address \
-		ENABLE_DEBUG:=1
-
-ifeq ($(findstring clang,${CC}),clang)
-build-yosys install-yosys: export override CXXFLAGS += -fsanitize-address-use-after-return=always
-endif
-endif
 
 .PHONY: clean-yosys
 clean-yosys:
-	${MAKE} -C ${YOSYS_SRC_DIR} ${yosys_make_args} clean
+	${MAKE} clean@yosys ${build_config}
 
 .PHONY: build-yosys
 build-yosys:
-	${MAKE} -C ${YOSYS_SRC_DIR} --no-print-directory ${yosys_make_args}
+	${MAKE} build@yosys ${build_config}
 
 .PHONY: install-yosys
-install-yosys: build-yosys | ${INSTALL_DIR}
-	${MAKE} -C ${YOSYS_SRC_DIR} --no-print-directory ${yosys_make_args} install
+install-yosys:
+	${MAKE} install@yosys ${build_config}
 
 #───────────────────────────────────────────────────────────────────────────────
 # fakedlclose
@@ -128,38 +96,28 @@ build-fakedlclose:
 	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR}
 
 .PHONY: install-fakedlclose
-install-fakedlclose: build-fakedlclose | ${INSTALL_DIR}
+install-fakedlclose: build-fakedlclose
 	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} INSTALL_DIR:=${INSTALL_DIR} install
 
 #───────────────────────────────────────────────────────────────────────────────
 # Plugin
 #───────────────────────────────────────────────────────────────────────────────
 
-plugin_make_args := UHDM_INSTALL_DIR:=${INSTALL_DIR} CC:=${CC} CXX:=${CXX}
-
-ifeq ($(strip ${ENABLE_ASAN}),1)
-plugin_make_args += EXTRA_FLAGS:='-g'
-
-plugin_build_deps += build-fakedlclose
-plugin_install_deps += install-fakedlclose
-else
-plugin_build_deps :=
-plugin_install_deps :=
-endif
-
+# TODO: migrate to new Makefiles
+.PHONY: build-plugin
 clean-plugin:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
-	${MAKE} -C frontends/systemverilog ${plugin_make_args} clean
+	${MAKE} clean@systemverilog-plugin ${build_config}
 
-.PHONY: build-plugin
-build-plugin: install-yosys install-surelog ${plugin_build_deps}
+.PHONY: build-plugin build-fakedlclose
+build-plugin:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
-	${MAKE} -C frontends/systemverilog --no-print-directory ${plugin_make_args} build
+	${MAKE} build@systemverilog-plugin ${build_config}
 
-.PHONY: install-plugin
-install-plugin: build-plugin ${plugin_install_deps} | ${INSTALL_DIR}
+.PHONY: install-plugin install-fakedlclose
+install-plugin:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
-	${MAKE} -C frontends/systemverilog --no-print-directory ${plugin_make_args} install
+	${MAKE} install@systemverilog-plugin ${build_config}
 
 # For backwards compatibility
 .PHONY: clean-plugins
@@ -171,3 +129,6 @@ build-plugins: build-plugin
 .PHONY: install-plugins
 install-plugins: install-plugin
 
+.NOTPARALLEL: clean-surelog clean-yosys clean-plugin \
+	build-surelog build-yosys build-plugin \
+	install-surelog install-yosys install-plugin

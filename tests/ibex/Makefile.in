@@ -11,7 +11,7 @@ ${IBEX}/.gitpatch:
 
 uhdm/yosys/synth-ibex: clean-build ${IBEX}/.gitpatch
 	virtualenv ${root_dir}/venv-ibex
-	(export PATH=${root_dir}/../image/bin:${PATH} && \
+	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \
 		pip install -r ${IBEX}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@svplugin_support && \
@@ -19,7 +19,7 @@ uhdm/yosys/synth-ibex: clean-build ${IBEX}/.gitpatch
 
 uhdm/yosys/synth-ibex-build: clean-build ${IBEX}/.gitpatch
 	virtualenv ${root_dir}/venv-ibex
-	(export PATH=${root_dir}/../image/bin:${PATH} && \
+	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \
 		pip install -r ${IBEX}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@svplugin_support && \
@@ -62,7 +62,7 @@ download-f4pga: | ${root_dir}/env/f4pga
 
 .PHONY: install-plugins
 install-plugins:
-	export PATH=${root_dir}/../image/bin:${PATH} && \
+	export PATH=${OUT_DIR}/bin:${PATH} && \
 		make -C ${root_dir}/../third_party/yosys_f4pga_plugins \
 			install_xdc install_fasm install_params install_sdc install_design_introspection
 
@@ -95,7 +95,7 @@ ${IBEX}/.gitf4pgapatch: ${IBEX}/.gitpatch
 
 uhdm/yosys/synth-ibex-f4pga: clean-build ${IBEX}/.gitf4pgapatch
 	# We're using ${IN_CONDA_ENV} to enter the conda environment instead of using virtualenv.
-	(export PATH=${root_dir}/../image/bin:${PATH} \
+	(export PATH=${OUT_DIR}/bin:${PATH} \
 		&& ${IN_CONDA_ENV} fusesoc --verbose --cores-root=${IBEX} \
 			run --build --tool symbiflow --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem")
 

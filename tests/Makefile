@@ -3,8 +3,9 @@ TEST ?= simple_tests/onenet
 
 root_dir:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-SURELOG_BIN = ${root_dir}/../image/bin/surelog
-YOSYS_BIN = ${root_dir}/../image/bin/yosys
+OUT_DIR = ${root_dir}/../out/current
+SURELOG_BIN = ${OUT_DIR}/bin/surelog
+YOSYS_BIN = ${OUT_DIR}/bin/yosys
 COVARAGE_REPORT = ${root_dir}/build/coverage
 
 TEST_DIR := $(realpath $(root_dir)/$(TEST))

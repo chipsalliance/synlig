@@ -55,7 +55,7 @@ The plugin is now ready to be used. and you can go to the [Usage](#usage) sectio
 ### Build required binaries
 
 You can build all required binaries using the provided `build_binaries.sh` script. 
-This script will build Surelog, Yosys and Synlig, and place them in the `image` folder. 
+This script will build Surelog, Yosys and Synlig, and place them in the `out` directory.
 You need to add this folder to your `PATH` variable to ensure you are using correct versions of the binaries.
 
 <!-- name="build-binaries" -->
@@ -69,7 +69,7 @@ To use Yosys built from a submodule, make sure to either use absolute paths, or 
 
 <!-- name="path-setup" -->
 ``` bash
-   export PATH=`pwd`/image/bin:$PATH
+   export PATH=`pwd`/out/current/bin:$PATH
 ```
 
 ## Usage
@@ -166,13 +166,13 @@ To download the sv2v submodule run:
    git submodule update --init --recursive --checkout third_party/sv2v
 ```
 
-To build sv2v and copy it to `images/bin` (where it is expected to be by the test script) run:
+To build sv2v and copy it to `out/current/bin` (where it is expected to be by the test script) run:
 
 <!-- name="sv2v-build" -->
 ``` bash
-wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/image/bin
+wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/out/current/bin
 make -j$(nproc) -C $PWD/third_party/sv2v
-cp ./third_party/sv2v/bin/sv2v ./image/bin
+cp ./third_party/sv2v/bin/sv2v ./out/current/bin
 ```
 
 #### Testing

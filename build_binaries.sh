@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
-: "${VARIABLE:=DEFAULT_VALUE}"
-: "${INSTALL_PATH:=$PWD/image}"
-
 SKIP_YOSYS=0
 BUILD_SV2V=0
 
@@ -27,26 +24,14 @@ for arg in $@; do
   esac
 done
 
-#Surelog
-cd third_party/surelog
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DCMAKE_POSITION_INDEPENDENT_CODE=ON -S . -B build
-cmake --build build -j $(nproc)
-cmake --install build
-cd ../..
+# Surelog & SV plugin
+make install@surelog
+make install@systemverilog-plugin
 
-#Yosys
-if [ "$SKIP_YOSYS" -eq 0 ]; then
-cd third_party/yosys
-make CONFIG=gcc PREFIX=$INSTALL_PATH install -j $(nproc)
-cd ../..
+# Yosys
+if [ "$SKIP_YOSYS" -eq "0" ]; then
+make install@yosys
 fi
-
-#UHDM plugin
-if [ $PLUGIN_ASAN -eq 1 ]; then
-  PLUGIN_LDFLAGS="-fsanitize=address -fcheck-new -fno-omit-frame-pointer -static-libasan"
-fi
-export PATH=$INSTALL_PATH/bin:${PATH}
-UHDM_INSTALL_DIR=$INSTALL_PATH LDFLAGS=$PLUGIN_LDFLAGS make -C $PWD/frontends/systemverilog install -j$(nproc)
 
 #sv2v
 if [ $BUILD_SV2V -eq 1 ]; then

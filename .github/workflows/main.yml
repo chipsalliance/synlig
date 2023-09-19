@@ -135,7 +135,7 @@ jobs:
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue
           # See https://github.com/actions/upload-artifact/issues/38
-          tar -cvf ${{ matrix.artifact-name }}.tar image
+          tar -cvf ${{ matrix.artifact-name }}.tar out
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
@@ -190,7 +190,7 @@ jobs:
         id: cache-restore
         uses: actions/cache/restore@v3
         with:
-          path: image/bin/sv2v
+          path: third_party/sv2v/bin/sv2v
           key: sv2v@${{ steps.rev.outputs.sv2v-submodule-rev }}
 
       - name: Checkout submodules
@@ -204,24 +204,22 @@ jobs:
       - name: Build binaries
         if: ${{ steps.cache-restore.outputs.cache-hit != 'true' }}
         run: |
-          mkdir -p $PWD/image/bin
           export PATH=$PWD/install/bin:/usr/local/bin:${PATH}
           wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
           make -j$(nproc) -C $PWD/third_party/sv2v
-          cp $PWD/third_party/sv2v/bin/sv2v image/bin
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
           name: sv2v
           path: |
-            image/bin/sv2v
+            third_party/sv2v/bin/sv2v
 
       - name: Save build results to cache
         if: ${{ steps.cache-restore.outputs.cache-hit != 'true' && ! (failure() || cancelled()) }}
         uses: actions/cache/save@v3
         with:
-          path: image/bin/sv2v
+          path: third_party/sv2v/bin/sv2v
           key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Upload load graphs
@@ -294,9 +292,9 @@ jobs:
           TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
           echo "TAG=$TAG" >> $GITHUB_ENV
-          ls -lah image
-          tar -zcvf $FULL_TARBALL image
-          tar -zcvf $PLUGIN_TARBALL image/share/yosys/plugins/systemverilog.so install_plugin.sh
+          ls -lah out
+          tar -zcvf $FULL_TARBALL out
+          tar -zcvf $PLUGIN_TARBALL out/share/yosys/plugins/systemverilog.so install_plugin.sh
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:
