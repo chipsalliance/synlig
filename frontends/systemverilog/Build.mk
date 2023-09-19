@@ -1,6 +1,6 @@
 t       := systemverilog-plugin
 ts      := $(call GetTargetStructName,${t})
-out_dir := $(call GetTargetOutDir,${t})
+out_dir := $(call GetTargetBuildDir,${t})
 
 cxx_is_clang := $(findstring clang,$(notdir ${CXX}))
 

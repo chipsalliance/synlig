@@ -1,6 +1,6 @@
 t       := surelog
 ts      := $(call GetTargetStructName,${t})
-out_dir := $(call GetTargetOutDir,${t})
+out_dir := $(call GetTargetBuildDir,${t})
 
 ${ts}.src_dir         := ${TOP_DIR}third_party/surelog/
 ${ts}.out_build_dir   := ${out_dir}build/
@@ -62,7 +62,7 @@ define ${ts}.build_command
 				-DANTLR_BUILD_SHARED=OFF \
 				-DCMAKE_INSTALL_PREFIX=${${ts}.out_install_dir} \
 				-S $(call ShQuote,${${ts}.src_dir}) \
-				-B $(call ShQuote,${${ts}.out_build_dir})
+				-B .
 	fi
 	${MAKE} --no-print-directory install
 endef

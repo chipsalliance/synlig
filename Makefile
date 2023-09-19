@@ -142,17 +142,35 @@ $(if $(filter-out 1,$(words $(filter ${ALL_ALLOWED_BUILD_TYPES},${CFG_BUILD_TYPE
 	$(error CFG_BUILD_TYPE: invalid value (${CFG_BUILD_TYPE}). Must be one of: ${ALL_ALLOWED_BUILD_TYPES})\
 )
 override BUILD_TYPE := ${CFG_BUILD_TYPE}
-
-override OUT_DIR := $(call ToAbsDirPaths,${CFG_OUT_DIR})
-
 _cfg_build_type := $(value CFG_BUILD_TYPE)
 _cfg_build_type_eq := $(if $(filter recursive,$(flavor CFG_BUILD_TYPE)),=,:=)
+
+override BUILD_DIR := $(call ToAbsDirPaths,${CFG_BUILD_DIR})
+# Resolve BUILD_DIR with CFG_BUILD_TYPE set to space to get common path prefix for
+# each build type.
+override CFG_BUILD_TYPE = ${C.SP}
+override build_dir_common_parent := $(call ToAbsDirPaths,$(dir $(firstword ${CFG_BUILD_DIR})))
+ifeq (${build_dir_common_parent},${BUILD_DIR})
+# BUILD_DIR does not depend on CFG_BUILD_TYPE. Do not create "current" symlink.
+override undefine build_dir_current_symlink
+else
+# Resolve BUILD_DIR with CFG_BUILD_TYPE set to "current" and remove common prefix
+# to get "common" symlink path
+override CFG_BUILD_TYPE = current
+override build_dir_current_symlink := $(patsubst %/,%,$(call ToAbsDirPaths,${CFG_BUILD_DIR}))
+# Calculate relative symlink target
+override build_dir_current_symlink_target := $(firstword $(subst /,${C.SP},$(patsubst ${build_dir_common_parent}%,%,${BUILD_DIR})))
+endif
+override undefine CFG_BUILD_TYPE
+$(eval CFG_BUILD_TYPE ${_cfg_build_type_eq} ${_cfg_build_type})
+
+override OUT_DIR := $(call ToAbsDirPaths,${CFG_OUT_DIR})
 # Resolve OUT_DIR with CFG_BUILD_TYPE set to space to get common path prefix for
 # each build type.
 override CFG_BUILD_TYPE = ${C.SP}
 override out_dir_common_parent := $(call ToAbsDirPaths,$(dir $(firstword ${CFG_OUT_DIR})))
 ifeq (${out_dir_common_parent},${OUT_DIR})
-# OUT_DIR does not depend on CFG_BUILT_TYPE. Do not create "current" symlink.
+# OUT_DIR does not depend on CFG_BUILD_TYPE. Do not create "current" symlink.
 override undefine out_dir_current_symlink
 else
 # Resolve OUT_DIR with CFG_BUILD_TYPE set to "current" and remove common prefix
@@ -164,16 +182,17 @@ override out_dir_current_symlink_target := $(firstword $(subst /,${C.SP},$(patsu
 endif
 override undefine CFG_BUILD_TYPE
 $(eval CFG_BUILD_TYPE ${_cfg_build_type_eq} ${_cfg_build_type})
+
 override undefine _cfg_build_type
 override undefine _cfg_build_type_eq
 
 
 # Set derived constants
 
-override OUT_BUILD_DIR := ${OUT_DIR}build/
-override OUT_PRODUCT_DIR := ${OUT_DIR}product/
+override BUILD_DIR := ${CFG_BUILD_DIR}
+override OUT_DIR := ${CFG_OUT_DIR}
 
-GetTargetOutDir = ${OUT_BUILD_DIR}${1}/
+GetTargetBuildDir = $(call ToAbsPaths,${BUILD_DIR}${1}/)
 
 
 # Export non-empty tool-related variables
@@ -188,6 +207,7 @@ $(foreach v,${tool_related_variables},$(if ${${v}},$(eval export ${v})))
 ifneq ($(filter-out list help,${MAKECMDGOALS}),)
 variables_to_dump := \
 	CFG_BUILD_TYPE \
+	CFG_BUILD_DIR \
 	CFG_OUT_DIR \
 	CC \
 	CXX \
@@ -219,6 +239,10 @@ endif
 
 # Skip this for targets that do not build anything.
 ifneq ($(filter-out list help,${MAKECMDGOALS}),)
+ifdef build_dir_current_symlink
+$(shell mkdir -p ${build_dir_common_parent})
+$(shell ln -fs -T ${build_dir_current_symlink_target} ${build_dir_current_symlink})
+endif
 ifdef out_dir_current_symlink
 $(shell mkdir -p ${out_dir_common_parent})
 $(shell ln -fs -T ${out_dir_current_symlink_target} ${out_dir_current_symlink})
@@ -231,7 +255,7 @@ endif
 # Skip this for targets that do not build anything.
 ifneq ($(filter-out list clean help,${MAKECMDGOALS}),)
 define buildconfig_state_file_content :=
-BUILD_TYPE:=${BUILD_TYPE}
+CFG_BUILD_TYPE:=${BUILD_TYPE}
 CC:=${CC}
 CXX:=${CXX}
 LD:=${LD}
@@ -241,37 +265,37 @@ LDFLAGS:=${LDFLAGS}
 LDLIBS:=${LDLIBS}
 endef
 
-buildconfig_state_file := $(wildcard ${OUT_DIR}buildconfig)
+buildconfig_state_file := $(wildcard ${BUILD_DIR}buildconfig)
 ifdef buildconfig_state_file
 $(file >${buildconfig_state_file}.new,${buildconfig_state_file_content}${C.NL})
 config_changed := $(shell cmp ${buildconfig_state_file} ${buildconfig_state_file}.new || echo 1)
 ifdef config_changed
 $(shell mv ${buildconfig_state_file} ${buildconfig_state_file}.old)
-$(shell cd ${OUT_DIR};  diff -tu buildconfig.old buildconfig.new > ${OUT_DIR}.buildconfig.diff)
+$(shell cd ${BUILD_DIR};  diff -tu buildconfig.old buildconfig.new > ${BUILD_DIR}.buildconfig.diff)
 define warning_message :=
-WARNING${C.DC} Build configuration for the output directory changed!
+WARNING${C.DC} Build configuration for the build directory changed!
 It is recommended to interrupt this build and clean the directory with:
 
-	${MAKE} OUT_DIR:=${OUT_DIR} clean
+	${MAKE} CFG_BUILD_DIR:=${BUILD_DIR} clean
 
 Configuration diff:
 ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-$(file <${OUT_DIR}.buildconfig.diff)
+$(file <${BUILD_DIR}.buildconfig.diff)
 ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
 
 This message won't be shown again. The original buildconfig file has been moved to:
 ${buildconfig_state_file}.old
 endef
-$(shell rm ${OUT_DIR}.buildconfig.diff)
+$(shell rm ${BUILD_DIR}.buildconfig.diff)
 $(warning ${warning_message})
 undefine warning_message
 endif
-$(shell mv ${buildconfig_state_file}.new ${buildconfig_state_file})
+$(shell cp ${buildconfig_state_file}.new ${buildconfig_state_file})
 undefine config_changed
 else
 # TODO(mglb): convert it to a target
-buildconfig_state_file := ${OUT_DIR}buildconfig
-$(shell mkdir -p ${OUT_DIR})
+buildconfig_state_file := ${BUILD_DIR}buildconfig
+$(shell mkdir -p ${BUILD_DIR})
 $(file >${buildconfig_state_file},${buildconfig_state_file_content}${C.NL})
 endif
 undefine buildconfig_state_file_content
@@ -347,8 +371,8 @@ install : $(foreach t,${GetTargetsList}, install@${t})
 .PHONY: clean
 clean : $(foreach t,${GetTargetsList},$(if ${$(call GetTargetStructName,${t}).src_clean_command},srcclean@${t}))
 	@:
-	if [[ -e ${OUT_DIR}buildconfig ]]; then
-		rm -rf ${OUT_BUILD_DIR} ${OUT_PRODUCT_DIR} ${OUT_DIR}buildconfig ${OUT_DIR}buildconfig.*
+	if [[ -e ${BUILD_DIR}buildconfig ]]; then
+		rm -rf ${BUILD_DIR} ${OUT_DIR}
 	fi
 
 #───────────────────────────────────────────────────────────────────────────────
@@ -377,7 +401,7 @@ install@${t} : private ts := ${ts}
 install@${t} : build@${t}
 	$(foreach srcdst,${${ts}.install_copy_list},\
 		$(foreach src,$(word 1,$(subst :,${C.SP},${srcdst})),\
-			$(foreach dst,$(call ToAbsPaths,${OUT_PRODUCT_DIR}$(word 2,$(subst :,${C.SP},${srcdst}))),\
+			$(foreach dst,$(call ToAbsPaths,${OUT_DIR}$(word 2,$(subst :,${C.SP},${srcdst}))),\
 				$(if $(filter %/,${dst}),mkdir -p ${dst}${C.NL})\
 				cp -ar ${src} ${dst}${C.NL}\
 			)\
@@ -388,7 +412,7 @@ install@${t} : build@${t}
 .PHONY: clean@${t}
 clean@${t} : private t := ${t}
 clean@${t} :
-	rm -rf $(call ShQuote,$(call GetTargetOutDir,${t}))
+	rm -rf $(call ShQuote,$(call GetTargetBuildDir,${t}))
 
 
 ifdef ${ts}.rules
