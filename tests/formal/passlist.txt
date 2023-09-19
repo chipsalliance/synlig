@@ -79,6 +79,7 @@ simple:EnumConcat/dut.v
 simple:EnumConcatenatedConst/top.sv
 simple:EnumConstX/top.sv
 simple:EnumInPackage/dut.sv
+simple:EnumItemReimport/top.sv
 simple:EnumParameterInNestedModules/top.sv
 simple:EnumVariantInPackage/top.sv
 simple:EnumWidth/top.sv
@@ -338,6 +339,7 @@ sv2v:core/package_export_wildcard.sv
 sv2v:core/package_export_wildcard.v
 sv2v:core/package_global.sv
 sv2v:core/package_global.v
+sv2v:core/package_ident.sv
 sv2v:core/package_ident.v
 sv2v:core/package_implied.sv
 sv2v:core/package_implied.v
@@ -442,6 +444,7 @@ sv2v:relong/complex_interface.sv
 sv2v:relong/complex_interface.v
 sv2v:relong/double_clock.sv
 sv2v:relong/double_clock.v
+sv2v:relong/enum.sv
 sv2v:relong/enum.v
 sv2v:relong/fsm.v
 sv2v:relong/functions.v
@@ -449,6 +452,7 @@ sv2v:relong/gen_struct.sv
 sv2v:relong/gen_struct.v
 sv2v:relong/inline_concat.sv
 sv2v:relong/inline_concat.v
+sv2v:relong/module_struct.sv
 sv2v:relong/module_struct.v
 sv2v:relong/port_connections.sv
 sv2v:relong/port_connections.v
