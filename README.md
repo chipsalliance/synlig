@@ -15,20 +15,10 @@ Before installing the plugin, check that Yosys is installed and correctly config
    yosys-config --help
 ```
 
-The required Yosys version is 0.10 or later.
+The required Yosys version is 0.23 or later.
 If you don't have Yosys, skip to the [Installation from source](#installation-from-source) section to build Yosys from the source or follow the steps below for Debian-based Linux distributions:
 
-* Ubuntu 22.04 LTS (Jammy Jellyfish) or higher:
-
-<!-- name="install-yosys-ubuntu" -->
-``` bash
-   apt install -y wget
-   wget https://launchpad.net/ubuntu/+source/yosys/0.18-1/+build/24132080/+files/yosys-dev_0.18-1_amd64.deb
-   wget https://launchpad.net/ubuntu/+source/yosys/0.18-1/+build/24132080/+files/yosys_0.18-1_amd64.deb
-   apt install -y ./yosys_0.18-1_amd64.deb ./yosys-dev_0.18-1_amd64.deb
-```
-
-* Debian Sid or higher:
+* Debian Bookworm or higher:
 
 <!-- name="install-yosys-debian" -->
 ``` bash
@@ -53,12 +43,13 @@ The plugin is now ready to be used. and you can go to the [Usage](#usage) sectio
 
 ## Installation from source
 
+* Debian Bookworm:
+
 ### Install dependencies
 
 <!-- name="dependencies" -->
 ``` bash
-   apt install -y gcc-9 g++-9 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget
-   pip3 install orderedmultidict
+   apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
 ```
 
 ### Build required binaries

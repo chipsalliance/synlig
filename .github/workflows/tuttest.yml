@@ -12,9 +12,10 @@ env:
 jobs:
   test-plugin-from-sources:
     runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
+    container: debian:bookworm
     env:
       DEBIAN_FRONTEND: noninteractive
+      PIPX_BIN_DIR: /usr/local/bin
 
     steps:
       - name: Prepare Repository
@@ -22,14 +23,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
       - name: Install Prerequisites
         run: |
-          apt-get update -qq
-          apt-get install -y python3-pip git
-          pip3 install git+https://github.com/antmicro/tuttest#egg=tuttest
+          apt update -qq
+          apt install -y --no-install-recommends pipx git
+          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
       - name: Install Dependencies
         run: |
@@ -47,48 +45,9 @@ jobs:
           (tuttest README.md path-setup; tuttest README.md example-uhdm-ver2) | bash -
           tuttest README.md example-multiple-files | (. <(tuttest README.md path-setup) && yosys)
 
-  test-plugin-ubuntu:
-    runs-on: [self-hosted, Linux, X64]
-    container: ubuntu:jammy
-    env:
-      DEBIAN_FRONTEND: noninteractive
-
-    steps:
-      - name: Prepare Repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
-
-      - name: Install Prerequisites
-        run: |
-          apt-get update -qq
-          apt-get install -y python3-pip git
-          pip3 install git+https://github.com/antmicro/tuttest#egg=tuttest
-
-      - name: Install Dependencies
-        run: |
-          tuttest README.md install-yosys-ubuntu | bash -
-
-      - name: Install Plugin
-        run: |
-          tuttest README.md download-plugin | bash -
-          tuttest README.md install-plugin | bash -
-
-      - name: Load Plugin
-        run: |
-          tuttest README.md load-plugin | yosys
-
-      - name: Test Plugin
-        run: |
-          tuttest README.md example-verilog | bash -
-          tuttest README.md example-multiple-files | yosys
-
   test-plugin-debian:
     runs-on: [self-hosted, Linux, X64]
-    container: debian:latest
+    container: debian:bookworm
     env:
       DEBIAN_FRONTEND: noninteractive
       PIPX_BIN_DIR: /usr/local/bin
@@ -101,8 +60,8 @@ jobs:
 
       - name: Install Prerequisites
         run: |
-          apt-get update -qq
-          apt-get install -y pipx git
+          apt update -qq
+          apt install -y --no-install-recommends pipx git
           pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
       - name: Install Dependencies
@@ -113,10 +72,14 @@ jobs:
         run: |
           tuttest README.md download-plugin | bash -
           tuttest README.md install-plugin | bash -
+          # TODO: temporary fix due to a bug in yosys-config for debian:trixie
+          # ln -s /usr/share/yosys /usr/lib/yosys
 
       - name: Load Plugin
         run: |
-          tuttest README.md load-plugin | yosys
+          tuttest README.md load-plugin | yosys -Q | tee log.txt
+          grep ^ERROR log.txt || exit 0
+          exit 1
 
       - name: Test Plugin
         run: |
