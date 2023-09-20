@@ -1,6 +1,6 @@
 curr_dir:=$(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-DESIGN_DIR = ${root_dir}/../third_party/veer
-VENV = ${root_dir}/venv-veer
+DESIGN_DIR = ${root_dir}/../third_party/veer_eh1
+VENV = ${root_dir}/venv-veer_eh1
 TOP := top_earlgrey_nexysvideo
 
 UHDM_file = ${root_dir}/build/${TOP}.uhdm
@@ -9,23 +9,23 @@ ${VENV}:
 	virtualenv ${VENV}
 
 ${DESIGN_DIR}/.gitpatch:
-	cd ${DESIGN_DIR} && git apply ${curr_dir}/0001-veer.patch && touch $@
+	cd ${DESIGN_DIR} && git apply ${curr_dir}/0001-veer_eh1.patch && touch $@
 
-uhdm/yosys/veer: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
+uhdm/yosys/veer_eh1: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \
 		pip install git+https://github.com/lowRISC/fusesoc.git@ot && \
 		fusesoc --cores-root=${DESIGN_DIR} run --build --tool yosys --target=synth chipsalliance.org:cores:VeeR_EH1:1.8)
 
-uhdm/yosys/veer-build: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
+uhdm/yosys/veer_eh1-build: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \
 		pip install git+https://github.com/lowRISC/fusesoc.git@ot && \
 		fusesoc --cores-root=${DESIGN_DIR} run --build --tool vivado --target=synth chipsalliance.org:cores:VeeR_EH1:1.8)
 
-uhdm/sv2v/veer: clean-build | ${VENV}
+uhdm/sv2v/veer_eh1: clean-build | ${VENV}
 	(export PATH=${root_dir}/../image/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \

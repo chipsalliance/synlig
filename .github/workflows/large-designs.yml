@@ -499,7 +499,7 @@ jobs:
           path: |
             **/plot_*.svg
 
-  veer_synth:
+  veer_eh1_synth:
     name: VeeR-EH1 (synthesis)
     runs-on: [self-hosted, Linux, X64]
     container: ubuntu:jammy
@@ -545,7 +545,7 @@ jobs:
       - name: Checkout submodules
         run: |
           git submodule update --depth 1 --init --recursive \
-              third_party/veer \
+              third_party/veer_eh1 \
               ;
 
       - name: Download binaries
@@ -560,7 +560,7 @@ jobs:
       - name: Build & Test
         run: |
           pip install virtualenv
-          make -C tests uhdm/yosys/veer TEST=veer \
+          make -C tests uhdm/yosys/veer_eh1 TEST=veer_eh1 \
               ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 
       - uses: actions/upload-artifact@v2
