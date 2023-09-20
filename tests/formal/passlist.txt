@@ -276,6 +276,7 @@ sv2v:core/assert.v
 sv2v:core/case_inside_cast.v
 sv2v:core/class_ident.sv
 sv2v:core/class_ident.v
+sv2v:core/class_param_nest.sv
 sv2v:core/class_param_nest.v
 sv2v:core/constexpr.v
 sv2v:core/data_lifetime.sv
@@ -622,6 +623,7 @@ yosys:simple/case_expr_extend.sv
 yosys:simple/case_expr_query.sv
 yosys:simple/case_large.v
 yosys:simple/constmuldivmod.v
+yosys:simple/constpower.v
 yosys:simple/const_branch_finish.v
 yosys:simple/const_fold_func.v
 yosys:simple/defvalue.sv
