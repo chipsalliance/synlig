@@ -50,6 +50,8 @@ UHDM_INSTALL_DIR=$INSTALL_PATH LDFLAGS=$PLUGIN_LDFLAGS make -C $PWD/frontends/sy
 
 #sv2v
 if [ $BUILD_SV2V -eq 1 ]; then
+cd third_party
 wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $INSTALL_PATH/bin
 make -j$(nproc) -C $PWD/sv2v && cp $PWD/sv2v/bin/sv2v $INSTALL_PATH/bin
+cd ..
 fi
