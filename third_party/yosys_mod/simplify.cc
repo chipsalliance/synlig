@@ -716,7 +716,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 	{
 		if (!current_always) {
 			log_file_warning(ast_node->filename, ast_node->location.first_line, "System task `%s' outside initial or always block is unsupported.\n", ast_node->str.c_str());
-		} else if (current_always->type == AST_INITIAL) {
+		} else if (current_always->type == Yosys::AST::AST_INITIAL) {
 			int default_base = 10;
 			if (ast_node->str.back() == 'b')
 				default_base = 2;
@@ -3335,7 +3335,7 @@ skip_dynamic_range_lvalue_expansion:;
 
 			if (ast_node->str == "\\$sformatf") {
 				Fmt fmt = ast_node->processFormat(stage, /*sformat_like=*/true);
-				newNode = AstNode::mkconst_str(fmt.render());
+				newNode = Yosys::AST::AstNode::mkconst_str(fmt.render());
 				goto apply_newNode;
 			}
 
