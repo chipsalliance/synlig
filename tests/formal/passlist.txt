@@ -293,8 +293,6 @@ sv2v:core/class_param_nest.v
 sv2v:core/constexpr.v
 sv2v:core/data_lifetime.sv
 sv2v:core/data_lifetime.v
-sv2v:core/edge.sv
-sv2v:core/edge.v
 sv2v:core/empty_args.sv
 sv2v:core/empty_args.v
 sv2v:core/empty_args_hier.sv
@@ -448,9 +446,6 @@ sv2v:error/macro_args_empty.sv
 sv2v:error/macro_arg_bad_name.sv
 sv2v:error/size_cast_neg_lit_1.sv
 sv2v:error/size_cast_neg_lit_2.sv
-sv2v:error/size_cast_xpr_lit.sv
-sv2v:error/size_cast_x_lit.sv
-sv2v:error/size_cast_zero_lit.sv
 sv2v:lex/block_comment.sv
 sv2v:lex/block_comment.v
 sv2v:lex/comment_no_space.sv
