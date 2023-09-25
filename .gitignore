@@ -1,3 +1,6 @@
+/out
+/buildconfig.user.mk
+
 /tests/build/
 /tests/opentitan/opentitan-parsing-test/build/
 __pycache__
