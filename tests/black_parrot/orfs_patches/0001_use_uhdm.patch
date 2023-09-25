@@ -1,0 +1,47 @@
+diff --git a/flow/Makefile b/flow/Makefile
+index 74fcf58c..91922b1b 100644
+--- a/flow/Makefile
++++ b/flow/Makefile
+@@ -419,8 +419,7 @@ $(WRAPPED_LIBS):
+ # |____/ |_| |_| \_| |_| |_| |_|_____|____/___|____/
+ #
+ .PHONY: synth
+-synth: versions.txt \
+-       $(RESULTS_DIR)/1_synth.v \
++synth: $(RESULTS_DIR)/1_synth.v \
+        $(RESULTS_DIR)/1_synth.sdc
+ 
+ .PHONY: synth-report
+diff --git a/flow/scripts/synth_preamble.tcl b/flow/scripts/synth_preamble.tcl
+index ae082367..6bc9f486 100644
+--- a/flow/scripts/synth_preamble.tcl
++++ b/flow/scripts/synth_preamble.tcl
+@@ -1,4 +1,6 @@
+ yosys -import
++plugin -i systemverilog
++yosys -import
+ 
+ if {[info exist ::env(CACHED_NETLIST)]} {
+   exec cp $::env(CACHED_NETLIST) $::env(RESULTS_DIR)/1_1_yosys.v
+@@ -8,20 +10,8 @@ if {[info exist ::env(CACHED_NETLIST)]} {
+   exit
+ }
+ 
+-# Setup verilog include directories
+-set vIdirsArgs ""
+-if {[info exist ::env(VERILOG_INCLUDE_DIRS)]} {
+-  foreach dir $::env(VERILOG_INCLUDE_DIRS) {
+-    lappend vIdirsArgs "-I$dir"
+-  }
+-  set vIdirsArgs [join $vIdirsArgs]
+-}
+-
+-
+ # Read verilog files
+-foreach file $::env(VERILOG_FILES) {
+-  read_verilog -defer -sv {*}$vIdirsArgs $file
+-}
++read_uhdm $::env(BLACKPARROT_UHDM)
+ 
+ 
+ 
