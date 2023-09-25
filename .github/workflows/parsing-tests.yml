@@ -71,7 +71,8 @@ jobs:
 
       - name: Checkout submodules
         run: |
-          git submodule update --depth 1 --init --recursive \
+          git submodule sync
+          git submodule update --depth 1 --init --recursive --checkout \
               third_party/surelog \
               ;
 
@@ -167,7 +168,8 @@ jobs:
 
       - name: Checkout submodules
         run: |
-          git submodule update --depth 1 --init --recursive \
+          git submodule sync
+          git submodule update --depth 1 --init --recursive --checkout \
               third_party/surelog \
               ;
 
