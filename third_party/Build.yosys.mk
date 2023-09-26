@@ -1,39 +1,37 @@
-t       := yosys
-ts      := $(call GetTargetStructName,${t})
-out_dir := $(call GetTargetBuildDir,${t})
+t  := yosys
+ts := $(call GetTargetStructName,${t})
 
 cxx_is_clang := $(findstring clang,$(notdir ${CXX}))
 
 ${ts}.src_dir         := ${TOP_DIR}third_party/yosys/
 ${ts}.mod_dir         := ${TOP_DIR}third_party/yosys_mod/
-${ts}.out_install_dir := ${out_dir}install/
-
-${ts}.input_files := $(shell \
-	find ${${ts}.src_dir} \
-		-path '*/.*' -prune -o \
-		-path '${${ts}.src_dir}*/abc' -prune -o \
-		-path '${${ts}.src_dir}*/docs' -prune -o \
-		-path '${${ts}.src_dir}*/tests' -prune -o \
-		-path '${${ts}.src_dir}*/manual' -prune -o \
-		-path '${${ts}.src_dir}*/examples' -prune -o \
-		-path '${${ts}.src_dir}*/yosys' -o \
-		-path '${${ts}.src_dir}*/yosys-*' -o \
-		-name '*.o' -o \
-		-name '*.d' -o \
-		-type f -print \
-)
+${ts}.out_install_dir := $(call ToAbsPaths,${OUT_DIR})
 
 ${ts}.output_files := \
-	${${ts}.out_install_dir}bin/yosys \
-	${${ts}.out_install_dir}bin/yosys-abc \
-	${${ts}.out_install_dir}bin/yosys-config
+	${${ts}.src_dir}yosys \
+	${${ts}.src_dir}yosys-abc \
+	${${ts}.src_dir}yosys-config
 
 ${ts}.output_dirs := \
-	${out_dir} \
-	${${ts}.out_install_dir}
+	${${ts}.src_dir}
 
-${ts}.install_copy_list := \
-	${${ts}.out_install_dir}*:
+${ts}.input_files := $(filter-out ${${ts}.output_files}, \
+	$(shell \
+		find ${${ts}.src_dir} \
+			-path '*/.*' -prune -o \
+			-path '${${ts}.src_dir}*/abc' -prune -o \
+			-path '${${ts}.src_dir}*/docs' -prune -o \
+			-path '${${ts}.src_dir}*/tests' -prune -o \
+			-path '${${ts}.src_dir}*/manual' -prune -o \
+			-path '${${ts}.src_dir}*/examples' -prune -o \
+			-path '${${ts}.src_dir}*/yosys' -o \
+			-path '${${ts}.src_dir}*/yosys-*' -o \
+			-name '*.o' -o \
+			-name '*.d' -o \
+			-type f -print \
+			| sed "s/ /\\\\ /g" \
+	) \
+)
 
 ${ts}.make_args := \
 	PREFIX:=${${ts}.out_install_dir} \
@@ -66,6 +64,11 @@ endif
 
 # Variable evaluation: in recipe, ${var}
 define ${ts}.build_command
+		cd ${${ts}.src_dir}
+		${MAKE} ${${ts}.make_args} --no-print-directory
+endef
+
+define ${ts}.install_command
 		cd ${${ts}.src_dir}
 		${MAKE} ${${ts}.make_args} --no-print-directory install
 endef
