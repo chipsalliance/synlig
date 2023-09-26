@@ -1,2 +1,2 @@
-TOP_FILE := $(root_dir)/../third_party/surelog/tests/GenerateAssigns/top.v
+TEST_FILES := $(root_dir)/../third_party/surelog/tests/GenerateAssigns/top.v
 TOP_MODULE := dut

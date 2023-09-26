@@ -107,7 +107,7 @@ As a simple example, we run Verilog code synthesis using the plugin:
 
 <!-- name="example-verilog" -->
 ``` bash
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog frontends/systemverilog/tests/counter/counter.v"
+   yosys -p "plugin -i systemverilog" -p "read_systemverilog tests/simple_tests/onenet/top.sv"
 ```
 
 In the second example, we first need to convert the SystemVerilog file into UHDM using Surelog and then read it into Yosys.
@@ -140,9 +140,9 @@ The described flow looks like so:
 ``` tcl
     plugin -i systemverilog
     # Read each file separately
-    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation.v
-    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation-buf.sv
-    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation-pkg.sv
+    read_systemverilog -defer tests/separate_compilation/separate_compilation.v
+    read_systemverilog -defer tests/separate_compilation/separate_compilation_buf.sv
+    read_systemverilog -defer tests/separate_compilation/separate_compilation_pkg.sv
     # Finish reading files, elaborate the design
     read_systemverilog -link
     # Continue Yosys flow...

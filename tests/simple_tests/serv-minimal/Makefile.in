@@ -1,4 +1,4 @@
-TOP_FILE := \
+TEST_FILES := \
     $(TEST_DIR)/src/serv_1.1.0/rtl/serv_ctrl.v \
     $(TEST_DIR)/src/serv_1.1.0/rtl/serv_top.v \
     $(TEST_DIR)/src/serv_1.1.0/rtl/serv_rf_top.v \

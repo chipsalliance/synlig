@@ -4,7 +4,7 @@
 # Original verilator frontend changes object name
 # when there is "__" in it.
 
-TOP_FILE := $(TEST_DIR)/my_pkg.sv
+TEST_FILES := $(TEST_DIR)/my_pkg.sv
 TOP_MODULE := top
 
 VERILATOR_FLAGS := $(TEST_DIR)/top.sv

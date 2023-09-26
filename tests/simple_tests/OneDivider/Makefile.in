@@ -1,2 +1,2 @@
-TOP_FILE := $(root_dir)/../third_party/surelog/tests/OneDivider/dut.v
+TEST_FILES := $(root_dir)/../third_party/surelog/tests/OneDivider/dut.v
 TOP_MODULE := dut
