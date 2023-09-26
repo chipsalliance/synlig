@@ -64,7 +64,7 @@ class UhdmAst
     // Makes the passed node a cell node of the specified type
     void make_cell(vpiHandle obj_h, ::Yosys::AST::AstNode *node, ::Yosys::AST::AstNode *type);
 
-    // Moves a type node to the specified node
+    // Moves a type node to the specified node. If a node of the same name already exists there, the type node is deleted.
     void move_type_to_new_typedef(::Yosys::AST::AstNode *current_node, ::Yosys::AST::AstNode *type_node);
 
     // Go up the UhdmAst to find a parent node of the specified type

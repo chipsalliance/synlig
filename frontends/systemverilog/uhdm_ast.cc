@@ -1984,6 +1984,8 @@ void UhdmAst::move_type_to_new_typedef(AST::AstNode *current_node, AST::AstNode 
     typedef_node->str = strip_package_name(type_node->str);
     for (auto c : current_node->children) {
         if (c->str == typedef_node->str) {
+            delete typedef_node;
+            delete type_node;
             return;
         }
     }
@@ -2059,17 +2061,22 @@ void UhdmAst::process_design()
                               shared.top_nodes[node->str] = node;
                           }
                       });
-    visit_one_to_many({vpiParameter, vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
-        if (get_attribute(node, attr_id::is_type_parameter)) {
-            // Don't process type parameters.
-            delete node;
-            return;
-        }
-        add_or_replace_child(current_node, node);
-    });
     visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
-        if (node)
-            move_type_to_new_typedef(current_node, node);
+        if (node) {
+            for (auto pair : shared.top_nodes) {
+                move_type_to_new_typedef(pair.second, node->clone());
+            }
+            delete node;
+        }
+    });
+    visit_one_to_many({vpiParameter, vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
+        if (!get_attribute(node, attr_id::is_type_parameter)) {
+            // Don't process type parameters.
+            for (auto pair : shared.top_nodes) {
+                add_or_replace_child(pair.second, node->clone());
+            }
+        }
+        delete node;
     });
     // Add top level typedefs and params to scope
     setup_current_scope(shared.top_nodes, current_node);
