@@ -60,6 +60,7 @@ You need to add this folder to your `PATH` variable to ensure you are using corr
 
 <!-- name="build-binaries" -->
 ``` bash
+   git submodule sync
    git submodule update --init --recursive third_party/{surelog,yosys}
    ./build_binaries.sh
 ```
@@ -154,6 +155,27 @@ If you encounter any problems with it, please compare the results with a single 
 ## Testing locally
 
 ### Formal Verification
+
+#### Prerequisites
+
+Formal Verification uses `sv2v` tool and tests from its repository, which is available as a submodule.
+To download the sv2v submodule run:
+
+<!-- name="sv2v-update" -->
+``` bash
+   git submodule update --init --recursive --checkout third_party/sv2v
+```
+
+To build sv2v and copy it to `images/bin` (where it is expected to be by the test script) run:
+
+<!-- name="sv2v-build" -->
+``` bash
+wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/image/bin
+make -j$(nproc) -C $PWD/third_party/sv2v
+cp ./third_party/sv2v/bin/sv2v ./image/bin
+```
+
+#### Testing
 
 To start formal verification tests, use `run_fv_tests.mk`, either as an executable or by using make:
 
