@@ -54,15 +54,15 @@ The plugin is now ready to be used. and you can go to the [Usage](#usage) sectio
 
 ### Build required binaries
 
-You can build all required binaries using the provided `build_binaries.sh` script. 
-This script will build Surelog, Yosys and Synlig, and place them in the `out` directory.
-You need to add this folder to your `PATH` variable to ensure you are using correct versions of the binaries.
+You can build all required binaries using the provided `Makefile`.
+`make install` will build Surelog, Yosys and Synlig, and place them in the `out` directory.
+You need to add `out/bin` to your `PATH` variable to ensure you are using correct versions of the binaries.
 
 <!-- name="build-binaries" -->
 ``` bash
    git submodule sync
    git submodule update --init --recursive third_party/{surelog,yosys}
-   ./build_binaries.sh
+   make install
 ```
 
 To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
