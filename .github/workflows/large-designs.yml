@@ -588,6 +588,9 @@ jobs:
     container: ubuntu:jammy
     env:
       DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-highmem-8"
+      # Minimum free RAM (in percents) required to start a test
+      MIN_FREE_MEM_TO_START_TEST: 20
 
     steps:
       - uses: actions/checkout@v3
