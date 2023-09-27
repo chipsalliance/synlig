@@ -317,7 +317,8 @@ GetTargetStructName = target[${1}]
 makefiles_to_include := \
 	third_party/Build.*.mk \
 	frontends/*/Build.mk \
-	tests/*/Build.mk
+	tests/*/Build.mk \
+	lib/*/Build.mk
 
 $(foreach THIS_BUILD_MK,$(wildcard $(call ToAbsPaths,${makefiles_to_include})),\
 	$(eval include ${THIS_BUILD_MK})\

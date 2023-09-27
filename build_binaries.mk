@@ -85,19 +85,17 @@ install-yosys:
 # fakedlclose
 #───────────────────────────────────────────────────────────────────────────────
 
-FAKEDLCLOSE_SRC_DIR := ${REPO_DIR}/lib/fakedlclose
-
 .PHONY: clean-fakedlclose
 clean-fakedlclose:
-	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} clean
+	${MAKE} clean@fakedlclose ${build_config}
 
 .PHONY: build-fakedlclose
 build-fakedlclose:
-	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR}
+	${MAKE} build@fakedlclose ${build_config}
 
 .PHONY: install-fakedlclose
-install-fakedlclose: build-fakedlclose
-	${MAKE} -C ${FAKEDLCLOSE_SRC_DIR} INSTALL_DIR:=${INSTALL_DIR} install
+install-fakedlclose:
+	${MAKE} install@fakedlclose ${build_config}
 
 #───────────────────────────────────────────────────────────────────────────────
 # Plugin
@@ -109,13 +107,13 @@ clean-plugin:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} clean@systemverilog-plugin ${build_config}
 
-.PHONY: build-plugin build-fakedlclose
+.PHONY: build-plugin
 build-plugin:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} build@systemverilog-plugin ${build_config}
 
-.PHONY: install-plugin install-fakedlclose
-install-plugin:
+.PHONY: install-plugin
+install-plugin: install-fakedlclose
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} install@systemverilog-plugin ${build_config}
 
@@ -129,6 +127,6 @@ build-plugins: build-plugin
 .PHONY: install-plugins
 install-plugins: install-plugin
 
-.NOTPARALLEL: clean-surelog clean-yosys clean-plugin \
-	build-surelog build-yosys build-plugin \
-	install-surelog install-yosys install-plugin
+.NOTPARALLEL: clean-surelog clean-yosys clean-plugin clean-fakedlclose \
+	build-surelog build-yosys build-plugin build-fakedlclose \
+	install-surelog install-yosys install-plugin install-fakedlclose
