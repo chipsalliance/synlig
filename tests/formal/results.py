@@ -196,7 +196,7 @@ def main():
     result_count, passed_should_fail, failed_should_pass = \
         process_data(results_path, result_keys, result_description_keys)
 
-    print("See formal verification flow diagram [README.md](https://github.com/chipsalliance/systemverilog-plugin/blob/master/formal/README.md)")
+    print("See formal verification flow diagram [README.md](https://github.com/chipsalliance/systemverilog-plugin/blob/main/tests/formal/README.md)")
     print(synth_header)
     print_results(synth_headers, synth_result_keys, synth_result_descriptions, result_count, passed_should_fail, failed_should_pass)
 
