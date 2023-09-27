@@ -6,9 +6,15 @@ BLACKPARROT = ${root_dir}/../third_party/black_parrot
 BLACKPARROT_PATCHES_DIR = ${curr_dir}/black_parrot_patches/
 BLACKPARROT_CFG ?= e_bp_unicore_cfg
 BLACKPARROT_UHDM = ${root_dir}/build/surelog/bp_tethered.${BLACKPARROT_CFG}.none.parse/out/slpp_unit/surelog.uhdm
+CONFIG_FILE = ${curr_dir}/config.mk
+ORFS_DIR = ${root_dir}/../third_party/OpenROAD-flow-scripts
+ORFS_PATCHES_DIR = ${curr_dir}/orfs_patches/
 
 export BP_TOOLS_DIR = $(BLACKPARROT)/../black_parrot_tools
 export BP_SDK_DIR = $(BLACKPARROT)/../black_parrot_sdk
+
+${ORFS_DIR}/.gitpatch:
+	cd $(ORFS_DIR) && git apply ${ORFS_PATCHES_DIR}/*.patch && touch $@
 
 ${BLACKPARROT}/.gitpatch:
 	cd ${BLACKPARROT}/ && git apply ${BLACKPARROT_PATCHES_DIR}/*.patch && touch $@
@@ -24,3 +30,11 @@ uhdm/yosys/synth-blackparrot-build: | ${BLACKPARROT_UHDM}
                       -p "read_uhdm ${BLACKPARROT_UHDM}" \
                       -p "synth_xilinx -iopad -family xc7" \
                       -p "write_edif bp_${BLACKPARROT_CFG}.edif")
+
+# Exports required for ASIC synthesis flow
+export BLACKPARROT_BUILD_DIR=${root_dir}/build/surelog/bp_tethered.${BLACKPARROT_CFG}.none.parse
+export YOSYS_CMD=${root_dir}/../image/bin/yosys
+export BLACKPARROT_UHDM
+export TEST_DIR
+uhdm/yosys/synth-blackparrot-build-asic: ${ORFS_DIR}/.gitpatch | ${BLACKPARROT_UHDM}
+	TOP=$(BLACKPARROT) $(MAKE) -C $(ORFS_DIR)/flow DESIGN_CONFIG=$(CONFIG_FILE) synth

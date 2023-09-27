@@ -52,3 +52,7 @@
 	path = third_party/googletest
 	url = https://github.com/google/googletest
 	update = none
+[submodule "third_party/OpenROAD-flow-scripts"]
+	path = third_party/OpenROAD-flow-scripts
+	url = https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts.git
+	update = none
