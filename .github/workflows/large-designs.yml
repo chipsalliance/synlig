@@ -81,6 +81,13 @@ jobs:
           name: lowrisc_ibex_top_artya7_surelog_0.1.bit
           path: tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
 
+      - name: Upload build dir
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ibex_build
+          path: tests/build/
+
       - name: Upload load graphs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
