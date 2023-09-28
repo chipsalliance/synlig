@@ -39,6 +39,21 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Install dependencies
+        run: |
+          apt-get update -q
+          apt-get install -y clang-format
+
+      - name: Sources format check
+        run: |
+          ./.github/scripts/format_sources.sh
+          if ! git diff --exit-code; then
+            echo
+            echo "Format locally using: ./.github/scripts/format_sources.sh"
+            echo
+            false
+          fi
+
       - name: Sort check
         run: |
           ./.github/scripts/sort_passlists.sh

@@ -1,0 +1,10 @@
+# From yosys-f4pga-plugins
+BasedOnStyle: LLVM
+IndentWidth: 4
+UseTab: Never
+BreakBeforeBraces: Linux
+AllowShortIfStatementsOnASingleLine: false
+IndentCaseLabels: false
+TabWidth: 4
+ContinuationIndentWidth: 2
+ColumnLimit: 150
