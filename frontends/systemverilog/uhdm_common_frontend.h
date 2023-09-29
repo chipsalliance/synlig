@@ -17,11 +17,11 @@
  *
  */
 
-#include "uhdm_ast.h"
 #include "frontends/ast/ast.h"
 #include "kernel/yosys.h"
 #include "uhdm/SynthSubset.h"
 #include "uhdm/VpiListener.h"
+#include "uhdm_ast.h"
 #include <string>
 #include <type_traits>
 #include <vector>
@@ -33,14 +33,14 @@ namespace systemverilog_plugin
 // https://github.com/chipsalliance/UHDM/commit/d78d094448bd94926644e48adea4df293b82f101
 // The commit introducing this code should to be reverted after Surelog is bumped to recent versions in all our repositories.
 template <typename ObjT, typename... ArgN, std::enable_if_t<std::is_constructible_v<ObjT, ArgN...>, bool> = true>
-static inline ObjT *make_new_object_with_optional_extra_true_arg(ArgN &&... arg_n)
+static inline ObjT *make_new_object_with_optional_extra_true_arg(ArgN &&...arg_n)
 {
     // Older UHDM version
     return new ObjT(std::forward<ArgN>(arg_n)...);
 }
 
 template <typename ObjT, typename... ArgN, std::enable_if_t<!std::is_constructible_v<ObjT, ArgN...>, bool> = true>
-static inline ObjT *make_new_object_with_optional_extra_true_arg(ArgN &&... arg_n)
+static inline ObjT *make_new_object_with_optional_extra_true_arg(ArgN &&...arg_n)
 {
     // Newer UHDM version
     return new ObjT(std::forward<ArgN>(arg_n)..., true);

@@ -6,8 +6,8 @@
 
 namespace systemverilog_plugin
 {
-	// this function converts a Verilog constant to an AST_CONSTANT node
-	Yosys::AST::AstNode *const2ast(std::string code, char case_type = 0, bool warn_z = false);
-}
+// this function converts a Verilog constant to an AST_CONSTANT node
+Yosys::AST::AstNode *const2ast(std::string code, char case_type = 0, bool warn_z = false);
+} // namespace systemverilog_plugin
 
 #endif // SYSTEMVERILOG_PLUGIN_CONST2AST_H
