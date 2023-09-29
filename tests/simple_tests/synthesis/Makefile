@@ -5,7 +5,7 @@ clean::
 
 # ----------------------------------- DFF ----------------------------------
 slpp_all/surelog.uhdm: dff.sv
-	PATH="$(PWD)/../../image/bin:$$PATH" \
+	PATH="${OUT_DIR}/bin:$$PATH" \
 		surelog -parse -sverilog -d coveruhdm $<
 
 top.edif: slpp_all/surelog.uhdm
@@ -55,7 +55,7 @@ cmake-src/.unpack: cmake-src.tar.gz cmake-src/.dir
 
 cmake-src/.conf: cmake-src/.unpack
 	(cd cmake-src && ./bootstrap \
-		--prefix=$(PWD)/../../image \
+		--prefix=${OUT_DIR} \
 		--parallel=`nproc`) && touch $@
 
 cmake-src/.build: cmake-src/.conf
@@ -72,8 +72,8 @@ $(PWD)/../../third_party/surelog/CMakeLists.txt:
 	(cd ../../ && git submodule update --init --recursive Surelog && touch $@)
 
 .surelog: $(PWD)/../../third_party/surelog/CMakeLists.txt .cmake
-	PATH="$(PWD)/../../image/bin:$$PATH" make -C ../../third_party/surelog \
-		PREFIX=$(PWD)/../../image release install -j`nproc` && touch $@
+	PATH="${OUT_DIR}/bin:$$PATH" make -C ../../third_party/surelog \
+		PREFIX=${OUT_DIR} release install -j`nproc` && touch $@
 # --------------------------------- SURELOG --------------------------------
 
 # ---------------------------------- UHDM ----------------------------------
@@ -86,8 +86,8 @@ $(PWD)/../../UHDM/CMakeLists.txt:
 .uhdm: .uhdm.patch .surelog .cmake
 	mkdir -p $(PWD)/../../UHDM/build && \
 	(cd $(PWD)/../../UHDM/build && \
-		PATH="$(PWD)/../../image/bin:$$PATH" cmake \
-		-DCMAKE_INSTALL_PREFIX=$(PWD)/../../image \
+		PATH="${OUT_DIR}/bin:$$PATH" cmake \
+		-DCMAKE_INSTALL_PREFIX=${OUT_DIR} \
 		-D_GLIBCXX_DEBUG=1 \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1 -DWITH_LIBCXX=Off' \

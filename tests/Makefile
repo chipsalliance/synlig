@@ -3,15 +3,16 @@ TEST ?= simple_tests/onenet
 
 root_dir:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-SURELOG_BIN = ${root_dir}/../image/bin/surelog
-YOSYS_BIN = ${root_dir}/../image/bin/yosys
+OUT_DIR = ${root_dir}/../out/current
+SURELOG_BIN = ${OUT_DIR}/bin/surelog
+YOSYS_BIN = ${OUT_DIR}/bin/yosys
 COVARAGE_REPORT = ${root_dir}/build/coverage
 
 TEST_DIR := $(realpath $(root_dir)/$(TEST))
 MAIN_FILE ?= $(TEST_DIR)/main.cpp
 YOSYS_TCL := $(TEST_DIR)/yosys_script.tcl
 
-# this include should set $(TOP_FILE) and $(TOP_MODULE) variables
+# this include should set $(TEST_FILES) and $(TOP_MODULE) variables
 include $(TEST)/Makefile.in
 
 # this variables use $(TOP_MODULE) that is set in included Makefile.in
@@ -27,14 +28,14 @@ list:
 # ------------ Test targets ------------
 
 uhdm/yosys/test-ast: clean-build surelog/parse
-	(export TOP_FILE="${TOP_FILE}" TOP_MODULE="${TOP_MODULE}" SURELOG_FLAGS="${SURELOG_FLAGS}" && \
+	(export TEST_DIR=${TEST_DIR} TEST_FILES="${TEST_FILES}" TOP_MODULE="${TOP_MODULE}" SURELOG_FLAGS="${SURELOG_FLAGS}" && \
 	cd $(root_dir)/build && ${YOSYS_BIN} -c $(YOSYS_TCL))
 
 # ------------ Test helper targets ------------
 
 surelog/parse: clean-build
 	(cd ${root_dir}/build && \
-		${SURELOG_BIN} -parse -sverilog -d coveruhdm -elabuhdm ${SURELOG_FLAGS} $(INCLUDE) $(TOP_FILE))
+		${SURELOG_BIN} -parse -sverilog -d coveruhdm -elabuhdm ${SURELOG_FLAGS} $(INCLUDE) $(TEST_FILES))
 	cp ${root_dir}/build/slpp_all/surelog.uhdm ${TOP_UHDM}
 
 # ------------ Clean targets ------------

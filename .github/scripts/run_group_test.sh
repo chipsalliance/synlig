@@ -64,7 +64,7 @@ for test_case in "${test_cases[@]}"; do
         make -C $REPO_DIR/tests \
                 -j $(nproc) \
                 --no-print-directory \
-                YOSYS_BIN:="LD_PRELOAD=${REPO_DIR}/image/lib/libfakedlclose.so ${REPO_DIR}/image/bin/yosys -Q" \
+                YOSYS_BIN:="LD_PRELOAD=${REPO_DIR}/out/current/lib/libfakedlclose.so ${REPO_DIR}/out/current/bin/yosys -Q" \
                 ENABLE_READLINE=0 \
                 PRETTY=0 \
                 PARSER=$PARSER \

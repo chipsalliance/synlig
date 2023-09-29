@@ -1,4 +1,4 @@
-TOP_FILE := $(TEST_DIR)/top.sv
+TEST_FILES := $(TEST_DIR)/top.sv
 TOP_MODULE := top
 
 SURELOG_FLAGS := -PX=5

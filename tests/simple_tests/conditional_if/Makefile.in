@@ -1,2 +1,2 @@
-TOP_FILE := $(TEST_DIR)/if.sv
+TEST_FILES := $(TEST_DIR)/if.sv
 TOP_MODULE := top

@@ -48,10 +48,6 @@
 	path = third_party/veer
 	url = https://github.com/chipsalliance/Cores-VeeR-EH1
 	update = none
-[submodule "third_party/googletest"]
-	path = third_party/googletest
-	url = https://github.com/google/googletest
-	update = none
 [submodule "third_party/OpenROAD-flow-scripts"]
 	path = third_party/OpenROAD-flow-scripts
 	url = https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts.git

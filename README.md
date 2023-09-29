@@ -54,22 +54,22 @@ The plugin is now ready to be used. and you can go to the [Usage](#usage) sectio
 
 ### Build required binaries
 
-You can build all required binaries using the provided `build_binaries.sh` script. 
-This script will build Surelog, Yosys and Synlig, and place them in the `image` folder. 
-You need to add this folder to your `PATH` variable to ensure you are using correct versions of the binaries.
+You can build all required binaries using the provided `Makefile`.
+`make install` will build Surelog, Yosys and Synlig, and place them in the `out` directory.
+You need to add `out/bin` to your `PATH` variable to ensure you are using correct versions of the binaries.
 
 <!-- name="build-binaries" -->
 ``` bash
    git submodule sync
    git submodule update --init --recursive third_party/{surelog,yosys}
-   ./build_binaries.sh
+   make install
 ```
 
 To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
 
 <!-- name="path-setup" -->
 ``` bash
-   export PATH=`pwd`/image/bin:$PATH
+   export PATH=`pwd`/out/current/bin:$PATH
 ```
 
 ## Usage
@@ -107,7 +107,7 @@ As a simple example, we run Verilog code synthesis using the plugin:
 
 <!-- name="example-verilog" -->
 ``` bash
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog frontends/systemverilog/tests/counter/counter.v"
+   yosys -p "plugin -i systemverilog" -p "read_systemverilog tests/simple_tests/onenet/top.sv"
 ```
 
 In the second example, we first need to convert the SystemVerilog file into UHDM using Surelog and then read it into Yosys.
@@ -140,9 +140,9 @@ The described flow looks like so:
 ``` tcl
     plugin -i systemverilog
     # Read each file separately
-    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation.v
-    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation-buf.sv
-    read_systemverilog -defer frontends/systemverilog/tests/separate-compilation/separate-compilation-pkg.sv
+    read_systemverilog -defer tests/separate_compilation/separate_compilation.v
+    read_systemverilog -defer tests/separate_compilation/separate_compilation_buf.sv
+    read_systemverilog -defer tests/separate_compilation/separate_compilation_pkg.sv
     # Finish reading files, elaborate the design
     read_systemverilog -link
     # Continue Yosys flow...
@@ -166,13 +166,13 @@ To download the sv2v submodule run:
    git submodule update --init --recursive --checkout third_party/sv2v
 ```
 
-To build sv2v and copy it to `images/bin` (where it is expected to be by the test script) run:
+To build sv2v and copy it to `out/current/bin` (where it is expected to be by the test script) run:
 
 <!-- name="sv2v-build" -->
 ``` bash
-wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/image/bin
+wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/out/current/bin
 make -j$(nproc) -C $PWD/third_party/sv2v
-cp ./third_party/sv2v/bin/sv2v ./image/bin
+cp ./third_party/sv2v/bin/sv2v ./out/current/bin
 ```
 
 #### Testing

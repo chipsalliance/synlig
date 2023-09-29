@@ -1,3 +1,3 @@
-TOP_FILE := $(TEST_DIR)/unary_op_not_log.sv
+TEST_FILES := $(TEST_DIR)/unary_op_not_log.sv
 TOP_MODULE := top
 VERILATOR_FLAGS := --Wno-WIDTH

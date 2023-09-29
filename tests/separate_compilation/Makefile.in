@@ -1,0 +1,2 @@
+TEST_FILES :=  $(TEST_DIR)/separate_compilation_pkg.sv $(TEST_DIR)/separate_compilation_buf.sv $(TEST_DIR)/separate_compilation.v
+TOP_MODULE := top
