@@ -602,17 +602,16 @@ struct SynligEdifBackend : public Backend {
     }
 };
 
-SynligEdifBackend *seb = NULL;
-
 void register_synlig_edif_backend()
 {
-    if (seb == NULL) {
-        backend_register.erase("edif");
-        pass_register.erase("edif");
-        pass_register.erase("write_edif");
-        seb = new SynligEdifBackend;
-        seb->init_register();
-    }
+    static SynligEdifBackend *seb = nullptr;
+    if (seb)
+        return;
+    backend_register.erase("edif");
+    pass_register.erase("edif");
+    pass_register.erase("write_edif");
+    seb = new SynligEdifBackend;
+    seb->init_register();
 }
 
 } // namespace systemverilog_plugin
