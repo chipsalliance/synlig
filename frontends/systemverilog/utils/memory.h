@@ -185,7 +185,7 @@ template <class Resource, class Deleter = utils_memory_internal::default_resourc
 
 // Creates `unique_resource<Resource, Deleter>` and initializes it with a resource constructed using specified arguments.
 template <class Resource, class Deleter = utils_memory_internal::default_resource_deleter_t<Resource>, class... Tn>
-inline unique_resource<Resource, Deleter> make_unique_resource(Tn &&... arg_n)
+inline unique_resource<Resource, Deleter> make_unique_resource(Tn &&...arg_n)
 {
     return unique_resource<Resource, Deleter>(Resource(std::forward<Tn>(arg_n)...));
 }

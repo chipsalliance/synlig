@@ -9,9 +9,9 @@
 #include <utility>
 #include <vector>
 
-#include "uhdm_ast.h"
 #include "frontends/ast/ast.h"
 #include "libs/sha1/sha1.h"
+#include "uhdm_ast.h"
 
 #include "utils/memory.h"
 
@@ -177,9 +177,9 @@ template <typename T> class ScopedValueChanger
     ~ScopedValueChanger() { ref = prev_val; }
 };
 
-template <typename T> ScopedValueChanger(T &)->ScopedValueChanger<T>;
+template <typename T> ScopedValueChanger(T &) -> ScopedValueChanger<T>;
 
-template <typename T> ScopedValueChanger(T &, const T &)->ScopedValueChanger<T>;
+template <typename T> ScopedValueChanger(T &, const T &) -> ScopedValueChanger<T>;
 
 // Delete all children nodes.
 // Does *not* delete attributes.
@@ -1365,9 +1365,9 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             log_assert(low_high_bound->children[1]->type == AST::AST_CONSTANT);
             const int low = low_high_bound->children[0]->integer;
             const int high = low_high_bound->children[1]->integer;
-            const int range = low_high_bound->children[1]->range_valid
-                                ? low_high_bound->children[1]->range_left
-                                : low_high_bound->children[0]->range_valid ? low_high_bound->children[0]->range_left : 32;
+            const int range = low_high_bound->children[1]->range_valid   ? low_high_bound->children[1]->range_left
+                              : low_high_bound->children[0]->range_valid ? low_high_bound->children[0]->range_left
+                                                                         : 32;
             delete low_high_bound;
             // According to standard:
             // If the bound to the left of the colon is greater than the
@@ -2427,7 +2427,7 @@ void UhdmAst::process_array_typespec()
     });
     if (auto ref_elemtypespec_h = vpi_handle(vpiElemTypespec, obj_h)) {
         if (auto elemtypespec_h = vpi_handle(vpiActual, ref_elemtypespec_h)) {
-            visit_one_to_many({ vpiRange }, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            visit_one_to_many({vpiRange}, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
             vpi_release_handle(elemtypespec_h);
         }
         vpi_release_handle(ref_elemtypespec_h);
@@ -2641,15 +2641,17 @@ void UhdmAst::process_enum_typespec()
 
             if (leftrange_obj->UhdmType() == UHDM::uhdmoperation) {
                 // Substitute the previous leftrange with the resolved operation result.
-                const UHDM::any *const instance =
-                  enum_object->Instance() ? enum_object->Instance() : enum_object->VpiParent() ? enum_object->VpiParent() : shared.current_instance;
+                const UHDM::any *const instance = enum_object->Instance()    ? enum_object->Instance()
+                                                  : enum_object->VpiParent() ? enum_object->VpiParent()
+                                                                             : shared.current_instance;
 
                 range_obj->Left_expr(reduce_expression(leftrange_obj, instance, enum_object->VpiParent()));
             }
             if (rightrange_obj->UhdmType() == UHDM::uhdmoperation) {
                 // Substitute the previous rightrange with the resolved operation result.
-                const UHDM::any *const instance =
-                  enum_object->Instance() ? enum_object->Instance() : enum_object->VpiParent() ? enum_object->VpiParent() : shared.current_instance;
+                const UHDM::any *const instance = enum_object->Instance()    ? enum_object->Instance()
+                                                  : enum_object->VpiParent() ? enum_object->VpiParent()
+                                                                             : shared.current_instance;
 
                 range_obj->Right_expr(reduce_expression(rightrange_obj, instance, enum_object->VpiParent()));
             }
