@@ -309,7 +309,7 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           ls -lah out
           tar -zcvf $FULL_TARBALL out
-          tar -zcvf $PLUGIN_TARBALL out/share/yosys/plugins/systemverilog.so install_plugin.sh
+          tar -zcvf $PLUGIN_TARBALL out/current/share/yosys/plugins/systemverilog.so install_plugin.sh
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:
