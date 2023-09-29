@@ -27,8 +27,10 @@
 #include "kernel/sigtools.h"
 #include <string>
 
-USING_YOSYS_NAMESPACE
-PRIVATE_NAMESPACE_BEGIN
+namespace systemverilog_plugin
+{
+
+using namespace ::Yosys;
 
 #define EDIF_DEF(_id) edif_names(RTLIL::unescape_id(_id), true).c_str()
 #define EDIF_DEFR(_id, _ren, _bl, _br) edif_names(RTLIL::unescape_id(_id), true, _ren, _bl, _br).c_str()
@@ -86,8 +88,8 @@ struct EdifNames {
     }
 };
 
-struct EdifBackend : public Backend {
-    EdifBackend() : Backend("edif", "write design to EDIF netlist file") {}
+struct SynligEdifBackend : public Backend {
+    SynligEdifBackend() : Backend("edif", "write design to EDIF netlist file") {}
     void help() override
     {
         //   |---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|
@@ -129,7 +131,7 @@ struct EdifBackend : public Backend {
     }
     void execute(std::ostream *&f, std::string filename, std::vector<std::string> args, RTLIL::Design *design) override
     {
-        log_header(design, "Executing EDIF backend.\n");
+        log_header(design, "Executing Synlig EDIF backend.\n");
         std::string top_module_name;
         bool port_rename = false;
         bool attr_properties = false;
@@ -598,6 +600,19 @@ struct EdifBackend : public Backend {
 
         *f << stringf(")\n");
     }
-} EdifBackend;
+};
 
-PRIVATE_NAMESPACE_END
+SynligEdifBackend *seb = NULL;
+
+void register_synlig_edif_backend()
+{
+    if (seb == NULL) {
+        backend_register.erase("edif");
+        pass_register.erase("edif");
+        pass_register.erase("write_edif");
+        seb = new SynligEdifBackend;
+        seb->init_register();
+    }
+}
+
+} // namespace systemverilog_plugin

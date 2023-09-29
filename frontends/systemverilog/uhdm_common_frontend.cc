@@ -18,6 +18,7 @@
  */
 
 #include "uhdm_common_frontend.h"
+#include "edif.h"
 
 namespace systemverilog_plugin
 {
@@ -29,6 +30,8 @@ static void set_line_num(int) {}
 
 /* Stub for AST::process */
 static int get_line_num(void) { return 1; }
+
+UhdmCommonFrontend::UhdmCommonFrontend(std::string name, std::string short_help) : Frontend(name, short_help) { register_synlig_edif_backend(); }
 
 void UhdmCommonFrontend::print_read_options()
 {
