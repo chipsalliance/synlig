@@ -66,3 +66,15 @@ sv2v:core/paramtype_param_default.sv
 sv2v:core/paramtype_stagger.sv
 # Yosys mishandles a negative signed constant which is interpreted correctly by the plugin.
 yosys:simple/case_expr_non_const.v
+# Yosys hangs and causes a timeout.
+# There's nothing to compare with the plugin in Formal Verification.
+# Also these tests are non-synthesizable.
+sv2v:error/size_cast_xpr_lit.sv
+sv2v:error/size_cast_x_lit.sv
+sv2v:error/size_cast_zero_lit.sv
+# Yosys aborts in Fmt::parse_verilog due to unsupported format.
+# There's nothing to compare with the plugin in Formal Verification.
+# This test is non-synthesizable.
+sv2v:core/edge.v
+# Yosys fails with syntax error, unexpected TOK_ID. This test is non-synthesizable.
+sv2v:core/edge.sv
