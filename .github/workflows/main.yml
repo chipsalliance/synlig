@@ -342,7 +342,7 @@ jobs:
           overwrite: true
           file_glob: true
 
-  install-plugin:
+  test-release-with-packaged-yosys:
     name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
     container: debian:trixie
@@ -389,7 +389,7 @@ jobs:
           tuttest README.md sv2v-update | bash -
           tuttest README.md sv2v-build | bash -
 
-  tuttest-from-sources:
+  test-readme-install-from-source:
     name: Test "Installation from source" from README
     runs-on: [self-hosted, Linux, X64]
     container: debian:trixie
@@ -424,6 +424,40 @@ jobs:
           (tuttest README.md path-setup; tuttest README.md example-uhdm-ver1) | bash -
           (tuttest README.md path-setup; tuttest README.md example-uhdm-ver2) | bash -
           tuttest README.md example-multiple-files | (. <(tuttest README.md path-setup) && yosys)
+
+  test-plugin-with-packaged-yosys:
+    name: Test With Packaged Yosys
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:trixie
+    needs: build-binaries
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      PIPX_BIN_DIR: /usr/local/bin
+
+    steps:
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+
+      - name: Extract
+        run: tar -xf binaries.tar
+
+      - name: Install Yosys & Plugin
+        run: |
+          apt update -q
+          apt install -y yosys yosys-dev
+          mkdir -p /usr/lib/yosys/plugins
+          ln -s $PWD/out/current/share/yosys/plugins/systemverilog.so \
+              /usr/lib/yosys/plugins/systemverilog.so
+
+      - name: Load Plugin
+        run: |
+          yosys -Q -m systemverilog \
+              -p "help read_systemverilog" \
+              -p "help read_uhdm" 2>&1 | tee log.txt
+          grep ^ERROR log.txt || exit 0
+          exit 1
 
   # needed for test linting
   upload-event-file:
