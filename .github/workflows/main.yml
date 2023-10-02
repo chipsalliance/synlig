@@ -345,33 +345,49 @@ jobs:
   install-plugin:
     name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
-    container: debian:latest
+    container: debian:bookworm
     needs: release
     env:
       DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-standard-2"
+      PIPX_BIN_DIR: /usr/local/bin
 
     steps:
-      - name: Install Yosys and dependencies
+      - name: Prepare Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Install Prerequisites
         run: |
-          apt-get update -q
-          apt-get upgrade -y
-          apt-get install -y \
-              curl \
-              jq \
-              libreadline-dev \
-              wget \
-              yosys \
-              yosys-dev \
-              ;
-      - name: Download and extract UHDM plugin
+          apt update -qq
+          apt install -y --no-install-recommends pipx git
+          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+      - name: Install Dependencies
         run: |
-          curl https://api.github.com/repos/chipsalliance/synlig/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
-      - name: Install it
+          tuttest README.md install-yosys-debian | bash -
+
+      - name: Install Plugin
         run: |
-          ./install_plugin.sh
-      - name: Run Yosys and load SystemVerilog plugin
-        run: yosys -p "plugin -i systemverilog"
+          tuttest README.md download-plugin | bash -
+          tuttest README.md install-plugin | bash -
+
+      - name: Load Plugin
+        run: |
+          tuttest README.md load-plugin | yosys -Q | tee log.txt
+          grep ^ERROR log.txt || exit 0
+          exit 1
+
+      - name: Test Plugin
+        run: |
+          tuttest README.md example-verilog | bash -
+          tuttest README.md example-multiple-files | yosys
+
+      - name: Test sv2v pull and build
+        run: |
+          export PATH=`pwd`/out/current/bin:$PATH
+          tuttest README.md sv2v-update | bash -
+          tuttest README.md sv2v-build | bash -
 
   # needed for test linting
   upload-event-file:
