@@ -389,6 +389,42 @@ jobs:
           tuttest README.md sv2v-update | bash -
           tuttest README.md sv2v-build | bash -
 
+  tuttest-from-sources:
+    name: Test "Installation from source" from README
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:bookworm
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      PIPX_BIN_DIR: /usr/local/bin
+
+    steps:
+      - name: Prepare Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Install Prerequisites
+        run: |
+          apt update -qq
+          apt install -y --no-install-recommends pipx git
+          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+      - name: Install Dependencies
+        run: |
+          tuttest README.md dependencies | bash -
+
+      - name: Build Binaries
+        run: |
+          tuttest README.md build-binaries | bash -
+
+      - name: Test Binaries
+        run: |
+          tuttest README.md load-plugin | (. <(tuttest README.md path-setup) && yosys)
+          (tuttest README.md path-setup; tuttest README.md example-verilog) | bash -
+          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver1) | bash -
+          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver2) | bash -
+          tuttest README.md example-multiple-files | (. <(tuttest README.md path-setup) && yosys)
+
   # needed for test linting
   upload-event-file:
     name: Upload GHA event file
