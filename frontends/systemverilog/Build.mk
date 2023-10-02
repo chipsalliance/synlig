@@ -8,6 +8,7 @@ ${ts}.src_dir         := $(call ToAbsDirPaths,$(dir ${THIS_BUILD_MK}))
 ${ts}.out_build_dir   := ${out_dir}
 
 ${ts}.sources := \
+	${${ts}.src_dir}compat_symbols.cc \
 	${${ts}.src_dir}uhdm_ast.cc \
 	${${ts}.src_dir}uhdm_ast_frontend.cc \
 	${${ts}.src_dir}uhdm_common_frontend.cc \
