@@ -345,7 +345,7 @@ jobs:
   install-plugin:
     name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
-    container: debian:bookworm
+    container: debian:trixie
     needs: release
     env:
       DEBIAN_FRONTEND: noninteractive
@@ -392,7 +392,7 @@ jobs:
   tuttest-from-sources:
     name: Test "Installation from source" from README
     runs-on: [self-hosted, Linux, X64]
-    container: debian:bookworm
+    container: debian:trixie
     env:
       DEBIAN_FRONTEND: noninteractive
       PIPX_BIN_DIR: /usr/local/bin
