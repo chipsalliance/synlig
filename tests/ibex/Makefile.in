@@ -79,7 +79,11 @@ ${REQUIREMENTS_FILE}: ${IBEX}/.requirementspatch
 env:: download-f4pga install-plugins
 	${IN_CONDA_ENV} conda env update --name ${CONDA_ENV_NAME} --file ${root_dir}/env/f4pga/xc7_env/xc7_environment.yml </dev/null | cat
 	# Update edalize installed by Ibex to our own fork.
-	${IN_CONDA_ENV} pip install git+https://github.com/antmicro/edalize@symbiflow-read_verilog_with_uhdm </dev/null | cat
+	${IN_CONDA_ENV} pip install \
+		git+https://github.com/antmicro/edalize@symbiflow-read_verilog_with_uhdm \
+		-r ${IBEX}/python-requirements.txt \
+		-r ${curr_dir}/f4pga_requirements.txt \
+		</dev/null | cat
 	${IN_CONDA_ENV} conda env config vars set \
 		F4PGA_INSTALL_DIR=${root_dir}/env/f4pga \
 		F4PGA_SHARE_DIR=${root_dir}/env/f4pga/share/f4pga </dev/null | cat
@@ -87,7 +91,7 @@ env:: download-f4pga install-plugins
 # Ibex build
 
 ${IBEX}/.requirementspatch:
-	cd ${IBEX} && git apply ${curr_dir}/dont_install_riscv_dv_requirements.patch && touch $@
+	cd ${IBEX} && git apply ${curr_dir}/ibex_requirements.patch && touch $@
 
 ${IBEX}/.gitf4pgapatch: ${IBEX}/.gitpatch
 	cd ${IBEX} && git apply ${curr_dir}/prim_generic_clock_gating.patch
