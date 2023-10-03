@@ -15,10 +15,10 @@ Before installing the plugin, check that Yosys is installed and correctly config
    yosys-config --help
 ```
 
-The required Yosys version is 0.23 or later.
+The required Yosys version is 0.33 or later.
 If you don't have Yosys, skip to the [Installation from source](#installation-from-source) section to build Yosys from the source or follow the steps below for Debian-based Linux distributions:
 
-* Debian Bookworm or higher:
+* Debian Trixie or higher:
 
 <!-- name="install-yosys-debian" -->
 ``` bash
