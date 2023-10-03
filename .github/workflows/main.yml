@@ -74,12 +74,21 @@ jobs:
             cxx: 'g++'
             apt-extra-deps: 'gcc g++'
             build-binaries-args: ''
+            debian-patch: false
+          - name: 'Build Binaries (for Debian)'
+            artifact-name: 'binaries-debian'
+            cc: 'gcc'
+            cxx: 'g++'
+            apt-extra-deps: 'gcc g++'
+            build-binaries-args: ''
+            debian-patch: true
           - name: 'Build Binaries (ASAN)'
             artifact-name: 'binaries-asan'
             cc: 'clang-15'
             cxx: 'clang++-15'
             apt-extra-deps: 'clang-15'
             build-binaries-args: 'ENABLE_ASAN:=1'
+            debian-patch: false
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64]
     container: debian:bookworm
@@ -134,6 +143,11 @@ jobs:
           git submodule update --depth 1 --init --recursive --checkout \
               third_party/{surelog,yosys} \
               ;
+
+      - name: Apply Debian patch
+        if: ${{ matrix.debian-patch }}
+        run: |
+          git -C third_party/yosys apply ../yosys_mod/yosys_debian.patch
 
       - name: Setup cache
         uses: actions/cache@v2
@@ -293,9 +307,17 @@ jobs:
         with:
           name: binaries
 
+      - name: Download Debian artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries-debian
+
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: |
+          tar -xf binaries.tar
+          mkdir debian
+          tar -xf binaries-debian.tar -C debian
 
       - name: Generate tarball and apply TAG
         run: |
@@ -303,6 +325,7 @@ jobs:
           DATE=$(git show -s --date=short --format=%cd)
           FULL_TARBALL=synlig-$GIT_VERSION-$DATE.tar.gz
           PLUGIN_TARBALL=synlig-plugin-$GIT_VERSION-$DATE.tar.gz
+          PLUGIN_DEBIAN_TARBALL=synlig-plugin-debian-$GIT_VERSION-$DATE.tar.gz
           # Create a tag of form 2021-12-06-ad2466e
           TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
@@ -310,6 +333,7 @@ jobs:
           ls -lah out
           tar -zcvf $FULL_TARBALL out
           tar -zcvf $PLUGIN_TARBALL out/current/share/yosys/plugins/systemverilog.so install_plugin.sh
+          tar -zcvf $PLUGIN_DEBIAN_TARBALL debian/out/current/share/yosys/plugins/systemverilog.so install_plugin.sh
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:
@@ -342,36 +366,122 @@ jobs:
           overwrite: true
           file_glob: true
 
-  install-plugin:
+  test-release-with-packaged-yosys:
     name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
-    container: debian:latest
+    container: debian:trixie
     needs: release
     env:
       DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-standard-2"
+      PIPX_BIN_DIR: /usr/local/bin
 
     steps:
-      - name: Install Yosys and dependencies
+      - name: Prepare Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Install Prerequisites
         run: |
-          apt-get update -q
-          apt-get upgrade -y
-          apt-get install -y \
-              curl \
-              jq \
-              libreadline-dev \
-              wget \
-              yosys \
-              yosys-dev \
-              ;
-      - name: Download and extract UHDM plugin
+          apt update -qq
+          apt install -y --no-install-recommends pipx git
+          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+      - name: Install Dependencies
         run: |
-          curl https://api.github.com/repos/chipsalliance/synlig/releases/latest -L | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
-      - name: Install it
+          tuttest README.md install-yosys-debian | bash -
+
+      - name: Install Plugin
         run: |
-          ./install_plugin.sh
-      - name: Run Yosys and load SystemVerilog plugin
-        run: yosys -p "plugin -i systemverilog"
+          tuttest README.md download-plugin | bash -
+          tuttest README.md install-plugin | bash -
+
+      - name: Load Plugin
+        run: |
+          tuttest README.md load-plugin | yosys -Q | tee log.txt
+          grep ^ERROR log.txt || exit 0
+          exit 1
+
+      - name: Test Plugin
+        run: |
+          tuttest README.md example-verilog | bash -
+          tuttest README.md example-multiple-files | yosys
+
+      - name: Test sv2v pull and build
+        run: |
+          export PATH=`pwd`/out/current/bin:$PATH
+          tuttest README.md sv2v-update | bash -
+          tuttest README.md sv2v-build | bash -
+
+  test-readme-install-from-source:
+    name: Test "Installation from source" from README
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:trixie
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      PIPX_BIN_DIR: /usr/local/bin
+
+    steps:
+      - name: Prepare Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Install Prerequisites
+        run: |
+          apt update -qq
+          apt install -y --no-install-recommends pipx git
+          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+      - name: Install Dependencies
+        run: |
+          tuttest README.md dependencies | bash -
+
+      - name: Build Binaries
+        run: |
+          tuttest README.md build-binaries | bash -
+
+      - name: Test Binaries
+        run: |
+          tuttest README.md load-plugin | (. <(tuttest README.md path-setup) && yosys)
+          (tuttest README.md path-setup; tuttest README.md example-verilog) | bash -
+          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver1) | bash -
+          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver2) | bash -
+          tuttest README.md example-multiple-files | (. <(tuttest README.md path-setup) && yosys)
+
+  test-plugin-with-packaged-yosys:
+    name: Test With Packaged Yosys
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:trixie
+    needs: build-binaries
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      PIPX_BIN_DIR: /usr/local/bin
+
+    steps:
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries-debian
+
+      - name: Extract
+        run: tar -xf binaries-debian.tar
+
+      - name: Install Yosys & Plugin
+        run: |
+          apt update -q
+          apt install -y yosys yosys-dev
+          mkdir -p /usr/lib/yosys/plugins
+          ln -s $PWD/out/current/share/yosys/plugins/systemverilog.so \
+              /usr/lib/yosys/plugins/systemverilog.so
+
+      - name: Load Plugin
+        run: |
+          yosys -Q -m systemverilog \
+              -p "help read_systemverilog" \
+              -p "help read_uhdm" 2>&1 | tee log.txt
+          grep ^ERROR log.txt || exit 0
+          exit 1
 
   # needed for test linting
   upload-event-file:

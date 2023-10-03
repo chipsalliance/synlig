@@ -1,0 +1,19 @@
+diff --git i/python-requirements.txt w/python-requirements.txt
+index 40173cd3..5a029093 100644
+--- i/python-requirements.txt
++++ w/python-requirements.txt
+@@ -3,7 +3,7 @@
+ # SPDX-License-Identifier: Apache-2.0
+ 
+ # Development version of edalize until all our changes are upstream
+-git+https://github.com/lowRISC/edalize.git@ot
++#git+https://github.com/lowRISC/edalize.git@ot
+ 
+ # Development version with OT-specific changes
+ git+https://github.com/lowRISC/fusesoc.git@ot
+@@ -27,4 +27,4 @@ mistletoe>=0.7.2
+ premailer < 3.9.0
+ 
+ # Recurse to get any requirements from riscv-dv
+--r vendor/google_riscv-dv/requirements.txt
++#-r vendor/google_riscv-dv/requirements.txt

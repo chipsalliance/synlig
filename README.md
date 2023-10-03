@@ -15,10 +15,10 @@ Before installing the plugin, check that Yosys is installed and correctly config
    yosys-config --help
 ```
 
-The required Yosys version is 0.23 or later.
+The required Yosys version is 0.33 or later.
 If you don't have Yosys, skip to the [Installation from source](#installation-from-source) section to build Yosys from the source or follow the steps below for Debian-based Linux distributions:
 
-* Debian Bookworm or higher:
+* Debian Trixie or higher:
 
 <!-- name="install-yosys-debian" -->
 ``` bash
@@ -30,7 +30,7 @@ When you are sure Yosys is installed and configured, download and unpack the lat
 <!-- name="download-plugin" -->
 ``` bash
    apt install -y curl jq tar wget
-   curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq .assets[1] | grep "browser_download_url" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+   curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig-plugin-debian")) | .browser_download_url' | xargs wget -O - | tar -xz
 ```
 
 Then, install the plugin with superuser privileges:
