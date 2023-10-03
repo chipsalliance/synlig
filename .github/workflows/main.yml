@@ -74,12 +74,21 @@ jobs:
             cxx: 'g++'
             apt-extra-deps: 'gcc g++'
             build-binaries-args: ''
+            debian-patch: false
+          - name: 'Build Binaries (for Debian)'
+            artifact-name: 'binaries-debian'
+            cc: 'gcc'
+            cxx: 'g++'
+            apt-extra-deps: 'gcc g++'
+            build-binaries-args: ''
+            debian-patch: true
           - name: 'Build Binaries (ASAN)'
             artifact-name: 'binaries-asan'
             cc: 'clang-15'
             cxx: 'clang++-15'
             apt-extra-deps: 'clang-15'
             build-binaries-args: 'ENABLE_ASAN:=1'
+            debian-patch: false
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64]
     container: debian:bookworm
@@ -134,6 +143,11 @@ jobs:
           git submodule update --depth 1 --init --recursive --checkout \
               third_party/{surelog,yosys} \
               ;
+
+      - name: Apply Debian patch
+        if: ${{ matrix.debian-patch }}
+        run: |
+          git -C third_party/yosys apply ../yosys_mod/yosys_debian.patch
 
       - name: Setup cache
         uses: actions/cache@v2
@@ -293,9 +307,17 @@ jobs:
         with:
           name: binaries
 
+      - name: Download Debian artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries-debian
+
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: |
+          tar -xf binaries.tar
+          mkdir debian
+          tar -xf binaries-debian.tar -C debian
 
       - name: Generate tarball and apply TAG
         run: |
@@ -303,6 +325,7 @@ jobs:
           DATE=$(git show -s --date=short --format=%cd)
           FULL_TARBALL=synlig-$GIT_VERSION-$DATE.tar.gz
           PLUGIN_TARBALL=synlig-plugin-$GIT_VERSION-$DATE.tar.gz
+          PLUGIN_DEBIAN_TARBALL=synlig-plugin-debian-$GIT_VERSION-$DATE.tar.gz
           # Create a tag of form 2021-12-06-ad2466e
           TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
@@ -310,6 +333,7 @@ jobs:
           ls -lah out
           tar -zcvf $FULL_TARBALL out
           tar -zcvf $PLUGIN_TARBALL out/current/share/yosys/plugins/systemverilog.so install_plugin.sh
+          tar -zcvf $PLUGIN_DEBIAN_TARBALL debian/out/current/share/yosys/plugins/systemverilog.so install_plugin.sh
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:
@@ -438,10 +462,10 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-debian
 
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-debian.tar
 
       - name: Install Yosys & Plugin
         run: |
