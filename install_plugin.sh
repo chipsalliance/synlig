@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 set -e
 
@@ -15,3 +15,10 @@ SYSTEMVERILOG_PLUGIN_PATH=$INSTALL_SCRIPT_DIR/out/current/share/yosys/plugins/sy
 
 mkdir -p $YOSYS_PLUGIN_DIR
 cp -v $SYSTEMVERILOG_PLUGIN_PATH $YOSYS_PLUGIN_DIR
+
+if [[ -f /etc/os-release ]] && source /etc/os-release && [[ "$NAME" == *Debian* ]]; then
+    # Debian has a different hardcoded plugin path, not reflected in yosys-config
+    # https://salsa.debian.org/science-team/yosys/-/blob/master/debian/patches/0017-Support-plugin-loading-from-libdir.patch
+    mkdir -p /usr/lib/yosys/plugins
+    cp $SYSTEMVERILOG_PLUGIN_PATH /usr/lib/yosys/plugins
+fi
