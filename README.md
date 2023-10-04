@@ -43,7 +43,7 @@ The plugin is now ready to be used. and you can go to the [Usage](#usage) sectio
 
 ## Installation from source
 
-* Debian Bookworm:
+* Debian Trixie:
 
 ### Install dependencies
 
