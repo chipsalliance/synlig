@@ -459,6 +459,11 @@ jobs:
       PIPX_BIN_DIR: /usr/local/bin
 
     steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+          fetch-depth: 1
+
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
@@ -471,9 +476,7 @@ jobs:
         run: |
           apt update -q
           apt install -y yosys yosys-dev
-          mkdir -p /usr/lib/yosys/plugins
-          ln -s $PWD/out/current/share/yosys/plugins/systemverilog.so \
-              /usr/lib/yosys/plugins/systemverilog.so
+          ./install_plugin.sh
 
       - name: Load Plugin
         run: |
