@@ -4,8 +4,8 @@ out_dir := $(call GetTargetBuildDir,${t})
 
 cxx_is_clang := $(findstring clang,$(notdir ${CXX}))
 
-${ts}.src_dir         := $(call ToAbsDirPaths,$(dir ${THIS_BUILD_MK}))
-${ts}.out_build_dir   := ${out_dir}
+${ts}.src_dir       := $(call ToAbsDirPaths,$(dir ${THIS_BUILD_MK}))
+${ts}.out_build_dir := ${out_dir}
 
 ${ts}.sources := \
 	${${ts}.src_dir}compat_symbols.cc \
@@ -13,13 +13,26 @@ ${ts}.sources := \
 	${${ts}.src_dir}uhdm_ast_frontend.cc \
 	${${ts}.src_dir}uhdm_common_frontend.cc \
 	${${ts}.src_dir}uhdm_surelog_ast_frontend.cc \
-	${$(call GetTargetStructName,yosys).mod_dir}edif.cc \
 	${$(call GetTargetStructName,yosys).mod_dir}const2ast.cc \
+	${$(call GetTargetStructName,yosys).mod_dir}edif.cc \
 	${$(call GetTargetStructName,yosys).mod_dir}simplify.cc
 
 define ${ts}.env =
 export PKG_CONFIG_PATH=$(call ShQuote,${$(call GetTargetStructName,surelog).output_vars.PKG_CONFIG_PATH}$(if ${PKG_CONFIG_PATH},:${PKG_CONFIG_PATH}))
 endef
+
+ifeq (${BUILD_TYPE},release)
+build_type_cxxflags = -O3
+else
+build_type_cxxflags = -g -Og
+ifeq (${BUILD_TYPE},asan)
+ifndef cxx_is_clang
+$(error ERROR: Address sanitizer is currently only supported with clang)
+endif
+build_type_cxxflags += -fsanitize=address -mllvm -asan-use-private-alias=1
+build_type_ldflags = -fsanitize=address
+endif
+endif
 
 ${ts}.cxxflags = \
 	-I${$(call GetTargetStructName,yosys).src_dir} \
@@ -27,7 +40,7 @@ ${ts}.cxxflags = \
 	-D_YOSYS_ \
 	-DYOSYS_ENABLE_PLUGINS \
 	$(shell ${${ts}.env}; pkg-config --cflags Surelog) \
-	-O3 \
+	${build_type_cxxflags} \
 	-Wall \
 	-W \
 	-Wextra \
@@ -40,6 +53,7 @@ ${ts}.cxxflags = \
 ${ts}.ldflags = \
 	$(if ${LD},${USE_LD_FLAG}) \
 	$(shell ${${ts}.env}; pkg-config --libs-only-L Surelog) \
+	${build_type_ldflags} \
 	${LDFLAGS} \
 	-Wl,--export-dynamic
 
