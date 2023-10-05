@@ -4,8 +4,8 @@ out_dir := $(call GetTargetBuildDir,${t})
 
 cxx_is_clang := $(findstring clang,$(notdir ${CXX}))
 
-${ts}.src_dir         := $(call ToAbsDirPaths,$(dir ${THIS_BUILD_MK}))
-${ts}.out_build_dir   := ${out_dir}
+${ts}.src_dir       := $(call ToAbsDirPaths,$(dir ${THIS_BUILD_MK}))
+${ts}.out_build_dir := ${out_dir}
 
 ${ts}.sources := \
 	${${ts}.src_dir}compat_symbols.cc \
@@ -13,8 +13,8 @@ ${ts}.sources := \
 	${${ts}.src_dir}uhdm_ast_frontend.cc \
 	${${ts}.src_dir}uhdm_common_frontend.cc \
 	${${ts}.src_dir}uhdm_surelog_ast_frontend.cc \
-	${$(call GetTargetStructName,yosys).mod_dir}edif.cc \
 	${$(call GetTargetStructName,yosys).mod_dir}const2ast.cc \
+	${$(call GetTargetStructName,yosys).mod_dir}edif.cc \
 	${$(call GetTargetStructName,yosys).mod_dir}simplify.cc
 
 define ${ts}.env =
