@@ -21,13 +21,23 @@ define ${ts}.env =
 export PKG_CONFIG_PATH=$(call ShQuote,${$(call GetTargetStructName,surelog).output_vars.PKG_CONFIG_PATH}$(if ${PKG_CONFIG_PATH},:${PKG_CONFIG_PATH}))
 endef
 
+ifeq (${BUILD_TYPE},release)
+build_type_cxxflags = -O3
+else
+build_type_cxxflags = -g -Og
+ifeq (${BUILD_TYPE},asan)
+build_type_cxxflags += -fsanitize=address
+build_type_ldflags = -fsanitize=address
+endif
+endif
+
 ${ts}.cxxflags = \
 	-I${$(call GetTargetStructName,yosys).src_dir} \
 	-I${$(call GetTargetStructName,yosys).mod_dir} \
 	-D_YOSYS_ \
 	-DYOSYS_ENABLE_PLUGINS \
 	$(shell ${${ts}.env}; pkg-config --cflags Surelog) \
-	-O3 \
+	${build_type_cxxflags} \
 	-Wall \
 	-W \
 	-Wextra \
@@ -40,6 +50,7 @@ ${ts}.cxxflags = \
 ${ts}.ldflags = \
 	$(if ${LD},${USE_LD_FLAG}) \
 	$(shell ${${ts}.env}; pkg-config --libs-only-L Surelog) \
+	${build_type_ldflags} \
 	${LDFLAGS} \
 	-Wl,--export-dynamic
 
