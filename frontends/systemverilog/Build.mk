@@ -26,7 +26,10 @@ build_type_cxxflags = -O3
 else
 build_type_cxxflags = -g -Og
 ifeq (${BUILD_TYPE},asan)
-build_type_cxxflags += -fsanitize=address
+ifndef cxx_is_clang
+$(error ERROR: Address sanitizer is currently only supported with clang)
+endif
+build_type_cxxflags += -fsanitize=address -mllvm -asan-use-private-alias=1
 build_type_ldflags = -fsanitize=address
 endif
 endif
