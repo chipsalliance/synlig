@@ -2322,8 +2322,6 @@ void UhdmAst::process_module()
         current_node->children.insert(current_node->children.begin(), typeNode);
     }
 
-    auto old_top = shared.current_top_node;
-    shared.current_top_node = module_node;
     visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiTaskFunc, vpiProcess},
                       obj_h, [&](AST::AstNode *node) {
                           if (get_attribute(node, attr_id::is_type_parameter)) {
@@ -2349,8 +2347,7 @@ void UhdmAst::process_module()
 
     if (is_module_instance)
         make_cell(obj_h, current_node, module_node);
-
-    shared.current_top_node = old_top;
+    
     set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
 
     delete_attribute(current_node, UhdmAst::partial());
