@@ -2056,12 +2056,11 @@ void UhdmAst::process_design()
 {
     current_node = make_ast_node(AST::AST_DESIGN);
     // Packages are read only, nothing can influence their content
-    visit_one_to_many({UHDM::uhdmtopPackages}, obj_h,
-                      [&](AST::AstNode *node) {
-                          if (node) {
-                              shared.top_nodes[node->str] = node;
-                          }
-                      });
+    visit_one_to_many({UHDM::uhdmtopPackages}, obj_h, [&](AST::AstNode *node) {
+        if (node) {
+            shared.top_nodes[node->str] = node;
+        }
+    });
     // Parameters and param assigns can depend on packages
     visit_one_to_many({vpiParameter, vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
         if (!get_attribute(node, attr_id::is_type_parameter)) {
@@ -2082,12 +2081,11 @@ void UhdmAst::process_design()
         }
     });
     // Top level functions and Instance tree can depend on all of the above
-    visit_one_to_many({vpiTaskFunc, UHDM::uhdmtopModules}, obj_h,
-                      [&](AST::AstNode *node) {
-                          if (node) {
-                              shared.top_nodes[node->str] = node;
-                          }
-                      });
+    visit_one_to_many({vpiTaskFunc, UHDM::uhdmtopModules}, obj_h, [&](AST::AstNode *node) {
+        if (node) {
+            shared.top_nodes[node->str] = node;
+        }
+    });
     // Add top level typedefs and params to scope
     setup_current_scope(shared.top_nodes, current_node);
     for (auto pair : shared.top_nodes) {
@@ -2326,12 +2324,22 @@ void UhdmAst::process_module()
 
     auto old_top = shared.current_top_node;
     shared.current_top_node = module_node;
-    visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiTaskFunc}, obj_h,
-                      [&](AST::AstNode *node) {
+    visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiTaskFunc, vpiProcess},
+                      obj_h, [&](AST::AstNode *node) {
+                          if (get_attribute(node, attr_id::is_type_parameter)) {
+                              // Don't process type parameters.
+                              delete node;
+                              return;
+                          }
+                          if ((node->type == AST::AST_ASSIGN && node->children.size() < 2)) {
+                              delete node;
+                              return;
+                          }
                           if (node) {
                               add_or_replace_child(module_node, node);
                           }
                       });
+
     // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
     visit_one_to_many({vpiPrimitive}, obj_h, [&](AST::AstNode *node) {
         if (node) {
@@ -2346,7 +2354,6 @@ void UhdmAst::process_module()
     set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
 
     delete_attribute(current_node, UhdmAst::partial());
-
 
     /*
     std::string type = vpi_get_str(vpiDefName, obj_h);
