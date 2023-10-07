@@ -1822,7 +1822,7 @@ void UhdmAst::process_packed_array_typespec()
     current_node = make_ast_node(AST::AST_WIRE);
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
     visit_one_to_one({vpiElemTypespec}, obj_h, [&](AST::AstNode *node) {
-        if (node && node->type == AST::AST_STRUCT) {
+        if (node && (node->type == AST::AST_STRUCT || node->type == AST::AST_ENUM)) {
             auto str = current_node->str;
             // unnamed array of named (struct) array
             if (str.empty() && !node->str.empty())
@@ -2055,7 +2055,7 @@ AST::AstNode *UhdmAst::find_ancestor(const std::unordered_set<AST::AstNodeType> 
 void UhdmAst::process_design()
 {
     current_node = make_ast_node(AST::AST_DESIGN);
-    visit_one_to_many({UHDM::uhdmallInterfaces, UHDM::uhdmtopPackages, UHDM::uhdmallModules, UHDM::uhdmtopModules, vpiTaskFunc}, obj_h,
+    visit_one_to_many({/*UHDM::uhdmallInterfaces,*/ UHDM::uhdmtopPackages, /*UHDM::uhdmallModules,*/ UHDM::uhdmtopModules, vpiTaskFunc}, obj_h,
                       [&](AST::AstNode *node) {
                           if (node) {
                               shared.top_nodes[node->str] = node;
@@ -2167,6 +2167,164 @@ void UhdmAst::simplify_parameter(AST::AstNode *parameter, AST::AstNode *module_n
 
 void UhdmAst::process_module()
 {
+    std::string type = vpi_get_str(vpiDefName, obj_h);
+    std::string name = vpi_get_str(vpiName, obj_h) ? vpi_get_str(vpiName, obj_h) : type;
+    sanitize_symbol_name(type);
+    sanitize_symbol_name(name);
+    type = strip_package_name(type);
+    name = strip_package_name(name);
+    bool is_module_instance = type != name;
+    std::cout << "Processing: " << type << " (" << name << ")" << std::endl;
+    if (!is_module_instance) {
+        // Top-level module
+        current_node = make_ast_node(AST::AST_MODULE);
+        current_node->str = type;
+        shared.top_nodes[current_node->str] = current_node;
+        shared.current_top_node = current_node;
+    } else {
+        current_node = make_ast_node(AST::AST_MODULE);
+        current_node->str = type;
+        shared.top_nodes[current_node->str] = current_node;
+        current_node = make_ast_node(AST::AST_CELL);
+    }
+
+    // A module instance inside another uhdmTopModules' module.
+    // Create standalone module instance AST and embed it in the instantiating module using AST_CELL.
+
+    const uhdm_handle *const handle = (const uhdm_handle *)obj_h;
+    const auto *const uhdm_obj = (const UHDM::any *)handle->object;
+    const auto current_instance_changer = ScopedValueChanger(shared.current_instance, uhdm_obj);
+
+    std::vector<std::pair<RTLIL::IdString, RTLIL::Const>> parameters;
+
+    auto parameter_typedefs = make_unique_resource<std::vector<AST::AstNode *>>();
+
+    visit_one_to_many({vpiParameter}, obj_h, [&](AST::AstNode *node) {
+        log_assert(node);
+        AST::AstNode *attr = get_attribute(node, attr_id::is_type_parameter);
+
+        if (!attr) {
+            // Process type parameters only.
+            delete node;
+            return;
+        }
+
+        if (node->children.size() == 0) {
+            log_assert(!attr->str.empty());
+            // Anonymous types have no chidren, and store the parameter name in attr->str.
+            parameters.push_back(std::make_pair(node->str, attr->str));
+            delete node;
+            return;
+        }
+
+        for (auto child : node->children) {
+            if (child->type == AST::AST_TYPEDEF && !child->str.empty()) {
+                // process_type_parameter should have created a node with the parameter name
+                //   and a child with the name of the value assigned to the parameter.
+                parameters.push_back(std::make_pair(node->str, child->str));
+            }
+
+            if (child->type == AST::AST_TYPEDEF || child->type == AST::AST_ENUM) {
+                // Copy definition of the type provided as parameter.
+                parameter_typedefs->push_back(child->clone());
+            }
+        }
+        delete node;
+    });
+
+    visit_one_to_many({vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
+        if (node && node->type == AST::AST_PARAMETER) {
+            log_assert(!node->children.empty());
+            if (node->children[0]->type != AST::AST_CONSTANT) {
+                if (shared.top_nodes.count(type)) {
+                    simplify_parameter(node, shared.top_nodes[type]);
+                } else {
+                    simplify_parameter(node, nullptr);
+                }
+            }
+            log_assert(node->children[0]->type == AST::AST_CONSTANT || node->children[0]->type == AST::AST_REALVALUE);
+            parameters.push_back(std::make_pair(node->str, node->children[0]->asParaConst()));
+        }
+        delete node;
+    });
+    // We need to rename module to prevent name collision with the same module, but with different parameters
+    std::string module_name = !parameters.empty() ? AST::derived_module_name(type, parameters).c_str() : type;
+    auto module_node = shared.top_nodes[module_name];
+    // true, when Surelog don't have definition of module while parsing design
+    // if so, we leaving module parameters to yosys and don't rename module
+    // as it will be done by yosys
+    bool isPrimitive = false;
+    if (!module_node) {
+        module_node = shared.top_nodes[type];
+        if (!module_node) {
+            module_node = new AST::AstNode(AST::AST_MODULE);
+            module_node->str = type;
+            module_node->attributes[UhdmAst::partial()] = AST::AstNode::mkconst_int(2, false, 1);
+            module_node->attributes[ID::whitebox] = AST::AstNode::mkconst_int(1, false, 1);
+        }
+        isPrimitive = module_node->attributes.count(UhdmAst::partial()) && module_node->attributes[UhdmAst::partial()]->integer == 2;
+        if (!parameters.empty() && !isPrimitive) {
+            module_node = module_node->clone();
+            module_node->str = module_name;
+        }
+    } else if (auto attribute = get_attribute(module_node, attr_id::is_elaborated_module); attribute && attribute->integer == 1) {
+        // we already processed module with this parameters, just create cell node
+        make_cell(obj_h, current_node, module_node);
+        return;
+    }
+    shared.top_nodes[module_node->str] = module_node;
+    visit_one_to_many({vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
+        if (node) {
+            if (node->children[0]->type != AST::AST_CONSTANT) {
+                if (shared.top_nodes[type]) {
+                    simplify_parameter(node, module_node);
+                    log_assert(node->children[0]->type == AST::AST_CONSTANT || node->children[0]->type == AST::AST_REALVALUE);
+                }
+            }
+            // if module is primitive
+            // Surelog doesn't have definition of this module,
+            // so we need to left setting of parameters to yosys
+            if (isPrimitive) {
+                node->type = AST::AST_PARASET;
+                current_node->children.push_back(node);
+            } else {
+                add_or_replace_child(module_node, node);
+            }
+        }
+    });
+    module_node->children.insert(std::end(module_node->children), std::begin(*parameter_typedefs), std::end(*parameter_typedefs));
+    parameter_typedefs->clear();
+    parameter_typedefs.reset();
+    if (module_node->attributes.count(UhdmAst::partial())) {
+        AST::AstNode *attr = module_node->attributes.at(UhdmAst::partial());
+        if (attr->type == AST::AST_CONSTANT)
+            if (attr->integer == 1) {
+                delete_attribute(module_node, UhdmAst::partial());
+            }
+    }
+
+    if (is_module_instance) {
+        auto typeNode = new AST::AstNode(AST::AST_CELLTYPE);
+        typeNode->str = module_node->str;
+        current_node->children.insert(current_node->children.begin(), typeNode);
+    }
+
+    auto old_top = shared.current_top_node;
+    shared.current_top_node = module_node;
+    visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiTaskFunc}, obj_h,
+                      [&](AST::AstNode *node) {
+                          if (node) {
+                              add_or_replace_child(module_node, node);
+                          }
+                      });
+
+    if (is_module_instance)
+        make_cell(obj_h, current_node, module_node);
+
+    shared.current_top_node = old_top;
+    set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
+
+    /*
     std::string type = vpi_get_str(vpiDefName, obj_h);
     std::string name = vpi_get_str(vpiName, obj_h) ? vpi_get_str(vpiName, obj_h) : type;
     bool is_module_instance = type != name;
@@ -2364,6 +2522,7 @@ void UhdmAst::process_module()
         shared.current_top_node = old_top;
         set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
     }
+    */
 }
 
 void UhdmAst::process_struct_typespec()
@@ -2839,6 +2998,41 @@ void UhdmAst::process_array_var()
         } else if (vpi_get(vpiType, reg_h) == vpiIntVar) {
             packed_ranges.push_back(make_range(31, 0));
             visit_default_expr(reg_h);
+        } else if (vpi_get(vpiType, reg_h) == vpiPackedArrayVar) {
+            vpiHandle itr2 = vpi_iterate(vpi_get(vpiType, reg_h) == vpiArrayVar ? vpiReg : vpiElement, reg_h);
+            while (vpiHandle reg_h2 = vpi_scan(itr2)) {
+                if (vpi_get(vpiType, reg_h2) == vpiStructVar || vpi_get(vpiType, reg_h2) == vpiEnumVar) {
+                    visit_one_to_one({vpiTypespec}, reg_h2, [&](AST::AstNode *node) {
+                        if (node->str.empty()) {
+                            // anonymous typespec, move the children to variable
+                            current_node->type = node->type;
+                            current_node->children = std::move(node->children);
+                        } else {
+                            auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
+                            wiretype_node->str = node->str;
+                            current_node->children.push_back(wiretype_node);
+                            current_node->is_custom_type = true;
+                        }
+                        delete node;
+                    });
+                } else if (vpi_get(vpiType, reg_h2) == vpiLogicVar) {
+                    current_node->is_logic = true;
+                    visit_one_to_one({vpiTypespec}, reg_h2, [&](AST::AstNode *node) {
+                        if (node->str.empty()) {
+                            // anonymous typespec, move the children to variable
+                            current_node->type = node->type;
+                            current_node->children = std::move(node->children);
+                        } else {
+                            auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
+                            wiretype_node->str = node->str;
+                            current_node->children.push_back(wiretype_node);
+                            current_node->is_custom_type = true;
+                        }
+                        delete node;
+                    });
+                }
+                visit_one_to_many({vpiRange}, reg_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            }
         }
         vpi_release_handle(reg_h);
     }
@@ -4736,6 +4930,15 @@ void UhdmAst::process_port()
             visit_one_to_many({vpiRange}, actual_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
             break;
         case vpiArrayVar:
+            visit_one_to_many({vpiElement}, actual_h, [&](AST::AstNode *node) {
+                if (node && GetSize(node->children) == 1) {
+                    current_node->children.push_back(node->children[0]->clone());
+                    if (node->children[0]->type == AST::AST_WIRETYPE) {
+                        current_node->is_custom_type = true;
+                    }
+                }
+                delete node;
+            });
             visit_one_to_many({vpiRange}, actual_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
             break;
         case vpiEnumNet:
@@ -4762,6 +4965,7 @@ void UhdmAst::process_port()
         vpi_release_handle(actual_h);
         vpi_release_handle(lowConn_h);
     }
+
     visit_one_to_one({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
         if (node) {
             if (current_node->children.empty() || current_node->children[0]->type != AST::AST_WIRETYPE) {
@@ -4780,6 +4984,7 @@ void UhdmAst::process_port()
             delete node;
         }
     });
+
     if (const int n = vpi_get(vpiDirection, obj_h)) {
         if (n == vpiInput) {
             current_node->is_input = true;
