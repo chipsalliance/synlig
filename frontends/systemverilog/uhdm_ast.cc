@@ -2055,20 +2055,14 @@ AST::AstNode *UhdmAst::find_ancestor(const std::unordered_set<AST::AstNodeType> 
 void UhdmAst::process_design()
 {
     current_node = make_ast_node(AST::AST_DESIGN);
-    visit_one_to_many({/*UHDM::uhdmallInterfaces,*/ UHDM::uhdmtopPackages, /*UHDM::uhdmallModules,*/ UHDM::uhdmtopModules, vpiTaskFunc}, obj_h,
+    // Packages are read only, nothing can influence their content
+    visit_one_to_many({UHDM::uhdmtopPackages}, obj_h,
                       [&](AST::AstNode *node) {
                           if (node) {
                               shared.top_nodes[node->str] = node;
                           }
                       });
-    visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
-        if (node) {
-            for (auto pair : shared.top_nodes) {
-                move_type_to_new_typedef(pair.second, node->clone());
-            }
-            delete node;
-        }
-    });
+    // Parameters and param assigns can depend on packages
     visit_one_to_many({vpiParameter, vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
         if (!get_attribute(node, attr_id::is_type_parameter)) {
             // Don't process type parameters.
@@ -2078,6 +2072,22 @@ void UhdmAst::process_design()
         }
         delete node;
     });
+    // Typedefs can depend on Parameter and param assigns and packages
+    visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
+        if (node) {
+            for (auto pair : shared.top_nodes) {
+                move_type_to_new_typedef(pair.second, node->clone());
+            }
+            delete node;
+        }
+    });
+    // Top level functions and Instance tree can depend on all of the above
+    visit_one_to_many({vpiTaskFunc, UHDM::uhdmtopModules}, obj_h,
+                      [&](AST::AstNode *node) {
+                          if (node) {
+                              shared.top_nodes[node->str] = node;
+                          }
+                      });
     // Add top level typedefs and params to scope
     setup_current_scope(shared.top_nodes, current_node);
     for (auto pair : shared.top_nodes) {
