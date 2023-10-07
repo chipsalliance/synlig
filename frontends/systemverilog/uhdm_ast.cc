@@ -2247,6 +2247,11 @@ void UhdmAst::process_module()
         }
         delete node;
     });
+    visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
+        if (node) {
+            move_type_to_new_typedef(current_node, node);
+        }
+    });
     // We need to rename module to prevent name collision with the same module, but with different parameters
     std::string module_name = !parameters.empty() ? AST::derived_module_name(type, parameters).c_str() : type;
     auto module_node = shared.top_nodes[module_name];
@@ -2317,12 +2322,20 @@ void UhdmAst::process_module()
                               add_or_replace_child(module_node, node);
                           }
                       });
+    // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
+    visit_one_to_many({vpiPrimitive}, obj_h, [&](AST::AstNode *node) {
+        if (node) {
+            current_node->children.push_back(node);
+        }
+    });
 
     if (is_module_instance)
         make_cell(obj_h, current_node, module_node);
 
     shared.current_top_node = old_top;
     set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
+
+    delete_attribute(current_node, UhdmAst::partial());
 
     /*
     std::string type = vpi_get_str(vpiDefName, obj_h);
