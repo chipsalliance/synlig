@@ -2337,6 +2337,7 @@ void UhdmAst::process_module()
 
     delete_attribute(current_node, UhdmAst::partial());
 
+
     /*
     std::string type = vpi_get_str(vpiDefName, obj_h);
     std::string name = vpi_get_str(vpiName, obj_h) ? vpi_get_str(vpiName, obj_h) : type;
