@@ -154,6 +154,7 @@ simple:OneStruct/dut.sv
 simple:OneSysFunc/dut.v
 simple:PackageCast/dut.v
 simple:PackedArray/top.sv
+simple:PackedArrayPort/top.sv
 simple:ParameterColonReference/top.sv
 simple:ParameterConditionalAssignment/top.sv
 simple:ParameterDoubleUnderscoreInSvFrontend/my_pkg.sv
