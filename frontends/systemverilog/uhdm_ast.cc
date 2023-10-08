@@ -1822,7 +1822,7 @@ void UhdmAst::process_packed_array_typespec()
     current_node = make_ast_node(AST::AST_WIRE);
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
     visit_one_to_one({vpiElemTypespec}, obj_h, [&](AST::AstNode *node) {
-        if (node && (node->type == AST::AST_STRUCT || node->type == AST::AST_ENUM)) {
+        if (node && (node->type == AST::AST_STRUCT)) {
             auto str = current_node->str;
             // unnamed array of named (struct) array
             if (str.empty() && !node->str.empty())
@@ -1830,6 +1830,12 @@ void UhdmAst::process_packed_array_typespec()
             node->cloneInto(current_node);
             current_node->str = str;
             delete node;
+        } else if (node && (node->type == AST::AST_ENUM)) {
+            AST::AstNode *const wiretype_node = make_named_node(AST::AST_WIRETYPE);
+            wiretype_node->str = node->str;
+            current_node->children.push_back(wiretype_node);
+            current_node->is_custom_type = true;
+            current_node->str = node->str;
         } else if (node) {
             if (!node->str.empty()) {
                 AST::AstNode *const wiretype_node = make_named_node(AST::AST_WIRETYPE);
