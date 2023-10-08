@@ -2055,23 +2055,12 @@ AST::AstNode *UhdmAst::find_ancestor(const std::unordered_set<AST::AstNodeType> 
 void UhdmAst::process_design()
 {
     current_node = make_ast_node(AST::AST_DESIGN);
-    // Packages are read only, nothing can influence their content
-    visit_one_to_many({UHDM::uhdmtopPackages}, obj_h, [&](AST::AstNode *node) {
-        if (node) {
-            shared.top_nodes[node->str] = node;
-        }
-    });
-    // Parameters and param assigns can depend on packages
-    visit_one_to_many({vpiParameter, vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
-        if (!get_attribute(node, attr_id::is_type_parameter)) {
-            // Don't process type parameters.
-            for (auto pair : shared.top_nodes) {
-                add_or_replace_child(pair.second, node->clone());
-            }
-        }
-        delete node;
-    });
-    // Typedefs can depend on Parameter and param assigns and packages
+    visit_one_to_many({UHDM::uhdmallInterfaces, UHDM::uhdmtopPackages, UHDM::uhdmallModules, UHDM::uhdmtopModules, vpiTaskFunc}, obj_h,
+                      [&](AST::AstNode *node) {
+                          if (node) {
+                              shared.top_nodes[node->str] = node;
+                          }
+                      });
     visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
         if (node) {
             for (auto pair : shared.top_nodes) {
@@ -2080,11 +2069,14 @@ void UhdmAst::process_design()
             delete node;
         }
     });
-    // Top level functions and Instance tree can depend on all of the above
-    visit_one_to_many({vpiTaskFunc, UHDM::uhdmtopModules}, obj_h, [&](AST::AstNode *node) {
-        if (node) {
-            shared.top_nodes[node->str] = node;
+    visit_one_to_many({vpiParameter, vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
+        if (!get_attribute(node, attr_id::is_type_parameter)) {
+            // Don't process type parameters.
+            for (auto pair : shared.top_nodes) {
+                add_or_replace_child(pair.second, node->clone());
+            }
         }
+        delete node;
     });
     // Add top level typedefs and params to scope
     setup_current_scope(shared.top_nodes, current_node);
@@ -2175,184 +2167,6 @@ void UhdmAst::simplify_parameter(AST::AstNode *parameter, AST::AstNode *module_n
 
 void UhdmAst::process_module()
 {
-    std::string type = vpi_get_str(vpiDefName, obj_h);
-    std::string name = vpi_get_str(vpiName, obj_h) ? vpi_get_str(vpiName, obj_h) : type;
-    sanitize_symbol_name(type);
-    sanitize_symbol_name(name);
-    type = strip_package_name(type);
-    name = strip_package_name(name);
-    bool is_module_instance = type != name;
-    std::cout << "Processing: " << type << " (" << name << ")" << std::endl;
-    if (!is_module_instance) {
-        // Top-level module
-        current_node = make_ast_node(AST::AST_MODULE);
-        current_node->str = type;
-        shared.top_nodes[current_node->str] = current_node;
-        shared.current_top_node = current_node;
-    } else {
-        current_node = make_ast_node(AST::AST_MODULE);
-        current_node->str = type;
-        shared.top_nodes[current_node->str] = current_node;
-        current_node = make_ast_node(AST::AST_CELL);
-    }
-
-    // A module instance inside another uhdmTopModules' module.
-    // Create standalone module instance AST and embed it in the instantiating module using AST_CELL.
-
-    const uhdm_handle *const handle = (const uhdm_handle *)obj_h;
-    const auto *const uhdm_obj = (const UHDM::any *)handle->object;
-    const auto current_instance_changer = ScopedValueChanger(shared.current_instance, uhdm_obj);
-
-    std::vector<std::pair<RTLIL::IdString, RTLIL::Const>> parameters;
-
-    auto parameter_typedefs = make_unique_resource<std::vector<AST::AstNode *>>();
-
-    visit_one_to_many({vpiParameter}, obj_h, [&](AST::AstNode *node) {
-        log_assert(node);
-        AST::AstNode *attr = get_attribute(node, attr_id::is_type_parameter);
-
-        if (!attr) {
-            // Process type parameters only.
-            delete node;
-            return;
-        }
-
-        if (node->children.size() == 0) {
-            log_assert(!attr->str.empty());
-            // Anonymous types have no chidren, and store the parameter name in attr->str.
-            parameters.push_back(std::make_pair(node->str, attr->str));
-            delete node;
-            return;
-        }
-
-        for (auto child : node->children) {
-            if (child->type == AST::AST_TYPEDEF && !child->str.empty()) {
-                // process_type_parameter should have created a node with the parameter name
-                //   and a child with the name of the value assigned to the parameter.
-                parameters.push_back(std::make_pair(node->str, child->str));
-            }
-
-            if (child->type == AST::AST_TYPEDEF || child->type == AST::AST_ENUM) {
-                // Copy definition of the type provided as parameter.
-                parameter_typedefs->push_back(child->clone());
-            }
-        }
-        delete node;
-    });
-
-    visit_one_to_many({vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
-        if (node && node->type == AST::AST_PARAMETER) {
-            log_assert(!node->children.empty());
-            if (node->children[0]->type != AST::AST_CONSTANT) {
-                if (shared.top_nodes.count(type)) {
-                    simplify_parameter(node, shared.top_nodes[type]);
-                } else {
-                    simplify_parameter(node, nullptr);
-                }
-            }
-            log_assert(node->children[0]->type == AST::AST_CONSTANT || node->children[0]->type == AST::AST_REALVALUE);
-            parameters.push_back(std::make_pair(node->str, node->children[0]->asParaConst()));
-        }
-        delete node;
-    });
-    visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
-        if (node) {
-            move_type_to_new_typedef(current_node, node);
-        }
-    });
-    // We need to rename module to prevent name collision with the same module, but with different parameters
-    std::string module_name = !parameters.empty() ? AST::derived_module_name(type, parameters).c_str() : type;
-    auto module_node = shared.top_nodes[module_name];
-    // true, when Surelog don't have definition of module while parsing design
-    // if so, we leaving module parameters to yosys and don't rename module
-    // as it will be done by yosys
-    bool isPrimitive = false;
-    if (!module_node) {
-        module_node = shared.top_nodes[type];
-        if (!module_node) {
-            module_node = new AST::AstNode(AST::AST_MODULE);
-            module_node->str = type;
-            module_node->attributes[UhdmAst::partial()] = AST::AstNode::mkconst_int(2, false, 1);
-            module_node->attributes[ID::whitebox] = AST::AstNode::mkconst_int(1, false, 1);
-        }
-        isPrimitive = module_node->attributes.count(UhdmAst::partial()) && module_node->attributes[UhdmAst::partial()]->integer == 2;
-        if (!parameters.empty() && !isPrimitive) {
-            module_node = module_node->clone();
-            module_node->str = module_name;
-        }
-    } else if (auto attribute = get_attribute(module_node, attr_id::is_elaborated_module); attribute && attribute->integer == 1) {
-        // we already processed module with this parameters, just create cell node
-        make_cell(obj_h, current_node, module_node);
-        return;
-    }
-    shared.top_nodes[module_node->str] = module_node;
-    visit_one_to_many({vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
-        if (node) {
-            if (node->children[0]->type != AST::AST_CONSTANT) {
-                if (shared.top_nodes[type]) {
-                    simplify_parameter(node, module_node);
-                    log_assert(node->children[0]->type == AST::AST_CONSTANT || node->children[0]->type == AST::AST_REALVALUE);
-                }
-            }
-            // if module is primitive
-            // Surelog doesn't have definition of this module,
-            // so we need to left setting of parameters to yosys
-            if (isPrimitive) {
-                node->type = AST::AST_PARASET;
-                current_node->children.push_back(node);
-            } else {
-                add_or_replace_child(module_node, node);
-            }
-        }
-    });
-    module_node->children.insert(std::end(module_node->children), std::begin(*parameter_typedefs), std::end(*parameter_typedefs));
-    parameter_typedefs->clear();
-    parameter_typedefs.reset();
-    if (module_node->attributes.count(UhdmAst::partial())) {
-        AST::AstNode *attr = module_node->attributes.at(UhdmAst::partial());
-        if (attr->type == AST::AST_CONSTANT)
-            if (attr->integer == 1) {
-                delete_attribute(module_node, UhdmAst::partial());
-            }
-    }
-
-    if (is_module_instance) {
-        auto typeNode = new AST::AstNode(AST::AST_CELLTYPE);
-        typeNode->str = module_node->str;
-        current_node->children.insert(current_node->children.begin(), typeNode);
-    }
-
-    visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiTaskFunc, vpiProcess},
-                      obj_h, [&](AST::AstNode *node) {
-                          if (get_attribute(node, attr_id::is_type_parameter)) {
-                              // Don't process type parameters.
-                              delete node;
-                              return;
-                          }
-                          if ((node->type == AST::AST_ASSIGN && node->children.size() < 2)) {
-                              delete node;
-                              return;
-                          }
-                          if (node) {
-                              add_or_replace_child(module_node, node);
-                          }
-                      });
-
-    // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
-    visit_one_to_many({vpiPrimitive}, obj_h, [&](AST::AstNode *node) {
-        if (node) {
-            current_node->children.push_back(node);
-        }
-    });
-
-    if (is_module_instance)
-        make_cell(obj_h, current_node, module_node);
-    
-    set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
-
-    delete_attribute(current_node, UhdmAst::partial());
-
-    /*
     std::string type = vpi_get_str(vpiDefName, obj_h);
     std::string name = vpi_get_str(vpiName, obj_h) ? vpi_get_str(vpiName, obj_h) : type;
     bool is_module_instance = type != name;
@@ -2550,7 +2364,6 @@ void UhdmAst::process_module()
         shared.current_top_node = old_top;
         set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
     }
-    */
 }
 
 void UhdmAst::process_struct_typespec()
