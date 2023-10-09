@@ -2879,8 +2879,10 @@ void UhdmAst::process_array_var()
                         delete node;
                     });
                 }
+                vpi_release_handle(reg_h2);
                 visit_one_to_many({vpiRange}, reg_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
             }
+            vpi_release_handle(itr2);
         }
         vpi_release_handle(reg_h);
     }
