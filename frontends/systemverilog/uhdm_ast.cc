@@ -1836,6 +1836,7 @@ void UhdmAst::process_packed_array_typespec()
             current_node->children.push_back(wiretype_node);
             current_node->is_custom_type = true;
             current_node->str = node->str;
+            delete node;
         } else if (node) {
             if (!node->str.empty()) {
                 AST::AstNode *const wiretype_node = make_named_node(AST::AST_WIRETYPE);
