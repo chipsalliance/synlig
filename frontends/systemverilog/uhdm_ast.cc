@@ -2849,22 +2849,22 @@ void UhdmAst::process_array_var()
         } else if (vpi_get(vpiType, reg_h) == vpiPackedArrayVar) {
             vpiHandle itr2 = vpi_iterate(vpi_get(vpiType, reg_h) == vpiArrayVar ? vpiReg : vpiElement, reg_h);
             while (vpiHandle reg_h2 = vpi_scan(itr2)) {
-                 auto vpi_obj = vpi_get(vpiType, reg_h2);
-                 if (vpi_obj == vpiStructVar || vpi_obj == vpiEnumVar || vpi_obj == vpiLogicVar) {
-                     if (vpi_obj == vpiLogicVar)
-                         current_node->is_logic = true;
-                     visit_one_to_one({vpiTypespec}, reg_h2, [&](AST::AstNode *node) {
-                         if (node->str.empty()) {
-                             // anonymous typespec, move the children to variable
-                             current_node->type = node->type;
-                             current_node->children = std::move(node->children);
-                         } else {
-                             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
-                             wiretype_node->str = node->str;
-                             current_node->children.push_back(wiretype_node);
-                             current_node->is_custom_type = true;
-                         }
-                         delete node;
+                auto vpi_obj = vpi_get(vpiType, reg_h2);
+                if (vpi_obj == vpiStructVar || vpi_obj == vpiEnumVar || vpi_obj == vpiLogicVar) {
+                    if (vpi_obj == vpiLogicVar)
+                        current_node->is_logic = true;
+                    visit_one_to_one({vpiTypespec}, reg_h2, [&](AST::AstNode *node) {
+                        if (node->str.empty()) {
+                            // anonymous typespec, move the children to variable
+                            current_node->type = node->type;
+                            current_node->children = std::move(node->children);
+                        } else {
+                            auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
+                            wiretype_node->str = node->str;
+                            current_node->children.push_back(wiretype_node);
+                            current_node->is_custom_type = true;
+                        }
+                        delete node;
                     });
                 }
                 vpi_release_handle(reg_h2);
