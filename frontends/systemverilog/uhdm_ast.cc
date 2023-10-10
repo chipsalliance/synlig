@@ -1822,7 +1822,7 @@ void UhdmAst::process_packed_array_typespec()
     current_node = make_ast_node(AST::AST_WIRE);
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
     visit_one_to_one({vpiElemTypespec}, obj_h, [&](AST::AstNode *node) {
-        if (node && (node->type == AST::AST_STRUCT)) {
+        if (node && node->type == AST::AST_STRUCT) {
             auto str = current_node->str;
             // unnamed array of named (struct) array
             if (str.empty() && !node->str.empty())
@@ -4815,7 +4815,6 @@ void UhdmAst::process_port()
         vpi_release_handle(actual_h);
         vpi_release_handle(lowConn_h);
     }
-
     visit_one_to_one({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
         if (node) {
             if (current_node->children.empty() || current_node->children[0]->type != AST::AST_WIRETYPE) {
@@ -4834,7 +4833,6 @@ void UhdmAst::process_port()
             delete node;
         }
     });
-
     if (const int n = vpi_get(vpiDirection, obj_h)) {
         if (n == vpiInput) {
             current_node->is_input = true;
