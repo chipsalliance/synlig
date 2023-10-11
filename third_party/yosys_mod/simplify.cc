@@ -723,7 +723,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             // when $display()/$write() functions are used in an always block, simplify the expressions and
             // convert them to a special cell later in genrtlil
             for (auto node : ast_node->children)
-                while (node->simplify(true, false, stage, -1, false, false)) {
+                while (node->simplify(true, stage, -1, false)) {
                 }
             return false;
         }
