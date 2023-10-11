@@ -1830,6 +1830,13 @@ void UhdmAst::process_packed_array_typespec()
             node->cloneInto(current_node);
             current_node->str = str;
             delete node;
+        } else if (node && (node->type == AST::AST_ENUM)) {
+            AST::AstNode *const wiretype_node = make_named_node(AST::AST_WIRETYPE);
+            wiretype_node->str = node->str;
+            current_node->children.push_back(wiretype_node);
+            current_node->is_custom_type = true;
+            current_node->str = node->str;
+            delete node;
         } else if (node) {
             if (!node->str.empty()) {
                 AST::AstNode *const wiretype_node = make_named_node(AST::AST_WIRETYPE);
@@ -2839,6 +2846,31 @@ void UhdmAst::process_array_var()
         } else if (vpi_get(vpiType, reg_h) == vpiIntVar) {
             packed_ranges.push_back(make_range(31, 0));
             visit_default_expr(reg_h);
+        } else if (vpi_get(vpiType, reg_h) == vpiPackedArrayVar) {
+            vpiHandle itr2 = vpi_iterate(vpi_get(vpiType, reg_h) == vpiArrayVar ? vpiReg : vpiElement, reg_h);
+            while (vpiHandle reg_h2 = vpi_scan(itr2)) {
+                auto vpi_obj = vpi_get(vpiType, reg_h2);
+                if (vpi_obj == vpiStructVar || vpi_obj == vpiEnumVar || vpi_obj == vpiLogicVar) {
+                    if (vpi_obj == vpiLogicVar)
+                        current_node->is_logic = true;
+                    visit_one_to_one({vpiTypespec}, reg_h2, [&](AST::AstNode *node) {
+                        if (node->str.empty()) {
+                            // anonymous typespec, move the children to variable
+                            current_node->type = node->type;
+                            current_node->children = std::move(node->children);
+                        } else {
+                            auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
+                            wiretype_node->str = node->str;
+                            current_node->children.push_back(wiretype_node);
+                            current_node->is_custom_type = true;
+                        }
+                        delete node;
+                    });
+                }
+                vpi_release_handle(reg_h2);
+                visit_one_to_many({vpiRange}, reg_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            }
+            vpi_release_handle(itr2);
         }
         vpi_release_handle(reg_h);
     }
@@ -4736,6 +4768,15 @@ void UhdmAst::process_port()
             visit_one_to_many({vpiRange}, actual_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
             break;
         case vpiArrayVar:
+            visit_one_to_many({vpiElement}, actual_h, [&](AST::AstNode *node) {
+                if (node && GetSize(node->children) == 1) {
+                    current_node->children.push_back(node->children[0]->clone());
+                    if (node->children[0]->type == AST::AST_WIRETYPE) {
+                        current_node->is_custom_type = true;
+                    }
+                }
+                delete node;
+            });
             visit_one_to_many({vpiRange}, actual_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
             break;
         case vpiEnumNet:
