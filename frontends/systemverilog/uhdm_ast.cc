@@ -848,7 +848,8 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
             // to our current select
             if (current_struct_elem->multirange_dimensions.size() > 2 && struct_range->children.size() == 2) {
                 if (i < (struct_ranges.size() - 1))
-                  log_error("Selecting a range of positions from a multirange is not supported in the dot notation, unless it is the last index.\n");
+                    log_error(
+                      "Selecting a range of positions from a multirange is not supported in the dot notation, unless it is the last index.\n");
             }
             if (struct_range->children.size() == 2) {
                 auto range_size = new AST::AstNode(
