@@ -1,6 +1,6 @@
 #!/usr/bin/env -S make -rR -Oline -f
 .ONESHELL:
-override SHELL := /bin/bash
+SHELL := bash
 override .SHELLFLAGS := -e -u -o pipefail -O nullglob -O extglob -O globstar -c
 
 override this_mk.file := $(abspath $(lastword ${MAKEFILE_LIST}))

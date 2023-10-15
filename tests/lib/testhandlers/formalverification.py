@@ -252,7 +252,7 @@ class BashScriptTaskGenerator:
 			return v
 
 		lines: list[str] = [
-			r"#!/bin/bash",
+			r"#!/usr/bin/env bash",
 			"set -u -o pipefail",
 			"shopt -s nullglob",
 			"shopt -s extglob",
