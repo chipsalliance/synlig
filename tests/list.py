@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import argparse
 import json
@@ -26,6 +26,6 @@ if args.directory[-1] == "/":
 part_of_tests = sorted(os.listdir(args.directory))
 if args.part is not None:
     part_of_tests = part_of_tests[(args.part - 1) * 256 : args.part * 256]
-    
+
 print(json.dumps([f"{args.directory}/{node}" for node in part_of_tests
     if node not in args.skip_elements and os.path.isdir(args.directory + "/" + node)]))

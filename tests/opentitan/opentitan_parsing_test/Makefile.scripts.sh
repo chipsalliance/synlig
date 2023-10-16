@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 declare -r result_unknown='unknown'
 
 declare -r result_test_pass='test-pass'

@@ -3,7 +3,7 @@
 # Setup make itself.
 
 .ONESHELL:
-override SHELL := /bin/bash
+SHELL := bash
 override .SHELLFLAGS := -e -u -o pipefail -O nullglob -O extglob -O globstar -c
 
 # Unset all default build- and recipe-related variables.
