@@ -72,6 +72,7 @@ simple:DisplayWithBinFormatSpecifier/top.sv
 simple:DisplayWithHexFormatSpecifier/top.sv
 simple:DivisionOfSize/top.sv
 simple:DotMultirange/top.sv
+simple:DotMultirangeSelect/top.sv
 simple:DotRange/top.sv
 simple:EmptyTask/top.sv
 simple:EnumArray/top.sv
@@ -111,6 +112,7 @@ simple:ImportedParameter/top.sv
 simple:ImportParametrizedTypeAndDeclareParamWithTheSameName/top.sv
 simple:ImportTypeOfPort/top.sv
 simple:IndexedPartSelect/top.sv
+simple:IndexedPartSelectInFor/top.sv
 simple:IndexedPartSelectInUniqueCase/top.sv
 simple:IndexedPartSelectOfMember/top.sv
 simple:InterfaceAsPort/top.sv
@@ -184,6 +186,7 @@ simple:ParameterWithUnderscoreValue/top.sv
 simple:ParameterWithUnderscoreValueDivided/top.sv
 simple:ParameterWithUnderscoreValueDividedPassedFromCommandLine/top.sv
 simple:PartSelect/top.sv
+simple:PartSelectInFor/top.sv
 simple:PartSelectOfMember/top.sv
 simple:PartSelectOfPartSelectedBitSelect/top.sv
 simple:PatternAsFunctionArgument/top.sv
