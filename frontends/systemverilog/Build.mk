@@ -54,8 +54,7 @@ ${ts}.ldflags = \
 	$(if ${LD},${USE_LD_FLAG}) \
 	$(shell ${${ts}.env}; pkg-config --libs-only-L Surelog) \
 	${build_type_ldflags} \
-	${LDFLAGS} \
-	-Wl,--export-dynamic
+	${LDFLAGS}
 
 ${ts}.ldlibs = \
 	$(shell ${${ts}.env}; pkg-config --libs-only-l --libs-only-other Surelog) \
