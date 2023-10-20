@@ -8,7 +8,9 @@ package keymgr_pkg;
    
 endpackage
 
-module top(input keymgr_pkg::hw_key_req_t keymgr_key_i, output logic [NumRegsKey-1:0][31:0] key_sideload [NumSharesKey]);
+                                                        // Originally key_sideload[NumSharesKey], but sv2v inverts unpacked
+                                                        // ranges in some cases, leading to formal verification failures.
+module top(input keymgr_pkg::hw_key_req_t keymgr_key_i, output logic [NumRegsKey-1:0][31:0] key_sideload [NumSharesKey-1:0]);
 
    parameter NumRegsKey = 8;
    parameter NumSharesKey = 2;
