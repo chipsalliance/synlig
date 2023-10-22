@@ -1,6 +1,6 @@
 # MIT 2.0 License
 
-# Usage: make -f makefile
+# Usage: make -f makefile.txt
 
 # This Makefile is a helper file to run the cmake CMakelists.txt present in this project
 # This is an alternative build system for Synlig when used in a cmake-based project.
