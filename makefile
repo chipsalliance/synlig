@@ -1,0 +1,43 @@
+# MIT 2.0 License
+
+# Usage: make -f makefile
+
+# This Makefile is helper to run the cmake CMakelists.txt present in this project
+# This is an alternative build system for Synlig when used in a cmake-based project.
+
+
+# Use bash as the default shell
+SHELL := /bin/bash
+
+ifdef $(LC_ALL)
+	undefine LC_ALL
+endif
+
+ifeq ($(CPU_CORES),)
+	CPU_CORES := $(shell nproc)
+	ifeq ($(CPU_CORES),)
+		CPU_CORES := $(shell sysctl -n hw.physicalcpu)
+	endif
+	ifeq ($(CPU_CORES),)
+		CPU_CORES := 2  # Good minimum assumption
+	endif
+endif
+
+PREFIX ?= /usr/local
+ADDITIONAL_CMAKE_OPTIONS ?=
+
+# If 'on', then the progress messages are printed. If 'off', makes it easier
+# to detect actual warnings and errors  in the build output.
+RULE_MESSAGES ?= on
+
+release: run-cmake-release
+	cmake --build build -j $(CPU_CORES)
+
+run-cmake-release:
+	cmake -DCMAKE_BUILD_TYPE=Release -DCPU_CORES=$(CPU_CORES) -DYOSYS_CONFIG=$(YOSYS_CONFIG) -DYOSYS_PATH=$(YOSYS_PATH) -DCMAKE_INSTALL_PREFIX=$(PREFIX) -DCMAKE_RULE_MESSAGES=$(RULE_MESSAGES) -S . -B build
+
+debug: run-cmake-debug
+	cmake --build build -j $(CPU_CORES)
+
+run-cmake-debug:
+	cmake -DCMAKE_BUILD_TYPE=Debug -DCPU_CORES=$(CPU_CORES) -DYOSYS_CONFIG=$(YOSYS_CONFIG) -DYOSYS_PATH=$(YOSYS_PATH) -DCMAKE_INSTALL_PREFIX=$(PREFIX) -DCMAKE_RULE_MESSAGES=$(RULE_MESSAGES) -S . -B build
