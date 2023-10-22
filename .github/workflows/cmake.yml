@@ -131,22 +131,6 @@ jobs:
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue
           # See https://github.com/actions/upload-artifact/issues/38
-          tar -cvf ${{ matrix.artifact-name }}.tar out
-
-      - name: Upload binaries
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.artifact-name }}
-          path: |
-            ${{ matrix.artifact-name }}.tar
-
-      - name: Upload load graphs
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: plots
-          path: |
-            **/plot_*.svg
 
   tests-parsing:
     name: Parsing Tests
