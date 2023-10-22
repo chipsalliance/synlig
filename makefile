@@ -2,7 +2,7 @@
 
 # Usage: make -f makefile
 
-# This Makefile is helper to run the cmake CMakelists.txt present in this project
+# This Makefile is a helper file to run the cmake CMakelists.txt present in this project
 # This is an alternative build system for Synlig when used in a cmake-based project.
 
 
