@@ -217,6 +217,6 @@ This flag also prints the converted Yosys AST.
 
 1. An alternative build mechanism defined in the CMakeLists.txt file is provided to allow Synlig to be built part of a larger cmake-based project
 Simply add_subsystem(synlig) in your parent CMake. See CMakeLists.txt for compilation options (With or without vendored Yosys and Surelog).
-1. To test locally this build system: make -f makefile.txt
+1. To test locally this build system: make -f cmake-makefile
 
 
