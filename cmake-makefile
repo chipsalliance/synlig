@@ -1,17 +1,10 @@
-# MIT 2.0 License
-
-# Usage: make -f makefile.txt
+# Usage: make -f cmake-makefile
 
 # This Makefile is a helper file to run the cmake CMakelists.txt present in this project
 # This is an alternative build system for Synlig when used in a cmake-based project.
 
 # Use bash as the default shell
 SHELL := /usr/bin/env bash
-
-
-ifdef $(LC_ALL)
-	undefine LC_ALL
-endif
 
 ifeq ($(CPU_CORES),)
 	CPU_CORES := $(shell nproc)

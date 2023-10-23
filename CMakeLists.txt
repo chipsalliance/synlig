@@ -1,8 +1,6 @@
 # -*- mode:cmake -*-
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
-# MIT 2.0 License
-
 # This cmake enables this project to be built in a larger cmake based infrastructure.
 # This is an alternative build system for Synlig when used in a cmake-based project.
 # It also allows to use a different version of Yosys if provided by YOSYS_CONFIG variable.
@@ -228,9 +226,6 @@ else()
     # Under MSYS some files are too large to build without additional flags
     set(MSYS_COMPILE_OPTIONS "-m64 -Wa,-mbig-obj")
   endif()
-  #set(MEM_SANITIZER_FLAGS
-  #    " -fsanitize=address -fno-omit-frame-pointer"
-  #)
   set(CMAKE_CXX_FLAGS_DEBUG
       "${CMAKE_CXX_FLAGS_DEBUG} ${TCMALLOC_COMPILE_OPTIONS} -Wall -Wno-unused-parameter -O0 -g ${MSYS_COMPILE_OPTIONS} ${MY_CXX_WARNING_FLAGS} ${MEM_SANITIZER_FLAGS}"
   )
