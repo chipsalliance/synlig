@@ -120,9 +120,9 @@ if(WITH_LIBCXX)
 endif()
 
 # In cmake it is imposible to read the output of yosys-config and populate variables at cmake configuration time as yosys is built in this cmake
-# The initial content of YOSYS_CONFIG_FLAGS is a bootstrap that enables to build the synlig code
+# The initial content of YOSYS_CONFIG_FLAGS is a bootstrap that enables to build the synlig local code (frontends/systemverilog), not yosys itself.
 # 
-set(YOSYS_CONFIG_FLAGS "-MD -MP -D_YOSYS_ -fPIC -Os -DYOSYS_ENABLE_READLINE -DYOSYS_ENABLE_PLUGINS -DYOSYS_ENABLE_GLOB -DYOSYS_ENABLE_ZLIB -I/usr/local/include -I/usr/include/tcl8.6 -DYOSYS_ENABLE_TCL -DYOSYS_ENABLE_ABC -DYOSYS_ENABLE_COVER")
+set(YOSYS_CONFIG_FLAGS "-MD -MP -D_YOSYS_ -fPIC -Os")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${YOSYS_CONFIG_FLAGS} -Wno-unused-parameter -std=c++17")
 
