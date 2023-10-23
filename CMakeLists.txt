@@ -9,10 +9,6 @@ cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 # Surelog can also be installed on the system.
 # This cmake is largely copied from the Surelog cmake
 
-# Set the project and version
-# Version changes whenever some new features accumulated, or the
-# grammar or the cache format changes to make sure caches
-# are invalidated.
 project(SYNLIG VERSION 1.76)
 
 # Detect build type, fallback to release and throw a warning if use didn't
@@ -118,10 +114,6 @@ endif()
 
 set(SYNLIG_BUILD_TYPE ${CMAKE_BUILD_TYPE})
 message("Building Synlig version v${SYNLIG_VERSION_MAJOR}.${SYNLIG_VERSION_MINOR} [${SYNLIG_VERSION_COMMIT_SHA}]")
-# TODO: should we also make install this header, or do we encourage to
-# use CommandLineParser::getVersionNumber() ?
-#configure_file(${PROJECT_SOURCE_DIR}/include/Synlig/synlig-version.h.in ${GENDIR}/include/Synlig/synlig-version.h)
-
 
 if(WITH_LIBCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
@@ -316,40 +308,9 @@ target_include_directories(synlig PUBLIC
 
 include(GNUInstallDirs)
 
-# Installation target
-#install(
-#    TARGETS synlig
-#    EXPORT Synlig
-#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-
-
 # Generate cmake config files for reuse by downstream packages
 include(CMakePackageConfigHelpers)
 
-# generate the config file that is includes the exports
-#configure_package_config_file(
-#  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/configs/SynligConfig.cmake.in
-#  ${CMAKE_CURRENT_BINARY_DIR}/SynligConfig.cmake
-#  INSTALL_DESTINATION cmake
-#)
-
-#write_basic_package_version_file(
-#  ${CMAKE_CURRENT_BINARY_DIR}/SynligConfigVersion.cmake
-#  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
-#  COMPATIBILITY SameMajorVersion
-#)
-
-#configure_file(
-#  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/configs/Synlig.pc.in
-#  "${CMAKE_CURRENT_BINARY_DIR}/Synlig.pc"
-#  @ONLY)
-
-# install the configuration file
-#install(EXPORT Synlig
-#    FILE SynligTargets.cmake
-#    NAMESPACE synlig::
-#    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Synlig
-#)
 
 install(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/SynligConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/SynligConfigVersion.cmake
