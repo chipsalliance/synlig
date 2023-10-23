@@ -1,6 +1,6 @@
 # -*- mode:cmake -*-
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
-
+# License: Apache-2.0 
 # This cmake enables this project to be built in a larger cmake based infrastructure.
 # This is an alternative build system for Synlig when used in a cmake-based project.
 # It also allows to use a different version of Yosys if provided by YOSYS_CONFIG variable.
