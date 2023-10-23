@@ -301,22 +301,17 @@ static void visitEachDescendant(AST::AstNode *node, const std::function<void(AST
     }
 }
 
-static void add_multirange_wire(AST::AstNode *node, std::vector<AST::AstNode *> packed_ranges, std::vector<AST::AstNode *> unpacked_ranges,
-                                bool reverse = true)
+static void add_multirange_wire(AST::AstNode *node, std::vector<AST::AstNode *> packed_ranges, std::vector<AST::AstNode *> unpacked_ranges)
 {
     delete_attribute(node, UhdmAst::packed_ranges());
     node->attributes[UhdmAst::packed_ranges()] = AST::AstNode::mkconst_int(1, false, 1);
     if (!packed_ranges.empty()) {
-        if (reverse)
-            std::reverse(packed_ranges.begin(), packed_ranges.end());
         node->attributes[UhdmAst::packed_ranges()]->children = std::move(packed_ranges);
     }
 
     delete_attribute(node, UhdmAst::unpacked_ranges());
     node->attributes[UhdmAst::unpacked_ranges()] = AST::AstNode::mkconst_int(1, false, 1);
     if (!unpacked_ranges.empty()) {
-        if (reverse)
-            std::reverse(unpacked_ranges.begin(), unpacked_ranges.end());
         node->attributes[UhdmAst::unpacked_ranges()]->children = std::move(unpacked_ranges);
     }
 }
@@ -583,7 +578,7 @@ static void resolve_wiretype(AST::AstNode *wire_node)
         delete_children(wire_node);
         if (value)
             wire_node->children.push_back(value);
-        add_multirange_wire(wire_node, packed_ranges.release(), unpacked_ranges.release(), false /* reverse */);
+        add_multirange_wire(wire_node, packed_ranges.release(), unpacked_ranges.release());
     }
 }
 
@@ -2563,7 +2558,6 @@ void UhdmAst::process_typespec_member()
                     for (auto r : node->attributes[UhdmAst::packed_ranges()]->children) {
                         packed_ranges.push_back(r->clone());
                     }
-                    std::reverse(packed_ranges.begin(), packed_ranges.end());
                     delete_attribute(node, UhdmAst::packed_ranges());
                 }
                 if (node->attributes.count(UhdmAst::unpacked_ranges())) {
@@ -2583,7 +2577,6 @@ void UhdmAst::process_typespec_member()
                     for (auto r : node->attributes[UhdmAst::packed_ranges()]->children) {
                         packed_ranges.push_back(r->clone());
                     }
-                    std::reverse(packed_ranges.begin(), packed_ranges.end());
                     delete_attribute(node, UhdmAst::packed_ranges());
                 }
                 if (node->attributes.count(UhdmAst::unpacked_ranges())) {
@@ -2931,7 +2924,7 @@ void UhdmAst::process_array_var()
     }
     vpi_release_handle(itr);
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
-    add_multirange_wire(current_node, packed_ranges, unpacked_ranges, false);
+    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
     visit_default_expr(obj_h);
 }
 
@@ -3378,7 +3371,7 @@ void UhdmAst::process_io_decl()
             current_node->is_output = true;
         }
     }
-    add_multirange_wire(current_node, packed_ranges, unpacked_ranges, false);
+    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
 
 void UhdmAst::process_always()
@@ -4587,7 +4580,7 @@ void UhdmAst::process_logic_typespec()
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
     if (packed_ranges.empty())
         packed_ranges.push_back(make_range(0, 0));
-    add_multirange_wire(current_node, packed_ranges, unpacked_ranges, false);
+    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
     current_node->is_signed = vpi_get(vpiSigned, obj_h);
 }
 
@@ -5003,7 +4996,7 @@ void UhdmAst::process_parameter()
         constant_node->location = current_node->location;
         current_node->children.push_back(constant_node);
     }
-    add_multirange_wire(current_node, packed_ranges, unpacked_ranges, false);
+    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
 
 void UhdmAst::process_byte_var()
