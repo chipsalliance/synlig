@@ -237,6 +237,7 @@ simple:TypedefedFunctionArgument/top.sv
 simple:TypedefedFunctionReturn/top.sv
 simple:TypedefedRangedFunctionArgument/top.sv
 simple:TypedefInModule/top.sv
+simple:TypedefInModulePort/top.sv
 simple:TypedefOnFileLevel/top.sv
 simple:TypedefPackedDimensions/top.sv
 simple:TypedefStructArray/top.sv
