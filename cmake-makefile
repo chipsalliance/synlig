@@ -5,9 +5,9 @@
 # This Makefile is a helper file to run the cmake CMakelists.txt present in this project
 # This is an alternative build system for Synlig when used in a cmake-based project.
 
-
 # Use bash as the default shell
-SHELL := /bin/bash
+SHELL := /usr/bin/env bash
+
 
 ifdef $(LC_ALL)
 	undefine LC_ALL
