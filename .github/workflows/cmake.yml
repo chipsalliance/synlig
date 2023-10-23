@@ -127,7 +127,7 @@ jobs:
         run: |
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
           # CMake build
-          make -f makefile.txt
+          make -f cmake-makefile
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue
           # See https://github.com/actions/upload-artifact/issues/38
