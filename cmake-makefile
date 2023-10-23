@@ -1,3 +1,4 @@
+# License: Apache-2.0 
 # Usage: make -f cmake-makefile
 
 # This Makefile is a helper file to run the cmake CMakelists.txt present in this project
