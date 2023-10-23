@@ -2193,8 +2193,22 @@ void UhdmAst::process_module()
             current_node->children.erase(process_it, current_node->children.end());
             auto old_top = shared.current_top_node;
             shared.current_top_node = current_node;
-            visit_one_to_many({vpiModule, vpiInterface, vpiParameter, vpiParamAssign, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray,
-                               vpiContAssign, vpiVariables},
+            visit_one_to_many({vpiParameter, vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
+                if (node) {
+                    if (get_attribute(node, attr_id::is_type_parameter)) {
+                        // Don't process type parameters.
+                        delete node;
+                        return;
+                    }
+                    add_or_replace_child(current_node, node);
+                }
+            });
+            visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
+                if (node) {
+                    move_type_to_new_typedef(current_node, node);
+                }
+            });
+            visit_one_to_many({vpiModule, vpiInterface, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray, vpiContAssign, vpiVariables},
                               obj_h, [&](AST::AstNode *node) {
                                   if (node) {
                                       if (get_attribute(node, attr_id::is_type_parameter)) {
@@ -2222,25 +2236,6 @@ void UhdmAst::process_module()
             shared.top_nodes[current_node->str] = current_node;
             shared.current_top_node = current_node;
             current_node->attributes[UhdmAst::partial()] = AST::AstNode::mkconst_int(1, false, 1);
-            visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
-                if (node) {
-                    move_type_to_new_typedef(current_node, node);
-                }
-            });
-            visit_one_to_many({vpiModule, vpiParameter, vpiParamAssign, vpiNet, vpiArrayNet, vpiProcess}, obj_h, [&](AST::AstNode *node) {
-                if (node) {
-                    if (get_attribute(node, attr_id::is_type_parameter)) {
-                        // Don't process type parameters.
-                        delete node;
-                        return;
-                    }
-                    if ((node->type == AST::AST_ASSIGN && node->children.size() < 2)) {
-                        delete node;
-                        return;
-                    }
-                    add_or_replace_child(current_node, node);
-                }
-            });
         }
     } else {
         // A module instance inside another uhdmTopModules' module.
