@@ -881,8 +881,9 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
 
     for (size_t i = 0; i < struct_ranges.size(); i++) {
         const auto *struct_range = struct_ranges[i];
-        auto const range_width_idx = i * 2 + 1;
-        auto const range_offset_idx = i * 2;
+        auto const idx = (struct_ranges.size() - i) * 2 - 1;
+        auto const range_width_idx = idx;
+        auto const range_offset_idx = idx - 1;
 
         int range_width = 0;
         if (current_struct_elem->multirange_dimensions.empty()) {
@@ -919,7 +920,7 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
 
             } else if (struct_range->children.size() == 1) {
                 // Selected a single position, as in `foo.bar[i]`.
-                if (range_width > 1 && current_struct_elem->multirange_dimensions.size() > range_width_idx + 2) {
+                if (range_width > 1 && range_width_idx > 1) {
                     // if it's not the last dimension.
                     right = new AST::AstNode(
                       AST::AST_ADD, right,
