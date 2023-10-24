@@ -1907,6 +1907,10 @@ static void add_or_replace_child(AST::AstNode *parent, AST::AstNode *child)
             delete *it;
             *it = child;
             return;
+        } else {
+            // Not a port
+            if (child->type == AST::AST_MEMORY)
+                child->type = AST::AST_WIRE;
         }
         parent->children.push_back(child);
     } else if (child->type == AST::AST_INITIAL) {
@@ -2208,17 +2212,18 @@ void UhdmAst::process_module()
                     move_type_to_new_typedef(current_node, node);
                 }
             });
-            visit_one_to_many({vpiModule, vpiInterface, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray, vpiContAssign, vpiVariables},
-                              obj_h, [&](AST::AstNode *node) {
-                                  if (node) {
-                                      if (get_attribute(node, attr_id::is_type_parameter)) {
-                                          // Don't process type parameters.
-                                          delete node;
-                                          return;
-                                      }
-                                      add_or_replace_child(current_node, node);
-                                  }
-                              });
+            visit_one_to_many(
+              {vpiModule, vpiInterface, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray, vpiContAssign, vpiProcess, vpiVariables}, obj_h,
+              [&](AST::AstNode *node) {
+                  if (node) {
+                      if (get_attribute(node, attr_id::is_type_parameter)) {
+                          // Don't process type parameters.
+                          delete node;
+                          return;
+                      }
+                      add_or_replace_child(current_node, node);
+                  }
+              });
             // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
             visit_one_to_many({vpiPrimitive}, obj_h, [&](AST::AstNode *node) {
                 if (node) {
@@ -2236,6 +2241,28 @@ void UhdmAst::process_module()
             shared.top_nodes[current_node->str] = current_node;
             shared.current_top_node = current_node;
             current_node->attributes[UhdmAst::partial()] = AST::AstNode::mkconst_int(1, false, 1);
+            /*
+            visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
+                if (node) {
+                    move_type_to_new_typedef(current_node, node);
+                }
+            });
+            */
+            // Diagnostic attempt, there is a state for vpiNet that requires this pass.
+            visit_one_to_many({/*vpiModule, vpiParameter, vpiParamAssign,*/ vpiNet, vpiArrayNet /*, vpiProcess*/}, obj_h, [&](AST::AstNode *node) {
+                if (node) {
+                    if (get_attribute(node, attr_id::is_type_parameter)) {
+                        // Don't process type parameters.
+                        delete node;
+                        return;
+                    }
+                    if ((node->type == AST::AST_ASSIGN && node->children.size() < 2)) {
+                        delete node;
+                        return;
+                    }
+                    add_or_replace_child(current_node, node);
+                }
+            });
         }
     } else {
         // A module instance inside another uhdmTopModules' module.
@@ -2343,6 +2370,11 @@ void UhdmAst::process_module()
                 }
             }
         });
+        visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
+            if (node) {
+                move_type_to_new_typedef(current_node, node);
+            }
+        });
         module_node->children.insert(std::end(module_node->children), std::begin(*parameter_typedefs), std::end(*parameter_typedefs));
         parameter_typedefs->clear();
         parameter_typedefs.reset();
@@ -2358,12 +2390,13 @@ void UhdmAst::process_module()
         current_node->children.insert(current_node->children.begin(), typeNode);
         auto old_top = shared.current_top_node;
         shared.current_top_node = module_node;
-        visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiTaskFunc}, obj_h,
-                          [&](AST::AstNode *node) {
-                              if (node) {
-                                  add_or_replace_child(module_node, node);
-                              }
-                          });
+        visit_one_to_many(
+          {vpiPort, vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiGenScopeArray, vpiContAssign, vpiProcess, vpiTaskFunc}, obj_h,
+          [&](AST::AstNode *node) {
+              if (node) {
+                  add_or_replace_child(module_node, node);
+              }
+          });
         make_cell(obj_h, current_node, module_node);
         shared.current_top_node = old_top;
         set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
