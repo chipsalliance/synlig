@@ -4421,7 +4421,7 @@ void UhdmAst::process_logic_var()
     // TODO: add const attribute, but it seems it is little more
     // then just setting boolean value
     // current_node->is_const = vpi_get(vpiConstantVariable, obj_h);
-    bool anonymousTypespec = false;
+    bool anonymous_typespec = false;
     visit_one_to_one({vpiTypespec}, obj_h, [&](AST::AstNode *node) {
         if (node->str.empty()) {
             // anonymous typespec, move the children to variable
