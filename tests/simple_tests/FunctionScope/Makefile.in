@@ -1,2 +1,2 @@
-TEST_FILES := $(TEST_DIR)/dut.v
+TEST_FILES := $(TEST_DIR)/dut.sv
 TOP_MODULE := dut
