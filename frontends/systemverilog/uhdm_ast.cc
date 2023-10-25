@@ -4427,7 +4427,7 @@ void UhdmAst::process_logic_var()
             // anonymous typespec, move the children to variable
             current_node->type = node->type;
             current_node->children = std::move(node->children);
-            anonymousTypespec = true;
+            anonymous_typespec = true;
         } else {
             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
             wiretype_node->str = node->str;
@@ -4437,7 +4437,7 @@ void UhdmAst::process_logic_var()
         current_node->is_signed = node->is_signed;
         delete node;
     });
-    if (anonymousTypespec) {
+    if (anonymous_typespec) {
         // TODO: Handling below seems similar to other typespec accesses for range. Candidate for extraction to a function.
         if (auto ref_typespec_h = vpi_handle(vpiTypespec, obj_h)) {
             if (auto typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
