@@ -2370,11 +2370,11 @@ void UhdmAst::process_module()
                 }
             }
         });
-        visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
-            if (node) {
-                move_type_to_new_typedef(current_node, node);
-            }
-        });
+        //visit_one_to_many({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
+        //    if (node) {
+        //        move_type_to_new_typedef(current_node, node);
+        //    }
+        //});
         module_node->children.insert(std::end(module_node->children), std::begin(*parameter_typedefs), std::end(*parameter_typedefs));
         parameter_typedefs->clear();
         parameter_typedefs.reset();
