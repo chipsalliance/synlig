@@ -451,7 +451,6 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
     AST::AstNode *result = nullptr;
     AST::AstNode *range_left = nullptr;
     AST::AstNode *range_right = nullptr;
-    int idx = 0;
     for (size_t i = 0; i < ranges.size(); i++) {
         if (i + 1 == ranges.size()) {
             // last range can have 2 children
@@ -469,16 +468,16 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
             range_left = ranges[i]->children[0]->clone();
             range_right = ranges[i]->children[0]->clone();
         }
-        if (range_offset[idx] != 0) {
-            range_left = make_node(AST::AST_SUB)({range_left, make_const(range_offset[idx], 32)});
-            range_right = make_node(AST::AST_SUB)({range_right, make_const(range_offset[idx], 32)});
+        if (range_offset[i] != 0) {
+            range_left = make_node(AST::AST_SUB)({range_left, make_const(range_offset[i], 32)});
+            range_right = make_node(AST::AST_SUB)({range_right, make_const(range_offset[i], 32)});
         }
         // right_range = right_range * single_elem_size
         // left_range  = (((range_left + 1) * single_elem_size) - right_range) - 1
-        range_right = make_node(AST::AST_MUL)({range_right, make_const(single_elem_size[idx], 32)});
+        range_right = make_node(AST::AST_MUL)({range_right, make_const(single_elem_size[i], 32)});
         range_left = make_node(AST::AST_SUB)(
           {make_node(AST::AST_SUB)(
-             {make_node(AST::AST_MUL)({make_node(AST::AST_ADD)({range_left, make_const(1, 32)}), make_const(single_elem_size[idx], 32)}),
+             {make_node(AST::AST_MUL)({make_node(AST::AST_ADD)({range_left, make_const(1, 32)}), make_const(single_elem_size[i], 32)}),
               range_right->clone()}),
            make_const(1, 32)});
         if (result) {
@@ -489,7 +488,6 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
         }
         range_left = make_node(AST::AST_ADD)({range_right->clone(), range_left});
         result = make_node(AST::AST_RANGE)({range_left, range_right});
-        idx++;
     }
     id->basic_prep = true;
     return result;
