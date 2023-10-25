@@ -537,7 +537,12 @@ static void add_force_convert_attribute(AST::AstNode *wire_node, uint32_t val = 
 static void check_memories(AST::AstNode *node, std::string scope, std::map<std::string, AST::AstNode *> &memories)
 {
     for (auto *child : node->children) {
-        check_memories(child, node->type == AST::AST_GENBLOCK ? scope + "." + node->str : scope, memories);
+        if (child->type == AST::AST_FUNCTION) {
+            std::map<std::string, AST::AstNode *> memories_in_scope;
+            check_memories(child, node->type == AST::AST_GENBLOCK ? scope + "." + node->str : scope, memories_in_scope);
+        } else {
+            check_memories(child, node->type == AST::AST_GENBLOCK ? scope + "." + node->str : scope, memories);
+        }
     }
 
     if (node->str == "\\$readmemh") {
