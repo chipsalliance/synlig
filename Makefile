@@ -1,5 +1,5 @@
 #!/usr/bin/env -S sh -c '/usr/bin/env make -j$(nproc) -rR -Oline -f "$0" "$@"'
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Setup make itself.
 
 .ONESHELL:
@@ -19,14 +19,14 @@ SUFFIXES :=
 endif
 override undefine letter_makeflags
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Load config.
 
 override TOP_DIR := $(dir $(abspath $(lastword ${MAKEFILE_LIST})))
 
 include ${TOP_DIR}buildconfig.mk
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Define constants with special characters.
 
 # Variable name conventions:
@@ -46,7 +46,7 @@ override C.DC := ${C.EMPTY}:${C.EMPTY}
 override C.QUOT := '
 # ' # THIS whole line is a comment fixing syntax highlighting in some editors.
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Define constants for output formatting. Empty when not outputting to a TTY.
 
 # Variable name conventions:
@@ -80,7 +80,7 @@ override F.D   :=
 override F.!D  :=
 endif
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 
 # Convert path from relative to absolute (assuming `${2}` or `${TOP_DIR}` as
 # the base).
@@ -108,7 +108,7 @@ ShQuote = '$(subst ${C.QUOT},'\'',$(strip ${1}))'
 
 ShQuoteList = $(foreach v,$(strip ${1}),$(call ShQuote,$v))
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Make sure internal variables are not overridden through command line.
 # Special variables are those with at least one lowercase letter in the name.
 # We could use `override` everywhere, but that's quite verbose.
@@ -133,7 +133,7 @@ $(error ${error_message})
 endif
 override undefine command_line_illegal_vars
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Validate configuration variable values and assign them to variables without
 # `CFG_` prefix used internally.
 
@@ -200,7 +200,7 @@ GetTargetBuildDir = $(call ToAbsPaths,${BUILD_DIR}${1}/)
 tool_related_variables := CC CXX LD CPPFLAGS CXXFLAGS LDFLAGS LDLIBS MAKE
 $(foreach v,${tool_related_variables},$(if ${${v}},$(eval export ${v})))
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Print table with date and configuration.
 
 # Skip this for informational targets.
@@ -234,7 +234,7 @@ undefine longest_variable_len
 undefine variables_to_dump
 endif
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Update "current" symlink, if needed.
 
 # Skip this for targets that do not build anything.
@@ -249,7 +249,7 @@ $(shell ln -fs -T ${out_dir_current_symlink_target} ${out_dir_current_symlink})
 endif
 endif
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Check whether build configuration changed, and warn if so.
 
 # Skip this for targets that do not build anything.
@@ -302,14 +302,14 @@ undefine buildconfig_state_file_content
 undefine buildconfig_state_file
 endif
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Set the linker flag
 #
 ifneq (${LD},ld)
 	USE_LD_FLAG = -fuse-ld=${LD}
 endif
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Include module-makefiles
 
 GetTargetStructName = target[${1}]
@@ -324,7 +324,7 @@ $(foreach THIS_BUILD_MK,$(wildcard $(call ToAbsPaths,${makefiles_to_include})),\
 	$(eval include ${THIS_BUILD_MK})\
 )
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Create common targets
 
 _GetTargetsList = $(patsubst $(call GetTargetStructName,%).${1},%,$(filter $(call GetTargetStructName,%).${1},${.VARIABLES}))
@@ -376,7 +376,7 @@ clean : $(foreach t,${GetTargetsList},$(if ${$(call GetTargetStructName,${t}).sr
 		rm -rf ${BUILD_DIR} ${OUT_DIR}
 	fi
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 # Create component targets
 
 # Skip this for informational targets.
