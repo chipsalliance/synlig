@@ -268,6 +268,12 @@ set(synlig_SRC
 add_library(synlig SHARED ${synlig_SRC})
 
 if(VENDORED_YOSYS)
+  if(NOT EXISTS "${PROJECT_SOURCE_DIR}/third_party/surelog/.git"
+     OR NOT EXISTS "${PROJECT_SOURCE_DIR}/third_party/yosys/.git")
+    message(SEND_ERROR "The git submodules are not available. Please run
+      git submodule sync
+      git submodule update --init --recursive third_party/{surelog,yosys}")
+  endif()
   add_dependencies(synlig yosys)
   add_dependencies(surelog yosys)
   add_dependencies(surelog-bin yosys)
