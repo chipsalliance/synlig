@@ -195,6 +195,18 @@ static void delete_children(AST::AstNode *node)
     node->children.clear();
 }
 
+static std::vector<AST::AstNode *> get_ranges(AST::AstNode *id)
+{
+    log_assert(!id->children.empty());
+    std::vector<AST::AstNode *> ranges;
+    for (auto c : id->children) {
+        if (c->type == AST::AST_RANGE) {
+            ranges.push_back(c);
+        }
+    }
+    return ranges;
+}
+
 static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node);
 
 static void sanitize_symbol_name(std::string &name)
@@ -289,22 +301,17 @@ static void visitEachDescendant(AST::AstNode *node, const std::function<void(AST
     }
 }
 
-static void add_multirange_wire(AST::AstNode *node, std::vector<AST::AstNode *> packed_ranges, std::vector<AST::AstNode *> unpacked_ranges,
-                                bool reverse = true)
+static void add_multirange_wire(AST::AstNode *node, std::vector<AST::AstNode *> packed_ranges, std::vector<AST::AstNode *> unpacked_ranges)
 {
     delete_attribute(node, UhdmAst::packed_ranges());
     node->attributes[UhdmAst::packed_ranges()] = AST::AstNode::mkconst_int(1, false, 1);
     if (!packed_ranges.empty()) {
-        if (reverse)
-            std::reverse(packed_ranges.begin(), packed_ranges.end());
         node->attributes[UhdmAst::packed_ranges()]->children = std::move(packed_ranges);
     }
 
     delete_attribute(node, UhdmAst::unpacked_ranges());
     node->attributes[UhdmAst::unpacked_ranges()] = AST::AstNode::mkconst_int(1, false, 1);
     if (!unpacked_ranges.empty()) {
-        if (reverse)
-            std::reverse(unpacked_ranges.begin(), unpacked_ranges.end());
         node->attributes[UhdmAst::unpacked_ranges()]->children = std::move(unpacked_ranges);
     }
 }
@@ -369,70 +376,119 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
     log_assert(AST_INTERNAL::current_scope.count(id->str));
     AST::AstNode *wire_node = AST_INTERNAL::current_scope[id->str];
     log_assert(!wire_node->multirange_dimensions.empty());
-    int elem_size = 1;
+    std::vector<AST::AstNode *> ranges = get_ranges(id);
+    // Order of ranges evaluation (IEEE 7.4.5):
+    // logic [A:B][C:D] wire [E:F][G:H];
+    //         |    |          |    |
+    //         3    4          1    2
+    // create vector containing size of single element for given range in evaluation order:
+    // [wire_size/(max(E, F) - min(E, F) + 1), (wire_size/(max(E, F) - min(E, F) + 1)) / (max(G, H) - min(G, H) - 1)...]
     std::vector<int> single_elem_size;
-    single_elem_size.push_back(elem_size);
-    for (size_t j = 0; (j + 1) < wire_node->multirange_dimensions.size(); j = j + 2) {
-        // The ranges' widths are placed on odd indices of multirange_dimensions.
-        elem_size *= wire_node->multirange_dimensions[j + 1];
+    const std::vector<AST::AstNode *> &unpacked_ranges = wire_node->attributes[UhdmAst::unpacked_ranges()]->children;
+    const std::vector<AST::AstNode *> &packed_ranges = wire_node->attributes[UhdmAst::packed_ranges()]->children;
+    // TODO(krak): maybe there is better way to get size of whole wire?
+    log_assert(!wire_node->children.empty());
+    int elem_size = wire_node->children[0]->range_left + 1;
+    // multirange_dimensions also contains ranges from wiretype, but
+    // they should be handled after packed ranges,
+    // this is primitive way of calculating how many packed ranges is from wiretype
+    // TODO(krak): this is good candidate for refactor
+    size_t skip = 0;
+    if (wire_node->attributes.count(ID::wiretype)) {
+        AST::AstNode *wiretype_node = wire_node->attributes[ID::wiretype]->id2ast;
+        if (wiretype_node->type == AST::AST_STRUCT) {
+            skip = 1;
+        } else if (wiretype_node->type == AST::AST_WIRE) {
+            skip = wiretype_node->attributes[UhdmAst::packed_ranges()]->children.size();
+            if (wiretype_node->attributes.count(ID::wiretype)) {
+                skip -= wiretype_node->attributes[UhdmAst::packed_ranges()]->children.size();
+            }
+        } else {
+            wiretype_node->dumpAst(NULL, "wiretype >");
+            log_error("Unhandled case in multirange wiretype!");
+        }
+    }
+    for (auto range = unpacked_ranges.begin(); range != unpacked_ranges.end(); range++) {
+        auto range_node = *range;
+        // add_multirange_attribute should already make sure there are 2 children nodes in range and they are consts
+        const auto low = min(range_node->children[0]->integer, range_node->children[1]->integer);
+        const auto high = max(range_node->children[0]->integer, range_node->children[1]->integer);
+        elem_size /= high - low + 1;
         single_elem_size.push_back(elem_size);
     }
-    std::reverse(single_elem_size.begin(), single_elem_size.end());
-    log_assert(i < (unpacked_ranges_size + packed_ranges_size));
-    log_assert(!id->children.empty());
-    AST::AstNode *result = nullptr;
-    // we want to start converting from the end
-    if (i < static_cast<int>(id->children.size()) - 1) {
-        result = convert_range(id, packed_ranges_size, unpacked_ranges_size, i + 1);
+    for (auto range = packed_ranges.begin() + skip; range != packed_ranges.end(); range++) {
+        auto range_node = *range;
+        // 'add_multirange_attribute' function should already make sure there are 2 children nodes in range and they are consts
+        const auto low = min(range_node->children[0]->integer, range_node->children[1]->integer);
+        const auto high = max(range_node->children[0]->integer, range_node->children[1]->integer);
+        elem_size /= high - low + 1;
+        single_elem_size.push_back(elem_size);
     }
-    // special case, we want to select whole wire
-    if (id->children.size() == 0 && i == 0) {
-        result = make_range(single_elem_size[i] - 1, 0);
-    } else {
-        AST::AstNode *range_left = nullptr;
-        AST::AstNode *range_right = nullptr;
-        if (id->children[i]->children.size() == 2) {
-            range_left = id->children[i]->children[0]->clone();
-            range_right = id->children[i]->children[1]->clone();
-        } else {
-            range_left = id->children[i]->children[0]->clone();
-            range_right = id->children[i]->children[0]->clone();
-        }
-        if (!wire_node->multirange_swapped.empty()) {
-            bool is_swapped = wire_node->multirange_swapped[wire_node->multirange_swapped.size() - i - 1];
-            auto right_idx = wire_node->multirange_dimensions.size() - (i * 2) - 2;
-            if (is_swapped) {
-                auto left_idx = wire_node->multirange_dimensions.size() - (i * 2) - 1;
-                auto elem_size = wire_node->multirange_dimensions[left_idx] - wire_node->multirange_dimensions[right_idx];
-                range_left = new AST::AstNode(AST::AST_SUB, AST::AstNode::mkconst_int(elem_size - 1, false), range_left);
-                range_right = new AST::AstNode(AST::AST_SUB, AST::AstNode::mkconst_int(elem_size - 1, false), range_right);
-            } else if (wire_node->multirange_dimensions[right_idx] != 0) {
-                range_left =
-                  new AST::AstNode(AST::AST_SUB, range_left, AST::AstNode::mkconst_int(wire_node->multirange_dimensions[right_idx], false));
-                range_right =
-                  new AST::AstNode(AST::AST_SUB, range_right, AST::AstNode::mkconst_int(wire_node->multirange_dimensions[right_idx], false));
+    if (single_elem_size.empty()) {
+        // TODO(krak): this needs better support
+        // only wiretype ranges
+        return make_range(elem_size - 1, 0);
+    }
+    // Same as above but, for offset
+    // start from unpacked ranges
+    // TODO(krak): we could also calculate offset while calculating elem_size, good place for refactor
+    std::vector<int> range_offset;
+    for (auto i = packed_ranges.size(); i < packed_ranges.size() + unpacked_ranges.size(); i++) {
+        range_offset.push_back(wire_node->multirange_dimensions[i * 2]);
+    }
+    // then packed
+    for (auto i = skip; i < packed_ranges.size(); i++) {
+        range_offset.push_back(wire_node->multirange_dimensions[i * 2]);
+    }
+    const auto make_node = [](AST::AstNodeType type) {
+        auto node = std::make_unique<AST::AstNode>(type);
+        return AstNodeBuilder(std::move(node));
+    };
+    const auto make_const = [make_node](uint32_t value, uint8_t width) {
+        log_assert(width <= 32);
+        return make_node(AST::AST_CONSTANT).value(value, false, width);
+    };
+    AST::AstNode *result = nullptr;
+    AST::AstNode *range_left = nullptr;
+    AST::AstNode *range_right = nullptr;
+    for (size_t i = 0; i < ranges.size(); i++) {
+        if (i + 1 == ranges.size()) {
+            // last range can have 2 children
+            log_assert(ranges[i]->children.size() > 0 && ranges[i]->children.size() < 3);
+            if (ranges[i]->children.size() == 2) {
+                range_left = ranges[i]->children[0]->clone();
+                range_right = ranges[i]->children[1]->clone();
+            } else {
+                range_left = ranges[i]->children[0]->clone();
+                range_right = ranges[i]->children[0]->clone();
             }
+        } else {
+            // other ranges needs to have single child
+            log_assert(ranges[i]->children.size() == 1);
+            range_left = ranges[i]->children[0]->clone();
+            range_right = ranges[i]->children[0]->clone();
         }
-        if (!result) {
-            range_left =
-              new AST::AstNode(AST::AST_SUB,
-                               new AST::AstNode(AST::AST_MUL, new AST::AstNode(AST::AST_ADD, range_left, AST::AstNode::mkconst_int(1, false)),
-                                                AST::AstNode::mkconst_int(single_elem_size[i + 1], false)),
-                               AST::AstNode::mkconst_int(1, false));
+        if (range_offset[i] != 0) {
+            range_left = make_node(AST::AST_SUB)({range_left, make_const(range_offset[i], 32)});
+            range_right = make_node(AST::AST_SUB)({range_right, make_const(range_offset[i], 32)});
         }
-        range_right = new AST::AstNode(AST::AST_MUL, range_right, AST::AstNode::mkconst_int(single_elem_size[i + 1], false));
+        // right_range = right_range * single_elem_size
+        // left_range  = (((range_left + 1) * single_elem_size) - right_range) - 1
+        range_right = make_node(AST::AST_MUL)({range_right, make_const(single_elem_size[i], 32)});
+        range_left = make_node(AST::AST_SUB)(
+          {make_node(AST::AST_SUB)(
+             {make_node(AST::AST_MUL)({make_node(AST::AST_ADD)({range_left, make_const(1, 32)}), make_const(single_elem_size[i], 32)}),
+              range_right->clone()}),
+           make_const(1, 32)});
         if (result) {
-            range_right = new AST::AstNode(AST::AST_ADD, range_right, result->children[1]->clone());
-            delete range_left;
-            range_left = new AST::AstNode(AST::AST_SUB, new AST::AstNode(AST::AST_ADD, range_right->clone(), result->children[0]->clone()),
-                                          result->children[1]->clone());
+            range_right = make_node(AST::AST_ADD)({result->children[1]->clone(), range_right});
+
             delete result;
             result = nullptr;
         }
-        result = new AST::AstNode(AST::AST_RANGE, range_left, range_right);
+        range_left = make_node(AST::AST_ADD)({range_right->clone(), range_left});
+        result = make_node(AST::AST_RANGE)({range_left, range_right});
     }
-    // return range from *current* selected range
-    // in the end, it results in whole selected range
     id->basic_prep = true;
     return result;
 }
@@ -520,7 +576,7 @@ static void resolve_wiretype(AST::AstNode *wire_node)
         delete_children(wire_node);
         if (value)
             wire_node->children.push_back(value);
-        add_multirange_wire(wire_node, packed_ranges.release(), unpacked_ranges.release(), false /* reverse */);
+        add_multirange_wire(wire_node, packed_ranges.release(), unpacked_ranges.release());
     }
 }
 
@@ -537,7 +593,12 @@ static void add_force_convert_attribute(AST::AstNode *wire_node, uint32_t val = 
 static void check_memories(AST::AstNode *node, std::string scope, std::map<std::string, AST::AstNode *> &memories)
 {
     for (auto *child : node->children) {
-        check_memories(child, node->type == AST::AST_GENBLOCK ? scope + "." + node->str : scope, memories);
+        if (child->type == AST::AST_FUNCTION) {
+            std::map<std::string, AST::AstNode *> memories_in_scope;
+            check_memories(child, node->type == AST::AST_GENBLOCK ? scope + "." + node->str : scope, memories_in_scope);
+        } else {
+            check_memories(child, node->type == AST::AST_GENBLOCK ? scope + "." + node->str : scope, memories);
+        }
     }
 
     if (node->str == "\\$readmemh") {
@@ -823,8 +884,9 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
 
     for (size_t i = 0; i < struct_ranges.size(); i++) {
         const auto *struct_range = struct_ranges[i];
-        auto const range_width_idx = i * 2 + 1;
-        auto const range_offset_idx = i * 2;
+        auto const idx = (struct_ranges.size() - i) * 2 - 1;
+        auto const range_width_idx = idx;
+        auto const range_offset_idx = idx - 1;
 
         int range_width = 0;
         if (current_struct_elem->multirange_dimensions.empty()) {
@@ -861,7 +923,7 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
 
             } else if (struct_range->children.size() == 1) {
                 // Selected a single position, as in `foo.bar[i]`.
-                if (range_width > 1 && current_struct_elem->multirange_dimensions.size() > range_width_idx + 2) {
+                if (range_width > 1 && range_width_idx > 1) {
                     // if it's not the last dimension.
                     right = new AST::AstNode(
                       AST::AST_ADD, right,
@@ -921,19 +983,14 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
     // Now expand ranges that are at instance part of dotted reference
     // `expand_dot` returns AST_RANGE with 2 children that selects member pointed by dotted reference
     // now we need to move this range to select correct struct
-    std::vector<AST::AstNode *> struct_ranges;
-    for (auto c : node->children) {
-        if (c->type == AST::AST_RANGE) {
-            struct_ranges.push_back(c);
-        }
-    }
+    std::vector<AST::AstNode *> struct_ranges = get_ranges(node);
     log_assert(wire_node->attributes.count(UhdmAst::unpacked_ranges()));
     log_assert(wire_node->attributes.count(UhdmAst::packed_ranges()));
     log_assert(struct_ranges.size() <= (wire_node->multirange_dimensions.size() / 2));
-    const auto wire_node_unpacked_ranges_size = wire_node->attributes[UhdmAst::unpacked_ranges()]->children.size();
     // TODO(krak): wire ranges are sometimes under wiretype node (e.g. in case of typedef)
     // but wiretype ranges contains also struct range that is already expanded in 'expand_dot'
     // we need to find a way to calculate size of wire ranges without struct range here to enable this assert
+    // const auto wire_node_unpacked_ranges_size = wire_node->attributes[UhdmAst::unpacked_ranges()]->children.size();
     // const auto wire_node_packed_ranges_size = wire_node->attributes[UhdmAst::packed_ranges()]->children.size();
     // const auto wire_node_ranges_size = wire_node_packed_ranges_size + wire_node_unpacked_ranges_size;
     // log_assert(struct_ranges.size() == (wire_node_ranges_size - 1));
@@ -946,13 +1003,8 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
         // in 'dot' context, we need to select specific struct element,
         // so assert that there is only 1 child in struct range (range with single child)
         log_assert((*it)->children.size() == 1);
-        bool is_unpacked_range = range_id < wire_node_unpacked_ranges_size;
-        // if unpacked range, select from back
-        auto elem = is_unpacked_range
-                      ? new AST::AstNode(AST::AST_SUB, AST::AstNode::mkconst_int(*wire_dimension_size_it - 1, true, 32), (*it)->children[0]->clone())
-                      : (*it)->children[0]->clone();
         // calculate which struct we selected
-        auto move_offset = new AST::AstNode(AST::AST_MUL, AST::AstNode::mkconst_int(struct_size_int, true, 32), elem);
+        auto move_offset = new AST::AstNode(AST::AST_MUL, AST::AstNode::mkconst_int(struct_size_int, true, 32), (*it)->children[0]->clone());
         // move our expanded dot to currently selected struct
         expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), expanded->children[0]);
         expanded->children[1] = new AST::AstNode(AST::AST_ADD, move_offset, expanded->children[1]);
@@ -2510,7 +2562,6 @@ void UhdmAst::process_typespec_member()
                     for (auto r : node->attributes[UhdmAst::packed_ranges()]->children) {
                         packed_ranges.push_back(r->clone());
                     }
-                    std::reverse(packed_ranges.begin(), packed_ranges.end());
                     delete_attribute(node, UhdmAst::packed_ranges());
                 }
                 if (node->attributes.count(UhdmAst::unpacked_ranges())) {
@@ -2530,7 +2581,6 @@ void UhdmAst::process_typespec_member()
                     for (auto r : node->attributes[UhdmAst::packed_ranges()]->children) {
                         packed_ranges.push_back(r->clone());
                     }
-                    std::reverse(packed_ranges.begin(), packed_ranges.end());
                     delete_attribute(node, UhdmAst::packed_ranges());
                 }
                 if (node->attributes.count(UhdmAst::unpacked_ranges())) {
@@ -3284,7 +3334,6 @@ void UhdmAst::process_io_decl()
         current_node = make_ast_node(AST::AST_MODPORTMEMBER);
         visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
     }
-    std::reverse(unpacked_ranges.begin(), unpacked_ranges.end());
 
     visit_one_to_one({vpiTypedef}, obj_h, [&](AST::AstNode *node) {
         if (node) {
@@ -3326,7 +3375,7 @@ void UhdmAst::process_io_decl()
             current_node->is_output = true;
         }
     }
-    add_multirange_wire(current_node, packed_ranges, unpacked_ranges, false);
+    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
 
 void UhdmAst::process_always()
@@ -4428,6 +4477,7 @@ void UhdmAst::process_logic_var()
             current_node->type = node->type;
             current_node->children = std::move(node->children);
             anonymous_typespec = true;
+            copy_packed_unpacked_attribute(node, current_node);
         } else {
             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
             wiretype_node->str = node->str;
@@ -4452,7 +4502,6 @@ void UhdmAst::process_logic_var()
         }
     }
     visit_default_expr(obj_h);
-    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
 
 void UhdmAst::process_sys_func_call()

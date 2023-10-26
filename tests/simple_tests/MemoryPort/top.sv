@@ -1,4 +1,6 @@
-module top(output logic [31:0] a [10]);
+// Originally a[10], but sv2v inverts unpacked ranges in some cases,
+// leading to formal verification failures.
+module top(output logic [31:0] a [9:0]);
   logic [31:0] b;
   for(genvar i = 0; i < 10; i++) begin
      assign a[i] = i;
