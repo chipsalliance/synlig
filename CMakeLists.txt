@@ -1,18 +1,18 @@
-# -*- mode:cmake -*-
+#- * - mode : cmake - * -
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
-# License: Apache-2.0 
-# This cmake enables this project to be built in a larger cmake based infrastructure.
-# This is an alternative build system for Synlig when used in a cmake-based project.
-# It also allows to use a different version of Yosys if provided by YOSYS_CONFIG variable.
-# That alternate Yosys can either be installed on the system or simply part of the larger cmake project.
-# In that case it won't compile the Yosys present in this repo.
-# Surelog can also be installed on the system.
-# This cmake is largely copied from the Surelog cmake
+#License : Apache - 2.0
+#This cmake enables this project to be built in a larger cmake based infrastructure.
+#This is an alternative build system for Synlig when used in a cmake - based project.
+#It also allows to use a different version of Yosys if provided by YOSYS_CONFIG variable.
+#That alternate Yosys can either be installed on the system or simply part of the larger cmake project.
+#In that case it won't compile the Yosys present in this repo.
+#Surelog can also be installed on the system.
+#This cmake is largely copied from the Surelog cmake
 
 project(SYNLIG VERSION 1.76)
 
-# Detect build type, fallback to release and throw a warning if use didn't
-# specify any
+#Detect build type, fallback to release and throw a warning if use didn't
+#specify any
 if(NOT CMAKE_BUILD_TYPE)
   message(WARNING "Build type not set, falling back to Release mode.
  To specify build type use:
@@ -65,7 +65,7 @@ if (SYNLIG_USE_HOST_YOSYS)
   get_target_property(YOSYS_INCLUDE_DIR yosys::yosys INTERFACE_INCLUDE_DIRECTORIES)
 else()
   if (DEFINED YOSYS_CONFIG AND NOT YOSYS_CONFIG STREQUAL "")
-    # Use the Yosys custom location given
+#Use the Yosys custom location given
     set(YOSYS_INCLUDE_DIR ${YOSYS_PATH})
     message("Using YOSYS from ${YOSYS_PATH}")
   else()
@@ -74,7 +74,7 @@ else()
     set(Yosys_BuildTests OFF CACHE INTERNAL "")
     set(YOSYS_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/third_party/yosys)
     set(YOSYS_CONFIG ${PROJECT_SOURCE_DIR}/third_party/yosys/yosys-config)
-    # Build Vendored Yosys if not provided by upper cmake
+#Build Vendored Yosys if not provided by upper cmake
     add_custom_target(yosys DEPENDS ${INSTALL_DIR}/bin/yosys)
     add_custom_command(OUTPUT ${INSTALL_DIR}/bin/yosys
       COMMAND echo "       Compiling Yosys"
@@ -89,7 +89,7 @@ endif()
 message("YOSYS_CONFIG: ${YOSYS_CONFIG}")
 message("YOSYS_INCLUDE_DIR: ${YOSYS_INCLUDE_DIR}")
 
-# NOTE: Policy changes has to happen before adding any subprojects
+#NOTE : Policy changes has to happen before adding any subprojects
 cmake_policy(SET CMP0091 NEW)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
@@ -98,15 +98,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Set version from cmake and extract latest hash if available
+#Set version from cmake and extract latest hash if available
 set(SYNLIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(SYNLIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git")
-  # Get latest commit
+#Get latest commit
   execute_process(COMMAND git rev-parse HEAD
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     OUTPUT_VARIABLE SURELOG_VERSION_COMMIT_SHA)
-  # strip newline
+#strip newline
   string(REGEX REPLACE "\n$" "" SYNLIG_VERSION_COMMIT_SHA "${SYNLIG_VERSION_COMMIT_SHA}")
 else()
   set(SYNLIG_VERSION_COMMIT_SHA "release")
@@ -119,8 +119,8 @@ if(WITH_LIBCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 endif()
 
-# In cmake it is imposible to read the output of yosys-config and populate variables at cmake configuration time as yosys is built in this cmake
-# The initial content of YOSYS_CONFIG_FLAGS is a bootstrap that enables to build the synlig local code (frontends/systemverilog), not yosys itself.
+#In cmake it is imposible to read the output of yosys - config and populate variables at cmake configuration time as yosys is built in this cmake
+#The initial content of YOSYS_CONFIG_FLAGS is a bootstrap that enables to build the synlig local code(frontends / systemverilog), not yosys itself.
 # 
 set(YOSYS_CONFIG_FLAGS "-D_YOSYS_")
 
@@ -153,23 +153,17 @@ if (SYNLIG_BUILD_TESTS)
   endif()
 endif()
 
+#Important Note
+#Do not expliclty rely on a third party module,
+#e.g.add_subdirectory(third_party / ...)
+#as this is not acceptable for several registries
+#and distribution systems.Instead, follow the pattern
+#above to have optionality, which can be tested
+#in.github / workflows / non_vendored.yml(Example in Surelog)
 
-#  _   _  ____ _______ ______
-# | \ | |/ __ \__   __|  ____|
-# |  \| | |  | | | |  | |__
-# | . ` | |  | | | |  |  __|
-# | |\  | |__| | | |  | |____
-# |_| \_|\____/  |_|  |______|
-# Do not expliclty rely on a third party module,
-# e.g. add_subdirectory(third_party/...)
-# as this is not acceptable for several registries
-# and distribution systems. Instead, follow the pattern
-# above to have optionality, which can be tested
-# in .github/workflows/non_vendored.yml
-
-# NOTE: Set the global output directories after the subprojects have had their go at it
+#NOTE : Set the global output directories after the subprojects have had their go at it
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-  # Force all .lib and .dll into bin for windows
+#Force all.lib and.dll into bin for windows
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
@@ -183,7 +177,7 @@ if(NO_TCMALLOC)  # Leave this message in for a while, then remove.
   message(WARNING "-DNO_TCMALLOC has no effect, this option is now called -DSYNLIG_WITH_TCMALLOC=Off")
 endif()
 
-# Use tcmalloc if requested and found on system.
+#Use tcmalloc if requested and found on system.
 if(SYNLIG_WITH_TCMALLOC)
   find_library(TCMALLOC_LIBRARY NAMES tcmalloc)
   if (TCMALLOC_LIBRARY)
@@ -211,11 +205,11 @@ if(MSVC)
   )
   set(CMAKE_EXE_LINKER_FLAGS /STACK:8388608)  # 8MB stack size
 elseif(WIN32 AND (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
-  # The stack size unnecessarily high here. Investigate and bring it back to something more reasonable.
+#The stack size unnecessarily high here.Investigate and bring it back to something more reasonable.
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Xclang --stack-size=33554432")  # 32MB stack size
 else()
   if(DEFINED ENV{MSYSTEM})
-    # Under MSYS some files are too large to build without additional flags
+#Under MSYS some files are too large to build without additional flags
     set(MSYS_COMPILE_OPTIONS "-m64 -Wa,-mbig-obj")
   endif()
   set(CMAKE_CXX_FLAGS_DEBUG
@@ -226,7 +220,7 @@ else()
   )
 endif()
 
-# This code contains warnings
+#This code contains warnings
 string(REGEX REPLACE "\\-Werror" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 string(REGEX REPLACE "\\-Wfatal\\-errors" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 string(REGEX REPLACE "\\-Werror" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
@@ -241,13 +235,8 @@ if (WIN32)
   add_compile_definitions(WIN32_LEAN_AND_MEAN)
 endif()
 
-# Java
-find_package(Java 11 REQUIRED COMPONENTS Runtime)
-message(STATUS "Java_JAVA_EXECUTABLE = ${Java_JAVA_EXECUTABLE}")
-
-
-# Put source code here, files that are generated at build time in
-# surelog_generated_SRC
+#Put source code here, files that are generated at build time in
+#surelog_generated_SRC
 set(synlig_SRC
   ${PROJECT_SOURCE_DIR}/frontends/systemverilog/compat_symbols.cc
   ${PROJECT_SOURCE_DIR}/frontends/systemverilog/uhdm_ast_frontend.cc
@@ -280,12 +269,6 @@ set_target_properties(synlig PROPERTIES
 set_target_properties(synlig PROPERTIES OUTPUT_NAME "systemverilog")
 set_target_properties(synlig PROPERTIES PREFIX "")
 
-#configure_file(${PROJECT_SOURCE_DIR}/include/Synlig/config.h.in ${GENDIR}/include/Synlig/config.h)
-#target_compile_options(synlig PUBLIC
-#  "SHELL:$<IF:$<CXX_COMPILER_ID:MSVC>,/FI Synlig/config.h,-include Synlig/config.h>")
-
-#set_property(TARGET synlig PROPERTY POSITION_INDEPENDENT_CODE 1)
-
 target_include_directories(synlig PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/frontends/systemverilog/>
   $<INSTALL_INTERFACE:include>)
@@ -308,7 +291,7 @@ target_include_directories(synlig PUBLIC
 
 include(GNUInstallDirs)
 
-# Generate cmake config files for reuse by downstream packages
+#Generate cmake config files for reuse by downstream packages
 include(CMakePackageConfigHelpers)
 
 
@@ -317,7 +300,7 @@ install(
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Synlig
 )
 
-# install the configuration file
+#install the configuration file
 install(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/Synlig.pc
   DESTINATION lib/pkgconfig)
