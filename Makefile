@@ -220,15 +220,15 @@ variables_to_dump := \
 # Measuring variable name + ":"
 longest_variable_len := $(shell printf '%s:\n' $(call ShQuoteList,${variables_to_dump}) | wc -L)
 
-$(info ▖)
-$(info ▌ $(shell printf '%-${longest_variable_len}s\t%s' 'Date:' "$$(date --iso-8601=seconds)"))
-$(info ▌)
+$(info -)
+$(info | $(shell printf '%-${longest_variable_len}s\t%s' 'Date:' "$$(date --iso-8601=seconds)"))
+$(info |)
 $(foreach v,${variables_to_dump},\
-	$(info ▌ $(shell \
+	$(info | $(shell \
 		printf '%-${longest_variable_len}s\t%s' $(call ShQuote,${v}:) $(call ShQuote,${${v}})\
 	))\
 )
-$(info ▘)
+$(info -)
 
 undefine longest_variable_len
 undefine variables_to_dump
