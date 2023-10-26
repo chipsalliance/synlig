@@ -118,11 +118,6 @@ if(WITH_LIBCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 endif()
 
-# In cmake it is imposible to read the output of yosys - config and populate
-# variables at cmake configuration time as yosys is built in this cmake The
-# initial content of YOSYS_CONFIG_FLAGS is a bootstrap that enables to build the
-# synlig local code(frontends / systemverilog), not yosys itself.
-#
 set(YOSYS_CONFIG_FLAGS "-D_YOSYS_")
 
 set(CMAKE_CXX_FLAGS
