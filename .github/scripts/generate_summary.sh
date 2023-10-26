@@ -9,7 +9,7 @@ declare -r ROOT_DIR="$(realpath $SELF_DIR/../..)"
 declare -r UHDM_RESULTS_FILE=$ROOT_DIR/test-results-uhdm.log
 declare -r SV_RESULTS_FILE=$ROOT_DIR/test-results-systemverilog.log
 
-#───────────────────────────────────────────────────────────────────────────────
+#--------------------------------------------------------------------------------
 
 function parse_stats() {
     local -n _test_names="$1"
