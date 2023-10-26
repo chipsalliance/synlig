@@ -99,6 +99,7 @@ simple:FunctionColonReference/top.sv
 simple:FunctionOnDesignLevel/top.sv
 simple:FunctionParam/top.sv
 simple:FunctionReturnEnum/top.sv
+simple:FunctionScope/dut.sv
 simple:FunctionWireAssignmentOnDeclaration/top.sv
 simple:FunctionWithoutReturn/top.sv
 simple:FunctionWithOverriddenParameter/top.sv
