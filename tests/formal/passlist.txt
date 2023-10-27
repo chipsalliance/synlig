@@ -156,6 +156,7 @@ simple:OneReplicate/dut.v
 simple:OneStruct/dut.sv
 simple:OneSysFunc/dut.v
 simple:PackageCast/dut.v
+simple:PackageLogicTypespec/dut.sv
 simple:PackedArray/top.sv
 simple:PackedArrayPort/top.sv
 simple:ParameterColonReference/top.sv
