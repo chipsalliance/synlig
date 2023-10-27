@@ -263,7 +263,7 @@ set(synlig_SRC
     ${PROJECT_SOURCE_DIR}/frontends/systemverilog/uhdm_common_frontend.cc
     ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/const2ast.cc
     ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/edif.cc
-    ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/simplify.cc)
+    ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/synlig_simplify.cc)
 
 add_library(synlig SHARED ${synlig_SRC})
 
