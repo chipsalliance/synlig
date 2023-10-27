@@ -211,3 +211,12 @@ When you are updating the Surelog version, you also need to recompile the plugin
 1. You can print the UHDM tree by adding `-debug` flag to `read_uhdm` or `read_systemverilog`. 
 This flag also prints the converted Yosys AST.
 1. The order of the files matters. Surelog requires that all definitions be already defined when a file is parsed (e.g. if file `B` is defining a type used in file `A`, file `B` needs to be parsed before file `A`).
+
+
+## Embedding Synlig in a larger cmake-based project
+
+1. An alternative build mechanism defined in the CMakeLists.txt file is provided to allow Synlig to be built part of a larger cmake-based project
+Simply add_subsystem(synlig) in your parent CMake. See CMakeLists.txt for compilation options (With or without vendored Yosys and Surelog).
+1. To test locally this build system: make -f cmake-makefile
+
+
