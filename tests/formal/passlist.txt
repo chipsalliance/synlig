@@ -105,6 +105,7 @@ simple:FunctionWithoutReturn/top.sv
 simple:FunctionWithOverriddenParameter/top.sv
 simple:GenIfInside/top.sv
 simple:GenScopeFunction/top.sv
+simple:HierPathTypespec/dut.sv
 simple:ImportedDoubleCastedParameter/top.sv
 simple:ImportedEnumCast/top.sv
 simple:ImportedFunctionCallInModuleAndSubmodule/top.sv
