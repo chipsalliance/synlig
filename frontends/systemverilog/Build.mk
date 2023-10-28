@@ -13,8 +13,8 @@ ${ts}.sources := \
 	${${ts}.src_dir}uhdm_ast_frontend.cc \
 	${${ts}.src_dir}uhdm_common_frontend.cc \
 	${${ts}.src_dir}uhdm_surelog_ast_frontend.cc \
-	${$(call GetTargetStructName,yosys).mod_dir}const2ast.cc \
-	${$(call GetTargetStructName,yosys).mod_dir}edif.cc \
+	${$(call GetTargetStructName,yosys).mod_dir}synlig_const2ast.cc \
+	${$(call GetTargetStructName,yosys).mod_dir}synlig_edif.cc \
 	${$(call GetTargetStructName,yosys).mod_dir}synlig_simplify.cc
 
 define ${ts}.env =

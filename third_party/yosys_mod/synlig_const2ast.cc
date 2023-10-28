@@ -38,7 +38,7 @@
  *
  */
 
-#include "const2ast.h"
+#include "synlig_const2ast.h"
 #include "frontends/ast/ast.h"
 #include "kernel/log.h"
 

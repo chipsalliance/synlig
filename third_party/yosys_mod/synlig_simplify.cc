@@ -29,7 +29,7 @@
 #include "kernel/log.h"
 #include "libs/sha1/sha1.h"
 
-#include "const2ast.h"
+#include "synlig_const2ast.h"
 
 #include <math.h>
 #include <sstream>

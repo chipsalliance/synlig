@@ -20,7 +20,7 @@
 #include <uhdm/uhdm.h>
 #include <uhdm/vpi_user.h>
 
-#include "const2ast.h"
+#include "synlig_const2ast.h"
 #include "synlig_simplify.h"
 
 YOSYS_NAMESPACE_BEGIN

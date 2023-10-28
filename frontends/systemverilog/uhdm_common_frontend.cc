@@ -18,7 +18,7 @@
  */
 
 #include "uhdm_common_frontend.h"
-#include "edif.h"
+#include "synlig_edif.h"
 
 namespace systemverilog_plugin
 {
