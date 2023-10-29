@@ -11,7 +11,9 @@ Copied files, their sources, changes & notes:
     - Removed Yosys namespace; `const2ast()` has been placed inside
       `systemverilog_plugin` namespace to avoid conflicts with the symbol from
       Yosys when statically linking.
-- simplify.cc: yosys/frontends/ast/simplify.cc (rev. ceef00c)
+    - Renamed to synlig_const2ast.cc to prevent GDB breakpoint aliasing from one
+      file to the other original file
+- synlig_simplify.cc: yosys/frontends/ast/simplify.cc (rev. ceef00c)
   - The file is a part of Yosys AST frontend. It has been placed in the plugin,
     as in some cases we need to adjust it to support certain functionalities
     in the plugin. Since it is included now in the plugin, we can skip caling
@@ -22,10 +24,16 @@ Copied files, their sources, changes & notes:
     - Removed unneeded code and member functions of AstNode::
     - Modified usage of AstNode:: members that are called from the Yosys'
       AstNode:: struct.
+    - Renamed to synlig_simplify.cc to prevent GDB breakpoint aliasing from one
+      file to the other original file
   - The file will be extended in the future instead of simplify_sv()
     in UhdmAst.cc, and it will be moved to other directory then.
+- edif.cc: yosys/frontends/verilog/edif.cc
+    - Renamed to synlig_edif.cc to prevent GDB breakpoint aliasing from one
+      file to the other original file
 
 Non-copied files placed here for interfacing purposes:
 
 - const2ast.h
 - simplify.h
+- edif.h

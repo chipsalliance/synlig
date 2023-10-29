@@ -29,14 +29,14 @@
 #include "kernel/log.h"
 #include "libs/sha1/sha1.h"
 
-#include "const2ast.h"
+#include "synlig_const2ast.h"
 
 #include <math.h>
 #include <sstream>
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include "simplify.h"
+#include "synlig_simplify.h"
 
 YOSYS_NAMESPACE_BEGIN
 namespace VERILOG_FRONTEND
