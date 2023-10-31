@@ -182,6 +182,7 @@ simple:ParameterPassedToSubmoduleInGenscopeOfSubmodule/top.sv
 simple:ParameterPassedToSubmoduleOfSubmodule/top.sv
 simple:ParameterRangeUsingDot/top.sv
 simple:ParameterSizeOfInstance/top.sv
+simple:ParameterType/dut.sv
 simple:ParameterUnpackedArray/top.sv
 simple:ParameterUnpackedLogicArray/top.sv
 simple:ParameterUnsignedInt/top.sv

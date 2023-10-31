@@ -177,6 +177,7 @@ class UhdmAst
     void process_type_parameter();
     void simplify_parameter(::Yosys::AST::AstNode *parameter, ::Yosys::AST::AstNode *module_node = nullptr);
     void process_unsupported_stmt(const UHDM::BaseClass *object, bool is_error = true);
+    void process_array_expr(const UHDM::BaseClass *object);
 
     UhdmAst(UhdmAst *p, UhdmAstShared &s, const std::string &i) : parent(p), shared(s), indent(i)
     {
