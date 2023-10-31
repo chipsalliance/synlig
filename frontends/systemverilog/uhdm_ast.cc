@@ -1536,12 +1536,12 @@ void UhdmAst::visit_default_expr(vpiHandle obj_h)
     });
 }
 
-void UhdmAst::process_array_expr(const UHDM::BaseClass* object) {
-  // Array expr are created in the UHDM elaborated model to model expanded default pattern assigns.
-  // They are not processed so far by the plugin. The plugin processes the non-expanded version in the non-elab model.
-  // Creating a function that is a no-op for now to enable traversing UHDM without error
+void UhdmAst::process_array_expr(const UHDM::BaseClass *object)
+{
+    // Array expr are created in the UHDM elaborated model to model expanded default pattern assigns.
+    // They are not processed so far by the plugin. The plugin processes the non-expanded version in the non-elab model.
+    // Creating a function that is a no-op for now to enable traversing UHDM without error
 }
-
 
 AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
 {
@@ -4062,9 +4062,9 @@ void UhdmAst::process_assignment_pattern_op()
     visit_one_to_many({vpiOperand}, obj_h, [&](AST::AstNode *node) {
         if (node->type == AST::AST_ASSIGN || node->type == AST::AST_ASSIGN_EQ || node->type == AST::AST_ASSIGN_LE) {
             if (assign_node == nullptr) {
-              // Parameter assigns are not assigns per-se, the find_ancestor returns nullptr, but an assign is created in the visit_one_to_many,
-              // selecting this assign for the downstream processing
-              assign_node = node;  
+                // Parameter assigns are not assigns per-se, the find_ancestor returns nullptr, but an assign is created in the visit_one_to_many,
+                // selecting this assign for the downstream processing
+                assign_node = node;
             }
             assignments.push_back(node);
         } else {
@@ -4309,9 +4309,7 @@ void UhdmAst::process_case_item()
 void UhdmAst::process_range(const UHDM::BaseClass *object)
 {
     current_node = make_ast_node(AST::AST_RANGE);
-    visit_one_to_one({vpiLeftRange, vpiRightRange}, obj_h, [&](AST::AstNode *node) { 
-        current_node->children.push_back(node); 
-    });
+    visit_one_to_one({vpiLeftRange, vpiRightRange}, obj_h, [&](AST::AstNode *node) { current_node->children.push_back(node); });
     if (current_node->children.size() > 0) {
         if (current_node->children[0]->str == "unsized") {
             log_error("%.*s:%d: Currently not supported object of type 'unsized range'\n", (int)object->VpiFile().length(), object->VpiFile().data(),
