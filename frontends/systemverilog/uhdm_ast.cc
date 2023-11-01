@@ -1460,6 +1460,18 @@ void UhdmAst::visit_one_to_many(const std::vector<int> child_node_types, vpiHand
     }
 }
 
+void UhdmAst::iterate_one_to_many(const std::vector<int> child_node_types, vpiHandle parent_handle, const std::function<void(vpiHandle)> &f)
+{
+    for (auto child : child_node_types) {
+        vpiHandle itr = vpi_iterate(child, parent_handle);
+        while (vpiHandle vpi_child_obj = vpi_scan(itr)) {
+            f(vpi_child_obj);
+            vpi_release_handle(vpi_child_obj);
+        }
+        vpi_release_handle(itr);
+    }
+}
+
 void UhdmAst::visit_one_to_one(const std::vector<int> child_node_types, vpiHandle parent_handle, const std::function<void(AST::AstNode *)> &f)
 {
     for (auto child : child_node_types) {
@@ -2271,6 +2283,13 @@ void UhdmAst::process_module()
             // processing nodes belonging to 'uhdmallModules'
             current_node = make_ast_node(AST::AST_MODULE);
             current_node->str = type;
+
+            iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
+                std::string name = vpi_get_str(vpiName, h);
+                if (name == "blackbox")
+                    current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 1);
+            });
+
             shared.top_nodes[current_node->str] = current_node;
             shared.current_top_node = current_node;
             current_node->attributes[UhdmAst::partial()] = AST::AstNode::mkconst_int(1, false, 1);
@@ -2356,12 +2375,19 @@ void UhdmAst::process_module()
             delete node;
         });
         // We need to rename module to prevent name collision with the same module, but with different parameters
-        std::string module_name = !parameters.empty() ? AST::derived_module_name(type, parameters).c_str() : type;
+        // Only if the module is not a blackbox.
+        bool is_blackbox = false;
+        if (auto existing_module_node = shared.top_nodes[type]) {
+            if (existing_module_node->attributes.count(ID::blackbox)) {
+                is_blackbox = true;
+            }
+        }
+        std::string module_name = ((!parameters.empty()) && (!is_blackbox)) ? AST::derived_module_name(type, parameters).c_str() : type;
         auto module_node = shared.top_nodes[module_name];
         // true, when Surelog don't have definition of module while parsing design
         // if so, we leaving module parameters to yosys and don't rename module
         // as it will be done by yosys
-        bool isPrimitive = false;
+        bool isPrimitive = is_blackbox;
         if (!module_node) {
             module_node = shared.top_nodes[type];
             if (!module_node) {
@@ -2376,9 +2402,11 @@ void UhdmAst::process_module()
                 module_node->str = module_name;
             }
         } else if (auto attribute = get_attribute(module_node, attr_id::is_elaborated_module); attribute && attribute->integer == 1) {
-            // we already processed module with this parameters, just create cell node
-            make_cell(obj_h, current_node, module_node);
-            return;
+            if (!is_blackbox) {
+                // we already processed module with this parameters, just create cell node
+                make_cell(obj_h, current_node, module_node);
+                return;
+            }
         }
         shared.top_nodes[module_node->str] = module_node;
         visit_one_to_many({vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
