@@ -40,6 +40,7 @@ simple:BitSelectOfParameterPassedToSubmoduleInGenForOfSubmodule/top.sv
 simple:BitSelectPartSelectInFunction/top.sv
 simple:bitwise_operations/top.sv
 simple:bitwise_operations_reverted_range/top.sv
+simple:BlackBox/cells.sv
 simple:BreakContinueWhile/top.sv
 simple:BreakWhile/top.sv
 simple:CaseInside/top.sv
