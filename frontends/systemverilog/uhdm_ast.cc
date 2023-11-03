@@ -2390,7 +2390,7 @@ void UhdmAst::process_module()
         shared.top_nodes[module_node->str] = module_node;
         visit_one_to_many({vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
             if (node) {
-                if (node->children[0]->type != AST::AST_CONSTANT) {
+                if ((!node->children.empty()) && ((node->children[0]->type != AST::AST_CONSTANT))) {
                     if (shared.top_nodes[type]) {
                         simplify_parameter(node, module_node);
                         log_assert(node->children[0]->type == AST::AST_CONSTANT || node->children[0]->type == AST::AST_REALVALUE);
