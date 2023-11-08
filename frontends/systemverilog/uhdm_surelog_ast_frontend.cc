@@ -202,7 +202,7 @@ struct UhdmSurelogAstFrontend : public UhdmCommonFrontend {
         // Should be called 1. for normal flow 2. after finishing with `-link`
         if (!this->shared.defer) {
             vpiHandle designH = uhdm_designs.at(0);
-            UHDM::design* design = UhdmDesignFromVpiHandle(designH);
+            UHDM::design *design = UhdmDesignFromVpiHandle(designH);
             UHDM::Serializer serializer;
             UHDM::SynthSubset *synthSubset =
               make_new_object_with_optional_extra_true_arg<UHDM::SynthSubset>(&serializer, this->shared.nonSynthesizableObjects, design, false);
