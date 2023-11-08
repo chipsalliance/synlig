@@ -201,9 +201,11 @@ struct UhdmSurelogAstFrontend : public UhdmCommonFrontend {
         // `-defer` turns elaboration off, so check for it
         // Should be called 1. for normal flow 2. after finishing with `-link`
         if (!this->shared.defer) {
+            vpiHandle designH = uhdm_designs.at(0);
+            UHDM::design* design = UhdmDesignFromVpiHandle(designH);
             UHDM::Serializer serializer;
             UHDM::SynthSubset *synthSubset =
-              make_new_object_with_optional_extra_true_arg<UHDM::SynthSubset>(&serializer, this->shared.nonSynthesizableObjects, false);
+              make_new_object_with_optional_extra_true_arg<UHDM::SynthSubset>(&serializer, this->shared.nonSynthesizableObjects, design, false);
             synthSubset->listenDesigns(uhdm_designs);
             delete synthSubset;
         }
