@@ -43,8 +43,10 @@ struct UhdmAstFrontend : public UhdmCommonFrontend {
         UHDM::Serializer serializer;
 
         std::vector<vpiHandle> restoredDesigns = serializer.Restore(filename);
+        vpiHandle designH = restoredDesigns.at(0);
+        UHDM::design *design = UhdmDesignFromVpiHandle(designH);
         UHDM::SynthSubset *synthSubset =
-          make_new_object_with_optional_extra_true_arg<UHDM::SynthSubset>(&serializer, this->shared.nonSynthesizableObjects, false);
+          make_new_object_with_optional_extra_true_arg<UHDM::SynthSubset>(&serializer, this->shared.nonSynthesizableObjects, design, false);
         synthSubset->listenDesigns(restoredDesigns);
         delete synthSubset;
         UhdmAst uhdm_ast(this->shared);
