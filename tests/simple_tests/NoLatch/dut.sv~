@@ -1,0 +1,12 @@
+module latch_test2 (
+    input logic a,
+    input logic b
+);
+
+    always_comb begin
+        logic temp = 0; // inline initialization does not prevent latch
+        if (a)
+            temp = b;
+    end
+
+endmodule // latch_test2

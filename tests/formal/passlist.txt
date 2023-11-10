@@ -146,6 +146,7 @@ simple:NestedParamSubstitution/top.sv
 simple:NestedSelectOnInputPortInGenscope/top.sv
 simple:NestedSelectOnVarInGenscope/top.sv
 simple:NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+simple:NoLatch/dut.sv
 simple:OneAlwaysComb/dut.v
 simple:OneCast/dut.v
 simple:OneConcat/dut.v
