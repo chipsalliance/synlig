@@ -290,6 +290,14 @@ set_target_properties(
   synlig PROPERTIES SOVERSION "${SYNLIG_VERSION_MAJOR}.${SYNLIG_VERSION_MINOR}")
 set_target_properties(synlig PROPERTIES OUTPUT_NAME "systemverilog")
 set_target_properties(synlig PROPERTIES PREFIX "")
+set_target_properties(synlig PROPERTIES SUFFIX ".so")
+
+# Allow undefined symbols at link time on macOS. These symbols should already be
+# present within yosys when the plugin is loaded.
+if(APPLE)
+  set_target_properties(synlig PROPERTIES LINK_FLAGS
+                                          "-undefined dynamic_lookup")
+endif()
 
 target_include_directories(
   synlig
