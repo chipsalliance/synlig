@@ -207,6 +207,25 @@ static std::vector<AST::AstNode *> get_ranges(AST::AstNode *id)
     return ranges;
 }
 
+static std::vector<AST::AstNode *> get_all_ranges(AST::AstNode *id)
+{
+    log_assert(!id->children.empty());
+    std::vector<AST::AstNode *> ranges;
+    for (auto c : id->children) {
+        if (c->type == AST::AST_RANGE) {
+            ranges.push_back(c);
+        }
+        for (auto pair : c->attributes) {
+            if (pair.second && !pair.second->children.empty()) {
+                for (auto r : get_all_ranges(pair.second)) {
+                    ranges.push_back(r);
+                }
+            }
+        }
+    }
+    return ranges;
+}
+
 static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node);
 
 static void sanitize_symbol_name(std::string &name)
@@ -998,6 +1017,25 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
     // Get size of single structure
     int struct_size_int = get_max_offset_struct(struct_node) + 1;
     auto wire_dimension_size_it = wire_node->multirange_dimensions.rbegin();
+    if (wire_node->multirange_dimensions.empty()) {
+        wire_dimension_size_it = struct_node->children[0]->multirange_dimensions.rbegin();
+        struct_ranges = get_all_ranges(struct_node);
+        if (struct_ranges.size() == 2 && dot->children.size() == 1) {
+            auto target = struct_ranges.at(1);
+            auto target_l = target->children.at(0);
+            auto target_r = target->children.at(1);
+            // target_size = l - r + 1
+            auto target_size = new AST::AstNode(AST::AST_ADD, new AST::AstNode(AST::AST_SUB, target_l->clone(), target_r->clone()),
+                                                AST::AstNode::mkconst_int(1, true, 32));
+            // offset = size * n
+            auto index = dot->children.at(0)->children.at(0);
+            auto move_offset = new AST::AstNode(AST::AST_MUL, target_size, index->clone());
+            expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), target_l->clone());
+            expanded->children[1] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), target_r->clone());
+            return expanded;
+        }
+        return expanded;
+    }
     unsigned long range_id = 0;
     for (auto it = struct_ranges.rbegin(); it != struct_ranges.rend(); it++) {
         // in 'dot' context, we need to select specific struct element,
@@ -1371,11 +1409,14 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             if (!current_node->str.empty() && current_node->str[0] == '\\') {
                 // instance so add a wire for the packed structure
                 auto wnode = make_packed_struct_local(current_node, current_node->str);
-                convert_packed_unpacked_range(wnode);
-                log_assert(AST_INTERNAL::current_ast_mod);
-                AST_INTERNAL::current_ast_mod->children.push_back(wnode);
-                AST_INTERNAL::current_scope[wnode->str]->attributes[ID::wiretype] = AST::AstNode::mkconst_str(current_node->str);
-                AST_INTERNAL::current_scope[wnode->str]->attributes[ID::wiretype]->id2ast = current_node;
+                if (!wnode->attributes.count(UhdmAst::is_simplified_wire())) {
+                    wnode->attributes[UhdmAst::is_simplified_wire()] = AST::AstNode::mkconst_int(1, true);
+                    convert_packed_unpacked_range(wnode);
+                    log_assert(AST_INTERNAL::current_ast_mod);
+                    AST_INTERNAL::current_ast_mod->children.push_back(wnode);
+                    AST_INTERNAL::current_scope[wnode->str]->attributes[ID::wiretype] = AST::AstNode::mkconst_str(current_node->str);
+                    AST_INTERNAL::current_scope[wnode->str]->attributes[ID::wiretype]->id2ast = current_node;
+                }
             }
 
             current_node->basic_prep = true;
@@ -1460,6 +1501,18 @@ void UhdmAst::visit_one_to_many(const std::vector<int> child_node_types, vpiHand
     }
 }
 
+void UhdmAst::iterate_one_to_many(const std::vector<int> child_node_types, vpiHandle parent_handle, const std::function<void(vpiHandle)> &f)
+{
+    for (auto child : child_node_types) {
+        vpiHandle itr = vpi_iterate(child, parent_handle);
+        while (vpiHandle vpi_child_obj = vpi_scan(itr)) {
+            f(vpi_child_obj);
+            vpi_release_handle(vpi_child_obj);
+        }
+        vpi_release_handle(itr);
+    }
+}
+
 void UhdmAst::visit_one_to_one(const std::vector<int> child_node_types, vpiHandle parent_handle, const std::function<void(AST::AstNode *)> &f)
 {
     for (auto child : child_node_types) {
@@ -1534,6 +1587,13 @@ void UhdmAst::visit_default_expr(vpiHandle obj_h)
         block_ast.current_node = block_node;
         assign_node->children.push_back(expr_node);
     });
+}
+
+void UhdmAst::process_array_expr(const UHDM::BaseClass *object)
+{
+    // Array expr are created in the UHDM elaborated model to model expanded default pattern assigns.
+    // They are not processed so far by the plugin. The plugin processes the non-expanded version in the non-elab model.
+    // Creating a function that is a no-op for now to enable traversing UHDM without error
 }
 
 AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
@@ -2271,6 +2331,13 @@ void UhdmAst::process_module()
             // processing nodes belonging to 'uhdmallModules'
             current_node = make_ast_node(AST::AST_MODULE);
             current_node->str = type;
+
+            iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
+                std::string name = vpi_get_str(vpiName, h);
+                if (name == "blackbox")
+                    current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 1);
+            });
+
             shared.top_nodes[current_node->str] = current_node;
             shared.current_top_node = current_node;
             current_node->attributes[UhdmAst::partial()] = AST::AstNode::mkconst_int(1, false, 1);
@@ -2356,12 +2423,19 @@ void UhdmAst::process_module()
             delete node;
         });
         // We need to rename module to prevent name collision with the same module, but with different parameters
-        std::string module_name = !parameters.empty() ? AST::derived_module_name(type, parameters).c_str() : type;
+        // Only if the module is not a blackbox.
+        bool is_blackbox = false;
+        if (auto existing_module_node = shared.top_nodes[type]) {
+            if (existing_module_node->attributes.count(ID::blackbox)) {
+                is_blackbox = true;
+            }
+        }
+        std::string module_name = ((!parameters.empty()) && (!is_blackbox)) ? AST::derived_module_name(type, parameters).c_str() : type;
         auto module_node = shared.top_nodes[module_name];
         // true, when Surelog don't have definition of module while parsing design
         // if so, we leaving module parameters to yosys and don't rename module
         // as it will be done by yosys
-        bool isPrimitive = false;
+        bool isPrimitive = is_blackbox;
         if (!module_node) {
             module_node = shared.top_nodes[type];
             if (!module_node) {
@@ -2376,14 +2450,16 @@ void UhdmAst::process_module()
                 module_node->str = module_name;
             }
         } else if (auto attribute = get_attribute(module_node, attr_id::is_elaborated_module); attribute && attribute->integer == 1) {
-            // we already processed module with this parameters, just create cell node
-            make_cell(obj_h, current_node, module_node);
-            return;
+            if (!is_blackbox) {
+                // we already processed module with this parameters, just create cell node
+                make_cell(obj_h, current_node, module_node);
+                return;
+            }
         }
         shared.top_nodes[module_node->str] = module_node;
         visit_one_to_many({vpiParamAssign}, obj_h, [&](AST::AstNode *node) {
             if (node) {
-                if (node->children[0]->type != AST::AST_CONSTANT) {
+                if ((!node->children.empty()) && ((node->children[0]->type != AST::AST_CONSTANT))) {
                     if (shared.top_nodes[type]) {
                         simplify_parameter(node, module_node);
                         log_assert(node->children[0]->type == AST::AST_CONSTANT || node->children[0]->type == AST::AST_REALVALUE);
@@ -2513,6 +2589,13 @@ void UhdmAst::process_typespec_member()
     case vpiLogicTypespec: {
         current_node->is_logic = true;
         visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+        if (auto ref_elemtypespec_h = vpi_handle(vpiElemTypespec, typespec_h)) {
+            if (auto elemtypespec_h = vpi_handle(vpiActual, ref_elemtypespec_h)) {
+                visit_one_to_many({vpiRange}, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+                vpi_release_handle(elemtypespec_h);
+            }
+            vpi_release_handle(ref_elemtypespec_h);
+        }
         break;
     }
     case vpiByteTypespec: {
@@ -4054,6 +4137,11 @@ void UhdmAst::process_assignment_pattern_op()
     std::vector<AST::AstNode *> assignments;
     visit_one_to_many({vpiOperand}, obj_h, [&](AST::AstNode *node) {
         if (node->type == AST::AST_ASSIGN || node->type == AST::AST_ASSIGN_EQ || node->type == AST::AST_ASSIGN_LE) {
+            if (assign_node == nullptr) {
+                // Parameter assigns are not assigns per-se, the find_ancestor returns nullptr, but an assign is created in the visit_one_to_many,
+                // selecting this assign for the downstream processing
+                assign_node = node;
+            }
             assignments.push_back(node);
         } else {
             current_node->children.push_back(node);
@@ -4475,7 +4563,7 @@ void UhdmAst::process_logic_var()
             // anonymous typespec, move the children to variable
             current_node->type = node->type;
             current_node->children = std::move(node->children);
-            copy_packed_unpacked_attribute(node, current_node);
+            // copy_packed_unpacked_attribute(node, current_node);
         } else {
             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
             wiretype_node->str = node->str;
@@ -4485,7 +4573,26 @@ void UhdmAst::process_logic_var()
         current_node->is_signed = node->is_signed;
         delete node;
     });
+    if (auto ref_typespec_h = vpi_handle(vpiTypespec, obj_h)) {
+        if (auto typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
+            visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            if (auto ref_elemtypespec_h = vpi_handle(vpiElemTypespec, typespec_h)) {
+                if (auto elemtypespec_h = vpi_handle(vpiActual, ref_elemtypespec_h)) {
+                    visit_one_to_many({vpiRange}, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+                    vpi_release_handle(elemtypespec_h);
+                }
+                vpi_release_handle(ref_elemtypespec_h);
+            }
+            vpi_release_handle(typespec_h);
+        } else {
+            visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+        }
+        vpi_release_handle(ref_typespec_h);
+    } else {
+        visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+    }
     visit_default_expr(obj_h);
+    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
 
 void UhdmAst::process_sys_func_call()
@@ -4582,6 +4689,13 @@ void UhdmAst::process_logic_typespec()
         }
     }
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+    if (auto ref_elemtypespec_h = vpi_handle(vpiElemTypespec, obj_h)) {
+        if (auto elemtypespec_h = vpi_handle(vpiActual, ref_elemtypespec_h)) {
+            visit_one_to_many({vpiRange}, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
+            vpi_release_handle(elemtypespec_h);
+        }
+        vpi_release_handle(ref_elemtypespec_h);
+    }
     if (packed_ranges.empty())
         packed_ranges.push_back(make_range(0, 0));
     add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
@@ -4968,6 +5082,11 @@ void UhdmAst::process_parameter()
                         wiretype_node->str = node->str;
                         current_node->children.push_back(wiretype_node);
                         current_node->is_custom_type = true;
+                        auto it = shared.param_types.find(current_node->str);
+                        if (it == shared.param_types.end())
+                            shared.param_types.insert(std::make_pair(current_node->str, node->clone()));
+                    } else {
+                        // parameter type
                         auto it = shared.param_types.find(current_node->str);
                         if (it == shared.param_types.end())
                             shared.param_types.insert(std::make_pair(current_node->str, node->clone()));
@@ -5444,6 +5563,9 @@ AST::AstNode *UhdmAst::process_object(vpiHandle obj_handle)
         break;
     case vpiClockingBlock:
         process_unsupported_stmt(object);
+        break;
+    case vpiArrayExpr:
+        process_array_expr(object);
         break;
     case vpiTypeParameter:
         process_type_parameter();
