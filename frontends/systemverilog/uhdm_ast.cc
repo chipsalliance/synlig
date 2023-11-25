@@ -1031,7 +1031,7 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
             // offset = size * n
             auto index = dot->children.at(0)->children.at(0);
             auto move_offset = new AST::AstNode(AST::AST_MUL, target_size, index->clone());
-            expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), target_l->clone());
+            expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset, target_l->clone());
             expanded->children[1] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), target_r->clone());
             return expanded;
         }
