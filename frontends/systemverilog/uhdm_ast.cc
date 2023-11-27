@@ -4513,6 +4513,7 @@ void UhdmAst::process_tagged_pattern()
     visit_one_to_one({vpiPattern}, obj_h, [&](AST::AstNode *node) { current_node->children.push_back(node); });
 }
 
+
 void UhdmAst::process_logic_var()
 {
     current_node = make_ast_node(AST::AST_WIRE);
