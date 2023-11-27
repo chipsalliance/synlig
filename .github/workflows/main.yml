@@ -487,6 +487,59 @@ jobs:
           grep ^ERROR log.txt || exit 0
           exit 1
 
+  test-plugin-with-bundled-yosys:
+    name: Test With Bundled Yosys
+    runs-on: [self-hosted, Linux, X64]
+    container: debian:trixie
+    needs: build-binaries
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      PIPX_BIN_DIR: /usr/local/bin
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+          fetch-depth: 1
+
+      - name: Install Prerequisites
+        run: |
+          apt update -qq
+          apt install -y --no-install-recommends pipx git
+          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+      - name: Install Dependencies
+        run: |
+          # Don't need all the build dependencies, but will ensure everything
+          # yosys needs at runtime will be installed
+          tuttest README.md dependencies | bash -
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries-debian
+
+      - name: Extract
+        run: |
+          # Extract into a different directory than it was built in
+          # to ensure no path dependencies
+          tar --one-top-level -xf binaries-debian.tar
+
+      - name: Verify yosys-config
+        run: |
+          # Check that the directories reported by yosys-config exist
+          echo "yosys-config reports data directory is" $(binaries-debian/out/current/bin/yosys-config --datdir)
+          ls $(binaries-debian/out/current/bin/yosys-config --datdir) > /dev/null
+
+      - name: Load Plugin
+        run: |
+          binaries-debian/out/current/bin/yosys \
+              -Q -m systemverilog \
+              -p "help read_systemverilog" \
+              -p "help read_uhdm" 2>&1 | tee log.txt
+          grep ^ERROR log.txt || exit 0
+          exit 1
+
   # needed for test linting
   upload-event-file:
     name: Upload GHA event file
