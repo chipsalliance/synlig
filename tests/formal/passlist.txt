@@ -135,6 +135,7 @@ simple:MonitorInputPort/top.sv
 simple:MultiAssignmentPatternOfConcat/top.sv
 simple:MultiDimHierPath2/dut.sv
 simple:MultiDimHierPath3/dut.sv
+simple:MultiDimHierPath4/dut.sv
 simple:MultipleAssignments/top.sv
 simple:MultipleCells/top.sv
 simple:NegationAsParameterOfInstance/top.sv
