@@ -11,8 +11,8 @@
 CFG_BUILD_TYPE := release
 
 # Base directory for all build outputs.
-CFG_BUILD_DIR = build/${CFG_BUILD_TYPE}/
-CFG_OUT_DIR = out/${CFG_BUILD_TYPE}/
+CFG_BUILD_DIR = build/${CFG_BUILD_TYPE}
+CFG_OUT_DIR = out/${CFG_BUILD_TYPE}
 
 # Basic build tools
 CC       ?= cc
