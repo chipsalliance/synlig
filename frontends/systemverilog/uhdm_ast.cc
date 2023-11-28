@@ -4567,7 +4567,7 @@ void UhdmAst::process_logic_var()
             // anonymous typespec, move the children to variable
             current_node->type = node->type;
             current_node->children = std::move(node->children);
-            // copy_packed_unpacked_attribute(node, current_node);
+            copy_packed_unpacked_attribute(node, current_node);
         } else {
             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
             wiretype_node->str = node->str;
@@ -4577,26 +4577,7 @@ void UhdmAst::process_logic_var()
         current_node->is_signed = node->is_signed;
         delete node;
     });
-    if (auto ref_typespec_h = vpi_handle(vpiTypespec, obj_h)) {
-        if (auto typespec_h = vpi_handle(vpiActual, ref_typespec_h)) {
-            visit_one_to_many({vpiRange}, typespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-            if (auto ref_elemtypespec_h = vpi_handle(vpiElemTypespec, typespec_h)) {
-                if (auto elemtypespec_h = vpi_handle(vpiActual, ref_elemtypespec_h)) {
-                    visit_one_to_many({vpiRange}, elemtypespec_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-                    vpi_release_handle(elemtypespec_h);
-                }
-                vpi_release_handle(ref_elemtypespec_h);
-            }
-            vpi_release_handle(typespec_h);
-        } else {
-            visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-        }
-        vpi_release_handle(ref_typespec_h);
-    } else {
-        visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { packed_ranges.push_back(node); });
-    }
     visit_default_expr(obj_h);
-    add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
 
 void UhdmAst::process_sys_func_call()
