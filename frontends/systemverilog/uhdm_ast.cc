@@ -1018,10 +1018,11 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
     int struct_size_int = get_max_offset_struct(struct_node) + 1;
     auto wire_dimension_size_it = wire_node->multirange_dimensions.rbegin();
 
-    if (wire_node->multirange_dimensions.empty() || wire_node->multirange_dimensions.size() == 2) {
+    if ((wire_node->multirange_dimensions.empty() || wire_node->multirange_dimensions.size() == 2) && (dot->children.size() == 1) &&
+        (!dot->children.at(0)->children.empty())) {
         wire_dimension_size_it = struct_node->children[0]->multirange_dimensions.rbegin();
         struct_ranges = get_all_ranges(struct_node);
-        if (struct_ranges.size() == 2 && dot->children.size() == 1) {
+        if (struct_ranges.size() == 2) {
             auto target = struct_ranges.at(1);
             auto target_l = target->children.at(0);
             auto target_r = target->children.at(1);
