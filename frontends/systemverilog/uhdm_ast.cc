@@ -1018,26 +1018,31 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
     int struct_size_int = get_max_offset_struct(struct_node) + 1;
     auto wire_dimension_size_it = wire_node->multirange_dimensions.rbegin();
 
-    if (wire_node->multirange_dimensions.empty()) {
+    if ((wire_node->multirange_dimensions.empty() || wire_node->multirange_dimensions.size() == 2) && (dot->children.size() == 1) &&
+        (!dot->children.at(0)->children.empty())) {
+        // Example: assign s.vector2x4[0] = a;
         wire_dimension_size_it = struct_node->children[0]->multirange_dimensions.rbegin();
-        struct_ranges = get_all_ranges(struct_node);
-        if (struct_ranges.size() == 2 && dot->children.size() == 1) {
+        std::vector<AST::AstNode *> struct_ranges = get_all_ranges(struct_node);
+        if (struct_ranges.size() == 2) {
             auto target = struct_ranges.at(1);
             auto target_l = target->children.at(0);
             auto target_r = target->children.at(1);
-            // target_size = l - r + 1
-            auto target_size = new AST::AstNode(AST::AST_ADD, new AST::AstNode(AST::AST_SUB, target_l->clone(), target_r->clone()),
-                                                AST::AstNode::mkconst_int(1, true, 32));
-            // offset = size * n
             auto index = dot->children.at(0)->children.at(0);
-            auto move_offset = new AST::AstNode(AST::AST_MUL, target_size, index->clone());
-            delete expanded->children[0];
-            delete expanded->children[1];
-            expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset, target_l->clone());
-            expanded->children[1] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), target_r->clone());
+            if (index->type == AST::AST_CONSTANT) {
+                // target_size = l - r + 1
+                auto target_size = new AST::AstNode(AST::AST_ADD, new AST::AstNode(AST::AST_SUB, target_l->clone(), target_r->clone()),
+                                                    AST::AstNode::mkconst_int(1, true, 32));
+                // move_offset = target_size * index
+                auto move_offset = new AST::AstNode(AST::AST_MUL, target_size, index->clone());
+                delete expanded->children[0];
+                delete expanded->children[1];
+                expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset, target_l->clone());
+                expanded->children[1] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), target_r->clone());
+                return expanded;
+            }
+        } else {
             return expanded;
         }
-        return expanded;
     }
 
     unsigned long range_id = 0;
