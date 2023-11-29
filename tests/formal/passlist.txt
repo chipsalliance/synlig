@@ -134,6 +134,7 @@ simple:ModuleInstantiationAndIndirectParams/dut.sv
 simple:ModuleUsingStuctInput/top.sv
 simple:MonitorInputPort/top.sv
 simple:MultiAssignmentPatternOfConcat/top.sv
+simple:MultiDimHierPath/dut.sv
 simple:MultiDimHierPath2/dut.sv
 simple:MultiDimHierPath3/dut.sv
 simple:MultiDimHierPath4/dut.sv
