@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 # can also be installed on the system. This cmake is largely copied from the
 # Surelog cmake
 
-project(SYNLIG VERSION 1.80)
+project(SYNLIG VERSION 1.81)
 
 # Detect build type, fallback to release and throw a warning if use didn't
 # specify any
