@@ -493,10 +493,16 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
         }
         // right_range = right_range * single_elem_size
         // left_range  = (((range_left + 1) * single_elem_size) - right_range) - 1
-        range_right = make_node(AST::AST_MUL)({range_right, make_const(single_elem_size[i], 32)});
+        int single_elem_size_val = 1;
+        if (i < single_elem_size.size()) {
+            single_elem_size_val = single_elem_size[i];
+        } else if (!single_elem_size.empty()) {
+            single_elem_size_val = single_elem_size[0];
+        }
+        range_right = make_node(AST::AST_MUL)({range_right, make_const(single_elem_size_val, 32)});
         range_left = make_node(AST::AST_SUB)(
           {make_node(AST::AST_SUB)(
-             {make_node(AST::AST_MUL)({make_node(AST::AST_ADD)({range_left, make_const(1, 32)}), make_const(single_elem_size[i], 32)}),
+             {make_node(AST::AST_MUL)({make_node(AST::AST_ADD)({range_left, make_const(1, 32)}), make_const(single_elem_size_val, 32)}),
               range_right->clone()}),
            make_const(1, 32)});
         if (result) {
