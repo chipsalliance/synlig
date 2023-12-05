@@ -487,7 +487,7 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
             range_left = ranges[i]->children[0]->clone();
             range_right = ranges[i]->children[0]->clone();
         }
-        if (range_offset[i] != 0) {
+        if ((i < range_offset.size()) && (range_offset[i] != 0)) {
             range_left = make_node(AST::AST_SUB)({range_left, make_const(range_offset[i], 32)});
             range_right = make_node(AST::AST_SUB)({range_right, make_const(range_offset[i], 32)});
         }
