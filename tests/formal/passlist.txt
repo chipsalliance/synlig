@@ -218,6 +218,7 @@ simple:ReturnFunctionCall/top.sv
 simple:rsp_gen_minimal/dut.v
 simple:SelectOnMemberSelectedFrom2DArray/top.sv
 simple:SelfPartSelectInBitSelect/top.sv
+simple:SelfSelectsInBitSelectAfterBitSelect/top.sv
 simple:serv-minimal/src/serv_1.1.0/rtl/serv_ctrl.v
 simple:ShiftTernary/top.sv
 simple:SignedWire/top.sv
