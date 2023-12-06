@@ -389,7 +389,7 @@ static std::pair<size_t, size_t> set_multirange_dimensions(AST::AstNode *wire_no
     return {packed_size, unpacked_size};
 }
 
-static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int unpacked_ranges_size, int i)
+static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int unpacked_ranges_size, int index)
 {
     log_assert(AST_INTERNAL::current_ast_mod);
     log_assert(AST_INTERNAL::current_scope.count(id->str));
@@ -418,10 +418,14 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
         if (wiretype_node->type == AST::AST_STRUCT) {
             skip = 1;
         } else if (wiretype_node->type == AST::AST_WIRE) {
+            // Testing this simple skip equation
+            skip = (wire_node->multirange_dimensions.size() / 2) - id->children.size();
+            /*
             skip = wiretype_node->attributes[UhdmAst::packed_ranges()]->children.size();
             if (wiretype_node->attributes.count(ID::wiretype)) {
                 skip -= wiretype_node->attributes[UhdmAst::packed_ranges()]->children.size();
             }
+            */
         } else {
             wiretype_node->dumpAst(NULL, "wiretype >");
             log_error("Unhandled case in multirange wiretype!");
@@ -491,14 +495,14 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
             range_left = make_node(AST::AST_SUB)({range_left, make_const(range_offset[i], 32)});
             range_right = make_node(AST::AST_SUB)({range_right, make_const(range_offset[i], 32)});
         }
-        // right_range = right_range * single_elem_size
-        // left_range  = (((range_left + 1) * single_elem_size) - right_range) - 1
         int single_elem_size_val = 1;
         if (i < single_elem_size.size()) {
             single_elem_size_val = single_elem_size[i];
         } else if (!single_elem_size.empty()) {
             single_elem_size_val = single_elem_size[0];
         }
+        // range_right = range_right * single_elem_size_val
+        // range_left  = (((range_left + 1) * single_elem_size_val) - range_right) - 1
         range_right = make_node(AST::AST_MUL)({range_right, make_const(single_elem_size_val, 32)});
         range_left = make_node(AST::AST_SUB)(
           {make_node(AST::AST_SUB)(
