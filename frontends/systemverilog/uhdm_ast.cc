@@ -418,14 +418,8 @@ static AST::AstNode *convert_range(AST::AstNode *id, int packed_ranges_size, int
         if (wiretype_node->type == AST::AST_STRUCT) {
             skip = 1;
         } else if (wiretype_node->type == AST::AST_WIRE) {
-            // Testing this simple skip equation
+            // skip number of dimensions of the object - number of dimensions of the var select
             skip = (wire_node->multirange_dimensions.size() / 2) - id->children.size();
-            /*
-            skip = wiretype_node->attributes[UhdmAst::packed_ranges()]->children.size();
-            if (wiretype_node->attributes.count(ID::wiretype)) {
-                skip -= wiretype_node->attributes[UhdmAst::packed_ranges()]->children.size();
-            }
-            */
         } else {
             wiretype_node->dumpAst(NULL, "wiretype >");
             log_error("Unhandled case in multirange wiretype!");
