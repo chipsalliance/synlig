@@ -138,6 +138,7 @@ simple:MultiDimHierPath/dut.sv
 simple:MultiDimHierPath2/dut.sv
 simple:MultiDimHierPath3/dut.sv
 simple:MultiDimHierPath4/dut.sv
+simple:MultiDimHierPath5/dut.sv
 simple:MultiDimHierPath6/dut.sv
 simple:MultipleAssignments/top.sv
 simple:MultipleCells/top.sv

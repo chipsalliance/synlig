@@ -1032,7 +1032,7 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
             auto target_l = target->children.at(0);
             auto target_r = target->children.at(1);
             auto index = dot->children.at(0)->children.at(0);
-            if (index->type == AST::AST_CONSTANT) {
+            if (index->type == AST::AST_CONSTANT || index->type == AST::AST_IDENTIFIER) {
                 // target_size = l - r + 1
                 auto target_size = new AST::AstNode(AST::AST_ADD, new AST::AstNode(AST::AST_SUB, target_l->clone(), target_r->clone()),
                                                     AST::AstNode::mkconst_int(1, true, 32));
