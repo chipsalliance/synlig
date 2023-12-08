@@ -4194,7 +4194,7 @@ void UhdmAst::process_indexed_part_select()
 {
     current_node = make_ast_node(AST::AST_IDENTIFIER);
     AST::AstNode *range_node = make_node(AST::AST_RANGE);
-    
+
     AST::AstNode *width = nullptr;
     visit_one_to_one({vpiWidthExpr}, obj_h, [&](AST::AstNode *node) { width = node; });
 
