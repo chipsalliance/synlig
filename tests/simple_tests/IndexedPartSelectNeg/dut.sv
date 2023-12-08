@@ -1,6 +1,6 @@
 
 `default_nettype none
-module nonblocking #(parameter WIDTH=32, SELW=1, CTRLW=$clog2(WIDTH), DINW=2**SELW)
+module dut #(parameter WIDTH=32, SELW=1, CTRLW=$clog2(WIDTH), DINW=2**SELW)
    (input wire             clk,
     input wire [CTRLW-1:0] ctrl,
     input wire [DINW-1:0]  din,
