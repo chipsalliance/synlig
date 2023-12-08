@@ -637,6 +637,7 @@ yosys:memlib/memlib_wide_sp.v
 yosys:memlib/memlib_wide_write.v
 yosys:memories/firrtl_938.v
 yosys:memories/implicit_en.v
+yosys:memories/issue00710.v
 yosys:memories/no_implicit_en.v
 yosys:memories/read_arst.v
 yosys:memories/shared_ports.v

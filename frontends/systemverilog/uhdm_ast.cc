@@ -2348,7 +2348,7 @@ void UhdmAst::process_module()
             iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
                 std::string name = vpi_get_str(vpiName, h);
                 if (name == "blackbox")
-                    current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 1);
+                    current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 32);
             });
 
             shared.top_nodes[current_node->str] = current_node;
@@ -2959,6 +2959,11 @@ void UhdmAst::process_array_var()
         }
         delete node;
     });
+    iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
+        std::string name = vpi_get_str(vpiName, h);
+        if (name == "keep")
+            current_node->attributes[ID::keep] = AST::AstNode::mkconst_int(1, false, 32);
+    });
     vpiHandle itr = vpi_iterate(vpi_get(vpiType, obj_h) == vpiArrayVar ? vpiReg : vpiElement, obj_h);
     while (vpiHandle reg_h = vpi_scan(itr)) {
         if (vpi_get(vpiType, reg_h) == vpiStructVar || vpi_get(vpiType, reg_h) == vpiEnumVar) {
@@ -3340,6 +3345,11 @@ void UhdmAst::process_array_net(const UHDM::BaseClass *object)
         vpi_release_handle(net_h);
     }
     vpi_release_handle(itr);
+    iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
+        std::string name = vpi_get_str(vpiName, h);
+        if (name == "keep")
+            current_node->attributes[ID::keep] = AST::AstNode::mkconst_int(1, false, 32);
+    });
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
     add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
 }
@@ -5034,6 +5044,11 @@ void UhdmAst::process_net()
             copy_packed_unpacked_attribute(node, current_node);
         }
         delete node;
+    });
+    iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
+        std::string name = vpi_get_str(vpiName, h);
+        if (name == "keep")
+            current_node->attributes[ID::keep] = AST::AstNode::mkconst_int(1, false, 32);
     });
 }
 
