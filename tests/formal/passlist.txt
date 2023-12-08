@@ -115,6 +115,8 @@ simple:ImportedParameter/top.sv
 simple:ImportParametrizedTypeAndDeclareParamWithTheSameName/top.sv
 simple:ImportTypeOfPort/top.sv
 simple:IndexedPartSelect/top.sv
+simple:IndexedPartSelectPos/dut.sv
+simple:IndexedPartSelectNeg/dut.sv
 simple:IndexedPartSelectInFor/top.sv
 simple:IndexedPartSelectInUniqueCase/top.sv
 simple:IndexedPartSelectOfMember/top.sv

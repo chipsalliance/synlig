@@ -4193,9 +4193,8 @@ void UhdmAst::process_part_select()
 void UhdmAst::process_indexed_part_select()
 {
     current_node = make_ast_node(AST::AST_IDENTIFIER);
-    // TODO: check if there are other types, for now only handle 1 and 2 (+: and -:)
-    auto indexed_part_select_type = vpi_get(vpiIndexedPartSelectType, obj_h) == 1 ? AST::AST_ADD : AST::AST_SUB;
     AST::AstNode *range_node = make_node(AST::AST_RANGE);
+    /*
     visit_one_to_one({vpiBaseExpr}, obj_h, [&](AST::AstNode *node) { range_node->children.push_back(node); });
     visit_one_to_one({vpiWidthExpr}, obj_h, [&](AST::AstNode *node) {
         AST::AstNode *right_range_node = make_node(indexed_part_select_type);
@@ -4209,6 +4208,51 @@ void UhdmAst::process_indexed_part_select()
     if (indexed_part_select_type == AST::AST_ADD) {
         std::reverse(range_node->children.begin(), range_node->children.end());
     }
+    */
+
+    AST::AstNode *width = nullptr;
+    visit_one_to_one({vpiWidthExpr}, obj_h, [&](AST::AstNode *node) { width = node; });
+
+    if (vpi_get(vpiIndexedPartSelectType, obj_h) == vpiPosIndexed) {
+        visit_one_to_one({vpiBaseExpr}, obj_h, [&](AST::AstNode *node) {
+            AST::AstNode *left_range_node = make_node(AST::AST_SUB);
+            AST::AstNode *add = make_node(AST::AST_ADD);
+            left_range_node->children.push_back(add);
+            left_range_node->children.push_back(AST::AstNode::mkconst_int(1, false, 32));
+            AST::AstNode *self_size = make_node(AST::AST_SELFSZ);
+            add->children.push_back(self_size);
+            add->children.push_back(width);
+            self_size->children.push_back(node);
+            range_node->children.push_back(left_range_node);
+
+            AST::AstNode *right_range_node = make_node(AST::AST_ADD);
+            self_size = make_node(AST::AST_SELFSZ);
+            self_size->children.push_back(node->clone());
+            right_range_node->children.push_back(self_size);
+            right_range_node->children.push_back(AST::AstNode::mkconst_int(0, false, 32));
+            range_node->children.push_back(right_range_node);
+        });
+    } else {
+        visit_one_to_one({vpiBaseExpr}, obj_h, [&](AST::AstNode *node) {
+            AST::AstNode *left_range_node = make_node(AST::AST_ADD);
+            AST::AstNode *self_size = make_node(AST::AST_SELFSZ);
+            self_size->children.push_back(node);
+            left_range_node->children.push_back(self_size);
+            left_range_node->children.push_back(AST::AstNode::mkconst_int(0, false, 32));
+            range_node->children.push_back(left_range_node);
+
+            AST::AstNode *right_range_node = make_node(AST::AST_SUB);
+            AST::AstNode *add = make_node(AST::AST_ADD);
+            right_range_node->children.push_back(add);
+            right_range_node->children.push_back(width);
+            self_size = make_node(AST::AST_SELFSZ);
+            add->children.push_back(self_size);
+            self_size->children.push_back(node->clone());
+            add->children.push_back(AST::AstNode::mkconst_int(1, false, 32));
+            range_node->children.push_back(right_range_node);
+        });
+    }
+
     current_node->children.push_back(range_node);
 }
 
