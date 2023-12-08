@@ -640,6 +640,7 @@ yosys:memories/implicit_en.v
 yosys:memories/issue00710.v
 yosys:memories/no_implicit_en.v
 yosys:memories/read_arst.v
+yosys:memories/read_two_mux.v
 yosys:memories/shared_ports.v
 yosys:memories/trans_addr_enable.v
 yosys:memories/trans_sdp.v
