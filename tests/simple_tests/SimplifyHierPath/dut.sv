@@ -5,6 +5,7 @@ module module_scope_Example(o1);
 endmodule
 
 module dut(
+   input logic clk,
    output wire [31:0] a1
 );
    module_scope_Example #(.v1(11)) a  (a1);

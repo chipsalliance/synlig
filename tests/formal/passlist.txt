@@ -734,7 +734,6 @@ yosys:simple/multiplier.v
 yosys:simple/named_genblk.v
 yosys:simple/nested_genblk_resolve.v
 yosys:simple/omsp_dbg_uart.v
-yosys:simple/operators.v
 yosys:simple/param_attr.v
 yosys:simple/realexpr.v
 yosys:simple/repwhile.v
