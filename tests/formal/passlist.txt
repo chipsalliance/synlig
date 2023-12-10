@@ -11,7 +11,6 @@ simple:AnonymousEnum/top.sv
 simple:AnonymousUnion/top.sv
 simple:ArithShiftTernary/top.sv
 simple:ArraySize/top.sv
-simple:SimplifyHierPath/dut.sv
 simple:AssignArraySelPlus/top.sv
 simple:AssignBitsCallToSubmoduleParameter/top.sv
 simple:AssignBitSelectPartSelect/top.sv
@@ -230,6 +229,7 @@ simple:SignedWire/top.sv
 simple:simple_unary_op_minus/simple_unary_op_minus.sv
 simple:simple_unary_op_not_log/simple_unary_op_not_log.sv
 simple:simple_unary_op_plus/simple_unary_op_plus.sv
+simple:SimplifyHierPath/dut.sv
 simple:SizeOfGeneratedWireArray/top.sv
 simple:SizeOfUnsignedParameter/top.sv
 simple:StreamOp/dut.sv
