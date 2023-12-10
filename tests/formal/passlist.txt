@@ -11,6 +11,7 @@ simple:AnonymousEnum/top.sv
 simple:AnonymousUnion/top.sv
 simple:ArithShiftTernary/top.sv
 simple:ArraySize/top.sv
+simple:SimplifyHierPath/dut.sv
 simple:AssignArraySelPlus/top.sv
 simple:AssignBitsCallToSubmoduleParameter/top.sv
 simple:AssignBitSelectPartSelect/top.sv
