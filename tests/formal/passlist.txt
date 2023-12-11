@@ -249,9 +249,12 @@ simple:SubmoduleInGenScopeWithGenScopeParametrizedByParameterFromTopModule/top.s
 simple:SumOfParameters/top.sv
 simple:SumOfParametersInNestedForLoops/top.sv
 simple:synthesis/dff.sv
+simple:TypedefAlias/dut.v
+simple:TypedefAliasInPackage/top.sv
 simple:TypedefedFunctionArgument/top.sv
 simple:TypedefedFunctionReturn/top.sv
 simple:TypedefedRangedFunctionArgument/top.sv
+simple:TypedefEnum/top.sv
 simple:TypedefInModule/top.sv
 simple:TypedefInModulePort/top.sv
 simple:TypedefOnFileLevel/top.sv
@@ -276,6 +279,7 @@ simple:UnsizedConstant/top.sv
 simple:UnsizedConstantsParameterParsing/top.sv
 simple:UnsizedConstantsParsing/top.sv
 simple:VarInFor/top.sv
+simple:VarPassedTo2Submodules/top.sv
 simple:VarSelect/top.sv
 simple:WireNotStartingFromZero/top.sv
 simple:xor_assignment/top.sv
