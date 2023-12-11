@@ -730,6 +730,7 @@ yosys:simple/matching_end_labels.sv
 yosys:simple/mem2reg_bounds_tern.v
 yosys:simple/memwr_port_connection.sv
 yosys:simple/mem_arst.v
+yosys:simple/module_scope.v
 yosys:simple/module_scope_case.v
 yosys:simple/multiplier.v
 yosys:simple/named_genblk.v
