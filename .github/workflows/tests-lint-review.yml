@@ -8,6 +8,18 @@ on:
 jobs:
   lint_review:
     runs-on: ubuntu-latest
+
+    # This needs to be configured more in detail: test-cases are typically
+    # coming from various external sources or are intentionally not
+    # adhering to lint rules as they expose a particular problem.
+    # Also, tests are typically named dut.sv, which typically does not
+    # match the module inside.
+    # It is probably more worthwhile to apply lint rules offline than
+    # commenting on pull requests which mostly results in non-actionable
+    # suggestions, increasing noise. Until the details are figured out:
+    # disable this for now.
+    if: false
+
     steps:
       - uses: actions/checkout@v3
 
