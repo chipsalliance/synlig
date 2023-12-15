@@ -281,8 +281,10 @@ if(VENDORED_YOSYS)
   add_dependencies(capnp yosys)
 endif()
 
-add_dependencies(synlig surelog)
-add_dependencies(synlig uhdm)
+if(NOT SYNLIG_USE_HOST_SURELOG)
+  add_dependencies(synlig surelog)
+  add_dependencies(synlig uhdm)
+endif()
 target_link_libraries(synlig PUBLIC ${UHDM_LIBRARY})
 target_link_libraries(synlig PUBLIC ${SURELOG_LIBRARY})
 
