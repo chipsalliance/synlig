@@ -128,7 +128,7 @@ set(WITH_STATIC_CRT
     CACHE BOOL "Use Static CRT")
 
 if(SYNLIG_USE_HOST_SURELOG)
-  find_package(SURELOG REQUIRED)
+  find_package(Surelog REQUIRED)
   find_package(UHDM REQUIRED)
   find_package(CapnProto)
   set(UHDM_LIBRARY uhdm::uhdm)
