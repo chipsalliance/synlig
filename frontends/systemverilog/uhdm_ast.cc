@@ -2319,7 +2319,7 @@ void UhdmAst::process_module()
             auto old_top = shared.current_top_node;
             shared.current_top_node = current_node;
             visit_one_to_many({vpiModule, vpiInterface, vpiParameter, vpiParamAssign, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray,
-                               vpiContAssign, vpiVariables},
+                               vpiContAssign, vpiProcess, vpiVariables},
                               obj_h, [&](AST::AstNode *node) {
                                   if (node) {
                                       if (get_attribute(node, attr_id::is_type_parameter)) {
@@ -2359,7 +2359,7 @@ void UhdmAst::process_module()
                     move_type_to_new_typedef(current_node, node);
                 }
             });
-            visit_one_to_many({vpiModule, vpiParameter, vpiParamAssign, vpiNet, vpiArrayNet, vpiProcess}, obj_h, [&](AST::AstNode *node) {
+            visit_one_to_many({vpiModule, vpiParameter, vpiParamAssign, vpiNet, vpiArrayNet, /*vpiProcess*/}, obj_h, [&](AST::AstNode *node) {
                 if (node) {
                     if (get_attribute(node, attr_id::is_type_parameter)) {
                         // Don't process type parameters.
@@ -2504,7 +2504,7 @@ void UhdmAst::process_module()
         current_node->children.insert(current_node->children.begin(), typeNode);
         auto old_top = shared.current_top_node;
         shared.current_top_node = module_node;
-        visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiTaskFunc}, obj_h,
+        visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiProcess, vpiTaskFunc}, obj_h,
                           [&](AST::AstNode *node) {
                               if (node) {
                                   add_or_replace_child(module_node, node);
