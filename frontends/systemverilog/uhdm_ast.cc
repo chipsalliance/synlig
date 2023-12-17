@@ -2318,18 +2318,38 @@ void UhdmAst::process_module()
             current_node->children.erase(process_it, current_node->children.end());
             auto old_top = shared.current_top_node;
             shared.current_top_node = current_node;
-            visit_one_to_many({vpiModule, vpiInterface, vpiParameter, vpiParamAssign, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray,
-                               vpiContAssign, vpiProcess, vpiVariables},
-                              obj_h, [&](AST::AstNode *node) {
-                                  if (node) {
-                                      if (get_attribute(node, attr_id::is_type_parameter)) {
-                                          // Don't process type parameters.
-                                          delete node;
-                                          return;
-                                      }
-                                      add_or_replace_child(current_node, node);
-                                  }
-                              });
+            visit_one_to_many(
+              {vpiModule, vpiInterface, vpiParameter, vpiParamAssign, vpiPort, vpiNet, vpiArrayNet, vpiTaskFunc, vpiGenScopeArray, vpiContAssign},
+              obj_h, [&](AST::AstNode *node) {
+                  if (node) {
+                      if (get_attribute(node, attr_id::is_type_parameter)) {
+                          // Don't process type parameters.
+                          delete node;
+                          return;
+                      }
+                      add_or_replace_child(current_node, node);
+                  }
+              });
+            visit_one_to_many({vpiProcess}, obj_h, [&](AST::AstNode *node) {
+                if (node && (node->type == AST::AST_ALWAYS)) {
+                    if (get_attribute(node, attr_id::is_type_parameter)) {
+                        // Don't process type parameters.
+                        delete node;
+                        return;
+                    }
+                    add_or_replace_child(current_node, node);
+                }
+            });
+            visit_one_to_many({vpiVariables}, obj_h, [&](AST::AstNode *node) {
+                if (node) {
+                    if (get_attribute(node, attr_id::is_type_parameter)) {
+                        // Don't process type parameters.
+                        delete node;
+                        return;
+                    }
+                    add_or_replace_child(current_node, node);
+                }
+            });
             // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
             visit_one_to_many({vpiPrimitive}, obj_h, [&](AST::AstNode *node) {
                 if (node) {
@@ -2359,8 +2379,22 @@ void UhdmAst::process_module()
                     move_type_to_new_typedef(current_node, node);
                 }
             });
-            visit_one_to_many({vpiModule, vpiParameter, vpiParamAssign, vpiNet, vpiArrayNet, /*vpiProcess*/}, obj_h, [&](AST::AstNode *node) {
+            visit_one_to_many({vpiModule, vpiParameter, vpiParamAssign, vpiNet, vpiArrayNet}, obj_h, [&](AST::AstNode *node) {
                 if (node) {
+                    if (get_attribute(node, attr_id::is_type_parameter)) {
+                        // Don't process type parameters.
+                        delete node;
+                        return;
+                    }
+                    if ((node->type == AST::AST_ASSIGN && node->children.size() < 2)) {
+                        delete node;
+                        return;
+                    }
+                    add_or_replace_child(current_node, node);
+                }
+            });
+            visit_one_to_many({vpiProcess}, obj_h, [&](AST::AstNode *node) {
+                if (node && (node->type == AST::AST_INITIAL)) {
                     if (get_attribute(node, attr_id::is_type_parameter)) {
                         // Don't process type parameters.
                         delete node;
@@ -2504,13 +2538,22 @@ void UhdmAst::process_module()
         current_node->children.insert(current_node->children.begin(), typeNode);
         auto old_top = shared.current_top_node;
         shared.current_top_node = module_node;
-        visit_one_to_many(
-          {vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign, vpiProcess, vpiTaskFunc}, obj_h,
-          [&](AST::AstNode *node) {
-              if (node) {
-                  add_or_replace_child(module_node, node);
-              }
-          });
+        visit_one_to_many({vpiVariables, vpiNet, vpiArrayNet, vpiInterface, vpiModule, vpiPort, vpiGenScopeArray, vpiContAssign}, obj_h,
+                          [&](AST::AstNode *node) {
+                              if (node) {
+                                  add_or_replace_child(module_node, node);
+                              }
+                          });
+        visit_one_to_many({vpiProcess}, obj_h, [&](AST::AstNode *node) {
+            if (node && node->type == AST::AST_ALWAYS) {
+                add_or_replace_child(module_node, node);
+            }
+        });
+        visit_one_to_many({vpiTaskFunc}, obj_h, [&](AST::AstNode *node) {
+            if (node) {
+                add_or_replace_child(module_node, node);
+            }
+        });
         make_cell(obj_h, current_node, module_node);
         shared.current_top_node = old_top;
         set_attribute(module_node, attr_id::is_elaborated_module, AST::AstNode::mkconst_int(1, true));
