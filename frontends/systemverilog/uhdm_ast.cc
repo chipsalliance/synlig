@@ -4086,6 +4086,12 @@ void UhdmAst::process_list_op()
         visit_one_to_many({vpiOperand}, obj_h, [&](AST::AstNode *node) {
             // add directly to process/cond node
             if (node) {
+                if (node->type == AST::AST_IDENTIFIER) {
+                    // No edge (pos/neg) sensitivity list
+                    AST::AstNode *edge = new AST::AstNode(AST::AST_EDGE);
+                    edge->children.push_back(node);
+                    node = edge;
+                }
                 parent_node->children.push_back(node);
             }
         });
