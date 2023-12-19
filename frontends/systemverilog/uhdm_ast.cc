@@ -4341,16 +4341,18 @@ void UhdmAst::process_for()
         loop->children.push_back(node);
     });
     visit_one_to_one({vpiStmt}, obj_h, [&](AST::AstNode *node) {
-        if (node->type != AST::AST_BLOCK) {
-            auto *statements = make_ast_node(AST::AST_BLOCK);
-            statements->str = current_node->str; // Needed in simplify step
-            statements->children.push_back(node);
-            loop->children.push_back(statements);
-        } else {
-            if (node->str == "") {
-                node->str = loop->str;
+        if (node) {
+            if (node->type != AST::AST_BLOCK) {
+                auto *statements = make_ast_node(AST::AST_BLOCK);
+                statements->str = current_node->str; // Needed in simplify step
+                statements->children.push_back(node);
+                loop->children.push_back(statements);
+            } else {
+                if (node->str == "") {
+                    node->str = loop->str;
+                }
+                loop->children.push_back(node);
             }
-            loop->children.push_back(node);
         }
     });
     current_node->children.push_back(loop);
