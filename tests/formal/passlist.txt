@@ -226,6 +226,7 @@ simple:SelfPartSelectInBitSelect/top.sv
 simple:SelfSelectsInBitSelectAfterBitSelect/top.sv
 simple:serv-minimal/src/serv_1.1.0/rtl/serv_ctrl.v
 simple:ShiftTernary/top.sv
+simple:SignedInteger/dut.sv
 simple:SignedWire/top.sv
 simple:simple_unary_op_minus/simple_unary_op_minus.sv
 simple:simple_unary_op_not_log/simple_unary_op_not_log.sv
