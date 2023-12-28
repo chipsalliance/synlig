@@ -438,6 +438,7 @@ sv2v:core/string.v
 sv2v:core/string_cast.sv
 sv2v:core/string_type.sv
 sv2v:core/string_type.v
+sv2v:core/struct_array.sv
 sv2v:core/struct_array.v
 sv2v:core/struct_array_field.v
 sv2v:core/struct_array_inline.sv
