@@ -632,6 +632,7 @@ yosys:bind/cell_list.sv
 yosys:bind/inst_list.sv
 yosys:errors/syntax_err09.v
 yosys:errors/syntax_err13.v
+yosys:fmt/always_comb.v
 yosys:hana/test_parser.v
 yosys:hana/test_simulation_and.v
 yosys:hana/test_simulation_decoder.v
