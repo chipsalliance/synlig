@@ -25,7 +25,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
-set(INSTALL_DIR ${PROJECT_SOURCE_DIR}/install)
+set(INSTALL_DIR ${PROJECT_SOURCE_DIR}/out/current)
 
 option(
   WITH_LIBCXX
@@ -128,7 +128,7 @@ set(WITH_STATIC_CRT
     CACHE BOOL "Use Static CRT")
 
 if(SYNLIG_USE_HOST_SURELOG)
-  find_package(SURELOG REQUIRED)
+  find_package(Surelog REQUIRED)
   find_package(UHDM REQUIRED)
   find_package(CapnProto)
   set(UHDM_LIBRARY uhdm::uhdm)
@@ -281,8 +281,10 @@ if(VENDORED_YOSYS)
   add_dependencies(capnp yosys)
 endif()
 
-add_dependencies(synlig surelog)
-add_dependencies(synlig uhdm)
+if(NOT SYNLIG_USE_HOST_SURELOG)
+  add_dependencies(synlig surelog)
+  add_dependencies(synlig uhdm)
+endif()
 target_link_libraries(synlig PUBLIC ${UHDM_LIBRARY})
 target_link_libraries(synlig PUBLIC ${SURELOG_LIBRARY})
 
@@ -316,21 +318,5 @@ target_include_directories(synlig PUBLIC $<BUILD_INTERFACE:${JSON_INCLUDE_DIR}>
 target_include_directories(synlig PUBLIC $<BUILD_INTERFACE:${YOSYS_INCLUDE_DIR}>
                                          $<INSTALL_INTERFACE:include>)
 
-include(GNUInstallDirs)
-
-# Generate cmake config files for reuse by downstream packages
-include(CMakePackageConfigHelpers)
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/SynligConfig.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/SynligConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Synlig)
-
-# install the configuration file
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Synlig.pc DESTINATION lib/pkgconfig)
-
-add_custom_target(
-  synlig_link_target ALL
-  COMMAND
-    ${CMAKE_COMMAND} -E create_symlink
-    ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
-    ${PROJECT_SOURCE_DIR}/compile_commands.json)
+# Install library using normal shell script
+install(CODE "execute_process(COMMAND ${CMAKE_SOURCE_DIR}/install_plugin.sh)")
