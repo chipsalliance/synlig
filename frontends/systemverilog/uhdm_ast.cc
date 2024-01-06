@@ -745,8 +745,13 @@ static void convert_packed_unpacked_range(AST::AstNode *wire_node)
             return true;
         if (unpacked_ranges.size() > 1)
             return true;
-        if (wire_node->attributes.count(ID::wiretype) && (!wire_node->attributes.count(UhdmAst::unpacked_ranges()))) {
-            return true;
+        if (wire_node->attributes.count(UhdmAst::packed_ranges()) && wire_node->attributes[UhdmAst::packed_ranges()]->children.size() &&
+            wire_node->attributes.count(UhdmAst::unpacked_ranges()) && wire_node->attributes[UhdmAst::unpacked_ranges()]->children.size()) {
+            // Most likely a memory
+        } else {
+            if (wire_node->attributes.count(ID::wiretype)) {
+                return true;
+            }
         }
         if (wire_node->type == AST::AST_PARAMETER)
             return true;
