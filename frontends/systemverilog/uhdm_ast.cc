@@ -745,8 +745,9 @@ static void convert_packed_unpacked_range(AST::AstNode *wire_node)
             return true;
         if (unpacked_ranges.size() > 1)
             return true;
-        if (wire_node->attributes.count(ID::wiretype))
+        if (wire_node->attributes.count(ID::wiretype) && (!wire_node->attributes.count(UhdmAst::unpacked_ranges()))) {
             return true;
+        }
         if (wire_node->type == AST::AST_PARAMETER)
             return true;
         if (wire_node->type == AST::AST_LOCALPARAM)

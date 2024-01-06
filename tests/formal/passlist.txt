@@ -769,6 +769,7 @@ yosys:svinterfaces/svinterface_at_top_ref.v
 yosys:svtypes/logic_rom.sv
 yosys:svtypes/multirange_array.sv
 yosys:svtypes/typedef_memory.sv
+yosys:svtypes/typedef_memory_2.sv
 yosys:techmap/mem_simple_4x1_cells.v
 yosys:techmap/mem_simple_4x1_uut.v
 yosys:various/async.v
