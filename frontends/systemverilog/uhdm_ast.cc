@@ -2970,8 +2970,8 @@ void UhdmAst::process_array_var()
     visit_one_to_one({vpiTypespec}, obj_h, [&](AST::AstNode *node) {
         if (node->str.empty()) {
             // anonymous typespec, move the children to variable
-            //current_node->type = node->type;
-            //current_node->children = std::move(node->children);
+            // current_node->type = node->type;
+            // current_node->children = std::move(node->children);
             copy_packed_unpacked_attribute(node, current_node);
         } else {
             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
