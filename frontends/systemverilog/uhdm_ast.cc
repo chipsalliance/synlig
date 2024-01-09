@@ -745,9 +745,8 @@ static void convert_packed_unpacked_range(AST::AstNode *wire_node)
             return true;
         if (unpacked_ranges.size() > 1)
             return true;
-        if (wire_node->attributes.count(ID::wiretype)) {
+        if (wire_node->attributes.count(ID::wiretype))
             return true;
-        }
         if (wire_node->type == AST::AST_PARAMETER)
             return true;
         if (wire_node->type == AST::AST_LOCALPARAM)
@@ -2974,9 +2973,11 @@ void UhdmAst::process_array_var()
             // current_node->children = std::move(node->children);
             copy_packed_unpacked_attribute(node, current_node);
         } else {
+
             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
             wiretype_node->str = node->str;
-            // wiretype needs to be 1st node
+            // current_node->children.push_back(wiretype_node);
+            //  wiretype needs to be 1st node
             current_node->children.insert(current_node->children.begin(), wiretype_node);
             current_node->is_custom_type = true;
         }
