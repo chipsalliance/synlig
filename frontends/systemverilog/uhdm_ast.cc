@@ -2969,12 +2969,12 @@ void UhdmAst::process_array_var()
     visit_one_to_one({vpiTypespec}, obj_h, [&](AST::AstNode *node) {
         if (node->str.empty()) {
             // anonymous typespec, move the children to variable
-            current_node->type = node->type;
-            current_node->children = std::move(node->children);
+            copy_packed_unpacked_attribute(node, current_node);
         } else {
             auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
             wiretype_node->str = node->str;
-            current_node->children.push_back(wiretype_node);
+            //  wiretype needs to be 1st node
+            current_node->children.insert(current_node->children.begin(), wiretype_node);
             current_node->is_custom_type = true;
         }
         delete node;
@@ -3007,6 +3007,11 @@ void UhdmAst::process_array_var()
                     // anonymous typespec, move the children to variable
                     current_node->type = node->type;
                     current_node->children = std::move(node->children);
+                    if (node->attributes.count(UhdmAst::packed_ranges())) {
+                        for (auto r : node->attributes[UhdmAst::packed_ranges()]->children) {
+                            packed_ranges.push_back(r->clone());
+                        }
+                    }
                 } else {
                     auto wiretype_node = new AST::AstNode(AST::AST_WIRETYPE);
                     wiretype_node->str = node->str;
