@@ -17,6 +17,8 @@
  *
  */
 
+#include <dlfcn.h>
+
 #include "uhdm_common_frontend.h"
 #include "synlig_edif.h"
 
@@ -30,6 +32,9 @@ static void set_line_num(int) {}
 
 /* Stub for AST::process */
 static int get_line_num(void) { return 1; }
+
+typedef int (*t_newproc)(RTLIL::Design*, AST::AstNode*, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool);
+typedef int (*t_oldproc)(RTLIL::Design*, AST::AstNode*, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool);
 
 UhdmCommonFrontend::UhdmCommonFrontend(std::string name, std::string short_help) : Frontend(name, short_help) { register_synlig_edif_backend(); }
 
@@ -151,7 +156,11 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
     AST::AstNode *current_ast = parse(filename);
 
     if (current_ast) {
-        AST::process(design, current_ast,
+        t_newproc newproc;
+        newproc = (t_newproc) dlsym(RTLD_DEFAULT, "_ZN5Yosys3AST7processEPNS_5RTLIL6DesignEPNS0_7AstNodeEbbbbbbbbbbbbbbbbbbbbb");
+        if (newproc != nullptr) {
+            log_header(design, "!!!!!!!!!!!!!!!!! Running with new Yosys\n");
+            newproc(design, current_ast,
                      false,               // nodisplay (came with Yosys 0.37)
                      dump_ast1,           //
                      dump_ast2,           //
@@ -173,7 +182,42 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
                      false,               // overwrite
                      defer,               // defer
                      default_nettype_wire // autowire
-        );
+            );
+            delete current_ast;
+            return;
+        }
+
+        t_oldproc oldproc;
+        oldproc = (t_oldproc) dlsym(RTLD_DEFAULT, "_ZN5Yosys3AST7processEPNS_5RTLIL6DesignEPNS0_7AstNodeEbbbbbbbbbbbbbbbbbbbb");
+        if (oldproc != nullptr) {
+            log_header(design, "!!!!!!!!!!!!!!!!! Running with old Yosys\n");
+            oldproc(design, current_ast,
+                     dump_ast1,           //
+                     dump_ast2,           //
+                     no_dump_ptr,         //
+                     dump_vlog1,          //
+                     dump_vlog2,          //
+                     dump_rtlil,          //
+                     false,               // nolatches
+                     false,               // nomeminit
+                     false,               // nomem2reg
+                     false,               // mem2reg
+                     false,               // noblackbox
+                     false,               // lib
+                     false,               // nowb
+                     false,               // noopt
+                     false,               // icells
+                     false,               // pwires
+                     dont_redefine,       // nooverwrite
+                     false,               // overwrite
+                     defer,               // defer
+                     default_nettype_wire // autowire
+            );
+            delete current_ast;
+            return;
+        }
+
+        log_header(design, "No AST::process function found, possibly another change in mainline yosys!");
         delete current_ast;
     }
 }
