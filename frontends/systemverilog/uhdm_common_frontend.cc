@@ -151,8 +151,29 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
     AST::AstNode *current_ast = parse(filename);
 
     if (current_ast) {
-        AST::process(design, current_ast, dump_ast1, dump_ast2, no_dump_ptr, dump_vlog1, dump_vlog2, dump_rtlil, false, false, false, false, false,
-                     false, false, false, false, false, dont_redefine, false, defer, default_nettype_wire);
+        AST::process(design, current_ast,
+                     false,               // nodisplay (came with Yosys 0.37)
+                     dump_ast1,           //
+                     dump_ast2,           //
+                     no_dump_ptr,         //
+                     dump_vlog1,          //
+                     dump_vlog2,          //
+                     dump_rtlil,          //
+                     false,               // nolatches
+                     false,               // nomeminit
+                     false,               // nomem2reg
+                     false,               // mem2reg
+                     false,               // noblackbox
+                     false,               // lib
+                     false,               // nowb
+                     false,               // noopt
+                     false,               // icells
+                     false,               // pwires
+                     dont_redefine,       // nooverwrite
+                     false,               // overwrite
+                     defer,               // defer
+                     default_nettype_wire // autowire
+        );
         delete current_ast;
     }
 }
