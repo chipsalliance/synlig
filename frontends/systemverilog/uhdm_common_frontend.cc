@@ -20,6 +20,20 @@
 #include "uhdm_common_frontend.h"
 #include "synlig_edif.h"
 
+#ifdef __linux__
+namespace Yosys
+{
+using AST::AstNode;
+using RTLIL::Design;
+
+namespace AST
+{
+extern void process(Design *, AstNode *, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool,
+                    bool, bool);
+} // namespace AST
+} // namespace Yosys
+#endif
+
 namespace systemverilog_plugin
 {
 
@@ -151,8 +165,8 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
     AST::AstNode *current_ast = parse(filename);
 
     if (current_ast) {
-        AST::process(design, current_ast, dump_ast1, dump_ast2, no_dump_ptr, dump_vlog1, dump_vlog2, dump_rtlil, false, false, false, false, false,
-                     false, false, false, false, false, dont_redefine, false, defer, default_nettype_wire);
+        Yosys::AST::process(design, current_ast, dump_ast1, dump_ast2, no_dump_ptr, dump_vlog1, dump_vlog2, dump_rtlil, false, false, false, false,
+                            false, false, false, false, false, false, dont_redefine, false, defer, default_nettype_wire);
         delete current_ast;
     }
 }
