@@ -159,14 +159,25 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
     AST::set_line_num = &set_line_num;
     AST::get_line_num = &get_line_num;
 
-    bool dont_redefine = false;
-    bool default_nettype_wire = true;
-
     AST::AstNode *current_ast = parse(filename);
 
     if (current_ast) {
-        Yosys::AST::process(design, current_ast, dump_ast1, dump_ast2, no_dump_ptr, dump_vlog1, dump_vlog2, dump_rtlil, false, false, false, false,
-                            false, false, false, false, false, false, dont_redefine, false, defer, default_nettype_wire);
+        Yosys::AST::process(design, current_ast, dump_ast1, dump_ast2, no_dump_ptr, dump_vlog1, dump_vlog2, dump_rtlil,
+                            false, // nolatches
+                            false, // nomeminit
+                            false, // nomem2reg
+                            false, // mem2reg
+                            false, // noblackbox
+                            false, // lib
+                            false, // nowb
+                            false, // noopt
+                            false, // icells
+                            false, // pwires
+                            false, // nooverwrite
+                            false, // overwrite
+                            defer, // defer
+                            true   // autowire
+        );
         delete current_ast;
     }
 }
