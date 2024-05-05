@@ -1828,7 +1828,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                 if (item_node->type == Yosys::AST::AST_STRUCT_ITEM || item_node->type == Yosys::AST::AST_STRUCT ||
                     item_node->type == Yosys::AST::AST_UNION) {
                     // structure member, rewrite ast_node node to reference the packed struct wire
-                    auto range = Yosys::AST::make_struct_member_range(ast_node, item_node);
+                    auto range = ast_node->make_index_range(item_node);
                     newNode = new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER, range);
                     newNode->str = sname;
                     // save type and original number of dimensions for $size() etc.
