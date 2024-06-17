@@ -21,7 +21,7 @@ jobs:
   emit-workflow-info:
     name: Emit Workflow Info
     if: ${{ github.event_name == 'workflow_dispatch' }}
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: 'bitnami/git:2.40.1-debian-11-r4'
 
     steps:
@@ -32,7 +32,7 @@ jobs:
 
   style-check:
     name: Style check
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: bitnami/git:2.40.1-debian-11-r4
 
     steps:
@@ -57,7 +57,7 @@ jobs:
             build-binaries-args: ''
             debian-patch: false
     name: ${{ matrix.name }}
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
     env:
       CC: ${{ matrix.cc }}

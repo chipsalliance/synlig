@@ -20,7 +20,7 @@ jobs:
   emit-workflow-info:
     name: Emit Workflow Info
     if: ${{ github.event_name == 'workflow_dispatch' }}
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: 'bitnami/git:2.40.1-debian-11-r4'
 
     steps:
@@ -31,7 +31,7 @@ jobs:
 
   style-check:
     name: Style check
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: bitnami/git:2.40.1-debian-11-r4
 
     steps:
@@ -90,7 +90,7 @@ jobs:
             build-binaries-args: 'ENABLE_ASAN:=1'
             debian-patch: false
     name: ${{ matrix.name }}
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
     env:
       CC: ${{ matrix.cc }}
@@ -184,7 +184,7 @@ jobs:
 
   build-sv2v:
     name: Build sv2v
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: ubuntu:jammy
     env:
       DEBIAN_FRONTEND: noninteractive
@@ -369,7 +369,7 @@ jobs:
 
   test-readme-install-from-source:
     name: Test "Installation from source" from README
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:trixie
     env:
       DEBIAN_FRONTEND: noninteractive
@@ -405,7 +405,7 @@ jobs:
 
   test-plugin-with-bundled-yosys:
     name: Test With Bundled Yosys
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:trixie
     needs: build-binaries
     env:
