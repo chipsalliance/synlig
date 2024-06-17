@@ -8,7 +8,7 @@ env:
 
 jobs:
   diff-bsg-tests:
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: ubuntu:jammy
     name: Parse and diff BSG Micro Designs
     env:

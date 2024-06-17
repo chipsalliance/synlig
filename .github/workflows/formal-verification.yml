@@ -8,7 +8,7 @@ env:
 
 jobs:
   tests-formal-verification:
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: ubuntu:jammy
     strategy:
       matrix:
@@ -139,7 +139,7 @@ jobs:
     name: Passlist Check
     needs: tests-formal-verification
     if: ${{ !cancelled() }}
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: ubuntu:jammy-20221130
 
     steps:
