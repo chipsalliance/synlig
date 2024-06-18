@@ -370,7 +370,7 @@ jobs:
   test-release-with-packaged-yosys:
     name: Release Package Installation Test
     runs-on: [self-hosted, Linux, X64]
-    container: debian:trixie
+    container: debian:sid
     needs: release
     env:
       DEBIAN_FRONTEND: noninteractive
@@ -453,7 +453,7 @@ jobs:
   test-plugin-with-packaged-yosys:
     name: Test With Packaged Yosys
     runs-on: [self-hosted, Linux, X64]
-    container: debian:trixie
+    container: debian:sid
     needs: build-binaries
     env:
       DEBIAN_FRONTEND: noninteractive
