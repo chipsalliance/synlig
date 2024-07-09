@@ -1,19 +1,36 @@
 diff --git a/flow/Makefile b/flow/Makefile
-index 74fcf58c..91922b1b 100644
+index aa6f506..b9894e6 100644
 --- a/flow/Makefile
 +++ b/flow/Makefile
-@@ -419,8 +419,7 @@ $(WRAPPED_LIBS):
- # |____/ |_| |_| \_| |_| |_| |_|_____|____/___|____/
- #
- .PHONY: synth
--synth: versions.txt \
--       $(RESULTS_DIR)/1_synth.v \
-+synth: $(RESULTS_DIR)/1_synth.v \
-        $(RESULTS_DIR)/1_synth.sdc
+@@ -462,7 +462,7 @@ synth: $(RESULTS_DIR)/1_synth.v \
  
  .PHONY: synth-report
+ synth-report: synth
+-	$(UNSET_AND_MAKE) do-synth-report
++	$(MAKE) do-synth-report
+ 
+ .PHONY: do-synth-report
+ do-synth-report:
+@@ -504,7 +504,7 @@ do-yosys: yosys-dependencies
+ 	($(TIME_CMD) $(YOSYS_CMD) $(YOSYS_FLAGS) -c $(SYNTH_SCRIPT)) 2>&1 | tee $(LOG_DIR)/1_1_yosys.log
+ 
+ $(RESULTS_DIR)/1_1_yosys.v: $(SDC_FILE_CLOCK_PERIOD)
+-	$(UNSET_AND_MAKE) do-yosys
++	$(MAKE) do-yosys
+ 
+ $(RESULTS_DIR)/1_synth.sdc: $(SDC_FILE)
+ 	mkdir -p $(REPORTS_DIR)
+@@ -516,7 +516,7 @@ do-synth:
+ 	cp $(RESULTS_DIR)/1_1_yosys.v $(RESULTS_DIR)/1_synth.v
+ 
+ $(RESULTS_DIR)/1_synth.v: $(RESULTS_DIR)/1_1_yosys.v
+-	$(UNSET_AND_MAKE) do-synth
++	$(MAKE) do-synth
+ 
+ .PHONY: clean_synth
+ clean_synth:
 diff --git a/flow/scripts/synth_preamble.tcl b/flow/scripts/synth_preamble.tcl
-index ae082367..6bc9f486 100644
+index fdb3bbf..69a465d 100644
 --- a/flow/scripts/synth_preamble.tcl
 +++ b/flow/scripts/synth_preamble.tcl
 @@ -1,4 +1,6 @@
@@ -21,9 +38,9 @@ index ae082367..6bc9f486 100644
 +plugin -i systemverilog
 +yosys -import
  
- if {[info exist ::env(CACHED_NETLIST)]} {
-   exec cp $::env(CACHED_NETLIST) $::env(RESULTS_DIR)/1_1_yosys.v
-@@ -8,20 +10,8 @@ if {[info exist ::env(CACHED_NETLIST)]} {
+ source $::env(SCRIPTS_DIR)/util.tcl
+ 
+@@ -10,23 +12,7 @@ if {[info exist ::env(CACHED_NETLIST)]} {
    exit
  }
  
@@ -37,11 +54,14 @@ index ae082367..6bc9f486 100644
 -}
 -
 -
- # Read verilog files
+-# Read verilog files
 -foreach file $::env(VERILOG_FILES) {
 -  read_verilog -defer -sv {*}$vIdirsArgs $file
 -}
+-
+-
+-
 +read_uhdm $::env(BLACKPARROT_UHDM)
  
- 
- 
+ # Read standard cells and macros as blackbox inputs
+ # These libs have their dont_use properties set accordingly
