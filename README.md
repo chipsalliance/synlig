@@ -61,7 +61,7 @@ You need to add `out/bin` to your `PATH` variable to ensure you are using correc
 ``` bash
    git submodule sync
    git submodule update --init --recursive third_party/{surelog,yosys}
-   make install
+   make install -j$(nproc)
 ```
 
 To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
