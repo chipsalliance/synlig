@@ -1,7 +1,7 @@
 #!/bin/bash
 #-----------------------------------------------------------------------------
 # Initial setup of a container image. This is called at the beginning of
-# every job that uses Ubuntu container image.
+# every job that uses Debian container image.
 #-----------------------------------------------------------------------------
 set -e -u -o pipefail
 shopt -s nullglob
@@ -18,39 +18,31 @@ end_group() { printf '::endgroup::\n'; }
 (
 	# https://www.freedesktop.org/software/systemd/man/os-release.html
 	source /etc/os-release
-	if ! [[ "${ID:-}" == 'ubuntu'
-			&& ( "${VERSION_ID:-}" == '22.04' || "${VERSION_CODENAME:-}" == 'jammy' ) ]]; then
-		emit_error "Incompatible OS (expected Ubuntu 22.04 AKA jammy), please update `${THIS_FILE}`."
+	if ! [[ "${ID:-}" == 'debian'
+			&& ( "${VERSION_ID:-}" == '12' || "${VERSION_CODENAME:-}" == 'bookworm' ) ]]; then
+		emit_error "Incompatible OS (expected Debian 12 AKA bookworm), please update `${THIS_FILE}`."
 		exit 1
 	fi
 )
 
 #-----------------------------------------------------------------------------
-begin_group 'Use regional (US) Ubuntu repository mirrors'
+begin_group 'Use regional (US) Debian repository mirrors'
 #-----------------------------------------------------------------------------
 
-sources_list=/etc/apt/sources.list
+sources_list=/etc/apt/sources.list.d/debian.sources
 
 declare -ra mirrors=(
-	## US-central GCE mirror
-	http://us-central1.gce.archive.ubuntu.com/ubuntu/
 	## Official regional mirror
-	http://us.archive.ubuntu.com/ubuntu/
-
-	## Main official repository
-	http://archive.ubuntu.com/ubuntu/
+    http://ftp.us.debian.org/debian/
 )
 {
-	printf 'deb %s jammy main restricted universe multiverse\n' "${mirrors[@]}"
+    printf "Types: deb\n"
+    printf "URIs: %s\n" "${mirrors[@]}"
+    printf "Suites: bookworm bookworm-updates\n"
+    printf "Components: main\n"
+    printf "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n"
 	printf '\n'
-	printf 'deb %s jammy-updates main restricted universe multiverse\n' "${mirrors[@]}"
-	printf '\n'
-	printf 'deb %s jammy-backports main restricted universe multiverse\n' "${mirrors[@]}"
-	printf '\n'
-
-	# Official security updates repo
-	printf 'deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse\n'
-} | tee "$sources_list"
+} | tee -a "$sources_list"
 
 end_group
 
@@ -68,7 +60,7 @@ declare -rA ci_apt_conf=(
 	[Acquire::Retries]='3'
 	[Acquire::http::Timeout]='15'
 
-	# Disables ipv6 (ubuntu servers have problems with it, and it is used by default).
+	# Disables ipv6 (servers have problems with it, and it is used by default).
 	[Acquire::ForceIPv4]='true'
 )
 for k in "${!ci_apt_conf[@]}"; do
