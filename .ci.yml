@@ -1,0 +1,181 @@
+stages:
+  - install_requirements_and_build
+  - run_tests
+
+image: debian:bookworm
+
+install_requirements_and_build:
+  stage: install_requirements_and_build
+  variables:
+    SCALENODE_RAM: 8000
+    SCALENODE_CPU: 6
+  script:
+    - echo "Installing dependencies and build"
+    - apt update
+    - >
+        apt install -y gcc-11 g++-11 build-essential
+        cmake tclsh ant default-jre swig google-perftools
+        libgoogle-perftools-dev python3 python3-dev
+        python3-pip uuid uuid-dev tcl-dev flex libfl-dev
+        git pkg-config libreadline-dev bison libffi-dev
+        wget python3-orderedmultidict
+    - echo "Build yosys, surelog and synlig binaries"
+    - git submodule sync
+    - git submodule update --init --recursive third_party/{surelog,yosys}
+    - make install -j $(nproc)
+    - echo "Build sv2v binary"
+    - git submodule update --init --recursive --checkout third_party/sv2v
+    - wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
+    - make -j$(nproc) -C $PWD/third_party/sv2v
+    - cp third_party/sv2v/bin/sv2v out/release/bin/
+  artifacts:
+    paths:
+      - out/
+
+variables:
+  TESTS_TO_SKIP: >
+    synthesis serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass
+    Continue AnonymousUnion ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule
+    VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes
+    EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork
+    PatternInFunction ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication
+    VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment
+    SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember
+    ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation
+    StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter RealValue BitsCallOnParametetrizedTypeFromPackage
+    AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor NestedPatternPassedAsPort StreamOp
+    NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect
+    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction
+  DEPENDENCIES_FOR_TESTING: >
+    make libgoogle-perftools4 libgoogle-perftools-dev libreadline8 gcc-11
+    libtcl8.6 libffi-dev tcl-dev flex libfl-dev swig g++-11 build-essential
+    jq git python3 python3-dev python3-pip python3-orderedmultidict
+
+parsing_tests_read_uhdm:
+  stage: run_tests
+  variables:
+    PARSER: surelog
+    TARGET: uhdm/yosys/test-ast
+  dependencies: [install_requirements_and_build]
+  script:
+    - echo "Install dependencies"
+    - apt update
+    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - echo "Load submodules"
+    - git submodule sync
+    - git submodule update --init --recursive third_party/surelog
+    - echo "Start testing"
+    - ./.github/scripts/run_group_test.sh ./build/parsing/read-uhdm ./build/parsing/test-results-uhdm.log
+  artifacts:
+    paths:
+      - build/
+
+parsing_tests_read_systemverilog:
+  stage: run_tests
+  variables:
+    PARSER: yosys-plugin
+    TARGET: uhdm/yosys/test-ast
+  dependencies: [install_requirements_and_build]
+  script:
+    - echo "Install dependencies"
+    - apt update
+    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - echo "Load submodules"
+    - git submodule sync
+    - git submodule update --init --recursive third_party/surelog
+    - echo "Start testing"
+    - ./.github/scripts/run_group_test.sh ./build/parsing/read-systemverilog ./build/parsing/test-results-systemverilog.log
+  artifacts:
+    paths:
+      - build/
+
+formal_verification_simple_tests:
+  stage: run_tests
+  variables:
+    PARSER: yosys-plugin
+    SCALENODE_RAM: 8000
+    SCALENODE_CPU: 6
+    NAME: simple
+    DIR: ./tests/simple_tests
+  dependencies: [install_requirements_and_build]
+  script:
+    - echo "Install dependencies"
+    - apt update
+    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - echo "Start testing"
+    - export PATH="$PWD/out/current/bin:$PATH"
+    - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
+    - echo "Gather tests results"
+    - list_file="build/$NAME.performed_tests_list.txt"
+    - for result_json in build/tests/*/*/result.json; do
+    -   test_name=$(jq -r '.name' "${result_json}")
+    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
+    - done
+    - set -o pipefail
+    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+  artifacts:
+    paths:
+      - build/
+
+formal_verification_yosys_tests:
+  stage: run_tests
+  variables:
+    PARSER: yosys-plugin
+    SCALENODE_RAM: 8000
+    SCALENODE_CPU: 6
+    NAME: yosys
+    DIR: ./third_party/yosys/tests
+  dependencies: [install_requirements_and_build]
+  script:
+    - echo "Install dependencies"
+    - apt update
+    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - echo "Load submodules"
+    - git submodule sync
+    - git submodule update --init --recursive third_party/yosys
+    - echo "Start testing"
+    - export PATH="$PWD/out/current/bin:$PATH"
+    - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
+    - echo "Gather tests results"
+    - list_file="build/$NAME.performed_tests_list.txt"
+    - for result_json in build/tests/*/*/result.json; do
+    -   test_name=$(jq -r '.name' "${result_json}")
+    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
+    - done
+    - set -o pipefail
+    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+  artifacts:
+    paths:
+      - build/
+
+formal_verification_sv2v_tests:
+  stage: run_tests
+  variables:
+    PARSER: yosys-plugin
+    SCALENODE_RAM: 8000
+    SCALENODE_CPU: 6
+    NAME: sv2v
+    DIR: ./third_party/sv2v/test
+  dependencies: [install_requirements_and_build]
+  script:
+    - echo "Install dependencies"
+    - apt update
+    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - echo "Load submodules"
+    - git submodule sync
+    - git submodule update --init --recursive --checkout third_party/sv2v
+    - echo "Start testing"
+    - export PATH="$PWD/out/current/bin:$PATH"
+    - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
+    - echo "Gather tests results"
+    - list_file="build/$NAME.performed_tests_list.txt"
+    - for result_json in build/tests/*/*/result.json; do
+    -   test_name=$(jq -r '.name' "${result_json}")
+    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
+    - done
+    - set -o pipefail
+    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+  artifacts:
+    paths:
+      - build/
+
