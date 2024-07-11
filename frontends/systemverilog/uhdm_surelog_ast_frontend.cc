@@ -172,7 +172,9 @@ struct UhdmSurelogAstFrontend : public UhdmCommonFrontend {
         clp->setParse(true);
         clp->fullSVMode(true);
         clp->setCacheAllowed(true);
-        clp->setReportNonSynthesizable(true);
+        if (!this->shared.disable_synth) {
+            clp->setReportNonSynthesizable(true);
+        }
         if (this->shared.defer) {
             clp->setCompile(false);
             clp->setElaborate(false);

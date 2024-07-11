@@ -1,0 +1,15 @@
+diff --git a/hw/ip/prim/rtl/prim_util_memload.svh b/hw/ip/prim/rtl/prim_util_memload.svh
+index c5c808c..a1e4fc2 100644
+--- a/hw/ip/prim/rtl/prim_util_memload.svh
++++ b/hw/ip/prim/rtl/prim_util_memload.svh
+@@ -68,7 +68,9 @@
+ 
+ initial begin
+   if (MemInitFile != "") begin : gen_meminit
+-      $display("Initializing memory %m from file '%s'.", MemInitFile);
++      `ifdef VERILATOR
++          $display("Initializing memory %m from file '%s'.", MemInitFile);
++      `endif
+       $readmemh(MemInitFile, mem);
+   end
+ end

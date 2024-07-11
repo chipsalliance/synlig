@@ -1283,40 +1283,6 @@ static AST::AstNode *make_packed_struct_local(AST::AstNode *template_node, std::
     return wnode;
 }
 
-static void simplify_format_string(AST::AstNode *current_node)
-{
-    std::string sformat = current_node->children[0]->str;
-    std::string preformatted_string = "";
-    int next_arg = 1;
-    for (size_t i = 0; i < sformat.length(); i++) {
-        if (sformat[i] == '%') {
-            AST::AstNode *node_arg = current_node->children[next_arg];
-            char cformat = sformat[++i];
-            if (cformat == 'b' or cformat == 'B') {
-                simplify(node_arg, true, false, false, 1, -1, false, false);
-                if (node_arg->type != AST::AST_CONSTANT)
-                    log_file_error(current_node->filename, current_node->location.first_line,
-                                   "Failed to evaluate system task `%s' with non-constant argument.\n", current_node->str.c_str());
-
-                RTLIL::Const val = node_arg->bitsAsConst();
-                for (int j = val.size() - 1; j >= 0; j--) {
-                    // We add ACII value of 0 to convert number to character
-                    preformatted_string += ('0' + val[j]);
-                }
-                delete current_node->children[next_arg];
-                current_node->children.erase(current_node->children.begin() + next_arg);
-            } else {
-                next_arg++;
-                preformatted_string += std::string("%") + cformat;
-            }
-        } else {
-            preformatted_string += sformat[i];
-        }
-    }
-    delete current_node->children[0];
-    current_node->children[0] = AST::AstNode::mkconst_str(preformatted_string);
-}
-
 void resolve_children_reparent(AST::AstNode *current_node)
 {
     bool have_children_to_reparent = false;
@@ -1489,8 +1455,6 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
         }
         break;
     case AST::AST_TCALL:
-        if (current_node->str == "$display" || current_node->str == "$write")
-            simplify_format_string(current_node);
         break;
     case AST::AST_COND:
     case AST::AST_CONDX:
@@ -1530,6 +1494,12 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             current_node->children.push_back(result);
             delete_attribute(current_node, UhdmAst::low_high_bound());
         }
+        break;
+    case AST::AST_EQ:
+        if (current_node->children.size() != 2)
+            log_file_error(
+              current_node->filename, current_node->location.first_line,
+              "Equality operator demands two arguments, but got one; it might happen because synlig discards most non-synthesizable code\n");
         break;
     default:
         break;
@@ -4730,9 +4700,9 @@ void UhdmAst::process_sys_func_call()
 
     if (current_node->str == "\\$display" || current_node->str == "\\$write") {
         // According to standard, %h and %x mean the same, but %h is currently unsupported by mainline yosys
-        std::string replaced_string = std::regex_replace(current_node->children[0]->str, std::regex("%[h|H]"), "%x");
-        delete current_node->children[0];
-        current_node->children[0] = AST::AstNode::mkconst_str(replaced_string);
+        if (current_node->children[0]->type == AST::AST_CONSTANT && current_node->children[0]->is_string) {
+            current_node->children[0]->str = std::regex_replace(current_node->children[0]->str, std::regex("%[h|H]"), "%x");
+        }
     }
 
     std::string remove_backslash[] = {"\\$display", "\\$strobe",   "\\$write",    "\\$monitor", "\\$time",    "\\$finish",
