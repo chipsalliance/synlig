@@ -43,7 +43,9 @@ jobs:
           fetch-depth: 1
 
       - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+        run: |
+          ./.github/scripts/set-up-common-ubuntu-configuration.sh
+          ./.github/scripts/set-up-common-git-configuration.sh
 
       - name: Install dependencies
         run: |
@@ -140,7 +142,9 @@ jobs:
           fetch-depth: 1
 
       - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+        run: |
+          ./.github/scripts/set-up-common-ubuntu-configuration.sh
+          ./.github/scripts/set-up-common-git-configuration.sh
 
       - name: Install dependencies
         run: |
@@ -237,7 +241,9 @@ jobs:
           path: logs
 
       - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+        run: |
+          ./.github/scripts/set-up-common-ubuntu-configuration.sh
+          ./.github/scripts/set-up-common-git-configuration.sh
 
       - name: Install dependencies
         run: |
@@ -317,7 +323,9 @@ jobs:
           fetch-depth: 1
 
       - name: Set up common Ubuntu configuration
-        run: ./.github/scripts/set-up-common-ubuntu-configuration.sh
+        run: |
+          ./.github/scripts/set-up-common-ubuntu-configuration.sh
+          ./.github/scripts/set-up-common-git-configuration.sh
 
       - name: Download test results
         uses: /actions/download-artifact@v3
