@@ -79,6 +79,8 @@ sv2v:core/empty_args.v
 sv2v:core/empty_args.sv
 sv2v:core/nest_order.v
 sv2v:relong/case.sv
+yosys:simple/mem_arst.v
+yosys:sat/alu.v
 ########################################################################################
 # Type parameters in top modules cause the modules to be renamed
 # and handled incorrectly in verification scripts.
@@ -99,7 +101,6 @@ sv2v:error/typeof_atom_bit.sv
 # There's nothing to compare with the plugin in Formal Verification.
 # This test is non-synthesizable.
 sv2v:core/edge.v
-# Yosys fails with syntax error, unexpected TOK_ID. This test is non-synthesizable.
 sv2v:core/edge.sv
 # These tests timeout formal verification
 sv2v:core/interface_array_slice.sv
@@ -156,3 +157,15 @@ sv2v:lex/string_macro.v
 # currently most non-synthesizable code is discarded by the
 # plugin
 yosys:various/countbits.sv
+# This tests contains multiple top modules and only one is selected for formal verification.
+# Order in which the top modules are selected is not deterministic.
+yosys:proc/bug_1268.v
+yosys:various/pmux2shiftx.v
+yosys:arch/common/mux.v
+# This tests doesn't contain anything to perform equivalence check.
+simple:unary_op_plus/unary_op_plus.sv
+simple:unary_op_minus/unary_op_minus.sv
+simple:unary_op_not_log/unary_op_not_log.sv
+yosys:simple/func_recurse.v
+yosys:simple/const_fold_func.v
+yosys:simple/func_block.v
