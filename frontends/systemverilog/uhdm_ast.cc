@@ -904,27 +904,18 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
         std::swap(right, sub_dot->children[1]);
         delete sub_dot;
     }
-    
-    // TODO: Unroll that loop properly
-    std::vector<int> multirange_dimensions(current_struct_elem->dimensions.size() * 2);
-    size_t i = 0;
-    for (auto & dim: current_struct_elem->dimensions) {
-        multirange_dimensions[i++] = dim.range_right;
-        multirange_dimensions[i++] = dim.range_width;
-    }
 
     for (size_t i = 0; i < struct_ranges.size(); i++) {
         const auto *struct_range = struct_ranges[i];
-        auto const idx = (struct_ranges.size() - i) * 2 - 1;
-        auto const range_width_idx = idx;
-        auto const range_offset_idx = idx - 1;
+        auto idx = struct_ranges.size() - i - 1;
 
         int range_width = 0;
-        if (multirange_dimensions.empty()) {
+        if (current_struct_elem->dimensions.empty()) {
             range_width = 1;
-        } else if (multirange_dimensions.size() > range_width_idx) {
-            range_width = multirange_dimensions[range_width_idx];
-            const auto range_offset = multirange_dimensions[range_offset_idx];
+        } else if (current_struct_elem->dimensions.size() > idx) {
+            auto &dim = current_struct_elem->dimensions[idx];
+            range_width = dim.range_width;
+            const auto range_offset = dim.range_right;
             if (range_offset != 0) {
                 log_file_error(struct_range->filename, struct_range->location.first_line,
                                "Accessing ranges that do not start from 0 is not supported.");
@@ -939,7 +930,7 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
         if (current_struct_elem->type == AST::AST_STRUCT_ITEM) {
             // if we selecting range of struct item, just add this range
             // to our current select
-            if (multirange_dimensions.size() > 2 && struct_range->children.size() == 2) {
+            if (current_struct_elem->dimensions.size() > 1 && struct_range->children.size() == 2) {
                 if (i < (struct_ranges.size() - 1))
                     log_error(
                       "Selecting a range of positions from a multirange is not supported in the dot notation, unless it is the last index.\n");
@@ -954,7 +945,7 @@ static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::A
 
             } else if (struct_range->children.size() == 1) {
                 // Selected a single position, as in `foo.bar[i]`.
-                if (range_width > 1 && range_width_idx > 1) {
+                if (range_width > 1 && idx > 0) {
                     // if it's not the last dimension.
                     right = new AST::AstNode(
                       AST::AST_ADD, right,
