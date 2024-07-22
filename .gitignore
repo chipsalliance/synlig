@@ -9,3 +9,4 @@ __pycache__
 /image
 .cache/
 compile_commands.json
+/.vscode

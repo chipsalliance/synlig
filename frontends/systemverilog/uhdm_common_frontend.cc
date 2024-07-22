@@ -162,7 +162,7 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
     AST::AstNode *current_ast = parse(filename);
 
     if (current_ast) {
-        Yosys::AST::process(design, current_ast, dump_ast1, dump_ast2, no_dump_ptr, dump_vlog1, dump_vlog2, dump_rtlil,
+        Yosys::AST::process(design, current_ast, false, dump_ast1, dump_ast2, no_dump_ptr, dump_vlog1, dump_vlog2, dump_rtlil,
                             false, // nolatches
                             false, // nomeminit
                             false, // nomem2reg

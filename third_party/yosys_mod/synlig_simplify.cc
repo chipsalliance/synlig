@@ -148,14 +148,12 @@ static int range_width(Yosys::AST::AstNode *node, Yosys::AST::AstNode *rnode)
 
 static void save_struct_range_dimensions(Yosys::AST::AstNode *node, Yosys::AST::AstNode *rnode)
 {
-    node->multirange_dimensions.push_back(rnode->range_right);
-    node->multirange_dimensions.push_back(range_width(node, rnode));
-    node->multirange_swapped.push_back(rnode->range_swapped);
+    node->dimensions.push_back({rnode->range_right, range_width(node, rnode), rnode->range_swapped});
 }
 
-static int get_struct_range_offset(Yosys::AST::AstNode *node, int dimension) { return node->multirange_dimensions[2 * dimension]; }
+static int get_struct_range_offset(Yosys::AST::AstNode *node, int dimension) { return node->dimensions[dimension].range_right; }
 
-static int get_struct_range_width(Yosys::AST::AstNode *node, int dimension) { return node->multirange_dimensions[2 * dimension + 1]; }
+static int get_struct_range_width(Yosys::AST::AstNode *node, int dimension) { return node->dimensions[dimension].range_width; }
 
 static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
 {
@@ -177,9 +175,11 @@ static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
                            "Currently support for custom-type with range is limited to single range\n");
         }
         for (auto range : ranges) {
-            snode->multirange_dimensions.push_back(min(range->range_left, range->range_right));
-            snode->multirange_dimensions.push_back(max(range->range_left, range->range_right) - min(range->range_left, range->range_right) + 1);
-            snode->multirange_swapped.push_back(range->range_swapped);
+            snode->dimensions.push_back({
+                min(range->range_left, range->range_right),
+                max(range->range_left, range->range_right) - min(range->range_left, range->range_right) + 1,
+                range->range_swapped
+            });
         }
     }
     // examine members from last to first
@@ -206,9 +206,11 @@ static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
                         auto rnode = node->children[1];
                         if (rnode->children.size() == 1) {
                             // C-style array size, e.g. bit [63:0] a [4]
-                            node->multirange_dimensions.push_back(0);
-                            node->multirange_dimensions.push_back(rnode->range_left);
-                            node->multirange_swapped.push_back(true);
+                            node->dimensions.push_back({
+                                0,
+                                rnode->range_left,
+                                true,
+                            });
                             width *= rnode->range_left;
                         } else {
                             save_struct_range_dimensions(node, rnode);
@@ -717,7 +719,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             // when $display()/$write() functions are used in an initial block, print them during synthesis
             Fmt fmt = ast_node->processFormat(stage, /*sformat_like=*/false, default_base);
             if (ast_node->str.substr(0, 8) == "$display")
-                fmt.append_string("\n");
+                fmt.append_literal("\n");
             log("%s", fmt.render().c_str());
         } else {
             // when $display()/$write() functions are used in an always block, simplify the expressions and
@@ -1714,15 +1716,16 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
     // resolve multiranges on memory decl
     if (ast_node->type == Yosys::AST::AST_MEMORY && ast_node->children.size() > 1 && ast_node->children[1]->type == Yosys::AST::AST_MULTIRANGE) {
         int total_size = 1;
-        ast_node->multirange_dimensions.clear();
-        ast_node->multirange_swapped.clear();
+        ast_node->dimensions.clear();
         for (auto range : ast_node->children[1]->children) {
             if (!range->range_valid)
                 log_file_error(ast_node->filename, ast_node->location.first_line, "Non-constant range on memory decl.\n");
-            ast_node->multirange_dimensions.push_back(min(range->range_left, range->range_right));
-            ast_node->multirange_dimensions.push_back(max(range->range_left, range->range_right) - min(range->range_left, range->range_right) + 1);
-            ast_node->multirange_swapped.push_back(range->range_swapped);
-            total_size *= ast_node->multirange_dimensions.back();
+            ast_node->dimensions.push_back({
+                min(range->range_left, range->range_right),
+                max(range->range_left, range->range_right) - min(range->range_left, range->range_right) + 1,
+                range->range_swapped
+            });
+            total_size *= ast_node->dimensions.back().range_width;
         }
         delete ast_node->children[1];
         ast_node->children[1] =
@@ -1736,16 +1739,16 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         Yosys::AST::AstNode *index_expr = nullptr;
 
         ast_node->integer = ast_node->children[0]->children.size(); // save original number of dimensions for $size() etc.
-        for (int i = 0; 2 * i < GetSize(ast_node->id2ast->multirange_dimensions); i++) {
+        for (int i = 0; i < GetSize(ast_node->id2ast->dimensions); i++) {
             if (GetSize(ast_node->children[0]->children) <= i)
                 log_file_error(ast_node->filename, ast_node->location.first_line, "Insufficient number of array indices for %s.\n",
                                log_id(ast_node->str));
 
             Yosys::AST::AstNode *new_index_expr = ast_node->children[0]->children[i]->children.at(0)->clone();
 
-            if (ast_node->id2ast->multirange_dimensions[2 * i])
+            if (ast_node->id2ast->dimensions[i].range_right)
                 new_index_expr = new Yosys::AST::AstNode(Yosys::AST::AST_SUB, new_index_expr,
-                                                         ast_node->mkconst_int(ast_node->id2ast->multirange_dimensions[2 * i], true));
+                                                         ast_node->mkconst_int(ast_node->id2ast->dimensions[i].range_right, true));
 
             if (i == 0)
                 index_expr = new_index_expr;
@@ -1753,11 +1756,11 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                 index_expr =
                   new Yosys::AST::AstNode(Yosys::AST::AST_ADD,
                                           new Yosys::AST::AstNode(Yosys::AST::AST_MUL, index_expr,
-                                                                  ast_node->mkconst_int(ast_node->id2ast->multirange_dimensions[2 * i + 1], true)),
+                                                                  ast_node->mkconst_int(ast_node->id2ast->dimensions[i].range_width, true)),
                                           new_index_expr);
         }
 
-        for (int i = GetSize(ast_node->id2ast->multirange_dimensions) / 2; i < GetSize(ast_node->children[0]->children); i++)
+        for (int i = GetSize(ast_node->id2ast->dimensions); i < GetSize(ast_node->children[0]->children); i++)
             ast_node->children.push_back(ast_node->children[0]->children[i]->clone());
 
         delete ast_node->children[0];
@@ -1816,12 +1819,12 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                 if (item_node->type == Yosys::AST::AST_STRUCT_ITEM || item_node->type == Yosys::AST::AST_STRUCT ||
                     item_node->type == Yosys::AST::AST_UNION) {
                     // structure member, rewrite ast_node node to reference the packed struct wire
-                    auto range = Yosys::AST::make_struct_member_range(ast_node, item_node);
+                    auto range = ast_node->make_index_range(item_node);
                     newNode = new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER, range);
                     newNode->str = sname;
                     // save type and original number of dimensions for $size() etc.
                     newNode->attributes[ID::wiretype] = item_node->clone();
-                    if (!item_node->multirange_dimensions.empty() && ast_node->children.size() > 0) {
+                    if (!item_node->dimensions.empty() && ast_node->children.size() > 0) {
                         if (ast_node->children[0]->type == Yosys::AST::AST_RANGE)
                             newNode->integer = 1;
                         else if (ast_node->children[0]->type == Yosys::AST::AST_MULTIRANGE)
@@ -3226,21 +3229,21 @@ skip_dynamic_range_lvalue_expansion:;
                     if (id_ast->type == Yosys::AST::AST_WIRE && item_node) {
                         // The dimension of the original array expression is saved in the 'integer' field
                         dim += buf->integer;
-                        if (item_node->multirange_dimensions.empty()) {
+                        if (item_node->dimensions.empty()) {
                             if (dim != 1)
                                 log_file_error(ast_node->filename, ast_node->location.first_line,
                                                "Dimension %d out of range in `%s', as it only has one dimension!\n", dim, item_node->str.c_str());
                             left = high = item_node->range_left;
                             right = low = item_node->range_right;
                         } else {
-                            int dims = GetSize(item_node->multirange_dimensions) / 2;
+                            int dims = GetSize(item_node->dimensions);
                             if (dim < 1 || dim > dims)
                                 log_file_error(ast_node->filename, ast_node->location.first_line,
                                                "Dimension %d out of range in `%s', as it only has dimensions 1..%d!\n", dim, item_node->str.c_str(),
                                                dims);
                             right = low = get_struct_range_offset(item_node, dim - 1);
                             left = high = low + get_struct_range_width(item_node, dim - 1) - 1;
-                            if (item_node->multirange_swapped[dim - 1]) {
+                            if (item_node->dimensions[dim - 1].range_swapped) {
                                 std::swap(left, right);
                             }
                             for (int i = dim; i < dims; i++) {
@@ -3292,7 +3295,7 @@ skip_dynamic_range_lvalue_expansion:;
                             // $size(), $left(), $right(), $high(), $low()
                             int dims = 1;
                             if (mem_range->type == Yosys::AST::AST_RANGE) {
-                                if (id_ast->multirange_dimensions.empty()) {
+                                if (id_ast->dimensions.empty()) {
                                     if (!mem_range->range_valid)
                                         log_file_error(ast_node->filename, ast_node->location.first_line,
                                                        "Failed to detect width of memory access `%s'!\n", buf->str.c_str());
@@ -3303,12 +3306,13 @@ skip_dynamic_range_lvalue_expansion:;
                                         low = min(left, right);
                                     }
                                 } else {
-                                    dims = GetSize(id_ast->multirange_dimensions) / 2;
+                                    dims = GetSize(id_ast->dimensions);
                                     if (dim <= dims) {
-                                        width_hint = id_ast->multirange_dimensions[2 * dim - 1];
-                                        high = id_ast->multirange_dimensions[2 * dim - 2] + id_ast->multirange_dimensions[2 * dim - 1] - 1;
-                                        low = id_ast->multirange_dimensions[2 * dim - 2];
-                                        if (id_ast->multirange_swapped[dim - 1]) {
+                                        auto& current = id_ast->dimensions[dim - 1];
+                                        width_hint = current.range_width;
+                                        high = current.range_right + current.range_width - 1;
+                                        low = current.range_width;
+                                        if (current.range_swapped) {
                                             left = low;
                                             right = high;
                                         } else {
