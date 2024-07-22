@@ -375,11 +375,11 @@ static std::pair<size_t, size_t> set_multirange_dimensions(AST::AstNode *wire_no
             const auto low = min(ranges[i]->children[0]->integer, ranges[i]->children[1]->integer);
             const auto high = max(ranges[i]->children[0]->integer, ranges[i]->children[1]->integer);
             const auto elem_size = high - low + 1;
-            
+
             wire_node->dimensions.push_back({
-                static_cast<int>(low),
-                static_cast<int>(elem_size),
-                ranges[i]->range_swapped
+              static_cast<int>(low),
+              static_cast<int>(elem_size),
+              ranges[i]->range_swapped,
             });
             size *= elem_size;
         }
@@ -1141,11 +1141,7 @@ static int simplify_struct(AST::AstNode *snode, int base_offset, AST::AstNode *p
         for (auto range : ranges) {
             int range_right = min(range->range_left, range->range_right);
             int range_width = max(range->range_left, range->range_right) - min(range->range_left, range->range_right) + 1;
-            snode->dimensions.push_back({
-                range_right,
-                range_width,
-                range->range_swapped
-            });
+            snode->dimensions.push_back({range_right, range_width, range->range_swapped});
             delete range;
         }
     }
