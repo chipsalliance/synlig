@@ -295,6 +295,8 @@ jobs:
     needs: build-binaries
 
   release:
+    permissions:
+      contents: write
     name: Release Package
     needs:
       - build-binaries
