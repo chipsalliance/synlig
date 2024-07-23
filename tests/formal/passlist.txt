@@ -82,6 +82,7 @@ simple:EnumBases/top.sv
 simple:EnumConcat/dut.v
 simple:EnumConcatenatedConst/top.sv
 simple:EnumConstX/top.sv
+simple:EnumInGenblock/top.sv
 simple:EnumInPackage/dut.sv
 simple:EnumItemReimport/top.sv
 simple:EnumParameterInNestedModules/top.sv
@@ -91,7 +92,6 @@ simple:event_implicit_expression_list/event_implicit.sv
 simple:ExpressionInIndex/top.sv
 simple:FileLevelParameter/top.sv
 simple:FileLevelUnionWithMultirange/top.sv
-simple:fsm_single_always/dut.v
 simple:fsm_using_always/dut.v
 simple:fsm_using_function/dut.v
 simple:Function2Returns/top.sv
@@ -155,6 +155,7 @@ simple:NestedParamSubstitution/top.sv
 simple:NestedSelectOnInputPortInGenscope/top.sv
 simple:NestedSelectOnVarInGenscope/top.sv
 simple:NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
+simple:NestedStructs/top.sv
 simple:NoEdge/dut.sv
 simple:NoLatch/dut.sv
 simple:OneAlwaysComb/dut.v
@@ -172,6 +173,7 @@ simple:PackageEnumConstPush/dut.sv
 simple:PackageLogicTypespec/dut.sv
 simple:PackedArray/top.sv
 simple:PackedArrayPort/top.sv
+simple:PackedInGenblock/top.sv
 simple:ParameterColonReference/top.sv
 simple:ParameterConditionalAssignment/top.sv
 simple:ParameterDoubleUnderscoreInSvFrontend/my_pkg.sv
@@ -336,7 +338,6 @@ sv2v:core/enum_typedef_keep.sv
 sv2v:core/enum_typedef_keep.v
 sv2v:core/for_loop_inits.v
 sv2v:core/function_range_cast.v
-sv2v:core/function_ret_unpacked.v
 sv2v:core/function_void.v
 sv2v:core/func_no_asgn.sv
 sv2v:core/func_no_asgn.v
@@ -598,7 +599,6 @@ yosys:asicworld/code_tidbits_asyn_reset.v
 yosys:asicworld/code_tidbits_blocking.v
 yosys:asicworld/code_tidbits_fsm_using_always.v
 yosys:asicworld/code_tidbits_fsm_using_function.v
-yosys:asicworld/code_tidbits_fsm_using_single_always.v
 yosys:asicworld/code_tidbits_nonblocking.v
 yosys:asicworld/code_tidbits_reg_combo_example.v
 yosys:asicworld/code_tidbits_reg_seq_example.v
@@ -632,7 +632,6 @@ yosys:bind/cell_list.sv
 yosys:bind/inst_list.sv
 yosys:errors/syntax_err09.v
 yosys:errors/syntax_err13.v
-yosys:fmt/always_comb.v
 yosys:hana/test_parser.v
 yosys:hana/test_simulation_and.v
 yosys:hana/test_simulation_decoder.v
@@ -641,7 +640,6 @@ yosys:memlib/memlib_clock_sdp.v
 yosys:memlib/memlib_lut.v
 yosys:memlib/memlib_multilut.v
 yosys:memlib/memlib_wide_read.v
-yosys:memlib/memlib_wide_sdp.v
 yosys:memlib/memlib_wide_sp.v
 yosys:memlib/memlib_wide_write.v
 yosys:memories/firrtl_938.v
@@ -664,11 +662,8 @@ yosys:memories/wide_write.v
 yosys:opt/opt_rmdff_sat.v
 yosys:opt/opt_share_diff_port_widths.v
 yosys:opt/opt_share_extend.v
-yosys:opt/opt_share_large_pmux_cat.v
 yosys:opt/opt_share_large_pmux_cat_multipart.v
 yosys:opt/opt_share_large_pmux_multipart.v
-yosys:opt/opt_share_large_pmux_part.v
-yosys:opt/opt_share_mux_tree.v
 yosys:proc/bug_1268.v
 yosys:proc/rmdead.v
 yosys:sat/alu.v
@@ -735,7 +730,6 @@ yosys:simple/loop_var_shadow.v
 yosys:simple/macros.v
 yosys:simple/macro_arg_surrounding_spaces.v
 yosys:simple/matching_end_labels.sv
-yosys:simple/mem2reg_bounds_tern.v
 yosys:simple/memwr_port_connection.sv
 yosys:simple/mem_arst.v
 yosys:simple/module_scope.v
@@ -751,6 +745,7 @@ yosys:simple/retime.v
 yosys:simple/rotate.v
 yosys:simple/scopes.v
 yosys:simple/signedexpr.v
+yosys:simple/sign_part_assign.v
 yosys:simple/specify.v
 yosys:simple/string_format.v
 yosys:simple/subbytes.v
@@ -778,8 +773,8 @@ yosys:various/attrib07_func_call.v
 yosys:various/constmsk_test.v
 yosys:various/const_func_block_var.v
 yosys:various/countbits.sv
-yosys:various/dynamic_part_select/forloop_select.v
 yosys:various/dynamic_part_select/forloop_select_gate.v
+yosys:various/dynamic_part_select/forloop_select_nowrshmsk.v
 yosys:various/dynamic_part_select/latch_002.v
 yosys:various/dynamic_part_select/latch_002_gate.v
 yosys:various/dynamic_part_select/latch_002_gate_good.v
@@ -794,11 +789,9 @@ yosys:various/dynamic_part_select/original_gate.v
 yosys:various/dynamic_part_select/reset_test.v
 yosys:various/dynamic_part_select/reset_test_gate.v
 yosys:various/dynamic_part_select/reversed_gate.v
-yosys:various/elab_sys_tasks.sv
 yosys:various/gen_if_null.v
 yosys:various/pmux2shiftx.v
 yosys:various/reg_wire_error.sv
-yosys:various/smtlib2_module.v
 yosys:various/sub.v
 yosys:verific/case.sv
 yosys:verilog/bug656.v

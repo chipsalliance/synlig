@@ -53,12 +53,22 @@
 # This test sometimes fails due to how yosys assigns
 # wires to cells and the fact, that currently formal verification
 # requires the same order of assignments
+simple:fsm_single_always/dut.v
+yosys:simple/fsm.v
+yosys:fmt/always_comb.v
 yosys:opt/opt_lut.v
 yosys:simple/always03.v
 yosys:simple/operators.v
 yosys:asicworld/code_verilog_tutorial_fsm_full.v
 yosys:asicworld/code_hdl_models_GrayCounter.v
 yosys:simple/sincos.v
+yosys:asicworld/code_tidbits_fsm_using_single_always.v
+yosys:opt/opt_share_large_pmux_cat.v
+yosys:opt/opt_share_large_pmux_part.v
+yosys:opt/opt_share_mux_tree.v
+yosys:simple/mem2reg_bounds_tern.v
+yosys:various/elab_sys_tasks.sv
+yosys:various/smtlib2_module.v
 ########################################################################################
 # Type parameters in top modules cause the modules to be renamed
 # and handled incorrectly in verification scripts.

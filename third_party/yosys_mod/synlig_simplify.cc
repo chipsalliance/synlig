@@ -532,6 +532,154 @@ static inline std::string encode_filename(const std::string &filename)
     return val.str();
 }
 
+void synlig_replace_result_wire_name_in_function(AST::AstNode *current_node, const std::string &from, const std::string &to)
+{
+    for (AST::AstNode *child : current_node->children)
+        synlig_replace_result_wire_name_in_function(child, from, to);
+    if (current_node->str == from && current_node->type != AST::AST_FCALL && current_node->type != AST::AST_TCALL)
+        current_node->str = to;
+}
+
+static std::string synlig_prefix_id(const std::string &prefix, const std::string &str)
+{
+    log_assert(!prefix.empty() && (prefix.front() == '$' || prefix.front() == '\\'));
+    log_assert(!str.empty());
+    log_assert(prefix.back() == '.');
+    if (str.front() == '\\')
+        return prefix + str.substr(1);
+    if (str.front() == '$')
+        return prefix + str;
+    return str;
+}
+
+// annotate the names of all wires and other named objects in a named generate
+// or procedural block; nested genblocks are themselves annotated such that the
+// prefix is carried forward, but resolution of their children is deferred;
+// blocks have additionally resolved variables to current scope when possible
+void synlig_expand_genblock(AST::AstNode *current_node, const std::string prefix, bool only_resolve_scope)
+{
+    if (current_node->type == AST::AST_IDENTIFIER || current_node->type == AST::AST_FCALL || current_node->type == AST::AST_TCALL ||
+        current_node->type == AST::AST_WIRETYPE || current_node->type == AST::AST_PREFIX) {
+
+        log_assert(!current_node->str.empty());
+
+        // search starting in the innermost scope and then stepping outward
+        for (size_t ppos = prefix.size() - 1; ppos; --ppos) {
+            if (prefix.at(ppos) != '.')
+                continue;
+
+            std::string new_prefix = prefix.substr(0, ppos + 1);
+            auto attempt_resolve = [&new_prefix](const std::string &ident) -> std::string {
+                std::string new_name = synlig_prefix_id(new_prefix, ident);
+                if (AST_INTERNAL::current_scope.count(new_name))
+                    return new_name;
+                return {};
+            };
+
+            // attempt to resolve the full identifier
+            std::string resolved = attempt_resolve(current_node->str);
+            if (!resolved.empty()) {
+                current_node->str = resolved;
+                break;
+            }
+
+            // attempt to resolve hierarchical prefixes within the identifier,
+            // as the prefix could refer to a local scope which exists but
+            // hasn't yet been elaborated
+            for (size_t spos = current_node->str.size() - 1; spos; --spos) {
+                if (current_node->str.at(spos) != '.')
+                    continue;
+                resolved = attempt_resolve(current_node->str.substr(0, spos));
+                if (!resolved.empty()) {
+                    current_node->str = resolved + current_node->str.substr(spos);
+                    ppos = 1; // break outer loop
+                    break;
+                }
+            }
+        }
+    }
+
+    auto prefix_node = [&prefix](AST::AstNode *child) {
+        if (child->str.empty())
+            return;
+        std::string new_name = synlig_prefix_id(prefix, child->str);
+        if (child->type == AST::AST_FUNCTION)
+            synlig_replace_result_wire_name_in_function(child, child->str, new_name);
+        else
+            child->str = new_name;
+        AST_INTERNAL::current_scope[new_name] = child;
+    };
+
+    for (size_t i = 0; i < current_node->children.size(); i++) {
+        AST::AstNode *child = current_node->children[i];
+
+        switch (child->type) {
+        case AST::AST_WIRE:
+        case AST::AST_MEMORY:
+        case AST::AST_STRUCT:
+        case AST::AST_UNION:
+        case AST::AST_PARAMETER:
+        case AST::AST_LOCALPARAM:
+        case AST::AST_FUNCTION:
+        case AST::AST_TASK:
+        case AST::AST_CELL:
+        case AST::AST_TYPEDEF:
+        case AST::AST_ENUM_ITEM:
+        case AST::AST_GENVAR:
+            if (!only_resolve_scope)
+                prefix_node(child);
+            break;
+
+        case AST::AST_BLOCK:
+        case AST::AST_GENBLOCK:
+            if (!child->str.empty() && !only_resolve_scope)
+                prefix_node(child);
+            break;
+
+        case AST::AST_ENUM:
+            AST_INTERNAL::current_scope[child->str] = child;
+            for (auto enode : child->children) {
+                log_assert(enode->type == AST::AST_ENUM_ITEM);
+                if (!only_resolve_scope)
+                    prefix_node(enode);
+            }
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    for (size_t i = 0; i < current_node->children.size(); i++) {
+        AST::AstNode *child = current_node->children[i];
+        // AST_PREFIX member names should not be prefixed; we recurse into them
+        // as normal to ensure indices and ranges are properly resolved, and
+        // then restore the previous string
+        if (current_node->type == AST::AST_PREFIX && i == 1) {
+            std::string backup_scope_name = child->str;
+            synlig_expand_genblock(child, prefix, only_resolve_scope);
+            child->str = backup_scope_name;
+            continue;
+        }
+        // functions/tasks may reference wires, constants, etc. in this scope
+        if (child->type == AST::AST_FUNCTION || child->type == AST::AST_TASK)
+            continue;
+        // named blocks pick up the current prefix and will expanded later
+        // blocks additionally resolve variables that are already in scope
+        if (child->type == AST::AST_BLOCK) {
+            synlig_expand_genblock(child, prefix, true);
+            continue;
+        }
+        if ((child->type == AST::AST_GENBLOCK) && !child->str.empty())
+            continue;
+        // enum was already prefixed
+        if (child->type == AST::AST_ENUM)
+            continue;
+
+        synlig_expand_genblock(child, prefix, only_resolve_scope);
+    }
+}
+
 // convert the AST into a simpler AST that has all parameters substituted by their
 // values, unrolled for-loops, expanded generate blocks, etc. when this function
 // is done with an AST it can be converted into RTLIL using genRTLIL().
@@ -2092,7 +2240,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             current_scope[local_index->str] = local_index;
             current_ast_mod->children.push_back(local_index);
 
-            buf->expand_genblock(prefix);
+            synlig_expand_genblock(buf, prefix, false);
 
             if (ast_node->type == Yosys::AST::AST_GENFOR) {
                 for (size_t i = 0; i < buf->children.size(); i++) {
@@ -2152,7 +2300,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
     // transform block with name
     if (ast_node->type == Yosys::AST::AST_BLOCK && !ast_node->str.empty()) {
-        ast_node->expand_genblock(ast_node->str + ".");
+        synlig_expand_genblock(ast_node, ast_node->str + ".", false);
 
         // if ast_node is an autonamed block is in an always_comb
         if (current_always && current_always->attributes.count(ID::always_comb) && is_autonamed_block(ast_node->str))
@@ -2181,7 +2329,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
     // simplify unconditional generate block
     if (ast_node->type == Yosys::AST::AST_GENBLOCK && ast_node->children.size() != 0) {
         if (!ast_node->str.empty()) {
-            ast_node->expand_genblock(ast_node->str + ".");
+            synlig_expand_genblock(ast_node, ast_node->str + ".", false);
         }
 
         for (size_t i = 0; i < ast_node->children.size(); i++) {
@@ -2216,7 +2364,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                 buf = new Yosys::AST::AstNode(Yosys::AST::AST_GENBLOCK, buf);
 
             if (!buf->str.empty()) {
-                buf->expand_genblock(buf->str + ".");
+                synlig_expand_genblock(buf, buf->str + ".", false);
             }
 
             for (size_t i = 0; i < buf->children.size(); i++) {
@@ -2294,7 +2442,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             buf = selected_case->clone();
 
             if (!buf->str.empty()) {
-                buf->expand_genblock(buf->str + ".");
+                synlig_expand_genblock(buf, buf->str + ".", false);
             }
 
             for (size_t i = 0; i < buf->children.size(); i++) {
@@ -3674,7 +3822,7 @@ skip_dynamic_range_lvalue_expansion:;
             goto replace_fcall_later;
         decl = decl->clone();
         decl->replace_result_wire_name_in_function(ast_node->str, "$result"); // enables recursion
-        decl->expand_genblock(prefix);
+        synlig_expand_genblock(decl, prefix, false);
 
         if (decl->type == Yosys::AST::AST_FUNCTION && !decl->attributes.count(ID::via_celltype)) {
             bool require_const_eval = decl->has_const_only_constructs();

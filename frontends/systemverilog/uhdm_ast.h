@@ -208,6 +208,7 @@ class UhdmAst
     static const ::Yosys::IdString &is_simplified_wire();
     static const ::Yosys::IdString &low_high_bound();
     static const ::Yosys::IdString &is_elaborated_module();
+    static const ::Yosys::IdString &expand_genblock();
 };
 
 // Utility for building AstNode trees.
