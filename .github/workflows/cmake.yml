@@ -73,6 +73,11 @@ jobs:
           submodules: false
           fetch-depth: 1
 
+      - name: Set up common Debian configuration
+        run: |
+          ./.github/scripts/set-up-common-debian-configuration.sh
+          ./.github/scripts/set-up-common-git-configuration.sh
+
       - name: Install dependencies
         run: |
           apt-get update -q
@@ -128,7 +133,4 @@ jobs:
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
           # CMake build
           make -f cmake-makefile
-          # By default actions/upload-artifact@v2 do not preserve file permissions
-          # tar directory to workaround this issue
-          # See https://github.com/actions/upload-artifact/issues/38
 
