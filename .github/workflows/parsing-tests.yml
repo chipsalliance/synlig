@@ -10,18 +10,13 @@ on:
 
 env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
-  TESTS_TO_SKIP: synthesis serv-minimal hello-uvm assignment-pattern Forever BitsCallOnType OneClass
-    Continue AnonymousUnion ParameterUnpackedArray VoidFunction2Returns PatternStruct ImportedFunctionCallInModuleAndSubmodule
-    VoidFunctionWithoutReturn cmake PutC OneThis CastInFunctionInGenBlock PatternType FunctionOutputArgument GetC ForkJoinTypes
-    EnumFirstInInitial ImportFunction DpiChandle Disable EnumFirst TypedefOnFileLevel UnsizedConstantsParameterParsing Fork
-    PatternInFunction ParameterUnpackedLogicArray SelectFromUnpackedInFunction PatternReplication
-    VoidFunction MultiplePrints BitSelectPartSelectInFunction ImportPackageWithFunction ParameterPackedArray StringAssignment
-    SystemFunctions ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember
-    ParameterOfSizeOfParametrizedPort ParameterOfSizeOfParametrizedPortInSubmodule ParameterOfSizeOfPort StringAssignConcatenation
-    StringLocalParamInitByConcatenation StringWithBackslash FunctionWithOverriddenParameter RealValue BitsCallOnParametetrizedTypeFromPackage
-    AssignToUnpackedUnionFieldAndReadOtherField IndexedPartSelectInFor NestedPatternPassedAsPort StreamOp
-    NestedStructArrayParameterInitializedByPatternPassedAsPort PartSelectInFor SelfSelectsInBitSelectAfterBitSelect
-    StructArrayParameterInitializedByPatternPassedAsPort SelectGivenBySelectOnParameterInFunction StreamOperatorBitReverseFunction
+  TESTS_TO_SKIP: synthesis serv-minimal hello-uvm assignment-pattern Forever OneClass
+    VoidFunction2Returns VoidFunctionWithoutReturn cmake OneThis FunctionOutputArgument
+    DpiChandle Disable SelectFromUnpackedInFunction VoidFunction MultiplePrints
+    ImportPackageWithFunction StringAssignment SystemFunctions
+    ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember
+    StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash
+    AssignToUnpackedUnionFieldAndReadOtherField NestedPatternPassedAsPort
 
 jobs:
   tests-read-uhdm:

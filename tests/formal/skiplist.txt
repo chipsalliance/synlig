@@ -76,5 +76,4 @@ sv2v:error/size_cast_zero_lit.sv
 # There's nothing to compare with the plugin in Formal Verification.
 # This test is non-synthesizable.
 sv2v:core/edge.v
-# Yosys fails with syntax error, unexpected TOK_ID. This test is non-synthesizable.
 sv2v:core/edge.sv

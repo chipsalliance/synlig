@@ -3,7 +3,7 @@
 	url = https://github.com/YosysHQ/yosys.git
 [submodule "Surelog"]
 	path = third_party/surelog
-	url = https://github.com/chipsalliance/Surelog.git
+	url = https://github.com/antmicro/Surelog.git
 [submodule "sv2v"]
 	path = third_party/sv2v
 	url = https://github.com/zachjs/sv2v.git

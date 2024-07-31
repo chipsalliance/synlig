@@ -89,6 +89,7 @@ class UhdmAstShared
     std::unordered_map<std::string, ::Yosys::AST::AstNode *> param_types;
 
     ::Yosys::AST::AstNode *current_top_node = nullptr;
+    ::Yosys::AST::AstNode *current_design = nullptr;
 
     // Currently processed UHDM module instance.
     // Used as a fallback when obj->Instance() and obj->vpiParent() are not available.

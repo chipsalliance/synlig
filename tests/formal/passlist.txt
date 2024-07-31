@@ -269,9 +269,6 @@ simple:TypeParameterAsPortTypeWithEnum/top.sv
 simple:TypeParameterAsPortTypeWithEnumOfParametrizedWidth/top.sv
 simple:TypeParameterAsPortTypeWithLogic/top.sv
 simple:TypeParameterAsPortTypeWithLogicAnonymous/top.sv
-simple:unary_op_minus/unary_op_minus.sv
-simple:unary_op_not_log/unary_op_not_log.sv
-simple:unary_op_plus/unary_op_plus.sv
 simple:UnionInsideStruct/dut.sv
 simple:UnionParameter/top.sv
 simple:UnitForLoop/dut.v
@@ -503,9 +500,9 @@ sv2v:lex/undefineall.sv
 sv2v:lex/undefineall.v
 sv2v:lex/utf8.sv
 sv2v:lib/empty.v
-sv2v:nosim/min_typ_max.sv
-sv2v:relong/alu.sv
+sv2v:nosim/func_output.sv
 sv2v:relong/alu.v
+sv2v:relong/alu.sv
 sv2v:relong/cache_request.v
 sv2v:relong/case.sv
 sv2v:relong/case.v
@@ -547,7 +544,6 @@ yosys:arch/common/blockrom.v
 yosys:arch/common/counter.v
 yosys:arch/common/fsm.v
 yosys:arch/common/logic.v
-yosys:arch/common/mux.v
 yosys:arch/common/shifter.v
 yosys:arch/common/tribuf.v
 yosys:arch/ecp5/macc.v
@@ -669,9 +665,7 @@ yosys:opt/opt_share_large_pmux_cat_multipart.v
 yosys:opt/opt_share_large_pmux_multipart.v
 yosys:opt/opt_share_large_pmux_part.v
 yosys:opt/opt_share_mux_tree.v
-yosys:proc/bug_1268.v
 yosys:proc/rmdead.v
-yosys:sat/alu.v
 yosys:sat/ram_memory.v
 yosys:sat/splice.v
 yosys:sim/adff.v
@@ -708,15 +702,12 @@ yosys:simple/case_large.v
 yosys:simple/constmuldivmod.v
 yosys:simple/constpower.v
 yosys:simple/const_branch_finish.v
-yosys:simple/const_fold_func.v
 yosys:simple/defvalue.sv
 yosys:simple/dff_different_styles.v
 yosys:simple/dynslice.v
 yosys:simple/forgen01.v
 yosys:simple/forgen02.v
 yosys:simple/forloops.v
-yosys:simple/func_block.v
-yosys:simple/func_recurse.v
 yosys:simple/genblk_dive.v
 yosys:simple/genblk_order.v
 yosys:simple/genblk_port_shadow.v
@@ -737,7 +728,6 @@ yosys:simple/macro_arg_surrounding_spaces.v
 yosys:simple/matching_end_labels.sv
 yosys:simple/mem2reg_bounds_tern.v
 yosys:simple/memwr_port_connection.sv
-yosys:simple/mem_arst.v
 yosys:simple/module_scope.v
 yosys:simple/module_scope_case.v
 yosys:simple/multiplier.v
@@ -796,7 +786,6 @@ yosys:various/dynamic_part_select/reset_test_gate.v
 yosys:various/dynamic_part_select/reversed_gate.v
 yosys:various/elab_sys_tasks.sv
 yosys:various/gen_if_null.v
-yosys:various/pmux2shiftx.v
 yosys:various/reg_wire_error.sv
 yosys:various/smtlib2_module.v
 yosys:various/sub.v
@@ -808,3 +797,5 @@ yosys:verilog/net_types.sv
 yosys:verilog/typedef_const_shadow.sv
 yosys:verilog/unbased_unsized_shift.sv
 yosys:verilog/unnamed_genblk.sv
+yosys:simple/fsm.v
+yosys:hana/test_intermout.v

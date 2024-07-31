@@ -303,7 +303,7 @@ def get_equiv_result(surelog_out, yosys_out, output_dir, prefix=""):
         "[0-9]+ unproven": "DIFF",  # NOT_EQUIVALENT
         "ERROR: Can't find gold module surelog": "S GATE",  # INVALID_MODEL_SURELOG
         "ERROR: Can't find gate module yosys": "Y GATE",  # INVALID_MODEL_YOSYS
-        "Proved 0 previously unproven \$equiv cells\.": "MODEL EM",  # EMPTY_MODEL
+        "Proved 0 previously unproven \\$equiv cells\\.": "MODEL EM",  # EMPTY_MODEL
         "ERROR:": "MODEL_ER",  # ERROR_MODEL
     }
 
