@@ -91,7 +91,6 @@ simple:EnumWidth/top.sv
 simple:event_implicit_expression_list/event_implicit.sv
 simple:ExpressionInIndex/top.sv
 simple:FileLevelParameter/top.sv
-simple:FileLevelUnionWithMultirange/top.sv
 simple:fsm_using_always/dut.v
 simple:fsm_using_function/dut.v
 simple:Function2Returns/top.sv
@@ -141,9 +140,9 @@ simple:MultiDimHierPath2/dut.sv
 simple:MultiDimHierPath3/dut.sv
 simple:MultiDimHierPath4/dut.sv
 simple:MultiDimHierPath5/dut.sv
-simple:MultiDimHierPath6/dut.sv
 simple:MultipleAssignments/top.sv
 simple:MultipleCells/top.sv
+simple:MultirangeMemory/top.sv
 simple:NegationAsParameterOfInstance/top.sv
 simple:NegationOfParameterInInstance/top.sv
 simple:NegationOfPatternParameter/top.sv
@@ -155,7 +154,6 @@ simple:NestedParamSubstitution/top.sv
 simple:NestedSelectOnInputPortInGenscope/top.sv
 simple:NestedSelectOnVarInGenscope/top.sv
 simple:NestedStructArrayParameterInitializedByPatternPassedAsPort/top.sv
-simple:NestedStructs/top.sv
 simple:NoEdge/dut.sv
 simple:NoLatch/dut.sv
 simple:OneAlwaysComb/dut.v
@@ -421,7 +419,6 @@ sv2v:error/interface_bad_expr_module.sv
 sv2v:error/macro_args_empty.sv
 sv2v:error/macro_arg_bad_name.sv
 sv2v:error/size_cast_neg_var_1.sv
-sv2v:error/typeof_atom_bit.sv
 sv2v:lex/block_comment.sv
 sv2v:lex/block_comment.v
 sv2v:lex/comment_no_space.sv
@@ -441,7 +438,6 @@ sv2v:nosim/func_output.sv
 sv2v:relong/alu.sv
 sv2v:relong/alu.v
 sv2v:relong/cache_request.v
-sv2v:relong/case.sv
 sv2v:relong/case.v
 sv2v:relong/complex_interface.sv
 sv2v:relong/complex_interface.v

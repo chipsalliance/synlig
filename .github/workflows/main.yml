@@ -376,52 +376,55 @@ jobs:
           overwrite: true
           file_glob: true
 
-  test-release-with-packaged-yosys:
-    name: Release Package Installation Test
-    runs-on: [self-hosted, Linux, X64]
-    container: debian:sid
-    needs: release
-    env:
-      DEBIAN_FRONTEND: noninteractive
-      PIPX_BIN_DIR: /usr/local/bin
-
-    steps:
-      - name: Prepare Repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-
-      - name: Install Prerequisites
-        run: |
-          apt update -qq
-          apt install -y --no-install-recommends pipx git
-          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
-
-      - name: Install Dependencies
-        run: |
-          tuttest README.md install-yosys-debian | bash -
-
-      - name: Install Plugin
-        run: |
-          tuttest README.md download-plugin | bash -
-          tuttest README.md install-plugin | bash -
-
-      - name: Load Plugin
-        run: |
-          tuttest README.md load-plugin | yosys -Q | tee log.txt
-          grep ^ERROR log.txt || exit 0
-          exit 1
-
-      - name: Test Plugin
-        run: |
-          tuttest README.md example-verilog | bash -
-          tuttest README.md example-multiple-files | yosys
-
-      - name: Test sv2v pull and build
-        run: |
-          export PATH=`pwd`/out/current/bin:$PATH
-          tuttest README.md sv2v-update | bash -
-          tuttest README.md sv2v-build | bash -
+# Synlig requires yosys version 0.39 or later 
+# which is currently not available in debian repositories.
+# This test can be uncommented when required version will be available.
+#  test-release-with-packaged-yosys:
+#    name: Release Package Installation Test
+#    runs-on: [self-hosted, Linux, X64]
+#    container: debian:sid
+#    needs: release
+#    env:
+#      DEBIAN_FRONTEND: noninteractive
+#      PIPX_BIN_DIR: /usr/local/bin
+#
+#    steps:
+#      - name: Prepare Repository
+#        uses: actions/checkout@v2
+#        with:
+#          fetch-depth: 1
+#
+#      - name: Install Prerequisites
+#        run: |
+#          apt update -qq
+#          apt install -y --no-install-recommends pipx git
+#          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+#
+#      - name: Install Dependencies
+#        run: |
+#          tuttest README.md install-yosys-debian | bash -
+#
+#      - name: Install Plugin
+#        run: |
+#          tuttest README.md download-plugin | bash -
+#          tuttest README.md install-plugin | bash -
+#
+#      - name: Load Plugin
+#        run: |
+#          tuttest README.md load-plugin | yosys -Q | tee log.txt
+#          grep ^ERROR log.txt || exit 0
+#          exit 1
+#
+#      - name: Test Plugin
+#        run: |
+#          tuttest README.md example-verilog | bash -
+#          tuttest README.md example-multiple-files | yosys
+#
+#      - name: Test sv2v pull and build
+#        run: |
+#          export PATH=`pwd`/out/current/bin:$PATH
+#          tuttest README.md sv2v-update | bash -
+#          tuttest README.md sv2v-build | bash -
 
   test-readme-install-from-source:
     name: Test "Installation from source" from README
@@ -459,42 +462,45 @@ jobs:
           (tuttest README.md path-setup; tuttest README.md example-uhdm-ver2) | bash -
           tuttest README.md example-multiple-files | (. <(tuttest README.md path-setup) && yosys)
 
-  test-plugin-with-packaged-yosys:
-    name: Test With Packaged Yosys
-    runs-on: [self-hosted, Linux, X64]
-    container: debian:sid
-    needs: build-binaries
-    env:
-      DEBIAN_FRONTEND: noninteractive
-      PIPX_BIN_DIR: /usr/local/bin
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: false
-          fetch-depth: 1
-
-      - name: Download binaries
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries-debian
-
-      - name: Extract
-        run: tar -xf binaries-debian.tar
-
-      - name: Install Yosys & Plugin
-        run: |
-          apt update -q
-          apt install -y yosys yosys-dev
-          ./install_plugin.sh
-
-      - name: Load Plugin
-        run: |
-          yosys -Q -m systemverilog \
-              -p "help read_systemverilog" \
-              -p "help read_uhdm" 2>&1 | tee log.txt
-          grep ^ERROR log.txt || exit 0
-          exit 1
+# Synlig requires yosys version 0.39 or later 
+# which is currently not available in debian repositories.
+# This test can be uncommented when required version will be available.
+#  test-plugin-with-packaged-yosys:
+#    name: Test With Packaged Yosys
+#    runs-on: [self-hosted, Linux, X64]
+#    container: debian:sid
+#    needs: build-binaries
+#    env:
+#      DEBIAN_FRONTEND: noninteractive
+#      PIPX_BIN_DIR: /usr/local/bin
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#        with:
+#          submodules: false
+#          fetch-depth: 1
+#
+#      - name: Download binaries
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: binaries-debian
+#
+#      - name: Extract
+#        run: tar -xf binaries-debian.tar
+#
+#      - name: Install Yosys & Plugin
+#        run: |
+#          apt update -q
+#          apt install -y yosys yosys-dev
+#          ./install_plugin.sh
+#
+#      - name: Load Plugin
+#        run: |
+#          yosys -Q -m systemverilog \
+#              -p "help read_systemverilog" \
+#              -p "help read_uhdm" 2>&1 | tee log.txt
+#          grep ^ERROR log.txt || exit 0
+#          exit 1
 
   test-plugin-with-bundled-yosys:
     name: Test With Bundled Yosys
