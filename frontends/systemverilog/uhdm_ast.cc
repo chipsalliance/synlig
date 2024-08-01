@@ -61,6 +61,7 @@ static IdString is_simplified_wire;
 static IdString low_high_bound;
 static IdString is_type_parameter;
 static IdString is_elaborated_module;
+static IdString expand_genblock;
 }; // namespace attr_id
 
 // TODO(mglb): use attr_id::* directly everywhere and remove those methods.
@@ -95,6 +96,7 @@ void attr_id_init()
     attr_id::low_high_bound = MAKE_INTERNAL_ID(low_high_bound);
     attr_id::is_type_parameter = MAKE_INTERNAL_ID(is_type_parameter);
     attr_id::is_elaborated_module = MAKE_INTERNAL_ID(is_elaborated_module);
+    attr_id::expand_genblock = MAKE_INTERNAL_ID(expand_genblock);
 }
 
 void attr_id_cleanup()
@@ -109,6 +111,7 @@ void attr_id_cleanup()
     attr_id::partial = IdString();
     attr_id::is_type_parameter = IdString();
     attr_id::is_elaborated_module = IdString();
+    attr_id::expand_genblock = IdString();
     attr_id::already_initialized = false;
 }
 
@@ -151,7 +154,8 @@ static void delete_internal_attributes(AST::AstNode *node)
         return;
 
     for (auto &attr : {UhdmAst::partial(), UhdmAst::packed_ranges(), UhdmAst::unpacked_ranges(), UhdmAst::force_convert(), UhdmAst::is_imported(),
-                       UhdmAst::is_simplified_wire(), UhdmAst::low_high_bound(), attr_id::is_type_parameter, attr_id::is_elaborated_module}) {
+                       UhdmAst::is_simplified_wire(), UhdmAst::low_high_bound(), attr_id::is_type_parameter, attr_id::is_elaborated_module,
+                       attr_id::expand_genblock}) {
         delete_attribute(node, attr);
     }
 }
@@ -1313,6 +1317,30 @@ static void simplify_format_string(AST::AstNode *current_node)
     current_node->children[0] = AST::AstNode::mkconst_str(preformatted_string);
 }
 
+void resolve_children_reparent(AST::AstNode *current_node)
+{
+    bool have_children_to_reparent = false;
+    for (AST::AstNode *child : current_node->children) {
+        if (child->attributes.count(attr_id::expand_genblock)) {
+            have_children_to_reparent = true;
+        }
+    }
+    if (!have_children_to_reparent)
+        return;
+    std::vector<AST::AstNode *> reparented;
+    for (AST::AstNode *child : current_node->children) {
+        if (child->attributes.count(attr_id::expand_genblock)) {
+            for (AST::AstNode *grandchild : child->children)
+                reparented.push_back(grandchild);
+            child->children.clear();
+            delete child;
+        } else {
+            reparented.push_back(child);
+        }
+    }
+    current_node->children = reparented;
+}
+
 // A wrapper for Yosys simplify function.
 // Simplifies AST constructs specific to this plugin to a form understandable by Yosys' simplify and then calls the latter if necessary.
 // Since simplify from Yosys has been forked to this codebase, all new code should be added there instead.
@@ -1370,10 +1398,26 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
         delete expanded;
         expanded = nullptr;
     }
+
+    if (current_node->attributes.count(attr_id::expand_genblock)) {
+        log_assert(current_node->str != "");
+        auto backup_scope = AST_INTERNAL::current_scope;
+
+        AST_INTERNAL::current_scope[current_node->str] = current_node;
+        synlig_expand_genblock(current_node, current_node->str + ".", false);
+        current_node->str = "";
+
+        std::swap(AST_INTERNAL::current_scope, backup_scope);
+        backup_scope.clear();
+    }
+
     // First simplify children
     for (size_t i = 0; i < current_node->children.size(); i++) {
         simplify_sv(current_node->children[i], current_node);
     }
+
+    resolve_children_reparent(current_node);
+
     switch (current_node->type) {
     case AST::AST_TYPEDEF:
     case AST::AST_ENUM:
@@ -4587,6 +4631,9 @@ void UhdmAst::process_gen_scope_array()
         genscope_node->children.clear();
         delete genscope_node;
     });
+    if (current_node->str != "") {
+        set_attribute(current_node, attr_id::expand_genblock, AST::AstNode::mkconst_int(1, true));
+    }
 }
 
 void UhdmAst::process_tagged_pattern()
