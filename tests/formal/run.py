@@ -16,9 +16,9 @@ sys.path.append(str(repo_dir / "lib" / "python3"))
 from yosys_systemverilog.run_command import run_command
 
 
-def get_skiplist(listfile):
+def get_testlist(listfile):
     """
-    Gets a list of tests to be skipped
+    Reads file with a list of tests
     """
     entries = set()
     with open(listfile, "r") as f:
@@ -29,6 +29,17 @@ def get_skiplist(listfile):
 
     return entries
 
+def convert_to_extra_arg_dict(extra_arg_list):
+    """
+    Packs extra_arg_list into dict
+    """
+    extra_arg_dict = dict()
+    for line in extra_arg_list:
+        test = line.split(' ')[0]
+        extra_arg = line.split(' ')[1]
+        extra_arg_dict[test] = extra_arg
+
+    return extra_arg_dict
 
 def get_test_top_module(work_path, prefix=""):
     """
@@ -132,7 +143,7 @@ def postprocess_gate_v(gate_v_path):
         f.write(content)
 
 
-def run_surelog(test_path, output_dir, prefix=""):
+def run_surelog(test_path, output_dir, extra_arg, prefix=""):
     """
     Writes and executes Surelog synthesis script
     """
@@ -140,7 +151,7 @@ def run_surelog(test_path, output_dir, prefix=""):
     gate_v = Path(output_dir) / f"{prefix}surelog_gate.v"
     script = [
         "plugin -i systemverilog",
-        "tee -o %s/%ssurelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s" % (output_dir, prefix, test_path),
+        "tee -o %s/%ssurelog_ast.txt read_systemverilog -dump_ast1 -mutestdout %s %s" % (output_dir, prefix, extra_arg, test_path),
         "synth_xilinx",
         "write_verilog %s/%ssurelog_gate.v" % (output_dir, prefix),
     ]
@@ -447,7 +458,12 @@ def main():
     # Directory for storing result.
     output_path = args.output_dir.resolve()
 
-    skiplist = get_skiplist(repo_dir/"tests"/"formal"/"skiplist.txt")
+    # Get a list of tests to be skipped
+    skiplist = get_testlist(repo_dir/"tests"/"formal"/"skiplist.txt")
+
+    # Get a list of tests that require extra argument
+    extra_arg_list = get_testlist(repo_dir/"tests"/"formal"/"extra_arg_list.txt")
+    extra_arg_dict = convert_to_extra_arg_dict(extra_arg_list)
 
     if args.test_suite_name:
         test_suite_work_dir = output_path/args.test_suite_name
@@ -478,6 +494,9 @@ def main():
         # Intentionally do not save test result.
         return 0
 
+    # Prepare extra arguments for test if one is provided.
+    extra_arg = extra_arg_dict[full_test_name] if (full_test_name in extra_arg_dict) else ""
+
     cancelled = False
     try:
         group_begin(full_test_name, test_id, tests_count)
@@ -507,7 +526,7 @@ def main():
             test_result["sv2v_yosys"] = "SKIPPED"
 
         ret_equiv = None
-        ret_surelog = run_surelog(test_src_file, work_dir)
+        ret_surelog = run_surelog(test_src_file, work_dir, extra_arg)
         if not ret_surelog:
             top_module_name = get_test_top_module(work_dir)
             ret_equiv = run_equiv(top_module_name, work_dir, yosys_gate=(ys_prefix + "yosys_gate.v"))
@@ -516,7 +535,7 @@ def main():
             test_result["surelog"] = "FAIL"
 
         if preprocessed_path:
-            ret_surelog = run_surelog(preprocessed_path, work_dir, "sv2v_")
+            ret_surelog = run_surelog(preprocessed_path, work_dir, extra_arg, "sv2v_")
             if not ret_surelog:
                 top_module_name = get_test_top_module(work_dir, "sv2v_")
                 ret_equiv = run_equiv(top_module_name, work_dir, surelog_gate="sv2v_surelog_gate.v", yosys_gate=(ys_prefix + "yosys_gate.v"))

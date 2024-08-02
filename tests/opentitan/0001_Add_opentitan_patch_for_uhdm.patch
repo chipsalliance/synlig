@@ -153,12 +153,12 @@ index 8d6cf89b6..6480e08ba 100644
 +        synth: "yosys"
 +        yosys_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: ['-noassert', '-dump_ast1', '-dump_ast2', '-no_dump_ptr']
-+        surelog_options: ['-DSYNTHESIS']
++        surelog_options: ['-DSYNTHESIS', '-synth']
 +      yosys:
 +        arch: "xilinx"
 +        yosys_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: ['-noassert', '-dump_ast1', '-dump_ast2', '-no_dump_ptr']
-+        surelog_options: ['-DSYNTHESIS']
++        surelog_options: ['-DSYNTHESIS', '-synth']
  
    lint:
      <<: *default_target
