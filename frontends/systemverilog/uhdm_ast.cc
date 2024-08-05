@@ -357,21 +357,21 @@ static std::pair<size_t, size_t> set_multirange_dimensions(AST::AstNode *wire_no
             if (ranges[i]->children.size() == 1) {
                 ranges[i]->children.push_back(ranges[i]->children[0]->clone());
             }
-            while (simplify(ranges[i], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(ranges[i], true, false, false, 1, -1, false, false)) {
             }
             // this workaround case, where yosys doesn't follow id2ast and simplifies it to resolve constant
             if (ranges[i]->children[0]->id2ast) {
                 simplify_sv(ranges[i]->children[0]->id2ast, ranges[i]->children[0]);
-                while (simplify(ranges[i]->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
+                while (synlig_simplify(ranges[i]->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
                 }
             }
             if (ranges[i]->children[1]->id2ast) {
                 simplify_sv(ranges[i]->children[1]->id2ast, ranges[i]->children[1]);
-                while (simplify(ranges[i]->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
+                while (synlig_simplify(ranges[i]->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
                 }
             }
             simplify_sv(ranges[i], wire_node);
-            while (simplify(ranges[i], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(ranges[i], true, false, false, 1, -1, false, false)) {
             }
             log_assert(ranges[i]->children[0]->type == AST::AST_CONSTANT);
             log_assert(ranges[i]->children[1]->type == AST::AST_CONSTANT);
@@ -551,7 +551,7 @@ static void resolve_wiretype(AST::AstNode *wire_node)
     // we need to setup current top ast as this simplify
     // needs to have access to all already defined ids
     simplify_sv(wiretype_ast, nullptr);
-    while (simplify(wire_node, true, false, false, 1, -1, false, false)) {
+    while (synlig_simplify(wire_node, true, false, false, 1, -1, false, false)) {
     }
     log_assert(!wiretype_ast->children.empty());
     if ((wiretype_ast->children[0]->type == AST::AST_STRUCT || wiretype_ast->children[0]->type == AST::AST_UNION) &&
@@ -1134,7 +1134,7 @@ static int simplify_struct(AST::AstNode *snode, int base_offset, AST::AstNode *p
     int packed_width = -1;
     for (auto s : snode->children) {
         if (s->type == AST::AST_RANGE) {
-            while (simplify(s, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(s, true, false, false, 1, -1, false, false)) {
             };
         }
     }
@@ -1450,7 +1450,7 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             current_node->attributes[UhdmAst::is_simplified_wire()] = AST::AstNode::mkconst_int(1, true);
             AST_INTERNAL::current_scope[current_node->str] = current_node;
             convert_packed_unpacked_range(current_node);
-            while (simplify(current_node, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(current_node, true, false, false, 1, -1, false, false)) {
             };
         }
         break;
@@ -1473,9 +1473,9 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             current_node->children[0] = nullptr;
             current_node->children[1] = nullptr;
             delete_children(current_node);
-            while (simplify(low_high_bound->children[0], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(low_high_bound->children[0], true, false, false, 1, -1, false, false)) {
             };
-            while (simplify(low_high_bound->children[1], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(low_high_bound->children[1], true, false, false, 1, -1, false, false)) {
             };
             log_assert(low_high_bound->children[0]->type == AST::AST_CONSTANT);
             log_assert(low_high_bound->children[1]->type == AST::AST_CONSTANT);
@@ -1732,7 +1732,7 @@ AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
         }
         // handle vpiBinStrVal, vpiDecStrVal and vpiHexStrVal
         if (val_str.find('\'') != std::string::npos) {
-            return ::systemverilog_plugin::const2ast(std::move(val_str), caseType, false);
+            return ::systemverilog_plugin::synlig_const2ast(std::move(val_str), caseType, false);
         } else {
             auto size = vpi_get(vpiSize, obj_h);
             std::string size_str;
@@ -1748,7 +1748,7 @@ AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
                     size_str = "1";
                 }
             }
-            auto c = ::systemverilog_plugin::const2ast(size_str + strValType + val_str, caseType, false);
+            auto c = ::systemverilog_plugin::synlig_const2ast(size_str + strValType + val_str, caseType, false);
             if (size <= 0) {
                 // unsized unbased const
                 c->is_unsized = true;
@@ -2289,26 +2289,26 @@ void UhdmAst::simplify_parameter(AST::AstNode *parameter, AST::AstNode *module_n
     // second child should be parameter range (optional)
     log_assert(!parameter->children.empty());
     simplify_sv(parameter->children[0], parameter);
-    while (simplify(parameter->children[0], true, false, false, 1, -1, false, false)) {
+    while (synlig_simplify(parameter->children[0], true, false, false, 1, -1, false, false)) {
     }
     // follow id2ast as yosys doesn't do it by default
     if (parameter->children[0]->id2ast) {
         simplify_sv(parameter->children[0]->id2ast, parameter);
-        while (simplify(parameter->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(parameter->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
         }
     }
     if (parameter->children.size() > 1) {
         simplify_sv(parameter->children[1], parameter);
-        while (simplify(parameter->children[1], true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(parameter->children[1], true, false, false, 1, -1, false, false)) {
         }
         if (parameter->children[1]->id2ast) {
             simplify_sv(parameter->children[1]->id2ast, parameter);
-            while (simplify(parameter->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(parameter->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
             }
         }
     }
     // then simplify parameter to AST_CONSTANT or AST_REALVALUE
-    while (simplify(parameter, true, false, false, 1, -1, false, false)) {
+    while (synlig_simplify(parameter, true, false, false, 1, -1, false, false)) {
     }
     clear_current_scope();
 }

@@ -51,7 +51,7 @@ namespace systemverilog_plugin
 using namespace ::Yosys;
 using namespace ::Yosys::AST_INTERNAL;
 
-void annotateTypedEnums(Yosys::AST::AstNode *ast_node, Yosys::AST::AstNode *template_node)
+void synlig_annotate_typed_enums(Yosys::AST::AstNode *ast_node, Yosys::AST::AstNode *template_node)
 {
     // check if enum
     if (template_node->attributes.count(ID::enum_type)) {
@@ -64,7 +64,7 @@ void annotateTypedEnums(Yosys::AST::AstNode *ast_node, Yosys::AST::AstNode *temp
         log_assert(current_scope.count(enum_type) == 1);
         Yosys::AST::AstNode *enum_node = current_scope.at(enum_type);
         log_assert(enum_node->type == Yosys::AST::AST_ENUM);
-        while (simplify(enum_node, true, false, false, 1, -1, false, true)) {
+        while (synlig_simplify(enum_node, true, false, false, 1, -1, false, true)) {
         }
         // get width from 1st enum item:
         log_assert(enum_node->children.size() >= 1);
@@ -107,7 +107,7 @@ void annotateTypedEnums(Yosys::AST::AstNode *ast_node, Yosys::AST::AstNode *temp
     }
 }
 
-static bool name_has_dot(const std::string &name, std::string &struct_name)
+static bool synlig_name_has_dot(const std::string &name, std::string &struct_name)
 {
     // check if plausible struct member name \sss.mmm
     std::string::size_type pos;
@@ -118,7 +118,7 @@ static bool name_has_dot(const std::string &name, std::string &struct_name)
     return false;
 }
 
-static Yosys::AST::AstNode *make_range(int left, int right, bool is_signed = false)
+static Yosys::AST::AstNode *synlig_make_range(int left, int right, bool is_signed = false)
 {
     // generate a pre-validated range node for a fixed signal range.
     auto range = new Yosys::AST::AstNode(Yosys::AST::AST_RANGE);
@@ -131,7 +131,7 @@ static Yosys::AST::AstNode *make_range(int left, int right, bool is_signed = fal
     return range;
 }
 
-static int range_width(Yosys::AST::AstNode *node, Yosys::AST::AstNode *rnode)
+static int synlig_range_width(Yosys::AST::AstNode *node, Yosys::AST::AstNode *rnode)
 {
     log_assert(rnode->type == Yosys::AST::AST_RANGE);
     if (!rnode->range_valid) {
@@ -141,23 +141,23 @@ static int range_width(Yosys::AST::AstNode *node, Yosys::AST::AstNode *rnode)
     return rnode->range_left - rnode->range_right + 1;
 }
 
-[[noreturn]] static void struct_array_packing_error(Yosys::AST::AstNode *node)
+[[noreturn]] static void synlig_struct_array_packing_error(Yosys::AST::AstNode *node)
 {
     log_file_error(node->filename, node->location.first_line, "Unpacked array in packed struct/union member %s\n", node->str.c_str());
 }
 
-static void save_struct_range_dimensions(Yosys::AST::AstNode *node, Yosys::AST::AstNode *rnode)
+static void synlig_save_struct_range_dimensions(Yosys::AST::AstNode *node, Yosys::AST::AstNode *rnode)
 {
     node->multirange_dimensions.push_back(rnode->range_right);
-    node->multirange_dimensions.push_back(range_width(node, rnode));
+    node->multirange_dimensions.push_back(synlig_range_width(node, rnode));
     node->multirange_swapped.push_back(rnode->range_swapped);
 }
 
-static int get_struct_range_offset(Yosys::AST::AstNode *node, int dimension) { return node->multirange_dimensions[2 * dimension]; }
+static int synlig_get_struct_range_offset(Yosys::AST::AstNode *node, int dimension) { return node->multirange_dimensions[2 * dimension]; }
 
-static int get_struct_range_width(Yosys::AST::AstNode *node, int dimension) { return node->multirange_dimensions[2 * dimension + 1]; }
+static int synlig_get_struct_range_width(Yosys::AST::AstNode *node, int dimension) { return node->multirange_dimensions[2 * dimension + 1]; }
 
-static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
+static int synlig_size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
 {
     // Struct members will be laid out in the structure contiguously from left to right.
     // Union members all have zero offset from the start of the union.
@@ -188,7 +188,7 @@ static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
         int width;
         if (node->type == Yosys::AST::AST_STRUCT || node->type == Yosys::AST::AST_UNION) {
             // embedded struct or union
-            width = size_packed_struct(node, base_offset + offset);
+            width = synlig_size_packed_struct(node, base_offset + offset);
             // set range of struct
             node->range_right = base_offset + offset;
             node->range_left = base_offset + offset + width - 1;
@@ -197,7 +197,7 @@ static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
             log_assert(node->type == Yosys::AST::AST_STRUCT_ITEM);
             if (node->children.size() > 0 && node->children[0]->type == Yosys::AST::AST_RANGE) {
                 // member width e.g. bit [7:0] a
-                width = range_width(node, node->children[0]);
+                width = synlig_range_width(node, node->children[0]);
                 if (node->children.size() == 2) {
                     // Unpacked array. Note that this is a Yosys extension; only packed data types
                     // and integer data types are allowed in packed structs / unions in SystemVerilog.
@@ -211,18 +211,18 @@ static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
                             node->multirange_swapped.push_back(true);
                             width *= rnode->range_left;
                         } else {
-                            save_struct_range_dimensions(node, rnode);
-                            width *= range_width(node, rnode);
+                            synlig_save_struct_range_dimensions(node, rnode);
+                            width *= synlig_range_width(node, rnode);
                         }
-                        save_struct_range_dimensions(node, node->children[0]);
+                        synlig_save_struct_range_dimensions(node, node->children[0]);
                     } else {
                         // The Yosys extension for unpacked arrays in packed structs / unions
                         // only supports memories, i.e. e.g. logic [7:0] a [256] - see above.
-                        struct_array_packing_error(node);
+                        synlig_struct_array_packing_error(node);
                     }
                 } else {
                     // Vector
-                    save_struct_range_dimensions(node, node->children[0]);
+                    synlig_save_struct_range_dimensions(node, node->children[0]);
                 }
                 // range nodes are now redundant
                 for (Yosys::AST::AstNode *child : node->children)
@@ -233,12 +233,12 @@ static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
                 if (node->children.size() != 1) {
                     // The Yosys extension for unpacked arrays in packed structs / unions
                     // only supports memories, i.e. e.g. logic [7:0] a [256] - see above.
-                    struct_array_packing_error(node);
+                    synlig_struct_array_packing_error(node);
                 }
                 width = 1;
                 for (auto rnode : node->children[0]->children) {
-                    save_struct_range_dimensions(node, rnode);
-                    width *= range_width(node, rnode);
+                    synlig_save_struct_range_dimensions(node, rnode);
+                    width *= synlig_range_width(node, rnode);
                 }
                 // range nodes are now redundant
                 for (Yosys::AST::AstNode *child : node->children)
@@ -279,7 +279,7 @@ static int size_packed_struct(Yosys::AST::AstNode *snode, int base_offset)
     return (is_union ? packed_width : offset);
 }
 
-Yosys::AST::AstNode *get_struct_member(const Yosys::AST::AstNode *node)
+Yosys::AST::AstNode *synlig_get_struct_member(const Yosys::AST::AstNode *node)
 {
     Yosys::AST::AstNode *member_node;
     if (node->attributes.count(ID::wiretype) && (member_node = node->attributes.at(ID::wiretype)) &&
@@ -290,7 +290,7 @@ Yosys::AST::AstNode *get_struct_member(const Yosys::AST::AstNode *node)
     return NULL;
 }
 
-static void add_members_to_scope(Yosys::AST::AstNode *snode, std::string name)
+static void synlig_add_members_to_scope(Yosys::AST::AstNode *snode, std::string name)
 {
     // add all the members in a struct or union to local scope
     // in case later referenced in assignments
@@ -300,12 +300,12 @@ static void add_members_to_scope(Yosys::AST::AstNode *snode, std::string name)
         current_scope[member_name] = node;
         if (node->type != Yosys::AST::AST_STRUCT_ITEM) {
             // embedded struct or union
-            add_members_to_scope(node, name + "." + node->str);
+            synlig_add_members_to_scope(node, name + "." + node->str);
         }
     }
 }
 
-static int get_max_offset(Yosys::AST::AstNode *node)
+static int synlig_get_max_offset(Yosys::AST::AstNode *node)
 {
     // get the width from the MS member in the struct
     // as members are laid out from left to right in the packed wire
@@ -316,7 +316,7 @@ static int get_max_offset(Yosys::AST::AstNode *node)
     return node->range_left;
 }
 
-static Yosys::AST::AstNode *make_packed_struct(Yosys::AST::AstNode *template_node, std::string &name)
+static Yosys::AST::AstNode *synlig_make_packed_struct(Yosys::AST::AstNode *template_node, std::string &name)
 {
     // create a wire for the packed struct
     auto wnode = new Yosys::AST::AstNode(Yosys::AST::AST_WIRE);
@@ -324,18 +324,18 @@ static Yosys::AST::AstNode *make_packed_struct(Yosys::AST::AstNode *template_nod
     wnode->is_logic = true;
     wnode->range_valid = true;
     wnode->is_signed = template_node->is_signed;
-    int offset = get_max_offset(template_node);
-    auto range = make_range(offset, 0);
+    int offset = synlig_get_max_offset(template_node);
+    auto range = synlig_make_range(offset, 0);
     wnode->children.push_back(range);
     // make sure this node is the one in scope for this name
     current_scope[name] = wnode;
     // add all the struct members to scope under the wire's name
-    add_members_to_scope(template_node, name);
+    synlig_add_members_to_scope(template_node, name);
     return wnode;
 }
 
 // check if a node or its children contains an assignment to the given variable
-static bool node_contains_assignment_to(const Yosys::AST::AstNode *node, const Yosys::AST::AstNode *var)
+static bool synlig_node_contains_assignment_to(const Yosys::AST::AstNode *node, const Yosys::AST::AstNode *var)
 {
     if (node->type == Yosys::AST::AST_ASSIGN_EQ || node->type == Yosys::AST::AST_ASSIGN_LE) {
         // current node is iteslf an assignment
@@ -349,37 +349,27 @@ static bool node_contains_assignment_to(const Yosys::AST::AstNode *node, const Y
         if (child != var && child->str == var->str && child->type == Yosys::AST::AST_WIRE)
             break; // skip the remainder of this block/scope
         // depth-first short circuit
-        if (!node_contains_assignment_to(child, var))
+        if (!synlig_node_contains_assignment_to(child, var))
             return false;
     }
     return true;
 }
 
-static std::string prefix_id(const std::string &prefix, const std::string &str)
-{
-    log_assert(!prefix.empty() && (prefix.front() == '$' || prefix.front() == '\\'));
-    log_assert(!str.empty() && (str.front() == '$' || str.front() == '\\'));
-    log_assert(prefix.back() == '.');
-    if (str.front() == '\\')
-        return prefix + str.substr(1);
-    return prefix + str;
-}
-
 // returns whether an expression contains an unbased unsized literal; does not
 // check the literal exists in a self-determined context
-static bool contains_unbased_unsized(const Yosys::AST::AstNode *node)
+static bool synlig_contains_unbased_unsized(const Yosys::AST::AstNode *node)
 {
     if (node->type == Yosys::AST::AST_CONSTANT)
         return node->is_unsized;
     for (const Yosys::AST::AstNode *child : node->children)
-        if (contains_unbased_unsized(child))
+        if (synlig_contains_unbased_unsized(child))
             return true;
     return false;
 }
 
 // adds a wire to the current module with the given name that matches the
 // dimensions of the given wire reference
-void add_wire_for_ref(const RTLIL::Wire *ref, const std::string &str)
+void synlig_add_wire_for_ref(const RTLIL::Wire *ref, const std::string &str)
 {
     Yosys::AST::AstNode *left = Yosys::AST::AstNode::mkconst_int(ref->width - 1 + ref->start_offset, true);
     Yosys::AST::AstNode *right = Yosys::AST::AstNode::mkconst_int(ref->start_offset, true);
@@ -396,7 +386,7 @@ void add_wire_for_ref(const RTLIL::Wire *ref, const std::string &str)
     current_scope[str] = wire;
 }
 
-enum class IdentUsage {
+enum class SynligIdentUsage {
     NotReferenced, // target variable is neither read or written in the block
     Assigned,      // target variable is always assigned before use
     SyncRequired,  // target variable may be used before it has been assigned
@@ -405,12 +395,12 @@ enum class IdentUsage {
 // determines whether a local variable a block is always assigned before it is
 // used, meaning the nosync attribute can automatically be added to that
 // variable
-static IdentUsage always_asgn_before_use(const Yosys::AST::AstNode *node, const std::string &target)
+static SynligIdentUsage synlig_always_asgn_before_use(const Yosys::AST::AstNode *node, const std::string &target)
 {
     // This variable has been referenced before it has necessarily been assigned
     // a value in this procedure.
     if (node->type == Yosys::AST::AST_IDENTIFIER && node->str == target)
-        return IdentUsage::SyncRequired;
+        return SynligIdentUsage::SyncRequired;
 
     // For case statements (which are also used for if/else), we check each
     // possible branch. If the variable is assigned in all branches, then it is
@@ -423,18 +413,18 @@ static IdentUsage always_asgn_before_use(const Yosys::AST::AstNode *node, const 
         for (const Yosys::AST::AstNode *child : node->children) {
             if (child->type == Yosys::AST::AST_COND && child->children.at(0)->type == Yosys::AST::AST_DEFAULT)
                 has_default = true;
-            IdentUsage nested = always_asgn_before_use(child, target);
-            if (nested != IdentUsage::Assigned && child->type == Yosys::AST::AST_COND)
+            SynligIdentUsage nested = synlig_always_asgn_before_use(child, target);
+            if (nested != SynligIdentUsage::Assigned && child->type == Yosys::AST::AST_COND)
                 all_defined = false;
-            if (nested == IdentUsage::SyncRequired)
+            if (nested == SynligIdentUsage::SyncRequired)
                 any_used = true;
         }
         if (any_used)
-            return IdentUsage::SyncRequired;
+            return SynligIdentUsage::SyncRequired;
         else if (all_defined && has_default)
-            return IdentUsage::Assigned;
+            return SynligIdentUsage::Assigned;
         else
-            return IdentUsage::NotReferenced;
+            return SynligIdentUsage::NotReferenced;
     }
 
     // Check if this is an assignment to the target variable. For simplicity, we
@@ -442,30 +432,30 @@ static IdentUsage always_asgn_before_use(const Yosys::AST::AstNode *node, const 
     if (node->type == Yosys::AST::AST_ASSIGN_EQ) {
         const Yosys::AST::AstNode *ident = node->children.at(0);
         if (ident->type == Yosys::AST::AST_IDENTIFIER && ident->str == target)
-            return IdentUsage::Assigned;
+            return SynligIdentUsage::Assigned;
     }
 
     for (const Yosys::AST::AstNode *child : node->children) {
-        IdentUsage nested = always_asgn_before_use(child, target);
-        if (nested != IdentUsage::NotReferenced)
+        SynligIdentUsage nested = synlig_always_asgn_before_use(child, target);
+        if (nested != SynligIdentUsage::NotReferenced)
             return nested;
     }
-    return IdentUsage::NotReferenced;
+    return SynligIdentUsage::NotReferenced;
 }
 
-static const std::string auto_nosync_prefix = "\\AutoNosync";
+static const std::string synlig_auto_nosync_prefix = "\\AutoNosync";
 
 // mark a local variable in an always_comb block for automatic nosync
 // consideration
-static void mark_auto_nosync(Yosys::AST::AstNode *block, const Yosys::AST::AstNode *wire)
+static void synlig_mark_auto_nosync(Yosys::AST::AstNode *block, const Yosys::AST::AstNode *wire)
 {
     log_assert(block->type == Yosys::AST::AST_BLOCK);
     log_assert(wire->type == Yosys::AST::AST_WIRE);
-    block->attributes[auto_nosync_prefix + wire->str] = Yosys::AST::AstNode::mkconst_int(1, false);
+    block->attributes[synlig_auto_nosync_prefix + wire->str] = Yosys::AST::AstNode::mkconst_int(1, false);
 }
 
 // block names can be prefixed with an explicit scope during elaboration
-static bool is_autonamed_block(const std::string &str)
+static bool synlig_is_autonamed_block(const std::string &str)
 {
     size_t last_dot = str.rfind('.');
     // unprefixed names: autonamed if the first char is a dollar sign
@@ -477,26 +467,26 @@ static bool is_autonamed_block(const std::string &str)
 
 // check a procedural block for auto-nosync markings, remove them, and add
 // nosync to local variables as necessary
-static void check_auto_nosync(Yosys::AST::AstNode *node)
+static void synlig_check_auto_nosync(Yosys::AST::AstNode *node)
 {
     std::vector<RTLIL::IdString> attrs_to_drop;
     for (const auto &elem : node->attributes) {
         // skip attributes that don't begin with the prefix
-        if (elem.first.compare(0, auto_nosync_prefix.size(), auto_nosync_prefix.c_str()))
+        if (elem.first.compare(0, synlig_auto_nosync_prefix.size(), synlig_auto_nosync_prefix.c_str()))
             continue;
 
         // delete and remove the attribute once we're done iterating
         attrs_to_drop.push_back(elem.first);
 
         // find the wire based on the attribute
-        std::string wire_name = elem.first.substr(auto_nosync_prefix.size());
+        std::string wire_name = elem.first.substr(synlig_auto_nosync_prefix.size());
         auto it = current_scope.find(wire_name);
         if (it == current_scope.end())
             continue;
 
         // analyze the usage of the local variable in this block
-        IdentUsage ident_usage = always_asgn_before_use(node, wire_name);
-        if (ident_usage != IdentUsage::Assigned)
+        SynligIdentUsage ident_usage = synlig_always_asgn_before_use(node, wire_name);
+        if (ident_usage != SynligIdentUsage::Assigned)
             continue;
 
         // mark the wire with `nosync`
@@ -514,10 +504,10 @@ static void check_auto_nosync(Yosys::AST::AstNode *node)
 
     // check local variables in any nested blocks
     for (Yosys::AST::AstNode *child : node->children)
-        check_auto_nosync(child);
+        synlig_check_auto_nosync(child);
 }
 
-static inline std::string encode_filename(const std::string &filename)
+static inline std::string synlig_encode_filename(const std::string &filename)
 {
     std::stringstream val;
     if (!std::any_of(filename.begin(), filename.end(),
@@ -686,7 +676,8 @@ void synlig_expand_genblock(AST::AstNode *current_node, const std::string prefix
 //
 // this function also does all name resolving and sets the id2ast member of all
 // nodes that link to a different node using names and lexical scoping.
-bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool in_lvalue, int stage, int width_hint, bool sign_hint, bool in_param)
+bool synlig_simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool in_lvalue, int stage, int width_hint, bool sign_hint,
+                     bool in_param)
 {
     static int recursion_counter = 0;
     static bool deep_recursion_warning = false;
@@ -714,7 +705,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         log_assert(ast_node->type == Yosys::AST::AST_MODULE || ast_node->type == Yosys::AST::AST_INTERFACE);
 
         deep_recursion_warning = true;
-        while (simplify(ast_node, const_fold, at_zero, in_lvalue, 1, width_hint, sign_hint, in_param)) {
+        while (synlig_simplify(ast_node, const_fold, at_zero, in_lvalue, 1, width_hint, sign_hint, in_param)) {
         }
 
         if (!flag_nomem2reg && !ast_node->get_bool_attribute(ID::nomem2reg)) {
@@ -796,7 +787,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                     reg->filename = node->filename;
                     reg->location = node->location;
                     ast_node->children.push_back(reg);
-                    while (simplify(reg, true, false, false, 1, -1, false, false)) {
+                    while (synlig_simplify(reg, true, false, false, 1, -1, false, false)) {
                     } // <- not sure about reg being the first arg here...
                 }
             }
@@ -812,7 +803,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                 delete node;
         }
 
-        while (simplify(ast_node, const_fold, at_zero, in_lvalue, 2, width_hint, sign_hint, in_param)) {
+        while (synlig_simplify(ast_node, const_fold, at_zero, in_lvalue, 2, width_hint, sign_hint, in_param)) {
         }
         recursion_counter--;
         return false;
@@ -871,7 +862,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             // when $display()/$write() functions are used in an always block, simplify the expressions and
             // convert them to a special cell later in genrtlil
             for (auto node : ast_node->children)
-                while (node->simplify(true, stage, -1, false)) {
+                while (synlig_simplify(node, true, false, false, stage, -1, false, false)) {
                 }
             return false;
         }
@@ -999,13 +990,13 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             Yosys::AST::AstNode *node = ast_node->children[i];
             if (node->type == Yosys::AST::AST_PARAMETER || node->type == Yosys::AST::AST_LOCALPARAM || node->type == Yosys::AST::AST_WIRE ||
                 node->type == Yosys::AST::AST_AUTOWIRE || node->type == Yosys::AST::AST_MEMORY || node->type == Yosys::AST::AST_TYPEDEF)
-                while (simplify(node, true, false, false, 1, -1, false,
-                                node->type == Yosys::AST::AST_PARAMETER || node->type == Yosys::AST::AST_LOCALPARAM))
+                while (synlig_simplify(node, true, false, false, 1, -1, false,
+                                       node->type == Yosys::AST::AST_PARAMETER || node->type == Yosys::AST::AST_LOCALPARAM))
                     did_something = true;
             if (node->type == Yosys::AST::AST_ENUM) {
                 for (auto enode : node->children) {
                     log_assert(enode->type == Yosys::AST::AST_ENUM_ITEM);
-                    while (simplify(node, true, false, false, 1, -1, false, in_param))
+                    while (synlig_simplify(node, true, false, false, 1, -1, false, in_param))
                         did_something = true;
                 }
             }
@@ -1013,7 +1004,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
         for (Yosys::AST::AstNode *child : ast_node->children)
             if (child->type == Yosys::AST::AST_ALWAYS && child->attributes.count(ID::always_comb))
-                check_auto_nosync(child);
+                synlig_check_auto_nosync(child);
     }
 
     // create name resolution entries for all objects with names
@@ -1069,7 +1060,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         for (Yosys::AST::AstNode *child : ast_node->children) {
             // simplify any parameters to constants
             if (child->type == Yosys::AST::AST_PARASET)
-                while (simplify(child, true, false, false, 1, -1, false, true)) {
+                while (synlig_simplify(child, true, false, false, 1, -1, false, true)) {
                 }
 
             // look for patterns which _may_ indicate ambiguity requiring
@@ -1093,7 +1084,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                         // this may be a fully sliced signed wire which needs
                         // to be indirected to produce an unsigned connection
                         lookup_suggested = true;
-                } else if (contains_unbased_unsized(value))
+                } else if (synlig_contains_unbased_unsized(value))
                     // unbased unsized literals extend to width of the context
                     lookup_suggested = true;
             }
@@ -1143,10 +1134,10 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
                 // create the indirection wire
                 std::stringstream sstr;
-                sstr << "$indirect$" << ref->name.c_str() << "$" << encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$"
-                     << (autoidx++);
+                sstr << "$indirect$" << ref->name.c_str() << "$" << synlig_encode_filename(ast_node->filename) << ":" << ast_node->location.first_line
+                     << "$" << (autoidx++);
                 std::string tmp_str = sstr.str();
-                add_wire_for_ref(ref, tmp_str);
+                synlig_add_wire_for_ref(ref, tmp_str);
 
                 Yosys::AST::AstNode *asgn = new Yosys::AST::AstNode(Yosys::AST::AST_ASSIGN);
                 current_ast_mod->children.push_back(asgn);
@@ -1181,9 +1172,9 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
     case Yosys::AST::AST_ASSIGN_EQ:
     case Yosys::AST::AST_ASSIGN_LE:
     case Yosys::AST::AST_ASSIGN:
-        while (!ast_node->children[0]->basic_prep && simplify(ast_node->children[0], false, false, true, stage, -1, false, in_param) == true)
+        while (!ast_node->children[0]->basic_prep && synlig_simplify(ast_node->children[0], false, false, true, stage, -1, false, in_param) == true)
             did_something = true;
-        while (!ast_node->children[1]->basic_prep && simplify(ast_node->children[1], false, false, false, stage, -1, false, in_param) == true)
+        while (!ast_node->children[1]->basic_prep && synlig_simplify(ast_node->children[1], false, false, false, stage, -1, false, in_param) == true)
             did_something = true;
         ast_node->children[0]->detectSignWidth(backup_width_hint, backup_sign_hint);
         ast_node->children[1]->detectSignWidth(width_hint, sign_hint);
@@ -1222,17 +1213,17 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         if (!ast_node->basic_prep) {
             for (auto *node : ast_node->children) {
                 // resolve any ranges
-                while (!node->basic_prep && simplify(node, true, false, false, stage, -1, false, false)) {
+                while (!node->basic_prep && synlig_simplify(node, true, false, false, stage, -1, false, false)) {
                     did_something = true;
                 }
             }
             // determine member offsets and widths
-            size_packed_struct(ast_node, 0);
+            synlig_size_packed_struct(ast_node, 0);
 
             // instance rather than just a type in a typedef or outer struct?
             if (!ast_node->str.empty() && ast_node->str[0] == '\\') {
                 // instance so add a wire for the packed structure
-                auto wnode = make_packed_struct(ast_node, ast_node->str);
+                auto wnode = synlig_make_packed_struct(ast_node, ast_node->str);
                 log_assert(current_ast_mod);
                 current_ast_mod->children.push_back(wnode);
             }
@@ -1247,7 +1238,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         // log("\nENUM %s: %d child %d\n", ast_node->str.c_str(), ast_node->basic_prep, ast_node->children[0]->basic_prep);
         if (!ast_node->basic_prep) {
             for (auto item_node : ast_node->children) {
-                while (!item_node->basic_prep && simplify(item_node, false, false, false, stage, -1, false, in_param))
+                while (!item_node->basic_prep && synlig_simplify(item_node, false, false, false, stage, -1, false, in_param))
                     did_something = true;
             }
             // allocate values (called more than once)
@@ -1263,15 +1254,15 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             auto item_node = current_scope[ast_node->children[0]->str];
             if (item_node->type == Yosys::AST::AST_STRUCT || item_node->type == Yosys::AST::AST_UNION) {
                 ast_node->attributes[ID::wiretype] = item_node->clone();
-                size_packed_struct(ast_node->attributes[ID::wiretype], 0);
-                add_members_to_scope(ast_node->attributes[ID::wiretype], ast_node->str);
+                synlig_size_packed_struct(ast_node->attributes[ID::wiretype], 0);
+                synlig_add_members_to_scope(ast_node->attributes[ID::wiretype], ast_node->str);
             }
         }
-        while (!ast_node->children[0]->basic_prep && simplify(ast_node->children[0], false, false, false, stage, -1, false, true) == true)
+        while (!ast_node->children[0]->basic_prep && synlig_simplify(ast_node->children[0], false, false, false, stage, -1, false, true) == true)
             did_something = true;
         ast_node->children[0]->detectSignWidth(width_hint, sign_hint);
         if (ast_node->children.size() > 1 && ast_node->children[1]->type == Yosys::AST::AST_RANGE) {
-            while (!ast_node->children[1]->basic_prep && simplify(ast_node->children[1], false, false, false, stage, -1, false, true) == true)
+            while (!ast_node->children[1]->basic_prep && synlig_simplify(ast_node->children[1], false, false, false, stage, -1, false, true) == true)
                 did_something = true;
             if (!ast_node->children[1]->range_valid)
                 log_file_error(ast_node->filename, ast_node->location.first_line, "Non-constant width range on parameter decl.\n");
@@ -1279,11 +1270,11 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         }
         break;
     case Yosys::AST::AST_ENUM_ITEM:
-        while (!ast_node->children[0]->basic_prep && simplify(ast_node->children[0], false, false, false, stage, -1, false, in_param))
+        while (!ast_node->children[0]->basic_prep && synlig_simplify(ast_node->children[0], false, false, false, stage, -1, false, in_param))
             did_something = true;
         ast_node->children[0]->detectSignWidth(width_hint, sign_hint);
         if (ast_node->children.size() > 1 && ast_node->children[1]->type == Yosys::AST::AST_RANGE) {
-            while (!ast_node->children[1]->basic_prep && simplify(ast_node->children[1], false, false, false, stage, -1, false, in_param))
+            while (!ast_node->children[1]->basic_prep && synlig_simplify(ast_node->children[1], false, false, false, stage, -1, false, in_param))
                 did_something = true;
             if (!ast_node->children[1]->range_valid)
                 log_file_error(ast_node->filename, ast_node->location.first_line, "Non-constant width range on enum item decl.\n");
@@ -1342,7 +1333,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         width_hint = -1;
         sign_hint = true;
         for (auto child : ast_node->children) {
-            while (!child->basic_prep && simplify(child, false, false, in_lvalue, stage, -1, false, in_param) == true)
+            while (!child->basic_prep && synlig_simplify(child, false, false, in_lvalue, stage, -1, false, in_param) == true)
                 did_something = true;
             child->detectSignWidthWorker(width_hint, sign_hint);
         }
@@ -1377,10 +1368,10 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
     if (detect_width_simple && width_hint < 0) {
         if (ast_node->type == Yosys::AST::AST_REPLICATE)
-            while (simplify(ast_node->children[0], true, false, in_lvalue, stage, -1, false, true) == true)
+            while (synlig_simplify(ast_node->children[0], true, false, in_lvalue, stage, -1, false, true) == true)
                 did_something = true;
         for (auto child : ast_node->children)
-            while (!child->basic_prep && simplify(child, false, false, in_lvalue, stage, -1, false, in_param) == true)
+            while (!child->basic_prep && synlig_simplify(child, false, false, in_lvalue, stage, -1, false, in_param) == true)
                 did_something = true;
         ast_node->detectSignWidth(width_hint, sign_hint);
     }
@@ -1390,18 +1381,18 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
     if (ast_node->type == Yosys::AST::AST_TERNARY) {
         if (width_hint < 0) {
-            while (!ast_node->children[0]->basic_prep && simplify(ast_node->children[0], true, false, in_lvalue, stage, -1, false, in_param))
+            while (!ast_node->children[0]->basic_prep && synlig_simplify(ast_node->children[0], true, false, in_lvalue, stage, -1, false, in_param))
                 did_something = true;
 
             bool backup_unevaluated_tern_branch = unevaluated_tern_branch;
             Yosys::AST::AstNode *chosen = ast_node->get_tern_choice().first;
 
             unevaluated_tern_branch = backup_unevaluated_tern_branch || chosen == ast_node->children[2];
-            while (!ast_node->children[1]->basic_prep && simplify(ast_node->children[1], false, false, in_lvalue, stage, -1, false, in_param))
+            while (!ast_node->children[1]->basic_prep && synlig_simplify(ast_node->children[1], false, false, in_lvalue, stage, -1, false, in_param))
                 did_something = true;
 
             unevaluated_tern_branch = backup_unevaluated_tern_branch || chosen == ast_node->children[1];
-            while (!ast_node->children[2]->basic_prep && simplify(ast_node->children[2], false, false, in_lvalue, stage, -1, false, in_param))
+            while (!ast_node->children[2]->basic_prep && synlig_simplify(ast_node->children[2], false, false, in_lvalue, stage, -1, false, in_param))
                 did_something = true;
 
             unevaluated_tern_branch = backup_unevaluated_tern_branch;
@@ -1432,7 +1423,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
     if (const_fold && ast_node->type == Yosys::AST::AST_CASE) {
         ast_node->detectSignWidth(width_hint, sign_hint);
-        while (simplify(ast_node->children[0], const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
+        while (synlig_simplify(ast_node->children[0], const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
         }
         if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT && ast_node->children[0]->bits_only_01()) {
             ast_node->children[0]->is_signed = sign_hint;
@@ -1447,7 +1438,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                         goto keep_const_cond;
                     if (v->type == Yosys::AST::AST_BLOCK)
                         continue;
-                    while (simplify(v, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
+                    while (synlig_simplify(v, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
                     }
                     if (v->type == Yosys::AST::AST_CONSTANT && v->bits_only_01()) {
                         RTLIL::Const case_item_expr = v->bitsAsConst(width_hint, sign_hint);
@@ -1536,7 +1527,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             if (children_are_self_determined)
                 width_hint_here = -1, sign_hint_here = false;
             did_something_here =
-              simplify(ast_node->children[i], const_fold_here, at_zero, in_lvalue_here, stage, width_hint_here, sign_hint_here, in_param_here);
+              synlig_simplify(ast_node->children[i], const_fold_here, at_zero, in_lvalue_here, stage, width_hint_here, sign_hint_here, in_param_here);
             if (did_something_here)
                 did_something = true;
         }
@@ -1556,7 +1547,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         }
     }
     for (auto &attr : ast_node->attributes) {
-        while (simplify(attr.second, true, false, false, stage, -1, false, true))
+        while (synlig_simplify(attr.second, true, false, false, stage, -1, false, true))
             did_something = true;
     }
     if (ast_node->type == Yosys::AST::AST_CASE && stage == 2) {
@@ -1635,7 +1626,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         auto type_node = ast_node->children[0];
         log_assert(type_node->type == Yosys::AST::AST_WIRE || type_node->type == Yosys::AST::AST_MEMORY ||
                    type_node->type == Yosys::AST::AST_STRUCT || type_node->type == Yosys::AST::AST_UNION);
-        while (simplify(type_node, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
+        while (synlig_simplify(type_node, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
             did_something = true;
         }
         log_assert(!type_node->is_custom_type);
@@ -1657,12 +1648,12 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             Yosys::AST::AstNode *template_node = resolved_type_node->children[0];
 
             // Ensure typedef itself is fully simplified
-            while (simplify(template_node, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
+            while (synlig_simplify(template_node, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
             };
 
             if (template_node->type == Yosys::AST::AST_STRUCT || template_node->type == Yosys::AST::AST_UNION) {
                 // replace with wire representing the packed structure
-                newNode = make_packed_struct(template_node, ast_node->str);
+                newNode = synlig_make_packed_struct(template_node, ast_node->str);
                 newNode->attributes[ID::wiretype] = ast_node->mkconst_str(resolved_type_node->str);
                 // add original input/output attribute to resolved wire
                 newNode->is_input = ast_node->is_input;
@@ -1691,7 +1682,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             ast_node->attributes[ID::wiretype] = ast_node->mkconst_str(resolved_type_node->str);
 
             // if an enum then add attributes to support simulator tracing
-            annotateTypedEnums(ast_node, template_node);
+            synlig_annotate_typed_enums(ast_node, template_node);
 
             // Insert clones children from template at beginning
             for (int i = 0; i < GetSize(template_node->children); i++)
@@ -1699,7 +1690,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
             if (ast_node->type == Yosys::AST::AST_MEMORY && GetSize(ast_node->children) == 1) {
                 // Single-bit memories must have [0:0] range
-                Yosys::AST::AstNode *rng = make_range(0, 0);
+                Yosys::AST::AstNode *rng = synlig_make_range(0, 0);
                 ast_node->children.insert(ast_node->children.begin(), rng);
             }
             did_something = true;
@@ -1723,12 +1714,12 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             Yosys::AST::AstNode *template_node = resolved_type_node->children[0];
 
             // Ensure typedef itself is fully simplified
-            while (simplify(template_node, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
+            while (synlig_simplify(template_node, const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param)) {
             };
 
             if (template_node->type == Yosys::AST::AST_STRUCT || template_node->type == Yosys::AST::AST_UNION) {
                 // replace with wire representing the packed structure
-                newNode = make_packed_struct(template_node, ast_node->str);
+                newNode = synlig_make_packed_struct(template_node, ast_node->str);
                 newNode->attributes[ID::wiretype] = ast_node->mkconst_str(resolved_type_node->str);
                 newNode->type = ast_node->type;
                 current_scope[ast_node->str] = ast_node;
@@ -1767,7 +1758,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             log_file_error(ast_node->filename, ast_node->location.first_line, "Index in generate block prefix syntax is not constant!\n");
         }
         if (ast_node->children[1]->type == Yosys::AST::AST_PREFIX)
-            simplify(ast_node->children[1], const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param);
+            synlig_simplify(ast_node->children[1], const_fold, at_zero, in_lvalue, stage, width_hint, sign_hint, in_param);
         log_assert(ast_node->children[1]->type == Yosys::AST::AST_IDENTIFIER);
         newNode = ast_node->children[1]->clone();
         const char *second_part = ast_node->children[1]->str.c_str();
@@ -1958,7 +1949,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
     if (ast_node->type == Yosys::AST::AST_IDENTIFIER && !ast_node->basic_prep) {
         // check if a plausible struct member sss.mmmm
         std::string sname;
-        if (name_has_dot(ast_node->str, sname)) {
+        if (synlig_name_has_dot(ast_node->str, sname)) {
             if (current_scope.count(ast_node->str) > 0) {
                 auto item_node = current_scope[ast_node->str];
                 if (item_node->type == Yosys::AST::AST_STRUCT_ITEM || item_node->type == Yosys::AST::AST_STRUCT ||
@@ -2058,7 +2049,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             std::swap(data_range_left, data_range_right);
 
         std::stringstream sstr;
-        sstr << "$mem2bits$" << ast_node->str << "$" << encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$"
+        sstr << "$mem2bits$" << ast_node->str << "$" << synlig_encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$"
              << (autoidx++);
         std::string wire_id = sstr.str();
 
@@ -2069,7 +2060,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         if (current_block)
             wire->attributes[ID::nosync] = ast_node->mkconst_int(1, false);
         current_ast_mod->children.push_back(wire);
-        while (simplify(wire, true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(wire, true, false, false, 1, -1, false, false)) {
         }
 
         Yosys::AST::AstNode *data = ast_node->clone();
@@ -2108,7 +2099,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         Yosys::AST::AstNode *body = ast_node->children[1];
 
         // eval count expression
-        while (simplify(count, true, false, false, stage, 32, true, false)) {
+        while (synlig_simplify(count, true, false, false, stage, 32, true, false)) {
         }
 
         if (count->type != Yosys::AST::AST_CONSTANT)
@@ -2167,7 +2158,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             int expr_width_hint = -1;
             bool expr_sign_hint = true;
             varbuf->detectSignWidth(expr_width_hint, expr_sign_hint);
-            while (simplify(varbuf, true, false, false, stage, 32, true, false)) {
+            while (synlig_simplify(varbuf, true, false, false, stage, 32, true, false)) {
             }
         }
 
@@ -2208,7 +2199,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                 int expr_width_hint = -1;
                 bool expr_sign_hint = true;
                 buf->detectSignWidth(expr_width_hint, expr_sign_hint);
-                while (simplify(buf, true, false, false, stage, expr_width_hint, expr_sign_hint, false)) {
+                while (synlig_simplify(buf, true, false, false, stage, expr_width_hint, expr_sign_hint, false)) {
                 }
             }
 
@@ -2236,7 +2227,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             size_t pos = local_index->str.rfind('.');
             if (pos != std::string::npos) // remove outer prefix
                 local_index->str = "\\" + local_index->str.substr(pos + 1);
-            local_index->str = prefix_id(prefix, local_index->str);
+            local_index->str = synlig_prefix_id(prefix, local_index->str);
             current_scope[local_index->str] = local_index;
             current_ast_mod->children.push_back(local_index);
 
@@ -2244,7 +2235,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
             if (ast_node->type == Yosys::AST::AST_GENFOR) {
                 for (size_t i = 0; i < buf->children.size(); i++) {
-                    simplify(buf->children[i], const_fold, false, false, stage, -1, false, false);
+                    synlig_simplify(buf->children[i], const_fold, false, false, stage, -1, false, false);
                     current_ast_mod->children.push_back(buf->children[i]);
                 }
             } else {
@@ -2260,7 +2251,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                 int expr_width_hint = -1;
                 bool expr_sign_hint = true;
                 buf->detectSignWidth(expr_width_hint, expr_sign_hint);
-                while (simplify(buf, true, false, false, stage, expr_width_hint, expr_sign_hint, true)) {
+                while (synlig_simplify(buf, true, false, false, stage, expr_width_hint, expr_sign_hint, true)) {
                 }
             }
 
@@ -2303,19 +2294,19 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         synlig_expand_genblock(ast_node, ast_node->str + ".", false);
 
         // if ast_node is an autonamed block is in an always_comb
-        if (current_always && current_always->attributes.count(ID::always_comb) && is_autonamed_block(ast_node->str))
+        if (current_always && current_always->attributes.count(ID::always_comb) && synlig_is_autonamed_block(ast_node->str))
             // track local variables in ast_node block so we can consider adding
             // nosync once the block has been fully elaborated
             for (Yosys::AST::AstNode *child : ast_node->children)
                 if (child->type == Yosys::AST::AST_WIRE && !child->attributes.count(ID::nosync))
-                    mark_auto_nosync(ast_node, child);
+                    synlig_mark_auto_nosync(ast_node, child);
 
         std::vector<Yosys::AST::AstNode *> new_children;
         for (size_t i = 0; i < ast_node->children.size(); i++)
             if (ast_node->children[i]->type == Yosys::AST::AST_WIRE || ast_node->children[i]->type == Yosys::AST::AST_MEMORY ||
                 ast_node->children[i]->type == Yosys::AST::AST_PARAMETER || ast_node->children[i]->type == Yosys::AST::AST_LOCALPARAM ||
                 ast_node->children[i]->type == Yosys::AST::AST_TYPEDEF) {
-                simplify(ast_node->children[i], false, false, false, stage, -1, false, false);
+                synlig_simplify(ast_node->children[i], false, false, false, stage, -1, false, false);
                 current_ast_mod->children.push_back(ast_node->children[i]);
                 current_scope[ast_node->children[i]->str] = ast_node->children[i];
             } else
@@ -2333,7 +2324,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         }
 
         for (size_t i = 0; i < ast_node->children.size(); i++) {
-            simplify(ast_node->children[i], const_fold, false, false, stage, -1, false, false);
+            synlig_simplify(ast_node->children[i], const_fold, false, false, stage, -1, false, false);
             current_ast_mod->children.push_back(ast_node->children[i]);
         }
 
@@ -2344,7 +2335,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
     // simplify generate-if blocks
     if (ast_node->type == Yosys::AST::AST_GENIF && ast_node->children.size() != 0) {
         Yosys::AST::AstNode *buf = ast_node->children[0]->clone();
-        while (simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
+        while (synlig_simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
         }
         if (buf->type != Yosys::AST::AST_CONSTANT) {
             // for (auto f : log_files)
@@ -2368,7 +2359,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             }
 
             for (size_t i = 0; i < buf->children.size(); i++) {
-                simplify(buf->children[i], const_fold, false, false, stage, -1, false, false);
+                synlig_simplify(buf->children[i], const_fold, false, false, stage, -1, false, false);
                 current_ast_mod->children.push_back(buf->children[i]);
             }
 
@@ -2383,7 +2374,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
     // simplify generate-case blocks
     if (ast_node->type == Yosys::AST::AST_GENCASE && ast_node->children.size() != 0) {
         Yosys::AST::AstNode *buf = ast_node->children[0]->clone();
-        while (simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
+        while (synlig_simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
         }
         if (buf->type != Yosys::AST::AST_CONSTANT) {
             // for (auto f : log_files)
@@ -2417,7 +2408,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
                     continue;
 
                 buf = child->clone();
-                while (simplify(buf, true, false, false, stage, width_hint, sign_hint, true)) {
+                while (synlig_simplify(buf, true, false, false, stage, width_hint, sign_hint, true)) {
                 }
                 if (buf->type != Yosys::AST::AST_CONSTANT) {
                     // for (auto f : log_files)
@@ -2446,7 +2437,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             }
 
             for (size_t i = 0; i < buf->children.size(); i++) {
-                simplify(buf->children[i], const_fold, false, false, stage, -1, false, false);
+                synlig_simplify(buf->children[i], const_fold, false, false, stage, -1, false, false);
                 current_ast_mod->children.push_back(buf->children[i]);
             }
 
@@ -2591,7 +2582,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
         int source_width = ast_node->children[0]->id2ast->range_left - ast_node->children[0]->id2ast->range_right + 1;
         int source_offset = ast_node->children[0]->id2ast->range_right;
         int result_width = 1;
-        Yosys::AST::AstNode *member_node = systemverilog_plugin::get_struct_member(ast_node->children[0]);
+        Yosys::AST::AstNode *member_node = systemverilog_plugin::synlig_get_struct_member(ast_node->children[0]);
         if (member_node) {
             // Clamp chunk to range of member within struct/union.
             log_assert(!source_offset && !ast_node->children[0]->id2ast->range_swapped);
@@ -2607,9 +2598,9 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
             shift_expr = range->children[1]->clone();
             Yosys::AST::AstNode *left_at_zero_ast = range->children[0]->clone();
             Yosys::AST::AstNode *right_at_zero_ast = range->children[1]->clone();
-            while (simplify(left_at_zero_ast, true, true, false, stage, -1, false, false)) {
+            while (synlig_simplify(left_at_zero_ast, true, true, false, stage, -1, false, false)) {
             }
-            while (simplify(right_at_zero_ast, true, true, false, stage, -1, false, false)) {
+            while (synlig_simplify(right_at_zero_ast, true, true, false, stage, -1, false, false)) {
             }
             if (left_at_zero_ast->type != Yosys::AST::AST_CONSTANT || right_at_zero_ast->type != Yosys::AST::AST_CONSTANT)
                 log_file_error(ast_node->filename, ast_node->location.first_line, "Unsupported expression on dynamic range select on signal `%s'!\n",
@@ -2623,7 +2614,7 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
 
         if (ast_node->children[0]->id2ast->attributes.count(ID::nowrshmsk)) {
             Yosys::AST::AstNode *node = ast_node->children[0]->id2ast->attributes.at(ID::nowrshmsk);
-            while (simplify(node, true, false, false, stage, -1, false, false)) {
+            while (synlig_simplify(node, true, false, false, stage, -1, false, false)) {
             }
             if (node->type != Yosys::AST::AST_CONSTANT)
                 log_file_error(ast_node->filename, ast_node->location.first_line, "Non-constant value for `nowrshmsk' attribute on `%s'!\n",
@@ -2661,10 +2652,10 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
               Yosys::AST::AST_WIRE,
               new Yosys::AST::AstNode(Yosys::AST::AST_RANGE, ast_node->mkconst_int(source_width - 1, true), ast_node->mkconst_int(0, true)));
             wire_mask->str =
-              stringf("$bitselwrite$mask$%s:%d$%d", encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
+              stringf("$bitselwrite$mask$%s:%d$%d", synlig_encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
             wire_mask->attributes[ID::nosync] = ast_node->mkconst_int(1, false);
             wire_mask->is_logic = true;
-            while (simplify(wire_mask, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(wire_mask, true, false, false, 1, -1, false, false)) {
             }
             current_ast_mod->children.push_back(wire_mask);
 
@@ -2672,10 +2663,10 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
               Yosys::AST::AST_WIRE,
               new Yosys::AST::AstNode(Yosys::AST::AST_RANGE, ast_node->mkconst_int(source_width - 1, true), ast_node->mkconst_int(0, true)));
             wire_data->str =
-              stringf("$bitselwrite$data$%s:%d$%d", encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
+              stringf("$bitselwrite$data$%s:%d$%d", synlig_encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
             wire_data->attributes[ID::nosync] = ast_node->mkconst_int(1, false);
             wire_data->is_logic = true;
-            while (simplify(wire_data, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(wire_data, true, false, false, 1, -1, false, false)) {
             }
             current_ast_mod->children.push_back(wire_data);
 
@@ -2687,11 +2678,11 @@ bool simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zero, bool
               Yosys::AST::AST_WIRE,
               new Yosys::AST::AstNode(Yosys::AST::AST_RANGE, ast_node->mkconst_int(shamt_width_hint - 1, true), ast_node->mkconst_int(0, true)));
             wire_sel->str =
-              stringf("$bitselwrite$sel$%s:%d$%d", encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
+              stringf("$bitselwrite$sel$%s:%d$%d", synlig_encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
             wire_sel->attributes[ID::nosync] = ast_node->mkconst_int(1, false);
             wire_sel->is_logic = true;
             wire_sel->is_signed = shamt_sign_hint;
-            while (simplify(wire_sel, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(wire_sel, true, false, false, 1, -1, false, false)) {
             }
             current_ast_mod->children.push_back(wire_sel);
 
@@ -2771,7 +2762,7 @@ skip_dynamic_range_lvalue_expansion:;
          ast_node->type == Yosys::AST::AST_FAIR || ast_node->type == Yosys::AST::AST_COVER) &&
         current_block != NULL) {
         std::stringstream sstr;
-        sstr << "$formal$" << encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$" << (autoidx++);
+        sstr << "$formal$" << synlig_encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$" << (autoidx++);
         std::string id_check = sstr.str() + "_CHECK", id_en = sstr.str() + "_EN";
 
         Yosys::AST::AstNode *wire_check = new Yosys::AST::AstNode(Yosys::AST::AST_WIRE);
@@ -2779,7 +2770,7 @@ skip_dynamic_range_lvalue_expansion:;
         wire_check->was_checked = true;
         current_ast_mod->children.push_back(wire_check);
         current_scope[wire_check->str] = wire_check;
-        while (simplify(wire_check, true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(wire_check, true, false, false, 1, -1, false, false)) {
         }
 
         Yosys::AST::AstNode *wire_en = new Yosys::AST::AstNode(Yosys::AST::AST_WIRE);
@@ -2796,7 +2787,7 @@ skip_dynamic_range_lvalue_expansion:;
             current_ast_mod->children.back()->children[0]->children[0]->children[0]->was_checked = true;
         }
         current_scope[wire_en->str] = wire_en;
-        while (simplify(wire_en, true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(wire_en, true, false, false, 1, -1, false, false)) {
         }
 
         Yosys::AST::AstNode *check_defval;
@@ -2896,11 +2887,11 @@ skip_dynamic_range_lvalue_expansion:;
               Yosys::AST::AST_WIRE,
               new Yosys::AST::AstNode(Yosys::AST::AST_RANGE, ast_node->mkconst_int(width_hint - 1, true), ast_node->mkconst_int(0, true)));
             wire_tmp->str =
-              stringf("$splitcmplxassign$%s:%d$%d", encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
+              stringf("$splitcmplxassign$%s:%d$%d", synlig_encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, autoidx++);
             current_ast_mod->children.push_back(wire_tmp);
             current_scope[wire_tmp->str] = wire_tmp;
             wire_tmp->attributes[ID::nosync] = ast_node->mkconst_int(1, false);
-            while (simplify(wire_tmp, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(wire_tmp, true, false, false, 1, -1, false, false)) {
             }
             wire_tmp->is_logic = true;
 
@@ -2936,8 +2927,8 @@ skip_dynamic_range_lvalue_expansion:;
         (ast_node->children[0]->children.size() == 1 || ast_node->children[0]->children.size() == 2) &&
         ast_node->children[0]->children[0]->type == Yosys::AST::AST_RANGE) {
         std::stringstream sstr;
-        sstr << "$memwr$" << ast_node->children[0]->str << "$" << encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$"
-             << (autoidx++);
+        sstr << "$memwr$" << ast_node->children[0]->str << "$" << synlig_encode_filename(ast_node->filename) << ":" << ast_node->location.first_line
+             << "$" << (autoidx++);
         std::string id_addr = sstr.str() + "_ADDR", id_data = sstr.str() + "_DATA", id_en = sstr.str() + "_EN";
 
         int mem_width, mem_size, addr_bits;
@@ -2975,7 +2966,7 @@ skip_dynamic_range_lvalue_expansion:;
             wire_addr->was_checked = true;
             current_ast_mod->children.push_back(wire_addr);
             current_scope[wire_addr->str] = wire_addr;
-            while (simplify(wire_addr, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(wire_addr, true, false, false, 1, -1, false, false)) {
             }
 
             Yosys::AST::AstNode *assign_addr = new Yosys::AST::AstNode(Yosys::AST::AST_ASSIGN_EQ, new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER),
@@ -3006,7 +2997,7 @@ skip_dynamic_range_lvalue_expansion:;
             wire_data->is_signed = mem_signed;
             current_ast_mod->children.push_back(wire_data);
             current_scope[wire_data->str] = wire_data;
-            while (simplify(wire_data, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(wire_data, true, false, false, 1, -1, false, false)) {
             }
 
             Yosys::AST::AstNode *assign_data = new Yosys::AST::AstNode(Yosys::AST::AST_ASSIGN_EQ, new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER),
@@ -3026,7 +3017,7 @@ skip_dynamic_range_lvalue_expansion:;
         wire_en->was_checked = true;
         current_ast_mod->children.push_back(wire_en);
         current_scope[wire_en->str] = wire_en;
-        while (simplify(wire_en, true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(wire_en, true, false, false, 1, -1, false, false)) {
         }
 
         Yosys::AST::AstNode *assign_en_first = new Yosys::AST::AstNode(Yosys::AST::AST_ASSIGN_EQ, new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER),
@@ -3076,9 +3067,9 @@ skip_dynamic_range_lvalue_expansion:;
                 if (mem_data_range_offset)
                     offset_ast = new Yosys::AST::AstNode(Yosys::AST::AST_SUB, offset_ast, ast_node->mkconst_int(mem_data_range_offset, true));
 
-                while (simplify(left_at_zero_ast, true, true, false, 1, -1, false, false)) {
+                while (synlig_simplify(left_at_zero_ast, true, true, false, 1, -1, false, false)) {
                 }
-                while (simplify(right_at_zero_ast, true, true, false, 1, -1, false, false)) {
+                while (synlig_simplify(right_at_zero_ast, true, true, false, 1, -1, false, false)) {
                 }
                 if (left_at_zero_ast->type != Yosys::AST::AST_CONSTANT || right_at_zero_ast->type != Yosys::AST::AST_CONSTANT)
                     log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3160,7 +3151,7 @@ skip_dynamic_range_lvalue_expansion:;
                 Yosys::AST::AstNode *wire = new Yosys::AST::AstNode(Yosys::AST::AST_WIRE);
                 wire->str = stringf("$initstate$%d_wire", myidx);
                 current_ast_mod->children.push_back(wire);
-                while (simplify(wire, true, false, false, 1, -1, false, false)) {
+                while (synlig_simplify(wire, true, false, false, 1, -1, false, false)) {
                 }
 
                 Yosys::AST::AstNode *cell =
@@ -3172,7 +3163,7 @@ skip_dynamic_range_lvalue_expansion:;
                 cell->children[1]->children[0]->str = wire->str;
                 cell->children[1]->children[0]->id2ast = wire;
                 current_ast_mod->children.push_back(cell);
-                while (simplify(cell, true, false, false, 1, -1, false, false)) {
+                while (synlig_simplify(cell, true, false, false, 1, -1, false, false)) {
                 }
 
                 newNode = new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER);
@@ -3197,7 +3188,7 @@ skip_dynamic_range_lvalue_expansion:;
 
                 if (GetSize(ast_node->children) == 2) {
                     Yosys::AST::AstNode *buf = ast_node->children[1]->clone();
-                    while (simplify(buf, true, false, false, stage, -1, false, false)) {
+                    while (synlig_simplify(buf, true, false, false, stage, -1, false, false)) {
                     }
                     if (buf->type != Yosys::AST::AST_CONSTANT)
                         log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3228,13 +3219,14 @@ skip_dynamic_range_lvalue_expansion:;
                       Yosys::AST::AST_WIRE,
                       new Yosys::AST::AstNode(Yosys::AST::AST_RANGE, ast_node->mkconst_int(width_hint - 1, true), ast_node->mkconst_int(0, true)));
 
-                    reg->str = stringf("$past$%s:%d$%d$%d", encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, myidx, i);
+                    reg->str =
+                      stringf("$past$%s:%d$%d$%d", synlig_encode_filename(ast_node->filename).c_str(), ast_node->location.first_line, myidx, i);
                     reg->is_reg = true;
                     reg->is_signed = sign_hint;
 
                     current_ast_mod->children.push_back(reg);
 
-                    while (simplify(reg, true, false, false, 1, -1, false, false)) {
+                    while (synlig_simplify(reg, true, false, false, 1, -1, false, false)) {
                     }
 
                     Yosys::AST::AstNode *regid = new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER);
@@ -3312,7 +3304,7 @@ skip_dynamic_range_lvalue_expansion:;
                                    RTLIL::unescape_id(ast_node->str).c_str(), int(ast_node->children.size()));
 
                 Yosys::AST::AstNode *buf = ast_node->children[0]->clone();
-                while (simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
+                while (synlig_simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
                 }
                 if (buf->type != Yosys::AST::AST_CONSTANT)
                     log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3346,7 +3338,7 @@ skip_dynamic_range_lvalue_expansion:;
                     if (ast_node->children.size() == 2) {
                         Yosys::AST::AstNode *buf = ast_node->children[1]->clone();
                         // Evaluate constant expression
-                        while (simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
+                        while (synlig_simplify(buf, true, false, false, stage, width_hint, sign_hint, false)) {
                         }
                         dim = buf->asInt(false);
                         delete buf;
@@ -3370,7 +3362,7 @@ skip_dynamic_range_lvalue_expansion:;
                                        buf->str.c_str());
 
                     // Check for item in packed struct / union
-                    Yosys::AST::AstNode *item_node = systemverilog_plugin::get_struct_member(buf);
+                    Yosys::AST::AstNode *item_node = systemverilog_plugin::synlig_get_struct_member(buf);
                     if (id_ast->type == Yosys::AST::AST_WIRE && item_node) {
                         // The dimension of the original array expression is saved in the 'integer' field
                         dim += buf->integer;
@@ -3386,13 +3378,13 @@ skip_dynamic_range_lvalue_expansion:;
                                 log_file_error(ast_node->filename, ast_node->location.first_line,
                                                "Dimension %d out of range in `%s', as it only has dimensions 1..%d!\n", dim, item_node->str.c_str(),
                                                dims);
-                            right = low = get_struct_range_offset(item_node, dim - 1);
-                            left = high = low + get_struct_range_width(item_node, dim - 1) - 1;
+                            right = low = synlig_get_struct_range_offset(item_node, dim - 1);
+                            left = high = low + synlig_get_struct_range_width(item_node, dim - 1) - 1;
                             if (item_node->multirange_swapped[dim - 1]) {
                                 std::swap(left, right);
                             }
                             for (int i = dim; i < dims; i++) {
-                                mem_depth *= get_struct_range_width(item_node, i);
+                                mem_depth *= synlig_get_struct_range_width(item_node, i);
                             }
                         }
                     }
@@ -3516,7 +3508,7 @@ skip_dynamic_range_lvalue_expansion:;
                 }
 
                 if (ast_node->children.size() >= 1) {
-                    while (simplify(ast_node->children[0], true, false, false, stage, width_hint, sign_hint, false)) {
+                    while (synlig_simplify(ast_node->children[0], true, false, false, stage, width_hint, sign_hint, false)) {
                     }
                     if (!ast_node->children[0]->isConst())
                         log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3529,7 +3521,7 @@ skip_dynamic_range_lvalue_expansion:;
                 }
 
                 if (ast_node->children.size() >= 2) {
-                    while (simplify(ast_node->children[1], true, false, false, stage, width_hint, sign_hint, false)) {
+                    while (synlig_simplify(ast_node->children[1], true, false, false, stage, width_hint, sign_hint, false)) {
                     }
                     if (!ast_node->children[1]->isConst())
                         log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3611,7 +3603,7 @@ skip_dynamic_range_lvalue_expansion:;
                 // Determine which bits to count
                 for (size_t i = 1; i < ast_node->children.size(); i++) {
                     Yosys::AST::AstNode *node = ast_node->children[i];
-                    while (simplify(node, true, false, false, stage, -1, false, false)) {
+                    while (synlig_simplify(node, true, false, false, stage, -1, false, false)) {
                     }
                     if (node->type != Yosys::AST::AST_CONSTANT)
                         log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3710,7 +3702,7 @@ skip_dynamic_range_lvalue_expansion:;
 
                     argtypes.push_back(RTLIL::unescape_id(dpi_decl->children.at(i)->str));
                     args.push_back(ast_node->children.at(i - 2)->clone());
-                    while (simplify(args.back(), true, false, false, stage, -1, false, true)) {
+                    while (synlig_simplify(args.back(), true, false, false, stage, -1, false, true)) {
                     }
 
                     if (args.back()->type != Yosys::AST::AST_CONSTANT && args.back()->type != Yosys::AST::AST_REALVALUE)
@@ -3747,14 +3739,14 @@ skip_dynamic_range_lvalue_expansion:;
                                    RTLIL::unescape_id(ast_node->str).c_str(), int(ast_node->children.size()));
 
                 Yosys::AST::AstNode *node_filename = ast_node->children[0]->clone();
-                while (simplify(node_filename, true, false, false, stage, width_hint, sign_hint, false)) {
+                while (synlig_simplify(node_filename, true, false, false, stage, width_hint, sign_hint, false)) {
                 }
                 if (node_filename->type != Yosys::AST::AST_CONSTANT)
                     log_file_error(ast_node->filename, ast_node->location.first_line,
                                    "Failed to evaluate system function `%s' with non-constant 1st argument.\n", ast_node->str.c_str());
 
                 Yosys::AST::AstNode *node_memory = ast_node->children[1]->clone();
-                while (simplify(node_memory, true, false, false, stage, width_hint, sign_hint, false)) {
+                while (synlig_simplify(node_memory, true, false, false, stage, width_hint, sign_hint, false)) {
                 }
                 if (node_memory->type != Yosys::AST::AST_IDENTIFIER || node_memory->id2ast == nullptr ||
                     node_memory->id2ast->type != Yosys::AST::AST_MEMORY)
@@ -3765,7 +3757,7 @@ skip_dynamic_range_lvalue_expansion:;
 
                 if (GetSize(ast_node->children) > 2) {
                     Yosys::AST::AstNode *node_addr = ast_node->children[2]->clone();
-                    while (simplify(node_addr, true, false, false, stage, width_hint, sign_hint, false)) {
+                    while (synlig_simplify(node_addr, true, false, false, stage, width_hint, sign_hint, false)) {
                     }
                     if (node_addr->type != Yosys::AST::AST_CONSTANT)
                         log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3775,7 +3767,7 @@ skip_dynamic_range_lvalue_expansion:;
 
                 if (GetSize(ast_node->children) > 3) {
                     Yosys::AST::AstNode *node_addr = ast_node->children[3]->clone();
-                    while (simplify(node_addr, true, false, false, stage, width_hint, sign_hint, false)) {
+                    while (synlig_simplify(node_addr, true, false, false, stage, width_hint, sign_hint, false)) {
                     }
                     if (node_addr->type != Yosys::AST::AST_CONSTANT)
                         log_file_error(ast_node->filename, ast_node->location.first_line,
@@ -3814,21 +3806,22 @@ skip_dynamic_range_lvalue_expansion:;
         }
 
         std::stringstream sstr;
-        sstr << ast_node->str << "$func$" << encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$" << (autoidx++) << '.';
+        sstr << ast_node->str << "$func$" << synlig_encode_filename(ast_node->filename) << ":" << ast_node->location.first_line << "$" << (autoidx++)
+             << '.';
         std::string prefix = sstr.str();
 
         Yosys::AST::AstNode *decl = current_scope[ast_node->str];
         if (unevaluated_tern_branch && decl->is_recursive_function())
             goto replace_fcall_later;
         decl = decl->clone();
-        decl->replace_result_wire_name_in_function(ast_node->str, "$result"); // enables recursion
+        synlig_replace_result_wire_name_in_function(decl, ast_node->str, "$result"); // enables recursion
         synlig_expand_genblock(decl, prefix, false);
 
         if (decl->type == Yosys::AST::AST_FUNCTION && !decl->attributes.count(ID::via_celltype)) {
             bool require_const_eval = decl->has_const_only_constructs();
             bool all_args_const = true;
             for (auto child : ast_node->children) {
-                while (simplify(child, true, false, false, 1, -1, false, true)) {
+                while (synlig_simplify(child, true, false, false, 1, -1, false, true)) {
                 }
                 if (child->type != Yosys::AST::AST_CONSTANT && child->type != Yosys::AST::AST_REALVALUE)
                     all_args_const = false;
@@ -3836,7 +3829,7 @@ skip_dynamic_range_lvalue_expansion:;
 
             if (all_args_const) {
                 Yosys::AST::AstNode *func_workspace = decl->clone();
-                func_workspace->str = prefix_id(prefix, "$result");
+                func_workspace->str = synlig_prefix_id(prefix, "$result");
                 newNode = func_workspace->eval_const_function(ast_node, in_param || require_const_eval);
                 delete func_workspace;
                 if (newNode) {
@@ -3861,7 +3854,7 @@ skip_dynamic_range_lvalue_expansion:;
             log_assert(ast_node->type == Yosys::AST::AST_FCALL);
 
             Yosys::AST::AstNode *wire = NULL;
-            std::string res_name = prefix_id(prefix, "$result");
+            std::string res_name = synlig_prefix_id(prefix, "$result");
             for (auto child : decl->children)
                 if (child->type == Yosys::AST::AST_WIRE && child->str == res_name)
                     wire = child->clone();
@@ -3873,7 +3866,7 @@ skip_dynamic_range_lvalue_expansion:;
 
             current_scope[wire->str] = wire;
             current_ast_mod->children.push_back(wire);
-            while (simplify(wire, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(wire, true, false, false, 1, -1, false, false)) {
             }
 
             Yosys::AST::AstNode *lvalue = new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER);
@@ -3919,7 +3912,7 @@ skip_dynamic_range_lvalue_expansion:;
                     wire->is_input = false;
                     wire->is_output = false;
                     current_ast_mod->children.push_back(wire);
-                    while (simplify(wire, true, false, false, 1, -1, false, false)) {
+                    while (synlig_simplify(wire, true, false, false, 1, -1, false, false)) {
                     }
 
                     Yosys::AST::AstNode *wire_id = new Yosys::AST::AstNode(Yosys::AST::AST_IDENTIFIER);
@@ -3960,7 +3953,7 @@ skip_dynamic_range_lvalue_expansion:;
                         for (auto c : child->children)
                             wire->children.push_back(c->clone());
                     } else if (!child->children.empty()) {
-                        while (simplify(child, true, false, false, stage, -1, false, false)) {
+                        while (synlig_simplify(child, true, false, false, stage, -1, false, false)) {
                         }
                         if (GetSize(child->children) == GetSize(wire->children) - contains_value) {
                             for (int i = 0; i < GetSize(child->children); i++)
@@ -3988,14 +3981,14 @@ skip_dynamic_range_lvalue_expansion:;
                     current_ast_mod->children.push_back(wire);
                 }
 
-                while (simplify(wire, true, false, false, 1, -1, false, false)) {
+                while (synlig_simplify(wire, true, false, false, 1, -1, false, false)) {
                 }
 
                 if ((child->is_input || child->is_output) && arg_count < ast_node->children.size()) {
                     Yosys::AST::AstNode *arg = ast_node->children[arg_count++]->clone();
                     // convert purely constant arguments into localparams
                     if (child->is_input && child->type == Yosys::AST::AST_WIRE && arg->type == Yosys::AST::AST_CONSTANT &&
-                        node_contains_assignment_to(decl, child)) {
+                        synlig_node_contains_assignment_to(decl, child)) {
                         wire->type = Yosys::AST::AST_LOCALPARAM;
                         if (wire->attributes.count(ID::nosync))
                             delete wire->attributes.at(ID::nosync);
@@ -4020,7 +4013,7 @@ skip_dynamic_range_lvalue_expansion:;
                             }
                         }
                         // updates the sizing
-                        while (simplify(wire, true, false, false, 1, -1, false, false)) {
+                        while (synlig_simplify(wire, true, false, false, 1, -1, false, false)) {
                         }
                         delete arg;
                         continue;
@@ -4057,7 +4050,7 @@ skip_dynamic_range_lvalue_expansion:;
         if (ast_node->type == Yosys::AST::AST_FCALL) {
             ast_node->delete_children();
             ast_node->type = Yosys::AST::AST_IDENTIFIER;
-            ast_node->str = prefix_id(prefix, "$result");
+            ast_node->str = synlig_prefix_id(prefix, "$result");
         }
         if (ast_node->type == Yosys::AST::AST_TCALL)
             ast_node->str = "";
@@ -4092,7 +4085,7 @@ replace_fcall_later:;
                             tmp_range_left = (param_width + 2 * param_offset) - ast_node->children[0]->range_right - 1;
                             tmp_range_right = (param_width + 2 * param_offset) - ast_node->children[0]->range_left - 1;
                         }
-                        Yosys::AST::AstNode *member_node = systemverilog_plugin::get_struct_member(ast_node);
+                        Yosys::AST::AstNode *member_node = systemverilog_plugin::synlig_get_struct_member(ast_node);
                         int chunk_offset = member_node ? member_node->range_right : 0;
                         log_assert(!(chunk_offset && param_upto));
                         for (int i = tmp_range_right; i <= tmp_range_left; i++) {
