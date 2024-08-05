@@ -82,6 +82,10 @@ class UhdmAstShared
     // Allows verification constructs in Surelog
     bool formal = false;
 
+    // Flag that disables -synth flag when compiling systemverilog with surelog
+    // applies only to read_systemverilog comand
+    bool disable_synth;
+
     // Top nodes of the design (modules, interfaces)
     std::unordered_map<std::string, ::Yosys::AST::AstNode *> top_nodes;
 

@@ -92,6 +92,9 @@ void UhdmCommonFrontend::print_read_options()
     log("        enable support for SystemVerilog assertions and some Yosys extensions\n");
     log("        replace the implicit -D SYNTHESIS with -D FORMAL\n");
     log("\n");
+    log("    -parseall\n");
+    log("        enable non-synthesizable SystemVerilog code which is discarded by default\n");
+    log("\n");
 }
 
 void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::vector<std::string> args, RTLIL::Design *design)
@@ -141,6 +144,8 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
             this->shared.formal = true;
             // Surelog needs it in the command line to annotate UHDM
             unhandled_args.push_back(args[i]);
+        } else if (args[i] == "-parseall") {
+            this->shared.disable_synth = true;
         } else {
             unhandled_args.push_back(args[i]);
         }

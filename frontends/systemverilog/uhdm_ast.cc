@@ -61,6 +61,7 @@ static IdString is_simplified_wire;
 static IdString low_high_bound;
 static IdString is_type_parameter;
 static IdString is_elaborated_module;
+static IdString expand_genblock;
 }; // namespace attr_id
 
 // TODO(mglb): use attr_id::* directly everywhere and remove those methods.
@@ -95,6 +96,7 @@ void attr_id_init()
     attr_id::low_high_bound = MAKE_INTERNAL_ID(low_high_bound);
     attr_id::is_type_parameter = MAKE_INTERNAL_ID(is_type_parameter);
     attr_id::is_elaborated_module = MAKE_INTERNAL_ID(is_elaborated_module);
+    attr_id::expand_genblock = MAKE_INTERNAL_ID(expand_genblock);
 }
 
 void attr_id_cleanup()
@@ -109,6 +111,7 @@ void attr_id_cleanup()
     attr_id::partial = IdString();
     attr_id::is_type_parameter = IdString();
     attr_id::is_elaborated_module = IdString();
+    attr_id::expand_genblock = IdString();
     attr_id::already_initialized = false;
 }
 
@@ -151,7 +154,8 @@ static void delete_internal_attributes(AST::AstNode *node)
         return;
 
     for (auto &attr : {UhdmAst::partial(), UhdmAst::packed_ranges(), UhdmAst::unpacked_ranges(), UhdmAst::force_convert(), UhdmAst::is_imported(),
-                       UhdmAst::is_simplified_wire(), UhdmAst::low_high_bound(), attr_id::is_type_parameter, attr_id::is_elaborated_module}) {
+                       UhdmAst::is_simplified_wire(), UhdmAst::low_high_bound(), attr_id::is_type_parameter, attr_id::is_elaborated_module,
+                       attr_id::expand_genblock}) {
         delete_attribute(node, attr);
     }
 }
@@ -353,21 +357,21 @@ static std::pair<size_t, size_t> set_multirange_dimensions(AST::AstNode *wire_no
             if (ranges[i]->children.size() == 1) {
                 ranges[i]->children.push_back(ranges[i]->children[0]->clone());
             }
-            while (simplify(ranges[i], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(ranges[i], true, false, false, 1, -1, false, false)) {
             }
             // this workaround case, where yosys doesn't follow id2ast and simplifies it to resolve constant
             if (ranges[i]->children[0]->id2ast) {
                 simplify_sv(ranges[i]->children[0]->id2ast, ranges[i]->children[0]);
-                while (simplify(ranges[i]->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
+                while (synlig_simplify(ranges[i]->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
                 }
             }
             if (ranges[i]->children[1]->id2ast) {
                 simplify_sv(ranges[i]->children[1]->id2ast, ranges[i]->children[1]);
-                while (simplify(ranges[i]->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
+                while (synlig_simplify(ranges[i]->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
                 }
             }
             simplify_sv(ranges[i], wire_node);
-            while (simplify(ranges[i], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(ranges[i], true, false, false, 1, -1, false, false)) {
             }
             log_assert(ranges[i]->children[0]->type == AST::AST_CONSTANT);
             log_assert(ranges[i]->children[1]->type == AST::AST_CONSTANT);
@@ -548,7 +552,7 @@ static void resolve_wiretype(AST::AstNode *wire_node)
     // we need to setup current top ast as this simplify
     // needs to have access to all already defined ids
     simplify_sv(wiretype_ast, nullptr);
-    while (simplify(wire_node, true, false, false, 1, -1, false, false)) {
+    while (synlig_simplify(wire_node, true, false, false, 1, -1, false, false)) {
     }
     log_assert(!wiretype_ast->children.empty());
     if ((wiretype_ast->children[0]->type == AST::AST_STRUCT || wiretype_ast->children[0]->type == AST::AST_UNION) &&
@@ -1129,7 +1133,7 @@ static int simplify_struct(AST::AstNode *snode, int base_offset, AST::AstNode *p
     int packed_width = -1;
     for (auto s : snode->children) {
         if (s->type == AST::AST_RANGE) {
-            while (simplify(s, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(s, true, false, false, 1, -1, false, false)) {
             };
         }
     }
@@ -1277,38 +1281,28 @@ static AST::AstNode *make_packed_struct_local(AST::AstNode *template_node, std::
     return wnode;
 }
 
-static void simplify_format_string(AST::AstNode *current_node)
+void resolve_children_reparent(AST::AstNode *current_node)
 {
-    std::string sformat = current_node->children[0]->str;
-    std::string preformatted_string = "";
-    int next_arg = 1;
-    for (size_t i = 0; i < sformat.length(); i++) {
-        if (sformat[i] == '%') {
-            AST::AstNode *node_arg = current_node->children[next_arg];
-            char cformat = sformat[++i];
-            if (cformat == 'b' or cformat == 'B') {
-                simplify(node_arg, true, false, false, 1, -1, false, false);
-                if (node_arg->type != AST::AST_CONSTANT)
-                    log_file_error(current_node->filename, current_node->location.first_line,
-                                   "Failed to evaluate system task `%s' with non-constant argument.\n", current_node->str.c_str());
-
-                RTLIL::Const val = node_arg->bitsAsConst();
-                for (int j = val.size() - 1; j >= 0; j--) {
-                    // We add ACII value of 0 to convert number to character
-                    preformatted_string += ('0' + val[j]);
-                }
-                delete current_node->children[next_arg];
-                current_node->children.erase(current_node->children.begin() + next_arg);
-            } else {
-                next_arg++;
-                preformatted_string += std::string("%") + cformat;
-            }
-        } else {
-            preformatted_string += sformat[i];
+    bool have_children_to_reparent = false;
+    for (AST::AstNode *child : current_node->children) {
+        if (child->attributes.count(attr_id::expand_genblock)) {
+            have_children_to_reparent = true;
         }
     }
-    delete current_node->children[0];
-    current_node->children[0] = AST::AstNode::mkconst_str(preformatted_string);
+    if (!have_children_to_reparent)
+        return;
+    std::vector<AST::AstNode *> reparented;
+    for (AST::AstNode *child : current_node->children) {
+        if (child->attributes.count(attr_id::expand_genblock)) {
+            for (AST::AstNode *grandchild : child->children)
+                reparented.push_back(grandchild);
+            child->children.clear();
+            delete child;
+        } else {
+            reparented.push_back(child);
+        }
+    }
+    current_node->children = reparented;
 }
 
 // A wrapper for Yosys simplify function.
@@ -1368,10 +1362,26 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
         delete expanded;
         expanded = nullptr;
     }
+
+    if (current_node->attributes.count(attr_id::expand_genblock)) {
+        log_assert(current_node->str != "");
+        auto backup_scope = AST_INTERNAL::current_scope;
+
+        AST_INTERNAL::current_scope[current_node->str] = current_node;
+        synlig_expand_genblock(current_node, current_node->str + ".", false);
+        current_node->str = "";
+
+        std::swap(AST_INTERNAL::current_scope, backup_scope);
+        backup_scope.clear();
+    }
+
     // First simplify children
     for (size_t i = 0; i < current_node->children.size(); i++) {
         simplify_sv(current_node->children[i], current_node);
     }
+
+    resolve_children_reparent(current_node);
+
     switch (current_node->type) {
     case AST::AST_TYPEDEF:
     case AST::AST_ENUM:
@@ -1438,13 +1448,11 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             current_node->attributes[UhdmAst::is_simplified_wire()] = AST::AstNode::mkconst_int(1, true);
             AST_INTERNAL::current_scope[current_node->str] = current_node;
             convert_packed_unpacked_range(current_node);
-            while (simplify(current_node, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(current_node, true, false, false, 1, -1, false, false)) {
             };
         }
         break;
     case AST::AST_TCALL:
-        if (current_node->str == "$display" || current_node->str == "$write")
-            simplify_format_string(current_node);
         break;
     case AST::AST_COND:
     case AST::AST_CONDX:
@@ -1463,9 +1471,9 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             current_node->children[0] = nullptr;
             current_node->children[1] = nullptr;
             delete_children(current_node);
-            while (simplify(low_high_bound->children[0], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(low_high_bound->children[0], true, false, false, 1, -1, false, false)) {
             };
-            while (simplify(low_high_bound->children[1], true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(low_high_bound->children[1], true, false, false, 1, -1, false, false)) {
             };
             log_assert(low_high_bound->children[0]->type == AST::AST_CONSTANT);
             log_assert(low_high_bound->children[1]->type == AST::AST_CONSTANT);
@@ -1484,6 +1492,12 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
             current_node->children.push_back(result);
             delete_attribute(current_node, UhdmAst::low_high_bound());
         }
+        break;
+    case AST::AST_EQ:
+        if (current_node->children.size() != 2)
+            log_file_error(
+              current_node->filename, current_node->location.first_line,
+              "Equality operator demands two arguments, but got one; it might happen because synlig discards most non-synthesizable code\n");
         break;
     default:
         break;
@@ -1716,7 +1730,7 @@ AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
         }
         // handle vpiBinStrVal, vpiDecStrVal and vpiHexStrVal
         if (val_str.find('\'') != std::string::npos) {
-            return ::systemverilog_plugin::const2ast(std::move(val_str), caseType, false);
+            return ::systemverilog_plugin::synlig_const2ast(std::move(val_str), caseType, false);
         } else {
             auto size = vpi_get(vpiSize, obj_h);
             std::string size_str;
@@ -1732,7 +1746,7 @@ AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
                     size_str = "1";
                 }
             }
-            auto c = ::systemverilog_plugin::const2ast(size_str + strValType + val_str, caseType, false);
+            auto c = ::systemverilog_plugin::synlig_const2ast(size_str + strValType + val_str, caseType, false);
             if (size <= 0) {
                 // unsized unbased const
                 c->is_unsized = true;
@@ -2273,26 +2287,26 @@ void UhdmAst::simplify_parameter(AST::AstNode *parameter, AST::AstNode *module_n
     // second child should be parameter range (optional)
     log_assert(!parameter->children.empty());
     simplify_sv(parameter->children[0], parameter);
-    while (simplify(parameter->children[0], true, false, false, 1, -1, false, false)) {
+    while (synlig_simplify(parameter->children[0], true, false, false, 1, -1, false, false)) {
     }
     // follow id2ast as yosys doesn't do it by default
     if (parameter->children[0]->id2ast) {
         simplify_sv(parameter->children[0]->id2ast, parameter);
-        while (simplify(parameter->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(parameter->children[0]->id2ast, true, false, false, 1, -1, false, false)) {
         }
     }
     if (parameter->children.size() > 1) {
         simplify_sv(parameter->children[1], parameter);
-        while (simplify(parameter->children[1], true, false, false, 1, -1, false, false)) {
+        while (synlig_simplify(parameter->children[1], true, false, false, 1, -1, false, false)) {
         }
         if (parameter->children[1]->id2ast) {
             simplify_sv(parameter->children[1]->id2ast, parameter);
-            while (simplify(parameter->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
+            while (synlig_simplify(parameter->children[1]->id2ast, true, false, false, 1, -1, false, false)) {
             }
         }
     }
     // then simplify parameter to AST_CONSTANT or AST_REALVALUE
-    while (simplify(parameter, true, false, false, 1, -1, false, false)) {
+    while (synlig_simplify(parameter, true, false, false, 1, -1, false, false)) {
     }
     clear_current_scope();
 }
@@ -4585,6 +4599,9 @@ void UhdmAst::process_gen_scope_array()
         genscope_node->children.clear();
         delete genscope_node;
     });
+    if (current_node->str != "") {
+        set_attribute(current_node, attr_id::expand_genblock, AST::AstNode::mkconst_int(1, true));
+    }
 }
 
 void UhdmAst::process_tagged_pattern()
@@ -4681,9 +4698,9 @@ void UhdmAst::process_sys_func_call()
 
     if (current_node->str == "\\$display" || current_node->str == "\\$write") {
         // According to standard, %h and %x mean the same, but %h is currently unsupported by mainline yosys
-        std::string replaced_string = std::regex_replace(current_node->children[0]->str, std::regex("%[h|H]"), "%x");
-        delete current_node->children[0];
-        current_node->children[0] = AST::AstNode::mkconst_str(replaced_string);
+        if (current_node->children[0]->type == AST::AST_CONSTANT && current_node->children[0]->is_string) {
+            current_node->children[0]->str = std::regex_replace(current_node->children[0]->str, std::regex("%[h|H]"), "%x");
+        }
     }
 
     std::string remove_backslash[] = {"\\$display", "\\$strobe",   "\\$write",    "\\$monitor", "\\$time",    "\\$finish",

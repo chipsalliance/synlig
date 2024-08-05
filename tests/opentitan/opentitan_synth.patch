@@ -1,0 +1,21 @@
+diff --git a/hw/ip/prim/rtl/prim_util_memload.svh b/hw/ip/prim/rtl/prim_util_memload.svh
+index 7f8c6da..e43a140 100644
+--- a/hw/ip/prim/rtl/prim_util_memload.svh
++++ b/hw/ip/prim/rtl/prim_util_memload.svh
+@@ -59,10 +59,14 @@ initial begin
+ 
+   // Print the hierarchical path to the memory to help make formal connectivity checks easy.
+   void'($value$plusargs("show_mem_paths=%0b", show_mem_paths));
+-  if (show_mem_paths) $display("%m");
++  `ifndef SYNTHESIS
++    if (show_mem_paths) $display("%m");
++  `endif
+ 
+   if (MemInitFile != "") begin : gen_meminit
+-      $display("Initializing memory %m from file '%s'.", MemInitFile);
++      `ifndef SYNTHESIS
++          $display("Initializing memory %m from file '%s'.", MemInitFile);
++      `endif
+       $readmemh(MemInitFile, mem);
+   end
+ end

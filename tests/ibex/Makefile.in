@@ -7,7 +7,7 @@ IBEX = ${root_dir}/../third_party/ibex
 #############################
 
 ${IBEX}/.gitpatch:
-	cd ${IBEX} && git apply ${curr_dir}/top_artya7_core.patch && touch $@
+	cd ${IBEX} && git apply ${curr_dir}/top_artya7_core.patch && git apply ${curr_dir}/ibex_synth.patch && touch $@
 
 uhdm/yosys/synth-ibex: clean-build ${IBEX}/.gitpatch
 	virtualenv ${root_dir}/venv-ibex
