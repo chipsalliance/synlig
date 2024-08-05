@@ -852,7 +852,7 @@ bool synlig_simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zer
             // when $display()/$write() functions are used in an initial block, print them during synthesis
             Fmt fmt = ast_node->processFormat(stage, /*sformat_like=*/false, default_base);
             if (ast_node->str.substr(0, 8) == "$display")
-                fmt.append_string("\n");
+                fmt.append_literal("\n");
             log("%s", fmt.render().c_str());
         } else {
             // when $display()/$write() functions are used in an always block, simplify the expressions and

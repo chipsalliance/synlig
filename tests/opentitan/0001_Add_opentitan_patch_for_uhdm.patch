@@ -146,13 +146,14 @@ index 8d6cf89b6..6480e08ba 100644
      toplevel: top_earlgrey_nexysvideo
      parameters:
        - BootRomInitFile
-@@ -64,6 +64,15 @@ targets:
+@@ -64,6 +64,16 @@ targets:
      tools:
        vivado:
          part: "xc7a200tsbg484-1" # Nexys Video
 +        synth: "yosys"
 +        yosys_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
 +        yosys_read_options: ['-noassert', '-dump_ast1', '-dump_ast2', '-no_dump_ptr']
++        yosys_extra_passes: ['delete */t:\$scopeinfo']
 +        surelog_options: ['-DSYNTHESIS', '-synth']
 +      yosys:
 +        arch: "xilinx"
