@@ -54,6 +54,7 @@
 # wires to cells and the fact, that currently formal verification
 # requires the same order of assignments
 simple:fsm_single_always/dut.v
+simple:NestedStructs/top.sv
 yosys:simple/fsm.v
 yosys:fmt/always_comb.v
 yosys:opt/opt_lut.v
@@ -77,6 +78,7 @@ sv2v:core/end_labels.v
 sv2v:core/empty_args.v
 sv2v:core/empty_args.sv
 sv2v:core/nest_order.v
+sv2v:relong/case.sv
 ########################################################################################
 # Type parameters in top modules cause the modules to be renamed
 # and handled incorrectly in verification scripts.
@@ -92,6 +94,7 @@ sv2v:error/size_cast_zero_lit.sv
 # These tests contain incorrect systemverilog code and are parsed differently by yosys and synlig
 sv2v:error/size_cast_neg_lit_1.sv
 sv2v:error/size_cast_neg_lit_2.sv
+sv2v:error/typeof_atom_bit.sv
 # Yosys aborts in Fmt::parse_verilog due to unsupported format.
 # There's nothing to compare with the plugin in Formal Verification.
 # This test is non-synthesizable.
