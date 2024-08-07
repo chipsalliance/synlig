@@ -65,7 +65,7 @@ endif
 # Variable evaluation: in recipe, ${var}
 define ${ts}.build_command
 		cd ${${ts}.src_dir}
-		${MAKE} ${${ts}.make_args} --no-print-directory
+		${MAKE} ${${ts}.make_args} --no-print-directory ENABLE_LTO=0
 endef
 
 define ${ts}.install_command
