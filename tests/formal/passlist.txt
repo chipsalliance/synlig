@@ -425,7 +425,6 @@ sv2v:lex/macro_macro.v
 sv2v:lex/macro_string.sv
 sv2v:lex/macro_vendor_comment.sv
 sv2v:lex/no_newline.sv
-sv2v:lex/number.sv
 sv2v:lex/number_literal_whitespace.v
 sv2v:lex/undefineall.sv
 sv2v:lex/undefineall.v
