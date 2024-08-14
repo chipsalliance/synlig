@@ -41,11 +41,17 @@ test_cases=( $(cd ${REPO_DIR}/tests && echo simple_tests/!(${filter_pat})) )
 global_status=0
 mkdir -p "$(dirname "$RESULTS_FILE")"
 
+declare -a failed_tests_list
+
 # Test
 
 cd $REPO_DIR
 for test_case in "${test_cases[@]}"; do
-    printf '::group::%s\n' "$test_case"
+    if [ -n "$GITHUB_ACTIONS" ]; then
+        printf '::group::%s\n' "$test_case"
+    else
+        printf "# %s #\n" "$test_case"
+    fi
     export test_case
     test_name="${test_case//tests\//}"
     test_name="${test_name//\//_}"
@@ -119,8 +125,24 @@ for test_case in "${test_cases[@]}"; do
     fi
 
     printf '%d\t%d\t%s\n' "$test_ok" "$asan_ok" "$test_name" >> "$RESULTS_FILE"
-    printf '::endgroup::\n'
+    if [ -n "$GITHUB_ACTIONS" ]; then
+        printf '::endgroup::\n'
+    else
+        if (( $test_ok == 1 )); then
+            printf "|  PASS\n\n"
+        else
+            failed_tests_list+=("$test_name")
+        fi
+    fi
 done
+
+if [ -z "$GITHUB_ACTIONS" ] && [[ $global_status -ne 0 ]]; then
+    echo "Failed tests list:"
+    for test_name in ${failed_tests_list[@]}
+    do
+		echo $test_name
+    done
+fi
 
 # Leave with non-zero error status if any test failed
 if [[ $global_status -ne 0 ]]; then

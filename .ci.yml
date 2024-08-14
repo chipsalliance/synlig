@@ -2,7 +2,6 @@ stages:
   - check_code_format
   - build_binaries
   - run_parsing_and_formal_tests
-  - verify_formal_tests_passlist
   - run_large_designs_tests
   - optional_bsg_tests
 
@@ -12,13 +11,20 @@ check_format:
   stage: check_code_format
   script:
     - echo "Install dependencies"
-    - apt update && apt install -y git clang-format
+    - apt update && apt install -y git clang-format python3 jq
     - echo "Check code format"
     - ./.github/scripts/format_sources.sh
+    - exit_code=0
     - if ! git diff --exit-code; then
     -   echo "Format locally using ./.github/scripts/format_sources.sh"
-    -   /bin/false
+    -   exit_code=1
     - fi
+    - ./.github/scripts/sort_passlists.sh
+    - if ! git diff --exit-code; then
+    -   echo "Format locally using ./.github/scripts/format_sources.sh"
+    -   exit_code=1
+    - fi
+    - exit $exit_code
 
 build_binaries:
   stage: build_binaries
@@ -45,8 +51,7 @@ build_binaries:
     - echo "Build sv2v binary"
     - git submodule update --init --recursive --checkout third_party/sv2v
     - wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-    - make -j$(nproc) -C $PWD/third_party/sv2v
-    - cp third_party/sv2v/bin/sv2v out/release/bin/
+    - make build_sv2v -j$(nproc)
   artifacts:
     when: always
     paths:
@@ -129,18 +134,17 @@ formal_verification_simple_tests:
   script:
     - echo "Install dependencies"
     - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - apt install -y $DEPENDENCIES_FOR_TESTING python3-click
+    - echo "Load submodules"
+    - git submodule sync
+    - git submodule update --init --checkout third_party/{eqy,sby}
+    - echo "Prepare eqy"
+    - make build_eqy build_sby -j $(nproc)
     - echo "Start testing"
     - export PATH="$PWD/out/current/bin:$PATH"
     - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
     - echo "Gather tests results"
-    - list_file="build/$NAME.performed_tests_list.txt"
-    - for result_json in build/tests/*/*/result.json; do
-    -   test_name=$(jq -r '.name' "${result_json}")
-    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
-    - done
-    - set -o pipefail
-    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+    - ./tests/formal/gather_fv_results.sh $NAME
   artifacts:
     when: always
     paths:
@@ -161,21 +165,17 @@ formal_verification_yosys_tests:
   script:
     - echo "Install dependencies"
     - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - apt install -y $DEPENDENCIES_FOR_TESTING python3-click
     - echo "Load submodules"
     - git submodule sync
-    - git submodule update --init --recursive third_party/yosys
+    - git submodule update --init --checkout third_party/{eqy,sby,yosys}
+    - echo "Prepare eqy"
+    - make build_eqy build_sby -j $(nproc)
     - echo "Start testing"
     - export PATH="$PWD/out/current/bin:$PATH"
     - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
     - echo "Gather tests results"
-    - list_file="build/$NAME.performed_tests_list.txt"
-    - for result_json in build/tests/*/*/result.json; do
-    -   test_name=$(jq -r '.name' "${result_json}")
-    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
-    - done
-    - set -o pipefail
-    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+    - ./tests/formal/gather_fv_results.sh $NAME
   artifacts:
     when: always
     paths:
@@ -196,44 +196,21 @@ formal_verification_sv2v_tests:
   script:
     - echo "Install dependencies"
     - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
+    - apt install -y $DEPENDENCIES_FOR_TESTING python3-click
     - echo "Load submodules"
     - git submodule sync
-    - git submodule update --init --recursive --checkout third_party/sv2v
+    - git submodule update --init --checkout third_party/{sv2v,eqy,sby}
+    - echo "Prepare eqy"
+    - make build_eqy build_sby -j $(nproc)
     - echo "Start testing"
     - export PATH="$PWD/out/current/bin:$PATH"
     - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
     - echo "Gather tests results"
-    - list_file="build/$NAME.performed_tests_list.txt"
-    - for result_json in build/tests/*/*/result.json; do
-    -   test_name=$(jq -r '.name' "${result_json}")
-    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
-    - done
-    - set -o pipefail
-    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+    - ./tests/formal/gather_fv_results.sh $NAME
   artifacts:
     when: always
     paths:
       - build/
-
-verify_formal_tests_passlist:
-  stage: verify_formal_tests_passlist
-  dependencies: [formal_verification_simple_tests, formal_verification_yosys_tests, formal_verification_sv2v_tests]
-  only:
-    - main
-    - merge_requests
-  script:
-    - echo "Check if every test from passlist.txt was executed"
-    - sort build/*.performed_tests_list.txt > performed_tests_list.txt
-    - cat tests/formal/passlist.txt | sed '/^#/d' | sort > sorted_passlist.txt
-    - readarray not_performed_tests < <(comm -13 performed_tests_list.txt sorted_passlist.txt)
-    - if (( ${#not_performed_tests[@]} > 0 )); then
-    -   printf '\x1b[1mTests from passlist.txt that were not performed:\x1b[0m\n'
-    -   printf '\x1b[91m%s\x1b[0m\n' "${not_performed_tests[@]}"
-    -   exit 1
-    - else
-    -   exit 0
-    - fi
 
 veer_synth_large_design:
   stage: run_large_designs_tests

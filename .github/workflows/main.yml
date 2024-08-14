@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update -q
-          apt-get install -y clang-format
+          apt-get install -y git clang-format python3 jq
 
       - name: Sources format check
         run: |
@@ -243,20 +243,20 @@ jobs:
         run: |
           export PATH=$PWD/install/bin:/usr/local/bin:${PATH}
           wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-          make -j$(nproc) -C $PWD/third_party/sv2v
+          make build_sv2v -j$(nproc)
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
           name: sv2v
           path: |
-            third_party/sv2v/bin/sv2v
+            out/release/bin/sv2v
 
       - name: Save build results to cache
         if: ${{ steps.cache-restore.outputs.cache-hit != 'true' && ! (failure() || cancelled()) }}
         uses: actions/cache/save@v3
         with:
-          path: third_party/sv2v/bin/sv2v
+          path: out/release/bin/sv2v
           key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Upload load graphs

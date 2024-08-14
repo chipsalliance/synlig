@@ -56,6 +56,7 @@ jobs:
               libgoogle-perftools-dev \
               python3 \
               python3-dev \
+              python3-click \
               swig \
               tcl-dev \
               tclsh \
@@ -68,8 +69,7 @@ jobs:
         run: |
           git submodule sync
           git submodule update --depth 1 --init --recursive --checkout \
-              third_party/yosys \
-              third_party/sv2v \
+              third_party/{yosys,sv2v,eqy,sby} \
               ;
 
       - name: Download binaries
@@ -87,6 +87,10 @@ jobs:
           name: sv2v
           path: out/current/bin/
 
+      - name: Build eqy and sby
+        run: |
+          make build_eqy build_sby -j$(nproc)
+
       - name: Test
         run: |
           chmod +x out/current/bin/sv2v
@@ -99,17 +103,12 @@ jobs:
 
       - name: Generate list of performed tests
         run: |
-          list_file="build/${TEST_SUITE_NAME}.performed_tests_list.txt"
-          touch "$list_file"
-          for result_json in build/tests/*/*/result.json; do
-            test_name=$(jq -r '.name' "${result_json}")
-            printf '%s:%s\n' "${TEST_SUITE_NAME}" "${test_name}" >> "$list_file"
-          done
+          ./tests/formal/gather_fv_results.sh $NAME
 
       - name: Pack formal verification logs
         run: |
           cd build
-          tar cf ${TEST_SUITE_NAME}.tar tests/*/*/*.out tests/*/*/slpp_all/*.log tests/*/*/*.txt tests/*/*/result.json
+          tar cf ${TEST_SUITE_NAME}.tar tests/*/*
 
       - name: Upload formal verification logs
         uses: actions/upload-artifact@v2
