@@ -67,7 +67,7 @@ class UhdmAst
     ::Yosys::AST::AstNode *make_identifier(std::string name);
 
     // Makes the passed node a cell node of the specified type
-    void make_cell(vpiHandle obj_h, ::Yosys::AST::AstNode *node, ::Yosys::AST::AstNode *type);
+    void make_cell(vpiHandle obj_h, ::Yosys::AST::AstNode *node, std::string type);
 
     // Moves a type node to the specified node. If a node of the same name already exists there, the type node is deleted.
     void move_type_to_new_typedef(::Yosys::AST::AstNode *current_node, ::Yosys::AST::AstNode *type_node);
@@ -180,7 +180,7 @@ class UhdmAst
     void process_gate();
     void process_primterm();
     void process_type_parameter();
-    void simplify_parameter(::Yosys::AST::AstNode *parameter, ::Yosys::AST::AstNode *module_node = nullptr);
+    void simplify_parameter(::Yosys::AST::AstNode *parameter, const std::vector<::Yosys::AST::AstNode *> &parameter_scopes);
     void process_unsupported_stmt(const UHDM::BaseClass *object, bool is_error = true);
     void process_array_expr(const UHDM::BaseClass *object);
 
