@@ -5,7 +5,7 @@
 # there.
 #
 # You can also set configuration variable through make command line arguments.
-#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#--------------------------------------------------------------------------------
 
 # One of: release, debug, asan
 CFG_BUILD_TYPE := release
