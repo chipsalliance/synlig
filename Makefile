@@ -279,9 +279,9 @@ It is recommended to interrupt this build and clean the directory with:
 	${MAKE} CFG_BUILD_DIR:=${BUILD_DIR} clean
 
 Configuration diff:
-┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+--------------------------------------------------------------------------------
 $(file <${BUILD_DIR}.buildconfig.diff)
-┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+--------------------------------------------------------------------------------
 
 This message won't be shown again. The original buildconfig file has been moved to:
 ${buildconfig_state_file}.old
@@ -293,7 +293,6 @@ endif
 $(shell cp ${buildconfig_state_file}.new ${buildconfig_state_file})
 undefine config_changed
 else
-# TODO(mglb): convert it to a target
 buildconfig_state_file := ${BUILD_DIR}buildconfig
 $(shell mkdir -p ${BUILD_DIR})
 $(file >${buildconfig_state_file},${buildconfig_state_file_content}${C.NL})
