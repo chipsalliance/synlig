@@ -14,11 +14,8 @@ jobs:
       matrix:
         include:
           - name: simple
-            test-suite: tests/simple_tests
           - name: sv2v
-            test-suite: third_party/sv2v/test
           - name: yosys
-            test-suite: third_party/yosys/tests
       fail-fast: false
     name: ${{ matrix.name }}
     env:
@@ -26,8 +23,6 @@ jobs:
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-highmem-8"
-      PARSER: yosys-plugin
-      TEST_SUITE_DIR: ${{ matrix.test-suite }}
       TEST_SUITE_NAME: ${{ matrix.name }}
 
     steps:
@@ -42,35 +37,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              jq \
-              libfl-dev \
-              libgoogle-perftools-dev \
-              python3 \
-              python3-dev \
-              python3-click \
-              swig \
-              tcl-dev \
-              tclsh \
-              time \
-              uuid \
-              uuid-dev \
-              ;
+          ./tests/scripts/run_formal.sh --name $TEST_SUITE_NAME install_dependencies
+
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/{yosys,sv2v,eqy,sby} \
-              ;
+          ./tests/scripts/run_formal.sh --name $TEST_SUITE_NAME load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -89,21 +61,14 @@ jobs:
 
       - name: Build eqy and sby
         run: |
-          make build_eqy build_sby -j$(nproc)
+          ./tests/scripts/run_formal.sh --name $TEST_SUITE_NAME build_dependencies
 
       - name: Test
         run: |
           chmod +x out/current/bin/sv2v
           source .github/scripts/common.sh
-          export PATH="$PWD/out/current/bin:$PATH"
-          ./run_fv_tests.mk -j$(nproc) \
-              TEST_SUITE_DIR:="$(realpath ${TEST_SUITE_DIR})" \
-              TEST_SUITE_NAME:="${TEST_SUITE_NAME}" \
-              test
+          ./tests/scripts/run_formal.sh  --name $TEST_SUITE_NAME run
 
-      - name: Generate list of performed tests
-        run: |
-          ./tests/formal/gather_fv_results.sh $NAME
 
       - name: Pack formal verification logs
         run: |
@@ -117,12 +82,6 @@ jobs:
           path: |
             build/*.tar
 
-      - name: Upload list of performed tests
-        uses: actions/upload-artifact@v2
-        with:
-          name: formal-verification-tests-list
-          path: build/*.performed_tests_list.txt
-
       - name: Upload load graphs
         uses: actions/upload-artifact@v2
         with:
@@ -134,34 +93,5 @@ jobs:
       - name: Check results and print a summary
         run: |
           set -o pipefail
-          python3 ./tests/formal/results.py "build/tests/${TEST_SUITE_NAME}" | tee $GITHUB_STEP_SUMMARY
+          ./tests/scripts/run_formal.sh --name $TEST_SUITE_NAME gather_results | tee $GITHUB_STEP_SUMMARY
 
-  passlist-check:
-    name: Passlist Check
-    needs: tests-formal-verification
-    if: ${{ !cancelled() }}
-    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
-    container: ubuntu:jammy-20221130
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
-      - name: Download lists of performed tests
-        uses: actions/download-artifact@v2
-        with:
-          name: formal-verification-tests-list
-
-      - name: Compare lists
-        run: |
-          sort *.performed_tests_list.txt > performed_tests_list.txt
-          grep -o '^[^ #]\+' tests/formal/passlist.txt | sort > sorted_passlist.txt
-          readarray not_performed_tests < <(comm -13 performed_tests_list.txt sorted_passlist.txt)
-          if (( ${#not_performed_tests[@]} > 0 )); then
-            printf '\x1b[1mTests from passlist.txt that were not performed:\x1b[0m\n'
-            printf '\x1b[91m%s\x1b[0m\n' "${not_performed_tests[@]}"
-            exit 1
-          else
-            exit 0
-          fi

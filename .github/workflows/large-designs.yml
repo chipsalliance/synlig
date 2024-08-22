@@ -27,39 +27,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libcairo2-dev \
-              libfl-dev \
-              libgoogle-perftools-dev \
-              libtinfo5 \
-              pkg-config \
-              python3 \
-              python3-dev \
-              python3-pip \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          ./tests/scripts/run_large_designs.sh --name ibex install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/make_env \
-              third_party/ibex \
-              ;
+          ./tests/scripts/run_large_designs.sh --name ibex load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -74,9 +46,7 @@ jobs:
         run: |
           source .github/scripts/common.sh
           enable_vivado 2017.2
-          pip install virtualenv
-          make -C tests uhdm/yosys/synth-ibex-build TEST=ibex \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+          ./tests/scripts/run_large_designs.sh --name ibex run
 
       - uses: actions/upload-artifact@v2
         with:
@@ -110,41 +80,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libffi-dev \
-              libfl-dev \
-              libgoogle-perftools-dev \
-              libreadline-dev \
-              pkg-config \
-              python3 \
-              python3-dev \
-              python3-pip \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              wget \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          ./tests/scripts/run_large_designs.sh --name ibex_f4pga install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/make_env \
-              third_party/ibex \
-              third_party/yosys_f4pga_plugins \
-              ;
+          ./tests/scripts/run_large_designs.sh --name ibex_f4pga load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -155,17 +95,9 @@ jobs:
       - name: Extract
         run: tar -xf binaries.tar
 
-      - name: Setup build environment
+      - name: Setup build environment & Build & Test
         run: |
-          # Environment creation has to be run with one job to avoid race conditions.
-          # See: https://github.com/SymbiFlow/make-env/pull/40
-          # Even with the fix more jobs doesn't help with anything.
-          make -C ./tests env TEST=ibex -j1
-
-      - name: Build & Test
-        run: |
-          make -C tests uhdm/yosys/synth-ibex-f4pga TEST=ibex \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+          ./tests/scripts/run_large_designs.sh --name ibex_f4pga run
 
       - uses: actions/upload-artifact@v2
         with:
@@ -202,39 +134,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              libtinfo5 \
-              ninja-build \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/opentitan_9d82960888 \
-              ;
+          ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -249,9 +153,7 @@ jobs:
         run: |
           source .github/scripts/common.sh
           enable_vivado 2017.2
-          pip install virtualenv
-          make -C tests uhdm/yosys/synth-opentitan-build TEST=opentitan \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+          ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 run
 
       - name: Generate AST
         run: |
@@ -316,39 +218,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              libtinfo5 \
-              ninja-build \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          ./tests/scripts/run_large_designs.sh --name opentitan install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/opentitan \
-              ;
+          ./tests/scripts/run_large_designs.sh --name opentitan load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -364,8 +238,7 @@ jobs:
           source .github/scripts/common.sh
           enable_vivado 2017.2
           pip install virtualenv
-          make -C tests uhdm/yosys/synth-opentitan-build-tiny TEST=opentitan \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+          ./tests/scripts/run_large_designs.sh --name opentitan run
 
       - uses: actions/upload-artifact@v2
         with:
@@ -389,10 +262,8 @@ jobs:
         include:
           - name: full/top-down
             file-name: full
-            make-args: 'TOP_DOWN_TEST:=1'
           - name: quick
             file-name: quick
-            make-args:
       fail-fast: false
     name: Opentitan parsing (${{ matrix.name }})
     env:
@@ -415,44 +286,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              graphviz \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              libgraphviz-dev \
-              libtinfo5 \
-              ninja-build \
-              pkg-config \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              time \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-          pip install virtualenv
+          ./tests/scripts/run_large_designs.sh --name opentitan_parse_${{ matrix.file-name }} install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/opentitan \
-              ;
+          ./tests/scripts/run_large_designs.sh --name opentitan_parse_${{ matrix.file-name }} load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -463,36 +301,11 @@ jobs:
       - name: Extract
         run: tar -xf binaries.tar
 
-      - name: Create venv
+      - name: Create venv & Parse OpenTitan components & Make summary
         run: |
-          export PATH="$PWD/out/current/bin:$PATH"
-          cd tests/opentitan/opentitan_parsing_test
-
-          make gen-opentitan-deps-mk
-
-      - name: Parse OpenTitan components
-        run: |
-          export PATH="$PWD/out/current/bin:$PATH"
           source .github/scripts/common.sh
           enable_vivado 2017.2
-          cd tests/opentitan/opentitan_parsing_test
-
-          make -rR -j${PARALLEL_JOBS:-1} -Otarget \
-              ${{ matrix.make-args }} \
-              MIN_FREE_MEM_TO_START_TEST:=${MIN_FREE_MEM_TO_START_TEST} \
-              test || :
-
-      - name: Summary
-        if: ${{ !cancelled() }}
-        run: |
-          export PATH="$PWD/out/current/bin:$PATH"
-          cd tests/opentitan/opentitan_parsing_test
-          make summary
-          make summary.md
-          cat build/results/summary.md > $GITHUB_STEP_SUMMARY
-          rm build/results/summary.md
-          # Exits with non-zero when there are unexpected passes or fails
-          make check-status
+          ./tests/scripts/run_large_designs.sh --name opentitan_parse_${{ matrix.file-name }} run
 
       - name: Upload logs
         if: ${{ !cancelled() }}
@@ -532,38 +345,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              ninja-build \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          ./tests/scripts/run_large_designs.sh --name veer install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/veer \
-              ;
+          ./tests/scripts/run_large_designs.sh --name veer load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -576,9 +362,7 @@ jobs:
 
       - name: Build & Test
         run: |
-          pip install virtualenv
-          make -C tests uhdm/yosys/veer TEST=veer \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+          ./tests/scripts/run_large_designs.sh --name veer run
 
       - uses: actions/upload-artifact@v2
         with:
@@ -615,42 +399,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              ninja-build \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          ./tests/scripts/run_large_designs.sh --name blackparrot_AMD install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/black_parrot \
-              ;
-          git submodule update --depth 1 --init --checkout \
-              third_party/black_parrot_tools \
-              third_party/black_parrot_sdk \
-              ;
+          ./tests/scripts/run_large_designs.sh --name blackparrot_AMD load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -663,9 +416,7 @@ jobs:
 
       - name: Build & Test
         run: |
-          pip install virtualenv
-          make -C tests uhdm/yosys/synth-blackparrot-build TEST=black_parrot \
-              ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+          ./tests/scripts/run_large_designs.sh --name blackparrot_AMD run
 
       - uses: actions/upload-artifact@v2
         with:
@@ -702,43 +453,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libftdi1-dev \
-              libgoogle-perftools-dev \
-              ninja-build \
-              python3 \
-              python3-dev \
-              python3-pip \
-              srecord \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              time \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-          update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+          ./tests/scripts/run_large_designs.sh --name blackparrot_ASIC install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/black_parrot \
-              ;
-          git submodule update --depth 1 --init --checkout \
-              third_party/black_parrot_tools \
-              third_party/black_parrot_sdk \
-              third_party/OpenROAD-flow-scripts \
-              ;
+          ./tests/scripts/run_large_designs.sh --name blackparrot_ASIC load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -751,8 +470,7 @@ jobs:
 
       - name: Build & Test
         run: |
-          pip install virtualenv
-          make -C tests uhdm/yosys/synth-blackparrot-build-asic TEST=black_parrot -j $(nproc)
+          ./tests/scripts/run_large_designs.sh --name blackparrot_ASIC run
 
       - uses: actions/upload-artifact@v2
         with:
