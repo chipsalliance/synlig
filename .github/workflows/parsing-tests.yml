@@ -37,11 +37,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ./tests/scripts/run_parsing.sh install_dependencies
+          ./tests/scripts/run_parsing.sh --type asan install_dependencies
 
       - name: Checkout submodules
         run: |
-          ./tests/scripts/run_parsing.sh load_submodules
+          ./tests/scripts/run_parsing.sh --type asan load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -56,7 +56,7 @@ jobs:
         env:
           TARGET: uhdm/yosys/test-ast
         run: |
-          ./tests/scripts/run_parsing.sh read_uhdm
+          ./tests/scripts/run_parsing.sh --type asan read_uhdm
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
@@ -110,11 +110,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ./tests/scripts/run_parsing.sh install_dependencies
+          ./tests/scripts/run_parsing.sh --type asan install_dependencies
 
       - name: Checkout submodules
         run: |
-          ./tests/scripts/run_parsing.sh load_submodules
+          ./tests/scripts/run_parsing.sh --type asan load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -129,7 +129,7 @@ jobs:
         env:
           TARGET: uhdm/yosys/test-ast
         run: |
-          ./tests/scripts/run_parsing.sh read_systemverilog
+          ./tests/scripts/run_parsing.sh --type asan read_systemverilog
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}

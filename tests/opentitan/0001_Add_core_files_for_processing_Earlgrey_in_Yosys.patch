@@ -7,7 +7,7 @@ index 47ef3473b..3f2da9c9e 100644
  
    synth:
 -    default_tool: vivado
-+    default_tool: yosys
++    default_tool: synlig
      filesets:
        - files_rtl_nexysvideo
        - files_constraints
@@ -17,7 +17,7 @@ index 47ef3473b..3f2da9c9e 100644
      tools:
 -      vivado:
 -        part: "xc7a200tsbg484-1"
-+      yosys:
++      synlig:
 +        arch: "xilinx"
 +        # part: "xc7a200tsbg484-1"
  

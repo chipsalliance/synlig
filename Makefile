@@ -314,8 +314,9 @@ endif
 GetTargetStructName = target[${1}]
 
 makefiles_to_include := \
+	src/Build.synlig.mk \
 	third_party/Build.*.mk \
-	frontends/*/Build.mk \
+	src/frontends/*/Build.mk \
 	tests/*/Build.mk \
 	lib/*/Build.mk
 
@@ -337,11 +338,10 @@ list :
 	printf '    %s\n' \
 			'list ${F.D}|${F.!D} help' \
 			'build' \
-			'build_eqy' \
-			'build_sby' \
-			'build_sv2v' \
 			'install' \
 			'clean' \
+			'tools' \
+			'plugin' \
 			;
 	echo
 	printf '${F.B}Common component targets${F.!B} (`${F.I}component${F.!I}` is a component name placeholder)\n\n'
@@ -362,29 +362,35 @@ list :
 .PHONY: help
 help : list
 
-
 .PHONY: build
-build : $(foreach t,${GetTargetsList}, @${t})
-
-.PHONY: build_eqy
-build_eqy : ${OUT_DIR}/bin/yosys-config
-	export PATH="$(realpath ${OUT_DIR})/bin:${PATH}"
-	${MAKE} -C third_party/eqy install PREFIX=$(realpath ${OUT_DIR})
-
-.PHONY: build_sby
-build_sby : ${OUT_DIR}/bin/yosys-config
-	export PATH="$(realpath ${OUT_DIR})/bin:${PATH}"
-	${MAKE} -C third_party/sby install PREFIX=$(realpath ${OUT_DIR})
-
-.PHONY: build_sv2v
-build_sv2v :
-	${MAKE} -C ./third_party/sv2v
-	mkdir -p ${OUT_DIR}/bin
-	cp ./third_party/sv2v/bin/sv2v ${OUT_DIR}/bin/sv2v
+build : build@surelog build@synlig
 
 .PHONY: install
-install : $(foreach t,${GetTargetsList}, install@${t})
+install : install@surelog install@synlig
 
+.PHONY: build-plugin
+build-plugin : build@surelog build@yosys build@systemverilog-plugin
+
+.PHONY: install-plugin
+install-plugin : install@surelog install@yosys install@systemverilog-plugin
+	#####################################################
+	#                      WARNING                      #
+	# Using synlig as yosys plugin is deprecated. It is #
+	# recommended to build synlig as standalone binary. #
+	#####################################################
+
+.PHONY: plugin
+plugin : install-plugin
+
+.NOTPARALLEL: build@surelog build@synlig build@yosys build@systemverilog-plugin \
+	install@surelog install@synlig install@yosys install@systemverilog-plugin
+
+install@eqy: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/eqy/.git
+install@sby: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/sby/.git
+install@sv2v: ${TOP_DIR}/third_party/sv2v/.git
+
+.PHONY: tools
+tools: install@eqy install@sby install@sv2v install@yosys-tools
 
 .PHONY: clean
 clean : $(foreach t,${GetTargetsList},$(if ${$(call GetTargetStructName,${t}).src_clean_command},srcclean@${t}))

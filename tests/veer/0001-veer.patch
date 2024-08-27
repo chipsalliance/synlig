@@ -1371,15 +1371,15 @@ index b6f986e..b193b7e 100644
        vivado:
          part : xc7a100tcsg324-1
 -        pnr  : none
-+        synth: "yosys"
++        synth: "synlig"
 +        arch: "xilinx"
-+        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
-+        yosys_read_options: ['-noassert']
++        synlig_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
++        synlig_read_options: ['-noassert']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
-+      yosys:
++      synlig:
 +        arch: "xilinx"
-+        yosys_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
-+        yosys_read_options: ['-noassert']
++        synlig_synth_options: ['-iopad', '-family xc7', '-run :check', "frontend=surelog"]
++        synlig_read_options: ['-noassert']
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
 +      sv2v:
      toplevel : veer_wrapper

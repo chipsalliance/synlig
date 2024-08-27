@@ -11,14 +11,14 @@ ${VENV}:
 ${DESIGN_DIR}/.gitpatch:
 	cd ${DESIGN_DIR} && git apply ${curr_dir}/0001-veer.patch && touch $@
 
-uhdm/yosys/veer: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
+uhdm/synlig/veer: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \
 		pip install git+https://github.com/lowRISC/fusesoc.git@ot && \
-		fusesoc --cores-root=${DESIGN_DIR} run --build --tool yosys --target=synth chipsalliance.org:cores:VeeR_EH1:1.8)
+		fusesoc --cores-root=${DESIGN_DIR} run --build --tool synlig --target=synth chipsalliance.org:cores:VeeR_EH1:1.8)
 
-uhdm/yosys/veer-build: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
+uhdm/synlig/veer-build: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \

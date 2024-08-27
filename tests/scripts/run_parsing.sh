@@ -13,8 +13,9 @@ SKIP="synthesis serv-minimal hello-uvm assignment-pattern MultiplePrints \
 	StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash \
 	AssignToUnpackedUnionFieldAndReadOtherField Forever"
 
-function test_read_systemverilog(){
+function read_systemverilog(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start testing read_systemverilog \##"
+	BUILD_TYPE=$type \
 	TESTS_TO_SKIP=$SKIP \
 	TARGET=uhdm/yosys/test-ast \
 	PARSER=yosys-plugin \
@@ -22,8 +23,9 @@ function test_read_systemverilog(){
 	exit $?
 }
 
-function test_read_uhdm(){
+function read_uhdm(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start testing read_uhdm \##"
+	BUILD_TYPE=$type \
 	TESTS_TO_SKIP=$SKIP \
 	TARGET=uhdm/yosys/test-ast \
 	PARSER=surelog \
@@ -31,12 +33,16 @@ function test_read_uhdm(){
 	exit $?
 }
 
-args=$(getopt -o h -l help -- "$@")
+TYPEARG=0
+args=$(getopt -o h -l type:,help -- "$@")
 
 for arg in $args
 do
-	if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]; then
+	case "$arg" in
+	-h|--help)
 		echo "Usage $0:"
+		echo "    --type <build type>"
+		echo ""
 		echo "    install_dependencies - installs necessary dependencies"
 		echo ""
 		echo "    load_submodules - clones necessary submodules"
@@ -44,21 +50,38 @@ do
 		echo "    read_uhdm -          tests read_uhdm command"
 		echo "    read_systemverilog - tests read_systemverilog command"
 		echo ""
-	fi
-
-	if [ "$arg" == "'install_dependencies'" ]; then
-		install_dependencies
-	fi
-
-	if [ "$arg" == "'load_submodules'" ]; then
-		load_submodules -r surelog
-	fi
-
-	if [ "$arg" == "'read_uhdm'" ]; then
-		test_read_uhdm
-	fi
-
-	if [ "$arg" == "'read_systemverilog'" ]; then
-		test_read_systemverilog
-	fi
+		echo "    List of supported build types:"
+		echo "        asan"
+		echo "        release"
+		echo "        plugin"
+		echo ""
+		exit 0
+	;;
+	--type) TYPEARG=1 ;;
+	"'install_dependencies'") install_dependencies ;;
+	"'load_submodules'") load_submodules -r surelog ;;
+	"'read_uhdm'") read_uhdm ;;
+	"'read_systemverilog'") read_systemverilog ;;
+	--)
+		if [ -z $type ]; then
+			echo "Build type is not provided!"
+			exit 1
+		else
+			[ "$type" == "'asan'" ] && valid=1
+			[ "$type" == "'release'" ] && valid=1
+			[ "$type" == "'plugin'" ] && valid=1
+			if [ -z $valid ]; then
+				echo "Provided build type is not valid!"
+				exit 1
+			fi
+		fi
+	;;
+	*)
+		if [ $TYPEARG -eq 1 ]; then
+			type=$arg
+		fi
+		TYPEARG=0
+	;;
+	esac
 done
+exit 0

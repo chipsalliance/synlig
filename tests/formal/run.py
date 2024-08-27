@@ -62,7 +62,6 @@ def prepare_eqy_script(output_dir, script_name, plugin_file, yosys_file):
         "opt",
         "",
         "[gate]",
-        "plugin -i systemverilog",
         "tee -o %s/%s/plugin_ast.txt read_systemverilog -nocache -debug %s" % (output_dir, script_name, plugin_file),
         "prep -flatten -auto-top",
         "opt",

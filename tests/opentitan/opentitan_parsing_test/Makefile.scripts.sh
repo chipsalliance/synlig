@@ -189,7 +189,7 @@ _process_core() {
 					--flag=ot_is_custom_tiny \
 					--target=default \
 					--build \
-					--tool=yosys \
+					--tool=synlig \
 					"$TARGET_CORE_NAME" \
 				&> "$(get_core_fusesoc_log_file "$TARGET_CORE")"
 	) || rc=$?  # Fusesoc exits with rc=0 after Ctrl+C, but with nice message in the log.

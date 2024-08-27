@@ -47,17 +47,19 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries.tar
+      - name: Extract binaries
+        run: tar -xf binaries-release.tar
 
-      - name: Download sv2v
+      - name: Download tools
         uses: actions/download-artifact@v2
         with:
-          name: sv2v
-          path: out/current/bin/
+          name: tools
+
+      - name: Extract tools
+        run: tar -xf tools.tar
 
       - name: Build eqy and sby
         run: |
@@ -65,7 +67,6 @@ jobs:
 
       - name: Test
         run: |
-          chmod +x out/current/bin/sv2v
           source .github/scripts/common.sh
           ./tests/scripts/run_formal.sh  --name $TEST_SUITE_NAME run
 

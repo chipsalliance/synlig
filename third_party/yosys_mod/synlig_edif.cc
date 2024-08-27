@@ -607,6 +607,10 @@ void register_synlig_edif_backend()
     static SynligEdifBackend *seb = nullptr;
     if (seb)
         return;
+    // Erasing from register maps is necessary only
+    // when compiling synlig as yosys plugin.
+    // Static build is compiled without yosys edif
+    // and there is no need to erase it from maps.
     backend_register.erase("edif");
     pass_register.erase("edif");
     pass_register.erase("write_edif");

@@ -63,26 +63,28 @@ for test_case in "${test_cases[@]}"; do
         # Used only for current test
         ASAN_OPTIONS+=":log_path=${test_out_dir}/asan"
 
-        # libfakedlclose.so has to be used with yosys to prevent
-        # systemverilog.so from being unloaded by yosys as part of cleanup
-        # before termination. ASAN needs it to be in memory to correctly
-        # symbolize function addresses.
+        if [ "$BUILD_TYPE" == "'plugin'" ]; then
+        	BINARY="${REPO_DIR}/out/current/bin/yosys -Q"
+        else
+        	BINARY="${REPO_DIR}/out/current/bin/synlig -Q"
+        fi
         make -C $REPO_DIR/tests \
                 -j $(nproc) \
                 --no-print-directory \
-                YOSYS_BIN:="LD_PRELOAD=${REPO_DIR}/out/current/lib/libfakedlclose.so ${REPO_DIR}/out/current/bin/yosys -Q" \
+                SYNLIG_BIN:="$BINARY" \
+                BUILD_TYPE=$BUILD_TYPE \
                 ENABLE_READLINE=0 \
                 PRETTY=0 \
                 PARSER=$PARSER \
                 TEST=$test_case \
-                $TARGET > "${test_out_dir}/yosys.log"
+                $TARGET > "${test_out_dir}/synlig.log"
     )
     (( $? == 0 )) && test_ok=1 || test_ok=0
 
     sed -i -n \
         -e "s#${REPO_DIR}/##g" \
         -E -e '/1. Executing (Verilog with )?UHDM frontend./,$ {/^End of script/d; /^Time spent/d; p}' \
-        "${test_out_dir}/yosys.log"
+        "${test_out_dir}/synlig.log"
 
     # ASAN log contains PID in the name. There should be only one log, but even
     # assuming more processes were spawned, we can quite safely concatenate
@@ -119,8 +121,8 @@ for test_case in "${test_cases[@]}"; do
     fi
 
     if (( $test_ok == 0 )); then
-        printf '\x1b[0;39;1;3mUp to last 50 lines of yosys log:\x1b[0m\n'
-        tail -n 50 ${test_out_dir}/yosys.log
+        printf '\x1b[0;39;1;3mUp to last 50 lines of synlig log:\x1b[0m\n'
+        tail -n 50 ${test_out_dir}/synlig.log
         global_status=1
     fi
 

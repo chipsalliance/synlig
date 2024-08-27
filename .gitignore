@@ -9,3 +9,10 @@ __pycache__
 /image
 .cache/
 compile_commands.json
+
+src/*.d
+src/*.o
+src/frontends/systemverilog/*.d
+src/frontends/systemverilog/*.o
+third_party/yosys_mod/*.d
+third_party/yosys_mod/*.o

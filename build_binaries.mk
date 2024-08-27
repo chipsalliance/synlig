@@ -64,6 +64,22 @@ install-surelog:
 	${MAKE} install@surelog ${build_config}
 
 #--------------------------------------------------------------------------------
+# Synlig
+#--------------------------------------------------------------------------------
+
+.PHONY: clean-synlig
+clean-synlig:
+	${MAKE} clean@synlig ${build_config}
+
+.PHONY: build-synlig
+build-synlig:
+	${MAKE} build@synlig ${build_config}
+
+.PHONY: install-synlig
+install-synlig:
+	${MAKE} install@synlig ${build_config}
+
+#--------------------------------------------------------------------------------
 # Yosys
 #--------------------------------------------------------------------------------
 
@@ -82,22 +98,6 @@ install-yosys:
 	${MAKE} install@yosys ${build_config}
 
 #--------------------------------------------------------------------------------
-# fakedlclose
-#--------------------------------------------------------------------------------
-
-.PHONY: clean-fakedlclose
-clean-fakedlclose:
-	${MAKE} clean@fakedlclose ${build_config}
-
-.PHONY: build-fakedlclose
-build-fakedlclose:
-	${MAKE} build@fakedlclose ${build_config}
-
-.PHONY: install-fakedlclose
-install-fakedlclose:
-	${MAKE} install@fakedlclose ${build_config}
-
-#--------------------------------------------------------------------------------
 # Plugin
 #--------------------------------------------------------------------------------
 
@@ -113,7 +113,7 @@ build-plugin:
 	${MAKE} build@systemverilog-plugin ${build_config}
 
 .PHONY: install-plugin
-install-plugin: install-fakedlclose
+install-plugin:
 	export PATH=${INSTALL_DIR}/bin:$${PATH}
 	${MAKE} install@systemverilog-plugin ${build_config}
 
@@ -126,7 +126,3 @@ build-plugins: build-plugin
 
 .PHONY: install-plugins
 install-plugins: install-plugin
-
-.NOTPARALLEL: clean-surelog clean-yosys clean-plugin clean-fakedlclose \
-	build-surelog build-yosys build-plugin build-fakedlclose \
-	install-surelog install-yosys install-plugin install-fakedlclose
