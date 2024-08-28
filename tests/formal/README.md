@@ -1,57 +1,50 @@
 # Formal verification basics
 
-Flow graph for [run.py](run.py) is presented on a diagram below. All end nodes that are not connected to `FAIL CI` node, will keep CI green but results in logs might still contain some errors for non-required checks.
+Flow graph for [run.py](run.py) is presented on a diagram below.
 ```mermaid
 graph TD;
-    A["Read top design by Yosys"]
-    B["Process top design with sv2v"]
-    C1["Read top design by Yosys with Systemverilog plugin"]
-    C2["Read top design by Yosys with Systemverilog plugin"]
-    D["Formal verification: yosys_gate.v vs surelog_gate.v"]
-    E["Formal verification: sv2v_yosys_gate.v vs surelog_gate.v"]
-    F["Formal verification: sv2v_yosys_gate.v vs sv2v_surelog_gate.v"]
-    G["Read processed design by Yosys with Systemverilog plugin"]
-    X["FAIL CI"]
+    A["Check if test should be skipped"]
+    B["Execute equivalence check between yosys and synlig"]
+    C["Process design with sv2v"]
+    D["Execute equivalence check between yosys and synlig"]
 
-    A-->|"FAIL"|B;
-    B-->|"OK"|C2;
-    C2-->|"OK"|E;
-    B-->|"OK"|G;
-    G-->F;
+    F["FINAL_RESULT"]
 
-    A-->|"OK"|C1;
-    C1-->|"OK"|D;
+    A-->|"Yes"|F;
+    A-->|"No"|B;
 
-    C2-->|"FAIL"|X;
-    B-->|"FAIL"|X;
-    E-->|"FAIL"|X;
-    C1-->|"FAIL"|X;
-    D-->|"FAIL"|X;
+    B-->|"Result: YOSYS_READ_FAIL"|C;
+    B-->|"Otherwise"|F;
+
+    C-->|"Success"|D;
+    C-->|"Failure"|F;
+
+	D-->F
 ```
-
+Possible final results from equivalence check:
+ * `PASS` - designs are formally equivalent,
+ * `FAIL` - designs are formally not equivalent,
+ * `SKIP` - test was skipped,
+ * `READ_FAIL` - either `yosys` or `synlig` couldn't read design,
+ * `EMPTY_MODULE` - synlig or yosys produced empty module,
+ * `UNMATCHED_MODULE` - different module names or count is produced,
+ * `NOTHING_TO_COMPARE` - couldn't find any pair of corresponding cells to compare in designs.
+ 
 A table below presents example for [results.py](results.py) script generated on all simple tests. It is generated in markdown style which is parsed in CI summary:
+
 ```
-# Synthesis results
-| Result   | Yosys | sv2v + Yosys |                   Description                    |
-|----------|-------|--------------|--------------------------------------------------|
-|     FAIL |   151 |           16 | Error in Yosys, possibly error in model          |
-|  SKIPPED |     0 |          110 | Test was not run due to previous pass/error      |
-|SV2V_FAIL |     0 |            7 | sv2v failed to convert test case                 |
-|       OK |   110 |          128 | Successful synthesis without formal verification |
 # Formal verification results
-|   Result    | SV plugin | sv2v + SV plugin |                      Description                       |
-|-------------|-----------|------------------|--------------------------------------------------------|
-|        PASS |       181 |               94 | Formally equivalent                                    |
-|        DIFF |        22 |                8 | Formally not-equivalent                                |
-|     NO GATE |         0 |                0 | Both parsers didn't produce gate-level netlist         |
-|      S GATE |         0 |                0 | Surelog parser didn't produce gate-level netlist       |
-|      Y GATE |         2 |                1 | Yosys parser didn't produce gate-level netlist         |
-|INCONCLUSIVE |         0 |                0 | Inconclusive                                           |
-|       INCOM |         0 |                0 | Incomplete, missing module declaration => Inconclusive |
-|     UH PLUG |         0 |                0 | UHDM Plugin error                                      |
-|    UH YGATE |         0 |                0 | UHDM Plugin error + Yosys no gate                      |
-|    MODEL_ER |        20 |                4 | Error in model                                         |
-|    MODEL EM |        11 |                4 | Model is empty                                         |
-|        FAIL |         2 |               17 | Error in Yosys, possibly error in model                |
-|     SKIPPED |        23 |              133 | Test was not run due to previous pass or Yosys fail    |
+|      Result       | Count |                 Description                  |
+|-------------------|-------|----------------------------------------------|
+|              PASS | 276   | formally equivalent                          |
+|              FAIL | 23    | formally not equivalent                      |
+|              SKIP | 4     | not executed                                 |
+|   YOSYS_READ_FAIL | 58    | yosys couldn't read design                   |
+|  PLUGIN_READ_FAIL | 4     | synlig couldn't read design                  |
+|      EMPTY_MODULE | 5     | synlig or yosys produced empty module        |
+|  UNMATCHED_MODULE | 13    | different module names or count was produced |
+|NOTHING_TO_COMPARE | 6     | there is nothing to compare in designs       |
+|           TIMEOUT | 0     | test timed out                               |
 ```
+
+It exits with non-zero exit code when at least one of the results is different than expected.

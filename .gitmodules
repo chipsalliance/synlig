@@ -52,3 +52,11 @@
 	path = third_party/OpenROAD-flow-scripts
 	url = https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts.git
 	update = none
+[submodule "third_party/sby"]
+	path = third_party/sby
+	url = https://github.com/YosysHQ/sby
+	update = none
+[submodule "third_party/eqy"]
+	path = third_party/eqy
+	url = https://github.com/YosysHQ/eqy
+	update = none

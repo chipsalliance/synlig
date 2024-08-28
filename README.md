@@ -152,6 +152,8 @@ If you encounter any problems with it, please compare the results with a single 
 
 #### Prerequisites
 
+##### `sv2v`
+
 Formal Verification uses `sv2v` tool and tests from its repository, which is available as a submodule.
 To download the sv2v submodule run:
 
@@ -164,9 +166,25 @@ To build sv2v and copy it to `out/current/bin` (where it is expected to be by th
 
 <!-- name="sv2v-build" -->
 ``` bash
-wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/out/current/bin
-make -j$(nproc) -C $PWD/third_party/sv2v
-cp ./third_party/sv2v/bin/sv2v ./out/current/bin
+    wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/out/current/bin
+    make build_sv2v -j$(nproc) 
+```
+
+##### `eqy` and `sby`
+
+Formal Verification proves design equivalence using `eqy` and `sby` tools, which are included as submodules.
+To checkout the `eqy` and `sby` submodules, run:
+
+<!-- name="eqy-sby-update" -->
+``` bash
+   git submodule update --init --checkout third_party/{eqy,sby}
+```
+
+To build `eqy` and `sby` run:
+
+<!-- name="eqy-sby-build" -->
+``` bash
+    make build_eqy build_sby -j$(nproc) 
 ```
 
 #### Testing
@@ -189,8 +207,17 @@ To start formal verification tests, use `run_fv_tests.mk`, either as an executab
 * `test_suite_dir` - path to a tests directory (e.g. `./yosys/tests`). Required by all targets except `help`.
 * `test_suite_name` - when specified, it is used as a name of a directory inside `./build/` where results are stored. Otherwise results are stored directly inside the `./build/` directory.
 
-`yosys` and `sv2v` must be present in one of `PATH` directories.
+To gather formal verification results use: 
+``` bash
+    ./tests/formal/gather_fv_results.sh \
+        TEST_SUITE_NAME:=<test_suite_name>
+```
+
 For other dependencies, please see the `.github/workflows/formal-verification.yml` file.
+
+#### More details
+
+[Formal Verification README](https://github.com/chipsalliance/synlig/tree/main/tests/formal)
 
 #### Available Targets
 

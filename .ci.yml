@@ -2,7 +2,6 @@ stages:
   - check_code_format
   - build_binaries
   - run_parsing_and_formal_tests
-  - verify_formal_tests_passlist
   - run_large_designs_tests
   - optional_bsg_tests
 
@@ -11,14 +10,21 @@ image: debian:bookworm
 check_format:
   stage: check_code_format
   script:
-    - echo "Install dependencies"
-    - apt update && apt install -y git clang-format
-    - echo "Check code format"
+    - echo "##/ Install dependencies \##"
+    - apt update && apt install -y git clang-format python3 jq
+    - echo "##/ Check code format \##"
     - ./.github/scripts/format_sources.sh
+    - exit_code=0
     - if ! git diff --exit-code; then
-    -   echo "Format locally using ./.github/scripts/format_sources.sh"
-    -   /bin/false
+    -   echo "|  Format locally using ./.github/scripts/format_sources.sh"
+    -   exit_code=1
     - fi
+    - ./.github/scripts/sort_passlists.sh
+    - if ! git diff --exit-code; then
+    -   echo "|  Format locally using ./.github/scripts/format_sources.sh"
+    -   exit_code=1
+    - fi
+    - exit $exit_code
 
 build_binaries:
   stage: build_binaries
@@ -29,7 +35,7 @@ build_binaries:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies and build"
+    - echo "##/ Install dependencies and build \##"
     - apt update
     - >
         apt install -y gcc-11 g++-11 build-essential
@@ -38,35 +44,18 @@ build_binaries:
         python3-pip uuid uuid-dev tcl-dev flex libfl-dev
         git pkg-config libreadline-dev bison libffi-dev
         wget python3-orderedmultidict
-    - echo "Build yosys, surelog and synlig binaries"
+    - echo "##/ Build yosys, surelog and synlig binaries \##"
     - git submodule sync
     - git submodule update --init --recursive third_party/{surelog,yosys}
     - make install -j $(nproc)
-    - echo "Build sv2v binary"
+    - echo "##/ Build sv2v binary \##"
     - git submodule update --init --recursive --checkout third_party/sv2v
     - wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-    - make -j$(nproc) -C $PWD/third_party/sv2v
-    - cp third_party/sv2v/bin/sv2v out/release/bin/
+    - make build_sv2v -j$(nproc)
   artifacts:
     when: always
     paths:
       - out/
-
-variables:
-  TESTS_TO_SKIP: >
-    synthesis serv-minimal hello-uvm assignment-pattern Forever OneClass
-    VoidFunction2Returns VoidFunctionWithoutReturn cmake OneThis FunctionOutputArgument
-    DpiChandle Disable SelectFromUnpackedInFunction VoidFunction MultiplePrints
-    ImportPackageWithFunction StringAssignment SystemFunctions
-    ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember
-    StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash
-    AssignToUnpackedUnionFieldAndReadOtherField NestedPatternPassedAsPort
-  DEPENDENCIES_FOR_TESTING: >
-    make libgoogle-perftools4 libgoogle-perftools-dev libreadline8 gcc-11 bison
-    libtcl8.6 libffi-dev tcl-dev flex libfl-dev swig g++-11 build-essential cmake
-    jq git python3 python3-dev python3-pip python3-orderedmultidict libreadline-dev
-    default-jre gettext-base ant libcairo2-dev google-perftools libtinfo5 wget
-    uuid-dev uuid libftdi1-dev ninja-build srecord tclsh time rustc graphviz-dev
 
 parsing_tests_read_uhdm:
   stage: run_parsing_and_formal_tests
@@ -78,14 +67,7 @@ parsing_tests_read_uhdm:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --init --recursive third_party/surelog
-    - echo "Start testing"
-    - ./.github/scripts/run_group_test.sh ./build/parsing/read-uhdm ./build/parsing/test-results-uhdm.log
+    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules read_uhdm
   artifacts:
     when: always
     paths:
@@ -101,14 +83,7 @@ parsing_tests_read_systemverilog:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --init --recursive third_party/surelog
-    - echo "Start testing"
-    - ./.github/scripts/run_group_test.sh ./build/parsing/read-systemverilog ./build/parsing/test-results-systemverilog.log
+    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules read_systemverilog
   artifacts:
     when: always
     paths:
@@ -117,30 +92,14 @@ parsing_tests_read_systemverilog:
 formal_verification_simple_tests:
   stage: run_parsing_and_formal_tests
   variables:
-    PARSER: yosys-plugin
     SCALENODE_RAM: 8000
     SCALENODE_CPU: 6
-    NAME: simple
-    DIR: ./tests/simple_tests
   dependencies: [build_binaries]
   only:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - echo "Start testing"
-    - export PATH="$PWD/out/current/bin:$PATH"
-    - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
-    - echo "Gather tests results"
-    - list_file="build/$NAME.performed_tests_list.txt"
-    - for result_json in build/tests/*/*/result.json; do
-    -   test_name=$(jq -r '.name' "${result_json}")
-    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
-    - done
-    - set -o pipefail
-    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+    - ./tests/scripts/run_formal.sh --name simple install_dependencies load_submodules build_dependencies run gather_results
   artifacts:
     when: always
     paths:
@@ -149,33 +108,14 @@ formal_verification_simple_tests:
 formal_verification_yosys_tests:
   stage: run_parsing_and_formal_tests
   variables:
-    PARSER: yosys-plugin
     SCALENODE_RAM: 8000
     SCALENODE_CPU: 6
-    NAME: yosys
-    DIR: ./third_party/yosys/tests
   dependencies: [build_binaries]
   only:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --init --recursive third_party/yosys
-    - echo "Start testing"
-    - export PATH="$PWD/out/current/bin:$PATH"
-    - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
-    - echo "Gather tests results"
-    - list_file="build/$NAME.performed_tests_list.txt"
-    - for result_json in build/tests/*/*/result.json; do
-    -   test_name=$(jq -r '.name' "${result_json}")
-    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
-    - done
-    - set -o pipefail
-    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+    - ./tests/scripts/run_formal.sh --name yosys install_dependencies load_submodules build_dependencies run gather_results
   artifacts:
     when: always
     paths:
@@ -184,56 +124,18 @@ formal_verification_yosys_tests:
 formal_verification_sv2v_tests:
   stage: run_parsing_and_formal_tests
   variables:
-    PARSER: yosys-plugin
     SCALENODE_RAM: 8000
     SCALENODE_CPU: 6
-    NAME: sv2v
-    DIR: ./third_party/sv2v/test
   dependencies: [build_binaries]
   only:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --init --recursive --checkout third_party/sv2v
-    - echo "Start testing"
-    - export PATH="$PWD/out/current/bin:$PATH"
-    - ./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$DIR" TEST_SUITE_NAME:="$NAME" test
-    - echo "Gather tests results"
-    - list_file="build/$NAME.performed_tests_list.txt"
-    - for result_json in build/tests/*/*/result.json; do
-    -   test_name=$(jq -r '.name' "${result_json}")
-    -   printf '%s:%s\n' "$NAME" "${test_name}" >> "$list_file"
-    - done
-    - set -o pipefail
-    - python3 ./tests/formal/results.py "build/tests/${NAME}" | tee "build/${NAME}_summary.txt"
+    - ./tests/scripts/run_formal.sh --name sv2v install_dependencies load_submodules build_dependencies run gather_results
   artifacts:
     when: always
     paths:
       - build/
-
-verify_formal_tests_passlist:
-  stage: verify_formal_tests_passlist
-  dependencies: [formal_verification_simple_tests, formal_verification_yosys_tests, formal_verification_sv2v_tests]
-  only:
-    - main
-    - merge_requests
-  script:
-    - echo "Check if every test from passlist.txt was executed"
-    - sort build/*.performed_tests_list.txt > performed_tests_list.txt
-    - cat tests/formal/passlist.txt | sed '/^#/d' | sort > sorted_passlist.txt
-    - readarray not_performed_tests < <(comm -13 performed_tests_list.txt sorted_passlist.txt)
-    - if (( ${#not_performed_tests[@]} > 0 )); then
-    -   printf '\x1b[1mTests from passlist.txt that were not performed:\x1b[0m\n'
-    -   printf '\x1b[91m%s\x1b[0m\n' "${not_performed_tests[@]}"
-    -   exit 1
-    - else
-    -   exit 0
-    - fi
 
 veer_synth_large_design:
   stage: run_large_designs_tests
@@ -245,17 +147,7 @@ veer_synth_large_design:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/veer
-    - echo "Start testing"
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - make -C tests uhdm/yosys/veer TEST=veer ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+    - ./tests/scripts/run_large_designs.sh --name veer install_dependencies load_submodules run
   artifacts:
     when: always
     paths:
@@ -271,18 +163,7 @@ blackparrot_synth_AMD_xilinx_large_design:
     SCALENODE_RAM: 20000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/black_parrot
-    - git submodule update --depth 1 --init --checkout third_party/{black_parrot_tools,black_parrot_sdk}
-    - echo "Start testing"
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - make -C tests uhdm/yosys/synth-blackparrot-build TEST=black_parrot ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+    - ./tests/scripts/run_large_designs.sh --name blackparrot_AMD install_dependencies load_submodules run
   artifacts:
     when: always
     paths:
@@ -298,18 +179,7 @@ blackparrot_synth_ASIC_xilinx_large_design:
     SCALENODE_RAM: 20000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/black_parrot
-    - git submodule update --depth 1 --init --checkout third_party/{black_parrot_tools,black_parrot_sdk,OpenROAD-flow-scripts}
-    - echo "Start testing"
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - make -C tests uhdm/yosys/synth-blackparrot-build-asic TEST=black_parrot -j $(nproc)
+    - ./tests/scripts/run_large_designs.sh --name blackparrot_ASIC install_dependencies load_submodules run
   artifacts:
     when: always
     paths:
@@ -328,19 +198,10 @@ ibex_synth_large_design:
     SCALENODE_RAM: 16000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/{make_env,ibex}
-    - echo "Setup tools"
+    - ./tests/scripts/run_large_designs.sh --name ibex install_dependencies
+    - echo "##/ Setup tools \##"
     - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - echo "Start testing"
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - make -C tests uhdm/yosys/synth-ibex-build TEST=ibex ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+    - ./tests/scripts/run_large_designs.sh --name ibex load_submodules run
   artifacts:
     when: always
     paths:
@@ -356,20 +217,10 @@ ibex_synth_f4pga_large_design:
     SCALENODE_RAM: 20000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/{make_env,ibex,yosys_f4pga_plugins}
-    - echo "Setup tools"
+    - ./tests/scripts/run_large_designs.sh --name ibex_f4pga install_dependencies
+    - echo "##/ Setup tools \##"
     - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - echo "Start testing"
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - make -C ./tests env TEST=ibex -j1
-    - make -C tests uhdm/yosys/synth-ibex-f4pga TEST=ibex ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+    - ./tests/scripts/run_large_designs.sh --name ibex_f4pga load_submodules run
   artifacts:
     when: always
     paths:
@@ -386,19 +237,10 @@ opentitan_9d82960888_synth_large_design:
     SCALENODE_RAM: 50000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/opentitan_9d82960888
-    - echo "Setup tools"
+    - ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 install_dependencies
+    - echo "##/ Setup tools \##"
     - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - echo "Start testing"
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - make -C tests uhdm/yosys/synth-opentitan-build TEST=opentitan ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+    - ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 load_submodules run
   artifacts:
     when: always
     paths:
@@ -416,19 +258,10 @@ opentitan_synth_large_design:
     SCALENODE_RAM: 160000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/opentitan
-    - echo "Setup tools"
+    - ./tests/scripts/run_large_designs.sh --name opentitan install_dependencies
+    - echo "##/ Setup tools \##"
     - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - echo "Start testing"
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - make -C tests uhdm/yosys/synth-opentitan-build-tiny TEST=opentitan ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+    - ./tests/scripts/run_large_designs.sh --name opentitan load_submodules run
   artifacts:
     when: always
     paths:
@@ -444,28 +277,10 @@ opentitan_parse_report_quick_large_design:
     SCALENODE_RAM: 36000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/opentitan
-    - echo "Setup tools"
+    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_quick install_dependencies
+    - echo "##/ Setup tools \##"
     - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - echo "Create venv"
-    - export PATH="$PWD/out/current/bin:$PATH"
-    - cd tests/opentitan/opentitan_parsing_test
-    - make gen-opentitan-deps-mk
-    - echo "Run parsing tests"
-    - make -rR -j$(nproc) -Otarget test || /bin/true
-    - echo "Make summary"
-    - make summary
-    - make summary.md
-    - cat build/results/summary.md && rm build/results/summary.md
-    - make check-status
+    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_quick load_submodules run
   artifacts:
     when: always
     paths:
@@ -483,28 +298,10 @@ opentitan_parse_report_full_large_design:
     SCALENODE_RAM: 120000
     SCALENODE_CPU: 6
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-    - update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-    - pip install --break-system-packages virtualenv && export PATH="$PATH:/usr/local/bin"
-    - echo "Load submodules"
-    - git submodule sync
-    - git submodule update --depth 1 --init --recursive --checkout third_party/opentitan
-    - echo "Setup tools"
+    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_full install_dependencies
+    - echo "##/ Setup tools \##"
     - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - echo "Create venv"
-    - export PATH="$PWD/out/current/bin:$PATH"
-    - cd tests/opentitan/opentitan_parsing_test
-    - make gen-opentitan-deps-mk
-    - echo "Run parsing tests"
-    - make -rR -j$(nproc) TOP_DOWN_TEST:=1 -Otarget test || /bin/true
-    - echo "Make summary"
-    - make summary
-    - make summary.md
-    - cat build/results/summary.md && rm build/results/summary.md
-    - make check-status
+    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_full load_submodules run
   artifacts:
     when: always
     paths:
@@ -519,13 +316,12 @@ bsg_test_diff:
     - main
     - merge_requests
   script:
-    - echo "Install dependencies"
-    - apt update
-    - apt install -y $DEPENDENCIES_FOR_TESTING
-    - echo "Load submodules"
+    - echo "##/ Install dependencies \##"
+    - ./tests/scripts/run_large_designs.sh --name opentitan install_dependencies
+    - echo "##/ Load submodules \##"
     - git submodule sync
     - git submodule update --depth 1 --init --recursive --checkout third_party/bsg_micro_designs
-    - echo "Start bsg diff test"
+    - echo "##/ Start bsg diff test \##"
     - export PATH="$PWD/out/current/bin:$PATH"
     - python3 ./tests/bsg_micro_designs/generate_bsg_tests.py
     - cat tests/bsg_micro_designs/build/bsg_micro_designs_summary.md

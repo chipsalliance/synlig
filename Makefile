@@ -337,6 +337,9 @@ list :
 	printf '    %s\n' \
 			'list ${F.D}|${F.!D} help' \
 			'build' \
+			'build_eqy' \
+			'build_sby' \
+			'build_sv2v' \
 			'install' \
 			'clean' \
 			;
@@ -363,6 +366,21 @@ help : list
 .PHONY: build
 build : $(foreach t,${GetTargetsList}, @${t})
 
+.PHONY: build_eqy
+build_eqy : ${OUT_DIR}/bin/yosys-config
+	export PATH="$(realpath ${OUT_DIR})/bin:${PATH}"
+	${MAKE} -C third_party/eqy install PREFIX=$(realpath ${OUT_DIR})
+
+.PHONY: build_sby
+build_sby : ${OUT_DIR}/bin/yosys-config
+	export PATH="$(realpath ${OUT_DIR})/bin:${PATH}"
+	${MAKE} -C third_party/sby install PREFIX=$(realpath ${OUT_DIR})
+
+.PHONY: build_sv2v
+build_sv2v :
+	${MAKE} -C ./third_party/sv2v
+	mkdir -p ${OUT_DIR}/bin
+	cp ./third_party/sv2v/bin/sv2v ${OUT_DIR}/bin/sv2v
 
 .PHONY: install
 install : $(foreach t,${GetTargetsList}, install@${t})

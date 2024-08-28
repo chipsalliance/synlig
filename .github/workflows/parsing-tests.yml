@@ -10,13 +10,6 @@ on:
 
 env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
-  TESTS_TO_SKIP: synthesis serv-minimal hello-uvm assignment-pattern Forever OneClass
-    VoidFunction2Returns VoidFunctionWithoutReturn cmake OneThis FunctionOutputArgument
-    DpiChandle Disable SelectFromUnpackedInFunction VoidFunction MultiplePrints
-    ImportPackageWithFunction StringAssignment SystemFunctions
-    ParameterDoubleUnderscoreInSvFrontend OutputSizeWithParameterOfInstanceInitializedByStructMember
-    StringAssignConcatenation StringLocalParamInitByConcatenation StringWithBackslash
-    AssignToUnpackedUnionFieldAndReadOtherField NestedPatternPassedAsPort
 
 jobs:
   tests-read-uhdm:
@@ -44,34 +37,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libgoogle-perftools-dev \
-              llvm-15 \
-              python3 \
-              python3-dev \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          ./tests/scripts/run_parsing.sh install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/surelog \
-              ;
+          ./tests/scripts/run_parsing.sh load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -86,10 +56,7 @@ jobs:
         env:
           TARGET: uhdm/yosys/test-ast
         run: |
-          ./.github/scripts/run_group_test.sh \
-              ./build/parsing/read-uhdm \
-              ./build/parsing/test-results-uhdm.log \
-              ;
+          ./tests/scripts/run_parsing.sh read_uhdm
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
@@ -143,34 +110,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update -q
-          apt-get install -y \
-              ant \
-              build-essential \
-              cmake \
-              default-jre \
-              flex \
-              git \
-              google-perftools \
-              libfl-dev \
-              libgoogle-perftools-dev \
-              llvm-15 \
-              python3 \
-              python3-dev \
-              swig \
-              tcl-dev \
-              tclsh \
-              uuid \
-              uuid-dev \
-              ;
-          update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          ./tests/scripts/run_parsing.sh install_dependencies
 
       - name: Checkout submodules
         run: |
-          git submodule sync
-          git submodule update --depth 1 --init --recursive --checkout \
-              third_party/surelog \
-              ;
+          ./tests/scripts/run_parsing.sh load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v2
@@ -185,10 +129,7 @@ jobs:
         env:
           TARGET: uhdm/yosys/test-ast
         run: |
-          ./.github/scripts/run_group_test.sh \
-              ./build/parsing/read-systemverilog \
-              ./build/parsing/test-results-systemverilog.log \
-              ;
+          ./tests/scripts/run_parsing.sh read_systemverilog
 
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
