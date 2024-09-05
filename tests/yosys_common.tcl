@@ -1,4 +1,4 @@
-if {$::env(BUILD_TYPE) == "'plugin'" } {
+if {$::env(BUILD_TYPE) == "plugin" } {
 	yosys plugin -i systemverilog
 }
 yosys -import

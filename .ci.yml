@@ -104,42 +104,45 @@ build_package:
     when: always
     paths:
       - build/
+  script:
+    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type $BUILD_TYPE read_uhdm
+    - ./tests/scripts/run_parsing.sh --type $BUILD_TYPE gather_results
 
 plugin_read_uhdm:
   <<: *parsing_test
   dependencies: [build_plugin]
-  script:
-    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type plugin read_uhdm
+  variables:
+    BUILD_TYPE: plugin
 
 plugin_read_systemverilog:
   <<: *parsing_test
   dependencies: [build_plugin]
-  script:
-    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type plugin read_systemverilog
+  variables:
+    BUILD_TYPE: plugin
 
 asan_read_uhdm:
   <<: *parsing_test
   dependencies: [build_asan]
-  script:
-    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type asan read_uhdm
+  variables:
+    BUILD_TYPE: asan
 
 asan_read_systemverilog:
   <<: *parsing_test
   dependencies: [build_asan]
-  script:
-    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type asan read_systemverilog
+  variables:
+    BUILD_TYPE: asan
 
 release_read_uhdm:
   <<: *parsing_test
   dependencies: [build_release]
-  script:
-    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type release read_uhdm
+  variables:
+    BUILD_TYPE: release
 
 release_read_systemverilog:
   <<: *parsing_test
   dependencies: [build_release]
-  script:
-    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type release read_systemverilog
+  variables:
+    BUILD_TYPE: release
 
 .job_template: &formal_test
   stage: "Run parsing and formal verification tests"
