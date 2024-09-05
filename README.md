@@ -2,51 +2,39 @@
 
 ![Synlig logo](images/synlig-logo.svg)
 
-Synlig is a SystemVerilog and [UHDM](https://github.com/chipsalliance/UHDM) front end plugin for [Yosys](https://github.com/YosysHQ/yosys). 
-It uses [Surelog](https://github.com/chipsalliance/Surelog), a SystemVerilog 2017 preprocessor, parser and elaborator.
+Synlig is a SystemVerilog synthesis tool that uses [Surelog](https://github.com/chipsalliance/Surelog) as a SystemVerilog 2017 preprocessor, parser and elaborator with [Yosys](https://github.com/YosysHQ/yosys) as a framework for synthesis.
 
 ## Installation
 
-Before installing the plugin, check that Yosys is installed and correctly configured:
+### Download Synlig
 
-<!-- name="check-yosys" -->
-``` bash
-   yosys -version
-   yosys-config --help
+You can download Synlig from Github [release page](https://github.com/chipsalliance/synlig/releases).
+To download latest version you can use following script:
+
+```bash
+# TODO: update it after initial release
+```
+Then, install it with superuser privileges:
+
+```bash
+# TODO: update it after initial release
 ```
 
-The required Yosys version is 0.40 or later.
-Note that the yosys package with required version is currently unavailable in any Debian repository.
-If you don't have Yosys, skip to the [Installation from source](#installation-from-source) section to build Yosys from the source.
+Synlig is now ready to be used.
+Now you can go to the [Usage](#usage) section of this document to learn how to use it.
 
-When you are sure Yosys is installed and configured, download and unpack the latest version of the plugin:
-
-<!-- name="download-plugin" -->
-``` bash
-   apt install -y curl jq tar wget
-   curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig-plugin-debian")) | .browser_download_url' | xargs wget -O - | tar -xz
-```
-
-Then, install the plugin with superuser privileges:
-
-<!-- name="install-plugin" -->
-``` bash
-   ./install_plugin.sh
-```
-The plugin is now ready to be used. and you can go to the [Usage](#usage) section of this document for instructions on how to load the plugin into Yosys.
-
-## Installation from source
+### Installation from source
 
 * Debian Trixie:
 
-### Install dependencies
+#### Install dependencies
 
 <!-- name="dependencies" -->
 ``` bash
    apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
 ```
 
-### Build required binaries
+#### Build required binaries
 
 You can build all required binaries using the provided `Makefile`.
 `make install` will build Surelog, Yosys and Synlig, and place them in the `out` directory.
@@ -59,7 +47,7 @@ You need to add `out/bin` to your `PATH` variable to ensure you are using correc
    make install -j$(nproc)
 ```
 
-To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
+To use Synlig, make sure to either use absolute paths, or update the `PATH` variable before use.
 
 <!-- name="path-setup" -->
 ``` bash
@@ -68,78 +56,95 @@ To use Yosys built from a submodule, make sure to either use absolute paths, or 
 
 ## Usage
 
-### Loading Synlig into Yosys
+You can now start Synlig by executing the `synlig` command.
+To read systemverilog files you can use:
 
-You can now start Yosys by executing the `yosys` command.
-In order to use the SystemVerilog plugin, you first need to load it in Yosys. To do so, execute the following commands in Yosys prompt:
-
-<!-- name="load-plugin" -->
-``` tcl
-   plugin -i systemverilog
-   help read_systemverilog
-   help read_uhdm
-   exit
-```
-
-Now Yosys is extended with 2 additional commands:
-
-* `read_systemverilog [options] [filenames]` - reads SystemVerilog files directly in Yosys. 
-It executes Surelog with provided filenames and converts them (in memory) into an UHDM file. 
-This UHDM file is converted into a Yosys AST. 
-Note: arguments to this command should be exactly the same as for Surelog binary.
-* `read_uhdm  [options] [filename]` - reads a UHDM file generated using Surelog and converts it into a Yosys AST.
-
-### Generating a UHDM file
-
-You can either generate a UHDM file directly using Surelog or convert SystemVerilog files to UHDM using the Yosys `read_systemverilog` command, where the command acts as a wrapper around a Surelog binary. 
-It accepts the same arguments as Surelog and executes Surelog underneath. 
-You can find more information about Surelog usage in [its README](https://github.com/chipsalliance/Surelog#usage).
+* `read_systemverilog [options] [filenames]` - reads SystemVerilog files. 
+* `read_uhdm  [options] [filename]` - allows to read UHDM files - SystemVerilog files already processed by Surelog.
+Afterwards it works similar to `read_systemverilog`.
 
 ### Quick start examples
 
-As a simple example, we run Verilog code synthesis using the plugin:
+#### Counter 
 
-<!-- name="example-verilog" -->
-``` bash
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog tests/simple_tests/onenet/top.sv"
+Consider following SystemVerilog code:
+
+<!-- name="counter.sv" -->
+``` SystemVerilog
+module top (
+  input clk,
+  output [3:0] led
+);
+  localparam BITS = 4;
+  localparam LOG2DELAY = 22;
+
+  wire bufg;
+  BUFG bufgctrl (
+      .I(clk),
+      .O(bufg)
+  );
+  reg [BITS+LOG2DELAY-1:0] counter = 0;
+  always @(posedge bufg) begin
+    counter <= counter + 1;
+  end
+  assign led[3:0] = counter >> LOG2DELAY;
+endmodule
 ```
 
-In the second example, we first need to convert the SystemVerilog file into UHDM using Surelog and then read it into Yosys.
+Running the synthesis using Synlig is very simple:
 
-<!-- name="example-uhdm-ver1" -->
-``` bash
-   surelog -parse tests/simple_tests/onenet/top.sv
-   yosys -p "plugin -i systemverilog" -p "read_uhdm slpp_all/surelog.uhdm"
+<!-- name="synthesis example" -->
+``` tcl
+	> read_systemverilog counter.sv
+	1. Executing Verilog with UHDM frontend.
+	(...)
+
+	> synth_xilinx
+	2. Executing SYNTH_XILINX pass.
+	(...)
+
+	Number of wires:                 10
+	Number of wire bits:            167
+	Number of public wires:           4
+	Number of public wire bits:      32
+	Number of ports:                  2
+	Number of port bits:              5
+	Number of memories:               0
+	Number of memory bits:            0
+	Number of processes:              0
+	Number of cells:                 40
+	  BUFG                            1
+	  CARRY4                          7
+	  FDRE                           26
+	  IBUF                            1
+	  INV                             1
+	  OBUF                            4
+	(...)
+
+	> write_edif counter.edif
+	3. Executing Synlig EDIF backend.
 ```
 
-This is equivalent to:
+As a result we get a `counter.edif` file that can be further processed to get the bitstream.
 
-<!-- name="example-uhdm-ver2" -->
-``` bash
-   yosys -p "plugin -i systemverilog" -p "read_systemverilog tests/simple_tests/onenet/top.sv"
-```
-
-After loading it into Yosys, you can process it further using regular Yosys commands.
-
-### Example for parsing multiple files
+#### Parsing multiple files
 
 To parse a multi-file with the `read_systemverilog` command, all files have to be listed at once. 
-his can be troublesome for larger designs. 
-To mitigate this issue, the plugin supports a flow that allows users to pass files and link them separately. 
+This can be troublesome for larger designs. 
+To mitigate this issue, Synlig supports a flow that allows users to pass files and link them separately. 
 Files can be loaded one by one using the `-defer` flag. 
 Once all files are uploaded, you should call `read_systemverilog -link` to elaborate them. 
 The described flow looks like so:
 
 <!-- name="example-multiple-files" -->
 ``` tcl
-    plugin -i systemverilog
     # Read each file separately
     read_systemverilog -defer tests/separate_compilation/separate_compilation.v
     read_systemverilog -defer tests/separate_compilation/separate_compilation_buf.sv
     read_systemverilog -defer tests/separate_compilation/separate_compilation_pkg.sv
     # Finish reading files, elaborate the design
     read_systemverilog -link
-    # Continue Yosys flow...
+    # Continue Synlig flow...
     exit
 ```
 
@@ -150,94 +155,111 @@ If you encounter any problems with it, please compare the results with a single 
 
 ### Formal Verification
 
+Synlig runs formal verification tests to make sure it gives comparable results with other synthesis tools.
+More information about Formal Verification can be found in its [README](https://github.com/chipsalliance/synlig/tree/main/tests/formal)
+
 #### Prerequisites
 
-##### `sv2v`
+All required prerequisites can be installed by running:
 
-Formal Verification uses `sv2v` tool and tests from its repository, which is available as a submodule.
-To download the sv2v submodule run:
-
-<!-- name="sv2v-update" -->
+<!-- name="install tools" -->
 ``` bash
-   git submodule update --init --recursive --checkout third_party/sv2v
+   git submodule update --init --recursive --checkout third_party/{sv2v,eqy,sby,yosys}
+   make tools -j $(nproc)
 ```
 
-To build sv2v and copy it to `out/current/bin` (where it is expected to be by the test script) run:
+#### Running Formal Verification
 
-<!-- name="sv2v-build" -->
-``` bash
-    wget -qO- https://get.haskellstack.org/ | sh -s - -f -d $PWD/out/current/bin
-    make build_sv2v -j$(nproc) 
-```
-
-##### `eqy` and `sby`
-
-Formal Verification proves design equivalence using `eqy` and `sby` tools, which are included as submodules.
-To checkout the `eqy` and `sby` submodules, run:
-
-<!-- name="eqy-sby-update" -->
-``` bash
-   git submodule update --init --checkout third_party/{eqy,sby}
-```
-
-To build `eqy` and `sby` run:
-
-<!-- name="eqy-sby-build" -->
-``` bash
-    make build_eqy build_sby -j$(nproc) 
-```
-
-#### Testing
-
-To start formal verification tests, use `run_fv_tests.mk`, either as an executable or by using make:
+To start formal verification tests use dedicated script:
 
 <!-- name="run-fv-tests-exec" -->
 ``` bash
-   ./run_fv_tests.mk [make_args...] \
-         TEST_SUITE_DIR:=<test_suite_dir> \
-         [TEST_SUITE_NAME:=<test_suite_name>] \
-         [target...]
+   ./tests/scripts/run_formal.sh --name=<test_suite_name> run
 ```
-
-<!-- name="run-fv-tests-make" -->
-``` bash
-   make -f ./run_fv_tests.mk [make_args] [args...] [target...]
-```
-
-* `test_suite_dir` - path to a tests directory (e.g. `./yosys/tests`). Required by all targets except `help`.
-* `test_suite_name` - when specified, it is used as a name of a directory inside `./build/` where results are stored. Otherwise results are stored directly inside the `./build/` directory.
 
 To gather formal verification results use: 
 ``` bash
-    ./tests/formal/gather_fv_results.sh \
-        TEST_SUITE_NAME:=<test_suite_name>
+   ./tests/scripts/run_formal.sh --name=<test_suite_name> gather_results
 ```
-
-For other dependencies, please see the `.github/workflows/formal-verification.yml` file.
-
-#### More details
-
-[Formal Verification README](https://github.com/chipsalliance/synlig/tree/main/tests/formal)
 
 #### Available Targets
 
-* ``help`` - Prints help.
-* ``list`` - Prints tests available in specified ``test_suite_dir``. Each test from the list is itself a valid target.
-* ``test`` - Runs all tests from ``test_suite_dir``.
+You can see available `test_suite_name`'s by running:
+
+``` bash
+   ./tests/scripts/run_formal.sh --help
+```
+
+### Design tests
+
+Synlig is also tested by synthesizing several designs:
+
+* [OpenTitan](https://github.com/lowRISC/opentitan),
+* [Ibex](https://github.com/lowRISC/ibex),
+* [VeeR](https://github.com/chipsalliance/Cores-VeeR-EH1),
+* [BlackParrot](https://github.com/black-parrot/black-parrot).
+
+For more details check `.github/workflows/large-designs.yml` or run:
+
+``` bash
+   ./tests/scripts/run_large_designs.sh --help
+```
+
+### Parsing tests
+
+Synlig is additionally tested on parsing tests, for more details check `.github/workflows/parsing-tests.yml` or run:
+
+``` bash
+   ./tests/scripts/run_parsing.sh --help
+```
 
 ## General & debugging tips
 
-1. `synlig` needs to be compiled with the same version of Surelog that was used to generate the UHDM file. 
-When you are updating the Surelog version, you also need to recompile the plugin.
 1. You can print the UHDM tree by adding `-debug` flag to `read_uhdm` or `read_systemverilog`. 
 This flag also prints the converted Yosys AST.
-1. The order of the files matters. Surelog requires that all definitions be already defined when a file is parsed (e.g. if file `B` is defining a type used in file `A`, file `B` needs to be parsed before file `A`).
-
+1. The order of the files matters.
+Surelog requires that all definitions be already defined when a file is parsed (e.g. if file `B` is defining a type used in file `A`, file `B` needs to be parsed before file `A`).
 
 ## Embedding Synlig in a larger cmake-based project
 
 1. An alternative build mechanism defined in the CMakeLists.txt file is provided to allow Synlig to be built part of a larger cmake-based project
-Simply add_subsystem(synlig) in your parent CMake. See CMakeLists.txt for compilation options (With or without vendored Yosys and Surelog).
+Simply add_subsystem(synlig) in your parent CMake.
+See CMakeLists.txt for compilation options (With or without vendored Yosys and Surelog).
 1. To test locally this build system: make -f cmake-makefile
 
+## Plugin mode
 
+Synlig is also available as Yosys plugin.
+Note that almost all tests are made on Synlig binary instead of plugin version, and there is no guarantee that plugin version will be still developed in the future.
+
+### Installation from source
+
+#### Install dependencies
+
+<!-- name="dependencies" -->
+``` bash
+   apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
+```
+
+#### Build required binaries
+
+You can build all required binaries using the provided `Makefile`.
+`make plugin` will build Surelog, Yosys and Synlig as plugin, and place them in the `out` directory.
+You need to add `out/bin` to your `PATH` variable to ensure you are using correct versions of the binaries.
+
+<!-- name="build-binaries" -->
+``` bash
+   git submodule update --init --recursive third_party/{surelog,yosys}
+   make plugin -j$(nproc)
+```
+
+To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
+
+<!-- name="path-setup" -->
+``` bash
+   export PATH=`pwd`/out/current/bin:$PATH
+```
+### Loading Synlig as plugin into Yosys
+
+You can now start Yosys by executing the `yosys` command.
+In order to use the SystemVerilog plugin, you first need to load it in Yosys, to do so, execute the following command in Yosys prompt: `plugin -i systemverilog`.

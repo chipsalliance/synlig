@@ -9,15 +9,15 @@ IBEX = ${root_dir}/../third_party/ibex
 ${IBEX}/.gitpatch:
 	cd ${IBEX} && git apply ${curr_dir}/top_artya7_core.patch && git apply ${curr_dir}/ibex_synth.patch && touch $@
 
-uhdm/yosys/synth-ibex: clean-build ${IBEX}/.gitpatch
+uhdm/synlig/synth-ibex: clean-build ${IBEX}/.gitpatch
 	virtualenv ${root_dir}/venv-ibex
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \
 		pip install -r ${IBEX}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@svplugin_support && \
-		fusesoc --cores-root=${IBEX} run --build --tool yosys --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem")
+		fusesoc --cores-root=${IBEX} run --build --tool synlig --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem")
 
-uhdm/yosys/synth-ibex-build: clean-build ${IBEX}/.gitpatch
+uhdm/synlig/synth-ibex-build: clean-build ${IBEX}/.gitpatch
 	virtualenv ${root_dir}/venv-ibex
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \

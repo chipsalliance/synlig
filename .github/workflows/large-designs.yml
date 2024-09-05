@@ -36,11 +36,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-release.tar
 
       - name: Build & Test
         run: |
@@ -89,11 +89,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-plugin
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-plugin.tar
 
       - name: Setup build environment & Build & Test
         run: |
@@ -143,11 +143,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-release.tar
 
       - name: Build & Test
         run: |
@@ -157,18 +157,18 @@ jobs:
 
       - name: Generate AST
         run: |
-          FILE_NAME=tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/yosys.log
+          FILE_NAME=tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/synlig.log
           start=$(grep -n "AST_MODULE" $FILE_NAME |cut -f1 -d:|head -n 1)
           end=$(grep -n "AST_" $FILE_NAME |cut -f1 -d:|tail -n 1)
 
-          sed -n $start,"$end"p $FILE_NAME > yosys.ast
+          sed -n $start,"$end"p $FILE_NAME > synlig.ast
 
       - name: Upload AST
         uses: actions/upload-artifact@v2
         if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
         with:
-          name: opentitan-yosys.ast
-          path: yosys.ast
+          name: opentitan-synlig.ast
+          path: synlig.ast
 
       # # Uncomment when first job on master will pass
       # - name: Download binaries
@@ -227,11 +227,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-release.tar
 
       - name: Build & Test
         run: |
@@ -295,11 +295,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-release.tar
 
       - name: Create venv & Parse OpenTitan components & Make summary
         run: |
@@ -354,11 +354,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-release.tar
 
       - name: Build & Test
         run: |
@@ -408,11 +408,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-release.tar
 
       - name: Build & Test
         run: |
@@ -462,11 +462,11 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries.tar
+        run: tar -xf binaries-release.tar
 
       - name: Build & Test
         run: |

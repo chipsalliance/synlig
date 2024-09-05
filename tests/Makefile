@@ -5,7 +5,7 @@ root_dir:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 OUT_DIR = ${root_dir}/../out/current
 SURELOG_BIN = ${OUT_DIR}/bin/surelog
-YOSYS_BIN = ${OUT_DIR}/bin/yosys
+SYNLIG_BIN = ${OUT_DIR}/bin/synlig
 COVARAGE_REPORT = ${root_dir}/build/coverage
 
 TEST_DIR := $(realpath $(root_dir)/$(TEST))
@@ -29,7 +29,7 @@ list:
 
 uhdm/yosys/test-ast: clean-build surelog/parse
 	(export TEST_DIR=${TEST_DIR} TEST_FILES="${TEST_FILES}" TOP_MODULE="${TOP_MODULE}" SURELOG_FLAGS="${SURELOG_FLAGS}" && \
-	cd $(root_dir)/build && ${YOSYS_BIN} -c $(YOSYS_TCL))
+	cd $(root_dir)/build && ${SYNLIG_BIN} -c $(YOSYS_TCL))
 
 # ------------ Test helper targets ------------
 

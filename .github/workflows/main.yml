@@ -68,27 +68,24 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: 'Build Binaries'
-            artifact-name: 'binaries'
+          - name: 'Build Synlig Release'
+            artifact-name: 'binaries-release'
+            apt-extra-deps: 'gcc g++'
+            cc: 'gcc'
+            cxx: 'g++'
+            build-binaries-args: 'install'
+          - name: 'Build Plugin'
+            artifact-name: 'binaries-plugin'
             cc: 'gcc'
             cxx: 'g++'
             apt-extra-deps: 'gcc g++'
-            build-binaries-args: ''
-            debian-patch: false
-          - name: 'Build Binaries (for Debian)'
-            artifact-name: 'binaries-debian'
-            cc: 'gcc'
-            cxx: 'g++'
-            apt-extra-deps: 'gcc g++'
-            build-binaries-args: ''
-            debian-patch: true
-          - name: 'Build Binaries (ASAN)'
+            build-binaries-args: 'plugin'
+          - name: 'Build Synlig (ASAN)'
             artifact-name: 'binaries-asan'
             cc: 'clang-15'
             cxx: 'clang++-15'
             apt-extra-deps: 'clang-15'
-            build-binaries-args: 'ENABLE_ASAN:=1'
-            debian-patch: false
+            build-binaries-args: 'install ENABLE_ASAN=1 CFG_BUILD_TYPE=asan'
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
@@ -149,11 +146,6 @@ jobs:
               third_party/{surelog,yosys} \
               ;
 
-      - name: Apply Debian patch
-        if: ${{ matrix.debian-patch }}
-        run: |
-          git -C third_party/yosys apply ../yosys_mod/yosys_debian.patch
-
       - name: Setup cache
         uses: actions/cache@v2
         with:
@@ -164,9 +156,7 @@ jobs:
       - name: Build binaries
         run: |
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
-          make -rR -j$(nproc) -Oline -f build_binaries.mk ${BUILD_BINARIES_ARGS} \
-              install-surelog install-yosys install-plugin
-          ./.github/scripts/patch_yosys_config.sh out
+          make -j $(nproc) ${BUILD_BINARIES_ARGS}
           # By default actions/upload-artifact@v2 do not preserve file permissions
           # tar directory to workaround this issue
           # See https://github.com/actions/upload-artifact/issues/38
@@ -187,8 +177,8 @@ jobs:
           path: |
             **/plot_*.svg
 
-  build-sv2v:
-    name: Build sv2v
+  build-tools:
+    name: Build tools
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
     env:
@@ -210,54 +200,62 @@ jobs:
         run: |
           apt-get update -q
           apt-get install -y \
+              ant \
+              bison \
+              build-essential \
+              ccache \
+              cmake \
+              default-jre \
+              flex \
               git \
+              gcc \
+              g++ \
+              google-perftools \
+              libffi-dev \
+              libfl-dev \
+              libgoogle-perftools-dev \
+              libreadline-dev \
+              pkg-config \
+              python3 \
+              python3-dev \
+              python3-pip \
+              python3-orderedmultidict \
+              swig \
+              tcl-dev \
+              tclsh \
+              uuid \
+              uuid-dev \
               wget \
               ;
 
-      - name: 'Read submodule revisions'
-        id: rev
-        run: |
-           CACHE_HASH_LENGTH=20
-           repo_hash="$(git submodule status third_party/sv2v)"
-           # Skip first character which is ' ' or '+'
-           repo_hash="${repo_hash:1:$CACHE_HASH_LENGTH}"
-           printf '::set-output name=%s::%s\n' 'sv2v-submodule-rev' "${repo_hash}"
-
-      - name: Try restoring build results from cache
-        id: cache-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: third_party/sv2v/bin/sv2v
-          key: sv2v@${{ steps.rev.outputs.sv2v-submodule-rev }}
-
       - name: Checkout submodules
-        if: ${{ steps.cache-restore.outputs.cache-hit != 'true' }}
         run: |
           git submodule sync
           git submodule update --depth 1 --init --recursive --checkout \
               third_party/sv2v \
+              third_party/yosys \
               ;
 
-      - name: Build binaries
-        if: ${{ steps.cache-restore.outputs.cache-hit != 'true' }}
+      - name: Build sv2v
         run: |
           export PATH=$PWD/install/bin:/usr/local/bin:${PATH}
           wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-          make build_sv2v -j$(nproc)
+          make install@sv2v -j $(nproc)
+
+      - name: Build tools
+        run: |
+          make install@yosys-tools -j $(nproc)
+
+      - name: Pack tools
+        run: |
+          tar -cvf tools.tar out
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
-          name: sv2v
+          name: tools
           path: |
-            out/release/bin/sv2v
-
-      - name: Save build results to cache
-        if: ${{ steps.cache-restore.outputs.cache-hit != 'true' && ! (failure() || cancelled()) }}
-        uses: actions/cache/save@v3
-        with:
-          path: out/release/bin/sv2v
-          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+            tools.tar
 
       - name: Upload load graphs
         if: ${{ !cancelled() }}
@@ -281,7 +279,7 @@ jobs:
     uses: ./.github/workflows/formal-verification.yml
     needs:
       - build-binaries
-      - build-sv2v
+      - build-tools
 
   tests-bsg-micro-designs-diff:
     name: Diff generated BSG Micro Designs tests
@@ -315,35 +313,24 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: binaries
-
-      - name: Download Debian artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: binaries-debian
+          name: binaries-release
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
         run: |
-          tar -xf binaries.tar
-          mkdir debian
-          tar -xf binaries-debian.tar -C debian
+          tar -xf binaries-release.tar
 
       - name: Generate tarball and apply TAG
         run: |
           GIT_VERSION=${GIT_VERSION:-$(git rev-parse --short "$GITHUB_SHA")}
           DATE=$(git show -s --date=short --format=%cd)
           FULL_TARBALL=synlig-$GIT_VERSION-$DATE.tar.gz
-          PLUGIN_TARBALL=synlig-plugin-$GIT_VERSION-$DATE.tar.gz
-          PLUGIN_DEBIAN_TARBALL=synlig-plugin-debian-$GIT_VERSION-$DATE.tar.gz
           # Create a tag of form 2021-12-06-ad2466e
           TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
           echo "TAG=$TAG" >> $GITHUB_ENV
           ls -lah out
           tar -zcvf $FULL_TARBALL out
-          tar -zcvf $PLUGIN_TARBALL install_plugin.sh out/current/share/yosys/plugins/systemverilog.so
-          tar -zcvf $PLUGIN_DEBIAN_TARBALL install_plugin.sh -C debian out/current/share/yosys/plugins/systemverilog.so
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:
@@ -532,13 +519,13 @@ jobs:
       - name: Download binaries
         uses: actions/download-artifact@v2
         with:
-          name: binaries-debian
+          name: binaries-plugin
 
       - name: Extract
         run: |
           # Extract into a different directory than it was built in
           # to ensure no path dependencies
-          tar --one-top-level -xf binaries-debian.tar
+          tar --one-top-level -xf binaries-plugin.tar
 
       - name: Verify yosys-config
         run: |

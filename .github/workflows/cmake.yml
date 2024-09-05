@@ -116,11 +116,6 @@ jobs:
               third_party/{surelog,yosys} \
               ;
 
-      - name: Apply Debian patch
-        if: ${{ matrix.debian-patch }}
-        run: |
-          git -C third_party/yosys apply ../yosys_mod/yosys_debian.patch
-
       - name: Setup cache
         uses: actions/cache@v2
         with:

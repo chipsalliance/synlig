@@ -256,11 +256,11 @@ endif()
 # Put source code here, files that are generated at build time in
 # surelog_generated_SRC
 set(synlig_SRC
-    ${PROJECT_SOURCE_DIR}/frontends/systemverilog/compat_symbols.cc
-    ${PROJECT_SOURCE_DIR}/frontends/systemverilog/uhdm_ast_frontend.cc
-    ${PROJECT_SOURCE_DIR}/frontends/systemverilog/uhdm_surelog_ast_frontend.cc
-    ${PROJECT_SOURCE_DIR}/frontends/systemverilog/uhdm_ast.cc
-    ${PROJECT_SOURCE_DIR}/frontends/systemverilog/uhdm_common_frontend.cc
+    ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/compat_symbols.cc
+    ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/uhdm_ast_frontend.cc
+    ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/uhdm_surelog_ast_frontend.cc
+    ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/uhdm_ast.cc
+    ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/uhdm_common_frontend.cc
     ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/synlig_const2ast.cc
     ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/synlig_edif.cc
     ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/synlig_simplify.cc)
@@ -303,7 +303,7 @@ endif()
 
 target_include_directories(
   synlig
-  PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/frontends/systemverilog/>
+  PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/>
          $<INSTALL_INTERFACE:include>)
 target_include_directories(
   synlig PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/yosys_mod/>

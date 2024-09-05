@@ -15,7 +15,7 @@ ${VENV_OT_9d82960888}:
 	pip install -r ${OPENTITAN_9d82960888}/python-requirements.txt && \
 	pip install git+https://github.com/antmicro/edalize@svplugin_support
 
-uhdm/yosys/synth-opentitan-build: clean-build | ${OPENTITAN_9d82960888}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT_9d82960888}
+uhdm/synlig/synth-opentitan-build: clean-build | ${OPENTITAN_9d82960888}/.gitpatch ${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem ${VENV_OT_9d82960888}
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${VENV_OT_9d82960888}/bin/activate && \
 		fusesoc --cores-root=${OPENTITAN_9d82960888} run --flag=fileset_ip --build --tool vivado --target=synth lowrisc:systems:top_earlgrey_nexysvideo --BootRomInitFile="${curr_dir}/boot_rom_fpga_nexysvideo.32.vmem")
@@ -45,8 +45,8 @@ ${VENV_OT_SYNTH}: | ${OPENTITAN}/.gitpatch_synth
 		pip install -r ${OPENTITAN}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@svplugin_support)
 
-uhdm/yosys/synth-opentitan-build-tiny: clean-build | ${OPENTITAN}/.gitpatch_synth ${VENV_OT_SYNTH}
+uhdm/synlig/synth-opentitan-build-tiny: clean-build | ${OPENTITAN}/.gitpatch_synth ${VENV_OT_SYNTH}
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${VENV_OT_SYNTH}/bin/activate && \
-		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_top --flag=ot_is_custom_tiny --build --tool yosys --target=synth ${TOP})
+		fusesoc --cores-root=${OPENTITAN} run --flag=fileset_top --flag=ot_is_custom_tiny --build --tool synlig --target=synth ${TOP})
 

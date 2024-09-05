@@ -115,7 +115,12 @@ class Compiler
 
 struct UhdmSurelogAstFrontend : public UhdmCommonFrontend {
     UhdmSurelogAstFrontend(std::string name, std::string short_help) : UhdmCommonFrontend(name, short_help) {}
-    UhdmSurelogAstFrontend() : UhdmCommonFrontend("verilog_with_uhdm", "generate/read UHDM file") {}
+    UhdmSurelogAstFrontend() : UhdmCommonFrontend("verilog_with_uhdm", "generate/read UHDM file")
+    {
+#ifndef SYNLIG_STANDALONE_BINARY
+        log_warning("Using synlig as yosys plugin is deprecated. It is recommended to build synlig as standalone binary.\n");
+#endif
+    }
 
     void help() override
     {

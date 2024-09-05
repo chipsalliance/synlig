@@ -16,13 +16,6 @@ diff --git a/flow/scripts/synth_preamble.tcl b/flow/scripts/synth_preamble.tcl
 index ae082367..6bc9f486 100644
 --- a/flow/scripts/synth_preamble.tcl
 +++ b/flow/scripts/synth_preamble.tcl
-@@ -1,4 +1,6 @@
- yosys -import
-+plugin -i systemverilog
-+yosys -import
- 
- if {[info exist ::env(CACHED_NETLIST)]} {
-   exec cp $::env(CACHED_NETLIST) $::env(RESULTS_DIR)/1_1_yosys.v
 @@ -8,20 +10,8 @@ if {[info exist ::env(CACHED_NETLIST)]} {
    exit
  }

@@ -7,12 +7,15 @@ source tests/scripts/common.sh
 
 function build_dependencies(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Build eqy and sby \##"
-	make build_eqy build_sby -j $(nproc)
+	make install@eqy install@sby -j $(nproc)
 }
 
 function run_formal_tests(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start testing $1 \##"
 	export PATH="$PWD/out/current/bin:$PATH"
+	# this link is necessary because eqy doesn't
+	# support specifying executable file correctly
+	ln -f -s $(realpath $PWD/out/current/bin/synlig) $PWD/out/current/bin/yosys
 	./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$2" TEST_SUITE_NAME:="$1" test
 }
 
@@ -22,11 +25,13 @@ function gather_results(){
 	exit $?
 }
 
+NAMEARG=0
 args=$(getopt -o h -l name:,help -- "$@")
 
-for arg in $(echo $args | sed -s "s/--name /--name~/")
+for arg in $args
 do
-	if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]; then
+	case "$arg" in
+	-h|--help)
 		echo "Usage $0:"
 		echo "    --name <test_suite_name>"
 		echo ""
@@ -41,14 +46,27 @@ do
 		echo "        yosys"
 		echo "        sv2v"
 		echo ""
-	fi
-
-	option=$(echo $arg | cut -d '~' -f 1)
-	if [ $option == "--name" ]; then
-		name=$(echo $arg | cut -d '~' -f 2)
-	fi
-
-	if [ "$arg" == "--" ]; then
+		exit 0
+	;;
+	--name) NAMEARG=1 ;;
+	"'install_dependencies'") install_dependencies ;;
+	"'build_dependencies'") build_dependencies ;;
+	"'load_submodules'")
+		[ "$name" == "'simple'" ] && load_submodules yosys -r eqy sby
+		[ "$name" == "'yosys'" ] && load_submodules yosys -r eqy sby
+		[ "$name" == "'sv2v'" ] && load_submodules yosys sv2v -r eqy sby
+	;;
+	"'run'")
+		[ "$name" == "'simple'" ] && run_formal_tests simple ./tests/simple_tests
+		[ "$name" == "'yosys'" ] && run_formal_tests yosys ./third_party/yosys/tests
+		[ "$name" == "'sv2v'" ] && run_formal_tests sv2v ./third_party/sv2v/test
+	;;
+	"'gather_results'")
+		[ "$name" == "'simple'" ] && gather_results simple ./tests/simple_tests
+		[ "$name" == "'yosys'" ] && gather_results yosys ./third_party/yosys/tests
+		[ "$name" == "'sv2v'" ] && gather_results sv2v
+	;;
+	--)
 		if [ -z $name ]; then
 			echo "Test suite name is not provided!"
 			exit 1
@@ -61,26 +79,13 @@ do
 				exit 1
 			fi
 		fi
-	fi
-
-	[ "$arg" == "'install_dependencies'" ] && install_dependencies
-	[ "$arg" == "'build_dependencies'" ] && build_dependencies
-
-	if [ "$arg" == "'load_submodules'" ]; then
-		[ "$name" == "'simple'" ] && load_submodules -r eqy sby
-		[ "$name" == "'yosys'" ] && load_submodules yosys -r eqy sby
-		[ "$name" == "'sv2v'" ] && load_submodules sv2v -r eqy sby
-	fi
-
-	if [ "$arg" == "'run'" ]; then
-		[ "$name" == "'simple'" ] && run_formal_tests simple ./tests/simple_tests
-		[ "$name" == "'yosys'" ] && run_formal_tests yosys ./third_party/yosys/tests
-		[ "$name" == "'sv2v'" ] && run_formal_tests sv2v ./third_party/sv2v/test
-	fi
-
-	if [ "$arg" == "'gather_results'" ]; then
-		[ "$name" == "'simple'" ] && gather_results simple ./tests/simple_tests
-		[ "$name" == "'yosys'" ] && gather_results yosys ./third_party/yosys/tests
-		[ "$name" == "'sv2v'" ] && gather_results sv2v
-	fi
+	;;
+	*)
+		if [ $NAMEARG -eq 1 ]; then
+			name=$arg
+		fi
+		NAMEARG=0
+	;;
+	esac
 done
+exit 0

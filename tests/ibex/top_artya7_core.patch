@@ -93,14 +93,14 @@ index 4493a8ae..bbe9c6c8 100644
      tools:
        vivado:
          part: "xc7a100tcsg324-1"  # Default to Arty A7-100
-+        synth: "yosys"
-+        yosys_read_options: ['-debug']
-+        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
++        synth: "synlig"
++        synlig_read_options: ['-debug']
++        synlig_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
-+      yosys:
++      synlig:
 +        arch: "xilinx"
-+        yosys_read_options: ['-debug']
-+        yosys_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
++        synlig_read_options: ['-debug']
++        synlig_synth_options: ['-iopad', '-family xc7', "frontend=surelog"]
 +        surelog_options: ['--disable-feature=parametersubstitution', '-DSYNTHESIS']
 +      symbiflow:
 +        package: "csg324-1"

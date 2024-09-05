@@ -7,25 +7,25 @@ source tests/scripts/common.sh
 
 function run_veer(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Veer large design test \##"
-	make -C tests uhdm/yosys/veer TEST=veer ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+	make -C tests uhdm/synlig/veer TEST=veer ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 	exit $?
 }
 
 function run_blackparrot_AMD(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Blackparrot AMD large design test \##"
-	make -C tests uhdm/yosys/synth-blackparrot-build TEST=black_parrot ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+	make -C tests uhdm/synlig/synth-blackparrot-build TEST=black_parrot ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 	exit $?
 }
 
 function run_blackparrot_ASIC(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Blackparrot ASIC large design test \##"
-	make -C tests uhdm/yosys/synth-blackparrot-build-asic TEST=black_parrot -j $(nproc)
+	make -C tests uhdm/synlig/synth-blackparrot-build-asic TEST=black_parrot -j $(nproc)
 	exit $?
 }
 
 function run_ibex(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Ibex large design test \##"
-	make -C tests uhdm/yosys/synth-ibex-build TEST=ibex ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+	make -C tests uhdm/synlig/synth-ibex-build TEST=ibex ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 	exit $?
 }
 
@@ -41,13 +41,13 @@ function run_ibex_f4pga(){
 
 function run_opentitan_9d82960888(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Opentitan 9d82960888 large design test \##"
-	make -C tests uhdm/yosys/synth-opentitan-build TEST=opentitan ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+	make -C tests uhdm/synlig/synth-opentitan-build TEST=opentitan ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 	exit $?
 }
 
 function run_opentitan(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Opentitan large design test \##"
-	make -C tests uhdm/yosys/synth-opentitan-build-tiny TEST=opentitan ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+	make -C tests uhdm/synlig/synth-opentitan-build-tiny TEST=opentitan ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
 	exit $?
 }
 
@@ -77,10 +77,13 @@ function run_opentitan_parse_full(){
 	exit $?
 }
 
+NAMEARG=0
 args=$(getopt -o h -l name:,help -- "$@")
-for arg in $(echo $args | sed -s "s/--name /--name~/")
+
+for arg in $args
 do
-	if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]; then
+	case "$arg" in
+	-h|--help)
 		echo "Usage $0:"
 		echo "    --name <test_suite_name>"
 		echo ""
@@ -98,14 +101,33 @@ do
 		echo "        opentitan"
 		echo "        opentitan_parse_quick"
 		echo "        opentitan_parse_full"
-	fi
-
-	option=$(echo $arg | cut -d '~' -f 1)
-	if [ $option == "--name" ]; then
-		name=$(echo $arg | cut -d '~' -f 2)
-	fi
-
-	if [ "$arg" == "--" ]; then
+		exit 0
+	;;
+	--name) NAMEARG=1 ;;
+	"'install_dependencies'") install_dependencies ;;
+	"'load_submodules'")
+		[ "$name" == "'veer'" ] && load_submodules -r veer
+		[ "$name" == "'blackparrot_AMD'" ] && load_submodules black_parrot_tools black_parrot_sdk -r black_parrot
+		[ "$name" == "'blackparrot_ASIC'" ] && load_submodules black_parrot_tools black_parrot_sdk OpenROAD-flow-scripts -r black_parrot
+		[ "$name" == "'ibex'" ] && load_submodules -r make_env ibex
+		[ "$name" == "'ibex_f4pga'" ] && load_submodules -r make_env ibex yosys_f4pga_plugins
+		[ "$name" == "'opentitan_9d82960888'" ] && load_submodules -r opentitan_9d82960888
+		[ "$name" == "'opentitan'" ] && load_submodules -r opentitan
+		[ "$name" == "'opentitan_parse_quick'" ] && load_submodules -r opentitan
+		[ "$name" == "'opentitan_parse_full'" ] && load_submodules -r opentitan
+	;;
+	"'run'")
+		[ "$name" == "'veer'" ] && run_veer
+		[ "$name" == "'blackparrot_AMD'" ] && run_blackparrot_AMD
+		[ "$name" == "'blackparrot_ASIC'" ] && run_blackparrot_ASIC
+		[ "$name" == "'ibex'" ] && run_ibex
+		[ "$name" == "'ibex_f4pga'" ] && run_ibex_f4pga
+		[ "$name" == "'opentitan_9d82960888'" ] && run_opentitan_9d82960888
+		[ "$name" == "'opentitan'" ] && run_opentitan
+		[ "$name" == "'opentitan_parse_quick'" ] && run_opentitan_parse_quick
+		[ "$name" == "'opentitan_parse_full'" ] && run_opentitan_parse_full
+	;;
+	--)
 		if [ -z $name ]; then
 			echo "Large design test name is not provided!"
 			exit 1
@@ -124,31 +146,13 @@ do
 				exit 1
 			fi
 		fi
-	fi
-
-	[ "$arg" == "'install_dependencies'" ] && install_dependencies
-
-	if [ "$arg" == "'load_submodules'" ]; then
-		[ "$name" == "'veer'" ] && load_submodules -r veer
-		[ "$name" == "'blackparrot_AMD'" ] && load_submodules black_parrot_tools black_parrot_sdk -r black_parrot
-		[ "$name" == "'blackparrot_ASIC'" ] && load_submodules black_parrot_tools black_parrot_sdk OpenROAD-flow-scripts -r black_parrot
-		[ "$name" == "'ibex'" ] && load_submodules -r make_env ibex
-		[ "$name" == "'ibex_f4pga'" ] && load_submodules -r make_env ibex yosys_f4pga_plugins
-		[ "$name" == "'opentitan_9d82960888'" ] && load_submodules -r opentitan_9d82960888
-		[ "$name" == "'opentitan'" ] && load_submodules -r opentitan
-		[ "$name" == "'opentitan_parse_quick'" ] && load_submodules -r opentitan
-		[ "$name" == "'opentitan_parse_full'" ] && load_submodules -r opentitan
-	fi
-
-	if [ "$arg" == "'run'" ]; then
-		[ "$name" == "'veer'" ] && run_veer
-		[ "$name" == "'blackparrot_AMD'" ] && run_blackparrot_AMD
-		[ "$name" == "'blackparrot_ASIC'" ] && run_blackparrot_ASIC
-		[ "$name" == "'ibex'" ] && run_ibex
-		[ "$name" == "'ibex_f4pga'" ] && run_ibex_f4pga
-		[ "$name" == "'opentitan_9d82960888'" ] && run_opentitan_9d82960888
-		[ "$name" == "'opentitan'" ] && run_opentitan
-		[ "$name" == "'opentitan_parse_quick'" ] && run_opentitan_parse_quick
-		[ "$name" == "'opentitan_parse_full'" ] && run_opentitan_parse_full
-	fi
+	;;
+	*)
+		if [ $NAMEARG -eq 1 ]; then
+			name=$arg
+		fi
+		NAMEARG=0
+	;;
+	esac
 done
+exit 0

@@ -1,3 +1,4 @@
+// This code is used only when compiling synlig as yosys plugin
 // Symbol redefinitions for backwards compatibility.
 // This ensures that the plugin can still be loaded with older Yosys even if new extern variables are added to Yosys headers.
 #include "kernel/rtlil.h"

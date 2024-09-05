@@ -23,18 +23,18 @@ ${BLACKPARROT_UHDM}: clean-build | ${BLACKPARROT}/.gitpatch
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		cd ${BLACKPARROT}/bp_top/syn/ && SURELOG_OPTS="-synth -DSYNTHESIS=1" $(MAKE) parse.surelog CFG=${BLACKPARROT_CFG} RESULTS_PATH=${root_dir}/build)
 
-uhdm/yosys/synth-blackparrot-build: | ${BLACKPARROT_UHDM}
+uhdm/synlig/synth-blackparrot-build: | ${BLACKPARROT_UHDM}
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		cd ${root_dir}/build && \
-		yosys -p "plugin -i systemverilog" \
-                      -p "read_uhdm ${BLACKPARROT_UHDM}" \
-                      -p "synth_xilinx -iopad -family xc7" \
-                      -p "write_edif bp_${BLACKPARROT_CFG}.edif")
+		synlig \
+			-p "read_uhdm ${BLACKPARROT_UHDM}" \
+			-p "synth_xilinx -iopad -family xc7" \
+			-p "write_edif bp_${BLACKPARROT_CFG}.edif")
 
 # Exports required for ASIC synthesis flow
 export BLACKPARROT_BUILD_DIR=${root_dir}/build/surelog/bp_tethered.${BLACKPARROT_CFG}.none.parse
-export YOSYS_CMD=${OUT_DIR}/bin/yosys
+export YOSYS_CMD=${OUT_DIR}/bin/synlig
 export BLACKPARROT_UHDM
 export TEST_DIR
-uhdm/yosys/synth-blackparrot-build-asic: ${ORFS_DIR}/.gitpatch | ${BLACKPARROT_UHDM}
+uhdm/synlig/synth-blackparrot-build-asic: ${ORFS_DIR}/.gitpatch | ${BLACKPARROT_UHDM}
 	TOP=$(BLACKPARROT) $(MAKE) -C $(ORFS_DIR)/flow DESIGN_CONFIG=$(CONFIG_FILE) synth

@@ -12,8 +12,7 @@ ${ts}.output_files := \
 	${${ts}.src_dir}yosys-abc \
 	${${ts}.src_dir}yosys-config
 
-${ts}.output_dirs := \
-	${${ts}.src_dir}
+${ts}.output_dirs := ${${ts}.src_dir}
 
 ${ts}.input_files := $(filter-out ${${ts}.output_files}, \
 	$(shell \
@@ -79,5 +78,4 @@ define ${ts}.src_clean_command
 	targets=(clean)
 	[[ -e abc ]] && targets+=(clean-abc) || :
 	${MAKE} ${${ts}.make_args} --no-print-directory "$${targets[@]}" || :
-	[[ -e abc ]] && rm -rf abc || :
 endef
