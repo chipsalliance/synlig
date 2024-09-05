@@ -37,6 +37,7 @@ fv_header = (
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("tests_suite_name", type=str)
     parser.add_argument("performed_tests_list_file", type=str)
     args = parser.parse_args()
 
@@ -46,16 +47,21 @@ def main():
         performed_tests_summary = json.loads(test_summary_file.read())
 
     # prepare expected summary based on tests/formal/testlist.json
+    # and find tests present in testlist that were not performed
     expected_tests_summary = {}
     with open("tests/formal/testlist.json", "r") as testlist_file:
         testlist_json = json.loads(testlist_file.read())
 
+    not_performed_present_in_testlist = []
     for expected_result, reasons in testlist_json.items():
         for reason, groups in reasons.items():
             for group, group_content in groups.items():
                 for name in group_content:
                     if performed_tests_summary.get(group + ":" + name) != None:
                         performed_tests_summary[group + ":" + name]["expected_result"] = expected_result
+                    else:
+                        if group == args.tests_suite_name:
+                            not_performed_present_in_testlist.append(group + ":" + name)
 
     # search for tests that have different result then expected
     results_different_then_expected = []
@@ -99,21 +105,17 @@ def main():
 
     # print difference between performed and expected testlist
 
-    results_differ = 0
-    tests_not_present = 0
+    exit_code = 0
 
     if len(results_different_then_expected) != 0:
         print("\nList of tests that result differ from expected:")
         for test_name, performed_result, expected_result in results_different_then_expected:
-            if performed_result == "PASS" or expected_result == "PASS":
-                print("%s resulted with: %s, but expected result was: %s %s" % (
-                    ansi_color(test_name, ANSI_BLUE),
-                    ansi_color(performed_result, ANSI_YELLOW),
-                    ansi_color(expected_result, ANSI_YELLOW),
-                    ansi_color("[ERROR]", ANSI_RED)))
-                results_differ = True
-            else:
-                print("%s resulted with: %s, but expected result was: %s" % (test_name, performed_result, expected_result))
+            print("%s resulted with: %s, but expected result was: %s %s" % (
+                ansi_color(test_name, ANSI_BLUE),
+                ansi_color(performed_result, ANSI_YELLOW),
+                ansi_color(expected_result, ANSI_YELLOW),
+                ansi_color("[ERROR]", ANSI_RED)))
+            exit_code = 1
 
     if len(tests_not_present_in_expected_summary) != 0:
         print("\nList of tests that were not present in testlist.json:")
@@ -121,15 +123,15 @@ def main():
             print("%s resulted with: %s" % (
                 ansi_color(test_name, ANSI_BLUE),
                 ansi_color(performed_result, ANSI_YELLOW)))
-        tests_not_present = True
+        exit_code = 1
 
-    if results_differ and tests_not_present:
-        return 3
-    if not results_differ and tests_not_present:
-        return 2
-    if results_differ and not tests_not_present:
-        return 1
-    return 0
+    if len(not_performed_present_in_testlist) != 0:
+        print("\nList of tests that were present in testlist.json but not performed:")
+        for test_name in not_performed_present_in_testlist:
+            print(ansi_color(test_name, ANSI_BLUE))
+        exit_code = 1
+
+    return exit_code
 
 if __name__ == "__main__":
     exit(main())
