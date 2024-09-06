@@ -13,6 +13,8 @@ uhdm/synlig/synth-ibex: clean-build ${IBEX}/.gitpatch
 	virtualenv ${root_dir}/venv-ibex
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \
+		# https://github.com/enthought/sat-solver/issues/286 \
+		pip install git+https://github.com/enthought/sat-solver.git@v0.8.2 && \
 		pip install -r ${IBEX}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@svplugin_support && \
 		fusesoc --cores-root=${IBEX} run --build --tool synlig --target=synth lowrisc:ibex:top_artya7_surelog --SRAMInitFile="${curr_dir}/led.vmem")
@@ -21,6 +23,8 @@ uhdm/synlig/synth-ibex-build: clean-build ${IBEX}/.gitpatch
 	virtualenv ${root_dir}/venv-ibex
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${root_dir}/venv-ibex/bin/activate && \
+		# https://github.com/enthought/sat-solver/issues/286 \
+		pip install git+https://github.com/enthought/sat-solver.git@v0.8.2 && \
 		pip install -r ${IBEX}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@svplugin_support && \
 		fusesoc --cores-root=${IBEX} run --build --tool vivado --target=synth lowrisc:ibex:top_artya7_surelog --part xc7a35ticsg324-1L --SRAMInitFile="${curr_dir}/led.vmem")
@@ -78,6 +82,8 @@ ${REQUIREMENTS_FILE}: ${IBEX}/.requirementspatch
 # Install conda packages from f4pga/xc7 environment and set environment variables.
 env:: download-f4pga install-plugins
 	${IN_CONDA_ENV} conda env update --name ${CONDA_ENV_NAME} --file ${root_dir}/env/f4pga/xc7_env/xc7_environment.yml </dev/null | cat
+	# https://github.com/enthought/sat-solver/issues/286
+	${IN_CONDA_ENV} pip install -I git+https://github.com/enthought/sat-solver.git@v0.8.2
 	# Update edalize installed by Ibex to our own fork.
 	${IN_CONDA_ENV} pip install \
 		git+https://github.com/antmicro/edalize@symbiflow-read_verilog_with_uhdm \

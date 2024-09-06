@@ -12,6 +12,8 @@ ${OPENTITAN_9d82960888}/.gitpatch:
 ${VENV_OT_9d82960888}:
 	virtualenv ${VENV_OT_9d82960888}
 	. ${VENV_OT_9d82960888}/bin/activate && \
+	# https://github.com/enthought/sat-solver/issues/286 \
+	pip install -I git+https://github.com/enthought/sat-solver.git@v0.8.2 && \
 	pip install -r ${OPENTITAN_9d82960888}/python-requirements.txt && \
 	pip install git+https://github.com/antmicro/edalize@svplugin_support
 
@@ -42,6 +44,8 @@ ${OPENTITAN}/.gitpatch_synth:
 ${VENV_OT_SYNTH}: | ${OPENTITAN}/.gitpatch_synth
 	virtualenv ${VENV_OT_SYNTH}
 	(. ${VENV_OT_SYNTH}/bin/activate && \
+		# https://github.com/enthought/sat-solver/issues/286 \
+		pip install -I git+https://github.com/enthought/sat-solver.git@v0.8.2 && \
 		pip install -r ${OPENTITAN}/python-requirements.txt && \
 		pip install git+https://github.com/antmicro/edalize@svplugin_support)
 
