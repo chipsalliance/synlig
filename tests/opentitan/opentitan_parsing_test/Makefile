@@ -169,6 +169,8 @@ env: ${VENV_DIR}
 ${VENV_DIR} : | ${BUILD_DIR}
 	virtualenv ${VENV_DIR}
 	. ${VENV_DIR}/bin/activate
+	# https://github.com/enthought/sat-solver/issues/286
+	pip install -I git+https://github.com/enthought/sat-solver.git@v0.8.2
 	pip install -r ${OPENTITAN_DIR}/python-requirements.txt
 	pip install pygraphviz
 	(

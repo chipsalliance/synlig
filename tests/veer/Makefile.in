@@ -15,6 +15,8 @@ uhdm/synlig/veer: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \
+		# https://github.com/enthought/sat-solver/issues/286 \
+		pip install -I git+https://github.com/enthought/sat-solver.git@v0.8.2 && \
 		pip install git+https://github.com/lowRISC/fusesoc.git@ot && \
 		fusesoc --cores-root=${DESIGN_DIR} run --build --tool synlig --target=synth chipsalliance.org:cores:VeeR_EH1:1.8)
 
@@ -22,6 +24,8 @@ uhdm/synlig/veer-build: clean-build | ${VENV} ${DESIGN_DIR}/.gitpatch
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \
+		# https://github.com/enthought/sat-solver/issues/286 \
+		pip install -I git+https://github.com/enthought/sat-solver.git@v0.8.2 && \
 		pip install git+https://github.com/lowRISC/fusesoc.git@ot && \
 		fusesoc --cores-root=${DESIGN_DIR} run --build --tool vivado --target=synth chipsalliance.org:cores:VeeR_EH1:1.8)
 
@@ -29,6 +33,8 @@ uhdm/sv2v/veer: clean-build | ${VENV}
 	(export PATH=${OUT_DIR}/bin:${PATH} && \
 		. ${VENV}/bin/activate && \
 		pip install -I git+https://github.com/antmicro/edalize@svplugin_support && \
+		# https://github.com/enthought/sat-solver/issues/286 \
+		pip install -I git+https://github.com/enthought/sat-solver.git@v0.8.2 && \
 		pip install git+https://github.com/lowRISC/fusesoc.git@ot && \
 		fusesoc --cores-root=${DESIGN_DIR} run --build --tool sv2v --target=synth chipsalliance.org:cores:VeeR_EH1:1.8)
 
