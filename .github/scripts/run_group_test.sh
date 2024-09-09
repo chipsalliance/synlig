@@ -64,14 +64,14 @@ for test_case in "${test_cases[@]}"; do
         ASAN_OPTIONS+=":log_path=${test_out_dir}/asan"
 
         if [ "$BUILD_TYPE" == "'plugin'" ]; then
-        	BINARY="${REPO_DIR}/out/current/bin/yosys -Q"
+            BINARY="yosys -Q"
         else
-        	BINARY="${REPO_DIR}/out/current/bin/synlig -Q"
+            BINARY="synlig -Q"
         fi
         make -C $REPO_DIR/tests \
                 -j $(nproc) \
                 --no-print-directory \
-                SYNLIG_BIN:="$BINARY" \
+                BINARY:="$BINARY" \
                 BUILD_TYPE=$BUILD_TYPE \
                 ENABLE_READLINE=0 \
                 PRETTY=0 \

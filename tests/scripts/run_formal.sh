@@ -7,15 +7,15 @@ source tests/scripts/common.sh
 
 function build_dependencies(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Build eqy and sby \##"
-	make install@eqy install@sby -j $(nproc)
+	make install@eqy install@sby -j $(nproc) PREFIX=out
 }
 
 function run_formal_tests(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start testing $1 \##"
-	export PATH="$PWD/out/current/bin:$PATH"
+	export PATH="$PWD/out/bin:$PATH"
 	# this link is necessary because eqy doesn't
 	# support specifying executable file correctly
-	ln -f -s $(realpath $PWD/out/current/bin/synlig) $PWD/out/current/bin/yosys
+	ln -f -s $(realpath $PWD/out/bin/synlig) $PWD/out/bin/yosys
 	./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$2" TEST_SUITE_NAME:="$1" test
 }
 

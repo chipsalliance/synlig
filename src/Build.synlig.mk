@@ -9,7 +9,8 @@ ${ts}.output_files := \
 	${${ts}.src_dir}synlig
 
 ${ts}.make_args := \
-	PREFIX:=${${ts}.out_install_dir} \
+	PREFIX:=$(call ToAbsPaths,${PREFIX}) \
+	DESTDIR:=$(if $(DESTDIR),$(call ToAbsPaths,$(DESTDIR)),) \
 	CONFIG:=$(if cxx_is_clang,clang,gcc) \
 	CC:=${CC} \
 	CXX:=${CXX} \
@@ -48,5 +49,7 @@ define ${ts}.install_command
 endef
 
 define ${ts}.src_clean_command
-	${MAKE} -C $(BUILD_DIR)/synlig -f $(TOP_DIR)/src/Makefile clean
+	if [ -d $(BUILD_DIR)/synlig ]; then
+		${MAKE} -C $(BUILD_DIR)/synlig -f $(TOP_DIR)/src/Makefile clean
+	fi
 endef

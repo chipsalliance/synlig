@@ -12,12 +12,12 @@ You can download Synlig from the GitHub [release page](https://github.com/chipsa
 To download the latest version, use the following script:
 
 ```bash
-# TODO: update it after initial release
+curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig")) | .browser_download_url' | xargs wget
 ```
-Then, install it with superuser privileges:
+Then, you can install it by unpacking archive with superuser privileges:
 
 ```bash
-# TODO: update it after initial release
+tar -C / -xf synlig-*.tar.gz
 ```
 
 Synlig is now ready to be used.
@@ -37,8 +37,7 @@ Debian Trixie:
 #### Build required binaries
 
 You can build all required binaries using the provided `Makefile`.
-`make install` will build Surelog, Yosys and Synlig, and place them in the `out` directory.
-You need to add `out/bin` to your `PATH` variable to ensure you are using correct versions of the binaries.
+`make install` will build and install Synlig in `/usr/local` directory.
 
 <!-- name="build-binaries" -->
 ``` bash

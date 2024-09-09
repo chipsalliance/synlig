@@ -73,19 +73,25 @@ jobs:
             apt-extra-deps: 'gcc g++'
             cc: 'gcc'
             cxx: 'g++'
-            build-binaries-args: 'install'
+            build-binaries-args: 'install install@surelog PREFIX=out'
           - name: 'Build Plugin'
             artifact-name: 'binaries-plugin'
             cc: 'gcc'
             cxx: 'g++'
             apt-extra-deps: 'gcc g++'
-            build-binaries-args: 'plugin'
+            build-binaries-args: 'plugin install@surelog PREFIX=out'
           - name: 'Build Synlig (ASAN)'
             artifact-name: 'binaries-asan'
             cc: 'clang-15'
             cxx: 'clang++-15'
             apt-extra-deps: 'clang-15'
-            build-binaries-args: 'install ENABLE_ASAN=1 CFG_BUILD_TYPE=asan'
+            build-binaries-args: 'install install@surelog ENABLE_ASAN=1 CFG_BUILD_TYPE=asan PREFIX=out'
+          - name: 'Build Package'
+            artifact-name: 'binaries-package'
+            apt-extra-deps: 'gcc g++'
+            cc: 'gcc'
+            cxx: 'g++'
+            build-binaries-args: 'install DESTDIR=out'
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
@@ -240,11 +246,11 @@ jobs:
         run: |
           export PATH=$PWD/install/bin:/usr/local/bin:${PATH}
           wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-          make install@sv2v -j $(nproc)
+          make install@sv2v -j $(nproc) PREFIX=out
 
       - name: Build tools
         run: |
-          make install@yosys-tools -j $(nproc)
+          make install@yosys-tools -j $(nproc) PREFIX=out
 
       - name: Pack tools
         run: |
@@ -313,14 +319,18 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: binaries-release
+          name: binaries-package
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
         run: |
-          tar -xf binaries-release.tar
+          tar -xf binaries-package.tar
 
-      - name: Generate tarball and apply TAG
+      - name: Prepare tarball
+        run: |
+          (cd out && tar -zcvf release.tar.gz usr)
+
+      - name: Name tarball and apply TAG
         run: |
           GIT_VERSION=${GIT_VERSION:-$(git rev-parse --short "$GITHUB_SHA")}
           DATE=$(git show -s --date=short --format=%cd)
@@ -329,8 +339,9 @@ jobs:
           TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
           echo "TAG=$TAG" >> $GITHUB_ENV
-          ls -lah out
-          tar -zcvf $FULL_TARBALL out
+          mv out/release.tar.gz $FULL_TARBALL
+          tar -tvf $FULL_TARBALL
+
       - name: Get PR data
         uses: 8BitJonny/gh-get-current-pr@2.2.0
         with:

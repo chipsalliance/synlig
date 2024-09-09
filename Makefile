@@ -235,21 +235,6 @@ undefine variables_to_dump
 endif
 
 #--------------------------------------------------------------------------------
-# Update "current" symlink, if needed.
-
-# Skip this for targets that do not build anything.
-ifneq ($(filter-out list help,${MAKECMDGOALS}),)
-ifdef build_dir_current_symlink
-$(shell mkdir -p ${build_dir_common_parent})
-$(shell ln -fs -T ${build_dir_current_symlink_target} ${build_dir_current_symlink})
-endif
-ifdef out_dir_current_symlink
-$(shell mkdir -p ${out_dir_common_parent})
-$(shell ln -fs -T ${out_dir_current_symlink_target} ${out_dir_current_symlink})
-endif
-endif
-
-#--------------------------------------------------------------------------------
 # Check whether build configuration changed, and warn if so.
 
 # Skip this for targets that do not build anything.
@@ -366,13 +351,13 @@ help : list
 build : build@surelog build@synlig
 
 .PHONY: install
-install : install@surelog install@synlig
+install : build@surelog install@synlig
 
 .PHONY: build-plugin
 build-plugin : build@surelog build@yosys build@systemverilog-plugin
 
 .PHONY: install-plugin
-install-plugin : install@surelog install@yosys install@systemverilog-plugin
+install-plugin : build@surelog install@yosys install@systemverilog-plugin
 	#####################################################
 	#                      WARNING                      #
 	# Using synlig as yosys plugin is deprecated. It is #
@@ -396,7 +381,7 @@ tools: install@eqy install@sby install@sv2v install@yosys-tools
 clean : $(foreach t,${GetTargetsList},$(if ${$(call GetTargetStructName,${t}).src_clean_command},srcclean@${t}))
 	@:
 	if [[ -e ${BUILD_DIR}buildconfig ]]; then
-		rm -rf ${BUILD_DIR} ${OUT_DIR}
+		rm -rf ${BUILD_DIR}
 	fi
 
 #--------------------------------------------------------------------------------

@@ -3,9 +3,7 @@ TEST ?= simple_tests/onenet
 
 root_dir:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-OUT_DIR = ${root_dir}/../out/current
-SURELOG_BIN = ${OUT_DIR}/bin/surelog
-SYNLIG_BIN = ${OUT_DIR}/bin/synlig
+OUT_DIR = ${root_dir}/../out
 COVARAGE_REPORT = ${root_dir}/build/coverage
 
 TEST_DIR := $(realpath $(root_dir)/$(TEST))
@@ -29,13 +27,13 @@ list:
 
 uhdm/yosys/test-ast: clean-build surelog/parse
 	(export TEST_DIR=${TEST_DIR} TEST_FILES="${TEST_FILES}" TOP_MODULE="${TOP_MODULE}" SURELOG_FLAGS="${SURELOG_FLAGS}" && \
-	cd $(root_dir)/build && ${SYNLIG_BIN} -c $(YOSYS_TCL))
+	cd $(root_dir)/build && $(BINARY) -c $(YOSYS_TCL))
 
 # ------------ Test helper targets ------------
 
 surelog/parse: clean-build
 	(cd ${root_dir}/build && \
-		${SURELOG_BIN} -parse -sverilog -d coveruhdm -elabuhdm ${SURELOG_FLAGS} $(INCLUDE) $(TEST_FILES))
+		surelog -parse -sverilog -d coveruhdm -elabuhdm ${SURELOG_FLAGS} $(INCLUDE) $(TEST_FILES))
 	cp ${root_dir}/build/slpp_all/surelog.uhdm ${TOP_UHDM}
 
 # ------------ Clean targets ------------
@@ -50,6 +48,6 @@ clean:: clean-build
 
 surelog/parse-earlgrey: clean-build
 	(cd ${root_dir}/third_party/surelog/third_party/tests/Earlgrey_0_1/sim-icarus && \
-		${SURELOG_BIN} -f Earlgrey_0_1.sl \
+		surelog -f Earlgrey_0_1.sl \
 	)
 	cp ${root_dir}/third_party/surelog/third_party/tests/Earlgrey_0_1/sim-icarus/slpp_all/surelog.uhdm ${TOP_UHDM}

@@ -68,7 +68,7 @@ jobs:
 
       - name: Generate and diff tests
         run: |
-          export PATH="$PWD/out/current/bin:$PATH"
+          export PATH="$PWD/out/bin:$PATH"
           python3 ./tests/bsg_micro_designs/generate_bsg_tests.py
 
       - name: Summary

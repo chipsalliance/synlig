@@ -12,7 +12,9 @@ CFG_BUILD_TYPE := release
 
 # Base directory for all build outputs.
 CFG_BUILD_DIR = build/${CFG_BUILD_TYPE}/
-CFG_OUT_DIR = out/${CFG_BUILD_TYPE}/
+PREFIX ?= /usr/local
+DESTDIR ?=
+CFG_OUT_DIR := $(DESTDIR)$(PREFIX)/
 
 # Basic build tools
 CC       ?= cc

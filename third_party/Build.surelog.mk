@@ -64,5 +64,6 @@ define ${ts}.build_command
 				-S $(call ShQuote,${${ts}.src_dir}) \
 				-B .
 	fi
-	${MAKE} --no-print-directory install
+	# reset DESTDIR as this install is only used to build synlig
+	${MAKE} --no-print-directory install DESTDIR=""
 endef
