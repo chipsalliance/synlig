@@ -151,9 +151,9 @@ index 8d6cf89b6..6480e08ba 100644
        vivado:
          part: "xc7a200tsbg484-1" # Nexys Video
 +        synth: "synlig"
-+        synlig_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog"]
++        synlig_synth_options: ['-flatten', '-iopad', '-noclkbuf', '-family xc7', "frontend=surelog", '-run begin:prepare']
 +        synlig_read_options: ['-noassert', '-dump_ast1', '-dump_ast2', '-no_dump_ptr']
-+        synlig_extra_passes: ['delete */t:\$scopeinfo']
++        synlig_extra_passes: ['proc_clean', 'proc_rmdead', 'proc_prune', 'proc_init', 'proc_arst', 'proc_rom', 'proc_mux', 'proc_dlatch', 'proc_dff', 'proc_memwr', 'proc_clean', 'opt_expr', 'flatten', 'tribuf -logic', 'deminout', 'opt_expr', 'opt_clean', 'opt -nodffe -nosdff', 'fsm', 'opt', 'wreduce', 'peepopt', 'opt_clean', 'muxpack', 'pmux2shiftx', 'clean', 'synth_xilinx -run map_dsp: -iopad -noclkbuf -family xc7', 'delete */t:\$scopeinfo']
 +        surelog_options: ['-DSYNTHESIS', '-synth']
 +      synlig:
 +        arch: "xilinx"
