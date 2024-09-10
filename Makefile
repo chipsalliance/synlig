@@ -351,7 +351,7 @@ help : list
 build : build@surelog build@synlig
 
 .PHONY: install
-install : build@surelog install@synlig
+install : install@synlig
 
 .PHONY: build-plugin
 build-plugin : build@surelog build@yosys build@systemverilog-plugin
@@ -365,10 +365,7 @@ install-plugin : build@surelog install@yosys install@systemverilog-plugin
 	#####################################################
 
 .PHONY: plugin
-plugin : install-plugin
-
-.NOTPARALLEL: build@surelog build@synlig build@yosys build@systemverilog-plugin \
-	install@surelog install@synlig install@yosys install@systemverilog-plugin
+plugin : build-plugin
 
 install@eqy: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/eqy/.git
 install@sby: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/sby/.git
