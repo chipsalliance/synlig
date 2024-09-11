@@ -14,5 +14,5 @@ src/*.d
 src/*.o
 src/frontends/systemverilog/*.d
 src/frontends/systemverilog/*.o
-third_party/yosys_mod/*.d
-third_party/yosys_mod/*.o
+src/mods/yosys_ast/*.d
+src/mods/yosys_ast/*.o

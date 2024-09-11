@@ -5,7 +5,7 @@ THIS_MK_DIR := $(patsubst /%/,/%,$(dir $(THIS_MK_FILE)))
 
 REPO_DIR := $(abspath $(THIS_MK_DIR)/..)
 YOSYS_SRC := $(REPO_DIR)/third_party/yosys
-YOSYS_MOD_SRC := $(REPO_DIR)/third_party/yosys_mod
+YOSYS_MOD_SRC := $(REPO_DIR)/src/mods/yosys_ast
 SYNLIG_FRONTENDS_SRC := $(REPO_DIR)/src/frontends
 SYNLIG_SRC := $(REPO_DIR)/src
 ifeq ($(SYNLIG_BUILD_TYPE),asan)

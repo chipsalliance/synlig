@@ -4,7 +4,6 @@ ts := $(call GetTargetStructName,${t})
 cxx_is_clang := $(findstring clang,$(notdir ${CXX}))
 
 ${ts}.src_dir         := ${TOP_DIR}third_party/yosys/
-${ts}.mod_dir         := ${TOP_DIR}third_party/yosys_mod/
 ${ts}.out_install_dir := $(call ToAbsPaths,${OUT_DIR})
 
 ${ts}.output_files := \
