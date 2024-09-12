@@ -44,7 +44,7 @@ jobs:
           ./tests/scripts/run_parsing.sh --type asan load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-asan
 
@@ -81,7 +81,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
-          name: plots
+          name: plots_tests_read_uhdm
           path: |
             **/plot_*.svg
 
@@ -117,7 +117,7 @@ jobs:
           ./tests/scripts/run_parsing.sh --type asan load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-asan
 
@@ -154,7 +154,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
-          name: plots
+          name: plots_tests_read_systemverilog
           path: |
             **/plot_*.svg
 

@@ -34,7 +34,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name ibex load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-release
 
@@ -48,16 +48,16 @@ jobs:
           enable_vivado 2017.2
           ./tests/scripts/run_large_designs.sh --name ibex run
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: lowrisc_ibex_top_artya7_surelog_0.1.bit
           path: tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-vivado/lowrisc_ibex_top_artya7_surelog_0.1.bit
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_ibex_synth
           path: |
             **/plot_*.svg
 
@@ -87,7 +87,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name ibex_f4pga load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-plugin
 
@@ -99,16 +99,16 @@ jobs:
         run: |
           ./tests/scripts/run_large_designs.sh --name ibex_f4pga run
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: top_artya7.bit
           path: ./tests/build/lowrisc_ibex_top_artya7_surelog_0.1/synth-symbiflow/top_artya7.bit
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_ibex_synth_f4pga
           path: |
             **/plot_*.svg
 
@@ -141,7 +141,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-release
 
@@ -164,7 +164,7 @@ jobs:
           sed -n $start,"$end"p $FILE_NAME > synlig.ast
 
       - name: Upload AST
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: ${{github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')}}
         with:
           name: opentitan-synlig.ast
@@ -183,16 +183,16 @@ jobs:
       #     mkdir compare
       #     ./github/scripts/compare_ast.py opentitan-yosys.ast yosys.ast
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
           path: tests/build/lowrisc_systems_top_earlgrey_nexysvideo_0.1/synth-vivado/lowrisc_systems_top_earlgrey_nexysvideo_0.1.bit
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_opentitan_9d82960888_synth
           path: |
             **/plot_*.svg
 
@@ -225,7 +225,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name opentitan load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-release
 
@@ -240,16 +240,16 @@ jobs:
           pip install virtualenv
           ./tests/scripts/run_large_designs.sh --name opentitan run
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
           path: tests/build/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1/synth-yosys/lowrisc_systems_custom_tiny_chip_custom_tiny_nexysvideo_0.1.edif
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_opentitan_synth
           path: |
             **/plot_*.svg
 
@@ -293,7 +293,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name opentitan_parse_${{ matrix.file-name }} load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-release
 
@@ -309,7 +309,7 @@ jobs:
 
       - name: Upload logs
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: opentitan-logs-${{ matrix.file-name }}
           path: |
@@ -320,9 +320,9 @@ jobs:
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_opentitan_parse_report_${{ matrix.file-name }}
           path: |
             **/plot_*.svg
 
@@ -352,7 +352,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name veer load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-release
 
@@ -364,16 +364,16 @@ jobs:
         run: |
           ./tests/scripts/run_large_designs.sh --name veer run
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: chipsalliance.org_cores_VeeR_EH1_1.9.edif
           path: tests/build/chipsalliance.org_cores_VeeR_EH1_1.9/synth-vivado/chipsalliance.org_cores_VeeR_EH1_1.9.edif
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_veer_synth
           path: |
             **/plot_*.svg
 
@@ -406,7 +406,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name blackparrot_AMD load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-release
 
@@ -418,16 +418,16 @@ jobs:
         run: |
           ./tests/scripts/run_large_designs.sh --name blackparrot_AMD run
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: bp_e_bp_unicore_cfg.edif
           path: tests/build/bp_e_bp_unicore_cfg.edif
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_blackparrot_synth_xilinx
           path: |
             **/plot_*.svg
 
@@ -460,7 +460,7 @@ jobs:
           ./tests/scripts/run_large_designs.sh --name blackparrot_ASIC load_submodules
 
       - name: Download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: binaries-release
 
@@ -472,7 +472,7 @@ jobs:
         run: |
           ./tests/scripts/run_large_designs.sh --name blackparrot_ASIC run
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: asic-flow-logs
           path: |
@@ -483,8 +483,8 @@ jobs:
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: plots
+          name: plots_blackparrot_synth_asic
           path: |
             **/plot_*.svg
