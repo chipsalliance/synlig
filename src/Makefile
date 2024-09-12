@@ -46,9 +46,8 @@ GCC_LTO :=
 CLANG_LTO := -flto=thin
 
 # --- install directory --- #
-PREFIX ?= $(REPO_DIR)/out/release
 BINDIR := $(PREFIX)/bin
-DATDIR := $(PREFIX)/share/yosys
+DATDIR := $(PREFIX)/share/synlig
 
 # --- vpath --- #
 VPATH := $(YOSYS_SRC)

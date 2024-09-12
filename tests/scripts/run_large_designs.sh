@@ -53,7 +53,7 @@ function run_opentitan(){
 
 function run_opentitan_parse_quick(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Opentitan large design test \##"
-	export PATH="$PWD/out/current/bin:$PATH"
+	export PATH="$PWD/out/bin:$PATH"
 	cd tests/opentitan/opentitan_parsing_test
 	make gen-opentitan-deps-mk
 	make -rR -j$(nproc) -Otarget test || /bin/true
@@ -66,7 +66,7 @@ function run_opentitan_parse_quick(){
 
 function run_opentitan_parse_full(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Opentitan large design test \##"
-	export PATH="$PWD/out/current/bin:$PATH"
+	export PATH="$PWD/out/bin:$PATH"
 	cd tests/opentitan/opentitan_parsing_test
 	make gen-opentitan-deps-mk
 	make -rR -j$(nproc) TOP_DOWN_TEST:=1 -Otarget test || /bin/true

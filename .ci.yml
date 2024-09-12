@@ -56,7 +56,7 @@ build_plugin:
     - apt update && apt install -y $BUILD_DEPENDENCIES
     - echo "##/ Build yosys, surelog and synlig binaries \##"
     - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
-    - make plugin -j $(nproc)
+    - make plugin install@surelog -j $(nproc) PREFIX=out
 
 build_asan:
   <<: *build_binary
@@ -65,7 +65,7 @@ build_asan:
     - apt update && apt install -y $BUILD_DEPENDENCIES
     - echo "##/ Build yosys, surelog and synlig binaries \##"
     - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
-    - make install -j $(nproc) ENABLE_ASAN=1 CC=clang CXX=clang++ CFG_BUILD_TYPE=asan
+    - make install install@surelog -j $(nproc) ENABLE_ASAN=1 CC=clang CXX=clang++ CFG_BUILD_TYPE=asan PREFIX=out
 
 build_release:
   <<: *build_binary
@@ -74,10 +74,20 @@ build_release:
     - apt update && apt install -y $BUILD_DEPENDENCIES
     - echo "##/ Build synlig binary \##"
     - git submodule sync && git submodule update --init --recursive --checkout third_party/{surelog,yosys,sv2v}
-    - make install -j $(nproc)
+    - make install install@surelog -j $(nproc) PREFIX=out
     - echo "##/ Build tools \##"
     - wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
-    - make install@sv2v install@yosys-tools -j$(nproc)
+    - make install@sv2v install@yosys-tools -j$(nproc) PREFIX=out
+
+build_package:
+  <<: *build_binary
+  script:
+    - echo "##/ Install dependencies and build \##"
+    - apt update && apt install -y $BUILD_DEPENDENCIES
+    - echo "##/ Build yosys, surelog and synlig binaries \##"
+    - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
+    - make install -j $(nproc) DESTDIR=out
+    - (cd out && tar -zcvf release.tar.gz usr)
 
 .job_template: &parsing_test
   stage: "Run parsing and formal verification tests"
@@ -297,7 +307,7 @@ bsg_test_diff:
     - git submodule sync
     - git submodule update --depth 1 --init --recursive --checkout third_party/bsg_micro_designs
     - echo "##/ Start bsg diff test \##"
-    - export PATH="$PWD/out/current/bin:$PATH"
+    - export PATH="$PWD/out/bin:$PATH"
     - python3 ./tests/bsg_micro_designs/generate_bsg_tests.py
     - cat tests/bsg_micro_designs/build/bsg_micro_designs_summary.md
   artifacts:

@@ -15,6 +15,7 @@ SKIP="synthesis serv-minimal hello-uvm assignment-pattern MultiplePrints \
 
 function read_systemverilog(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start testing read_systemverilog \##"
+	export PATH="$PATH:$(realpath out/bin)"
 	BUILD_TYPE=$type \
 	TESTS_TO_SKIP=$SKIP \
 	TARGET=uhdm/yosys/test-ast \
@@ -25,6 +26,7 @@ function read_systemverilog(){
 
 function read_uhdm(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start testing read_uhdm \##"
+	export PATH="$PATH:$(realpath out/bin)"
 	BUILD_TYPE=$type \
 	TESTS_TO_SKIP=$SKIP \
 	TARGET=uhdm/yosys/test-ast \
