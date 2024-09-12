@@ -111,8 +111,169 @@ namespace Yosys
 extern int yosys_tcl_iterp_init(Tcl_Interp *interp);
 extern void yosys_tcl_activate_repl();
 }; // namespace Yosys
+
+#endif
+namespace Synlig
+{
+
+const char *create_prompt(RTLIL::Design *design, int recursion_counter)
+{
+    static char buffer[100];
+    std::string str = "\n";
+    if (recursion_counter > 1)
+        str += stringf("(%d) ", recursion_counter);
+    str += "synlig";
+    if (!design->selected_active_module.empty())
+        str += stringf(" [%s]", RTLIL::unescape_id(design->selected_active_module).c_str());
+    if (!design->selection_stack.empty() && !design->selection_stack.back().full_selection) {
+        if (design->selected_active_module.empty())
+            str += "*";
+        else if (design->selection_stack.back().selected_modules.size() != 1 || design->selection_stack.back().selected_members.size() != 0 ||
+                 design->selection_stack.back().selected_modules.count(design->selected_active_module) == 0)
+            str += "*";
+    }
+    snprintf(buffer, 100, "%s> ", str.c_str());
+    return buffer;
+}
+
+static char *readline_cmd_generator(const char *text, int state)
+{
+    static std::map<std::string, Pass *>::iterator it;
+    static int len;
+
+    if (!state) {
+        it = pass_register.begin();
+        len = strlen(text);
+    }
+
+    for (; it != pass_register.end(); it++) {
+        if (it->first.compare(0, len, text) == 0)
+            return strdup((it++)->first.c_str());
+    }
+    return NULL;
+}
+
+static char *readline_obj_generator(const char *text, int state)
+{
+    static std::vector<char *> obj_names;
+    static size_t idx;
+
+    if (!state) {
+        idx = 0;
+        obj_names.clear();
+
+        RTLIL::Design *design = yosys_get_design();
+        int len = strlen(text);
+
+        if (design->selected_active_module.empty()) {
+            for (auto mod : design->modules())
+                if (RTLIL::unescape_id(mod->name).compare(0, len, text) == 0)
+                    obj_names.push_back(strdup(log_id(mod->name)));
+        } else if (design->module(design->selected_active_module) != nullptr) {
+            RTLIL::Module *module = design->module(design->selected_active_module);
+
+            for (auto w : module->wires())
+                if (RTLIL::unescape_id(w->name).compare(0, len, text) == 0)
+                    obj_names.push_back(strdup(log_id(w->name)));
+
+            for (auto &it : module->memories)
+                if (RTLIL::unescape_id(it.first).compare(0, len, text) == 0)
+                    obj_names.push_back(strdup(log_id(it.first)));
+
+            for (auto cell : module->cells())
+                if (RTLIL::unescape_id(cell->name).compare(0, len, text) == 0)
+                    obj_names.push_back(strdup(log_id(cell->name)));
+
+            for (auto &it : module->processes)
+                if (RTLIL::unescape_id(it.first).compare(0, len, text) == 0)
+                    obj_names.push_back(strdup(log_id(it.first)));
+        }
+
+        std::sort(obj_names.begin(), obj_names.end());
+    }
+
+    if (idx < obj_names.size())
+        return strdup(obj_names[idx++]);
+
+    idx = 0;
+    obj_names.clear();
+    return NULL;
+}
+static char **readline_completion(const char *text, int start, int)
+{
+    if (start == 0)
+        return rl_completion_matches(text, readline_cmd_generator);
+    if (strncmp(rl_line_buffer, "read_", 5) && strncmp(rl_line_buffer, "write_", 6))
+        return rl_completion_matches(text, readline_obj_generator);
+    return NULL;
+}
+
+void shell(RTLIL::Design *design)
+{
+    static int recursion_counter = 0;
+
+    recursion_counter++;
+    log_cmd_error_throw = true;
+
+#if defined(YOSYS_ENABLE_READLINE) || defined(YOSYS_ENABLE_EDITLINE)
+    rl_readline_name = (char *)"synlig";
+    rl_attempted_completion_function = readline_completion;
+    rl_basic_word_break_characters = (char *)" \t\n";
 #endif
 
+    char *command = NULL;
+#if defined(YOSYS_ENABLE_READLINE) || defined(YOSYS_ENABLE_EDITLINE)
+    while ((command = readline(create_prompt(design, recursion_counter))) != NULL) {
+#else
+    char command_buffer[4096];
+    while (1) {
+        fputs(create_prompt(design, recursion_counter), stdout);
+        fflush(stdout);
+        if ((command = fgets(command_buffer, 4096, stdin)) == NULL)
+            break;
+#endif
+        if (command[strspn(command, " \t\r\n")] == 0) {
+#if defined(YOSYS_ENABLE_READLINE) || defined(YOSYS_ENABLE_EDITLINE)
+            free(command);
+#endif
+            continue;
+        }
+#if defined(YOSYS_ENABLE_READLINE) || defined(YOSYS_ENABLE_EDITLINE)
+        add_history(command);
+#endif
+
+        char *p = command + strspn(command, " \t\r\n");
+        if (!strncmp(p, "exit", 4)) {
+            p += 4;
+            p += strspn(p, " \t\r\n");
+            if (*p == 0)
+                break;
+        }
+
+        try {
+            log_assert(design->selection_stack.size() == 1);
+            Pass::call(design, command);
+        } catch (log_cmd_error_exception) {
+            while (design->selection_stack.size() > 1)
+                design->selection_stack.pop_back();
+            log_reset_stack();
+        }
+        design->check();
+#if defined(YOSYS_ENABLE_READLINE) || defined(YOSYS_ENABLE_EDITLINE)
+        if (command)
+            free(command);
+#endif
+    }
+    if (command == NULL)
+        printf("exit\n");
+#if defined(YOSYS_ENABLE_READLINE) || defined(YOSYS_ENABLE_EDITLINE)
+    else
+        free(command);
+#endif
+    recursion_counter--;
+    log_cmd_error_throw = false;
+}
+}; // namespace Synlig
 int main(int argc, char **argv)
 {
     std::string frontend_command = "auto";
@@ -513,7 +674,7 @@ int main(int argc, char **argv)
 #endif
     } else {
         if (run_shell)
-            shell(yosys_design);
+            Synlig::shell(yosys_design);
         else
             run_backend(output_filename, backend_command);
     }
