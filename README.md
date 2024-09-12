@@ -11,6 +11,7 @@ Synlig is a SystemVerilog synthesis tool that uses [Surelog](https://github.com/
 You can download Synlig from the GitHub [release page](https://github.com/chipsalliance/synlig/releases).
 To download the latest version, use the following script:
 
+<!-- name="download-release" -->
 ```bash
 curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig")) | .browser_download_url' | xargs wget -O - | tar -xz
 ```
@@ -27,11 +28,11 @@ Go to the [Usage](#usage) section of this document to learn how to use it.
 
 ### Installation from source
 
-Debian Trixie:
+Debian Bookworm:
 
 #### Install dependencies
 
-<!-- name="dependencies" -->
+<!-- name="install-dependencies" -->
 ``` bash
    apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
 ```
@@ -41,7 +42,7 @@ Debian Trixie:
 You can build all required binaries using the provided `Makefile`.
 `make install` will build and install Synlig in `/usr/local` directory.
 
-<!-- name="build-binaries" -->
+<!-- name="make-install" -->
 ``` bash
    git submodule sync
    git submodule update --init --recursive third_party/{surelog,yosys}
@@ -87,7 +88,7 @@ endmodule
 
 Running synthesis using Synlig is very simple:
 
-<!-- name="synthesis example" -->
+<!-- name="synthesis-example" -->
 ``` tcl
 	> read_systemverilog counter.sv
 	1. Executing Verilog with UHDM frontend.
@@ -154,9 +155,20 @@ More information about formal verification can be found in this [README](https:/
 
 #### Prerequisites
 
+##### Dependencies
+
+Building `sv2v` requires Haskell Stack, you can install it by running:
+
+<!-- name="get-haskell" -->
+``` bash
+   wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
+```
+
+##### Installation
+
 All required prerequisites can be installed by running:
 
-<!-- name="install tools" -->
+<!-- name="install-tools" -->
 ``` bash
    git submodule update --init --recursive --checkout third_party/{sv2v,eqy,sby,yosys}
    make tools -j $(nproc)
@@ -166,12 +178,14 @@ All required prerequisites can be installed by running:
 
 To start formal verification tests, use the dedicated script:
 
-<!-- name="run-fv-tests-exec" -->
+<!-- name="formal-verification-run" -->
 ``` bash
    ./tests/scripts/run_formal.sh --name=<test_suite_name> run
 ```
 
 To gather formal verification results, run:
+
+<!-- name="formal-verification-gather-results" -->
 ``` bash
    ./tests/scripts/run_formal.sh --name=<test_suite_name> gather_results
 ```
@@ -180,6 +194,7 @@ To gather formal verification results, run:
 
 You can see the available `test_suite_name` options by running:
 
+<!-- name="formal-verification-help" -->
 ``` bash
    ./tests/scripts/run_formal.sh --help
 ```
@@ -195,6 +210,7 @@ Synlig is also tested by synthesizing several designs:
 
 For more details, check `.github/workflows/large-designs.yml` or run:
 
+<!-- name="large-designs-help" -->
 ``` bash
    ./tests/scripts/run_large_designs.sh --help
 ```
@@ -203,6 +219,7 @@ For more details, check `.github/workflows/large-designs.yml` or run:
 
 Synlig is additionally tested with parsing tests. For more details check `.github/workflows/parsing-tests.yml` or run:
 
+<!-- name="parsing-tests-help" -->
 ``` bash
    ./tests/scripts/run_parsing.sh --help
 ```
@@ -230,7 +247,7 @@ Note that almost all tests are made using the Synlig binary instead of the plugi
 
 #### Install dependencies
 
-<!-- name="dependencies" -->
+<!-- name="install-dependencies-plugin" -->
 ``` bash
    apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
 ```
@@ -241,7 +258,7 @@ You can build all required binaries using the provided `Makefile`.
 `make plugin` will build Surelog, Yosys and Synlig as a plugin, and place them in the `out` directory.
 You need to add `out/bin` to your `PATH` variable to ensure you are using correct versions of the binaries.
 
-<!-- name="build-binaries" -->
+<!-- name="build-plugin" -->
 ``` bash
    git submodule update --init --recursive third_party/{surelog,yosys}
    make plugin -j$(nproc)
@@ -249,7 +266,7 @@ You need to add `out/bin` to your `PATH` variable to ensure you are using correc
 
 To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
 
-<!-- name="path-setup" -->
+<!-- name="path-setup-plugin" -->
 ``` bash
    export PATH=`pwd`/out/current/bin:$PATH
 ```
