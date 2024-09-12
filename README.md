@@ -12,12 +12,14 @@ You can download Synlig from the GitHub [release page](https://github.com/chipsa
 To download the latest version, use the following script:
 
 ```bash
-curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig")) | .browser_download_url' | xargs wget
+curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig")) | .browser_download_url' | xargs wget -O - | tar -xz
 ```
-Then, you can install it by unpacking archive with superuser privileges:
 
-```bash
-tar -C / -xf synlig-*.tar.gz
+To use Synlig, make sure to either use absolute paths, or update the `PATH` variable before use.
+
+<!-- name="path-setup" -->
+``` bash
+   export PATH=`pwd`/synlig:$PATH
 ```
 
 Synlig is now ready to be used.
@@ -44,13 +46,6 @@ You can build all required binaries using the provided `Makefile`.
    git submodule sync
    git submodule update --init --recursive third_party/{surelog,yosys}
    make install -j$(nproc)
-```
-
-To use Synlig, make sure to either use absolute paths, or update the `PATH` variable before use.
-
-<!-- name="path-setup" -->
-``` bash
-   export PATH=`pwd`/out/current/bin:$PATH
 ```
 
 ## Usage

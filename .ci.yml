@@ -86,8 +86,14 @@ build_package:
     - apt update && apt install -y $BUILD_DEPENDENCIES
     - echo "##/ Build yosys, surelog and synlig binaries \##"
     - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
-    - make install -j $(nproc) DESTDIR=out
-    - (cd out && tar -zcvf release.tar.gz usr)
+    - make install -j $(nproc) PREFIX=out
+    - mkdir synlig
+    - cp out/bin/synlig synlig/
+    - cp -r out/share/synlig synlig/share
+    - tar -zcvf release.tar.gz synlig
+  artifacts:
+    paths:
+      - release.tar.gz
 
 .job_template: &parsing_test
   stage: "Run parsing and formal verification tests"
