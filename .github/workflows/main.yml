@@ -91,7 +91,7 @@ jobs:
             apt-extra-deps: 'gcc g++'
             cc: 'gcc'
             cxx: 'g++'
-            build-binaries-args: 'install DESTDIR=out'
+            build-binaries-args: 'install PREFIX=out'
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
@@ -328,7 +328,10 @@ jobs:
 
       - name: Prepare tarball
         run: |
-          (cd out && tar -zcvf release.tar.gz usr)
+          mkdir synlig
+          cp out/bin/synlig synlig/
+          cp -r out/share/synlig synlig/share
+          tar -zcvf release.tar.gz synlig
 
       - name: Name tarball and apply TAG
         run: |
@@ -339,7 +342,7 @@ jobs:
           TAG="${TAG:-$(git show -s --date=short --format=%cd-%h)}"
           git tag "$TAG" || true
           echo "TAG=$TAG" >> $GITHUB_ENV
-          mv out/release.tar.gz $FULL_TARBALL
+          mv release.tar.gz $FULL_TARBALL
           tar -tvf $FULL_TARBALL
 
       - name: Get PR data
