@@ -6,6 +6,7 @@ cxx_is_clang := $(findstring clang,$(notdir ${CXX}))
 
 ${ts}.src_dir       := $(call ToAbsDirPaths,$(dir ${THIS_BUILD_MK}))
 ${ts}.out_build_dir := ${out_dir}
+${ts}.mod_dir       := ${TOP_DIR}src/mods/yosys_ast/
 
 ${ts}.sources := \
 	${${ts}.src_dir}compat_symbols.cc \
@@ -13,9 +14,9 @@ ${ts}.sources := \
 	${${ts}.src_dir}uhdm_ast_frontend.cc \
 	${${ts}.src_dir}uhdm_common_frontend.cc \
 	${${ts}.src_dir}uhdm_surelog_ast_frontend.cc \
-	${$(call GetTargetStructName,yosys).mod_dir}synlig_const2ast.cc \
-	${$(call GetTargetStructName,yosys).mod_dir}synlig_edif.cc \
-	${$(call GetTargetStructName,yosys).mod_dir}synlig_simplify.cc
+	${${ts}.mod_dir}synlig_const2ast.cc \
+	${${ts}.mod_dir}synlig_edif.cc \
+	${${ts}.mod_dir}synlig_simplify.cc
 
 define ${ts}.env =
 export PKG_CONFIG_PATH=$(call ShQuote,${$(call GetTargetStructName,surelog).output_vars.PKG_CONFIG_PATH}$(if ${PKG_CONFIG_PATH},:${PKG_CONFIG_PATH}))
@@ -36,7 +37,7 @@ endif
 
 ${ts}.cxxflags = \
 	-I${$(call GetTargetStructName,yosys).src_dir} \
-	-I${$(call GetTargetStructName,yosys).mod_dir} \
+	-I${${ts}.mod_dir} \
 	-D_YOSYS_ \
 	-DYOSYS_ENABLE_PLUGINS \
 	$(shell ${${ts}.env}; pkg-config --cflags Surelog) \

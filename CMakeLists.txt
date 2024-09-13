@@ -261,9 +261,9 @@ set(synlig_SRC
     ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/uhdm_surelog_ast_frontend.cc
     ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/uhdm_ast.cc
     ${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/uhdm_common_frontend.cc
-    ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/synlig_const2ast.cc
-    ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/synlig_edif.cc
-    ${PROJECT_SOURCE_DIR}/third_party/yosys_mod/synlig_simplify.cc)
+    ${PROJECT_SOURCE_DIR}/src/mods/yosys_ast/synlig_const2ast.cc
+    ${PROJECT_SOURCE_DIR}/src/mods/yosys_ast/synlig_edif.cc
+    ${PROJECT_SOURCE_DIR}/src/mods/yosys_ast/synlig_simplify.cc)
 
 add_library(synlig SHARED ${synlig_SRC})
 
@@ -306,7 +306,7 @@ target_include_directories(
   PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/frontends/systemverilog/>
          $<INSTALL_INTERFACE:include>)
 target_include_directories(
-  synlig PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/yosys_mod/>
+  synlig PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/mods/yosys_ast/>
                 $<INSTALL_INTERFACE:include>)
 target_include_directories(
   synlig PUBLIC $<BUILD_INTERFACE:${SURELOG_INCLUDE_DIRS}>
