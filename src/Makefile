@@ -116,9 +116,8 @@ LINKFLAGS += -rdynamic
 LIBS += -lrt
 endif
 
-# --- detect yosys version #
-YOSYS_VER := $(shell grep $(YOSYS_SRC)/Makefile -e "YOSYS_VER := " | head -n 1 | cut -d ' ' -f 3)
-GIT_REV := $(shell GIT_DIR=$(YOSYS_SRC)/.git git rev-parse --short=9 HEAD || echo UNKNOWN)
+# --- detect synlig hash --- #
+GIT_REV := $(shell GIT_DIR=$(REPO_DIR)/.git git rev-parse --short=9 HEAD || echo UNKNOWN)
 OBJS = kernel/version_$(GIT_REV).o
 
 # --- set abc flags --- #
@@ -383,12 +382,12 @@ $(REPO_DIR)/src/frontends/systemverilog/%.o: $(REPO_DIR)/src/frontends/systemver
 	$(Q) mkdir -p $(dir $@)
 	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $<
 
-YOSYS_VER_STR := Yosys $(YOSYS_VER) (git sha1 $(GIT_REV), $(notdir $(CXX)) $(shell \
+VERSION_STR := Synlig (git sha1 $(GIT_REV), $(notdir $(CXX)) $(shell \
 		$(CXX) --version | tr ' ()' '\n' | grep '^[0-9]' | head -n1) $(filter -f% -m% -O% -DNDEBUG,$(CXXFLAGS)))
 
 kernel/version_$(GIT_REV).cc: $(YOSYS_SRC)/Makefile
 	$(P) rm -f kernel/version_*.o kernel/version_*.d kernel/version_*.cc
-	$(Q) mkdir -p kernel && echo "namespace Yosys { extern const char *yosys_version_str; const char *yosys_version_str=\"$(YOSYS_VER_STR)\"; }" > kernel/version_$(GIT_REV).cc
+	$(Q) mkdir -p kernel && echo "namespace Yosys { extern const char *yosys_version_str; const char *yosys_version_str=\"$(VERSION_STR)\"; }" > kernel/version_$(GIT_REV).cc
 
 .PHONY: check-git-abc
 

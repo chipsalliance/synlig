@@ -746,7 +746,6 @@ int main(int argc, char **argv)
         log("End of script. Logfile hash: %s%sCPU: user %.2fs system %.2fs%s\n", hash.c_str(), stats_divider.c_str(),
             ru_buffer.ru_utime.tv_sec + 1e-6 * ru_buffer.ru_utime.tv_usec, ru_buffer.ru_stime.tv_sec + 1e-6 * ru_buffer.ru_stime.tv_usec,
             meminfo.c_str());
-        log("%s\n", yosys_version_str);
 
         int64_t total_ns = 0;
         std::set<tuple<int64_t, int, std::string>> timedat;
