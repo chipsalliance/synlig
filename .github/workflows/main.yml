@@ -447,12 +447,16 @@ jobs:
       - name: Install Prerequisites
         run: |
           apt update -qq
-          apt install -y --no-install-recommends pipx jq curl wget
+          apt install -y --no-install-recommends pipx git wget
           pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
       - name: Set Pipefail
         run: |
           set -o pipefail
+
+      - name: Install Dependencies
+        run: |
+          tuttest README.md install-dependencies-package | bash -
 
       - name: Download Release And Set PATH
         run: |

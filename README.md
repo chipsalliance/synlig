@@ -9,7 +9,14 @@ Synlig is a SystemVerilog synthesis tool that uses [Surelog](https://github.com/
 ### Download Synlig
 
 You can download Synlig from the GitHub [release page](https://github.com/chipsalliance/synlig/releases).
-To download the latest version, use the following script:
+First, make sure you have all required dependencies installed with:
+
+<!-- name="install-dependencies-package" -->
+```
+apt install -y jq curl wget tk
+```
+
+then use the following script to download Synlig:
 
 <!-- name="download-release" -->
 ```bash
