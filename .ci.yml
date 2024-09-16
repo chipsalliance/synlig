@@ -299,6 +299,38 @@ ibex_synth_f4pga_large_design:
     - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
     - ./tests/scripts/run_large_designs.sh --name ibex_f4pga load_submodules run
 
+check_README:
+  stage: "Optional tests"
+  only:
+    - main
+    - merge_requests
+  variables:
+    SCALENODE_RAM: 8000
+    SCALENODE_CPU: 6
+  script:
+    - echo "##/ Install Prerequisites \##"
+    - apt update && apt install -y pipx git wget
+    - pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+    - export PATH=$PATH:/root/.local/bin
+    - echo "##/ Set pipefail \##"
+    - set -o pipefail
+    - echo "##/ Install dependencies \##"
+    - tuttest README.md install-dependencies | bash -
+    - echo "##/ Test make install \##"
+    - tuttest README.md make-install | bash -
+    - echo "##/ Test make tools \##"
+    - tuttest README.md get-haskell | bash -
+    - tuttest README.md install-tools | bash -
+    - echo "##/ Test counter.sv synthesis \##"
+    - tuttest README.md counter.sv > counter.sv
+    - tuttest README.md synthesis-example  | grep ">" | cut -d ">" -f 2 | synlig
+    - echo "##/ Test parsing multiple files \##"
+    - tuttest README.md example-multiple-files | synlig
+    - echo "##/ Test testing scripts commands \##"
+    - tuttest README.md formal-verification-help | bash -
+    - tuttest README.md large-designs-help | bash -
+    - tuttest README.md parsing-tests-help | bash -
+
 bsg_test_diff:
   stage: "Optional tests"
   dependencies: [build_plugin]

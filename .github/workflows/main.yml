@@ -377,60 +377,10 @@ jobs:
           overwrite: true
           file_glob: true
 
-# Synlig requires yosys version 0.40 or later 
-# which is currently not available in debian repositories.
-# This test can be uncommented when required version will be available.
-#  test-release-with-packaged-yosys:
-#    name: Release Package Installation Test
-#    runs-on: [self-hosted, Linux, X64]
-#    container: debian:sid
-#    needs: release
-#    env:
-#      DEBIAN_FRONTEND: noninteractive
-#      PIPX_BIN_DIR: /usr/local/bin
-#
-#    steps:
-#      - name: Prepare Repository
-#        uses: actions/checkout@v2
-#        with:
-#          fetch-depth: 1
-#
-#      - name: Install Prerequisites
-#        run: |
-#          apt update -qq
-#          apt install -y --no-install-recommends pipx git
-#          pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
-#
-#      - name: Install Dependencies
-#        run: |
-#          tuttest README.md install-yosys-debian | bash -
-#
-#      - name: Install Plugin
-#        run: |
-#          tuttest README.md download-plugin | bash -
-#          tuttest README.md install-plugin | bash -
-#
-#      - name: Load Plugin
-#        run: |
-#          tuttest README.md load-plugin | yosys -Q | tee log.txt
-#          grep ^ERROR log.txt || exit 0
-#          exit 1
-#
-#      - name: Test Plugin
-#        run: |
-#          tuttest README.md example-verilog | bash -
-#          tuttest README.md example-multiple-files | yosys
-#
-#      - name: Test sv2v pull and build
-#        run: |
-#          export PATH=`pwd`/out/current/bin:$PATH
-#          tuttest README.md sv2v-update | bash -
-#          tuttest README.md sv2v-build | bash -
-
-  test-readme-install-from-source:
-    name: Test "Installation from source" from README
+  verify-README:
+    name: Verify README Correctness (Installation From Sources)
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
-    container: debian:trixie
+    container: debian:bookworm
     env:
       DEBIAN_FRONTEND: noninteractive
       PIPX_BIN_DIR: /usr/local/bin
@@ -444,126 +394,72 @@ jobs:
       - name: Install Prerequisites
         run: |
           apt update -qq
-          apt install -y --no-install-recommends pipx git
+          apt install -y --no-install-recommends pipx git wget
           pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
+
+      - name: Set Pipefail
+        run: |
+          set -o pipefail
 
       - name: Install Dependencies
         run: |
-          tuttest README.md dependencies | bash -
+          tuttest README.md install-dependencies | bash -
 
-      - name: Build Binaries
+      - name: Test Synlig Installation
         run: |
-          tuttest README.md build-binaries | bash -
+          tuttest README.md make-install | bash -
 
-      - name: Test Binaries
+      - name: Test Tools Installation
         run: |
-          tuttest README.md load-plugin | (. <(tuttest README.md path-setup) && yosys)
-          (tuttest README.md path-setup; tuttest README.md example-verilog) | bash -
-          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver1) | bash -
-          (tuttest README.md path-setup; tuttest README.md example-uhdm-ver2) | bash -
-          tuttest README.md example-multiple-files | (. <(tuttest README.md path-setup) && yosys)
+          tuttest README.md get-haskell | bash -
+          tuttest README.md install-tools | bash -
 
-# Synlig requires yosys version 0.40 or later 
-# which is currently not available in debian repositories.
-# This test can be uncommented when required version will be available.
-#  test-plugin-with-packaged-yosys:
-#    name: Test With Packaged Yosys
-#    runs-on: [self-hosted, Linux, X64]
-#    container: debian:sid
-#    needs: build-binaries
-#    env:
-#      DEBIAN_FRONTEND: noninteractive
-#      PIPX_BIN_DIR: /usr/local/bin
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          submodules: false
-#          fetch-depth: 1
-#
-#      - name: Download binaries
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: binaries-debian
-#
-#      - name: Extract
-#        run: tar -xf binaries-debian.tar
-#
-#      - name: Install Yosys & Plugin
-#        run: |
-#          apt update -q
-#          apt install -y yosys yosys-dev
-#          ./install_plugin.sh
-#
-#      - name: Load Plugin
-#        run: |
-#          yosys -Q -m systemverilog \
-#              -p "help read_systemverilog" \
-#              -p "help read_uhdm" 2>&1 | tee log.txt
-#          grep ^ERROR log.txt || exit 0
-#          exit 1
+      - name: Test counter.sv Synthesis
+        run: |
+          tuttest README.md counter.sv > counter.sv
+          tuttest README.md synthesis-example  | grep ">" | cut -d ">" -f 2 | synlig
 
-  test-plugin-with-bundled-yosys:
-    name: Test With Bundled Yosys
+      - name: Test Parsing Multiple Files
+        run: |
+          tuttest README.md example-multiple-files | synlig
+
+      - name: Test Testing Scripts Commands
+        run: |
+          tuttest README.md formal-verification-help | bash -
+          tuttest README.md large-designs-help | bash -
+          tuttest README.md parsing-tests-help | bash -
+
+  test-package:
+    name: Verify README Correctness (Download And Run Release)
+    needs: release
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
-    container: debian:trixie
-    needs: build-binaries
+    container: debian:bookworm
     env:
       DEBIAN_FRONTEND: noninteractive
       PIPX_BIN_DIR: /usr/local/bin
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Prepare Repository
+        uses: actions/checkout@v2
         with:
-          submodules: false
           fetch-depth: 1
 
       - name: Install Prerequisites
         run: |
           apt update -qq
-          apt install -y --no-install-recommends pipx git
+          apt install -y --no-install-recommends pipx jq curl wget
           pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
-      - name: Install Dependencies
+      - name: Set Pipefail
         run: |
-          # Don't need all the build dependencies, but will ensure everything
-          # yosys needs at runtime will be installed
-          tuttest README.md dependencies | bash -
+          set -o pipefail
 
-      - name: Download binaries
-        uses: actions/download-artifact@v4
-        with:
-          name: binaries-plugin
-
-      - name: Extract
+      - name: Download Release And Set PATH
         run: |
-          # Extract into a different directory than it was built in
-          # to ensure no path dependencies
-          tar --one-top-level -xf binaries-plugin.tar
+          tuttest README.md download-release | bash -
+          eval $(tuttest README.md path-setup)
 
-      - name: Verify yosys-config
+      - name: Test counter.sv Synthesis
         run: |
-          # Check that the directories reported by yosys-config exist
-          echo "yosys-config reports data directory is" $(binaries-debian/out/current/bin/yosys-config --datdir)
-          ls $(binaries-debian/out/current/bin/yosys-config --datdir) > /dev/null
-
-      - name: Load Plugin
-        run: |
-          binaries-debian/out/current/bin/yosys \
-              -Q -m systemverilog \
-              -p "help read_systemverilog" \
-              -p "help read_uhdm" 2>&1 | tee log.txt
-          grep ^ERROR log.txt || exit 0
-          exit 1
-
-  # needed for test linting
-  upload-event-file:
-    name: Upload GHA event file
-    runs-on: ubuntu-latest
-    steps:
-      - run: cp "$GITHUB_EVENT_PATH" ./event.json
-      - name: Upload event file as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: event.json
-          path: event.json
+          tuttest README.md counter.sv > counter.sv
+          tuttest README.md synthesis-example  | grep ">" | cut -d ">" -f 2 | synlig
