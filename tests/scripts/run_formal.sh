@@ -40,6 +40,7 @@ do
 		echo "    load_submodules        - clones necessary submodules"
 		echo "    run                    - launches FV"
 		echo "    gather_results         - gathers results of FV"
+		echo "    pack_logs              - creates .tar.gz archive with selected logs"
 		echo ""
 		echo "    List of supported test suite names:"
 		echo "        simple"
@@ -65,6 +66,26 @@ do
 		[ "$name" == "'simple'" ] && gather_results simple ./tests/simple_tests
 		[ "$name" == "'yosys'" ] && gather_results yosys ./third_party/yosys/tests
 		[ "$name" == "'sv2v'" ] && gather_results sv2v
+	;;
+	"'pack_logs'")
+		(
+			shopt -s extglob nullglob
+			[ -z "$GITHUB_ACTIONS" ] && echo "##/ Pack logs \##"
+			LOGFILE=${name//\'/}_formal_verification_logs.tar
+			DIRNAME=./build/tests/${name//\'/}
+			tar -cf ${LOGFILE} \
+				${DIRNAME}/*/result.json \
+				${DIRNAME}/*/*.sv \
+				${DIRNAME}/*/*.v \
+				${DIRNAME}/*/*.eqy \
+				${DIRNAME}/*/*/*.log \
+				${DIRNAME}/*/*/*.txt \
+				${DIRNAME}/*/*/*.ids \
+				${DIRNAME}/*/*/*.list \
+				${DIRNAME}/*/*/*.ys
+			find ${DIRNAME} -name logfile.txt -exec tar --append --file=${LOGFILE} {} +
+			gzip $LOGFILE
+		)
 	;;
 	--)
 		if [ -z $name ]; then
