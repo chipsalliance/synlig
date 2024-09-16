@@ -90,7 +90,7 @@ Running synthesis using Synlig is very simple:
 <!-- name="synthesis example" -->
 ``` tcl
 	> read_systemverilog counter.sv
-	1. Executing Verilog with UHDM frontend.
+	1. Executing SystemVerilog frontend.
 	(...)
 
 	> synth_xilinx
