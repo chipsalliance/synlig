@@ -19,7 +19,7 @@ sh_quote_list = $(foreach _v,$(strip ${1}),${chr.quot}$(subst ${chr.quot},${chr.
 TEST_SUITE_DIR ?=
 TEST_SUITE_NAME ?=
 
-REPO_DIR := ${this_mk.dir}
+REPO_DIR := $(abspath ${this_mk.dir}/../../)
 
 #--------------------------------------------------------------------------------
 # Check and normalize configuration values

@@ -16,7 +16,7 @@ function run_formal_tests(){
 	# this link is necessary because eqy doesn't
 	# support specifying executable file correctly
 	ln -f -s $(realpath $PWD/out/bin/synlig) $PWD/out/bin/yosys
-	./run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$2" TEST_SUITE_NAME:="$1" test
+	tests/formal/run_fv_tests.mk -j $(nproc) TEST_SUITE_DIR:="$2" TEST_SUITE_NAME:="$1" test
 }
 
 function gather_results(){
