@@ -315,21 +315,21 @@ check_README:
     - echo "##/ Set pipefail \##"
     - set -o pipefail
     - echo "##/ Install dependencies \##"
-    - tuttest README.md install-dependencies | bash -
+    - tuttest README.md install-dependencies | bash -eo pipefail -
     - echo "##/ Test make install \##"
-    - tuttest README.md make-install | bash -
+    - tuttest README.md make-install | bash -eo pipefail -
     - echo "##/ Test make tools \##"
-    - tuttest README.md get-haskell | bash -
-    - tuttest README.md install-tools | bash -
+    - tuttest README.md get-haskell | bash -eo pipefail -
+    - tuttest README.md install-tools | bash -eo pipefail -
     - echo "##/ Test counter.sv synthesis \##"
     - tuttest README.md counter.sv > counter.sv
     - tuttest README.md synthesis-example  | grep ">" | cut -d ">" -f 2 | synlig
     - echo "##/ Test parsing multiple files \##"
     - tuttest README.md example-multiple-files | synlig
     - echo "##/ Test testing scripts commands \##"
-    - tuttest README.md formal-verification-help | bash -
-    - tuttest README.md large-designs-help | bash -
-    - tuttest README.md parsing-tests-help | bash -
+    - tuttest README.md formal-verification-help | bash -eo pipefail -
+    - tuttest README.md large-designs-help | bash -eo pipefail -
+    - tuttest README.md parsing-tests-help | bash -eo pipefail -
 
 bsg_test_diff:
   stage: "Optional tests"
