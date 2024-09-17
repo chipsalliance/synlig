@@ -225,7 +225,7 @@ struct UhdmSurelogAstFrontend : public UhdmCommonFrontend {
         this->shared.nonSynthesizableObjects.clear();
         return current_ast;
     }
-    void call_log_header(RTLIL::Design *design) override { log_header(design, "Executing Verilog with UHDM frontend.\n"); }
+    void call_log_header(RTLIL::Design *design) override { log_header(design, "Executing SystemVerilog frontend.\n"); }
 } UhdmSurelogAstFrontend;
 
 struct UhdmSystemVerilogFrontend : public UhdmSurelogAstFrontend {
