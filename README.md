@@ -255,20 +255,20 @@ Note that almost all tests are made using the Synlig binary instead of the plugi
 #### Build required binaries
 
 You can build all required binaries using the provided `Makefile`.
-`make plugin` will build Surelog, Yosys and Synlig as a plugin, and place them in the `out` directory.
+`make install-plugin` will build Yosys and Synlig as a plugin, and place them in the `out` directory.
 You need to add `out/bin` to your `PATH` variable to ensure you are using correct versions of the binaries.
 
 <!-- name="build-plugin" -->
 ``` bash
    git submodule update --init --recursive third_party/{surelog,yosys}
-   make plugin -j$(nproc)
+   make install-plugin -j$(nproc)
 ```
 
 To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
 
 <!-- name="path-setup-plugin" -->
 ``` bash
-   export PATH=`pwd`/out/current/bin:$PATH
+   export PATH=`pwd`/out/bin:$PATH
 ```
 ### Loading Synlig as a plugin into Yosys
 

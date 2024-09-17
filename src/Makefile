@@ -4,15 +4,18 @@ THIS_MK_FILE := $(abspath $(lastword $(MAKEFILE_LIST)))
 THIS_MK_DIR := $(patsubst /%/,/%,$(dir $(THIS_MK_FILE)))
 
 REPO_DIR := $(abspath $(THIS_MK_DIR)/..)
+
 YOSYS_SRC := $(REPO_DIR)/third_party/yosys
-YOSYS_MOD_SRC := $(REPO_DIR)/src/mods/yosys_ast
-SYNLIG_FRONTENDS_SRC := $(REPO_DIR)/src/frontends
 SYNLIG_SRC := $(REPO_DIR)/src
+
 ifeq ($(SYNLIG_BUILD_TYPE),asan)
+BUILD_DIR := $(REPO_DIR)/build/asan/synlig
 SURELOG_PKG_DIR := $(REPO_DIR)/build/asan/surelog
 else
+BUILD_DIR := $(REPO_DIR)/build/release/synlig
 SURELOG_PKG_DIR := $(REPO_DIR)/build/release/surelog
 endif
+
 
 # --- set compiler ---#
 CONFIG := none
@@ -20,7 +23,7 @@ CONFIG := none
 # CONFIG := gcc
 
 # --- add synlig cxxflags --- #
-CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_FRONTENDS_SRC)/*/ -I $(YOSYS_MOD_SRC)
+CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_SRC)/frontends/*/ -I $(SYNLIG_SRC)/mods/*
 
 # --- add static option --- #
 CXXFLAGS += -static
@@ -50,15 +53,15 @@ BINDIR := $(PREFIX)/bin
 DATDIR := $(PREFIX)/share/synlig
 
 # --- vpath --- #
-VPATH := $(YOSYS_SRC)
+VPATH := $(YOSYS_SRC):$(SYNLIG_SRC)
 
 # --- prepare targets --- #
 OBJS =
 EXTRA_OBJS =
 GENFILES =
 EXTRA_TARGETS =
-TARGETS = synlig synlig-config
-OUT_TARGETS = synlig synlig-config
+TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
+OUT_TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
 all: top-all
 
 # --- setup linking surelog --- #
@@ -203,9 +206,9 @@ endif
 ifeq ($(PRETTY_PROGRESS),1)
 P_STATUS = 0
 P_OFFSET = 0
-P_UPDATE = $(eval P_STATUS=$(shell echo $(OBJS) yosys | $(AWK) 'BEGIN { RS = " "; I = $(P_STATUS)+0; } $$1 == "$@" && NR > I { I = NR; } END { print I; }'))
-P_SHOW = [$(shell $(AWK) "BEGIN { N=$(words $(OBJS) yosys); printf \"%3d\", $(P_OFFSET)+90*$(P_STATUS)/N; exit; }")%]
-P = @echo "$(if $(findstring $@,$(TARGETS) $(EXTRA_TARGETS)),$(eval P_OFFSET = 10))$(call P_UPDATE)$(call P_SHOW) Building $@";
+P_UPDATE = $(eval P_STATUS=$(shell echo $(YOSYS_OBJS) $(SYNLIG_OBJS) | $(AWK) 'BEGIN { RS = " "; I = $(P_STATUS)+0; } $$1 == "$@" && NR > I { I = NR; } END { print I; }'))
+P_SHOW = [$(shell $(AWK) "BEGIN { N=$(words $(YOSYS_OBJS) $(SYNLIG_OBJS)); printf \"%3d\", $(P_OFFSET)+80*$(P_STATUS)/N; exit; }")%]
+P = @echo "$(if $(findstring $@,$(TARGETS) $(EXTRA_TARGETS)),$(eval P_OFFSET = 5))$(call P_UPDATE)$(call P_SHOW) Building $(shell echo $@ | $(SED) -s "s#$(BUILD_DIR)/##g")";
 Q = @
 S = -s
 endif
@@ -221,14 +224,14 @@ SMALL = 0
 # --- prepare defines for adding include files --- #
 define add_share_file
 EXTRA_TARGETS += $(subst //,/,$(1)/$(notdir $(2)))
-$(subst //,/,$(1)/$(notdir $(2))): $(2)
+$(subst //,/,$(BUILD_DIR)/$(1)/$(notdir $(2))): $(2)
 	$$(P) mkdir -p $(1)
 	$$(Q) cp "$(YOSYS_SRC)"/$(2) $(subst //,/,$(1)/$(notdir $(2)))
 endef
 
 define add_gen_share_file
 EXTRA_TARGETS += $(subst //,/,$(1)/$(notdir $(2)))
-$(subst //,/,$(1)/$(notdir $(2))): $(2)
+$(subst //,/,$(BUILD_DIR)/$(1)/$(notdir $(2))): $(BUILD_DIR)/$(2)
 	$$(P) mkdir -p $(1)
 	$$(Q) cp $(2) $(subst //,/,$(1)/$(notdir $(2)))
 endef
@@ -285,13 +288,10 @@ $(eval $(call add_include_file,frontends/blif/blifparse.h))
 $(eval $(call add_include_file,backends/rtlil/rtlil_backend.h))
 
 # --- add obj files --- #
-OBJS += $(SYNLIG_SRC)/main.o kernel/register.o kernel/rtlil.o kernel/log.o kernel/calc.o kernel/yosys.o
+OBJS += kernel/register.o kernel/rtlil.o kernel/log.o kernel/calc.o kernel/yosys.o
 OBJS += kernel/binding.o
 OBJS += kernel/cellaigs.o kernel/celledges.o kernel/cost.o kernel/satgen.o kernel/scopeinfo.o kernel/qcsat.o kernel/mem.o kernel/ffmerge.o kernel/ff.o kernel/yw.o kernel/json.o kernel/fmt.o
 OBJS += kernel/fstdata.o
-
-kernel/log.o: CXXFLAGS += -DYOSYS_SRC='"$(YOSYS_SRC)"'
-kernel/yosys.o: CXXFLAGS += -DYOSYS_DATDIR='"$(DATDIR)"' -DYOSYS_PROGRAM_PREFIX='""'
 
 OBJS += libs/bigint/BigIntegerAlgorithms.o libs/bigint/BigInteger.o libs/bigint/BigIntegerUtils.o
 OBJS += libs/bigint/BigUnsigned.o libs/bigint/BigUnsignedInABase.o
@@ -335,57 +335,73 @@ include $(YOSYS_SRC)/backends/aiger/Makefile.inc
 include $(YOSYS_SRC)/backends/intersynth/Makefile.inc
 include $(YOSYS_SRC)/backends/spice/Makefile.inc
 
-include $(SYNLIG_FRONTENDS_SRC)/*/Makefile.inc
-include $(YOSYS_MOD_SRC)/Makefile.inc
+SYNLIG_OBJS += main.o
+SYNLIG_OBJS += yosys-libabc.a
 
-OBJS += yosys-libabc.a
+include $(SYNLIG_SRC)/frontends/*/Makefile.inc
+include $(SYNLIG_SRC)/mods/*/Makefile.inc
+
+# --- prefix objects --- #
+
+YOSYS_OBJS = $(addprefix $(BUILD_DIR)/, $(OBJS))
+SYNLIG_OBJS := $(addprefix $(BUILD_DIR)/, $(SYNLIG_OBJS))
+GENFILES := $(addprefix $(BUILD_DIR)/, $(GENFILES))
+EXTRA_OBJS := $(addprefix $(BUILD_DIR)/, $(EXTRA_OBJS))
+EXTRA_TARGETS := $(addprefix $(BUILD_DIR)/, $(EXTRA_TARGETS))
+
+# --- unexport CXXFLAGS --- #
 
 # prevent the CXXFLAGS set by this Makefile from reaching abc/Makefile,
 # especially the -MD flag which will break the build when CXX is clang
 unexport CXXFLAGS
 
-# --- make targets --- #
+# --- include yosys targets and dependencies --- #
+include $(REPO_DIR)/src/Makefile.inc
 
+# --- make targets --- #
 top-all: $(TARGETS) $(EXTRA_TARGETS)
 	@echo ""
 	@echo "  Build successful."
 	@echo ""
 
 .PHONY: compile-only
-compile-only: $(OBJS) $(GENFILES) $(EXTRA_TARGETS)
+compile-only: $(YOSYS_OBJS) $(SYNLIG_OBJS) $(GENFILES) $(EXTRA_TARGETS)
 	@echo ""
 	@echo "  Compile successful."
 	@echo ""
 
-synlig: $(OBJS)
-	$(P) $(CXX) -o synlig $(LINKFLAGS) $(OBJS) $(LIBS) $(SURELOG_LDFLAGS) $(SURELOG_LDLIBS)
+$(BUILD_DIR)/kernel/log.o: CXXFLAGS += -DYOSYS_SRC='"$(YOSYS_SRC)"'
+$(BUILD_DIR)/kernel/yosys.o: CXXFLAGS += -DYOSYS_DATDIR='"$(DATDIR)"' -DYOSYS_PROGRAM_PREFIX='""'
 
-synlig-config: misc/yosys-config.in $(YOSYS_SRC)/Makefile
+$(BUILD_DIR)/synlig: $(YOSYS_OBJS) $(SYNLIG_OBJS)
+	$(CXX) -o synlig $(LINKFLAGS) $(YOSYS_OBJS) $(SYNLIG_OBJS) $(LIBS) $(SURELOG_LDFLAGS) $(SURELOG_LDLIBS)
+
+$(BUILD_DIR)/synlig-config: misc/yosys-config.in $(YOSYS_SRC)/Makefile
 	$(P) $(SED) -e 's#@CXX@#$(strip $(CXX))#;' -e 's#@CXXFLAGS@#$(strip $(CXXFLAGS))#;' -e 's#-static##;' \
 			-e 's#@LINKFLAGS@#$(strip $(LINKFLAGS))#;' -e 's#@LIBS@#$(strip $(LIBS))#;' \
 			-e 's#@BINDIR@#$(strip $(BINDIR))#;' -e 's#@DATDIR@#$(strip $(DATDIR))#;' < $< > synlig-config
 	$(Q) chmod +x synlig-config
 
-$(REPO_DIR)/src/frontends/systemverilog/%.o: $(REPO_DIR)/src/frontends/systemverilog/%.cc
+$(BUILD_DIR)/frontends/systemverilog/%.o: frontends/systemverilog/%.cc
 	$(Q) mkdir -p $(dir $@)
-	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -Wno-unused-parameter -I $(SYNLIG_FRONTENDS_SRC)/* -I ./ $<
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -Wno-unused-parameter -I ./ $<
 
-%.o: %.cc
+$(BUILD_DIR)/%.o: %.cc
 	$(Q) mkdir -p $(dir $@)
-	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -I $(SYNLIG_FRONTENDS_SRC)/* -I ./ $<
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -I ./ $<
 
-%.pyh: %.h
+$(BUILD_DIR)/%.pyh: %.h
 	$(Q) mkdir -p $(dir $@)
 	$(P) cat $< | grep -E -v "#[ ]*(include|error)" | $(CXX) $(CXXFLAGS) -x c++ -o $@ -E -P -
 
-%.o: %.cpp
+$(BUILD_DIR)/%.o: %.cpp
 	$(Q) mkdir -p $(dir $@)
 	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $<
 
 VERSION_STR := Synlig (git sha1 $(GIT_REV), $(notdir $(CXX)) $(shell \
 		$(CXX) --version | tr ' ()' '\n' | grep '^[0-9]' | head -n1) $(filter -f% -m% -O% -DNDEBUG,$(CXXFLAGS)))
 
-kernel/version_$(GIT_REV).cc: $(YOSYS_SRC)/Makefile
+$(BUILD_DIR)/kernel/version_$(GIT_REV).cc: $(YOSYS_SRC)/Makefile
 	$(P) rm -f kernel/version_*.o kernel/version_*.d kernel/version_*.cc
 	$(Q) mkdir -p kernel && echo "namespace Yosys { extern const char *yosys_version_str; const char *yosys_version_str=\"$(VERSION_STR)\"; }" > kernel/version_$(GIT_REV).cc
 
@@ -404,22 +420,19 @@ check-git-abc:
 		exit 1; \
 	fi
 
-abc/abc abc/libabc.a: | check-git-abc
+abc/libabc.a: | check-git-abc
 	$(P)
-	$(Q) mkdir -p abc && $(MAKE) -C abc -f "$(realpath $(YOSYS_SRC)/abc/Makefile)" ABCSRC="$(realpath $(YOSYS_SRC)/abc/)" $(S) $(ABCMKARGS) $(if $(filter %.a,$@),PROG="abc",PROG="abc") MSG_PREFIX="$(eval P_OFFSET = 5)$(call P_SHOW)$(eval P_OFFSET = 10) ABC: " $(if $(filter %.a,$@),libabc.a)
+	$(Q) mkdir -p abc && $(MAKE) -C abc -f "$(realpath $(YOSYS_SRC)/abc/Makefile)" ABCSRC="$(realpath $(YOSYS_SRC)/abc/)" $(S) $(ABCMKARGS) $(if $(filter %.a,$@),PROG="abc",PROG="abc") MSG_PREFIX="$(eval P_OFFSET = 10)$(call P_SHOW)$(eval P_OFFSET = 15) ABC: " $(if $(filter %.a,$@),libabc.a)
 
-yosys-abc: abc/abc
-	$(P) cp $< yosys-abc
-
-yosys-libabc.a: abc/libabc.a
-	$(P) cp $< yosys-libabc.a
+$(BUILD_DIR)/yosys-libabc.a: abc/libabc.a
+	$(P) cp $< $(BUILD_DIR)/yosys-libabc.a
 
 install: $(TARGETS) $(EXTRA_TARGETS)
 	mkdir -p $(DESTDIR)$(BINDIR)
 	cp $(OUT_TARGETS) $(DESTDIR)$(BINDIR)
 	$(STRIP) -S $(DESTDIR)$(BINDIR)/synlig
 	mkdir -p $(DESTDIR)$(DATDIR)
-	cp -r share/. $(DESTDIR)$(DATDIR)/.
+	cp -r $(BUILD_DIR)/share/. $(DESTDIR)$(DATDIR)/.
 
 uninstall:
 	rm -vf $(addprefix $(DESTDIR)$(BINDIR)/,$(notdir $(TARGETS)))
@@ -433,10 +446,6 @@ uninstall:
 -include techlibs/*/*.d
 
 clean:
-	rm -rf share
-	rm -f $(OBJS) $(GENFILES) $(TARGETS) $(EXTRA_TARGETS)
-	rm -rf $(SYNLIG_FRONTENDS_SRC)/*/*.d
-	rm -rf $(YOSYS_MOD_SRC)/*.d $(REPO_DIR)/src/*.d
-	rm -rf $(REPO_DIR)/build/release/synlig
+	rm -rf $(BUILD_DIR)
 
 .PHONY: all top-all abc install clean

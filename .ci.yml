@@ -54,9 +54,9 @@ build_plugin:
   script:
     - echo "##/ Install dependencies and build \##"
     - apt update && apt install -y $BUILD_DEPENDENCIES
-    - echo "##/ Build yosys, surelog and synlig binaries \##"
+    - echo "##/ Build yosys, surelog and plugin binaries \##"
     - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
-    - make plugin install@surelog -j $(nproc) PREFIX=out
+    - make install-plugin install@surelog -j $(nproc) PREFIX=out
 
 build_asan:
   <<: *build_binary

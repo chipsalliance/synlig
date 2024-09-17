@@ -79,7 +79,7 @@ jobs:
             cc: 'gcc'
             cxx: 'g++'
             apt-extra-deps: 'gcc g++'
-            build-binaries-args: 'plugin install@surelog PREFIX=out'
+            build-binaries-args: 'install-plugin install@surelog PREFIX=out'
           - name: 'Build Synlig (ASAN)'
             artifact-name: 'binaries-asan'
             cc: 'clang-15'

@@ -8,6 +8,12 @@ ${ts}.out_install_dir := $(call ToAbsPaths,${OUT_DIR})
 ${ts}.output_files := \
 	${${ts}.src_dir}synlig
 
+${ts}.deps = \
+	${$(call GetTargetStructName,surelog).output_files}
+
+${ts}.input_files = \
+	${${ts}.deps}
+
 ${ts}.make_args := \
 	PREFIX:=$(call ToAbsPaths,${PREFIX}) \
 	DESTDIR:=$(if $(DESTDIR),$(call ToAbsPaths,$(DESTDIR)),) \
