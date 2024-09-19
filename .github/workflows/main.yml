@@ -397,37 +397,40 @@ jobs:
           apt install -y --no-install-recommends pipx git wget
           pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
-      - name: Set Pipefail
-        run: |
-          set -o pipefail
 
       - name: Install Dependencies
         run: |
-          tuttest README.md install-dependencies | bash -
+          set -o pipefail
+          tuttest README.md install-dependencies | bash -eo pipefail -
 
       - name: Test Synlig Installation
         run: |
-          tuttest README.md make-install | bash -
+          set -o pipefail
+          tuttest README.md make-install | bash -eo pipefail -
 
       - name: Test Tools Installation
         run: |
-          tuttest README.md get-haskell | bash -
-          tuttest README.md install-tools | bash -
+          set -o pipefail
+          tuttest README.md get-haskell | bash -eo pipefail -
+          tuttest README.md install-tools | bash -eo pipefail -
 
       - name: Test counter.sv Synthesis
         run: |
+          set -o pipefail
           tuttest README.md counter.sv > counter.sv
           tuttest README.md synthesis-example  | grep ">" | cut -d ">" -f 2 | synlig
 
       - name: Test Parsing Multiple Files
         run: |
+          set -o pipefail
           tuttest README.md example-multiple-files | synlig
 
       - name: Test Testing Scripts Commands
         run: |
-          tuttest README.md formal-verification-help | bash -
-          tuttest README.md large-designs-help | bash -
-          tuttest README.md parsing-tests-help | bash -
+          set -o pipefail
+          tuttest README.md formal-verification-help | bash -eo pipefail -
+          tuttest README.md large-designs-help | bash -eo pipefail -
+          tuttest README.md parsing-tests-help | bash -eo pipefail -
 
   test-package:
     name: Verify README Correctness (Download And Run Release)
@@ -450,20 +453,15 @@ jobs:
           apt install -y --no-install-recommends pipx git wget
           pipx install git+https://github.com/antmicro/tuttest#egg=tuttest
 
-      - name: Set Pipefail
-        run: |
-          set -o pipefail
-
       - name: Install Dependencies
         run: |
-          tuttest README.md install-dependencies-package | bash -
+          set -o pipefail
+          tuttest README.md install-dependencies-package | bash -eo pipefail -
 
-      - name: Download Release And Set PATH
+      - name: Download Release, Set PATH and Test counter.sv Synthesis
         run: |
-          tuttest README.md download-release | bash -
+          set -o pipefail
+          tuttest README.md download-release | bash -eo pipefail -
           eval $(tuttest README.md path-setup)
-
-      - name: Test counter.sv Synthesis
-        run: |
           tuttest README.md counter.sv > counter.sv
           tuttest README.md synthesis-example  | grep ">" | cut -d ">" -f 2 | synlig
