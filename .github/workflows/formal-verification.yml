@@ -73,15 +73,14 @@ jobs:
 
       - name: Pack formal verification logs
         run: |
-          cd build
-          tar cf ${TEST_SUITE_NAME}.tar tests/*/*
+          ./tests/scripts/run_formal.sh --name $TEST_SUITE_NAME pack_logs
 
       - name: Upload formal verification logs
         uses: actions/upload-artifact@v4
         with:
           name: formal-verification-logs-${{ matrix.name }}
           path: |
-            build/*.tar
+            ${{ matrix.name }}_formal_verification_logs.tar
 
       - name: Upload load graphs
         uses: actions/upload-artifact@v4

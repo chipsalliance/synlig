@@ -153,22 +153,22 @@ release_read_systemverilog:
   artifacts:
     when: always
     paths:
-      - build/
+      - ./*_formal_verification_logs.tar.gz
 
 simple_formal_verification_tests:
   <<: *formal_test
   script:
-    - ./tests/scripts/run_formal.sh --name simple install_dependencies load_submodules build_dependencies run gather_results
+    - ./tests/scripts/run_formal.sh --name simple install_dependencies load_submodules build_dependencies run pack_logs gather_results
 
 yosys_formal_verification_tests:
   <<: *formal_test
   script:
-    - ./tests/scripts/run_formal.sh --name yosys install_dependencies load_submodules build_dependencies run gather_results
+    - ./tests/scripts/run_formal.sh --name yosys install_dependencies load_submodules build_dependencies run pack_logs gather_results
 
 sv2v_formal_verification_tests:
   <<: *formal_test
   script:
-    - ./tests/scripts/run_formal.sh --name sv2v install_dependencies load_submodules build_dependencies run gather_results
+    - ./tests/scripts/run_formal.sh --name sv2v install_dependencies load_submodules build_dependencies run pack_logs gather_results
 
 .job_template: &large_design_test
   stage: "Run large designs tests"
