@@ -68,7 +68,7 @@ build_asan:
   <<: *build_binary
   script:
     - *common_build_prefix
-    - make install install@surelog -j $(nproc) ENABLE_ASAN=1 CC=clang CXX=clang++ CFG_BUILD_TYPE=asan PREFIX=out
+    - make install@surelog install@asan -j $(nproc) CC=clang CXX=clang++ PREFIX=out
 
 build_release:
   <<: *build_binary

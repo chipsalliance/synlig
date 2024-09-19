@@ -20,10 +20,21 @@ endif
 override undefine letter_makeflags
 
 #--------------------------------------------------------------------------------
+# Detect build type.
+
+CFG_BUILD_TYPE := release
+ifneq ($(filter install@asan build@asan,${MAKECMDGOALS}),)
+CFG_BUILD_TYPE := asan
+ENABLE_ASAN := 1
+endif
+ifneq ($(filter plugin,${MAKECMDGOALS}),)
+CFG_BUILD_TYPE := plugin
+endif
+
+#--------------------------------------------------------------------------------
 # Load config.
 
 override TOP_DIR := $(dir $(abspath $(lastword ${MAKEFILE_LIST})))
-
 include ${TOP_DIR}buildconfig.mk
 
 #--------------------------------------------------------------------------------
@@ -137,7 +148,7 @@ override undefine command_line_illegal_vars
 # Validate configuration variable values and assign them to variables without
 # `CFG_` prefix used internally.
 
-override ALL_ALLOWED_BUILD_TYPES := release debug asan
+override ALL_ALLOWED_BUILD_TYPES := release asan plugin
 $(if $(filter-out 1,$(words $(filter ${ALL_ALLOWED_BUILD_TYPES},${CFG_BUILD_TYPE}))),\
 	$(error CFG_BUILD_TYPE: invalid value (${CFG_BUILD_TYPE}). Must be one of: ${ALL_ALLOWED_BUILD_TYPES})\
 )
@@ -366,6 +377,12 @@ install-plugin : build@surelog install@yosys install@systemverilog-plugin
 
 .PHONY: plugin
 plugin : build-plugin
+
+.PHONY: build@asan
+build@asan : build
+
+.PHONY: install@asan
+install@asan : install
 
 install@eqy: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/eqy/.git
 install@sby: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/sby/.git

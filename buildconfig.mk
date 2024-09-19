@@ -7,9 +7,6 @@
 # You can also set configuration variable through make command line arguments.
 #--------------------------------------------------------------------------------
 
-# One of: release, debug, asan
-CFG_BUILD_TYPE := release
-
 # Base directory for all build outputs.
 CFG_BUILD_DIR = build/${CFG_BUILD_TYPE}/
 PREFIX ?= /usr/local
