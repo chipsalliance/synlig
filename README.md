@@ -20,14 +20,14 @@ then use the following script to download Synlig:
 
 <!-- name="download-release" -->
 ```bash
-curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig")) | .browser_download_url' | xargs wget -O - | tar -xz
+    curl https://api.github.com/repos/chipsalliance/synlig/releases/latest | jq -r '.assets | .[] | select(.name | startswith("synlig")) | .browser_download_url' | xargs wget -O - | tar -xz
 ```
 
 To use Synlig, make sure to either use absolute paths, or update the `PATH` variable before use.
 
 <!-- name="path-setup" -->
 ``` bash
-   export PATH=`pwd`/synlig:$PATH
+    export PATH=`pwd`/synlig:$PATH
 ```
 
 Synlig is now ready to be used.
@@ -41,7 +41,7 @@ Debian Bookworm:
 
 <!-- name="install-dependencies" -->
 ``` bash
-   apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
+    apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
 ```
 
 #### Build required binaries
@@ -51,9 +51,9 @@ You can build all required binaries using the provided `Makefile`.
 
 <!-- name="make-install" -->
 ``` bash
-   git submodule sync
-   git submodule update --init --recursive third_party/{surelog,yosys}
-   make install -j$(nproc)
+    git submodule sync
+    git submodule update --init --recursive third_party/{surelog,yosys}
+    make install -j$(nproc)
 ```
 
 ## Usage
@@ -73,58 +73,58 @@ Consider the following SystemVerilog code:
 
 <!-- name="counter.sv" -->
 ``` SystemVerilog
-module top (
-  input clk,
-  output [3:0] led
-);
-  localparam BITS = 4;
-  localparam LOG2DELAY = 22;
+    module top (
+      input clk,
+      output [3:0] led
+    );
+      localparam BITS = 4;
+      localparam LOG2DELAY = 22;
 
-  wire bufg;
-  BUFG bufgctrl (
-      .I(clk),
-      .O(bufg)
-  );
-  reg [BITS+LOG2DELAY-1:0] counter = 0;
-  always @(posedge bufg) begin
-    counter <= counter + 1;
-  end
-  assign led[3:0] = counter >> LOG2DELAY;
-endmodule
+      wire bufg;
+      BUFG bufgctrl (
+          .I(clk),
+          .O(bufg)
+      );
+      reg [BITS+LOG2DELAY-1:0] counter = 0;
+      always @(posedge bufg) begin
+        counter <= counter + 1;
+      end
+      assign led[3:0] = counter >> LOG2DELAY;
+    endmodule
 ```
 
 Running synthesis using Synlig is very simple:
 
 <!-- name="synthesis-example" -->
 ``` tcl
-	> read_systemverilog counter.sv
-	1. Executing SystemVerilog frontend.
-	(...)
+    > read_systemverilog counter.sv
+    1. Executing SystemVerilog frontend.
+    (...)
 
-	> synth_xilinx
-	2. Executing SYNTH_XILINX pass.
-	(...)
+    > synth_xilinx
+    2. Executing SYNTH_XILINX pass.
+    (...)
 
-	Number of wires:                 10
-	Number of wire bits:            167
-	Number of public wires:           4
-	Number of public wire bits:      32
-	Number of ports:                  2
-	Number of port bits:              5
-	Number of memories:               0
-	Number of memory bits:            0
-	Number of processes:              0
-	Number of cells:                 40
-	  BUFG                            1
-	  CARRY4                          7
-	  FDRE                           26
-	  IBUF                            1
-	  INV                             1
-	  OBUF                            4
-	(...)
+    Number of wires:                 10
+    Number of wire bits:            167
+    Number of public wires:           4
+    Number of public wire bits:      32
+    Number of ports:                  2
+    Number of port bits:              5
+    Number of memories:               0
+    Number of memory bits:            0
+    Number of processes:              0
+    Number of cells:                 40
+      BUFG                            1
+      CARRY4                          7
+      FDRE                           26
+      IBUF                            1
+      INV                             1
+      OBUF                            4
+    (...)
 
-	> write_edif counter.edif
-	3. Executing Synlig EDIF backend.
+    > write_edif counter.edif
+    3. Executing Synlig EDIF backend.
 ```
 
 As a result, we get a `counter.edif` file that can be further processed to generate the bitstream.
@@ -177,8 +177,8 @@ All required prerequisites can be installed by running:
 
 <!-- name="install-tools" -->
 ``` bash
-   git submodule update --init --recursive --checkout third_party/{sv2v,eqy,sby,yosys}
-   make tools -j $(nproc)
+    git submodule update --init --recursive --checkout third_party/{sv2v,eqy,sby,yosys}
+    make tools -j $(nproc)
 ```
 
 #### Running formal verification
@@ -187,14 +187,14 @@ To start formal verification tests, use the dedicated script:
 
 <!-- name="formal-verification-run" -->
 ``` bash
-   ./tests/scripts/run_formal.sh --name=<test_suite_name> run
+    ./tests/scripts/run_formal.sh --name=<test_suite_name> run
 ```
 
 To gather formal verification results, run:
 
 <!-- name="formal-verification-gather-results" -->
 ``` bash
-   ./tests/scripts/run_formal.sh --name=<test_suite_name> gather_results
+    ./tests/scripts/run_formal.sh --name=<test_suite_name> gather_results
 ```
 
 #### Available targets
@@ -203,7 +203,7 @@ You can see the available `test_suite_name` options by running:
 
 <!-- name="formal-verification-help" -->
 ``` bash
-   ./tests/scripts/run_formal.sh --help
+    ./tests/scripts/run_formal.sh --help
 ```
 
 ### Design tests
@@ -219,7 +219,7 @@ For more details, check `.github/workflows/large-designs.yml` or run:
 
 <!-- name="large-designs-help" -->
 ``` bash
-   ./tests/scripts/run_large_designs.sh --help
+    ./tests/scripts/run_large_designs.sh --help
 ```
 
 ### Parsing tests
@@ -228,7 +228,7 @@ Synlig is additionally tested with parsing tests. For more details check `.githu
 
 <!-- name="parsing-tests-help" -->
 ``` bash
-   ./tests/scripts/run_parsing.sh --help
+    ./tests/scripts/run_parsing.sh --help
 ```
 
 ## General & debugging tips
@@ -256,7 +256,7 @@ Note that almost all tests are made using the Synlig binary instead of the plugi
 
 <!-- name="install-dependencies-plugin" -->
 ``` bash
-   apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
+    apt install -y gcc-11 g++-11 build-essential cmake tclsh ant default-jre swig google-perftools libgoogle-perftools-dev python3 python3-dev python3-pip uuid uuid-dev tcl-dev flex libfl-dev git pkg-config libreadline-dev bison libffi-dev wget python3-orderedmultidict
 ```
 
 #### Build required binaries
@@ -267,15 +267,15 @@ You need to add `out/bin` to your `PATH` variable to ensure you are using correc
 
 <!-- name="build-plugin" -->
 ``` bash
-   git submodule update --init --recursive third_party/{surelog,yosys}
-   make install-plugin -j$(nproc)
+    git submodule update --init --recursive third_party/{surelog,yosys}
+    make install-plugin -j$(nproc)
 ```
 
 To use Yosys built from a submodule, make sure to either use absolute paths, or update the `PATH` variable before use.
 
 <!-- name="path-setup-plugin" -->
 ``` bash
-   export PATH=`pwd`/out/bin:$PATH
+    export PATH=`pwd`/out/bin:$PATH
 ```
 ### Loading Synlig as a plugin into Yosys
 
