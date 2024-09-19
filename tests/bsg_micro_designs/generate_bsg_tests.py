@@ -8,9 +8,9 @@ import re
 
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent.parent.parent / "lib" / "python3"))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent / "tests" / "lib" / "python3"))
 
-from yosys_systemverilog.run_command import run_command
+from run_command import run_command
 
 
 def gen_tests(test_name, test_suite_dir, test_ref_dir, output_dir):

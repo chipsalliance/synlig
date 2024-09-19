@@ -22,11 +22,11 @@ declare -a asan_options=(
     check_initialization_order=1
     detect_leaks=1
     handle_abort=1
-    suppressions=$REPO_DIR/config/asan.supp
+    suppressions=$REPO_DIR/tests/asan_config/asan.supp
     log_suffix=.log
 )
 declare -a lsan_options=(
-    suppressions=$REPO_DIR/config/lsan.supp
+    suppressions=$REPO_DIR/tests/asan_config/lsan.supp
 )
 export ASAN_OPTIONS="$(IFS=':'; printf '%s' "${asan_options[*]}")"
 export LSAN_OPTIONS="$(IFS=':'; printf '%s' "${lsan_options[*]}")"

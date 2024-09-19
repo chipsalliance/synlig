@@ -13,9 +13,9 @@ from pathlib import Path
 from ansi_color import *
 
 repo_dir = Path(__file__).resolve().parent.parent.parent
-sys.path.append(str(repo_dir / "lib" / "python3"))
+sys.path.append(str(repo_dir / "tests" / "lib" / "python3"))
 
-from yosys_systemverilog.run_command import run_command
+from run_command import run_command
 
 def get_expected_result(listfile, full_test_name):
     test_group, test_name = full_test_name.split(":")
