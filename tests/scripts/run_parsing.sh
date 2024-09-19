@@ -20,7 +20,7 @@ function read_systemverilog(){
 	TESTS_TO_SKIP=$SKIP \
 	TARGET=uhdm/yosys/test-ast \
 	PARSER=yosys-plugin \
-	./.github/scripts/run_group_test.sh ./build/parsing/read-systemverilog ./build/parsing/test-results-systemverilog.log
+	./.github/scripts/run_group_test.sh ./build/parsing/${type}-read-systemverilog ./build/parsing/${type}-test-results-systemverilog.log
 	exit $?
 }
 
@@ -31,7 +31,7 @@ function read_uhdm(){
 	TESTS_TO_SKIP=$SKIP \
 	TARGET=uhdm/yosys/test-ast \
 	PARSER=surelog \
-	./.github/scripts/run_group_test.sh ./build/parsing/read-uhdm ./build/parsing/test-results-uhdm.log
+	./.github/scripts/run_group_test.sh ./build/parsing/${type}-read-uhdm ./build/parsing/${type}-test-results-uhdm.log
 	exit $?
 }
 
@@ -52,6 +52,8 @@ do
 		echo "    read_uhdm -          tests read_uhdm command"
 		echo "    read_systemverilog - tests read_systemverilog command"
 		echo ""
+		echo "    gather_results - prints summary for performed tests"
+		echo ""
 		echo "    List of supported build types:"
 		echo "        asan"
 		echo "        release"
@@ -64,14 +66,17 @@ do
 	"'load_submodules'") load_submodules -r surelog ;;
 	"'read_uhdm'") read_uhdm ;;
 	"'read_systemverilog'") read_systemverilog ;;
+	"'gather_results'")
+		.github/scripts/generate_summary.sh $type ./build/parsing
+	;;
 	--)
 		if [ -z $type ]; then
 			echo "Build type is not provided!"
 			exit 1
 		else
-			[ "$type" == "'asan'" ] && valid=1
-			[ "$type" == "'release'" ] && valid=1
-			[ "$type" == "'plugin'" ] && valid=1
+			[ "$type" == "asan" ] && valid=1
+			[ "$type" == "release" ] && valid=1
+			[ "$type" == "plugin" ] && valid=1
 			if [ -z $valid ]; then
 				echo "Provided build type is not valid!"
 				exit 1
@@ -80,7 +85,7 @@ do
 	;;
 	*)
 		if [ $TYPEARG -eq 1 ]; then
-			type=$arg
+			type=${arg//\'/}
 		fi
 		TYPEARG=0
 	;;

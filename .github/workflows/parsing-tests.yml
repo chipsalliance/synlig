@@ -12,18 +12,50 @@ env:
   GHA_CUSTOM_LINE_PREFIX: "▌"
 
 jobs:
-  tests-read-uhdm:
-    name: Surelog
-    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
-    container: ubuntu:jammy
+  parsing-tests:
     strategy:
       fail-fast: false
+      matrix:
+        include:
+
+            # release build #
+          - job_name: 'Test read_systemverilog release'
+            artifact_name: 'binaries-release'
+            build_type: 'release'
+            run_command: 'read_systemverilog'
+          - job_name: 'Test read_uhdm release'
+            artifact_name: 'binaries-release'
+            build_type: 'release'
+            run_command: 'read_uhdm'
+
+            # plugin build #
+          - job_name: 'Test read_systemverilog plugin'
+            artifact_name: 'binaries-plugin'
+            build_type: 'plugin'
+            run_command: 'read_systemverilog'
+          - job_name: 'Test read_uhdm plugin'
+            artifact_name: 'binaries-plugin'
+            build_type: 'plugin'
+            run_command: 'read_uhdm'
+
+            # asan build #
+          - job_name: 'Test read_systemverilog asan'
+            artifact_name: 'binaries-asan'
+            build_type: 'asan'
+            run_command: 'read_systemverilog'
+          - job_name: 'Test read_uhdm asan'
+            artifact_name: 'binaries-asan'
+            build_type: 'asan'
+            run_command: 'read_uhdm'
+
+    name: ${{ matrix.job_name }}
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
+    container: ubuntu:jammy
     env:
       GIT_HTTP_LOW_SPEED_LIMIT: 1
       GIT_HTTP_LOW_SPEED_TIME: 600
       DEBIAN_FRONTEND: noninteractive
       GHA_MACHINE_TYPE: "n2-standard-2"
-      PARSER: surelog
 
     steps:
       - uses: actions/checkout@v3
@@ -37,124 +69,37 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ./tests/scripts/run_parsing.sh --type asan install_dependencies
+          ./tests/scripts/run_parsing.sh --type ${{ matrix.build_type }} install_dependencies
 
       - name: Checkout submodules
         run: |
-          ./tests/scripts/run_parsing.sh --type asan load_submodules
+          ./tests/scripts/run_parsing.sh --type ${{ matrix.build_type }} load_submodules
 
       - name: Download binaries
         uses: actions/download-artifact@v4
         with:
-          name: binaries-asan
+          name: ${{ matrix.artifact_name }}
 
       # See https://github.com/actions/upload-artifact/issues/38
       - name: Extract
-        run: tar -xf binaries-asan.tar
+        run: tar -xf ${{ matrix.artifact_name }}.tar
 
-      - name: Build & Test (yosys)
-        env:
-          TARGET: uhdm/yosys/test-ast
+      - name: Test
         run: |
-          ./tests/scripts/run_parsing.sh --type asan read_uhdm
+          ./tests/scripts/run_parsing.sh --type ${{ matrix.build_type }} ${{matrix.run_command }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
-          name: parsing_test-results
-          path: build/parsing/test-results-uhdm.log
+          name: results_parsing_tests_${{ matrix.build_type }}_${{ matrix.run_command }}
+          path: build/parsing/*
           retention-days: 1
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: parsing_read-uhdm_logs
-          path: build/parsing/read-uhdm/*/*.log
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: parsing_read-uhdm_yosys-sv
-          path: build/parsing/read-uhdm/*/yosys.sv
 
       - name: Upload load graphs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: plots_tests_read_uhdm
-          path: |
-            **/plot_*.svg
-
-  tests-read-systemverilog:
-    name: SystemVerilog Plugin
-    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
-    container: ubuntu:jammy
-    strategy:
-      fail-fast: false
-    env:
-      GIT_HTTP_LOW_SPEED_LIMIT: 1
-      GIT_HTTP_LOW_SPEED_TIME: 600
-      DEBIAN_FRONTEND: noninteractive
-      GHA_MACHINE_TYPE: "n2-standard-2"
-      PARSER: yosys-plugin
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
-      - name: Set up common Ubuntu configuration
-        run: |
-          ./.github/scripts/set-up-common-ubuntu-configuration.sh
-          ./.github/scripts/set-up-common-git-configuration.sh
-
-      - name: Install dependencies
-        run: |
-          ./tests/scripts/run_parsing.sh --type asan install_dependencies
-
-      - name: Checkout submodules
-        run: |
-          ./tests/scripts/run_parsing.sh --type asan load_submodules
-
-      - name: Download binaries
-        uses: actions/download-artifact@v4
-        with:
-          name: binaries-asan
-
-      # See https://github.com/actions/upload-artifact/issues/38
-      - name: Extract
-        run: tar -xf binaries-asan.tar
-
-      - name: Build & Test (yosys)
-        env:
-          TARGET: uhdm/yosys/test-ast
-        run: |
-          ./tests/scripts/run_parsing.sh --type asan read_systemverilog
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: parsing_test-results
-          path: ./build/parsing/test-results-systemverilog.log
-          retention-days: 1
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: parsing_read-systemverilog_logs
-          path: build/parsing/read-systemverilog/*/*.log
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: parsing_read-systemverilog_yosys-sv
-          path: build/parsing/read-systemverilog/*/yosys.sv
-
-      - name: Upload load graphs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: plots_tests_read_systemverilog
+          name: plots_tests_${{ matrix.build_type }}_${{ matrix.run_command }}
           path: |
             **/plot_*.svg
 
@@ -164,16 +109,16 @@ jobs:
     container: ubuntu:jammy
     if: github.event.pull_request.head.repo.full_name == github.repository || github.event.push
     needs:
-      - tests-read-systemverilog
+      - parsing-tests
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
       - name: Download test results
-        uses: /actions/download-artifact@v3
+        uses: /actions/download-artifact@v4
         with:
-          name: parsing_read-systemverilog_logs
+          name: results_parsing_tests_release_read_systemverilog
           path: logs
 
       - name: Set up common Ubuntu configuration
@@ -250,11 +195,10 @@ jobs:
     container: ubuntu:jammy
     if: ${{ !cancelled() }}
     needs:
-      - tests-read-uhdm
-      - tests-read-systemverilog
+      - parsing-tests
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
@@ -264,10 +208,13 @@ jobs:
           ./.github/scripts/set-up-common-git-configuration.sh
 
       - name: Download test results
-        uses: /actions/download-artifact@v3
+        uses: /actions/download-artifact@v4
         with:
-          name: parsing_test-results
+          pattern: results_parsing_tests_*_*
+          merge-multiple: true
 
       - name: Generate summary
         run: |
-          ./.github/scripts/generate_summary.sh
+          ./.github/scripts/generate_summary.sh release . > $GITHUB_STEP_SUMMARY
+          ./.github/scripts/generate_summary.sh asan . >> $GITHUB_STEP_SUMMARY
+          ./.github/scripts/generate_summary.sh plugin . >> $GITHUB_STEP_SUMMARY

@@ -13,6 +13,7 @@ declare -r RESULTS_FILE="$(realpath -m "$2")"
 # Input passed via env:
 # - PARSER
 # - TARGET
+# - BUILD_TYPE
 
 # Configure ASAN & LSAN
 
@@ -63,7 +64,7 @@ for test_case in "${test_cases[@]}"; do
         # Used only for current test
         ASAN_OPTIONS+=":log_path=${test_out_dir}/asan"
 
-        if [ "$BUILD_TYPE" == "'plugin'" ]; then
+        if [ "$BUILD_TYPE" == "plugin" ]; then
             BINARY="yosys -Q"
         else
             BINARY="synlig -Q"
