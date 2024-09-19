@@ -30,6 +30,9 @@ endif
 ifneq ($(filter plugin,${MAKECMDGOALS}),)
 CFG_BUILD_TYPE := plugin
 endif
+ifneq ($(filter install@pysynlig build@pysynlig,${MAKECMDGOALS}),)
+CFG_BUILD_TYPE := pysynlig
+endif
 
 #--------------------------------------------------------------------------------
 # Load config.
@@ -94,7 +97,7 @@ override undefine command_line_illegal_vars
 # Validate configuration variable values and assign them to variables without
 # `CFG_` prefix used internally.
 
-override ALL_ALLOWED_BUILD_TYPES := release asan plugin
+override ALL_ALLOWED_BUILD_TYPES := release asan plugin pysynlig
 $(if $(filter-out 1,$(words $(filter ${ALL_ALLOWED_BUILD_TYPES},${CFG_BUILD_TYPE}))),\
 	$(error CFG_BUILD_TYPE: invalid value (${CFG_BUILD_TYPE}). Must be one of: ${ALL_ALLOWED_BUILD_TYPES})\
 )
@@ -329,6 +332,12 @@ build@asan : build
 
 .PHONY: install@asan
 install@asan : install
+
+.PHONY: build@pysynlig
+build@pysynlig : build
+
+.PHONY: install@pysynlig
+install@pysynlig : install
 
 install@eqy: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/eqy/.git
 install@sby: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/sby/.git

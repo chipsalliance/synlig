@@ -16,13 +16,15 @@ ${ts}.input_files = \
 
 ${ts}.make_args := \
 	PREFIX:=$(call ToAbsPaths,${PREFIX}) \
+	PYTHON_PREFIX:=$(call ToAbsPaths,${PYTHON_PREFIX}) \
 	DESTDIR:=$(if $(DESTDIR),$(call ToAbsPaths,$(DESTDIR)),) \
 	CONFIG:=$(if cxx_is_clang,clang,gcc) \
 	CC:=${CC} \
 	CXX:=${CXX} \
 	LD:=${CXX} \
 	$(if ${LD},LDFLAGS:=$(call ShQuote,${LDFLAGS} ${USE_LD_FLAG})) \
-	SYNLIG_BUILD_TYPE:=$(CFG_BUILD_TYPE)
+	SYNLIG_BUILD_TYPE:=$(BUILD_TYPE) \
+	SYNLIG_BUILD_DIR:=$(call ToAbsPaths,$(BUILD_DIR))
 
 cxxflags := ${CXXFLAGS}
 
@@ -31,9 +33,6 @@ ${ts}.make_args += SANITIZER:=address
 ifdef cxx_is_clang
 cxxflags += -fsanitize-address-use-after-return=always
 endif
-endif
-
-ifneq (${BUILD_TYPE},release)
 ${ts}.make_args += \
 	ENABLE_DEBUG:=1 \
 	STRIP:=/bin/true

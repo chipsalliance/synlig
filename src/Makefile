@@ -8,14 +8,8 @@ REPO_DIR := $(abspath $(THIS_MK_DIR)/..)
 YOSYS_SRC := $(REPO_DIR)/third_party/yosys
 SYNLIG_SRC := $(REPO_DIR)/src
 
-ifeq ($(SYNLIG_BUILD_TYPE),asan)
-BUILD_DIR := $(REPO_DIR)/build/asan/synlig
-SURELOG_PKG_DIR := $(REPO_DIR)/build/asan/surelog
-else
-BUILD_DIR := $(REPO_DIR)/build/release/synlig
-SURELOG_PKG_DIR := $(REPO_DIR)/build/release/surelog
-endif
-
+BUILD_DIR := $(SYNLIG_BUILD_DIR)synlig
+SURELOG_PKG_DIR := $(SYNLIG_BUILD_DIR)surelog
 
 # --- set compiler ---#
 CONFIG := none
@@ -60,8 +54,13 @@ OBJS =
 EXTRA_OBJS =
 GENFILES =
 EXTRA_TARGETS =
+ifneq ($(SYNLIG_BUILD_TYPE),pysynlig)
 TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
 OUT_TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
+else
+TARGETS = $(BUILD_DIR)/libsynlig.so
+OUT_TARGETS = $(BUILD_DIR)/libsynlig.so $(BUILD_DIR)/python/__init__.py
+endif
 all: top-all
 
 # --- setup linking surelog --- #
@@ -126,10 +125,45 @@ OBJS = kernel/version_$(GIT_REV).o
 # --- set abc flags --- #
 ABCMKARGS = CC="$(CXX)" CXX="$(CXX)" ABC_USE_LIBSTDCXX=1 ABC_USE_NAMESPACE=abc VERBOSE=$(Q)
 
-# --- detect python --- #
-PYTHON_EXECUTABLE := $(shell if python3 -c ""; then echo "python3"; else echo "python"; fi)
-PYTHON_CONFIG := $(PYTHON_EXECUTABLE)-config
-PYTHON_DESTDIR := $(shell $(PYTHON_EXECUTABLE) -c "import site; print(site.getsitepackages()[-1]);")
+# --- setup python --- #
+ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
+PYTHON_VERSION_TESTCODE := "import sys;t='{v[0]}.{v[1]}'.format(v=list(sys.version_info[:2]));print(t)"
+PYTHON_VERSION := $(shell /usr/bin/env python3 -c ""$(PYTHON_VERSION_TESTCODE)"")
+PYTHON_MAJOR_VERSION := $(shell echo $(PYTHON_VERSION) | cut -f1 -d.)
+
+ENABLE_PYTHON_CONFIG_EMBED ?= $(shell /usr/bin/env python3-config --embed --libs > /dev/null && echo 1)
+ifeq ($(ENABLE_PYTHON_CONFIG_EMBED),1)
+PYTHON_CONFIG := /usr/bin/env python3-config --embed
+else
+PYTHON_CONFIG := /usr/bin/env python3-config
+endif
+endif
+
+ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
+# Detect name of boost_python library. Some distros use boost_python-py<version>, other boost_python<version>, some only use the major version number, some a concatenation of major and minor version numbers
+CHECK_BOOST_PYTHON = (echo "int main(int argc, char ** argv) {return 0;}" | $(CXX) -xc -o /dev/null $(shell /usr/bin/env python3-config --ldflags) -l$(1) - > /dev/null 2>&1 && echo "-l$(1)")
+BOOST_PYTHON_LIB ?= $(shell \
+	$(call CHECK_BOOST_PYTHON,boost_python-py$(subst .,,$(PYTHON_VERSION))) || \
+	$(call CHECK_BOOST_PYTHON,boost_python-py$(PYTHON_MAJOR_VERSION)) || \
+	$(call CHECK_BOOST_PYTHON,boost_python$(subst .,,$(PYTHON_VERSION))) || \
+	$(call CHECK_BOOST_PYTHON,boost_python$(PYTHON_MAJOR_VERSION)) \
+)
+
+ifeq ($(BOOST_PYTHON_LIB),)
+$(error BOOST_PYTHON_LIB could not be detected. Please define manually)
+endif
+
+LIBS += $(shell /usr/bin/env python3-config --libs) $(BOOST_PYTHON_LIB) -lboost_system -lboost_filesystem
+# python-config --ldflags includes LIBS for some reason
+LINKFLAGS += $(filter-out -l%,$(shell /usr/bin/env python3-config --ldflags))
+CXXFLAGS += $(shell /usr/bin/env python3-config --includes)
+PYFLAG := -DWITH_PYTHON
+PY_WRAPPER_FILE = kernel/python_wrappers
+OBJS += $(PY_WRAPPER_FILE).o
+PY_GEN_SCRIPT= py_wrap_generator
+PY_WRAP_INCLUDES := $(shell cd $(SYNLIG_SRC) && python$(PYTHON_VERSION) -c "from python import $(PY_GEN_SCRIPT); $(PY_GEN_SCRIPT).print_includes()")
+PY_WRAP_INCLUDES := $(addprefix $(BUILD_DIR)/, $(PY_WRAP_INCLUDES))
+endif
 
 # --- gcc/clang --- #
 LTOFLAGS := $(GCC_LTO)
@@ -193,6 +227,7 @@ CXXFLAGS := -Og -DDEBUG $(filter-out $(OPT_LEVEL),$(CXXFLAGS))
 endif
 
 # --- link abc --- #
+ABC_ENV := CFLAGS=-fPIC
 CXXFLAGS += -DYOSYS_ENABLE_ABC
 CXXFLAGS += -DYOSYS_LINK_ABC
 LIBS += -lpthread
@@ -220,6 +255,7 @@ ENABLE_VERIFIC_VHDL := 1
 ENABLE_ZLIB := 1
 DISABLE_SPAWN := 0
 SMALL = 0
+PYTHON_EXECUTABLE := /usr/bin/env python3
 
 # --- prepare defines for adding include files --- #
 define add_share_file
@@ -370,6 +406,25 @@ compile-only: $(YOSYS_OBJS) $(SYNLIG_OBJS) $(GENFILES) $(EXTRA_TARGETS)
 	@echo "  Compile successful."
 	@echo ""
 
+ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
+
+$(BUILD_DIR)/$(PY_WRAPPER_FILE).cc: python/$(PY_GEN_SCRIPT).py $(PY_WRAP_INCLUDES)
+	$(Q) cp -r $(SYNLIG_SRC)/python .
+	$(Q) mkdir -p $(dir $@)
+	$(P) python$(PYTHON_VERSION) -c "from python import $(PY_GEN_SCRIPT); $(PY_GEN_SCRIPT).gen_wrappers(\"$(PY_WRAPPER_FILE).cc\")"
+
+$(BUILD_DIR)/libsynlig.so: $(filter-out main.o,$(YOSYS_OBJS) $(SYNLIG_OBJS))
+	$(P) $(CXX) -o libsynlig.so -shared -Wl,-soname,libsynlig.so $(LINKFLAGS) $^ $(LIBS) $(SURELOG_LDFLAGS) $(SURELOG_LDLIBS)
+
+$(BUILD_DIR)/kernel/yosys.o: kernel/yosys.cc
+	$(Q) mkdir -p $(dir $@)
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -I ./ $<
+
+$(BUILD_DIR)/$(PY_WRAPPER_FILE).o: $(BUILD_DIR)/$(PY_WRAPPER_FILE).cc
+	$(Q) mkdir -p $(dir $@)
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $(PYFLAG) -I ./ $<
+endif
+
 $(BUILD_DIR)/kernel/log.o: CXXFLAGS += -DYOSYS_SRC='"$(YOSYS_SRC)"'
 $(BUILD_DIR)/kernel/yosys.o: CXXFLAGS += -DYOSYS_DATDIR='"$(DATDIR)"' -DYOSYS_PROGRAM_PREFIX='""'
 
@@ -388,15 +443,15 @@ $(BUILD_DIR)/frontends/systemverilog/%.o: frontends/systemverilog/%.cc
 
 $(BUILD_DIR)/%.o: %.cc
 	$(Q) mkdir -p $(dir $@)
-	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -I ./ $<
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $(PYFLAG) -I ./ $<
 
 $(BUILD_DIR)/%.pyh: %.h
 	$(Q) mkdir -p $(dir $@)
-	$(P) cat $< | grep -E -v "#[ ]*(include|error)" | $(CXX) $(CXXFLAGS) -x c++ -o $@ -E -P -
+	$(P) cat $< | grep -E -v "#[ ]*(include|error)" | $(CXX) $(CXXFLAGS) $(PYFLAG) -x c++ -o $@ -E -P -
 
 $(BUILD_DIR)/%.o: %.cpp
 	$(Q) mkdir -p $(dir $@)
-	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $<
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $(PYFLAG) $<
 
 VERSION_STR := Synlig (git sha1 $(GIT_REV), $(notdir $(CXX)) $(shell \
 		$(CXX) --version | tr ' ()' '\n' | grep '^[0-9]' | head -n1) $(filter -f% -m% -O% -DNDEBUG,$(CXXFLAGS)))
@@ -422,15 +477,20 @@ check-git-abc:
 
 abc/libabc.a: | check-git-abc
 	$(P)
-	$(Q) mkdir -p abc && $(MAKE) -C abc -f "$(realpath $(YOSYS_SRC)/abc/Makefile)" ABCSRC="$(realpath $(YOSYS_SRC)/abc/)" $(S) $(ABCMKARGS) $(if $(filter %.a,$@),PROG="abc",PROG="abc") MSG_PREFIX="$(eval P_OFFSET = 10)$(call P_SHOW)$(eval P_OFFSET = 15) ABC: " $(if $(filter %.a,$@),libabc.a)
+	$(Q) mkdir -p abc && $(ABC_ENV) $(MAKE) -C abc -f "$(realpath $(YOSYS_SRC)/abc/Makefile)" ABCSRC="$(realpath $(YOSYS_SRC)/abc/)" $(S) $(ABCMKARGS) $(if $(filter %.a,$@),PROG="abc",PROG="abc") MSG_PREFIX="$(eval P_OFFSET = 10)$(call P_SHOW)$(eval P_OFFSET = 15) ABC: " $(if $(filter %.a,$@),libabc.a)
 
 $(BUILD_DIR)/yosys-libabc.a: abc/libabc.a
 	$(P) cp $< $(BUILD_DIR)/yosys-libabc.a
 
 install: $(TARGETS) $(EXTRA_TARGETS)
+ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
+	mkdir -p $(DESTDIR)$(PYTHON_PREFIX)/PySynlig
+	cp $(OUT_TARGETS) $(DESTDIR)$(PYTHON_PREFIX)/PySynlig
+else
 	mkdir -p $(DESTDIR)$(BINDIR)
 	cp $(OUT_TARGETS) $(DESTDIR)$(BINDIR)
 	$(STRIP) -S $(DESTDIR)$(BINDIR)/synlig
+endif
 	mkdir -p $(DESTDIR)$(DATDIR)
 	cp -r $(BUILD_DIR)/share/. $(DESTDIR)$(DATDIR)/.
 

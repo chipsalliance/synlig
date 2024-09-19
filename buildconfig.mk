@@ -13,6 +13,13 @@ PREFIX ?= /usr/local
 DESTDIR ?=
 CFG_OUT_DIR := $(DESTDIR)$(PREFIX)/
 
+# Install directory for python
+PYTHON_PREFIX := $(shell /usr/bin/env python3 -c "import site; print(site.getsitepackages()[-1]);")
+
+ifneq ($(PREFIX),/usr/local)
+PYTHON_PREFIX := $(PREFIX)
+endif
+
 # Basic build tools
 CC       ?= cc
 CXX      ?= c++
