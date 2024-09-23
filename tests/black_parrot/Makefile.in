@@ -31,6 +31,13 @@ uhdm/synlig/synth-blackparrot-build: | ${BLACKPARROT_UHDM}
 			-p "synth_xilinx -iopad -family xc7" \
 			-p "write_edif bp_${BLACKPARROT_CFG}.edif")
 
+uhdm/synlig/synth-blackparrot-build-python: | ${BLACKPARROT_UHDM}
+	(cd ${root_dir}/build && \
+		${root_dir}/black_parrot/black_parrot_build.py \
+			--mod_dir ${OUT_DIR} \
+			--uhdm_file ${BLACKPARROT_UHDM} \
+			--edif_file bp_${BLACKPARROT_CFG}.edif)
+
 # Exports required for ASIC synthesis flow
 export BLACKPARROT_BUILD_DIR=${root_dir}/build/surelog/bp_tethered.${BLACKPARROT_CFG}.none.parse
 export YOSYS_CMD=${OUT_DIR}/bin/synlig

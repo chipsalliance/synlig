@@ -92,6 +92,12 @@ jobs:
             cc: 'gcc'
             cxx: 'g++'
             build-binaries-args: 'install PREFIX=out'
+          - name: 'Build PySynlig'
+            artifact-name: 'binaries-pysynlig'
+            apt-extra-deps: 'gcc g++ libboost-system-dev libboost-filesystem-dev libboost-python-dev'
+            cc: 'gcc'
+            cxx: 'g++'
+            build-binaries-args: 'install@surelog install@pysynlig PREFIX=out'
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
