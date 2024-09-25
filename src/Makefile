@@ -7,6 +7,7 @@ REPO_DIR := $(abspath $(THIS_MK_DIR)/..)
 
 YOSYS_SRC := $(REPO_DIR)/third_party/yosys
 SYNLIG_SRC := $(REPO_DIR)/src
+PYBIND_SRC := $(REPO_DIR)/third_party/pybind11
 
 BUILD_DIR := $(SYNLIG_BUILD_DIR)synlig
 SURELOG_PKG_DIR := $(SYNLIG_BUILD_DIR)surelog
@@ -17,7 +18,7 @@ CONFIG := none
 # CONFIG := gcc
 
 # --- add synlig cxxflags --- #
-CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_SRC)/frontends/*/ -I $(SYNLIG_SRC)/mods/*
+CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_SRC)/frontends/*/ -I $(SYNLIG_SRC)/mods/* -I $(SYNLIG_SRC)/utils
 
 # --- add static option --- #
 CXXFLAGS += -static
@@ -58,7 +59,7 @@ ifneq ($(SYNLIG_BUILD_TYPE),pysynlig)
 TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
 OUT_TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
 else
-TARGETS = $(BUILD_DIR)/libsynlig.so
+TARGETS = $(BUILD_DIR)/libsynlig.so $(BUILD_DIR)/python/__init__.py
 OUT_TARGETS = $(BUILD_DIR)/libsynlig.so $(BUILD_DIR)/python/__init__.py
 endif
 all: top-all
@@ -127,42 +128,12 @@ ABCMKARGS = CC="$(CXX)" CXX="$(CXX)" ABC_USE_LIBSTDCXX=1 ABC_USE_NAMESPACE=abc V
 
 # --- setup python --- #
 ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
-PYTHON_VERSION_TESTCODE := "import sys;t='{v[0]}.{v[1]}'.format(v=list(sys.version_info[:2]));print(t)"
-PYTHON_VERSION := $(shell /usr/bin/env python3 -c ""$(PYTHON_VERSION_TESTCODE)"")
-PYTHON_MAJOR_VERSION := $(shell echo $(PYTHON_VERSION) | cut -f1 -d.)
-
-ENABLE_PYTHON_CONFIG_EMBED ?= $(shell /usr/bin/env python3-config --embed --libs > /dev/null && echo 1)
-ifeq ($(ENABLE_PYTHON_CONFIG_EMBED),1)
-PYTHON_CONFIG := /usr/bin/env python3-config --embed
-else
-PYTHON_CONFIG := /usr/bin/env python3-config
-endif
-endif
-
-ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
-# Detect name of boost_python library. Some distros use boost_python-py<version>, other boost_python<version>, some only use the major version number, some a concatenation of major and minor version numbers
-CHECK_BOOST_PYTHON = (echo "int main(int argc, char ** argv) {return 0;}" | $(CXX) -xc -o /dev/null $(shell /usr/bin/env python3-config --ldflags) -l$(1) - > /dev/null 2>&1 && echo "-l$(1)")
-BOOST_PYTHON_LIB ?= $(shell \
-	$(call CHECK_BOOST_PYTHON,boost_python-py$(subst .,,$(PYTHON_VERSION))) || \
-	$(call CHECK_BOOST_PYTHON,boost_python-py$(PYTHON_MAJOR_VERSION)) || \
-	$(call CHECK_BOOST_PYTHON,boost_python$(subst .,,$(PYTHON_VERSION))) || \
-	$(call CHECK_BOOST_PYTHON,boost_python$(PYTHON_MAJOR_VERSION)) \
-)
-
-ifeq ($(BOOST_PYTHON_LIB),)
-$(error BOOST_PYTHON_LIB could not be detected. Please define manually)
-endif
-
-LIBS += $(shell /usr/bin/env python3-config --libs) $(BOOST_PYTHON_LIB) -lboost_system -lboost_filesystem
-# python-config --ldflags includes LIBS for some reason
+LIBS += $(shell /usr/bin/env python3-config --libs)
 LINKFLAGS += $(filter-out -l%,$(shell /usr/bin/env python3-config --ldflags))
 CXXFLAGS += $(shell /usr/bin/env python3-config --includes)
-PYFLAG := -DWITH_PYTHON
-PY_WRAPPER_FILE = kernel/python_wrappers
-OBJS += $(PY_WRAPPER_FILE).o
-PY_GEN_SCRIPT= py_wrap_generator
-PY_WRAP_INCLUDES := $(shell cd $(SYNLIG_SRC) && python$(PYTHON_VERSION) -c "from python import $(PY_GEN_SCRIPT); $(PY_GEN_SCRIPT).print_includes()")
-PY_WRAP_INCLUDES := $(addprefix $(BUILD_DIR)/, $(PY_WRAP_INCLUDES))
+SYNLIG_OBJS += python/wrapper.o
+CXXFLAGS += $(shell /usr/bin/env python3-config --includes)
+CXXFLAGS += -I $(PYBIND_SRC)/include
 endif
 
 # --- gcc/clang --- #
@@ -371,7 +342,8 @@ include $(YOSYS_SRC)/backends/aiger/Makefile.inc
 include $(YOSYS_SRC)/backends/intersynth/Makefile.inc
 include $(YOSYS_SRC)/backends/spice/Makefile.inc
 
-SYNLIG_OBJS += main.o
+SYNLIG_OBJS += utils/main.o
+SYNLIG_OBJS += utils/setup.o
 SYNLIG_OBJS += yosys-libabc.a
 
 include $(SYNLIG_SRC)/frontends/*/Makefile.inc
@@ -407,26 +379,21 @@ compile-only: $(YOSYS_OBJS) $(SYNLIG_OBJS) $(GENFILES) $(EXTRA_TARGETS)
 	@echo ""
 
 ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
-
-$(BUILD_DIR)/$(PY_WRAPPER_FILE).cc: python/$(PY_GEN_SCRIPT).py $(PY_WRAP_INCLUDES)
-	$(Q) cp -r $(SYNLIG_SRC)/python .
-	$(Q) mkdir -p $(dir $@)
-	$(P) python$(PYTHON_VERSION) -c "from python import $(PY_GEN_SCRIPT); $(PY_GEN_SCRIPT).gen_wrappers(\"$(PY_WRAPPER_FILE).cc\")"
-
-$(BUILD_DIR)/libsynlig.so: $(filter-out main.o,$(YOSYS_OBJS) $(SYNLIG_OBJS))
+$(BUILD_DIR)/libsynlig.so: $(filter-out utils/main.o,$(YOSYS_OBJS) $(SYNLIG_OBJS))
 	$(P) $(CXX) -o libsynlig.so -shared -Wl,-soname,libsynlig.so $(LINKFLAGS) $^ $(LIBS) $(SURELOG_LDFLAGS) $(SURELOG_LDLIBS)
 
 $(BUILD_DIR)/kernel/yosys.o: kernel/yosys.cc
 	$(Q) mkdir -p $(dir $@)
 	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -I ./ $<
 
-$(BUILD_DIR)/$(PY_WRAPPER_FILE).o: $(BUILD_DIR)/$(PY_WRAPPER_FILE).cc
+$(BUILD_DIR)/python/%.py: $(SYNLIG_SRC)/python/%.py
 	$(Q) mkdir -p $(dir $@)
-	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $(PYFLAG) -I ./ $<
+	$(Q) cp $< $@
 endif
 
 $(BUILD_DIR)/kernel/log.o: CXXFLAGS += -DYOSYS_SRC='"$(YOSYS_SRC)"'
 $(BUILD_DIR)/kernel/yosys.o: CXXFLAGS += -DYOSYS_DATDIR='"$(DATDIR)"' -DYOSYS_PROGRAM_PREFIX='""'
+$(BUILD_DIR)/utils/setup.o: CXXFLAGS += -DSYNLIG_DATDIR='"$(DATDIR)"'
 
 $(BUILD_DIR)/synlig: $(YOSYS_OBJS) $(SYNLIG_OBJS)
 	$(CXX) -o synlig $(LINKFLAGS) $(YOSYS_OBJS) $(SYNLIG_OBJS) $(LIBS) $(SURELOG_LDFLAGS) $(SURELOG_LDLIBS)

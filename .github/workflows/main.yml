@@ -74,30 +74,35 @@ jobs:
             cc: 'gcc'
             cxx: 'g++'
             build-binaries-args: 'install install@surelog PREFIX=out'
+            submodules: 'third_party/yosys third_party/surelog'
           - name: 'Build Plugin'
             artifact-name: 'binaries-plugin'
             cc: 'gcc'
             cxx: 'g++'
             apt-extra-deps: 'gcc g++'
             build-binaries-args: 'install-plugin install@surelog PREFIX=out'
+            submodules: 'third_party/yosys third_party/surelog'
           - name: 'Build Synlig (ASAN)'
             artifact-name: 'binaries-asan'
             cc: 'clang-15'
             cxx: 'clang++-15'
             apt-extra-deps: 'clang-15'
             build-binaries-args: 'install@surelog install@asan PREFIX=out'
+            submodules: 'third_party/yosys third_party/surelog'
           - name: 'Build Package'
             artifact-name: 'binaries-package'
             apt-extra-deps: 'gcc g++'
             cc: 'gcc'
             cxx: 'g++'
             build-binaries-args: 'install PREFIX=out'
+            submodules: 'third_party/yosys third_party/surelog'
           - name: 'Build PySynlig'
             artifact-name: 'binaries-pysynlig'
-            apt-extra-deps: 'gcc g++ libboost-system-dev libboost-filesystem-dev libboost-python-dev'
+            apt-extra-deps: 'gcc g++'
             cc: 'gcc'
             cxx: 'g++'
             build-binaries-args: 'install@surelog install@pysynlig PREFIX=out'
+            submodules: 'third_party/yosys third_party/surelog third_party/pybind11'
     name: ${{ matrix.name }}
     runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     container: debian:bookworm
@@ -155,7 +160,7 @@ jobs:
         run: |
           git submodule sync
           git submodule update --depth 1 --init --recursive --checkout \
-              third_party/{surelog,yosys} \
+              ${{ matrix.submodules }} \
               ;
 
       - name: Setup cache

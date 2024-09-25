@@ -33,13 +33,13 @@ check_format:
 
 variables:
   BUILD_DEPENDENCIES: >
-    tclsh g++-11 default-jre swig clang gcc-11 git
-    python3-dev python3-pip tcl-dev cmake uuid ant
-    pkg-config libreadline-dev bison python3 flex
-    build-essential libboost-python-dev libfl-dev
-    google-perftools libgoogle-perftools-dev wget
-    libffi-dev python3-orderedmultidict uuid-dev
-    libboost-filesystem-dev libboost-system-dev
+    google-perftools libgoogle-perftools-dev
+    libffi-dev python3-orderedmultidict git
+    tclsh ant default-jre swig clang gcc-11
+    pkg-config libreadline-dev bison g++-11
+    python3 python3-dev python3-pip uuid
+    uuid-dev tcl-dev flex libfl-dev wget
+    build-essential cmake
 
 .job_template: &build_binary
   stage: "Build binaries"
@@ -86,7 +86,7 @@ build_pysynlig:
     - echo "##/ Install dependencies and build \##"
     - apt update && apt install -y $BUILD_DEPENDENCIES
     - echo "##/ Build yosys, surelog and synlig binaries \##"
-    - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
+    - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys,pybind11}
     - make install@surelog install@pysynlig -j $(nproc) PREFIX=out
 
 build_package:
