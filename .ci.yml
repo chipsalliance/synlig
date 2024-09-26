@@ -1,3 +1,8 @@
+include:
+  - project: repositories/synlig-ci
+    ref: master
+    file: .ci.yml
+
 stages:
   - "Check code format"
   - "Build binaries"
@@ -38,9 +43,6 @@ variables:
 
 .job_template: &build_binary
   stage: "Build binaries"
-  variables:
-    SCALENODE_RAM: 8000
-    SCALENODE_CPU: 8
   only:
     - main
     - merge_requests
@@ -49,44 +51,41 @@ variables:
     paths:
       - out/
 
+.common_build_prefix: &common_build_prefix |-
+  echo "##/ Install dependencies and build \##"
+  apt update && apt install -y $BUILD_DEPENDENCIES
+  echo "##/ Load submodules \##"
+  git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
+  echo "##/ Build binaries \##"
+
 build_plugin:
   <<: *build_binary
   script:
-    - echo "##/ Install dependencies and build \##"
-    - apt update && apt install -y $BUILD_DEPENDENCIES
-    - echo "##/ Build yosys, surelog and plugin binaries \##"
-    - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
+    - *common_build_prefix
     - make install-plugin install@surelog -j $(nproc) PREFIX=out
 
 build_asan:
   <<: *build_binary
   script:
-    - echo "##/ Install dependencies and build \##"
-    - apt update && apt install -y $BUILD_DEPENDENCIES
-    - echo "##/ Build yosys, surelog and synlig binaries \##"
-    - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
+    - *common_build_prefix
     - make install install@surelog -j $(nproc) ENABLE_ASAN=1 CC=clang CXX=clang++ CFG_BUILD_TYPE=asan PREFIX=out
 
 build_release:
   <<: *build_binary
   script:
-    - echo "##/ Install dependencies and build \##"
-    - apt update && apt install -y $BUILD_DEPENDENCIES
-    - echo "##/ Build synlig binary \##"
-    - git submodule sync && git submodule update --init --recursive --checkout third_party/{surelog,yosys,sv2v}
+    - *common_build_prefix
     - make install install@surelog -j $(nproc) PREFIX=out
     - echo "##/ Build tools \##"
+    - git submodule update --init --recursive --checkout third_party/sv2v
     - wget -qO- https://get.haskellstack.org/ | sh -s - -f -d /usr/local/bin
     - make install@sv2v install@yosys-tools -j$(nproc) PREFIX=out
 
 build_package:
   <<: *build_binary
   script:
-    - echo "##/ Install dependencies and build \##"
-    - apt update && apt install -y $BUILD_DEPENDENCIES
-    - echo "##/ Build yosys, surelog and synlig binaries \##"
-    - git submodule sync && git submodule update --init --recursive third_party/{surelog,yosys}
+    - *common_build_prefix
     - make install -j $(nproc) PREFIX=out
+    - echo "##/ Prepare release \##"
     - mkdir synlig
     - cp out/bin/synlig synlig/
     - cp -r out/share/synlig synlig/share
@@ -104,52 +103,62 @@ build_package:
     when: always
     paths:
       - build/
-  script:
-    - ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type $BUILD_TYPE read_uhdm
-    - ./tests/scripts/run_parsing.sh --type $BUILD_TYPE gather_results
+
+.parsing_tests_script: &parsing_tests_script |-
+  ./tests/scripts/run_parsing.sh install_dependencies load_submodules --type $BUILD_TYPE $COMMAND
+  ./tests/scripts/run_parsing.sh --type $BUILD_TYPE gather_results
 
 plugin_read_uhdm:
   <<: *parsing_test
   dependencies: [build_plugin]
-  variables:
-    BUILD_TYPE: plugin
+  script:
+    - BUILD_TYPE=plugin
+    - COMMAND=read_uhdm
+    - *parsing_tests_script
 
 plugin_read_systemverilog:
   <<: *parsing_test
   dependencies: [build_plugin]
-  variables:
-    BUILD_TYPE: plugin
+  script:
+    - BUILD_TYPE=plugin
+    - COMMAND=read_systemverilog
+    - *parsing_tests_script
 
 asan_read_uhdm:
   <<: *parsing_test
   dependencies: [build_asan]
-  variables:
-    BUILD_TYPE: asan
+  script:
+    - BUILD_TYPE=asan
+    - COMMAND=read_uhdm
+    - *parsing_tests_script
 
 asan_read_systemverilog:
   <<: *parsing_test
   dependencies: [build_asan]
-  variables:
-    BUILD_TYPE: asan
+  script:
+    - BUILD_TYPE=asan
+    - COMMAND=read_systemverilog
+    - *parsing_tests_script
 
 release_read_uhdm:
   <<: *parsing_test
   dependencies: [build_release]
-  variables:
-    BUILD_TYPE: release
+  script:
+    - BUILD_TYPE=release
+    - COMMAND=read_uhdm
+    - *parsing_tests_script
 
 release_read_systemverilog:
   <<: *parsing_test
   dependencies: [build_release]
-  variables:
-    BUILD_TYPE: release
+  script:
+    - BUILD_TYPE=release
+    - COMMAND=read_systemverilog
+    - *parsing_tests_script
 
 .job_template: &formal_test
   stage: "Run parsing and formal verification tests"
   dependencies: [build_release]
-  variables:
-    SCALENODE_RAM: 8000
-    SCALENODE_CPU: 6
   only:
     - main
     - merge_requests
@@ -158,20 +167,26 @@ release_read_systemverilog:
     paths:
       - ./*_formal_verification_logs.tar.gz
 
+.formal_tests_script: &formal_tests_script |-
+  ./tests/scripts/run_formal.sh --name $TESTS_SUITE_NAME install_dependencies load_submodules build_dependencies run pack_logs gather_results
+
 simple_formal_verification_tests:
   <<: *formal_test
   script:
-    - ./tests/scripts/run_formal.sh --name simple install_dependencies load_submodules build_dependencies run pack_logs gather_results
+    - TESTS_SUITE_NAME=simple
+    - *formal_tests_script
 
 yosys_formal_verification_tests:
   <<: *formal_test
   script:
-    - ./tests/scripts/run_formal.sh --name yosys install_dependencies load_submodules build_dependencies run pack_logs gather_results
+    - TESTS_SUITE_NAME=yosys
+    - *formal_tests_script
 
 sv2v_formal_verification_tests:
   <<: *formal_test
   script:
-    - ./tests/scripts/run_formal.sh --name sv2v install_dependencies load_submodules build_dependencies run pack_logs gather_results
+    - TESTS_SUITE_NAME=sv2v
+    - *formal_tests_script
 
 .job_template: &large_design_test
   stage: "Run large designs tests"
@@ -184,69 +199,57 @@ sv2v_formal_verification_tests:
     paths:
       - tests/build/
 
+.large_design_script: &large_design_script |-
+  ./tests/scripts/run_large_designs.sh --name $TEST_NAME install_dependencies load_submodules run
+
 veer_synth_large_design:
   <<: *large_design_test
-  variables:
-    SCALENODE_RAM: 12000
-    SCALENODE_CPU: 4
   script:
-    - ./tests/scripts/run_large_designs.sh --name veer install_dependencies load_submodules run
+    - TEST_NAME=veer
+    - *large_design_script
 
 blackparrot_synth_AMD_xilinx_large_design:
   <<: *large_design_test
-  variables:
-    SCALENODE_RAM: 20000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name blackparrot_AMD install_dependencies load_submodules run
+    - TEST_NAME=blackparrot_AMD
+    - *large_design_script
 
 blackparrot_synth_ASIC_xilinx_large_design:
   <<: *large_design_test
-  variables:
-    SCALENODE_RAM: 20000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name blackparrot_ASIC install_dependencies load_submodules run
+    - TEST_NAME=blackparrot_ASIC
+    - *large_design_script
   artifacts:
     paths:
+      - tests/build/
       - third_party/OpenROAD-flow-scripts/logs
       - third_party/OpenROAD-flow-scripts/reports
       - third_party/OpenROAD-flow-scripts/results
 
+.large_design_script_with_tools: &large_design_script_with_tools |-
+  ./tests/scripts/run_large_designs.sh --name $TEST_NAME install_dependencies
+  echo "##/ Setup tools \##"
+  eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
+  ./tests/scripts/run_large_designs.sh --name $TEST_NAME load_submodules run
+
 ibex_synth_large_design:
   <<: *large_design_test
-  variables:
-    SCALENODE_RAM: 16000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name ibex install_dependencies
-    - echo "##/ Setup tools \##"
-    - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - ./tests/scripts/run_large_designs.sh --name ibex load_submodules run
+    - TEST_NAME=ibex
+    - *large_design_script_with_tools
 
 opentitan_9d82960888_synth_large_design:
   <<: *large_design_test
-  variables:
-    SCALENODE_RAM: 50000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 install_dependencies
-    - echo "##/ Setup tools \##"
-    - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - ./tests/scripts/run_large_designs.sh --name opentitan_9d82960888 load_submodules run
+    - TEST_NAME=opentitan_9d82960888
+    - *large_design_script_with_tools
 
 opentitan_synth_large_design:
   <<: *large_design_test
-  tags: ['ace-x86_64-high-mem']
   when: manual
-  variables:
-    SCALENODE_RAM: 160000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name opentitan install_dependencies
-    - echo "##/ Setup tools \##"
-    - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - ./tests/scripts/run_large_designs.sh --name opentitan load_submodules run
+    - TEST_NAME=opentitan
+    - *large_design_script_with_tools
 
 .job_template: &opentitan_parsing_test
   stage: "Run large designs tests"
@@ -261,27 +264,16 @@ opentitan_synth_large_design:
 
 opentitan_parse_report_quick_large_design:
   <<: *opentitan_parsing_test
-  variables:
-    SCALENODE_RAM: 36000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_quick install_dependencies
-    - echo "##/ Setup tools \##"
-    - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_quick load_submodules run
+    - TEST_NAME=opentitan_parse_quick
+    - *large_design_script_with_tools
 
 opentitan_parse_report_full_large_design:
   <<: *opentitan_parsing_test
-  tags: ['ace-x86_64-high-mem']
   when: manual
-  variables:
-    SCALENODE_RAM: 120000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_full install_dependencies
-    - echo "##/ Setup tools \##"
-    - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - ./tests/scripts/run_large_designs.sh --name opentitan_parse_full load_submodules run
+    - TEST_NAME=opentitan_parse_full
+    - *large_design_script_with_tools
 
 ibex_synth_f4pga_large_design:
   stage: "Run large designs tests"
@@ -293,23 +285,15 @@ ibex_synth_f4pga_large_design:
     when: always
     paths:
       - tests/build/
-  variables:
-    SCALENODE_RAM: 20000
-    SCALENODE_CPU: 6
   script:
-    - ./tests/scripts/run_large_designs.sh --name ibex_f4pga install_dependencies
-    - echo "##/ Setup tools \##"
-    - eval $SETUP_TOOLS && export PATH="$PATH:$TOOLS_HOME/bin"
-    - ./tests/scripts/run_large_designs.sh --name ibex_f4pga load_submodules run
+    - TEST_NAME=ibex_f4pga
+    - *large_design_script_with_tools
 
 check_README:
-  stage: "Optional tests"
+  stage: "Build binaries"
   only:
     - main
     - merge_requests
-  variables:
-    SCALENODE_RAM: 8000
-    SCALENODE_CPU: 6
   script:
     - echo "##/ Install Prerequisites \##"
     - apt update && apt install -y pipx git wget
