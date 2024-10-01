@@ -282,6 +282,7 @@
                 "TypedefedFunctionArgument/top.sv",
                 "TypedefedFunctionReturn/top.sv",
                 "TypedefedRangedFunctionArgument/top.sv",
+                "UnionCustomTypeMultirange/top.sv",
                 "UnionInsideStruct/dut.sv",
                 "UnitForLoop/dut.v",
                 "UnpackedArray/top.sv",
@@ -535,6 +536,7 @@
                 "svinterfaces/svinterface1_ref.v",
                 "svinterfaces/svinterface_at_top_ref.v",
                 "svtypes/logic_rom.sv",
+                "svtypes/struct_dynamic_range.sv",
                 "svtypes/struct_simple.sv",
                 "svtypes/typedef_initial_and_assign.sv",
                 "svtypes/typedef_memory.sv",
@@ -1830,7 +1832,6 @@
                 "ParameterOfSizeOfParametrizedPortInSubmodule/top.sv",
                 "ParameterPackedArraySurelogSubstitution/top.sv",
                 "TypedefedRangedFunctionReturn/top.sv",
-                "UnionCustomTypeMultirange/top.sv",
                 "UnsizedConstantParameter/top.sv"
             ],
             "yosys": [
@@ -1841,7 +1842,6 @@
                 "simple/genblk_dive.v",
                 "svinterfaces/svinterface1.sv",
                 "svtypes/static_cast_simple.sv",
-                "svtypes/struct_dynamic_range.sv",
                 "various/const_func.sv",
                 "verific/range_case.sv",
                 "verilog/unbased_unsized.sv"

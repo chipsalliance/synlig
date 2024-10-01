@@ -62,6 +62,7 @@ static IdString low_high_bound;
 static IdString is_type_parameter;
 static IdString is_elaborated_module;
 static IdString expand_genblock;
+static IdString enum_struct_item;
 }; // namespace attr_id
 
 // TODO(mglb): use attr_id::* directly everywhere and remove those methods.
@@ -97,6 +98,7 @@ void attr_id_init()
     attr_id::is_type_parameter = MAKE_INTERNAL_ID(is_type_parameter);
     attr_id::is_elaborated_module = MAKE_INTERNAL_ID(is_elaborated_module);
     attr_id::expand_genblock = MAKE_INTERNAL_ID(expand_genblock);
+    attr_id::enum_struct_item = MAKE_INTERNAL_ID(enum_struct_item);
 }
 
 void attr_id_cleanup()
@@ -112,6 +114,7 @@ void attr_id_cleanup()
     attr_id::is_type_parameter = IdString();
     attr_id::is_elaborated_module = IdString();
     attr_id::expand_genblock = IdString();
+    attr_id::enum_struct_item = IdString();
     attr_id::already_initialized = false;
 }
 
@@ -155,7 +158,7 @@ static void delete_internal_attributes(AST::AstNode *node)
 
     for (auto &attr : {UhdmAst::partial(), UhdmAst::packed_ranges(), UhdmAst::unpacked_ranges(), UhdmAst::force_convert(), UhdmAst::is_imported(),
                        UhdmAst::is_simplified_wire(), UhdmAst::low_high_bound(), attr_id::is_type_parameter, attr_id::is_elaborated_module,
-                       attr_id::expand_genblock}) {
+                       attr_id::expand_genblock, attr_id::enum_struct_item}) {
         delete_attribute(node, attr);
     }
 }
@@ -743,7 +746,11 @@ static void convert_packed_unpacked_range(AST::AstNode *wire_node)
             return false;
         if (packed_ranges.size() > 1)
             return true;
+        if (wire_node->type == AST::AST_STRUCT_ITEM && packed_ranges.size() > 0)
+            return true;
         if (unpacked_ranges.size() > 1)
+            return true;
+        if (wire_node->type == AST::AST_STRUCT_ITEM && unpacked_ranges.size() > 0)
             return true;
         if (wire_node->attributes.count(ID::wiretype))
             return true;
@@ -840,151 +847,235 @@ void UhdmAst::uhdmast_assert_log(const char *expr_str, const char *func, const c
     }
 }
 
-static AST::AstNode *expand_dot(const AST::AstNode *current_struct, const AST::AstNode *search_node)
+static std::vector<std::pair<AST::AstNode *, std::vector<AST::AstNode *>>>
+search_struct_access_with_dots(AST::AstNode *current_node, AST::AstNode *wire_node, AST::AstNode *current_struct, AST::AstNode *search_node)
 {
-    AST::AstNode *current_struct_elem = nullptr;
-    auto search_str = search_node->str.find("\\") == 0 ? search_node->str.substr(1) : search_node->str;
-    auto struct_elem_it =
-      std::find_if(current_struct->children.begin(), current_struct->children.end(), [&](AST::AstNode *node) { return node->str == search_str; });
-    if (struct_elem_it == current_struct->children.end()) {
-        current_struct->dumpAst(NULL, "struct >");
-        log_error("Couldn't find search elem: %s in struct\n", search_str.c_str());
-    }
-    current_struct_elem = *struct_elem_it;
+    // Converts access of type: foo[1][2].a[1][0].b[1][2]
+    // to list of accessed struct members nodes and coresponding ranges
 
-    AST::AstNode *sub_dot = nullptr;
-    std::vector<AST::AstNode *> struct_ranges;
+    assert(search_node->type == static_cast<int>(AST::Extended::AST_DOT));
+    std::vector<std::pair<AST::AstNode *, std::vector<AST::AstNode *>>> result;
 
-    for (auto c : search_node->children) {
-        if (c->type == static_cast<int>(AST::Extended::AST_DOT)) {
-            // There should be only 1 AST_DOT node children
-            log_assert(!sub_dot);
-            sub_dot = expand_dot(current_struct_elem, c);
+    // first accesses are stored in current_node ranges: foo[1][2]
+    {
+        std::vector<AST::AstNode *> ranges;
+        for (auto child : current_node->children) {
+            assert(child->type == AST::AST_RANGE || child->type == static_cast<int>(AST::Extended::AST_DOT));
+            if (child->type == AST::AST_RANGE)
+                ranges.push_back(child);
         }
-        if (c->type == AST::AST_RANGE) {
-            struct_ranges.push_back(c);
-        }
+        // wire_node contains dimensions that are accessed by current_node bit selects
+        // it can be considered as first "struct member"
+        result.push_back({wire_node, ranges});
     }
-    AST::AstNode *left = nullptr, *right = nullptr;
-    switch (current_struct_elem->type) {
-    case AST::AST_STRUCT_ITEM:
-        left = AST::AstNode::mkconst_int(current_struct_elem->range_left, true);
-        right = AST::AstNode::mkconst_int(current_struct_elem->range_right, true);
-        break;
-    case AST::AST_STRUCT:
-    case AST::AST_UNION:
-        // TODO(krak): add proper support for accessing struct/union elements
-        // with multirange
-        // Currently support only special access to 2 dimensional packed element
-        // when selecting single range
-        if (!struct_ranges.empty() && current_struct_elem->dimensions.size() == 2) {
-            // get element size in number of bits
-            const int single_elem_size = current_struct_elem->children.front()->range_left + 1;
-            left = AST::AstNode::mkconst_int(single_elem_size * current_struct_elem->dimensions.back().range_width, true);
-            right =
-              AST::AstNode::mkconst_int(current_struct_elem->children.back()->range_right * current_struct_elem->dimensions.back().range_width, true);
+
+    // other accesses are stored in AST_DOT subtree .a[1][0] and .b[1][2]
+    while (search_node != NULL) {
+
+        auto search_str = search_node->str.find("\\") == 0 ? search_node->str.substr(1) : search_node->str;
+        auto struct_elem_it =
+          std::find_if(current_struct->children.begin(), current_struct->children.end(), [&](AST::AstNode *node) { return node->str == search_str; });
+        AST::AstNode *current_struct_elem = *struct_elem_it;
+        if (struct_elem_it == current_struct->children.end()) {
+            current_struct->dumpAst(NULL, "struct >");
+            log_error("Couldn't find search elem: %s in struct\n", search_str.c_str());
+        }
+
+        auto sub_dot_it = std::find_if(search_node->children.begin(), search_node->children.end(),
+                                       [&](AST::AstNode *node) { return node->type == static_cast<int>(AST::Extended::AST_DOT); });
+        AST::AstNode *sub_dot = NULL;
+        if (sub_dot_it != search_node->children.end())
+            sub_dot = *sub_dot_it;
+
+        std::vector<AST::AstNode *> ranges;
+        for (auto child : search_node->children) {
+            assert(child->type == AST::AST_RANGE || child->type == static_cast<int>(AST::Extended::AST_DOT));
+            if (child->type == AST::AST_RANGE)
+                ranges.push_back(child);
+        }
+        result.push_back({current_struct_elem, ranges});
+
+        search_node = sub_dot;
+        current_struct = current_struct_elem;
+    }
+
+    return result;
+}
+
+static std::pair<AST::AstNode *, AST::AstNode *> traverse_dimensions(std::vector<AST::AstNode::dimension_t> dimensions,
+                                                                     std::vector<AST::AstNode *> ranges, uint32_t substructure_size, bool last_access)
+{
+    // creates simple range select based on struct member dimensions and range selects
+    assert(dimensions.size() == ranges.size());
+    if (dimensions.size() == 0) {
+        return {AST::AstNode::mkconst_int(0, false, 32), AST::AstNode::mkconst_int(substructure_size, false, 32)};
+    }
+
+    // calculate suffix products of dimensions widths
+    std::vector<uint32_t> dimension_sizes(ranges.size(), 0);
+    uint32_t current_size = 1;
+    for (int i = dimensions.size() - 1; i >= 0; i--) {
+        if ((uint32_t)i < dimension_sizes.size()) {
+            dimension_sizes[i] = current_size;
+        }
+        current_size *= dimensions[i].range_width;
+    }
+
+    AST::AstNode *right_node = AST::AstNode::mkconst_int(0, false, 32);
+    uint32_t right_offset = 0;
+    bool is_variable_indexed = 0;
+
+    // only last range select is responsible for selection width
+    for (int i = 0; i < ranges.size() - 1; i++) {
+
+        AST::AstNode *range_node = ranges[i];
+        assert(range_node->children.size() == 1);
+        AST::AstNode *offset_node = range_node->children[0];
+
+        if (offset_node->type == AST::AST_CONSTANT) {
+            uint32_t offset = offset_node->integer - dimensions[i].range_right;
+
+            if (dimensions[i].range_swapped)
+                offset = (dimensions[i].range_width - offset - 1);
+            offset *= dimension_sizes[i];
+
+            right_offset += offset;
+
         } else {
-            left = AST::AstNode::mkconst_int(current_struct_elem->children.front()->range_left, true);
-            right = AST::AstNode::mkconst_int(current_struct_elem->children.back()->range_right, true);
+
+            is_variable_indexed = true;
+
+            if (right_offset) {
+                // first apply current offset if it's not zero
+                right_node = new AST::AstNode(AST::AST_ADD, right_node, AST::AstNode::mkconst_int(right_offset, false, 32));
+                right_offset = 0;
+            }
+
+            // construct term based select for current dimension
+            AST::AstNode *current_offset =
+              new AST::AstNode(AST::AST_SUB, offset_node->clone(), AST::AstNode::mkconst_int(dimensions[i].range_right, false, 32));
+
+            if (dimensions[i].range_swapped)
+                current_offset = new AST::AstNode(AST::AST_SUB, AST::AstNode::mkconst_int(dimensions[i].range_width - 1, false, 32), current_offset);
+
+            current_offset = new AST::AstNode(AST::AST_MUL, current_offset, AST::AstNode::mkconst_int(dimension_sizes[i], false, 32));
+
+            // extend right offset node with prepared select for current dimension
+            right_node = new AST::AstNode(AST::AST_ADD, current_offset, right_node);
         }
-        break;
-    default:
-        // Structs currently can only have AST_STRUCT, AST_STRUCT_ITEM, or AST_UNION.
-        log_file_error(current_struct_elem->filename, current_struct_elem->location.first_line,
-                       "Accessing struct member of type %s is unsupported.\n", type2str(current_struct_elem->type).c_str());
-    };
-
-    auto elem_size =
-      new AST::AstNode(AST::AST_ADD, new AST::AstNode(AST::AST_SUB, left->clone(), right->clone()), AST::AstNode::mkconst_int(1, true));
-
-    if (sub_dot) {
-        // First select correct element in first struct
-        std::swap(left, sub_dot->children[0]);
-        std::swap(right, sub_dot->children[1]);
-        delete sub_dot;
     }
+    // last range select determines the width of whole access
+    uint32_t select_width;
+    AST::AstNode *select_width_node = NULL;
+    {
+        int i = ranges.size() - 1;
+        AST::AstNode *range_node = ranges[i];
+        assert(1 <= range_node->children.size() && range_node->children.size() <= 2);
 
-    for (size_t i = 0; i < struct_ranges.size(); i++) {
-        const auto *struct_range = struct_ranges[i];
-        auto const idx = (struct_ranges.size() - i) - 1;
+        if (range_node->children.size() == 1) {
+            AST::AstNode *offset_node = range_node->children[0];
 
-        int range_width = 0;
-        if (current_struct_elem->dimensions.empty()) {
-            range_width = 1;
-        } else if (current_struct_elem->dimensions.size() > idx) {
-            range_width = current_struct_elem->dimensions[idx].range_width;
-            const auto range_offset = current_struct_elem->dimensions[idx].range_right;
-            if (range_offset != 0) {
-                log_file_error(struct_range->filename, struct_range->location.first_line,
-                               "Accessing ranges that do not start from 0 is not supported.");
-            }
-        } else {
-            struct_range->dumpAst(NULL, "range >");
-            log_file_error(struct_range->filename, struct_range->location.first_line, "Couldn't find range width.");
-        }
-        // now we have correct element set,
-        // but we still need to set correct struct
-        log_assert(!struct_range->children.empty());
-        if (current_struct_elem->type == AST::AST_STRUCT_ITEM) {
-            // if we selecting range of struct item, just add this range
-            // to our current select
-            if (current_struct_elem->dimensions.size() > 1 && struct_range->children.size() == 2) {
-                if (i < (struct_ranges.size() - 1))
-                    log_error(
-                      "Selecting a range of positions from a multirange is not supported in the dot notation, unless it is the last index.\n");
-            }
-            if (struct_range->children.size() == 2) {
-                auto range_size = new AST::AstNode(
-                  AST::AST_ADD, new AST::AstNode(AST::AST_SUB, struct_range->children[0]->clone(), struct_range->children[1]->clone()),
-                  AST::AstNode::mkconst_int(1, true));
-                right = new AST::AstNode(AST::AST_ADD, right, struct_range->children[1]->clone());
-                delete left;
-                left = new AST::AstNode(AST::AST_ADD, right->clone(), new AST::AstNode(AST::AST_SUB, range_size, AST::AstNode::mkconst_int(1, true)));
+            if (offset_node->type == AST::AST_CONSTANT && !is_variable_indexed) {
+                uint32_t offset = offset_node->integer - dimensions[i].range_right;
 
-            } else if (struct_range->children.size() == 1) {
-                // Selected a single position, as in `foo.bar[i]`.
-                if (range_width > 1 && idx > 0) {
-                    // if it's not the last dimension.
-                    right = new AST::AstNode(
-                      AST::AST_ADD, right,
-                      new AST::AstNode(AST::AST_MUL, struct_range->children[0]->clone(), AST::AstNode::mkconst_int(range_width, true)));
-                    delete left;
-                    left = new AST::AstNode(AST::AST_ADD, right->clone(), AST::AstNode::mkconst_int(range_width - 1, true));
-                } else {
-                    right = new AST::AstNode(AST::AST_ADD, right, struct_range->children[0]->clone());
-                    delete left;
-                    left = right->clone();
+                if (dimensions[i].range_swapped)
+                    offset = (dimensions[i].range_width - offset - 1);
+
+                right_offset += offset * dimension_sizes[i];
+                select_width = dimension_sizes[i];
+            } else {
+
+                is_variable_indexed = true;
+
+                if (right_offset) {
+                    // first apply current offset if it's not zero
+                    right_node = new AST::AstNode(AST::AST_ADD, right_node, AST::AstNode::mkconst_int(right_offset, false, 32));
+                    right_offset = 0;
                 }
-            } else {
-                struct_range->dumpAst(NULL, "range >");
-                log_error("Unhandled range select (AST_STRUCT_ITEM) in AST_DOT!\n");
-            }
-        } else if (current_struct_elem->type == AST::AST_STRUCT) {
-            if (struct_range->children.size() == 2) {
-                right = new AST::AstNode(AST::AST_ADD, right, struct_range->children[1]->clone());
-                auto range_size = new AST::AstNode(
-                  AST::AST_ADD, new AST::AstNode(AST::AST_SUB, struct_range->children[0]->clone(), struct_range->children[1]->clone()),
-                  AST::AstNode::mkconst_int(1, true));
-                left = new AST::AstNode(AST::AST_ADD, left, new AST::AstNode(AST::AST_SUB, range_size, elem_size->clone()));
-            } else if (struct_range->children.size() == 1) {
-                AST::AstNode *mul = new AST::AstNode(AST::AST_MUL, elem_size->clone(), struct_range->children[0]->clone());
 
-                left = new AST::AstNode(AST::AST_ADD, left, mul);
-                right = new AST::AstNode(AST::AST_ADD, right, mul->clone());
-            } else {
-                struct_range->dumpAst(NULL, "range >");
-                log_error("Unhandled range select (AST_STRUCT) in AST_DOT!\n");
+                // prepare offset node for current dimension
+                AST::AstNode *current_offset =
+                  new AST::AstNode(AST::AST_SUB, offset_node->clone(), AST::AstNode::mkconst_int(dimensions[i].range_right, false, 32));
+
+                if (dimensions[i].range_swapped)
+                    current_offset =
+                      new AST::AstNode(AST::AST_SUB, AST::AstNode::mkconst_int(dimensions[i].range_width - 1, false, 32), current_offset);
+
+                AST::AstNode *current_right_select =
+                  new AST::AstNode(AST::AST_MUL, current_offset, AST::AstNode::mkconst_int(dimension_sizes[i], false, 32));
+
+                select_width_node = AST::AstNode::mkconst_int(dimension_sizes[i], false, 32);
+
+                // extend right offset node with prepared select for current dimension
+                right_node = new AST::AstNode(AST::AST_ADD, right_node, current_right_select);
             }
         } else {
-            log_file_error(current_struct_elem->filename, current_struct_elem->location.first_line,
-                           "Accessing member of a slice of type %s is unsupported.\n", type2str(current_struct_elem->type).c_str());
+            // Multidimensional struct accesses are allowed only as last ones; example:
+            // .foo[3][2:3] and .foo[1:0] are allowed, but .foo[3:2][3] is not allowed
+            assert(last_access);
+            AST::AstNode *left_offset_node = range_node->children[0];
+            AST::AstNode *right_offset_node = range_node->children[1];
+
+            if (left_offset_node->type == AST::AST_CONSTANT && right_offset_node->type == AST::AST_CONSTANT && !is_variable_indexed) {
+                uint32_t current_left_offset = left_offset_node->integer - dimensions[i].range_right;
+                if (dimensions[i].range_swapped)
+                    current_left_offset = (dimensions[i].range_width - current_left_offset - 1);
+
+                uint32_t current_right_offset = right_offset_node->integer - dimensions[i].range_right;
+                if (dimensions[i].range_swapped)
+                    current_right_offset = (dimensions[i].range_width - current_right_offset - 1);
+
+                uint32_t low = min(current_left_offset, current_right_offset);
+                uint32_t high = max(current_left_offset, current_right_offset);
+
+                right_offset += low * dimension_sizes[i];
+                select_width = dimension_sizes[i] * (high - low + 1);
+            } else {
+
+                is_variable_indexed = true;
+
+                // prepare left and right offsets for current dimension
+                AST::AstNode *left_offset_node = range_node->children[0]->clone();
+                AST::AstNode *right_offset_node = range_node->children[1]->clone();
+
+                left_offset_node = new AST::AstNode(AST::AST_SUB, left_offset_node, AST::AstNode::mkconst_int(dimensions[i].range_right, false, 32));
+
+                right_offset_node =
+                  new AST::AstNode(AST::AST_SUB, right_offset_node, AST::AstNode::mkconst_int(dimensions[i].range_right, false, 32));
+
+                if (dimensions[i].range_swapped) {
+                    left_offset_node =
+                      new AST::AstNode(AST::AST_SUB, AST::AstNode::mkconst_int(dimensions[i].range_width - 1, false, 32), left_offset_node);
+                    right_offset_node =
+                      new AST::AstNode(AST::AST_SUB, AST::AstNode::mkconst_int(dimensions[i].range_width - 1, false, 32), right_offset_node);
+                    std::swap(left_offset_node, right_offset_node);
+                }
+
+                right_node =
+                  new AST::AstNode(AST::AST_ADD, right_node,
+                                   new AST::AstNode(AST::AST_MUL, right_offset_node, AST::AstNode::mkconst_int(dimension_sizes[i], false, 32)));
+                // width is the difference between left and right node
+                select_width_node = new AST::AstNode(AST::AST_MUL, AST::AstNode::mkconst_int(dimension_sizes[i], false, 32),
+                                                     new AST::AstNode(AST::AST_ADD, AST::AstNode::mkconst_int(1, false, 32),
+                                                                      new AST::AstNode(AST::AST_SUB, left_offset_node, right_offset_node->clone())));
+            }
         }
     }
-    delete elem_size;
-    // Return range from the begining of *current* struct
-    // When all AST_DOT are expanded it will return range
-    // from original wire
-    return new AST::AstNode(AST::AST_RANGE, left, right);
+
+    if (is_variable_indexed) {
+        if (right_offset != 0)
+            right_node = new AST::AstNode(AST::AST_ADD, right_node, AST::AstNode::mkconst_int(right_offset, false, 32));
+        right_node = new AST::AstNode(AST::AST_MUL, right_node, AST::AstNode::mkconst_int(substructure_size, false, 32));
+        assert(select_width_node != NULL);
+        select_width_node = new AST::AstNode(AST::AST_MUL, select_width_node, AST::AstNode::mkconst_int(substructure_size, false, 32));
+        return {right_node, select_width_node};
+
+    } else {
+        delete right_node;
+        right_offset *= substructure_size;
+        select_width *= substructure_size;
+        return {AST::AstNode::mkconst_int(right_offset, false, 32), AST::AstNode::mkconst_int(select_width, false, 32)};
+    }
 }
 
 static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AST::AstNode *dot)
@@ -998,72 +1089,89 @@ static AST::AstNode *convert_dot(AST::AstNode *wire_node, AST::AstNode *node, AS
     } else {
         log_file_error(wire_node->filename, wire_node->location.first_line, "Unsupported node type: %s\n", type2str(wire_node->type).c_str());
     }
-    log_assert(struct_node);
-    auto expanded = expand_dot(struct_node, dot);
-    // Now expand ranges that are at instance part of dotted reference
-    // `expand_dot` returns AST_RANGE with 2 children that selects member pointed by dotted reference
-    // now we need to move this range to select correct struct
-    std::vector<AST::AstNode *> struct_ranges = get_ranges(node);
-    log_assert(wire_node->attributes.count(UhdmAst::unpacked_ranges()));
-    log_assert(wire_node->attributes.count(UhdmAst::packed_ranges()));
-    log_assert(struct_ranges.size() <= wire_node->dimensions.size());
-    // TODO(krak): wire ranges are sometimes under wiretype node (e.g. in case of typedef)
-    // but wiretype ranges contains also struct range that is already expanded in 'expand_dot'
-    // we need to find a way to calculate size of wire ranges without struct range here to enable this assert
-    // const auto wire_node_unpacked_ranges_size = wire_node->attributes[UhdmAst::unpacked_ranges()]->children.size();
-    // const auto wire_node_packed_ranges_size = wire_node->attributes[UhdmAst::packed_ranges()]->children.size();
-    // const auto wire_node_ranges_size = wire_node_packed_ranges_size + wire_node_unpacked_ranges_size;
-    // log_assert(struct_ranges.size() == (wire_node_ranges_size - 1));
+    synlig_simplify(struct_node, false, false, false, 1, -1, false, false);
+    synlig_simplify(wire_node, false, false, false, 1, -1, false, false);
 
-    // Get size of single structure
-    int struct_size_int = get_max_offset_struct(struct_node) + 1;
-    auto wire_dimension_size_it = wire_node->dimensions.rbegin();
+    auto selects = search_struct_access_with_dots(node, wire_node, struct_node, dot);
+    uint32_t previous_offset = 0;
 
-    if ((wire_node->dimensions.empty() || wire_node->dimensions.size() == 1) && (dot->children.size() == 1) &&
-        (!dot->children.at(0)->children.empty())) {
-        // Example: assign s.vector2x4[0] = a;
-        wire_dimension_size_it = struct_node->children[0]->dimensions.rbegin();
-        std::vector<AST::AstNode *> struct_ranges = get_all_ranges(struct_node);
-        if (struct_ranges.size() == 2) {
-            auto target = struct_ranges.at(1);
-            auto target_l = target->children.at(0);
-            auto target_r = target->children.at(1);
-            auto index = dot->children.at(0)->children.at(0);
-            if (index->type == AST::AST_CONSTANT || index->type == AST::AST_IDENTIFIER) {
-                // target_size = l - r + 1
-                auto target_size = new AST::AstNode(AST::AST_ADD, new AST::AstNode(AST::AST_SUB, target_l->clone(), target_r->clone()),
-                                                    AST::AstNode::mkconst_int(1, true, 32));
-                // move_offset = target_size * index
-                auto move_offset = new AST::AstNode(AST::AST_MUL, target_size, index->clone());
-                delete expanded->children[0];
-                delete expanded->children[1];
-                expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset, target_l->clone());
-                expanded->children[1] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), target_r->clone());
-                return expanded;
-            }
-        } else {
-            return expanded;
+    AST::AstNode *right_node = AST::AstNode::mkconst_int(0, false, 32);
+    AST::AstNode *width_node;
+
+    assert(selects.size());
+    // iterate over all accesses and prepares simple range
+    for (int i = 0; i < selects.size(); i++) {
+        bool last_access = (i == (selects.size() - 1));
+        auto current_struct_node = selects[i].first;
+        auto ranges = selects[i].second;
+        auto dimensions = current_struct_node->dimensions;
+
+        // wire_node stores its dimensions reversed
+        if (i == 0) {
+            reverse(dimensions.begin(), dimensions.end());
+            // in most cases wiretype dimensions contiain additional entry with substructure size
+            if (ranges.size() < dimensions.size())
+                dimensions.pop_back();
+            for (int i = 0; i < dimensions.size(); i++)
+                dimensions[i].range_swapped = 0;
         }
+        // if access is not last one then one have to specify all array dimensions
+        // there is also a special case with enum, but it is considered only as last_access
+        assert(last_access || ranges.size() == dimensions.size());
+
+        // special case for enums as struct_members
+        if (current_struct_node->attributes.count(attr_id::enum_struct_item) || (ranges.size() > dimensions.size() && ranges.size() == 1)) {
+            assert(last_access);
+            if (ranges.size() == 1 && dimensions.size() == 0) {
+                AST::AstNode::dimension_t dim;
+                uint32_t high = max(current_struct_node->range_right, current_struct_node->range_left);
+                uint32_t low = min(current_struct_node->range_right, current_struct_node->range_left);
+                uint32_t width = high - low + 1;
+
+                dim.range_right = low;
+                dim.range_width = width;
+                dim.range_swapped = current_struct_node->range_swapped;
+
+                dimensions.push_back(dim);
+            } else {
+                assert(dimensions.size() > 1);
+                reverse(dimensions.begin(), dimensions.end());
+            }
+        }
+        assert(ranges.size() <= dimensions.size());
+        assert(current_struct_node->range_left >= current_struct_node->range_right);
+        assert(!current_struct_node->range_swapped);
+
+        uint32_t current_struct_offset = current_struct_node->range_right;
+        uint32_t current_struct_width = current_struct_node->range_left - current_struct_node->range_right + 1;
+
+        assert(current_struct_offset >= previous_offset);
+        uint32_t offset_difference = current_struct_offset - previous_offset;
+        previous_offset = current_struct_offset;
+
+        dimensions.resize(ranges.size()); // removes dimensions that won't be accessed by this select
+        uint32_t dimensions_width = 1;
+        for (int i = dimensions.size() - 1; i >= 0; i--)
+            dimensions_width *= dimensions[i].range_width;
+        uint32_t substructure_size = current_struct_width / dimensions_width;
+
+        auto [current_offset_node, current_width_node] = traverse_dimensions(dimensions, ranges, substructure_size, last_access);
+
+        right_node = new AST::AstNode(AST::AST_ADD, new AST::AstNode(AST::AST_ADD, right_node, current_offset_node),
+                                      AST::AstNode::mkconst_int(offset_difference, false, 32));
+
+        if (last_access)
+            width_node = current_width_node;
+        else
+            delete current_width_node;
     }
 
-    unsigned long range_id = 0;
-    for (auto it = struct_ranges.rbegin(); it != struct_ranges.rend(); it++) {
-        // in 'dot' context, we need to select specific struct element,
-        // so assert that there is only 1 child in struct range (range with single child)
-        log_assert((*it)->children.size() == 1);
-        // calculate which struct we selected
-        auto move_offset = new AST::AstNode(AST::AST_MUL, AST::AstNode::mkconst_int(struct_size_int, true, 32), (*it)->children[0]->clone());
-        // move our expanded dot to currently selected struct
-        expanded->children[0] = new AST::AstNode(AST::AST_ADD, move_offset->clone(), expanded->children[0]);
-        expanded->children[1] = new AST::AstNode(AST::AST_ADD, move_offset, expanded->children[1]);
-        struct_size_int *= wire_dimension_size_it->range_width;
-        // wire_dimension_size stores interleaved offset and size. Move to next dimension's size
-        wire_dimension_size_it++;
-        range_id++;
-    }
-    return expanded;
+    AST::AstNode *left_node =
+      new AST::AstNode(AST::AST_SUB, new AST::AstNode(AST::AST_ADD, right_node->clone(), width_node), AST::AstNode::mkconst_int(1, false, 32));
+
+    AST::AstNode *result = new AST::AstNode(AST::AST_RANGE, left_node, right_node);
+    return result;
 }
-
 static void setup_current_scope(std::unordered_map<std::string, AST::AstNode *> top_nodes, AST::AstNode *current_top_node)
 {
     for (auto it = top_nodes.begin(); it != top_nodes.end(); it++) {
@@ -1417,6 +1525,18 @@ static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
         }
         break;
     case AST::AST_STRUCT_ITEM:
+        for (auto child : current_node->children) {
+            if (child->type == AST::AST_WIRETYPE) {
+                auto wirenode = AST_INTERNAL::current_scope[child->str];
+                if (wirenode && wirenode->type == AST::AST_TYPEDEF) {
+                    assert(wirenode->children.size() == 1);
+                    auto type_node = wirenode->children[0];
+                    if (type_node->attributes.count("\\enum_type")) {
+                        set_attribute(current_node, attr_id::enum_struct_item, AST::AstNode::mkconst_int(1, true));
+                    }
+                }
+            }
+        }
         if (!current_node->attributes.count(UhdmAst::is_simplified_wire())) {
             current_node->attributes[UhdmAst::is_simplified_wire()] = AST::AstNode::mkconst_int(1, true);
             AST_INTERNAL::current_scope[current_node->str] = current_node;
