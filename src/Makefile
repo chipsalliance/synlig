@@ -7,15 +7,10 @@ REPO_DIR := $(abspath $(THIS_MK_DIR)/..)
 
 YOSYS_SRC := $(REPO_DIR)/third_party/yosys
 SYNLIG_SRC := $(REPO_DIR)/src
+PYBIND_SRC := $(REPO_DIR)/third_party/pybind11
 
-ifeq ($(SYNLIG_BUILD_TYPE),asan)
-BUILD_DIR := $(REPO_DIR)/build/asan/synlig
-SURELOG_PKG_DIR := $(REPO_DIR)/build/asan/surelog
-else
-BUILD_DIR := $(REPO_DIR)/build/release/synlig
-SURELOG_PKG_DIR := $(REPO_DIR)/build/release/surelog
-endif
-
+BUILD_DIR := $(SYNLIG_BUILD_DIR)synlig
+SURELOG_PKG_DIR := $(SYNLIG_BUILD_DIR)surelog
 
 # --- set compiler ---#
 CONFIG := none
@@ -23,7 +18,7 @@ CONFIG := none
 # CONFIG := gcc
 
 # --- add synlig cxxflags --- #
-CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_SRC)/frontends/*/ -I $(SYNLIG_SRC)/mods/*
+CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_SRC)/frontends/*/ -I $(SYNLIG_SRC)/mods/* -I $(SYNLIG_SRC)/utils
 
 # --- add static option --- #
 CXXFLAGS += -static
@@ -60,8 +55,13 @@ OBJS =
 EXTRA_OBJS =
 GENFILES =
 EXTRA_TARGETS =
+ifneq ($(SYNLIG_BUILD_TYPE),pysynlig)
 TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
 OUT_TARGETS = $(BUILD_DIR)/synlig $(BUILD_DIR)/synlig-config
+else
+TARGETS = $(BUILD_DIR)/libsynlig.so $(BUILD_DIR)/python/__init__.py
+OUT_TARGETS = $(BUILD_DIR)/libsynlig.so $(BUILD_DIR)/python/__init__.py
+endif
 all: top-all
 
 # --- setup linking surelog --- #
@@ -126,10 +126,15 @@ OBJS = kernel/version_$(GIT_REV).o
 # --- set abc flags --- #
 ABCMKARGS = CC="$(CXX)" CXX="$(CXX)" ABC_USE_LIBSTDCXX=1 ABC_USE_NAMESPACE=abc VERBOSE=$(Q)
 
-# --- detect python --- #
-PYTHON_EXECUTABLE := $(shell if python3 -c ""; then echo "python3"; else echo "python"; fi)
-PYTHON_CONFIG := $(PYTHON_EXECUTABLE)-config
-PYTHON_DESTDIR := $(shell $(PYTHON_EXECUTABLE) -c "import site; print(site.getsitepackages()[-1]);")
+# --- setup python --- #
+ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
+LIBS += $(shell /usr/bin/env python3-config --libs)
+LINKFLAGS += $(filter-out -l%,$(shell /usr/bin/env python3-config --ldflags))
+CXXFLAGS += $(shell /usr/bin/env python3-config --includes)
+SYNLIG_OBJS += python/wrapper.o
+CXXFLAGS += $(shell /usr/bin/env python3-config --includes)
+CXXFLAGS += -I $(PYBIND_SRC)/include
+endif
 
 # --- gcc/clang --- #
 LTOFLAGS := $(GCC_LTO)
@@ -193,6 +198,7 @@ CXXFLAGS := -Og -DDEBUG $(filter-out $(OPT_LEVEL),$(CXXFLAGS))
 endif
 
 # --- link abc --- #
+ABC_ENV := CFLAGS=-fPIC
 CXXFLAGS += -DYOSYS_ENABLE_ABC
 CXXFLAGS += -DYOSYS_LINK_ABC
 LIBS += -lpthread
@@ -220,6 +226,7 @@ ENABLE_VERIFIC_VHDL := 1
 ENABLE_ZLIB := 1
 DISABLE_SPAWN := 0
 SMALL = 0
+PYTHON_EXECUTABLE := /usr/bin/env python3
 
 # --- prepare defines for adding include files --- #
 define add_share_file
@@ -335,7 +342,8 @@ include $(YOSYS_SRC)/backends/aiger/Makefile.inc
 include $(YOSYS_SRC)/backends/intersynth/Makefile.inc
 include $(YOSYS_SRC)/backends/spice/Makefile.inc
 
-SYNLIG_OBJS += main.o
+SYNLIG_OBJS += utils/main.o
+SYNLIG_OBJS += utils/setup.o
 SYNLIG_OBJS += yosys-libabc.a
 
 include $(SYNLIG_SRC)/frontends/*/Makefile.inc
@@ -370,8 +378,22 @@ compile-only: $(YOSYS_OBJS) $(SYNLIG_OBJS) $(GENFILES) $(EXTRA_TARGETS)
 	@echo "  Compile successful."
 	@echo ""
 
+ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
+$(BUILD_DIR)/libsynlig.so: $(filter-out utils/main.o,$(YOSYS_OBJS) $(SYNLIG_OBJS))
+	$(P) $(CXX) -o libsynlig.so -shared -Wl,-soname,libsynlig.so $(LINKFLAGS) $^ $(LIBS) $(SURELOG_LDFLAGS) $(SURELOG_LDLIBS)
+
+$(BUILD_DIR)/kernel/yosys.o: kernel/yosys.cc
+	$(Q) mkdir -p $(dir $@)
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -I ./ $<
+
+$(BUILD_DIR)/python/%.py: $(SYNLIG_SRC)/python/%.py
+	$(Q) mkdir -p $(dir $@)
+	$(Q) cp $< $@
+endif
+
 $(BUILD_DIR)/kernel/log.o: CXXFLAGS += -DYOSYS_SRC='"$(YOSYS_SRC)"'
 $(BUILD_DIR)/kernel/yosys.o: CXXFLAGS += -DYOSYS_DATDIR='"$(DATDIR)"' -DYOSYS_PROGRAM_PREFIX='""'
+$(BUILD_DIR)/utils/setup.o: CXXFLAGS += -DSYNLIG_DATDIR='"$(DATDIR)"'
 
 $(BUILD_DIR)/synlig: $(YOSYS_OBJS) $(SYNLIG_OBJS)
 	$(CXX) -o synlig $(LINKFLAGS) $(YOSYS_OBJS) $(SYNLIG_OBJS) $(LIBS) $(SURELOG_LDFLAGS) $(SURELOG_LDLIBS)
@@ -388,15 +410,15 @@ $(BUILD_DIR)/frontends/systemverilog/%.o: frontends/systemverilog/%.cc
 
 $(BUILD_DIR)/%.o: %.cc
 	$(Q) mkdir -p $(dir $@)
-	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) -I ./ $<
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $(PYFLAG) -I ./ $<
 
 $(BUILD_DIR)/%.pyh: %.h
 	$(Q) mkdir -p $(dir $@)
-	$(P) cat $< | grep -E -v "#[ ]*(include|error)" | $(CXX) $(CXXFLAGS) -x c++ -o $@ -E -P -
+	$(P) cat $< | grep -E -v "#[ ]*(include|error)" | $(CXX) $(CXXFLAGS) $(PYFLAG) -x c++ -o $@ -E -P -
 
 $(BUILD_DIR)/%.o: %.cpp
 	$(Q) mkdir -p $(dir $@)
-	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $<
+	$(P) $(CXX) -o $@ -c $(CPPFLAGS) $(CXXFLAGS) $(PYFLAG) $<
 
 VERSION_STR := Synlig (git sha1 $(GIT_REV), $(notdir $(CXX)) $(shell \
 		$(CXX) --version | tr ' ()' '\n' | grep '^[0-9]' | head -n1) $(filter -f% -m% -O% -DNDEBUG,$(CXXFLAGS)))
@@ -422,15 +444,20 @@ check-git-abc:
 
 abc/libabc.a: | check-git-abc
 	$(P)
-	$(Q) mkdir -p abc && $(MAKE) -C abc -f "$(realpath $(YOSYS_SRC)/abc/Makefile)" ABCSRC="$(realpath $(YOSYS_SRC)/abc/)" $(S) $(ABCMKARGS) $(if $(filter %.a,$@),PROG="abc",PROG="abc") MSG_PREFIX="$(eval P_OFFSET = 10)$(call P_SHOW)$(eval P_OFFSET = 15) ABC: " $(if $(filter %.a,$@),libabc.a)
+	$(Q) mkdir -p abc && $(ABC_ENV) $(MAKE) -C abc -f "$(realpath $(YOSYS_SRC)/abc/Makefile)" ABCSRC="$(realpath $(YOSYS_SRC)/abc/)" $(S) $(ABCMKARGS) $(if $(filter %.a,$@),PROG="abc",PROG="abc") MSG_PREFIX="$(eval P_OFFSET = 10)$(call P_SHOW)$(eval P_OFFSET = 15) ABC: " $(if $(filter %.a,$@),libabc.a)
 
 $(BUILD_DIR)/yosys-libabc.a: abc/libabc.a
 	$(P) cp $< $(BUILD_DIR)/yosys-libabc.a
 
 install: $(TARGETS) $(EXTRA_TARGETS)
+ifeq ($(SYNLIG_BUILD_TYPE),pysynlig)
+	mkdir -p $(DESTDIR)$(PYTHON_PREFIX)/PySynlig
+	cp $(OUT_TARGETS) $(DESTDIR)$(PYTHON_PREFIX)/PySynlig
+else
 	mkdir -p $(DESTDIR)$(BINDIR)
 	cp $(OUT_TARGETS) $(DESTDIR)$(BINDIR)
 	$(STRIP) -S $(DESTDIR)$(BINDIR)/synlig
+endif
 	mkdir -p $(DESTDIR)$(DATDIR)
 	cp -r $(BUILD_DIR)/share/. $(DESTDIR)$(DATDIR)/.
 

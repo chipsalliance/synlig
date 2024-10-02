@@ -20,65 +20,25 @@ endif
 override undefine letter_makeflags
 
 #--------------------------------------------------------------------------------
+# Detect build type.
+
+CFG_BUILD_TYPE := release
+ifneq ($(filter install@asan build@asan,${MAKECMDGOALS}),)
+CFG_BUILD_TYPE := asan
+ENABLE_ASAN := 1
+endif
+ifneq ($(filter plugin,${MAKECMDGOALS}),)
+CFG_BUILD_TYPE := plugin
+endif
+ifneq ($(filter install@pysynlig build@pysynlig,${MAKECMDGOALS}),)
+CFG_BUILD_TYPE := pysynlig
+endif
+
+#--------------------------------------------------------------------------------
 # Load config.
 
 override TOP_DIR := $(dir $(abspath $(lastword ${MAKEFILE_LIST})))
-
 include ${TOP_DIR}buildconfig.mk
-
-#--------------------------------------------------------------------------------
-# Define constants with special characters.
-
-# Variable name conventions:
-# C.* : raw character string
-
-# New line
-override define C.NL :=
-
-
-endef
-override C.EMPTY :=
-# Space
-override C.SP := ${C.EMPTY} ${C.EMPTY}
-# Colon
-override C.DC := ${C.EMPTY}:${C.EMPTY}
-# Single quote
-override C.QUOT := '
-# ' # THIS whole line is a comment fixing syntax highlighting in some editors.
-
-#--------------------------------------------------------------------------------
-# Define constants for output formatting. Empty when not outputting to a TTY.
-
-# Variable name conventions:
-# F.*  : raw control sequence string
-# F.x  : enable x
-# F.!x : disable x
-
-ifdef MAKE_TERMOUT
-override csi := $(shell printf '\x1b[')
-
-# Resets all formatting options
-override F.RST := ${csi}0m
-# Bold
-override F.B   := ${csi}22;1m
-override F.!B  := ${csi}22m
-# Italic
-override F.I   := ${csi}3m
-override F.!I  := ${csi}23m
-# Dim
-override F.D   := ${csi}2m
-override F.!D  := ${csi}22m
-
-override undefine csi
-else
-override F.RST :=
-override F.B   :=
-override F.!B  :=
-override F.I   :=
-override F.!I  :=
-override F.D   :=
-override F.!D  :=
-endif
 
 #--------------------------------------------------------------------------------
 
@@ -137,7 +97,7 @@ override undefine command_line_illegal_vars
 # Validate configuration variable values and assign them to variables without
 # `CFG_` prefix used internally.
 
-override ALL_ALLOWED_BUILD_TYPES := release debug asan
+override ALL_ALLOWED_BUILD_TYPES := release asan plugin pysynlig
 $(if $(filter-out 1,$(words $(filter ${ALL_ALLOWED_BUILD_TYPES},${CFG_BUILD_TYPE}))),\
 	$(error CFG_BUILD_TYPE: invalid value (${CFG_BUILD_TYPE}). Must be one of: ${ALL_ALLOWED_BUILD_TYPES})\
 )
@@ -366,6 +326,18 @@ install-plugin : build@surelog install@yosys install@systemverilog-plugin
 
 .PHONY: plugin
 plugin : build-plugin
+
+.PHONY: build@asan
+build@asan : build
+
+.PHONY: install@asan
+install@asan : install
+
+.PHONY: build@pysynlig
+build@pysynlig : build
+
+.PHONY: install@pysynlig
+install@pysynlig : install
 
 install@eqy: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/eqy/.git
 install@sby: ${OUT_DIR}/bin/synlig-config ${TOP_DIR}/third_party/sby/.git

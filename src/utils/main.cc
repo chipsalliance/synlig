@@ -25,6 +25,8 @@
 #include <unistd.h>
 #endif
 
+#include "setup.h"
+
 USING_YOSYS_NAMESPACE
 
 char *optarg;
@@ -612,7 +614,7 @@ int main(int argc, char **argv)
     }
 #endif
 
-    yosys_setup();
+    Synlig::synlig_setup();
     log_error_atexit = yosys_atexit;
 
     for (auto &fn : plugin_filenames)

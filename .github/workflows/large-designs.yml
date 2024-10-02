@@ -488,3 +488,50 @@ jobs:
           name: plots_blackparrot_synth_asic
           path: |
             **/plot_*.svg
+
+  blackparrot_synth_xilinx_python:
+    name: Black Parrot (AMD (Xilinx) with PySynlig)
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
+    container: debian:bookworm
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      GHA_MACHINE_TYPE: "n2-highmem-8"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Install dependencies
+        run: |
+          ./tests/scripts/run_large_designs.sh --name blackparrot_AMD_python install_dependencies
+
+      - name: Checkout submodules
+        run: |
+          ./tests/scripts/run_large_designs.sh --name blackparrot_AMD_python load_submodules
+
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: binaries-pysynlig
+
+      # See https://github.com/actions/upload-artifact/issues/38
+      - name: Extract
+        run: tar -xf binaries-pysynlig.tar
+
+      - name: Build & Test
+        run: |
+          ./tests/scripts/run_large_designs.sh --name blackparrot_AMD_python run
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python_bp_e_bp_unicore_cfg.edif
+          path: tests/build/bp_e_bp_unicore_cfg.edif
+
+      - name: Upload load graphs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: plots_blackparrot_synth_xilinx_python
+          path: |
+            **/plot_*.svg

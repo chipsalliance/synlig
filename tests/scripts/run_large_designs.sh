@@ -17,6 +17,12 @@ function run_blackparrot_AMD(){
 	exit $?
 }
 
+function run_blackparrot_AMD_python(){
+	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Blackparrot AMD large design test (with Synlig as python module) \##"
+	make -C tests uhdm/synlig/synth-blackparrot-build-python TEST=black_parrot ENABLE_READLINE=0 PRETTY=0 -j $(nproc)
+	exit $?
+}
+
 function run_blackparrot_ASIC(){
 	[ -z "$GITHUB_ACTIONS" ] && echo "##/ Start Blackparrot ASIC large design test \##"
 	make -C tests uhdm/synlig/synth-blackparrot-build-asic TEST=black_parrot -j $(nproc)
@@ -94,6 +100,7 @@ do
 		echo "    List of supported large design test names:"
 		echo "        veer"
 		echo "        blackparrot_AMD"
+		echo "        blackparrot_AMD_python"
 		echo "        blackparrot_ASIC"
 		echo "        ibex"
 		echo "        ibex_f4pga"
@@ -108,6 +115,7 @@ do
 	"'load_submodules'")
 		[ "$name" == "'veer'" ] && load_submodules -r veer
 		[ "$name" == "'blackparrot_AMD'" ] && load_submodules black_parrot_tools black_parrot_sdk -r black_parrot
+		[ "$name" == "'blackparrot_AMD_python'" ] && load_submodules black_parrot_tools black_parrot_sdk -r black_parrot
 		[ "$name" == "'blackparrot_ASIC'" ] && load_submodules black_parrot_tools black_parrot_sdk OpenROAD-flow-scripts -r black_parrot
 		[ "$name" == "'ibex'" ] && load_submodules -r make_env ibex
 		[ "$name" == "'ibex_f4pga'" ] && load_submodules -r make_env ibex yosys_f4pga_plugins
@@ -119,6 +127,7 @@ do
 	"'run'")
 		[ "$name" == "'veer'" ] && run_veer
 		[ "$name" == "'blackparrot_AMD'" ] && run_blackparrot_AMD
+		[ "$name" == "'blackparrot_AMD_python'" ] && run_blackparrot_AMD_python
 		[ "$name" == "'blackparrot_ASIC'" ] && run_blackparrot_ASIC
 		[ "$name" == "'ibex'" ] && run_ibex
 		[ "$name" == "'ibex_f4pga'" ] && run_ibex_f4pga
@@ -134,6 +143,7 @@ do
 		else
 			[ "$name" == "'veer'" ] && valid=1
 			[ "$name" == "'blackparrot_AMD'" ] && valid=1
+			[ "$name" == "'blackparrot_AMD_python'" ] && valid=1
 			[ "$name" == "'blackparrot_ASIC'" ] && valid=1
 			[ "$name" == "'ibex'" ] && valid=1
 			[ "$name" == "'ibex_f4pga'" ] && valid=1
