@@ -1,4 +1,4 @@
-# Synlig
+<!-- # Synlig -->
 
 ![Synlig logo](images/synlig-logo.svg)
 
