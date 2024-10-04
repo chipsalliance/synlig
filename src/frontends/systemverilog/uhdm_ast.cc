@@ -2409,6 +2409,8 @@ void UhdmAst::process_module()
             current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 32);
         else if (name == "whitebox")
             current_node->attributes[ID::whitebox] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "abc9_box")
+            current_node->attributes[ID::abc9_box] = AST::AstNode::mkconst_int(1, false, 32);
     });
 
     // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
