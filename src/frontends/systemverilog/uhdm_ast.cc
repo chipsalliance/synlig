@@ -2229,21 +2229,14 @@ void UhdmAst::process_design()
     for (auto &pair : shared.top_nodes) {
         if (!pair.second)
             continue;
-        if (!pair.second->get_bool_attribute(ID::blackbox)) {
-            if (pair.second->type == AST::AST_PACKAGE)
-                current_node->children.insert(current_node->children.begin(), pair.second);
-            else {
-                check_memories(pair.second);
-                setup_current_scope(shared.top_nodes, pair.second);
-                simplify_sv(pair.second, nullptr);
-                clear_current_scope();
-                current_node->children.push_back(pair.second);
-            }
-        } else {
-            // TODO: This should be properly erased from the module, but it seems that it's
-            // needed to resolve scope
-            delete pair.second;
-            pair.second = nullptr;
+        if (pair.second->type == AST::AST_PACKAGE)
+            current_node->children.insert(current_node->children.begin(), pair.second);
+        else {
+            check_memories(pair.second);
+            setup_current_scope(shared.top_nodes, pair.second);
+            simplify_sv(pair.second, nullptr);
+            clear_current_scope();
+            current_node->children.push_back(pair.second);
         }
     }
     shared.current_design = old_design;
