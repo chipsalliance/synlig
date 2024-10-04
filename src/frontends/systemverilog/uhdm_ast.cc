@@ -2407,6 +2407,8 @@ void UhdmAst::process_module()
         std::string name = vpi_get_str(vpiName, h);
         if (name == "blackbox")
             current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "whitebox")
+            current_node->attributes[ID::whitebox] = AST::AstNode::mkconst_int(1, false, 32);
     });
 
     // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
