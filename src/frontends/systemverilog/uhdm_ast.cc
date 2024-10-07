@@ -2229,21 +2229,14 @@ void UhdmAst::process_design()
     for (auto &pair : shared.top_nodes) {
         if (!pair.second)
             continue;
-        if (!pair.second->get_bool_attribute(ID::blackbox)) {
-            if (pair.second->type == AST::AST_PACKAGE)
-                current_node->children.insert(current_node->children.begin(), pair.second);
-            else {
-                check_memories(pair.second);
-                setup_current_scope(shared.top_nodes, pair.second);
-                simplify_sv(pair.second, nullptr);
-                clear_current_scope();
-                current_node->children.push_back(pair.second);
-            }
-        } else {
-            // TODO: This should be properly erased from the module, but it seems that it's
-            // needed to resolve scope
-            delete pair.second;
-            pair.second = nullptr;
+        if (pair.second->type == AST::AST_PACKAGE)
+            current_node->children.insert(current_node->children.begin(), pair.second);
+        else {
+            check_memories(pair.second);
+            setup_current_scope(shared.top_nodes, pair.second);
+            simplify_sv(pair.second, nullptr);
+            clear_current_scope();
+            current_node->children.push_back(pair.second);
         }
     }
     shared.current_design = old_design;
@@ -2407,6 +2400,10 @@ void UhdmAst::process_module()
         std::string name = vpi_get_str(vpiName, h);
         if (name == "blackbox")
             current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "whitebox")
+            current_node->attributes[ID::whitebox] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "abc9_box")
+            current_node->attributes[ID::abc9_box] = AST::AstNode::mkconst_int(1, false, 32);
     });
 
     // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
@@ -2869,6 +2866,14 @@ void UhdmAst::process_array_var()
         std::string name = vpi_get_str(vpiName, h);
         if (name == "keep")
             current_node->attributes[ID::keep] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "anyconst")
+            current_node->attributes[ID::anyconst] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "anyseq")
+            current_node->attributes[ID::anyseq] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "allconst")
+            current_node->attributes[ID::allconst] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "allseq")
+            current_node->attributes[ID::allseq] = AST::AstNode::mkconst_int(1, false, 32);
     });
     vpiHandle itr = vpi_iterate(vpi_get(vpiType, obj_h) == vpiArrayVar ? vpiReg : vpiElement, obj_h);
     while (vpiHandle reg_h = vpi_scan(itr)) {
@@ -3263,6 +3268,14 @@ void UhdmAst::process_array_net(const UHDM::BaseClass *object)
         std::string name = vpi_get_str(vpiName, h);
         if (name == "keep")
             current_node->attributes[ID::keep] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "anyconst")
+            current_node->attributes[ID::anyconst] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "anyseq")
+            current_node->attributes[ID::anyseq] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "allconst")
+            current_node->attributes[ID::allconst] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "allseq")
+            current_node->attributes[ID::allseq] = AST::AstNode::mkconst_int(1, false, 32);
     });
     visit_one_to_many({vpiRange}, obj_h, [&](AST::AstNode *node) { unpacked_ranges.push_back(node); });
     add_multirange_wire(current_node, packed_ranges, unpacked_ranges);
@@ -4995,6 +5008,14 @@ void UhdmAst::process_net()
         std::string name = vpi_get_str(vpiName, h);
         if (name == "keep")
             current_node->attributes[ID::keep] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "anyconst")
+            current_node->attributes[ID::anyconst] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "anyseq")
+            current_node->attributes[ID::anyseq] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "allconst")
+            current_node->attributes[ID::allconst] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "allseq")
+            current_node->attributes[ID::allseq] = AST::AstNode::mkconst_int(1, false, 32);
     });
 }
 
