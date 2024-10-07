@@ -476,6 +476,7 @@
                 "simple/carryadd.v",
                 "simple/case_expr_const.v",
                 "simple/case_expr_extend.sv",
+                "simple/case_expr_non_const.v",
                 "simple/case_expr_query.sv",
                 "simple/case_large.v",
                 "simple/const_branch_finish.v",
@@ -1892,8 +1893,7 @@
                 "unary_op_plus/unary_op_plus.sv"
             ],
             "yosys": [
-                "arch/common/blockrom.v",
-                "simple/case_expr_non_const.v"
+                "arch/common/blockrom.v"
             ],
             "sv2v": [
                 "core/inc.sv",
