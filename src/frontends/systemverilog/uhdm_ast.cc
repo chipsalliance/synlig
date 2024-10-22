@@ -2313,6 +2313,19 @@ void UhdmAst::process_module()
         return;
     }
     current_node = make_ast_node(AST::AST_MODULE);
+
+    bool has_blackbox_attribute = false;
+    iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
+        std::string name = vpi_get_str(vpiName, h);
+        if (name == "blackbox") {
+            current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 32);
+            has_blackbox_attribute = true;
+        } else if (name == "whitebox")
+            current_node->attributes[ID::whitebox] = AST::AstNode::mkconst_int(1, false, 32);
+        else if (name == "abc9_box")
+            current_node->attributes[ID::abc9_box] = AST::AstNode::mkconst_int(1, false, 32);
+    });
+
     AST::AstNode *module_node = current_node;
     const uhdm_handle *const handle = (const uhdm_handle *)obj_h;
     const auto *const uhdm_obj = (const UHDM::any *)handle->object;
@@ -2371,7 +2384,7 @@ void UhdmAst::process_module()
         add_or_replace_child(current_node, node);
     });
     if (!is_top_module) {
-        std::string module_name = ((!parameters.empty()) && (!is_blackbox)) ? AST::derived_module_name(type, parameters).c_str() : type;
+        std::string module_name = ((!parameters.empty()) && (!is_blackbox) && (!has_blackbox_attribute)) ? AST::derived_module_name(type, parameters).c_str() : type;
         type = module_name;
         current_node->str = type;
         if (shared.top_nodes.find(type) != shared.top_nodes.end()) {
@@ -2396,15 +2409,6 @@ void UhdmAst::process_module()
         current_node->children.erase(process_it);
         current_node->children.insert(current_node->children.end(), proc);
     }
-    iterate_one_to_many({vpiAttribute}, obj_h, [&](vpiHandle h) {
-        std::string name = vpi_get_str(vpiName, h);
-        if (name == "blackbox")
-            current_node->attributes[ID::blackbox] = AST::AstNode::mkconst_int(1, false, 32);
-        else if (name == "whitebox")
-            current_node->attributes[ID::whitebox] = AST::AstNode::mkconst_int(1, false, 32);
-        else if (name == "abc9_box")
-            current_node->attributes[ID::abc9_box] = AST::AstNode::mkconst_int(1, false, 32);
-    });
 
     // Primitives will have the same names (like "and"), so we need to make sure we don't replace them
     visit_one_to_many({vpiPrimitive}, obj_h, [&](AST::AstNode *node) {
