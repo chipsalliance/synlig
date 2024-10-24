@@ -25,7 +25,8 @@
         },
         "unstable": {
             "sv2v": [
-                "core/for_decl.v"
+                "core/for_decl.v",
+                "core/named_block.v"
             ]
         },
         "multiple topmodules": {
@@ -459,6 +460,7 @@
                 "sim/sdff.v",
                 "sim/sdffce.v",
                 "sim/sdffe.v",
+                "sim/simple_assign.v",
                 "simple/aes_kexp128.v",
                 "simple/always01.v",
                 "simple/always02.v",
@@ -1117,7 +1119,6 @@
                 "core/multipack_port.v",
                 "core/multipack_struct_cast.sv",
                 "core/multipack_tb.v",
-                "core/named_block.v",
                 "core/named_genblk_cascade_tb.v",
                 "core/no_default_param.sv",
                 "core/non_ansi_port_decl_order_tb.v",
