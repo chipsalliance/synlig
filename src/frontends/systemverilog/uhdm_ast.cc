@@ -2384,7 +2384,7 @@ void UhdmAst::process_module()
         add_or_replace_child(current_node, node);
     });
     if (!is_top_module) {
-        std::string module_name = 
+        std::string module_name =
           ((!parameters.empty()) && (!is_blackbox) && (!has_blackbox_attribute)) ? AST::derived_module_name(type, parameters).c_str() : type;
         type = module_name;
         current_node->str = type;
