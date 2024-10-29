@@ -2385,7 +2385,7 @@ void UhdmAst::process_module()
     });
     if (!is_top_module) {
         std::string module_name = 
-            ((!parameters.empty()) && (!is_blackbox) && (!has_blackbox_attribute)) ? AST::derived_module_name(type, parameters).c_str() : type;
+          ((!parameters.empty()) && (!is_blackbox) && (!has_blackbox_attribute)) ? AST::derived_module_name(type, parameters).c_str() : type;
         type = module_name;
         current_node->str = type;
         if (shared.top_nodes.find(type) != shared.top_nodes.end()) {
