@@ -84,7 +84,7 @@ for test_case in "${test_cases[@]}"; do
 
     sed -i -n \
         -e "s#${REPO_DIR}/##g" \
-        -E -e '/1. Executing (Verilog with )?UHDM frontend./,$ {/^End of script/d; /^Time spent/d; p}' \
+        -E -e '/1. Executing (SystemVerilog)?(UHDM)? frontend./,$ {/^End of script/d; /^Time spent/d; p}' \
         "${test_out_dir}/synlig.log"
 
     # ASAN log contains PID in the name. There should be only one log, but even
@@ -107,7 +107,8 @@ for test_case in "${test_cases[@]}"; do
     # tests/Makefile runs yosys with CWD set to `tests/build` directory.
     # Some tests write `yosys.sv` file in the CWD.
     if [[ -e $REPO_DIR/tests/build/yosys.sv ]]; then
-        mv "$REPO_DIR/tests/build/yosys.sv" "${test_out_dir}/"
+        tail -n +2 "$REPO_DIR/tests/build/yosys.sv" > "${test_out_dir}/yosys.sv"
+        rm "$REPO_DIR/tests/build/yosys.sv"
     fi
 
     if (( $asan_ok == 0 )); then
