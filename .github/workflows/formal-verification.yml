@@ -80,7 +80,7 @@ jobs:
         with:
           name: formal-verification-logs-${{ matrix.name }}
           path: |
-            ${{ matrix.name }}_formal_verification_logs.tar
+            ${{ matrix.name }}_formal_verification_logs.tar.gz
 
       - name: Upload load graphs
         uses: actions/upload-artifact@v4
