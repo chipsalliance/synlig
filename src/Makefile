@@ -261,6 +261,7 @@ $(eval $(call add_include_file,kernel/celltypes.h))
 $(eval $(call add_include_file,kernel/consteval.h))
 $(eval $(call add_include_file,kernel/constids.inc))
 $(eval $(call add_include_file,kernel/cost.h))
+$(eval $(call add_include_file,kernel/drivertools.h))
 $(eval $(call add_include_file,kernel/ff.h))
 $(eval $(call add_include_file,kernel/ffinit.h))
 $(eval $(call add_include_file,kernel/ffmerge.h))
@@ -277,6 +278,7 @@ $(eval $(call add_include_file,kernel/register.h))
 $(eval $(call add_include_file,kernel/rtlil.h))
 $(eval $(call add_include_file,kernel/satgen.h))
 $(eval $(call add_include_file,kernel/scopeinfo.h))
+$(eval $(call add_include_file,kernel/sexpr.h))
 $(eval $(call add_include_file,kernel/sigtools.h))
 $(eval $(call add_include_file,kernel/timinginfo.h))
 $(eval $(call add_include_file,kernel/utils.h))
@@ -299,6 +301,7 @@ OBJS += kernel/register.o kernel/rtlil.o kernel/log.o kernel/calc.o kernel/yosys
 OBJS += kernel/binding.o
 OBJS += kernel/cellaigs.o kernel/celledges.o kernel/cost.o kernel/satgen.o kernel/scopeinfo.o kernel/qcsat.o kernel/mem.o kernel/ffmerge.o kernel/ff.o kernel/yw.o kernel/json.o kernel/fmt.o
 OBJS += kernel/fstdata.o
+OBJS += kernel/sexpr.o kernel/drivertools.o kernel/functional.o
 
 OBJS += libs/bigint/BigIntegerAlgorithms.o libs/bigint/BigInteger.o libs/bigint/BigIntegerUtils.o
 OBJS += libs/bigint/BigUnsigned.o libs/bigint/BigUnsignedInABase.o
