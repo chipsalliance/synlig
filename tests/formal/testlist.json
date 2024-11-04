@@ -91,7 +91,6 @@
                 "CastLogic/top.sv",
                 "CastSize/top.sv",
                 "CastStruct/top.sv",
-                "CastStructArray/top.sv",
                 "CastToSumOfConstants/top.sv",
                 "CastToSumWithParameterIn2InstancesOfSubmodule/top.sv",
                 "CastToSumWithParameterInSubmodule/top.sv",
@@ -148,6 +147,8 @@
                 "IndexedPartSelectPos/dut.sv",
                 "InterfaceAsPort/top.sv",
                 "InterfaceAsPortAssignValueInSubmodule/top.sv",
+                "InterfaceParameter/top.sv",
+                "InterfaceParameterSetValue/top.sv",
                 "InterfaceVariable/top.sv",
                 "InterfaceWithPort/top.sv",
                 "LocalParamInNestedForLoops/top.sv",
@@ -209,9 +210,6 @@
                 "ParameterInitializedInTopOf5LevelHierarchy/top.sv",
                 "ParameterInitializedInTopOf5LevelHierarchyWithUnusedParamInTheMiddle/top.sv",
                 "ParameterInitializedInTopOf5LevelHierarchyWithUnusedParamOfDifferentTypeInTheMiddle/top.sv",
-                "ParameterOfParametrizedType/top.sv",
-                "ParameterOfParametrizedTypeInSubmodule/top.sv",
-                "ParameterOfSizeOfPort/top.sv",
                 "ParameterPassedTo3TimesNestedSubmodule/top.sv",
                 "ParameterPassedToSubmoduleInGenscopeOfSubmodule/top.sv",
                 "ParameterPassedToSubmoduleOfSubmodule/top.sv",
@@ -331,6 +329,7 @@
                 "arch/ice40/dpram.v",
                 "arch/ice40/rom.v",
                 "arch/ice40/spram.v",
+                "arch/nanoxplore/meminit.v",
                 "arch/nexus/blockram_dc.v",
                 "arch/quicklogic/qlf_k6n10f/meminit.v",
                 "arch/xilinx/asym_ram_sdp_read_wider.v",
@@ -906,6 +905,7 @@
                 "fmt/initial_display.v",
                 "fmt/roundtrip.v",
                 "fmt/roundtrip_tb.v",
+                "functional/picorv32_tb.v",
                 "hana/hana_vlib.v",
                 "hana/test_simulation_vlib.v",
                 "lut/map_and.v",
@@ -981,7 +981,6 @@
                 "various/rand_const.sv",
                 "various/shregmap.v",
                 "various/struct_access.sv",
-                "verific/enum_values.sv",
                 "verilog/asgn_expr.sv",
                 "verilog/dynamic_range_lhs.v",
                 "verilog/func_upto.sv",
@@ -1524,6 +1523,7 @@
                 "arch/gowin/init.v",
                 "arch/ice40/macc.v",
                 "arch/xilinx/priority_memory.v",
+                "functional/picorv32.v",
                 "hana/test_parse2synthtrans.v",
                 "hana/test_simulation_always.v",
                 "hana/test_simulation_buffer.v",
@@ -1817,14 +1817,25 @@
                 "various/reg_wire_error.sv"
             ]
         },
+        "surelog wrongly assigns values in enum": {
+            "yosys": [
+                "verific/enum_values.sv"
+            ]
+        },
+        "yosys wrongly calculates wiretype size": {
+            "simple": [
+                "CastStructArray/top.sv",
+                "ParameterOfParametrizedTypeInSubmodule/top.sv",
+                "ParameterOfParametrizedType/top.sv",
+                "ParameterOfSizeOfPort/top.sv"
+            ]
+        },
         "FV: Failed to prove equivalence": {
             "simple": [
                 "CastClog2ToMinimalSizeOfParamValueFromCommandLine/top.sv",
                 "Fork/top.sv",
                 "ImportedPackageEnumItemInInterface/top.sv",
                 "IndexedPartSelectOfArrayElement/top.sv",
-                "InterfaceParameter/top.sv",
-                "InterfaceParameterSetValue/top.sv",
                 "LogicPackedArray/top.sv",
                 "MultirangesStartNotFromZero/top.sv",
                 "OneNetModport/top.sv",
