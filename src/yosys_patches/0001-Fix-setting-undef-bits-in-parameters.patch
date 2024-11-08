@@ -1,0 +1,25 @@
+From 84a9827ed92421008542a7d85e9381607b9add7b Mon Sep 17 00:00:00 2001
+From: mszelwiga <mszelwiga@internships.antmicro.com>
+Date: Thu, 21 Nov 2024 14:26:39 +0100
+Subject: [PATCH] Fix setting undef bits in parameters
+
+---
+ passes/cmds/setundef.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/passes/cmds/setundef.cc b/passes/cmds/setundef.cc
+index 4ba58036b..dce33c05b 100644
+--- a/passes/cmds/setundef.cc
++++ b/passes/cmds/setundef.cc
+@@ -243,7 +243,7 @@ struct SetundefPass : public Pass {
+ 			{
+ 				for (auto *cell : module->selected_cells()) {
+ 					for (auto &parameter : cell->parameters) {
+-						for (auto bit : parameter.second) {
++						for (auto &bit : parameter.second.bits()) {
+ 							if (bit > RTLIL::State::S1)
+ 								bit = worker.next_bit();
+ 						}
+-- 
+2.39.2
+
