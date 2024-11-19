@@ -1,4 +1,6 @@
 
+CXXFLAGS += -I $(SYNLIG_SRC)/frontends/systemverilog
+
 SYNLIG_OBJS += frontends/systemverilog/uhdm_ast.o
 SYNLIG_OBJS += frontends/systemverilog/uhdm_ast_frontend.o
 SYNLIG_OBJS += frontends/systemverilog/uhdm_common_frontend.o
