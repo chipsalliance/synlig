@@ -2080,7 +2080,8 @@ void UhdmAst::process_packed_array_typespec()
             wiretype_node->str = node->str;
             current_node->children.push_back(wiretype_node);
             current_node->is_custom_type = true;
-            current_node->str = node->str;
+            if (current_node->str == "")
+                current_node->str = node->str;
             delete node;
         } else if (node) {
             if (!node->str.empty()) {
