@@ -275,6 +275,43 @@ void shell(RTLIL::Design *design)
     recursion_counter--;
     log_cmd_error_throw = false;
 }
+std::vector<std::string> format_help_msg(std::string text, int max_len)
+{
+    std::vector<std::string> lines;
+    std::string current_token = "", current_line = "";
+    for (char c : text + " ") {
+        if (c == ' ') {
+            if (current_token == "")
+                continue;
+            if (current_line.size() + current_token.size() + 1 <= max_len) {
+                if (current_line != "")
+                    current_line += " ";
+                current_line += current_token;
+                current_token = "";
+            } else {
+                if (current_line != "")
+                    lines.push_back(current_line);
+                current_line = current_token;
+                current_token = "";
+            }
+        } else {
+            current_token += c;
+        }
+    }
+    if (current_line != "")
+        lines.push_back(current_line);
+    return lines;
+}
+template <typename reg_type> std::string get_list_from_register(std::map<std::string, reg_type> reg)
+{
+    string result = "";
+    for (auto reg_item : reg) {
+        if (reg_item != (*reg.begin()))
+            result += ", ";
+        result += reg_item.first;
+    }
+    return result;
+}
 }; // namespace Synlig
 int main(int argc, char **argv)
 {
@@ -334,9 +371,16 @@ int main(int argc, char **argv)
         printf("\n");
         printf("    -b backend\n");
         printf("        use this backend for the output file specified on the command line\n");
+        Pass::init_register();
+        std::string backend_text = "list of available backends: " + Synlig::get_list_from_register<Backend *>(backend_register);
+        for (auto line : Synlig::format_help_msg(backend_text, 70))
+            printf("        %s\n", line.c_str());
         printf("\n");
         printf("    -f frontend\n");
         printf("        use the specified frontend for the input files on the command line\n");
+        std::string frontend_text = "list of available frontends: " + Synlig::get_list_from_register<Frontend *>(frontend_register);
+        for (auto line : Synlig::format_help_msg(frontend_text, 70))
+            printf("        %s\n", line.c_str());
         printf("\n");
         printf("    -H\n");
         printf("        print the command list\n");
@@ -635,7 +679,16 @@ int main(int argc, char **argv)
             frontend_files.push_back(argv[i]);
     }
 
+    if (frontend_files.size() != 0 && frontend_register.count(frontend_command) == 0 && frontend_command != "auto") {
+        std::string frontend_text = "list of available frontends: " + Synlig::get_list_from_register<Frontend *>(frontend_register);
+        for (auto line : Synlig::format_help_msg(frontend_text, 80))
+            printf("%s\n", line.c_str());
+        printf("\n");
+        log_error(("No such frontend: " + frontend_command + "\n").c_str());
+    }
+
     for (auto it = frontend_files.begin(); it != frontend_files.end(); ++it) {
+
         if (run_frontend((*it).c_str(), frontend_command))
             run_shell = false;
     }
@@ -675,10 +728,18 @@ int main(int argc, char **argv)
         log_error("Can't exectue TCL shell: this version of yosys is not built with TCL support enabled.\n");
 #endif
     } else {
-        if (run_shell)
+        if (run_shell) {
             Synlig::shell(yosys_design);
-        else
+        } else {
+            if (backend_register.count(backend_command) == 0 && backend_command != "auto") {
+                std::string backend_text = "list of available backends: " + Synlig::get_list_from_register<Backend *>(backend_register);
+                for (auto line : Synlig::format_help_msg(backend_text, 80))
+                    printf("%s\n", line.c_str());
+                printf("\n");
+                log_error(("No such backend: " + backend_command + "\n").c_str());
+            }
             run_backend(output_filename, backend_command);
+        }
     }
 
     yosys_design->check();
