@@ -46,6 +46,7 @@ lowrisc:ip:rom_ctrl:0.1
 lowrisc:ip:rom_ctrl_pkg:0.1
 lowrisc:ip:rstmgr_cnsty_chk:0
 lowrisc:ip:rstmgr_reg:0.1
+lowrisc:ip:rv_core_ibex:0.1
 lowrisc:ip:rv_core_ibex_pkg:0.1
 lowrisc:ip:rv_dm:0.1
 lowrisc:ip:rv_plic_component:0.1
