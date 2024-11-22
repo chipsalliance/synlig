@@ -4997,6 +4997,8 @@ void UhdmAst::process_port()
     std::vector<AST::AstNode *> unpacked_ranges; // comes after wire name
     if (lowConn_h) {
         vpiHandle actual_h = vpi_handle(vpiActual, lowConn_h);
+        if (!actual_h)
+            log_error("vpiPort doesn't contain vpiActual in it's subtree. Aborting.\n");
         auto actual_type = vpi_get(vpiType, actual_h);
         switch (actual_type) {
         case vpiModport: {
