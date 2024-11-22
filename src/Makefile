@@ -18,7 +18,7 @@ CONFIG := none
 # CONFIG := gcc
 
 # --- add synlig cxxflags --- #
-CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_SRC)/frontends/*/ -I $(SYNLIG_SRC)/mods/* -I $(SYNLIG_SRC)/utils
+CXXFLAGS += -DSYNLIG_STANDALONE_BINARY -I $(SYNLIG_SRC)/utils
 
 # --- add static option --- #
 CXXFLAGS += -static

@@ -426,3 +426,11 @@ endef
 $(foreach t,${GetTargetsList},$(foreach ts,$(call GetTargetStructName,${t}),$(eval $(value _single_target_rules))))
 
 endif
+
+#--------------------------------------------------------------------------------
+# Add Yosys patches target
+
+include ${TOP_DIR}/src/yosys_patches/Makefile.inc
+build@synlig: apply_yosys_patches
+build@yosys: apply_yosys_patches
+

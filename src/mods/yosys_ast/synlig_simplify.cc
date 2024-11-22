@@ -1439,8 +1439,8 @@ bool synlig_simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zer
                     if (v->type == Yosys::AST::AST_CONSTANT && v->bits_only_01()) {
                         RTLIL::Const case_item_expr = v->bitsAsConst(width_hint, sign_hint);
                         RTLIL::Const match = const_eq(case_expr, case_item_expr, sign_hint, sign_hint, 1);
-                        log_assert(match.bits.size() == 1);
-                        if (match.bits.front() == RTLIL::State::S1) {
+                        log_assert(match.size() == 1);
+                        if (match.front() == RTLIL::State::S1) {
                             while (i + 1 < GetSize(ast_node->children))
                                 delete ast_node->children[++i];
                             goto keep_const_cond;
@@ -1771,7 +1771,7 @@ bool synlig_simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zer
         if (ast_node->children[1]->type != Yosys::AST::AST_CONSTANT)
             log_file_error(ast_node->filename, ast_node->location.first_line, "Right operand of to_bits expression is not constant!\n");
         RTLIL::Const new_value = ast_node->children[1]->bitsAsConst(ast_node->children[0]->bitsAsConst().as_int(), ast_node->children[1]->is_signed);
-        newNode = Yosys::AST::AstNode::mkconst_bits(new_value.bits, ast_node->children[1]->is_signed);
+        newNode = Yosys::AST::AstNode::mkconst_bits(new_value.to_bits(), ast_node->children[1]->is_signed);
         goto apply_newNode;
     }
 
@@ -1916,7 +1916,7 @@ bool synlig_simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zer
                 log_file_warning(ast_node->filename, ast_node->location.first_line, "converting real value %e to binary %s.\n",
                                  ast_node->children[0]->realvalue, log_signal(constvalue));
                 delete ast_node->children[0];
-                ast_node->children[0] = Yosys::AST::AstNode::mkconst_bits(constvalue.bits, sign_hint);
+                ast_node->children[0] = Yosys::AST::AstNode::mkconst_bits(constvalue.to_bits(), sign_hint);
                 did_something = true;
             }
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT) {
@@ -1924,7 +1924,7 @@ bool synlig_simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zer
                     RTLIL::SigSpec sig(ast_node->children[0]->bits);
                     sig.extend_u0(width, ast_node->children[0]->is_signed);
                     Yosys::AST::AstNode *old_child_0 = ast_node->children[0];
-                    ast_node->children[0] = Yosys::AST::AstNode::mkconst_bits(sig.as_const().bits, ast_node->is_signed);
+                    ast_node->children[0] = Yosys::AST::AstNode::mkconst_bits(sig.as_const().to_bits(), ast_node->is_signed);
                     delete old_child_0;
                 }
                 ast_node->children[0]->is_signed = ast_node->is_signed;
@@ -3313,8 +3313,8 @@ skip_dynamic_range_lvalue_expansion:;
                 delete buf;
 
                 uint32_t result = 0;
-                for (size_t i = 0; i < arg_value.bits.size(); i++)
-                    if (arg_value.bits.at(i) == RTLIL::State::S1)
+                for (size_t i = 0; i < arg_value.size(); i++)
+                    if (arg_value.at(i) == RTLIL::State::S1)
                         result = i + 1;
 
                 newNode = ast_node->mkconst_int(result, true);
@@ -4111,14 +4111,14 @@ replace_fcall_later:;
         case Yosys::AST::AST_BIT_NOT:
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = RTLIL::const_not(ast_node->children[0]->bitsAsConst(width_hint, sign_hint), dummy_arg, sign_hint, false, width_hint);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, sign_hint);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), sign_hint);
             }
             break;
         case Yosys::AST::AST_TO_SIGNED:
         case Yosys::AST::AST_TO_UNSIGNED:
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = ast_node->children[0]->bitsAsConst(width_hint, sign_hint);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, ast_node->type == Yosys::AST::AST_TO_SIGNED);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), ast_node->type == Yosys::AST::AST_TO_SIGNED);
             }
             break;
             if (0) {
@@ -4140,7 +4140,7 @@ replace_fcall_later:;
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT && ast_node->children[1]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = const_func(ast_node->children[0]->bitsAsConst(width_hint, sign_hint),
                                             ast_node->children[1]->bitsAsConst(width_hint, sign_hint), sign_hint, sign_hint, width_hint);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, sign_hint);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), sign_hint);
             }
             break;
             if (0) {
@@ -4165,14 +4165,14 @@ replace_fcall_later:;
             }
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = const_func(RTLIL::Const(ast_node->children[0]->bits), dummy_arg, false, false, -1);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, false);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), false);
             }
             break;
         case Yosys::AST::AST_LOGIC_NOT:
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y =
                   RTLIL::const_logic_not(RTLIL::Const(ast_node->children[0]->bits), dummy_arg, ast_node->children[0]->is_signed, false, -1);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, false);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), false);
             } else if (ast_node->children[0]->isConst()) {
                 newNode = Yosys::AST::AstNode::mkconst_int(ast_node->children[0]->asReal(sign_hint) == 0, false, 1);
             }
@@ -4188,7 +4188,7 @@ replace_fcall_later:;
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT && ast_node->children[1]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = const_func(RTLIL::Const(ast_node->children[0]->bits), RTLIL::Const(ast_node->children[1]->bits),
                                             ast_node->children[0]->is_signed, ast_node->children[1]->is_signed, -1);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, false);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), false);
             } else if (ast_node->children[0]->isConst() && ast_node->children[1]->isConst()) {
                 if (ast_node->type == Yosys::AST::AST_LOGIC_AND)
                     newNode = Yosys::AST::AstNode::mkconst_int(
@@ -4221,7 +4221,7 @@ replace_fcall_later:;
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT && ast_node->children[1]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = const_func(ast_node->children[0]->bitsAsConst(width_hint, sign_hint), RTLIL::Const(ast_node->children[1]->bits),
                                             sign_hint, ast_node->type == Yosys::AST::AST_POW ? ast_node->children[1]->is_signed : false, width_hint);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, sign_hint);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), sign_hint);
             } else if (ast_node->type == Yosys::AST::AST_POW && ast_node->children[0]->isConst() && ast_node->children[1]->isConst()) {
                 newNode = new Yosys::AST::AstNode(Yosys::AST::AST_REALVALUE);
                 newNode->realvalue = pow(ast_node->children[0]->asReal(sign_hint), ast_node->children[1]->asReal(sign_hint));
@@ -4264,7 +4264,7 @@ replace_fcall_later:;
                 bool cmp_signed = ast_node->children[0]->is_signed && ast_node->children[1]->is_signed;
                 RTLIL::Const y = const_func(ast_node->children[0]->bitsAsConst(cmp_width, cmp_signed),
                                             ast_node->children[1]->bitsAsConst(cmp_width, cmp_signed), cmp_signed, cmp_signed, 1);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, false);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), false);
             } else if (ast_node->children[0]->isConst() && ast_node->children[1]->isConst()) {
                 bool cmp_signed = (ast_node->children[0]->type == Yosys::AST::AST_REALVALUE || ast_node->children[0]->is_signed) &&
                                   (ast_node->children[1]->type == Yosys::AST::AST_REALVALUE || ast_node->children[1]->is_signed);
@@ -4329,7 +4329,7 @@ replace_fcall_later:;
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT && ast_node->children[1]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = const_func(ast_node->children[0]->bitsAsConst(width_hint, sign_hint),
                                             ast_node->children[1]->bitsAsConst(width_hint, sign_hint), sign_hint, sign_hint, width_hint);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, sign_hint);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), sign_hint);
             } else if (ast_node->children[0]->isConst() && ast_node->children[1]->isConst()) {
                 newNode = new Yosys::AST::AstNode(Yosys::AST::AST_REALVALUE);
                 switch (ast_node->type) {
@@ -4367,7 +4367,7 @@ replace_fcall_later:;
             }
             if (ast_node->children[0]->type == Yosys::AST::AST_CONSTANT) {
                 RTLIL::Const y = const_func(ast_node->children[0]->bitsAsConst(width_hint, sign_hint), dummy_arg, sign_hint, false, width_hint);
-                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, sign_hint);
+                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), sign_hint);
             } else if (ast_node->children[0]->isConst()) {
                 newNode = new Yosys::AST::AstNode(Yosys::AST::AST_REALVALUE);
                 if (ast_node->type == Yosys::AST::AST_NEG)
@@ -4393,10 +4393,10 @@ replace_fcall_later:;
                             newNode->realvalue = choice->asReal(sign_hint);
                         } else {
                             RTLIL::Const y = choice->bitsAsConst(width_hint, sign_hint);
-                            if (choice->is_string && y.bits.size() % 8 == 0 && sign_hint == false)
-                                newNode = Yosys::AST::AstNode::mkconst_str(y.bits);
+                            if (choice->is_string && y.size() % 8 == 0 && sign_hint == false)
+                                newNode = Yosys::AST::AstNode::mkconst_str(y.to_bits());
                             else
-                                newNode = Yosys::AST::AstNode::mkconst_bits(y.bits, sign_hint);
+                                newNode = Yosys::AST::AstNode::mkconst_bits(y.to_bits(), sign_hint);
                         }
                     } else if (choice->isConst()) {
                         newNode = choice->clone();
@@ -4404,11 +4404,11 @@ replace_fcall_later:;
                 } else if (ast_node->children[1]->type == Yosys::AST::AST_CONSTANT && ast_node->children[2]->type == Yosys::AST::AST_CONSTANT) {
                     RTLIL::Const a = ast_node->children[1]->bitsAsConst(width_hint, sign_hint);
                     RTLIL::Const b = ast_node->children[2]->bitsAsConst(width_hint, sign_hint);
-                    log_assert(a.bits.size() == b.bits.size());
-                    for (size_t i = 0; i < a.bits.size(); i++)
-                        if (a.bits[i] != b.bits[i])
-                            a.bits[i] = RTLIL::State::Sx;
-                    newNode = Yosys::AST::AstNode::mkconst_bits(a.bits, sign_hint);
+                    log_assert(a.size() == b.size());
+                    for (size_t i = 0; i < a.size(); i++)
+                        if (a[i] != b[i])
+                            a.bits()[i] = RTLIL::State::Sx;
+                    newNode = Yosys::AST::AstNode::mkconst_bits(a.to_bits(), sign_hint);
                 } else if (ast_node->children[1]->isConst() && ast_node->children[2]->isConst()) {
                     newNode = new Yosys::AST::AstNode(Yosys::AST::AST_REALVALUE);
                     if (ast_node->children[1]->asReal(sign_hint) == ast_node->children[2]->asReal(sign_hint))
@@ -4429,7 +4429,7 @@ replace_fcall_later:;
                     val = ast_node->children[1]->bitsAsUnsizedConst(width);
                 else
                     val = ast_node->children[1]->bitsAsConst(width);
-                newNode = Yosys::AST::AstNode::mkconst_bits(val.bits, ast_node->children[1]->is_signed);
+                newNode = Yosys::AST::AstNode::mkconst_bits(val.to_bits(), ast_node->children[1]->is_signed);
             }
             break;
         case Yosys::AST::AST_CONCAT:
