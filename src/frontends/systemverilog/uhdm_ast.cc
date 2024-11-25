@@ -2380,6 +2380,19 @@ void UhdmAst::simplify_parameter(AST::AstNode *parameter, const std::vector<::Yo
             }
         });
     }
+    auto ancestor_node = this;
+    while (ancestor_node) {
+        if (ancestor_node->current_node) {
+            visitEachDescendant(ancestor_node->current_node, [&](AST::AstNode *current_scope_node) {
+                if (current_scope_node->type == AST::AST_TYPEDEF || current_scope_node->type == AST::AST_PARAMETER ||
+                    current_scope_node->type == AST::AST_LOCALPARAM || current_scope_node->type == AST::AST_FUNCTION) {
+                    AST_INTERNAL::current_scope[current_scope_node->str] = current_scope_node;
+                }
+            });
+        }
+        ancestor_node = ancestor_node->parent;
+    }
+
     // first apply custom simplification step if needed
     simplify_sv(parameter, nullptr);
     // workaround for yosys sometimes not simplifying parameters children
