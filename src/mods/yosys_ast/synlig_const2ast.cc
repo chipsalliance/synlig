@@ -153,7 +153,7 @@ static void synlig_strtobin(std::vector<RTLIL::State> &data, const char *str, in
 }
 
 // convert the Verilog code for a constant to an AST node
-AstNode *systemverilog_plugin::synlig_const2ast(std::string code, char case_type, bool warn_z)
+AstNode *Synlig::synlig_const2ast(std::string code, char case_type, bool warn_z)
 {
     if (warn_z) {
         AstNode *ret = synlig_const2ast(code, case_type);

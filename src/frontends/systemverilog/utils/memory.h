@@ -4,7 +4,7 @@
 #include <cassert>
 #include <utility>
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 // `std::default_delete` equivalent for any range of pointers, e.g. `std::vector<Object *>`.
@@ -190,6 +190,6 @@ inline unique_resource<Resource, Deleter> make_unique_resource(Tn &&...arg_n)
     return unique_resource<Resource, Deleter>(Resource(std::forward<Tn>(arg_n)...));
 }
 
-} // namespace systemverilog_plugin
+} // namespace Synlig
 
 #endif // SYSTEMVERILOG_PLUGIN_UTILS_MEMORY_H_

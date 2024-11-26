@@ -45,7 +45,7 @@ extern bool sv_mode;
 }
 YOSYS_NAMESPACE_END
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 using namespace ::Yosys;
@@ -2579,7 +2579,7 @@ bool synlig_simplify(Yosys::AST::AstNode *ast_node, bool const_fold, bool at_zer
         int source_width = ast_node->children[0]->id2ast->range_left - ast_node->children[0]->id2ast->range_right + 1;
         int source_offset = ast_node->children[0]->id2ast->range_right;
         int result_width = 1;
-        Yosys::AST::AstNode *member_node = systemverilog_plugin::synlig_get_struct_member(ast_node->children[0]);
+        Yosys::AST::AstNode *member_node = Synlig::synlig_get_struct_member(ast_node->children[0]);
         if (member_node) {
             // Clamp chunk to range of member within struct/union.
             log_assert(!source_offset && !ast_node->children[0]->id2ast->range_swapped);
@@ -3359,7 +3359,7 @@ skip_dynamic_range_lvalue_expansion:;
                                        buf->str.c_str());
 
                     // Check for item in packed struct / union
-                    Yosys::AST::AstNode *item_node = systemverilog_plugin::synlig_get_struct_member(buf);
+                    Yosys::AST::AstNode *item_node = Synlig::synlig_get_struct_member(buf);
                     if (id_ast->type == Yosys::AST::AST_WIRE && item_node) {
                         // The dimension of the original array expression is saved in the 'integer' field
                         dim += buf->integer;
@@ -4082,7 +4082,7 @@ replace_fcall_later:;
                             tmp_range_left = (param_width + 2 * param_offset) - ast_node->children[0]->range_right - 1;
                             tmp_range_right = (param_width + 2 * param_offset) - ast_node->children[0]->range_left - 1;
                         }
-                        Yosys::AST::AstNode *member_node = systemverilog_plugin::synlig_get_struct_member(ast_node);
+                        Yosys::AST::AstNode *member_node = Synlig::synlig_get_struct_member(ast_node);
                         int chunk_offset = member_node ? member_node->range_right : 0;
                         log_assert(!(chunk_offset && param_upto));
                         for (int i = tmp_range_right; i <= tmp_range_left; i++) {
@@ -4478,4 +4478,4 @@ replace_fcall_later:;
     return did_something;
 }
 
-} // namespace systemverilog_plugin
+} // namespace Synlig

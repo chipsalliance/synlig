@@ -40,7 +40,7 @@
 #include "uhdm/uhdm-version.h" // UHDM_VERSION define
 #include "uhdm/vpi_visitor.h"  // visit_object
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 using namespace ::Yosys;
@@ -399,4 +399,4 @@ struct SystemVerilogDefines : public Pass {
     }
 } SystemVerilogDefines;
 
-} // namespace systemverilog_plugin
+} // namespace Synlig

@@ -9,14 +9,14 @@ Copied files, their sources, changes & notes:
   - Changes:
     - C++ includes adapted to not rely on `verilog_frontend.h` file.
     - Removed Yosys namespace; `const2ast()` has been placed inside
-      `systemverilog_plugin` namespace to avoid conflicts with the symbol from
+      `Synlig` namespace to avoid conflicts with the symbol from
       Yosys when statically linking.
     - Renamed to synlig_const2ast.cc to prevent GDB breakpoint aliasing from one
       file to the other original file
 - synlig_simplify.cc: yosys/frontends/ast/simplify.cc (rev. ceef00c)
-  - The file is a part of Yosys AST frontend. It has been placed in the plugin,
+  - The file is a part of Yosys AST frontend. It has been placed in Synlig,
     as in some cases we need to adjust it to support certain functionalities
-    in the plugin. Since it is included now in the plugin, we can skip caling
+    in Synlig. Since it is included now in the plugin, we can skip caling
     the original Yosys' simplify() during AST preparation. The original Yosys'
     simplify() is only called in uhdmcommonfrontend.cc when Yosys' process()
     is called, after having AST done.

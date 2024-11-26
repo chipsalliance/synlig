@@ -30,7 +30,7 @@ extern bool sv_mode;
 }
 YOSYS_NAMESPACE_END
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 using namespace ::Yosys;
@@ -75,7 +75,7 @@ static IdString enum_struct_item;
 /*static*/ const IdString &UhdmAst::low_high_bound() { return attr_id::low_high_bound; }
 /*static*/ const IdString &UhdmAst::is_elaborated_module() { return attr_id::is_elaborated_module; }
 
-#define MAKE_INTERNAL_ID(X) IdString("$systemverilog_plugin$" #X)
+#define MAKE_INTERNAL_ID(X) IdString("$synlig$" #X)
 
 void attr_id_init()
 {
@@ -88,6 +88,7 @@ void attr_id_init()
 
     // Register IdStrings. Can't be done statically, as the IdString class uses resources created during Yosys initialization which happens after
     // static initialization of the plugin when everything is statically linked.
+    // This applies only to Synlig compiled as plugin.
     attr_id::partial = MAKE_INTERNAL_ID(partial);
     attr_id::packed_ranges = MAKE_INTERNAL_ID(packed_ranges);
     attr_id::unpacked_ranges = MAKE_INTERNAL_ID(unpacked_ranges);
@@ -149,7 +150,7 @@ static void delete_attribute(AST::AstNode *node, const IdString &attribute)
     }
 }
 
-// Delete all attributes that belong to the SV plugin.
+// Delete all attributes that belong to the Synlig.
 // The attributes beloning to Yosys are *not* deleted here.
 static void delete_internal_attributes(AST::AstNode *node)
 {
@@ -1371,7 +1372,7 @@ void resolve_children_reparent(AST::AstNode *current_node)
 }
 
 // A wrapper for Yosys simplify function.
-// Simplifies AST constructs specific to this plugin to a form understandable by Yosys' simplify and then calls the latter if necessary.
+// Simplifies AST constructs specific to Synlig to a form understandable by Yosys' simplify and then calls the latter if necessary.
 // Since simplify from Yosys has been forked to this codebase, all new code should be added there instead.
 static void simplify_sv(AST::AstNode *current_node, AST::AstNode *parent_node)
 {
@@ -1836,7 +1837,7 @@ AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
         }
         // handle vpiBinStrVal, vpiDecStrVal and vpiHexStrVal
         if (val_str.find('\'') != std::string::npos) {
-            return ::systemverilog_plugin::synlig_const2ast(std::move(val_str), caseType, false);
+            return ::Synlig::synlig_const2ast(std::move(val_str), caseType, false);
         } else {
             auto size = vpi_get(vpiSize, obj_h);
             std::string size_str;
@@ -1852,7 +1853,7 @@ AST::AstNode *UhdmAst::process_value(vpiHandle obj_h)
                     size_str = "1";
                 }
             }
-            auto c = ::systemverilog_plugin::synlig_const2ast(size_str + strValType + val_str, caseType, false);
+            auto c = ::Synlig::synlig_const2ast(size_str + strValType + val_str, caseType, false);
             if (size <= 0) {
                 // unsized unbased const
                 c->is_unsized = true;
@@ -2914,7 +2915,7 @@ void UhdmAst::process_enum_typespec()
     }
     if (current_node->str.empty()) {
         // anonymous typespec
-        std::string typedef_name = "$systemverilog_plugin$anonymous_enum" + std::to_string(shared.next_anonymous_enum_typedef_id());
+        std::string typedef_name = "$synlig$anonymous_enum" + std::to_string(shared.next_anonymous_enum_typedef_id());
         current_node->str = typedef_name;
         uhdmast_assert(shared.current_top_node != nullptr);
         move_type_to_new_typedef(shared.current_top_node, current_node);
@@ -3993,7 +3994,7 @@ void UhdmAst::process_stream_op()
     // Get a prefix for internal identifiers.
     const auto stream_op_id = shared.next_loop_id();
     const auto make_id_str = [stream_op_id](const char *suffix) {
-        return std::string("$systemverilog_plugin$stream_op_") + std::to_string(stream_op_id) + "_" + suffix;
+        return std::string("$synlig$stream_op_") + std::to_string(stream_op_id) + "_" + suffix;
     };
 
     if (is_proc_ctx) {
@@ -5771,4 +5772,4 @@ void UhdmAst::report_error(const char *format, ...) const
     }
 }
 
-} // namespace systemverilog_plugin
+} // namespace Synlig
