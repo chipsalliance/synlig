@@ -17,7 +17,7 @@ ${ts}.sources := \
 	${${ts}.mod_dir}synlig_const2ast.cc \
 	${${ts}.mod_dir}synlig_edif.cc \
 	${${ts}.mod_dir}synlig_simplify.cc \
-	${${ts}.mod_dir}synlig_write_ilang.cc
+	${${ts}.mod_dir}synlig_ilang.cc
 
 define ${ts}.env =
 export PKG_CONFIG_PATH=$(call ShQuote,${$(call GetTargetStructName,surelog).output_vars.PKG_CONFIG_PATH}$(if ${PKG_CONFIG_PATH},:${PKG_CONFIG_PATH}))
