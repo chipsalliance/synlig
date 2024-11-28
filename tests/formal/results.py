@@ -12,7 +12,7 @@ fv_result_descriptions = {
     "FAIL":               "formally not equivalent",
     "SKIP":               "not executed",
     "YOSYS_READ_FAIL":    "yosys couldn't read design",
-    "PLUGIN_READ_FAIL":   "synlig couldn't read design",
+    "SYNLIG_READ_FAIL":   "synlig couldn't read design",
     "EMPTY_MODULE":       "synlig or yosys produced empty module",
     "UNMATCHED_MODULE":   "different module names or count was produced",
     "NOTHING_TO_COMPARE": "there is nothing to compare in designs",
@@ -70,7 +70,7 @@ def main():
             expected_result = performed_tests_summary[test]["expected_result"]
             performed_result = performed_tests_summary[test]["result"]
             if expected_result != performed_result:
-                if not (expected_result == "READ_FAIL" and performed_result in {"YOSYS_READ_FAIL", "PLUGIN_READ_FAIL"}):
+                if not (expected_result == "READ_FAIL" and performed_result in {"YOSYS_READ_FAIL", "SYNLIG_READ_FAIL"}):
                     results_different_then_expected.append((
                         test,
                         performed_result,

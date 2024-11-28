@@ -21,7 +21,7 @@
 #include "uhdm/vpi_visitor.h"  // visit_object
 #include "uhdm_common_frontend.h"
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 using namespace ::Yosys;
@@ -60,4 +60,4 @@ struct UhdmAstFrontend : public UhdmCommonFrontend {
     void call_log_header(RTLIL::Design *design) override { log_header(design, "Executing UHDM frontend.\n"); }
 } UhdmAstFrontend;
 
-} // namespace systemverilog_plugin
+} // namespace Synlig

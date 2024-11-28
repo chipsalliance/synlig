@@ -26,7 +26,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 // FIXME (mglb): temporary fix to support UHDM both before and after the following change:
@@ -57,4 +57,4 @@ struct UhdmCommonFrontend : public ::Yosys::Frontend {
     void execute(std::istream *&f, std::string filename, std::vector<std::string> args, ::Yosys::RTLIL::Design *design);
 };
 
-} // namespace systemverilog_plugin
+} // namespace Synlig

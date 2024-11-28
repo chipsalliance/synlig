@@ -9,7 +9,7 @@
 #include <memory>
 #include <uhdm/uhdm.h>
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 class AstNodeBuilder;
@@ -330,6 +330,6 @@ class AstNodeBuilder
     operator std::unique_ptr<AstNode>() { return std::move(node); }
 };
 
-} // namespace systemverilog_plugin
+} // namespace Synlig
 
 #endif

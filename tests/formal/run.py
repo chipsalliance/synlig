@@ -53,7 +53,7 @@ def preprocess_sv2v(test_sources, work_path):
 
     return {"status": "converted", "file": sv2v_out}
 
-def prepare_eqy_script(output_dir, script_name, plugin_file, yosys_file):
+def prepare_eqy_script(output_dir, script_name, synlig_file, yosys_file):
 
     script = [
         "[gold]",
@@ -62,7 +62,7 @@ def prepare_eqy_script(output_dir, script_name, plugin_file, yosys_file):
         "opt",
         "",
         "[gate]",
-        "tee -o %s/%s/plugin_ast.txt read_systemverilog -nocache -debug %s" % (output_dir, script_name, plugin_file),
+        "tee -o %s/%s/synlig_ast.txt read_systemverilog -nocache -debug %s" % (output_dir, script_name, synlig_file),
         "prep -flatten -auto-top",
         "opt",
         "",
@@ -92,7 +92,7 @@ def run_eqy(output_dir, script_name):
     equiv_patterns = {
         "Successfully proved designs equivalent":                                 "PASS",
         "read_gold: job failed. ERROR.":                                          "YOSYS_READ_FAIL",
-        "read_gate: job failed. ERROR.":                                          "PLUGIN_READ_FAIL",
+        "read_gate: job failed. ERROR.":                                          "SYNLIG_READ_FAIL",
         "combine: ERROR: No \"gold\" top module found!":                          "EMPTY_MODULE",
         "combine: ERROR: No \"gate\" top module found!":                          "EMPTY_MODULE",
         "combine: ERROR: Unmatched module":                                       "UNMATCHED_MODULE",
@@ -223,14 +223,14 @@ def main():
 
     group_begin(full_test_name)
 
-    print("# Plugin v yosys")
+    print("# Synlig v yosys")
     prepare_eqy_script(work_dir, "yosys", test_src_file, test_src_file)
     result = run_eqy(work_dir, "yosys")
-    test_result["result_plugin_v_yosys"] = result
+    test_result["result_synlig_v_yosys"] = result
     print("|  result: " + color_result(result), end="\n|\n")
 
     ending_results = {"PASS",
-        "PLUGIN_READ_FAIL",
+        "SYNLIG_READ_FAIL",
         "EMPTY_MODULE",
         "UNMATCHED_MODULE",
         "NOTHING_TO_COMPARE",
@@ -258,15 +258,15 @@ def main():
 
         sv2v_file = sv2v_result["file"]
 
-        print("# Plugin v sv2v yosys")
+        print("# Synlig v sv2v yosys")
         prepare_eqy_script(work_dir, "sv2v_yosys", test_src_file, sv2v_file)
         result = run_eqy(work_dir, "sv2v_yosys")
-        test_result["result_plugin_v_sv2v_yosys"] = result
+        test_result["result_synlig_v_sv2v_yosys"] = result
         print("|  result: " + color_result(result), end="\n|\n")
 
         ending_results = {"PASS",
             "YOSYS_READ_FAIL",
-            "PLUGIN_READ_FAIL",
+            "SYNLIG_READ_FAIL",
             "EMPTY_MODULE",
             "UNMATCHED_MODULE",
             "NOTHING_TO_COMPARE",

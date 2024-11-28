@@ -12,7 +12,7 @@
 #include <uhdm/vpi_user.h>
 #include <unordered_map>
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 class UhdmAstShared
@@ -106,6 +106,6 @@ class UhdmAstShared
     std::unordered_map<std::string, std::unordered_map<const UHDM::enum_typespec *, std::string>> anonymous_enums;
 };
 
-} // namespace systemverilog_plugin
+} // namespace Synlig
 
 #endif

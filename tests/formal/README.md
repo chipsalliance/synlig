@@ -40,7 +40,7 @@ A table below presents example for [results.py](results.py) script generated on 
 |              FAIL | 23    | formally not equivalent                      |
 |              SKIP | 4     | not executed                                 |
 |   YOSYS_READ_FAIL | 58    | yosys couldn't read design                   |
-|  PLUGIN_READ_FAIL | 4     | synlig couldn't read design                  |
+|  SYNLIG_READ_FAIL | 4     | synlig couldn't read design                  |
 |      EMPTY_MODULE | 5     | synlig or yosys produced empty module        |
 |  UNMATCHED_MODULE | 13    | different module names or count was produced |
 |NOTHING_TO_COMPARE | 6     | there is nothing to compare in designs       |

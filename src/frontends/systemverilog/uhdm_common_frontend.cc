@@ -35,7 +35,7 @@ extern void process(Design *, AstNode *, bool, bool, bool, bool, bool, bool, boo
 } // namespace Yosys
 #endif
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 using namespace ::Yosys;
@@ -194,4 +194,4 @@ void UhdmCommonFrontend::execute(std::istream *&f, std::string filename, std::ve
     }
 }
 
-} // namespace systemverilog_plugin
+} // namespace Synlig

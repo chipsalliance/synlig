@@ -27,7 +27,7 @@
 #include "kernel/sigtools.h"
 #include <string>
 
-namespace systemverilog_plugin
+namespace Synlig
 {
 
 using namespace ::Yosys;
@@ -618,4 +618,4 @@ void register_synlig_edif_backend()
     seb->init_register();
 }
 
-} // namespace systemverilog_plugin
+} // namespace Synlig
