@@ -19,6 +19,13 @@ struct WriteIlangAlias : public Pass {
             cmd += " " + args[i];
         run_pass(cmd, design);
     }
-} WriteIlangAliasPass;
+};
 
+void register_synlig_ilang_alias()
+{
+    if (!pass_register.count("write_ilang")) {
+        static WriteIlangAlias *write_ilang_alias = new WriteIlangAlias;
+        write_ilang_alias->init_register();
+    }
+}
 } // namespace Synlig

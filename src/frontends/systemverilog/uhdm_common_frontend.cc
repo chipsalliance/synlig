@@ -19,6 +19,7 @@
 
 #include "uhdm_common_frontend.h"
 #include "synlig_edif.h"
+#include "synlig_ilang.h"
 
 #ifdef __linux__
 namespace Yosys
@@ -45,7 +46,11 @@ static void set_line_num(int) {}
 /* Stub for AST::process */
 static int get_line_num(void) { return 1; }
 
-UhdmCommonFrontend::UhdmCommonFrontend(std::string name, std::string short_help) : Frontend(name, short_help) { register_synlig_edif_backend(); }
+UhdmCommonFrontend::UhdmCommonFrontend(std::string name, std::string short_help) : Frontend(name, short_help)
+{
+    register_synlig_edif_backend();
+    Synlig::register_synlig_ilang_alias();
+}
 
 void UhdmCommonFrontend::print_read_options()
 {
