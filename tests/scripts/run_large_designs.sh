@@ -114,9 +114,9 @@ do
 	"'install_dependencies'") install_dependencies ;;
 	"'load_submodules'")
 		[ "$name" == "'veer'" ] && load_submodules -r veer
-		[ "$name" == "'blackparrot_AMD'" ] && load_submodules black_parrot_tools black_parrot_sdk -r black_parrot
-		[ "$name" == "'blackparrot_AMD_python'" ] && load_submodules black_parrot_tools black_parrot_sdk -r black_parrot
-		[ "$name" == "'blackparrot_ASIC'" ] && load_submodules black_parrot_tools black_parrot_sdk OpenROAD-flow-scripts -r black_parrot
+		[ "$name" == "'blackparrot_AMD'" ] && load_submodules -r black_parrot
+		[ "$name" == "'blackparrot_AMD_python'" ] && load_submodules -r black_parrot
+		[ "$name" == "'blackparrot_ASIC'" ] && load_submodules OpenROAD-flow-scripts -r black_parrot
 		[ "$name" == "'ibex'" ] && load_submodules -r make_env ibex
 		[ "$name" == "'ibex_f4pga'" ] && load_submodules -r make_env ibex yosys_f4pga_plugins
 		[ "$name" == "'opentitan_9d82960888'" ] && load_submodules -r opentitan_9d82960888

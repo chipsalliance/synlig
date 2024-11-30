@@ -10,9 +10,6 @@ CONFIG_FILE = ${curr_dir}/config.mk
 ORFS_DIR = ${root_dir}/../third_party/OpenROAD-flow-scripts
 ORFS_PATCHES_DIR = ${curr_dir}/orfs_patches/
 
-export BP_TOOLS_DIR = $(BLACKPARROT)/../black_parrot_tools
-export BP_SDK_DIR = $(BLACKPARROT)/../black_parrot_sdk
-
 ${ORFS_DIR}/.gitpatch:
 	cd $(ORFS_DIR) && git apply ${ORFS_PATCHES_DIR}/*.patch && touch $@
 
