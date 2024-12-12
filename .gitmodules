@@ -32,14 +32,6 @@
 	path = third_party/black_parrot
 	url = https://github.com/black-parrot/black-parrot.git
 	update = none
-[submodule "uhdm-tests/black-parrot/black-parrot-tools"]
-	path = third_party/black_parrot_tools
-	url = https://github.com/black-parrot/black-parrot-tools
-	update = none
-[submodule "uhdm-tests/black-parrot/black-parrot-sdk"]
-	path = third_party/black_parrot_sdk
-	url = https://github.com/black-parrot-sdk/black-parrot-sdk.git
-	update = none
 [submodule "uhdm-tests/bsg_micro_designs/bsg_micro_designs"]
 	path = third_party/bsg_micro_designs
 	url = https://github.com/bsg-idea/bsg_micro_designs.git
